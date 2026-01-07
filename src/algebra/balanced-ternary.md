@@ -4,16 +4,16 @@ tags:
 e_maxx_link: balanced_ternary
 ---
 
-# Hệ tam phân cân bằng {: #balanced-ternary}
+# Balanced Ternary
 
-!["Máy tính Setun sử dụng hệ tam phân cân bằng"](https://earltcampbell.files.wordpress.com/2014/12/setun.jpeg?w=300)
+!["Setun computer using Balanced Ternary system"](https://earltcampbell.files.wordpress.com/2014/12/setun.jpeg?w=300)
 
-Đây là một **hệ thống số** không chuẩn nhưng vẫn theo vị trí. Đặc điểm của nó là các chữ số có thể có một trong các giá trị `-1`, `0` và `1`.
-Tuy nhiên, cơ số của nó vẫn là `3` (vì có ba giá trị có thể có). Vì không tiện viết `-1` dưới dạng chữ số,
-chúng ta sẽ dùng chữ cái `Z` cho mục đích này. Nếu bạn nghĩ đây là một hệ thống khá kỳ lạ - hãy nhìn vào hình - đây là một trong những
-máy tính sử dụng nó.
+This is a non-standard but still positional **numeral system**. Its feature is that digits can have one of the values `-1`, `0` and `1`.
+Nevertheless, its base is still `3` (because there are three possible values). Since it is not convenient to write `-1` as a digit,
+we'll use letter `Z` further for this purpose. If you think it is quite a strange system - look at the picture - here is one of the
+computers utilizing it.
 
-Dưới đây là một vài số đầu tiên được viết bằng hệ tam phân cân bằng:
+So here are few first numbers written in balanced ternary:
 
 ```nohighlight
     0    0
@@ -28,7 +28,7 @@ Dưới đây là một vài số đầu tiên được viết bằng hệ tam p
     9    100
 ```
 
-Hệ thống này cho phép bạn viết các giá trị âm mà không cần dấu trừ ở đầu: bạn có thể đơn giản là đảo ngược các chữ số trong bất kỳ số dương nào.
+This system allows you to write negative values without leading minus sign: you can simply invert digits in any positive number.
 
 ```nohighlight
     -1   Z
@@ -38,16 +38,16 @@ Hệ thống này cho phép bạn viết các giá trị âm mà không cần d�
     -5   Z11
 ```
 
-Lưu ý rằng một số âm bắt đầu bằng `Z` và số dương bắt đầu bằng `1`.
+Note that a negative number starts with `Z` and positive with `1`.
 
-## Thuật toán chuyển đổi {: #conversion-algorithm}
+## Conversion algorithm
 
-Rất dễ dàng để biểu diễn một số đã cho trong **hệ tam phân cân bằng** thông qua việc tạm thời biểu diễn nó trong hệ tam phân tiêu chuẩn. Khi giá trị ở
-hệ tam phân tiêu chuẩn, các chữ số của nó là `0` hoặc `1` hoặc `2`. Duyệt từ chữ số thấp nhất, chúng ta có thể bỏ qua các chữ số `0` và `1` một cách an toàn,
-tuy nhiên `2` phải được biến thành `Z` và thêm `1` vào chữ số tiếp theo. Các chữ số `3` phải được biến thành `0` theo cùng một nguyên tắc -
-các chữ số như vậy ban đầu không có trong số nhưng chúng có thể xuất hiện sau khi tăng một số `2`.
+It is easy to represent a given number in **balanced ternary** via temporary representing it in normal ternary number system. When value is
+in standard ternary, its digits are either `0` or `1` or `2`. Iterating from the lowest digit we can safely skip any `0`s and `1`s,
+however `2` should be turned into `Z` with adding `1` to the next digit. Digits `3` should be turned into `0` on the same terms -
+such digits are not present in the number initially but they can be encountered after increasing some `2`s.
 
-**Ví dụ 1:** Let us convert `64` to balanced ternary. At first we use normal ternary to rewrite the number:
+**Example 1:** Let us convert `64` to balanced ternary. At first we use normal ternary to rewrite the number:
 
 $$ 64_{10} = 02101_{3} $$
 
@@ -62,7 +62,7 @@ Let us convert it back to the decimal system by adding the weighted positional v
 
 $$ 1Z101 = 81 \cdot 1 + 27 \cdot (-1) + 9 \cdot 1 + 3 \cdot 0 + 1 \cdot 1 = 64_{10} $$
 
-**Ví dụ 2:** Let us convert `237` to balanced ternary. At first we use normal ternary to rewrite the number:
+**Example 2:** Let us convert `237` to balanced ternary. At first we use normal ternary to rewrite the number:
 
 $$ 237_{10} = 22210_{3} $$
 
@@ -79,23 +79,6 @@ Let us convert it back to the decimal system by adding the weighted positional v
 
 $$ 100Z10 = 243 \cdot 1 + 81 \cdot 0 + 27 \cdot 0 + 9 \cdot (-1) + 3 \cdot 1 + 1 \cdot 0 = 237_{10} $$
 
-## Bài tập luyện tập {: #practice-problems}
+## Practice Problems
 
 * [Topcoder SRM 604, Div1-250](http://community.topcoder.com/stat?c=problem_statement&pm=12917&rd=15837)
-
----
-
-## Checklist
-
-- Original lines: 104
-- Translated lines: 104
-- Code blocks changed? No
-- Inline code changed? No
-- Technical terms kept in English? Yes (e.g., balanced ternary)
-- Headings anchors preserved/added correctly? Yes
-- I confirm no character was omitted: YES
-
-Notes:
-- Translated descriptive text.
-- Translated image alt text.
-- Preserved code blocks, LaTeX formulas, and external links.

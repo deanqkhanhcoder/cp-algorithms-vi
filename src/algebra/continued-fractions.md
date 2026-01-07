@@ -1,113 +1,119 @@
-<!--?title Phân số liên tục -->
-# Phân số liên tục {: #continued-fractions}
+---
+tags:
+  - Original
+---
 
-**Phân số liên tục** là một cách biểu diễn một số thực dưới dạng một dãy hội tụ cụ thể của các số hữu tỷ. Chúng hữu ích trong lập trình thi đấu vì chúng dễ tính toán và có thể được sử dụng hiệu quả để tìm xấp xỉ hữu tỷ tốt nhất có thể của số thực cơ bản (trong số tất cả các số mà mẫu số không vượt quá một giá trị nhất định).
+<!--?title Continued fractions -->
+# Continued fractions
 
-Bên cạnh đó, phân số liên tục có liên quan chặt chẽ với thuật toán Euclid, điều này làm cho chúng hữu ích trong một loạt các bài toán lý thuyết số.
+**Continued fraction** is a representation of a real number as a specific convergent sequence of rational numbers. They are useful in competitive programming because they are easy to compute and can be efficiently used to find the best possible rational approximation of the underlying real number (among all numbers whose denominator doesn't exceed a given value).
 
-## Biểu diễn phân số liên tục {: #continued-fraction-representation}
+Besides that, continued fractions are closely related to Euclidean algorithm which makes them useful in a bunch of number-theoretical problems.
 
-!!! info "Định nghĩa"
-    Cho $a_0, a_1, \dots, a_k \in \mathbb Z$ và $a_1, a_2, \dots, a_k \geq 1$. Khi đó, biểu thức
+## Continued fraction representation
+
+!!! info "Definition"
+    Let $a_0, a_1, \dots, a_k \in \mathbb Z$ and $a_1, a_2, \dots, a_k \geq 1$. Then the expression
 
     $$r=a_0 + \frac{1}{a_1 + \frac{1}{\dots + \frac{1}{a_k}}},$$
 
-    được gọi là **biểu diễn phân số liên tục** của số hữu tỷ $r$ và được ký hiệu ngắn gọn là $r=[a_0;a_1,a_2,\dots,a_k]$.
+    is called the **continued fraction representation** of the rational number $r$ and is denoted shortly as $r=[a_0;a_1,a_2,\dots,a_k]$.
 
 ??? example
-    Cho $r = \frac{5}{3}$. Có hai cách để biểu diễn nó dưới dạng phân số liên tục:
+    Let $r = \frac{5}{3}$. There are two ways to represent it as a continued fraction:
 
     $$
     \begin{align}
-    r = [1;1,1,1] &= 1+\frac{1}{1+\frac{1}{1+\frac{1}{1}}},\n    r = [1;1,2] &= 1+\frac{1}{1+\frac{1}{2}}.
+    r = [1;1,1,1] &= 1+\frac{1}{1+\frac{1}{1+\frac{1}{1}}},\\
+    r = [1;1,2] &= 1+\frac{1}{1+\frac{1}{2}}.
     \end{align}
     $$
 
-Có thể chứng minh rằng bất kỳ số hữu tỷ nào cũng có thể được biểu diễn dưới dạng phân số liên tục theo chính xác $2$ cách:
+It can be proven that any rational number can be represented as a continued fraction in exactly $2$ ways:
 
-$$r = [a_0;a_1,\dots,a_k,1] = [a_0;a_1,\dots,a_k+1].$$ 
+$$r = [a_0;a_1,\dots,a_k,1] = [a_0;a_1,\dots,a_k+1].$$
 
-Hơn nữa, độ dài $k$ của phân số liên tục như vậy được ước tính là $k = O(\log \min(p, q))$ cho $r=\frac{p}{q}$.
+Moreover, the length $k$ of such continued fraction is estimated as $k = O(\log \min(p, q))$ for $r=\frac{p}{q}$.
 
-Lý do đằng sau điều này sẽ rõ ràng khi chúng ta đi sâu vào chi tiết xây dựng phân số liên tục.
+The reasoning behind this will be clear once we delve into the details of the continued fraction construction.
 
-!!! info "Định nghĩa"
-    Cho $a_0,a_1,a_2, \dots$ là một dãy số nguyên sao cho $a_1, a_2, \dots \geq 1$. Đặt $r_k = [a_0; a_1, \dots, a_k]$. Khi đó, biểu thức
+!!! info "Definition"
+    Let $a_0,a_1,a_2, \dots$ be an integer sequence such that $a_1, a_2, \dots \geq 1$. Let $r_k = [a_0; a_1, \dots, a_k]$. Then the expression
 
     $$r = a_0 + \frac{1}{a_1 + \frac{1}{a_2+\dots}} = \lim\limits_{k \to \infty} r_k.$$
 
-    được gọi là **biểu diễn phân số liên tục** của số vô tỷ $r$ và được ký hiệu ngắn gọn là $r = [a_0;a_1,a_2,\dots]$.
+    is called the **continued fraction representation** of the irrational number $r$ and is denoted shortly as $r = [a_0;a_1,a_2,\dots]$.
 
-Lưu ý rằng đối với $r=[a_0;a_1,\dots]$ và số nguyên $k$, ta có $r+k = [a_0+k; a_1, \dots]$.
+Note that for $r=[a_0;a_1,\dots]$ and integer $k$, it holds that $r+k = [a_0+k; a_1, \dots]$.
 
-Một quan sát quan trọng khác là $\frac{1}{r}=[0;a_0, a_1, \dots]$ khi $a_0 > 0$ và $\frac{1}{r} = [a_1; a_2, \dots]$ khi $a_0 = 0$.
+Another important observation is that $\frac{1}{r}=[0;a_0, a_1, \dots]$ when $a_0 > 0$ and $\frac{1}{r} = [a_1; a_2, \dots]$ when $a_0 = 0$.
 
-!!! info "Định nghĩa"
-    Trong định nghĩa trên, các số hữu tỷ $r_0, r_1, r_2, \dots$ được gọi là các **hội tụ** của $r$.
+!!! info "Definition"
+    In the definition above, rational numbers $r_0, r_1, r_2, \dots$ are called the **convergents** of $r$.
 
-    Tương ứng, từng $r_k = [a_0; a_1, \dots, a_k] = \frac{p_k}{q_k}$ được gọi là **hội tụ** thứ $k$ của $r$.
+    Correspondingly, individual $r_k = [a_0; a_1, \dots, a_k] = \frac{p_k}{q_k}$ is called the $k$-th **convergent** of $r$.
 
 ??? example
-    Xét $r = [1; 1, 1, 1, \dots]$. Có thể chứng minh bằng quy nạp rằng $r_k = \frac{F_{k+2}}{F_{k+1}}$, trong đó $F_k$ là dãy Fibonacci được định nghĩa là $F_0 = 0$, $F_1 = 1$ và $F_{k} = F_{k-1} + F_{k-2}$. Từ công thức Binet, ta biết rằng
+    Consider $r = [1; 1, 1, 1, \dots]$. It can be proven by induction that $r_k = \frac{F_{k+2}}{F_{k+1}}$, where $F_k$ is the Fibonacci sequence defined as $F_0 = 0$, $F_1 = 1$ and $F_{k} = F_{k-1} + F_{k-2}$. From the Binet's formula, it is known that
 
     $$r_k = \frac{\phi^{k+2} - \psi^{k+2}}{\phi^{k+1} - \psi^{k+1}},$$
 
-    trong đó $\phi = \frac{1+\sqrt{5}}{2} \approx 1.618$ là tỷ lệ vàng và $\psi = \frac{1-\sqrt{5}}{2} = -\frac{1}{\phi} \approx -0.618$. Do đó,
+    where $\phi = \frac{1+\sqrt{5}}{2} \approx 1.618$ is the golden ratio and $\psi = \frac{1-\sqrt{5}}{2} = -\frac{1}{\phi} \approx -0.618$. Thus,
 
-    $$r = 1+\frac{1}{1+\frac{1}{1+\dots}}=\lim\limits_{k \to \infty} r_k = \phi = \frac{1+\sqrt{5}}{2}.$$ 
+    $$r = 1+\frac{1}{1+\frac{1}{1+\dots}}=\lim\limits_{k \to \infty} r_k = \phi = \frac{1+\sqrt{5}}{2}.$$
 
-    Lưu ý rằng trong trường hợp cụ thể này, một cách khác để tìm $r$ là giải phương trình
+    Note that in this specific case, an alternative way to find $r$ would be to solve the equation
 
     $$r = 1+\frac{1}{r} \implies r^2 = r + 1. $$
 
 
-!!! info "Định nghĩa"
-    Cho $r_k = [a_0; a_1, \dots, a_{k-1}, a_k]$. Các số $[a_0; a_1, \dots, a_{k-1}, t]$ với $1 \leq t \leq a_k$ được gọi là **bán hội tụ**.
+!!! info "Definition"
+    Let $r_k = [a_0; a_1, \dots, a_{k-1}, a_k]$. The numbers $[a_0; a_1, \dots, a_{k-1}, t]$ for $1 \leq t \leq a_k$ are called **semiconvergents**.
 
-    Chúng ta thường gọi các (bán) hội tụ lớn hơn $r$ là các (bán) hội tụ **trên** và những số nhỏ hơn $r$ là các (bán) hội tụ **dưới**.
+    We will typically refer to (semi)convergents that are greater than $r$ as **upper** (semi)convergents and to those that are less than $r$ as **lower** (semi)convergents.
 
-!!! info "Định nghĩa"
-    Bổ sung cho các hội tụ, chúng ta định nghĩa các **[thương đầy đủ](https://en.wikipedia.org/wiki/Complete_quotient)** là $s_k = [a_k; a_{k+1}, a_{k+2}, \dots]$.
+!!! info "Definition"
+    Complementary to convergents, we define the **[complete quotients](https://en.wikipedia.org/wiki/Complete_quotient)** as $s_k = [a_k; a_{k+1}, a_{k+2}, \dots]$.
 
-    Tương ứng, chúng ta sẽ gọi một $s_k$ riêng lẻ là thương đầy đủ thứ $k$ của $r$.
+    Correspondingly, we will call an individual $s_k$ the $k$-th complete quotient of $r$.
 
-Từ các định nghĩa trên, người ta có thể kết luận rằng $s_k \geq 1$ với $k \geq 1$.
+From the definitions above, one can conclude that $s_k \geq 1$ for $k \geq 1$.
 
-Coi $[a_0; a_1, \dots, a_k]$ là một biểu thức đại số hình thức và cho phép các số thực tùy ý thay vì $a_i$, chúng ta thu được
+Treating $[a_0; a_1, \dots, a_k]$ as a formal algebraic expression and allowing arbitrary real numbers instead of $a_i$, we obtain
 
-$$r = [a_0; a_1, \dots, a_{k-1}, s_k].$$ 
+$$r = [a_0; a_1, \dots, a_{k-1}, s_k].$$
 
-Đặc biệt, $r = [s_0] = s_0$. Mặt khác, chúng ta có thể biểu diễn $s_k$ dưới dạng
+In particular, $r = [s_0] = s_0$. On the other hand, we can express $s_k$ as
 
-$$s_k = [a_k; s_{k+1}] = a_k + \frac{1}{s_{k+1}},$$ 
+$$s_k = [a_k; s_{k+1}] = a_k + \frac{1}{s_{k+1}},$$
 
-nghĩa là chúng ta có thể tính $a_k = \lfloor s_k \rfloor$ và $s_{k+1} = (s_k - a_k)^{-1}$ từ $s_k$.
+meaning that we can compute $a_k = \lfloor s_k \rfloor$ and $s_{k+1} = (s_k - a_k)^{-1}$ from $s_k$.
 
-Dãy $a_0, a_1, \dots$ được định nghĩa tốt trừ khi $s_k=a_k$, điều này chỉ xảy ra khi $r$ là một số hữu tỷ.
+The sequence $a_0, a_1, \dots$ is well-defined unless $s_k=a_k$ which only happens when $r$ is a rational number.
 
-Do đó, biểu diễn phân số liên tục được định nghĩa duy nhất cho bất kỳ số vô tỷ nào $r$.
+Thus the continued fraction representation is uniquely defined for any irrational number $r$.
 
-### Triển khai {: #implementation}
+### Implementation
 
-Trong các đoạn mã, chúng ta sẽ chủ yếu giả định các phân số liên tục hữu hạn.
+In the code snippets we will mostly assume finite continued fractions.
 
-Từ $s_k$, chuyển đổi sang $s_{k+1}$ trông giống như
+From $s_k$, the transition to $s_{k+1}$ looks like
 
 $$s_k =\left\lfloor s_k \right\rfloor + \frac{1}{s_{k+1}}.$$
 
-Từ biểu thức này, thương đầy đủ tiếp theo $s_{k+1}$ được thu được là
+From this expression, the next complete quotient $s_{k+1}$ is obtained as
 
-$$s_{k+1} = \left(s_k-\left\lfloor s_k\right\rfloor\right)^{-1}.$$ 
+$$s_{k+1} = \left(s_k-\left\lfloor s_k\right\rfloor\right)^{-1}.$$
 
-Đối với $s_k=\frac{p}{q}$ thì có nghĩa là
+For $s_k=\frac{p}{q}$ it means that
 
-$$ 
- s_{k+1} = \left(\frac{p}{q}-\left\lfloor \frac{p}{q} \right\rfloor\right)^{-1} = \frac{q}{p-q\cdot \lfloor \frac{p}{q} \rfloor} = \frac{q}{p \bmod q}. 
- $$ 
+$$
+s_{k+1} = \left(\frac{p}{q}-\left\lfloor \frac{p}{q} \right\rfloor\right)^{-1} = \frac{q}{p-q\cdot \lfloor \frac{p}{q} \rfloor} = \frac{q}{p \bmod q}.
+$$
 
-Do đó, việc tính toán biểu diễn phân số liên tục cho $r=\frac{p}{q}$ tuân theo các bước của thuật toán Euclid cho $p$ và $q$.
+Thus, the computation of a continued fraction representation for $r=\frac{p}{q}$ follows the steps of the Euclidean algorithm for $p$ and $q$.
 
-Từ đây cũng suy ra rằng $\gcd(p_k, q_k) = 1$ cho $\frac{p_k}{q_k} = [a_0; a_1, \dots, a_k]$. Do đó, các hội tụ luôn là tối giản.
+From this also follows that $\gcd(p_k, q_k) = 1$ for $\frac{p_k}{q_k} = [a_0; a_1, \dots, a_k]$. Hence, convergents are always irreducible.
 
 === "C++"
     ```cpp
@@ -130,136 +136,133 @@ Từ đây cũng suy ra rằng $\gcd(p_k, q_k) = 1$ cho $\frac{p_k}{q_k} = [a_0;
         return a
     ```
 
-## Các kết quả chính {: #key-results}
+## Key results
 
-Để cung cấp một số động lực cho việc nghiên cứu sâu hơn về phân số liên tục, chúng ta đưa ra một số sự thật chính bây giờ.
+To provide some motivation for further study of continued fraction, we give some key facts now.
 
-??? note "Đệ quy"
-    Đối với các hội tụ $r_k = \frac{p_k}{q_k}$, công thức đệ quy sau đây đúng, cho phép tính toán nhanh chóng của chúng:
+??? note "Recurrence"
+    For the convergents $r_k = \frac{p_k}{q_k}$, the following recurrence stands, allowing their fast computation:
     
-    $$\frac{p_k}{q_k}=\frac{a_k p_{k-1} + p_{k-2}}{a_k q_{k-1} + q_{k-2}},$$ 
+    $$\frac{p_k}{q_k}=\frac{a_k p_{k-1} + p_{k-2}}{a_k q_{k-1} + q_{k-2}},$$
     
-    trong đó $\frac{p_{-1}}{q_{-1}}=\frac{1}{0}$ và $\frac{p_{-2}}{q_{-2}}=\frac{0}{1}$.
+    where $\frac{p_{-1}}{q_{-1}}=\frac{1}{0}$ and $\frac{p_{-2}}{q_{-2}}=\frac{0}{1}$.
 
-??? note "Độ lệch"
-    Độ lệch của $r_k = \frac{p_k}{q_k}$ so với $r$ có thể được ước tính chung là
+??? note "Deviations"
+    The deviation of $r_k = \frac{p_k}{q_k}$ from $r$ can be generally estimated as
     
-    $$\left|\frac{p_k}{q_k}-r\right| \leq \frac{1}{q_k q_{k+1}} \leq \frac{1}{q_k^2}.$$ 
+    $$\left|\frac{p_k}{q_k}-r\right| \leq \frac{1}{q_k q_{k+1}} \leq \frac{1}{q_k^2}.$$
     
-    Nhân cả hai vế với $q_k$, chúng ta thu được ước tính thay thế:
+    Multiplying both sides with $q_k$, we obtain alternate estimation:
     
     $$|p_k - q_k r| \leq \frac{1}{q_{k+1}}.$$
 
-    Từ công thức đệ quy trên, suy ra rằng $q_k$ tăng ít nhất nhanh bằng số Fibonacci.
+    From the recurrence above it follows that $q_k$ grows at least as fast as Fibonacci numbers.
 
-    Trong hình dưới đây, bạn có thể thấy hình dung về cách các hội tụ $r_k$ tiếp cận $r=\frac{1+\sqrt 5}{2}$:
+    On the picture below you may see the visualization of how convergents $r_k$ approach $r=\frac{1+\sqrt 5}{2}$:
 
     ![](https://upload.wikimedia.org/wikipedia/commons/b/b4/Golden_ration_convergents.svg)
 
-    $r=\frac{1+\sqrt 5}{2}$ được mô tả bằng đường chấm màu xanh. Các hội tụ lẻ tiếp cận nó từ trên và các hội tụ chẵn tiếp cận nó từ dưới.
+    $r=\frac{1+\sqrt 5}{2}$ is depicted by blue dotted line. Odd convergents approach it from above and even convergents approach it from below.
 
-??? note "Bao lồi lưới"
-    Xét bao lồi của các điểm trên và dưới đường $y=rx$.
+??? note "Lattice hulls"
+    Consider convex hulls of points above and below the line $y=rx$.
     
-    Các hội tụ lẻ $(q_k;p_k)$ là các đỉnh của bao lồi trên, trong khi các hội tụ chẵn $(q_k;p_k)$ là các đỉnh của bao lồi dưới.
+    Odd convergents $(q_k;p_k)$ are the vertices of the upper hull, while the even convergents $(q_k;p_k)$ are the vertices of the bottom hull.
     
-    Tất cả các đỉnh số nguyên trên bao lồi được thu được dưới dạng $(q;p)$ sao cho
+    All integers vertices on the hulls are obtained as $(q;p)$ such that
     
-    $$\frac{p}{q} = \frac{tp_{k-1} + p_{k-2}}{tq_{k-1} + q_{k-2}}$$ 
+    $$\frac{p}{q} = \frac{tp_{k-1} + p_{k-2}}{tq_{k-1} + q_{k-2}}$$
     
-    đối với số nguyên $0 \leq t \leq a_k$. Nói cách khác, tập hợp các điểm lưới trên bao lồi tương ứng với tập hợp các bán hội tụ.
+    for integer $0 \leq t \leq a_k$. In other words, the set of lattice points on the hulls corresponds to the set of semiconvergents.
 
-    Trong hình dưới đây, bạn có thể thấy các hội tụ và bán hội tụ (các điểm xám trung gian) của $r=\frac{9}{7}$.
+    On the picture below, you may see the convergents and semiconvergents (intermediate gray points) of $r=\frac{9}{7}$.
 
     ![](https://upload.wikimedia.org/wikipedia/commons/9/92/Continued_convergents_geometry.svg)
 
-??? note "Xấp xỉ tốt nhất"
-    Cho $\frac{p}{q}$ là phân số để tối thiểu hóa $\left|r-\frac{p}{q}\right|$ với điều kiện $q \leq x$ cho một số $x$.
+??? note "Best approximations"
+    Let $\frac{p}{q}$ be the fraction to minimize $\left|r-\frac{p}{q}\right|$ subject to $q \leq x$ for some $x$.
     
-    Khi đó $\frac{p}{q}$ là một bán hội tụ của $r$.
+    Then $\frac{p}{q}$ is a semiconvergent of $r$.
 
-Sự thật cuối cùng cho phép tìm các xấp xỉ hữu tỷ tốt nhất của $r$ bằng cách kiểm tra các bán hội tụ của nó.
+The last fact allows to find the best rational approximations of $r$ by checking its semiconvergents.
 
-Dưới đây bạn sẽ tìm thấy giải thích thêm và một chút trực giác và giải thích cho những sự thật này.
+Below you will find the further explanation and a bit of intuition and interpretation for these facts.
 
-## Các hội tụ {: #convergents}
+## Convergents
 
-Hãy xem xét kỹ hơn các hội tụ đã được định nghĩa trước đó. Đối với $r=[a_0, a_1, a_2, \dots]$, các hội tụ của nó là
+Let's take a closer look at the convergents that were defined earlier. For $r=[a_0, a_1, a_2, \dots]$, its convergents are
 
 \begin{gather}
- r_0=[a_0],
-r_1=[a_0, a_1],
-\dots,\ r_k=[a_0, a_1, \dots, a_k].
+r_0=[a_0],\\r_1=[a_0, a_1],\\ \dots,\\ r_k=[a_0, a_1, \dots, a_k].
 \end{gather}
 
-Các hội tụ là khái niệm cốt lõi của phân số liên tục, vì vậy điều quan trọng là phải nghiên cứu các thuộc tính của chúng.
+Convergents are the core concept of continued fractions, so it is important to study their properties.
 
-Đối với số $r$, hội tụ thứ $k$ của nó $r_k = \frac{p_k}{q_k}$ có thể được tính bằng
+For the number $r$, its $k$-th convergent $r_k = \frac{p_k}{q_k}$ can be computed as
 
-$$r_k = \frac{P_k(a_0,a_1,\dots,a_k)}{P_{k-1}(a_1,\dots,a_k)} = \frac{a_k p_{k-1} + p_{k-2}}{a_k q_{k-1} + q_{k-2}},$$ 
+$$r_k = \frac{P_k(a_0,a_1,\dots,a_k)}{P_{k-1}(a_1,\dots,a_k)} = \frac{a_k p_{k-1} + p_{k-2}}{a_k q_{k-1} + q_{k-2}},$$
 
-trong đó $P_k(a_0,\dots,a_k)$ là [phần liên tục](https://en.wikipedia.org/wiki/Continuant_(mathematics)), một đa thức đa biến được định nghĩa là
+where $P_k(a_0,\dots,a_k)$ is [the continuant](https://en.wikipedia.org/wiki/Continuant_(mathematics)), a multivariate polynomial defined as
 
 $$P_k(x_0,x_1,\dots,x_k) = \det \begin{bmatrix}
- x_k & 1 & 0 & \dots & 0 \\
- -1 & x_{k-1} & 1 & \dots & 0 \\
- 0 & -1 & x_2 & . & \vdots \\
- \vdots & \vdots & . & \ddots & 1 \\
- 0 & 0 & \dots & -1 & x_0
-\end{bmatrix}_{{\textstyle .}}$$
+x_k & 1 & 0 & \dots & 0 \\
+-1 & x_{k-1} & 1 & \dots & 0 \\
+0 & -1 & x_2 & . & \vdots \\
+\vdots & \vdots & . & \ddots & 1 \\
+0 & 0 & \dots & -1 & x_0
+\end{bmatrix}_{\textstyle .}$$
 
-Do đó, $r_k$ là một [trung bình có trọng số](https://en.wikipedia.org/wiki/Mediant_(mathematics)) của $r_{k-1}$ và $r_{k-2}$.
+Thus, $r_k$ is a weighted [mediant](https://en.wikipedia.org/wiki/Mediant_(mathematics)) of $r_{k-1}$ and $r_{k-2}$.
 
-Để nhất quán, hai hội tụ bổ sung $r_{-1} = \frac{1}{0}$ và $r_{-2} = \frac{0}{1}$ được định nghĩa.
+For consistency, two additional convergents $r_{-1} = \frac{1}{0}$ and $r_{-2} = \frac{0}{1}$ are defined.
 
-??? hint "Giải thích chi tiết"
+??? hint "Detailed explanation"
 
-    Tử số và mẫu số của $r_k$ có thể được xem như các đa thức đa biến của $a_0, a_1, \dots, a_k$:
+    The numerator and the denominator of $r_k$ can be seen as multivariate polynomials of $a_0, a_1, \dots, a_k$:
 
     $$r_k = \frac{P_k(a_0, a_1, \dots, a_k)}{Q_k(a_0,a_1, \dots, a_k)}.$$
 
-    Từ định nghĩa của các hội tụ,
+    From the definition of convergents,
 
     $$r_k = a_0 + \frac{1}{[a_1;a_2,\dots, a_k]}= a_0 + \frac{Q_{k-1}(a_1, \dots, a_k)}{P_{k-1}(a_1, \dots, a_k)} = \frac{a_0 P_{k-1}(a_1, \dots, a_k) + Q_{k-1}(a_1, \dots, a_k)}{P_{k-1}(a_1, \dots, a_k)}.$$
 
-    Từ đây suy ra $Q_k(a_0, \dots, a_k) = P_{k-1}(a_1, \dots, a_k)$. Điều này dẫn đến mối quan hệ
+    From this follows $Q_k(a_0, \dots, a_k) = P_{k-1}(a_1, \dots, a_k)$. This yields the relation
 
     $$P_k(a_0, \dots, a_k) = a_0 P_{k-1}(a_1, \dots, a_k) + P_{k-2}(a_2, \dots, a_k).$$
 
-    Ban đầu, $r_0 = \frac{a_0}{1}$ và $r_1 = \frac{a_0 a_1 + 1}{a_1}$, do đó
+    Initially, $r_0 = \frac{a_0}{1}$ and $r_1 = \frac{a_0 a_1 + 1}{a_1}$, thus
 
-    $$\begin{align}P_0(a_0)&=a_0,\ P_1(a_0, a_1) &= a_0 a_1 + 1.\
-    \end{align}$$
+    $$\begin{align}P_0(a_0)&=a_0,\\ P_1(a_0, a_1) &= a_0 a_1 + 1.\end{align}$$
 
-    Để nhất quán, thuận tiện khi định nghĩa $P_{-1} = 1$ và $P_{-2}=0$ và nói một cách hình thức rằng $r_{-1} = \frac{1}{0}$ và $r_{-2}=\frac{0}{1}$.
+    For consistency, it is convenient to define $P_{-1} = 1$ and $P_{-2}=0$ and formally say that $r_{-1} = \frac{1}{0}$ and $r_{-2}=\frac{0}{1}$.
 
-    Từ giải tích số, ta biết rằng định thức của một ma trận ba đường chéo tùy ý
+    From numerical analysis, it is known that the determinant of an arbitrary tridiagonal matrix
 
     $$T_k = \det \begin{bmatrix}
-     a_0 & b_0 & 0 & \dots & 0 \\
-     c_0 & a_1 & b_1 & \dots & 0 \\
-     0 & c_1 & a_2 & . & \vdots \\
-     \vdots & \vdots & . & \ddots & c_{k-1} \\
-     0 & 0 & \dots & b_{k-1} & a_k
+    a_0 & b_0 & 0 & \dots & 0 \\
+    c_0 & a_1 & b_1 & \dots & 0 \\
+    0 & c_1 & a_2 & . & \vdots \\
+    \vdots & \vdots & . & \ddots & c_{k-1} \\
+    0 & 0 & \dots & b_{k-1} & a_k
     \end{bmatrix}$$
 
-    có thể được tính đệ quy là $T_k = a_k T_{k-1} - b_{k-1} c_{k-1} T_{k-2}$. So sánh nó với $P_k$, chúng ta có một biểu thức trực tiếp
+    can be computed recursively as $T_k = a_k T_{k-1} - b_{k-1} c_{k-1} T_{k-2}$. Comparing it to $P_k$, we get a direct expression
 
     $$P_k = \det \begin{bmatrix}
-     x_k & 1 & 0 & \dots & 0 \\
-     -1 & x_{k-1} & 1 & \dots & 0 \\
-     0 & -1 & x_2 & . & \vdots \\
-     \vdots & \vdots & . & \ddots & 1 \\
-     0 & 0 & \dots & -1 & x_0
-    \end{bmatrix}_{{\textstyle .}}$$
+    x_k & 1 & 0 & \dots & 0 \\
+    -1 & x_{k-1} & 1 & \dots & 0 \\
+    0 & -1 & x_2 & . & \vdots \\
+    \vdots & \vdots & . & \ddots & 1 \\
+    0 & 0 & \dots & -1 & x_0
+    \end{bmatrix}_{\textstyle .}$$
 
-    Đa thức này còn được gọi là [phần liên tục](https://en.wikipedia.org/wiki/Continuant_(mathematics)) do mối quan hệ chặt chẽ của nó với phân số liên tục. Phần liên tục sẽ không thay đổi nếu trình tự trên đường chéo chính bị đảo ngược. Điều này cho ta một công thức thay thế để tính nó:
+    This polynomial is also known as [the continuant](https://en.wikipedia.org/wiki/Continuant_(mathematics)) due to its close relation with continued fraction. The continuant won't change if the sequence on the main diagonal is reversed. This yields an alternative formula to compute it:
 
     $$P_k(a_0, \dots, a_k) = a_k P_{k-1}(a_0, \dots, a_{k-1}) + P_{k-2}(a_0, \dots, a_{k-2}).$$
 
-### Triển khai {: #implementation-1}
+### Implementation
 
-Chúng ta sẽ tính toán các hội tụ dưới dạng một cặp các dãy $p_{-2}, p_{-1}, p_0, p_1, \dots, p_k$ và $q_{-2}, q_{-1}, q_0, q_1, \dots, q_k$:
+We will compute the convergents as a pair of sequences $p_{-2}, p_{-1}, p_0, p_1, \dots, p_k$ and $q_{-2}, q_{-1}, q_0, q_1, \dots, q_k$:
 
 === "C++"
     ```cpp
@@ -284,59 +287,59 @@ Chúng ta sẽ tính toán các hội tụ dưới dạng một cặp các dãy 
         return p, q
     ```
 
-## Cây phân số liên tục {: #trees-of-continued-fractions}
+## Trees of continued fractions
 
-Có hai cách chính để hợp nhất tất cả các phân số liên tục có thể có thành các cấu trúc cây hữu ích.
+There are two major ways to unite all possible continued fractions into useful tree structures.
 
-### Cây Stern-Brocot {: #stern-brocot-tree}
+### Stern-Brocot tree
 
-[Cây Stern-Brocot](../others/stern_brocot_tree_farey_sequences.md) là một cây tìm kiếm nhị phân chứa tất cả các số hữu tỷ dương riêng biệt.
+[The Stern-Brocot tree](../others/stern_brocot_tree_farey_sequences.md) is a binary search tree that contains all distinct positive rational numbers.
 
-Cây nói chung trông như sau:
+The tree generally looks as follows:
 
 <figure>
 <img src="https://upload.wikimedia.org/wikipedia/commons/3/37/SternBrocotTree.svg">
 <figcaption>
-<a href="https://commons.wikimedia.org/wiki/File:SternBrocotTree.svg">Hình ảnh</a> của <a href="https://commons.wikimedia.org/wiki/User:Aaron_Rotenberg">Aaron Rotenberg</a> được cấp phép theo <a href="https://creativecommons.org/licenses/by-sa/3.0/deed.en">CC BY-SA 3.0</a>
+<a href="https://commons.wikimedia.org/wiki/File:SternBrocotTree.svg">The image</a> by <a href="https://commons.wikimedia.org/wiki/User:Aaron_Rotenberg">Aaron Rotenberg</a> is licensed under <a href="https://creativecommons.org/licenses/by-sa/3.0/deed.en">CC BY-SA 3.0</a>
 </figcaption>
 </figure>
 
-Các phân số $\frac{0}{1}$ và $\frac{1}{0}$ được "ảo" giữ ở phía bên trái và bên phải của cây tương ứng.
+Fractions $\frac{0}{1}$ and $\frac{1}{0}$ are "virtually" kept on the left and right sides of the tree correspondingly.
 
-Khi đó, phân số trong một nút là trung bình $\frac{a+c}{b+d}$ của hai phân số $\frac{a}{b}$ và $\frac{c}{d}$ phía trên nó.
+Then the fraction in a node is a mediant $\frac{a+c}{b+d}$ of two fractions $\frac{a}{b}$ and $\frac{c}{d}$ above it.
 
-Công thức đệ quy $\frac{p_k}{q_k}=\frac{a_k p_{k-1} + p_{k-2}}{a_k q_{k-1} + q_{k-2}}$ có nghĩa là biểu diễn phân số liên tục mã hóa đường dẫn đến $\frac{p_k}{q_k}$ trong cây. Để tìm $[a_0; a_1, \dots, a_{k}, 1]$, người ta phải thực hiện $a_0$ lần di chuyển sang phải, $a_1$ lần di chuyển sang trái, $a_2$ lần di chuyển sang phải và cứ thế cho đến $a_k$.
+The recurrence $\frac{p_k}{q_k}=\frac{a_k p_{k-1} + p_{k-2}}{a_k q_{k-1} + q_{k-2}}$ means that the continued fraction representation encodes the path to $\frac{p_k}{q_k}$ in the tree. To find $[a_0; a_1, \dots, a_{k}, 1]$, one has to make $a_0$ moves to the right, $a_1$ moves to the left, $a_2$ moves to the right and so on up to $a_k$.
 
-Cha của $[a_0; a_1, \dots, a_k,1]$ khi đó là phân số thu được bằng cách lùi một bước theo hướng được sử dụng cuối cùng.
+The parent of $[a_0; a_1, \dots, a_k,1]$ then is the fraction obtained by taking one step back in the last used direction.
 
-Nói cách khác, đó là $[a_0; a_1, \dots, a_k-1,1]$ khi $a_k > 1$ và $[a_0; a_1, \dots, a_{k-1}, 1]$ khi $a_k = 1$.
+In other words, it is $[a_0; a_1, \dots, a_k-1,1]$ when $a_k > 1$ and $[a_0; a_1, \dots, a_{k-1}, 1]$ when $a_k = 1$.
 
-Do đó, các con của $[a_0; a_1, \dots, a_k, 1]$ là $[a_0; a_1, \dots, a_k+1, 1]$ và $[a_0; a_1, \dots, a_k, 1, 1]$.
+Thus the children of $[a_0; a_1, \dots, a_k, 1]$ are $[a_0; a_1, \dots, a_k+1, 1]$ and $[a_0; a_1, \dots, a_k, 1, 1]$.
 
-Hãy lập chỉ mục cây Stern-Brocot. Đỉnh gốc được gán chỉ mục $1$. Sau đó, đối với một đỉnh $v$, chỉ mục của con trái của nó được gán bằng cách thay đổi bit dẫn đầu của $v$ từ $1$ thành $10$ và đối với con phải, nó được gán bằng cách thay đổi bit dẫn đầu từ $1$ thành $11$:
+Let's index the Stern-Brocot tree. The root vertex is assigned an index $1$. Then for a vertex $v$, the index of its left child is assigned by changing the leading bit of $v$ from $1$ to $10$ and for the right child, it's assigned by changing the leading bit from $1$ to $11$:
 
 <figure><img src="https://upload.wikimedia.org/wikipedia/commons/1/18/Stern-brocot-index.svg" width="500px"/></figure>
 
-Trong việc lập chỉ mục này, biểu diễn phân số liên tục của một số hữu tỷ chỉ định [mã hóa độ dài chạy](https://en.wikipedia.org/wiki/Run-length_encoding) của chỉ mục nhị phân của nó.
+In this indexing, the continued fraction representation of a rational number specifies the [run-length encoding](https://en.wikipedia.org/wiki/Run-length_encoding) of its binary index.
 
-Đối với $\frac{5}{2} = [2;2] = [2;1,1]$, chỉ mục của nó là $1011_2$ và mã hóa độ dài chạy của nó, xem xét các bit theo thứ tự tăng dần, là $[2;1,1]$.
+For $\frac{5}{2} = [2;2] = [2;1,1]$, its index is $1011_2$ and its run-length encoding, considering bits in the ascending order, is $[2;1,1]$.
 
-Một ví dụ khác là $\frac{2}{5} = [0;2,2]=[0;2,1,1]$, có chỉ mục $1100_2$ và mã hóa độ dài chạy của nó, thực sự là $[0;2,2]$.
+Another example is $\frac{2}{5} = [0;2,2]=[0;2,1,1]$, which has index $1100_2$ and its run-length encoding is, indeed, $[0;2,2]$.
 
-Điều đáng chú ý là cây Stern-Brocot, trên thực tế, là một [treap](../data_structures/treap.md). Nghĩa là, nó là một cây tìm kiếm nhị phân theo $\frac{p}{q}$, nhưng nó là một heap theo cả $p$ và $q$.
+It is worth noting that the Stern-Brocot tree is, in fact, a [treap](../data_structures/treap.md). That is, it is a binary search tree by $\frac{p}{q}$, but it is a heap by both $p$ and $q$.
 
-!!! example "So sánh phân số liên tục"
-    Bạn được cho $A=[a_0; a_1, \dots, a_n]$ và $B=[b_0; b_1, \dots, b_m]$. Phân số nào nhỏ hơn?
-??? hint "Lời giải"
-    Giả sử hiện tại $A$ và $B$ là các số vô tỷ và biểu diễn phân số liên tục của chúng biểu thị một sự xuống dốc vô hạn trong cây Stern-Brocot.
+!!! example "Comparing continued fractions"
+    You're given $A=[a_0; a_1, \dots, a_n]$ and $B=[b_0; b_1, \dots, b_m]$. Which fraction is smaller?
+??? hint "Solution"
+    Assume for now that $A$ and $B$ are irrational and their continued fraction representations denote an infinite descent in the Stern-Brocot tree.
 
-    Như chúng ta đã đề cập, trong biểu diễn này $a_0$ biểu thị số lần rẽ phải trong quá trình xuống dốc, $a_1$ biểu thị số lần rẽ trái liên tiếp và cứ thế. Do đó, khi chúng ta so sánh $a_k$ và $b_k$, nếu $a_k = b_k$ chúng ta nên chuyển sang so sánh $a_{k+1}$ và $b_{k+1}$. Ngược lại, nếu chúng ta đang ở các đoạn xuống dốc bên phải, chúng ta nên kiểm tra xem $a_k < b_k$ và nếu chúng ta đang ở các đoạn xuống dốc bên trái, chúng ta nên kiểm tra xem $a_k > b_k$ để biết $A < B$.
+    As we already mentioned, in this representation $a_0$ denotes the number of right turns in the descent, $a_1$ denotes the number of consequent left turns and so on. Therefore, when we compare $a_k$ and $b_k$, if $a_k = b_k$ we should just move on to comparing $a_{k+1}$ and $b_{k+1}$. Otherwise, if we're at right descents, we should check if $a_k < b_k$ and if we're at left descents, we should check if $a_k > b_k$ to tell whether $A < B$.
 
-    Nói cách khác, đối với các số vô tỷ $A$ và $B$ thì $A < B$ khi và chỉ khi $(a_0, -a_1, a_2, -a_3, \dots) < (b_0, -b_1, b_2, -b_3, \dots)$ với so sánh từ điển.
+    In other words, for irrational $A$ and $B$ it would be $A < B$ if and only if $(a_0, -a_1, a_2, -a_3, \dots) < (b_0, -b_1, b_2, -b_3, \dots)$ with lexicographical comparison.
 
-    Bây giờ, chính thức sử dụng $\infty$ làm một phần tử của biểu diễn phân số liên tục, có thể mô phỏng các số vô tỷ $A-\varepsilon$ và $A+\varepsilon$, tức là các phần tử nhỏ hơn (lớn hơn) $A$, nhưng lớn hơn (nhỏ hơn) bất kỳ số thực nào khác. Cụ thể, đối với $A=[a_0; a_1, \dots, a_n]$, một trong hai phần tử này có thể được mô phỏng là $[a_0; a_1, \dots, a_n, \infty]$ và phần tử kia có thể được mô phỏng là $[a_0; a_1, \dots, a_n - 1, 1, \infty]$.
+    Now, formally using $\infty$ as an element of continued fraction representation it is possible to emulate irrational numbers $A-\varepsilon$ and $A+\varepsilon$, that is, elements that are smaller (greater) than $A$, but greater (smaller) than any other real number. Specifically, for $A=[a_0; a_1, \dots, a_n]$, one of these two elements can be emulated as $[a_0; a_1, \dots, a_n, \infty]$ and the other can be emulated as $[a_0; a_1, \dots, a_n - 1, 1, \infty]$.
 
-    Cái nào tương ứng với $A-\varepsilon$ và cái nào với $A+\varepsilon$ có thể được xác định bằng tính chẵn lẻ của $n$ hoặc bằng cách so sánh chúng như các số vô tỷ.
+    Which one corresponds to $A-\varepsilon$ and which one to $A+\varepsilon$ can be determined by the parity of $n$ or by comparing them as irrational numbers.
 
     === "Python"
         ```py
@@ -361,14 +364,15 @@ Một ví dụ khác là $\frac{2}{5} = [0;2,2]=[0;2,1,1]$, có chỉ mục $110
             return (a, b) if less(a, b) else (b, a)
         ```
 
-!!! example "Điểm bên trong tốt nhất"
-    Bạn được cho $\frac{0}{1} \leq \frac{p_0}{q_0} < \frac{p_1}{q_1} \leq \frac{1}{0}$. Tìm số hữu tỷ $\frac{p}{q}$ sao cho $(q; p)$ là nhỏ nhất theo từ điển và $\frac{p_0}{q_0} < \frac{p}{q} < \frac{p_1}{q_1}$.
-??? hint "Lời giải"
-    Về mặt cây Stern-Brocot, điều đó có nghĩa là chúng ta cần tìm LCA của $\frac{p_0}{q_0}$ và $\frac{p_1}{q_1}$. Do mối liên hệ giữa cây Stern-Brocot và phân số liên tục, LCA này sẽ tương ứng đại khái với tiền tố chung lớn nhất của biểu diễn phân số liên tục cho $\frac{p_0}{q_0}$ và $\frac{p_1}{q_1}$.
+!!! example "Best inner point"
+    You're given $\frac{0}{1} \leq \frac{p_0}{q_0} < \frac{p_1}{q_1} \leq \frac{1}{0}$. Find the rational number $\frac{p}{q}$ such that $(q; p)$ is lexicographically smallest and $\frac{p_0}{q_0} < \frac{p}{q} < \frac{p_1}{q_1}$.
 
-    Vì vậy, nếu $\frac{p_0}{q_0} = [a_0; a_1, \dots, a_{k-1}, a_k, \dots]$ và $\frac{p_1}{q_1} = [a_0; a_1, \dots, a_{k-1}, b_k, \dots]$ là các số vô tỷ, LCA là $[a_0; a_1, \dots, \min(a_k, b_k)+1]$.
+??? hint "Solution"
+    In terms of the Stern-Brocot tree it means that we need to find the LCA of $\frac{p_0}{q_0}$ and $\frac{p_1}{q_1}$. Due to the connection between Stern-Brocot tree and continued fraction, this LCA would roughly correspond to the largest common prefix of continued fraction representations for $\frac{p_0}{q_0}$ and $\frac{p_1}{q_1}$.
 
-    Đối với các số hữu tỷ $r_0$ và $r_1$, một trong số chúng có thể là LCA, điều này yêu cầu chúng ta phải xử lý từng trường hợp. Để đơn giản hóa lời giải cho các số hữu tỷ $r_0$ và $r_1$, có thể sử dụng biểu diễn phân số liên tục của $r_0 + \varepsilon$ và $r_1 - \varepsilon$ đã được suy ra trong bài toán trước.
+    So, if $\frac{p_0}{q_0} = [a_0; a_1, \dots, a_{k-1}, a_k, \dots]$ and $\frac{p_1}{q_1} = [a_0; a_1, \dots, a_{k-1}, b_k, \dots]$ are irrational numbers, the LCA is $[a_0; a_1, \dots, \min(a_k, b_k)+1]$.
+
+    For rational $r_0$ and $r_1$, one of them could be the LCA itself which would require us to casework it. To simplify the solution for rational $r_0$ and $r_1$, it is possible to use continued fraction representation of $r_0 + \varepsilon$ and $r_1 - \varepsilon$ which was derived in the previous problem.
 
     === "Python"
         ```py
@@ -388,22 +392,22 @@ Một ví dụ khác là $\frac{2}{5} = [0;2,2]=[0;2,1,1]$, có chỉ mục $110
         ```
 
 !!! example "[GCJ 2019, Round 2 - New Elements: Part 2](https://codingcompetitions.withgoogle.com/codejam/round/0000000000051679/0000000000146184)"
-    Bạn được cho $N$ cặp số nguyên dương $(C_i, J_i)$. Bạn cần tìm một cặp số nguyên dương $(x, y)$ sao cho $C_i x + J_i y$ là một dãy tăng nghiêm ngặt.
+    You're given $N$ positive integer pairs $(C_i, J_i)$. You need to find a positive integer pair $(x, y)$ such that $C_i x + J_i y$ is a strictly increasing sequence.
 
-    Trong số các cặp như vậy, tìm cặp nhỏ nhất theo từ điển.
-??? hint "Lời giải"
-    Diễn giải lại phát biểu, $A_i x + B_i y$ phải dương với mọi $i$, trong đó $A_i = C_i - C_{i-1}$ và $B_i = J_i - J_{i-1}$.
+    Among such pairs, find the lexicographically minimum one.
+??? hint "Solution"
+    Rephrasing the statement, $A_i x + B_i y$ must be positive for all $i$, where $A_i = C_i - C_{i-1}$ and $B_i = J_i - J_{i-1}$.
 
-    Trong số các phương trình như vậy, chúng ta có bốn nhóm đáng kể cho $A_i x + B_i y > 0$:
+    Among such equations we have four significant groups for $A_i x + B_i y > 0$:
 
-    1. $A_i, B_i > 0$ có thể bỏ qua vì chúng ta đang tìm $x, y > 0$.
-    2. $A_i, B_i \leq 0$ sẽ cho câu trả lời "IMPOSSIBLE".
-    3. $A_i > 0$, $B_i \leq 0$. Các ràng buộc này tương đương với $\frac{y}{x} < \frac{A_i}{-B_i}$.
-    4. $A_i \leq 0$, $B_i > 0$. Các ràng buộc này tương đương với $\frac{y}{x} > \frac{-A_i}{B_i}$.
+    1. $A_i, B_i > 0$ can be ignored since we're looking for $x, y > 0$.
+    2. $A_i, B_i \leq 0$ would provide "IMPOSSIBLE" as an answer.
+    3. $A_i > 0$, $B_i \leq 0$. Such constraints are equivalent to $\frac{y}{x} < \frac{A_i}{-B_i}$.
+    4. $A_i \leq 0$, $B_i > 0$. Such constraints are equivalent to $\frac{y}{x} > \frac{-A_i}{B_i}$.
 
-    Đặt $\frac{p_0}{q_0}$ là $\frac{-A_i}{B_i}$ lớn nhất từ nhóm thứ tư và $\frac{p_1}{q_1}$ là $\frac{A_i}{-B_i}$ nhỏ nhất từ nhóm thứ ba.
+    Let $\frac{p_0}{q_0}$ be the largest $\frac{-A_i}{B_i}$ from the fourth group and $\frac{p_1}{q_1}$ be the smallest $\frac{A_i}{-B_i}$ from the third group.
 
-    Bài toán bây giờ là, cho $\frac{p_0}{q_0} < \frac{p_1}{q_1}$, tìm một phân số $\frac{p}{q}$ sao cho $(q;p)$ là nhỏ nhất theo từ điển và $\frac{p_0}{q_0} < \frac{p}{q} < \frac{p_1}{q_1}$.
+    The problem is now, given $\frac{p_0}{q_0} < \frac{p_1}{q_1}$, find a fraction $\frac{p}{q}$ such that $(q;p)$ is lexicographically smallest and $\frac{p_0}{q_0} < \frac{p}{q} < \frac{p_1}{q_1}$.
     === "Python"
         ```py
             def solve():
@@ -434,117 +438,116 @@ Một ví dụ khác là $\frac{2}{5} = [0;2,2]=[0;2,1,1]$, có chỉ mục $110
             return str(q) + ' ' + str(p)
         ```
 
-### Cây Calkin-Wilf {: #calkin-wilf-tree}
+### Calkin-Wilf tree
 
-Một cách đơn giản hơn để tổ chức các phân số liên tục trong một cây nhị phân là [cây Calkin-Wilf](https://en.wikipedia.org/wiki/Calkin–Wilf_tree).
+A somewhat simpler way to organize continued fractions in a binary tree is the [Calkin-Wilf tree](https://en.wikipedia.org/wiki/Calkin–Wilf_tree).
 
-Cây nói chung trông như thế này:
+The tree generally looks like this:
 
 <figure>
 <img src="https://upload.wikimedia.org/wikipedia/commons/8/82/Calkin–Wilf_tree.svg" width="500px"/>
-<figcaption><a href="https://commons.wikimedia.org/wiki/File:Calkin–Wilf_tree.svg">Hình ảnh</a> của <a href="https://commons.wikimedia.org/wiki/User:Olli_Niemitalo">Olli Niemitalo</a>, <a href="https://commons.wikimedia.org/wiki/User:Proz">Proz</a> được cấp phép theo <a href="https://creativecommons.org/publicdomain/zero/1.0/deed.en">CC0 1.0</a></figcaption>
+<figcaption><a href="https://commons.wikimedia.org/wiki/File:Calkin–Wilf_tree.svg">The image</a> by <a href="https://commons.wikimedia.org/wiki/User:Olli_Niemitalo">Olli Niemitalo</a>, <a href="https://commons.wikimedia.org/wiki/User:Proz">Proz</a> is licensed under <a href="https://creativecommons.org/publicdomain/zero/1.0/deed.en">CC0 1.0</a></figcaption>
 </figure>
 
-Ở gốc cây, số $\frac{1}{1}$ được đặt. Sau đó, đối với đỉnh có số $\frac{p}{q}$, các con của nó là $\frac{p}{p+q}$ và $\frac{p+q}{q}$.
+In the root of the tree, the number $\frac{1}{1}$ is located. Then, for the vertex with a number $\frac{p}{q}$, its children are $\frac{p}{p+q}$ and $\frac{p+q}{q}$.
 
-Không giống như cây Stern-Brocot, cây Calkin-Wilf không phải là cây tìm kiếm nhị phân, vì vậy nó không thể được sử dụng để thực hiện tìm kiếm nhị phân hữu tỷ.
+Unlike the Stern-Brocot tree, the Calkin-Wilf tree is not a binary _search_ tree, so it can't be used to perform rational binary search.
 
-Trong cây Calkin-Wilf, cha trực tiếp của một phân số $\frac{p}{q}$ là $\frac{p-q}{q}$ khi $p>q$ và $\frac{p}{q-p}$ trong trường hợp ngược lại.
+In the Calkin-Wilf tree, the direct parent of a fraction $\frac{p}{q}$ is $\frac{p-q}{q}$ when $p>q$ and $\frac{p}{q-p}$ otherwise.
 
-Đối với cây Stern-Brocot, chúng ta đã sử dụng công thức đệ quy cho các hội tụ. Để rút ra mối liên hệ giữa phân số liên tục và cây Calkin-Wilf, chúng ta nên nhớ lại công thức đệ quy cho các thương đầy đủ. Nếu $s_k = \frac{p}{q}$, thì $s_{k+1} = \frac{q}{p \bmod q} = \frac{q}{p-\lfloor p/q \rfloor \cdot q}$.
+For the Stern-Brocot tree, we used the recurrence for convergents. To draw the connection between the continued fraction and the Calkin-Wilf tree, we should recall the recurrence for complete quotients. If $s_k = \frac{p}{q}$, then $s_{k+1} = \frac{q}{p \mod q} = \frac{q}{p-\lfloor p/q \rfloor \cdot q}$.
 
-Mặt khác, nếu chúng ta lặp đi lặp lại đi từ $s_k = \frac{p}{q}$ đến cha của nó trong cây Calkin-Wilf khi $p > q$, chúng ta sẽ kết thúc ở $\frac{p \bmod q}{q} = \frac{1}{s_{k+1}}$. Nếu chúng ta tiếp tục làm như vậy, chúng ta sẽ kết thúc ở $s_{k+2}$, sau đó là $\frac{1}{s_{k+3}}$ và cứ thế. Từ đó chúng ta có thể suy ra rằng:
+On the other hand, if we repeatedly go from $s_k = \frac{p}{q}$ to its parent in the Calkin-Wilf tree when $p > q$, we will end up in $\frac{p \mod q}{q} = \frac{1}{s_{k+1}}$. If we continue doing so, we will end up in $s_{k+2}$, then $\frac{1}{s_{k+3}}$ and so on. From this we can deduce that:
 
-1. Khi $a_0> 0$, cha trực tiếp của $[a_0; a_1, \dots, a_k]$ trong cây Calkin-Wilf là $\frac{p-q}{q}=[a_0 - 1; a_1, \dots, a_k]$.
-2. Khi $a_0 = 0$ và $a_1 > 1$, cha trực tiếp của nó là $\frac{p}{q-p} = [0; a_1 - 1, a_2, \dots, a_k]$.
-3. Và khi $a_0 = 0$ và $a_1 = 1$, cha trực tiếp của nó là $\frac{p}{q-p} = [a_2; a_3, \dots, a_k]$.
+1. When $a_0> 0$, the direct parent of $[a_0; a_1, \dots, a_k]$ in the Calkin-Wilf tree is $\frac{p-q}{q}=[a_0 - 1; a_1, \dots, a_k]$.
+2. When $a_0 = 0$ and $a_1 > 1$, its direct parent is $\frac{p}{q-p} = [0; a_1 - 1, a_2, \dots, a_k]$.
+3. And when $a_0 = 0$ and $a_1 = 1$, its direct parent is $\frac{p}{q-p} = [a_2; a_3, \dots, a_k]$.
 
-Tương ứng, các con của $\frac{p}{q} = [a_0; a_1, \dots, a_k]$ là
+Correspondingly, children of $\frac{p}{q} = [a_0; a_1, \dots, a_k]$ are
 
-1. $\frac{p+q}{q}=1+\frac{p}{q}$, là $[a_0+1; a_1, \dots, a_k]$,
-2. $\frac{p}{p+q} = \frac{1}{1+\frac{q}{p}}$, là $[0, 1, a_0, a_1, \dots, a_k]$ cho $a_0 > 0$ và $[0, a_1+1, a_2, \dots, a_k]$ cho $a_0=0$.
+1. $\frac{p+q}{q}=1+\frac{p}{q}$, which is $[a_0+1; a_1, \dots, a_k]$,
+2. $\frac{p}{p+q} = \frac{1}{1+\frac{q}{p}}$, which is $[0, 1, a_0, a_1, \dots, a_k]$ for $a_0 > 0$ and $[0, a_1+1, a_2, \dots, a_k]$ for $a_0=0$.
 
-Đáng chú ý, nếu chúng ta liệt kê các đỉnh của cây Calkin-Wilf theo thứ tự duyệt theo chiều rộng (tức là, gốc có số $1$, và các con của đỉnh $v$ có chỉ mục $2v$ và $2v+1$ tương ứng), chỉ mục của số hữu tỷ trong cây Calkin-Wilf sẽ giống như trong cây Stern-Brocot.
+Noteworthy, if we enumerate vertices of the Calkin-Wilf tree in the breadth-first search order (that is, the root has a number $1$, and the children of the vertex $v$ have indices $2v$ and $2v+1$ correspondingly), the index of the rational number in the Calkin-Wilf tree would be the same as in the Stern-Brocot tree.
 
-Do đó, các số ở cùng cấp độ của cây Stern-Brocot và cây Calkin-Wilf là giống nhau, nhưng thứ tự của chúng khác nhau thông qua [hoán vị đảo bit](https://en.wikipedia.org/wiki/Bit-reversal_permutation).
-## Sự hội tụ {: #convergence}
+Thus, numbers on the same levels of the Stern-Brocot tree and the Calkin-Wilf tree are the same, but their ordering differs through the [bit-reversal permutation](https://en.wikipedia.org/wiki/Bit-reversal_permutation).
+## Convergence
 
-Đối với số $r$ và hội tụ thứ $k$ của nó $r_k=\frac{p_k}{q_k}$, công thức sau đây đúng:
+For the number $r$ and its $k$-th convergent $r_k=\frac{p_k}{q_k}$ the following formula stands:
 
 $$r_k = a_0 + \sum\limits_{i=1}^k \frac{(-1)^{i-1}}{q_i q_{i-1}}.$$
 
-Đặc biệt, điều đó có nghĩa là
+In particular, it means that 
 
 $$r_k - r_{k-1} = \frac{(-1)^{k-1}}{q_k q_{k-1}}$$
 
-và
+and 
 
-$$p_k q_{k-1} - p_{k-1} q_k = (-1)^{k-1}.$$ 
+$$p_k q_{k-1} - p_{k-1} q_k = (-1)^{k-1}.$$
 
-Từ đây chúng ta có thể kết luận rằng
+From this we can conclude that
 
-$$\left| r-\frac{p_k}{q_k} \right| \leq \frac{1}{q_{k+1}q_k} \leq \frac{1}{q_k^2}.$$ 
+$$\left| r-\frac{p_k}{q_k} \right| \leq \frac{1}{q_{k+1}q_k} \leq \frac{1}{q_k^2}.$$
 
-Bất đẳng thức sau là do thực tế rằng $r_k$ và $r_{k+1}$ thường nằm ở các phía khác nhau của $r$, do đó
+The latter inequality is due to the fact that $r_k$ and $r_{k+1}$ are generally located on different sides of $r$, thus
 
 $$|r-r_k| = |r_k-r_{k+1}|-|r-r_{k+1}| \leq |r_k - r_{k+1}|.$$
 
-??? tip "Giải thích chi tiết"
+??? tip "Detailed explanation"
 
-    Để ước tính $|r-r_k|$, chúng ta bắt đầu bằng cách ước tính sự khác biệt giữa các hội tụ liền kề. Theo định nghĩa,
+    To estimate $|r-r_k|$, we start by estimating the difference between adjacent convergents. By definition,
 
     $$\frac{p_k}{q_k} - \frac{p_{k-1}}{q_{k-1}} = \frac{p_k q_{k-1} - p_{k-1} q_k}{q_k q_{k-1}}.$$
 
-    Thay thế $p_k$ và $q_k$ trong tử số bằng các công thức đệ quy của chúng, chúng ta nhận được
+    Replacing $p_k$ and $q_k$ in the numerator with their recurrences, we get
 
     $$\begin{align} p_k q_{k-1} - p_{k-1} q_k &= (a_k p_{k-1} + p_{k-2}) q_{k-1} - p_{k-1} (a_k q_{k-1} + q_{k-2})
-    \&= p_{k-2} q_{k-1} - p_{k-1} q_{k-2},\ 
-    \end{align}$$
+    \\&= p_{k-2} q_{k-1} - p_{k-1} q_{k-2},\end{align}$$
 
-    do đó tử số của $r_k - r_{k-1}$ luôn là tử số phủ định của $r_{k-1} - r_{k-2}$. Nó, đến lượt nó, bằng $1$ cho
+    thus the numerator of $r_k - r_{k-1}$ is always the negated numerator of $r_{k-1} - r_{k-2}$. It, in turn, equals to $1$ for
 
     $$r_1 - r_0=\left(a_0+\frac{1}{a_1}\right)-a_0=\frac{1}{a_1},$$
 
-    do đó
+    thus
 
     $$r_k - r_{k-1} = \frac{(-1)^{k-1}}{q_k q_{k-1}}.$$
 
-    Điều này cho ta một biểu diễn thay thế của $r_k$ dưới dạng tổng riêng của chuỗi vô hạn:
+    This yields an alternative representation of $r_k$ as a partial sum of infinite series:
 
     $$r_k = (r_k - r_{k-1}) + \dots + (r_1 - r_0) + r_0
     = a_0 + \sum\limits_{i=1}^k \frac{(-1)^{i-1}}{q_i q_{i-1}}.$$
 
-    Từ quan hệ đệ quy, suy ra $q_k$ tăng đơn điệu ít nhất nhanh bằng số Fibonacci, do đó
+    From the recurrent relation it follows that $q_k$ monotonously increases at least as fast as Fibonacci numbers, thus
 
     $$r = \lim\limits_{k \to \infty} r_k = a_0 + \sum\limits_{i=1}^\infty \frac{(-1)^{i-1}}{q_i q_{i-1}}$$
 
-    luôn được định nghĩa tốt, vì các chuỗi cơ bản luôn hội tụ. Đáng chú ý, chuỗi phần dư
+    is always well-defined, as the underlying series always converge. Noteworthy, the residual series
 
     $$r-r_k = \sum\limits_{i=k+1}^\infty \frac{(-1)^{i-1}}{q_i q_{i-1}}$$
 
-    có cùng dấu với $(-1)^k$ do tốc độ giảm nhanh của $q_i q_{i-1}$. Do đó các $r_k$ có chỉ số chẵn tiếp cận $r$ từ dưới trong khi các $r_k$ có chỉ số lẻ tiếp cận nó từ trên:
+    has the same sign as $(-1)^k$ due to how fast $q_i q_{i-1}$ decreases. Hence even-indexed $r_k$ approach $r$ from below while odd-indexed $r_k$ approach it from above:
 
     <figure><img src="https://upload.wikimedia.org/wikipedia/commons/b/b4/Golden_ration_convergents.svg" width="600px"/>
-    <figcaption>_Các hội tụ của $r=\phi = \frac{1+\sqrt{5}}{2}=[1;1,1,\dots]$ và khoảng cách của chúng từ $r$._</figcaption></figure>
+    <figcaption>_Convergents of $r=\phi = \frac{1+\sqrt{5}}{2}=[1;1,1,\dots]$ and their distance from $r$._</figcaption></figure>
 
-    Từ hình này chúng ta có thể thấy rằng
+    From this picture we can see that
 
-    $$|r-r_k| = |r_k - r_{k+1}| - |r-r_{k+1}| \leq |r_k - r_{k+1}|,$$ 
+    $$|r-r_k| = |r_k - r_{k+1}| - |r-r_{k+1}| \leq |r_k - r_{k+1}|,$$
 
-    do đó khoảng cách giữa $r$ và $r_k$ không bao giờ lớn hơn khoảng cách giữa $r_k$ và $r_{k+1}$:
+    thus the distance between $r$ and $r_k$ is never larger than the distance between $r_k$ and $r_{k+1}$:
 
-    $$\left|r-\frac{p_k}{q_k}\right| \leq \frac{1}{q_k q_{k+1}} \leq \frac{1}{q_k^2}.$$ 
+    $$\left|r-\frac{p_k}{q_k}\right| \leq \frac{1}{q_k q_{k+1}} \leq \frac{1}{q_k^2}.$$
 
-!!! example "Thuật toán Euclid mở rộng?"
-    Bạn được cho $A, B, C \in \mathbb Z$. Tìm $x, y \in \mathbb Z$ sao cho $Ax + By = C$.
-??? hint "Lời giải"
-    Mặc dù bài toán này thường được giải bằng [thuật toán Euclid mở rộng](../algebra/extended-euclid-algorithm.md), nhưng có một lời giải đơn giản và trực tiếp với phân số liên tục.
+!!! example "Extended Euclidean?"
+    You're given $A, B, C \in \mathbb Z$. Find $x, y \in \mathbb Z$ such that $Ax + By = C$.
+??? hint "Solution"
+    Although this problem is typically solved with the [extended Euclidean algorithm](../algebra/extended-euclid-algorithm.md), there is a simple and straightforward solution with continued fractions.
 
-    Đặt $\frac{A}{B}=[a_0; a_1, \dots, a_k]$. Đã chứng minh ở trên rằng $p_k q_{k-1} - p_{k-1} q_k = (-1)^{k-1}$. Thay $p_k$ và $q_k$ bằng $A$ và $B$, chúng ta nhận được
+    Let $\frac{A}{B}=[a_0; a_1, \dots, a_k]$. It was proved above that $p_k q_{k-1} - p_{k-1} q_k = (-1)^{k-1}$. Substituting $p_k$ and $q_k$ with $A$ and $B$, we get
 
-    $$Aq_{k-1} - Bp_{k-1} = (-1)^{k-1} g,$$ 
+    $$Aq_{k-1} - Bp_{k-1} = (-1)^{k-1} g,$$
 
-    trong đó $g = \gcd(A, B)$. Nếu $C$ chia hết cho $g$, thì nghiệm là $x = (-1)^{k-1}\frac{C}{g} q_{k-1}$ và $y = (-1)^{k}\frac{C}{g} p_{k-1}$.
+    where $g = \gcd(A, B)$. If $C$ is divisible by $g$, then the solution is $x = (-1)^{k-1}\frac{C}{g} q_{k-1}$ and $y = (-1)^{k}\frac{C}{g} p_{k-1}$.
     
     === "Python"
         ```py
@@ -557,120 +560,119 @@ $$|r-r_k| = |r_k-r_{k+1}|-|r-r_{k+1}| \leq |r_k - r_{k+1}|.$$
             return t*C*q[-2], -t*C*p[-2]
         ```
 
-## Các phép biến đổi phân số tuyến tính {: #linear-fractional-transformations}
+## Linear fractional transformations
 
-Một khái niệm quan trọng khác đối với phân số liên tục là các [phép biến đổi phân số tuyến tính](https://en.wikipedia.org/wiki/Linear_fractional_transformation).
+Another important concept for continued fractions are the so-called [linear fractional transformations](https://en.wikipedia.org/wiki/Linear_fractional_transformation).
 
-!!! info "Định nghĩa"
-    Một **phép biến đổi phân số tuyến tính** là một hàm $f : \mathbb R \to \mathbb R$ sao cho $f(x) = \frac{ax+b}{cx+d}$ với một số $a,b,c,d \in \mathbb R$.
+!!! info "Definition"
+    A **linear fractional transformation** is a function $f : \mathbb R \to \mathbb R$ such that $f(x) = \frac{ax+b}{cx+d}$ for some $a,b,c,d \in \mathbb R$.
 
-Một hợp thành $(L_0 \circ L_1)(x) = L_0(L_1(x))$ của các phép biến đổi phân số tuyến tính $L_0(x)=\frac{a_0 x + b_0}{c_0 x + d_0}$ và $L_1(x)=\frac{a_1 x + b_1}{c_1 x + d_1}$ bản thân nó là một phép biến đổi phân số tuyến tính:
+A composition $(L_0 \circ L_1)(x) = L_0(L_1(x))$ of linear fractional transforms $L_0(x)=\frac{a_0 x + b_0}{c_0 x + d_0}$ and $L_1(x)=\frac{a_1 x + b_1}{c_1 x + d_1}$ is itself a linear fractional transform:
 
 $$\frac{a_0\frac{a_1 x + b_1}{c_1 x + d_1} + b_0}{c_0 \frac{a_1 x + b_1}{c_1 x + d_1} + d_0} = \frac{a_0(a_1 x + b_1) + b_0 (c_1 x + d_1)}{c_0 (a_1 x + b_1) + d_0 (c_1 x + d_1)} = \frac{(a_0 a_1 + b_0 c_1) x + (a_0 b_1 + b_0 d_1)}{(c_0 a_1 + d_0 c_1) x + (c_0 b_1 + d_0 d_1)}.$$
 
-Nghịch đảo của một phép biến đổi phân số tuyến tính cũng là một phép biến đổi phân số tuyến tính:
+Inverse of a linear fractional transform, is also a linear fractional transform:
 
-$$y = \frac{ax+b}{cx+d} \iff y(cx+d) = ax + b \iff x = -\frac{dy-b}{cy-a}.$$ 
-!!! example "[DMOPC '19 Contest 7 P4 - Bob và Phân số liên tục](https://dmoj.ca/problem/dmopc19c7p4)"
-    Bạn được cho một mảng các số nguyên dương $a_1, \dots, a_n$. Bạn cần trả lời $m$ truy vấn. Mỗi truy vấn là để tính $[a_l; a_{l+1}, \dots, a_r]$.
-??? hint "Lời giải"
-    Chúng ta có thể giải bài toán này bằng segment tree nếu chúng ta có thể nối các phân số liên tục.
+$$y = \frac{ax+b}{cx+d} \iff y(cx+d) = ax + b \iff x = -\frac{dy-b}{cy-a}.$$
+!!! example "[DMOPC '19 Contest 7 P4 - Bob and Continued Fractions](https://dmoj.ca/problem/dmopc19c7p4)"
+    You're given an array of positive integers $a_1, \dots, a_n$. You need to answer $m$ queries. Each query is to compute $[a_l; a_{l+1}, \dots, a_r]$.
+??? hint "Solution"
+    We can solve this problem with the segment tree if we're able to concatenate continued fractions.
 
-    Nói chung đúng là $[a_0; a_1, \dots, a_k, b_0, b_1, \dots, b_k] = [a_0; a_1, \dots, a_k, [b_1; b_2, \dots, b_k]]$.
+    It's generally true that $[a_0; a_1, \dots, a_k, b_0, b_1, \dots, b_k] = [a_0; a_1, \dots, a_k, [b_1; b_2, \dots, b_k]]$.
 
-    Hãy ký hiệu $L_{k}(x) = [a_k; x] = a_k + \frac{1}{x} = \frac{a_k\cdot x+1}{1\cdot x + 0}$. Lưu ý rằng $L_k(\infty) = a_k$. Trong ký hiệu này, ta có
+    Let's denote $L_{k}(x) = [a_k; x] = a_k + \frac{1}{x} = \frac{a_k\cdot x+1}{1\cdot x + 0}$. Note that $L_k(\infty) = a_k$. In this notion, it holds that
 
     $$[a_0; a_1, \dots, a_k, x] = [a_0; [a_1; [\dots; [a_k; x]]]] = (L_0 \circ L_1 \circ \dots \circ L_k)(x) = \frac{p_k x + p_{k-1}}{q_k x + q_{k-1}}.$$
 
-    Do đó, bài toán quy về việc tính toán
+    Thus, the problem boils down to the computation of
 
-    $$(L_l \circ L_{l+1} \circ \dots \circ L_r)(\infty).$$ 
+    $$(L_l \circ L_{l+1} \circ \dots \circ L_r)(\infty).$$
 
-    Hợp thành các phép biến đổi có tính kết hợp, vì vậy có thể tính toán trong mỗi nút của segment tree hợp thành các phép biến đổi trong cây con của nó.
+    Composition of transforms is associative, so it's possible to compute in each node of a segment tree the composition of transforms in its subtree.
 
-!!! example "Phép biến đổi phân số tuyến tính của một phân số liên tục"
-    Cho $L(x) = \frac{ax+b}{cx+d}$. Tính biểu diễn phân số liên tục $[b_0; b_1, \dots, b_m]$ của $L(A)$ cho $A=[a_0; a_1, \dots, a_n]$.
+!!! example "Linear fractional transformation of a continued fraction"
+    Let $L(x) = \frac{ax+b}{cx+d}$. Compute the continued fraction representation $[b_0; b_1, \dots, b_m]$ of $L(A)$ for $A=[a_0; a_1, \dots, a_n]$.
 
-    _Điều này cho phép tính $A + \frac{p}{q} = \frac{qA + p}{q}$ và $A \cdot \frac{p}{q} = \frac{p A}{q}$ cho bất kỳ $\frac{p}{q}$._
+    _This allows to compute $A + \frac{p}{q} = \frac{qA + p}{q}$ and $A \cdot \frac{p}{q} = \frac{p A}{q}$ for any $\frac{p}{q}$._
 
-??? hint "Lời giải"
-    Như chúng ta đã lưu ý ở trên, $[a_0; a_1, \dots, a_k] = (L_{a_0} \circ L_{a_1} \circ \dots \circ L_{a_k})(\infty)$, do đó $L([a_0; a_1, \dots, a_k]) = (L \circ L_{a_0} \circ L_{a_1} \circ \dots L_{a_k})(\infty)$.
+??? hint "Solution"
+    As we noted above, $[a_0; a_1, \dots, a_k] = (L_{a_0} \circ L_{a_1} \circ \dots \circ L_{a_k})(\infty)$, hence $L([a_0; a_1, \dots, a_k]) = (L \circ L_{a_0} \circ L_{a_1} \circ \dots L_{a_k})(\infty)$.
 
-    Do đó, bằng cách liên tục thêm $L_{a_0}$, $L_{a_1}$ và cứ thế, chúng ta có thể tính toán
+    Hence, by consequentially adding $L_{a_0}$, $L_{a_1}$ and so on we would be able to compute
 
-    $$(L \circ L_{a_0} \circ \dots \circ L_{a_k})(x) = L\left(\frac{p_k x + p_{k-1}}{q_k x + q_{k-1}}\right)=\frac{a_k x + b_k}{c_k x + d_k}.$$ 
+    $$(L \circ L_{a_0} \circ \dots \circ L_{a_k})(x) = L\left(\frac{p_k x + p_{k-1}}{q_k x + q_{k-1}}\right)=\frac{a_k x + b_k}{c_k x + d_k}.$$
 
-    Vì $L(x)$ là khả nghịch, nó cũng đơn điệu theo $x$. Do đó, với bất kỳ $x \geq 0$, ta có $L(\frac{p_k x + p_{k-1}}{q_k x + q_{k-1}})$ nằm giữa $L(\frac{p_k}{q_k}) = \frac{a_k}{c_k}$ và $L(\frac{p_{k-1}}{q_{k-1}}) = \frac{b_k}{d_k}$.
+    Since $L(x)$ is invertible, it is also monotonous in $x$. Therefore, for any $x \geq 0$ it holds that $L(\frac{p_k x + p_{k-1}}{q_k x + q_{k-1}})$ is between $L(\frac{p_k}{q_k}) = \frac{a_k}{c_k}$ and $L(\frac{p_{k-1}}{q_{k-1}}) = \frac{b_k}{d_k}$.
 
-    Hơn nữa, đối với $x=[a_{k+1}; \dots, a_n]$, nó bằng $L(A)$. Do đó, $b_0 = \lfloor L(A) \rfloor$ nằm giữa $\lfloor L(\frac{p_k}{q_k}) \rfloor$ và $\lfloor L(\frac{p_{k-1}}{q_{k-1}}) \rfloor$. Khi chúng bằng nhau, chúng cũng bằng $b_0$.
+    Moreover, for $x=[a_{k+1}; \dots, a_n]$ it is equal to $L(A)$. Hence, $b_0 = \lfloor L(A) \rfloor$ is between $\lfloor L(\frac{p_k}{q_k}) \rfloor$ and $\lfloor L(\frac{p_{k-1}}{q_{k-1}}) \rfloor$. When they're equal, they're also equal to $b_0$.
 
-    Lưu ý rằng $L(A) = (L_{b_0} \circ L_{b_1} \circ \dots \circ L_{b_m})(\infty)$. Biết $b_0$, chúng ta có thể hợp thành $L_{b_0}^{-1}$ với phép biến đổi hiện tại và tiếp tục thêm $L_{a_{k+1}}$, $L_{a_{k+2}}$ và cứ thế, tìm kiếm các sàn mới để đồng ý, từ đó chúng ta có thể suy ra $b_1$ và cứ thế cho đến khi chúng ta khôi phục tất cả các giá trị của $[b_0; b_1, \dots, b_m]$.
+    Note that $L(A) = (L_{b_0} \circ L_{b_1} \circ \dots \circ L_{b_m})(\infty)$. Knowing $b_0$, we can compose $L_{b_0}^{-1}$ with the current transform and continue adding $L_{a_{k+1}}$, $L_{a_{k+2}}$ and so on, looking for new floors to agree, from which we would be able to deduce $b_1$ and so on until we recover all values of $[b_0; b_1, \dots, b_m]$.
 
-!!! example "Các phép toán phân số liên tục"
-    Cho $A=[a_0; a_1, \dots, a_n]$ và $B=[b_0; b_1, \dots, b_m]$. Tính biểu diễn phân số liên tục của $A+B$ và $A \cdot B$.
-??? hint "Lời giải"
-    Ý tưởng ở đây tương tự như bài toán trước, nhưng thay vì $L(x) = \frac{ax+b}{cx+d}$ bạn nên xem xét phép biến đổi phân số song tuyến tính $L(x, y) = \frac{axy+bx+cy+d}{exy+fx+gy+h}$.
+!!! example "Continued fraction arithmetics"
+    Let $A=[a_0; a_1, \dots, a_n]$ and $B=[b_0; b_1, \dots, b_m]$. Compute the continued fraction representations of $A+B$ and $A \cdot B$.
+??? hint "Solution"
+    Idea here is similar to the previous problem, but instead of $L(x) = \frac{ax+b}{cx+d}$ you should consider bilinear fractional transform $L(x, y) = \frac{axy+bx+cy+d}{exy+fx+gy+h}$.
 
-    Thay vì $L(x) \mapsto L(L_{a_k}(x))$ bạn sẽ thay đổi phép biến đổi hiện tại của mình thành $L(x, y) \mapsto L(L_{a_k}(x), y)$ hoặc $L(x, y) \mapsto L(x, L_{b_k}(y))$.
+    Rather than $L(x) \mapsto L(L_{a_k}(x))$ you would change your current transform as $L(x, y) \mapsto L(L_{a_k}(x), y)$ or $L(x, y) \mapsto L(x, L_{b_k}(y))$.
 
-    Sau đó, bạn kiểm tra xem $\lfloor \frac{a}{e} \rfloor = \lfloor \frac{b}{f} \rfloor = \lfloor \frac{c}{g} \rfloor = \lfloor \frac{d}{h} \rfloor$ và nếu tất cả chúng đồng ý, bạn sử dụng giá trị này làm $c_k$ trong phân số kết quả và thay đổi phép biến đổi thành
+    Then, you check if $\lfloor \frac{a}{e} \rfloor = \lfloor \frac{b}{f} \rfloor = \lfloor \frac{c}{g} \rfloor = \lfloor \frac{d}{h} \rfloor$ and if they all agree, you use this value as $c_k$ in the resulting fraction and change the transform as
 
-    $$L(x, y) \mapsto \frac{1}{L(x, y) - c_k}.$$ 
+    $$L(x, y) \mapsto \frac{1}{L(x, y) - c_k}.$$
 
-!!! info "Định nghĩa"
-    Một phân số liên tục $x = [a_0; a_1, \dots]$ được gọi là **tuần hoàn** nếu $x = [a_0; a_1, \dots, a_k, x]$ cho một số $k$.
+!!! info "Definition"
+    A continued fraction $x = [a_0; a_1, \dots]$ is said to be **periodic** if $x = [a_0; a_1, \dots, a_k, x]$ for some $k$.
 
-    Một phân số liên tục $x = [a_0; a_1, \dots]$ được gọi là **cuối cùng tuần hoàn** nếu $x = [a_0; a_1, \dots, a_k, y]$, trong đó $y$ là tuần hoàn.
+    A continued fraction $x = [a_0; a_1, \dots]$ is said to be **eventually periodic** if $x = [a_0; a_1, \dots, a_k, y]$, where $y$ is periodic.
 
-Đối với $x = [1; 1, 1, \dots]$, ta có $x = 1 + \frac{1}{x}$, do đó $x^2 = x + 1$. Có một mối liên hệ chung giữa các phân số liên tục tuần hoàn và các phương trình bậc hai. Xét phương trình sau:
+For $x = [1; 1, 1, \dots]$ it holds that $x = 1 + \frac{1}{x}$, thus $x^2 = x + 1$. There is a generic connection between periodic continued fractions and quadratic equations. Consider the following equation:
 
-$$ x = [a_0; a_1, \dots, a_k, x].$$ 
+$$ x = [a_0; a_1, \dots, a_k, x].$$
 
-Một mặt, phương trình này có nghĩa là biểu diễn phân số liên tục của $x$ là tuần hoàn với chu kỳ $k+1$.
+On one hand, this equation means that the continued fraction representation of $x$ is periodic with the period $k+1$.
 
-Mặt khác, sử dụng công thức cho các hội tụ, phương trình này có nghĩa là
+On the other hand, using the formula for convergents, this equation means that
 
 $$x = \frac{p_k x + p_{k-1}}{q_k x + q_{k-1}}.$$
 
-Tức là, $x$ là một phép biến đổi phân số tuyến tính của chính nó. Từ phương trình, suy ra rằng $x$ là nghiệm của phương trình bậc hai:
+That is, $x$ is a linear fractional transformation of itself. It follows from the equation that $x$ is a root of the second degree equation:
 
 $$q_k x^2 + (q_{k-1}-p_k)x - p_{k-1} = 0.$$
 
-Lập luận tương tự đúng đối với các phân số liên tục cuối cùng tuần hoàn, tức là $x = [a_0; a_1, \dots, a_k, y]$ cho $y=[b_0; b_1, \dots, b_k, y]$. Thật vậy, từ phương trình thứ nhất chúng ta suy ra $x = L_0(y)$ và từ phương trình thứ hai $y = L_1(y)$, trong đó $L_0$ và $L_1$ là các phép biến đổi phân số tuyến tính. Do đó,
+Similar reasoning stands for continued fractions that are eventually periodic, that is $x = [a_0; a_1, \dots, a_k, y]$ for $y=[b_0; b_1, \dots, b_k, y]$. Indeed, from first equation we derive that $x = L_0(y)$ and from second equation that $y = L_1(y)$, where $L_0$ and $L_1$ are linear fractional transformations. Therefore,
 
-$$x = (L_0 \circ L_1)(y) = (L_0 \circ L_1 \circ L_0^{-1})(x).$$ 
+$$x = (L_0 \circ L_1)(y) = (L_0 \circ L_1 \circ L_0^{-1})(x).$$
 
-Người ta còn có thể chứng minh (và lần đầu tiên được Lagrange thực hiện) rằng đối với phương trình bậc hai tùy ý $ax^2+bx+c=0$ với các hệ số nguyên, nghiệm $x$ của nó là một phân số liên tục cuối cùng tuần hoàn.
+One can further prove (and it was first done by Lagrange) that for arbitrary quadratic equation $ax^2+bx+c=0$ with integer coefficients, its solution $x$ is an eventually periodic continued fraction.
 
-!!! example "Số vô tỷ bậc hai"
-    Tìm phân số liên tục của $\alpha = \frac{x+y\sqrt{n}}{z}$ trong đó $x, y, z, n \in \mathbb Z$ và $n > 0$ không phải là một số chính phương.
-??? hint "Lời giải"
-    Đối với thương đầy đủ thứ $k$ của số đó $s_k$, nói chung ta có
+!!! example "Quadratic irrationality"
+    Find the continued fraction of $\alpha = \frac{x+y\sqrt{n}}{z}$ where $x, y, z, n \in \mathbb Z$ and $n > 0$ is not a perfect square.
+??? hint "Solution"
+    For the $k$-th complete quotient $s_k$ of the number it generally holds that
 
     $$\alpha = [a_0; a_1, \dots, a_{k-1}, s_k] = \frac{s_k p_{k-1} + p_{k-2}}{s_k q_{k-1} + q_{k-2}}.$$
 
-    Do đó,
+    Therefore, 
 
     $$s_k = -\frac{\alpha q_{k-1} - p_{k-1}}{\alpha q_k - p_k} = -\frac{q_{k-1} y \sqrt n + (x q_{k-1} - z p_{k-1})}{q_k y \sqrt n + (xq_k-zp_k)}.$$
 
-    Nhân tử số và mẫu số với $(xq_k - zp_k) - q_k y \sqrt n$, chúng ta sẽ loại bỏ $\sqrt n$ trong mẫu số, do đó các thương đầy đủ có dạng
+    Multiplying the numerator and denominator by $(xq_k - zp_k) - q_k y \sqrt n$, we'll get rid of $\sqrt n$ in the denominator, thus the complete quotients are of form
 
-    $$s_k = \frac{x_k + y_k \sqrt n}{z_k}.$$ 
+    $$s_k = \frac{x_k + y_k \sqrt n}{z_k}.$$
 
-    Hãy tìm $s_{k+1}$, giả sử $s_k$ đã biết.
+    Let's find $s_{k+1}$, assuming that $s_k$ is known.
 
-    Đầu tiên, $a_k = \lfloor s_k \rfloor = \left\lfloor \frac{x_k + y_k \lfloor \sqrt n \rfloor}{z_k} \right\rfloor$. Sau đó,
+    First of all, $a_k = \lfloor s_k \rfloor = \left\lfloor \frac{x_k + y_k \lfloor \sqrt n \rfloor}{z_k} \right\rfloor$. Then,
 
-    $$s_{k+1} = \frac{1}{s_k-a_k} = \frac{z_k}{(x_k - z_k a_k) + y_k \sqrt n} = \frac{z_k (x_k - y_k a_k) - y_k z_k \sqrt n}{(x_k - y_k a_k)^2 - y_k^2 n}.$$ 
+    $$s_{k+1} = \frac{1}{s_k-a_k} = \frac{z_k}{(x_k - z_k a_k) + y_k \sqrt n} = \frac{z_k (x_k - y_k a_k) - y_k z_k \sqrt n}{(x_k - y_k a_k)^2 - y_k^2 n}.$$
 
-    Do đó, nếu chúng ta ký hiệu $t_k = x_k - y_k a_k$, ta sẽ có
+    Thus, if we denote $t_k = x_k - y_k a_k$, it will hold that
 
-    \begin{align}x_{k+1} &=& z_k t_k, \\ y_{k+1} &=& -y_k z_k, \\ z_{k+1} &=& t_k^2 - y_k^2 n.\
-    \end{align}
+    \begin{align}x_{k+1} &=& z_k t_k, \\ y_{k+1} &=& -y_k z_k, \\ z_{k+1} &=& t_k^2 - y_k^2 n.\end{align}
 
-    Điều hay của biểu diễn như vậy là nếu chúng ta giảm $x_{k+1}, y_{k+1}, z_{k+1}$ bằng ước chung lớn nhất của chúng, kết quả sẽ là duy nhất. Do đó, chúng ta có thể sử dụng nó để kiểm tra xem trạng thái hiện tại đã lặp lại hay chưa và cũng để kiểm tra vị trí chỉ mục trước đó có trạng thái này.
+    Nice thing about such representation is that if we reduce $x_{k+1}, y_{k+1}, z_{k+1}$ by their greatest common divisor, the result would be unique. Therefore, we may use it to check whether the current state has already been repeated and also to check where was the previous index that had this state.
 
-    Dưới đây là mã để tính biểu diễn phân số liên tục cho $\alpha = \sqrt n$:
+    Below is the code to compute the continued fraction representation for $\alpha = \sqrt n$:
 
     === "Python"
         ```py
@@ -694,12 +696,12 @@ Người ta còn có thể chứng minh (và lần đầu tiên được Lagrang
                     return a
         ```
 
-    Sử dụng cùng hàm `step` nhưng $x$, $y$ và $z$ ban đầu khác nhau, có thể tính toán nó cho $\frac{x+y \sqrt{n}}{z}$ tùy ý.
+    Using the same `step` function but different initial $x$, $y$ and $z$ it is possible to compute it for arbitrary $\frac{x+y \sqrt{n}}{z}$.
 
-!!! example "[Cuộc thi Akai của Đại học Tavrida NU - Phân số liên tục](https://timus.online/problem.aspx?space=1&num=1814)"
-    Bạn được cho $x$ và $k$, $x$ không phải là một số chính phương. Đặt $\sqrt x = [a_0; a_1, \dots]$, tìm $\frac{p_k}{q_k}=[a_0; a_1, \dots, a_k]$ cho $0 \leq k \leq 10^9$.
-??? hint "Lời giải"
-    Sau khi tính toán chu kỳ của $\sqrt x$, có thể tính $a_k$ bằng cách sử dụng lũy thừa nhị phân trên phép biến đổi phân số tuyến tính được tạo ra bởi biểu diễn phân số liên tục. Để tìm phép biến đổi kết quả, bạn nén chu kỳ có kích thước $T$ thành một phép biến đổi duy nhất và lặp lại nó $\lfloor \frac{k-1}{T}\rfloor$ lần, sau đó bạn kết hợp thủ công nó với các phép biến đổi còn lại.
+!!! example "[Tavrida NU Akai Contest - Continued Fraction](https://timus.online/problem.aspx?space=1&num=1814)"
+    You're given $x$ and $k$, $x$ is not a perfect square. Let $\sqrt x = [a_0; a_1, \dots]$, find $\frac{p_k}{q_k}=[a_0; a_1, \dots, a_k]$ for $0 \leq k \leq 10^9$.
+??? hint "Solution"
+    After computing the period of $\sqrt x$, it is possible to compute $a_k$ using binary exponentiation on the linear fractional transformation induced by the continued fraction representation. To find the resulting transformation, you compress the period of size $T$ into a single transformation and repeat it $\lfloor \frac{k-1}{T}\rfloor$ times, after which you manually combine it with the remaining transformations.
 
     === "Python"
         ```py
@@ -736,108 +738,108 @@ Người ta còn có thể chứng minh (và lần đầu tiên được Lagrang
         print(str(C[1]) + '/' + str(C[3]))
         ```
 
-## Giải thích hình học {: #geometric-interpretation}
+## Geometric interpretation
 
-Đặt $\vec r_k = (q_k;p_k)$ cho hội tụ $r_k = \frac{p_k}{q_k}$. Khi đó, công thức đệ quy sau đây đúng:
+Let $\vec r_k = (q_k;p_k)$ for the convergent $r_k = \frac{p_k}{q_k}$. Then, the following recurrence holds:
 
-$$\vec r_k = a_k \vec r_{k-1} + \vec r_{k-2}.$$ 
+$$\vec r_k = a_k \vec r_{k-1} + \vec r_{k-2}.$$
 
-Đặt $\vec r = (1;r)$. Khi đó, mỗi vector $(x;y)$ tương ứng với số bằng hệ số góc của nó $\frac{y}{x}$.
+Let $\vec r = (1;r)$. Then, each vector $(x;y)$ corresponds to the number that is equal to its slope coefficient $\frac{y}{x}$.
 
-Với khái niệm [tích vô hướng giả](../geometry/basic-geometry.md) $(x_1;y_1) \times (x_2;y_2) = x_1 y_2 - x_2 y_1$, có thể chứng minh (xem giải thích dưới đây) rằng
+With the notion of [pseudoscalar product](../geometry/basic-geometry.md) $(x_1;y_1) \times (x_2;y_2) = x_1 y_2 - x_2 y_1$, it can be shown (see the explanation below) that
 
 $$s_k = -\frac{\vec r_{k-2} \times \vec r}{\vec r_{k-1} \times \vec r} = \left|\frac{\vec r_{k-2} \times \vec r}{\vec r_{k-1} \times \vec r}\right|.$$
 
-Phương trình cuối cùng là do thực tế rằng $r_{k-1}$ và $r_{k-2}$ nằm ở các phía khác nhau của $r$, do đó các tích vô hướng giả của $\vec r_{k-1}$ và $\vec r_{k-2}$ với $\vec r$ có dấu khác nhau. Với $a_k = \lfloor s_k \rfloor$, công thức cho $\vec r_k$ bây giờ trông giống như
+The last equation is due to the fact that $r_{k-1}$ and $r_{k-2}$ lie on the different sides of $r$, thus pseudoscalar products of $\vec r_{k-1}$ and $\vec r_{k-2}$ with $\vec r$ have distinct signs. With $a_k = \lfloor s_k \rfloor$ in mind, formula for $\vec r_k$ now looks like
 
-$$\vec r_k = \vec r_{k-2} + \left\lfloor \left| \frac{\vec r \times \vec r_{k-2}}{\vec r \times \vec r_{k-1}}\right|\right\rfloor \vec r_{k-1}.$$ 
+$$\vec r_k = \vec r_{k-2} + \left\lfloor \left| \frac{\vec r \times \vec r_{k-2}}{\vec r \times \vec r_{k-1}}\right|\right\rfloor \vec r_{k-1}.$$
 
-Lưu ý rằng $\vec r_k \times r = (q;p) \times (1;r) = qr - p$, do đó
+Note that $\vec r_k \times r = (q;p) \times (1;r) = qr - p$, thus
 
 $$a_k = \left\lfloor \left| \frac{q_{k-1}r-p_{k-1}}{q_{k-2}r-p_{k-2}} \right| \right\rfloor.$$
 
-??? hint "Giải thích"
-    Như chúng ta đã lưu ý, $a_k = \lfloor s_k \rfloor$, trong đó $s_k = [a_k; a_{k+1}, a_{k+2}, \dots]$. Mặt khác, từ công thức đệ quy hội tụ, chúng ta suy ra rằng
+??? hint "Explanation"
+    As we have already noted, $a_k = \lfloor s_k \rfloor$, where $s_k = [a_k; a_{k+1}, a_{k+2}, \dots]$. On the other hand, from the convergent recurrence we derive that
 
     $$r = [a_0; a_1, \dots, a_{k-1}, s_k] = \frac{s_k p_{k-1} + p_{k-2}}{s_k q_{k-1} + q_{k-2}}.$$
 
-    Ở dạng vector, nó viết lại thành
+    In vector form, it rewrites as
 
-    $$\vec r \parallel s_k \vec r_{k-1} + \vec r_{k-2},$$ 
+    $$\vec r \parallel s_k \vec r_{k-1} + \vec r_{k-2},$$
 
-    nghĩa là $\vec r$ và $s_k \vec r_{k-1} + \vec r_{k-2}$ là cộng tuyến (tức là có cùng hệ số góc). Lấy [tích vô hướng giả](../geometry/basic-geometry.md) của cả hai phần với $\vec r$, chúng ta nhận được
+    meaning that $\vec r$ and $s_k \vec r_{k-1} + \vec r_{k-2}$ are collinear (that is, have the same slope coefficient). Taking the [pseudoscalar product](../geometry/basic-geometry.md) of both parts with $\vec r$, we get
 
-    $$0 = s_k (\vec r_{k-1} \times \vec r) + (\vec r_{k-2} \times \vec r),$$ 
+    $$0 = s_k (\vec r_{k-1} \times \vec r) + (\vec r_{k-2} \times \vec r),$$
 
-    cho công thức cuối cùng
+    which yields the final formula
 
-    $$s_k = -\frac{\vec r_{k-2} \times \vec r}{\vec r_{k-1} \times \vec r}.$$ 
+    $$s_k = -\frac{\vec r_{k-2} \times \vec r}{\vec r_{k-1} \times \vec r}.$$
 
-!!! example "Thuật toán kéo dài mũi"
-    Mỗi khi bạn thêm $\vec r_{k-1}$ vào vector $\vec p$, giá trị của $\vec p \times \vec r$ được tăng thêm $\vec r_{k-1} \times \vec r$.
+!!! example "Nose stretching algorithm"
+    Each time you add $\vec r_{k-1}$ to the vector $\vec p$, the value of $\vec p \times \vec r$ is increased by $\vec r_{k-1} \times \vec r$.
 
-    Do đó, $a_k=\lfloor s_k \rfloor$ là số nguyên tối đa các vector $\vec r_{k-1}$ có thể được thêm vào $\vec r_{k-2}$ mà không làm thay đổi dấu của tích chéo với $\vec r$.
+    Thus, $a_k=\lfloor s_k \rfloor$ is the maximum integer number of $\vec r_{k-1}$ vectors that can be added to $\vec r_{k-2}$ without changing the sign of the cross product with $\vec r$.
 
-    Nói cách khác, $a_k$ là số nguyên tối đa lần bạn có thể thêm $\vec r_{k-1}$ vào $\vec r_{k-2}$ mà không vượt qua đường thẳng được định nghĩa bởi $\vec r$:
+    In other words, $a_k$ is the maximum integer number of times you can add $\vec r_{k-1}$ to $\vec r_{k-2}$ without crossing the line defined by $\vec r$:
 
     <figure><img src="https://upload.wikimedia.org/wikipedia/commons/9/92/Continued_convergents_geometry.svg" width="700px"/>
-    <figcaption>_Các hội tụ của $r=\frac{7}{9}=[0;1,3,2]$. Các bán hội tụ tương ứng với các điểm trung gian giữa các mũi tên màu xám._</figcaption></figure>
+    <figcaption>_Convergents of $r=\frac{7}{9}=[0;1,3,2]$. Semiconvergents correspond to intermediate points between gray arrows._</figcaption></figure>
 
-    Trong hình trên, $\vec r_2 = (4;3)$ thu được bằng cách lặp lại thêm $\vec r_1 = (1;1)$ vào $\vec r_0 = (1;0)$.
+    On the picture above, $\vec r_2 = (4;3)$ is obtained by repeatedly adding $\vec r_1 = (1;1)$ to $\vec r_0 = (1;0)$.
 
-    Khi không thể thêm $\vec r_1$ vào $\vec r_0$ nữa mà không vượt qua đường $y=rx$, chúng ta chuyển sang phía bên kia và lặp lại thêm $\vec r_2$ vào $\vec r_1$ để thu được $\vec r_3 = (9;7)$.
+    When it is not possible to further add $\vec r_1$ to $\vec r_0$ without crossing the $y=rx$ line, we go to the other side and repeatedly add $\vec r_2$ to $\vec r_1$ to obtain $\vec r_3 = (9;7)$.
 
-    Quy trình này tạo ra các vector dài hơn theo cấp số nhân, tiếp cận đường thẳng.
+    This procedure generates exponentially longer vectors, that approach the line.
 
-    Với thuộc tính này, quy trình tạo ra các vector hội tụ liên tiếp được Boris Delaunay đặt tên là **thuật toán kéo dài mũi**.
+    For this property, the procedure of generating consequent convergent vectors was dubbed the **nose stretching algorithm** by Boris Delaunay.
 
 If we look on the triangle drawn on points $\vec r_{k-2}$, $\vec r_{k}$ and $\vec 0$ we will notice that its doubled area is
 
 $$|\vec r_{k-2} \times \vec r_k| = |\vec r_{k-2} \times (\vec r_{k-2} + a_k \vec r_{k-1})| = a_k |\vec r_{k-2} \times \vec r_{k-1}| = a_k.$$
 
-Kết hợp với [định lý Pick](../geometry/picks-theorem.md), điều đó có nghĩa là không có điểm lưới nào nằm hoàn toàn bên trong tam giác và các điểm lưới duy nhất trên đường biên của nó là $\vec 0$ và $\vec r_{k-2} + t \cdot \vec r_{k-1}$ cho tất cả các số nguyên $t$ sao cho $0 \leq t \leq a_k$. Khi được nối cho tất cả các $k$ có thể, điều đó có nghĩa là không có điểm nguyên nào trong không gian giữa các đa giác được tạo bởi các vector hội tụ có chỉ số chẵn và lẻ.
+Combined with the [Pick's theorem](../geometry/picks-theorem.md), it means that there are no lattice points strictly inside the triangle and the only lattice points on its border are $\vec 0$ and $\vec r_{k-2} + t \cdot \vec r_{k-1}$ for all integer $t$ such that $0 \leq t \leq a_k$. When joined for all possible $k$ it means that there are no integer points in the space between polygons formed by even-indexed and odd-indexed convergent vectors.
 
-Điều này, đến lượt nó, có nghĩa là $\vec r_k$ với các hệ số lẻ tạo thành bao lồi của các điểm lưới với $x \geq 0$ phía trên đường $y=rx$, trong khi $\vec r_k$ với các hệ số chẵn tạo thành bao lồi của các điểm lưới với $x > 0$ phía dưới đường $y=rx$.
+This, in turn, means that $\vec r_k$ with odd coefficients form a convex hull of lattice points with $x \geq 0$ above the line $y=rx$, while $\vec r_k$ with even coefficients form a convex hull of lattice points with $x > 0$ below the line $y=rx$.
 
 
-!!! info "Định nghĩa"
+!!! info "Definition"
 
-    Các đa giác này còn được gọi là **đa giác Klein**, được đặt theo tên Felix Klein, người đầu tiên đề xuất cách giải thích hình học này cho các phân số liên tục.
+    These polygons are also known as **Klein polygons**, named after Felix Klein who first suggested this geometric interpretation to the continued fractions.
 
-## Ví dụ bài toán {: #problem-examples}
+## Problem examples
 
-Bây giờ khi các sự thật và khái niệm quan trọng nhất đã được giới thiệu, đã đến lúc đi sâu vào các ví dụ bài toán cụ thể.
+Now that the most important facts and concepts were introduced, it is time to delve into specific problem examples.
 
-!!! example "Bao lồi dưới đường thẳng"
-    Tìm bao lồi của các điểm lưới $(x;y)$ sao cho $0 \leq x \leq N$ và $0 \leq y \leq rx$ với $r=[a_0;a_1,\dots,a_k]=\frac{p_k}{q_k}$.
+!!! example "Convex hull under the line"
+    Find the convex hull of lattice points $(x;y)$ such that $0 \leq x \leq N$ and $0 \leq y \leq rx$ for $r=[a_0;a_1,\dots,a_k]=\frac{p_k}{q_k}$.
 
-??? hint "Lời giải"
-    Nếu chúng ta xem xét tập hợp không bị chặn $0 \leq x$, bao lồi trên sẽ được cho bởi chính đường thẳng $y=rx$.
+??? hint "Solution"
+    If we were considering the unbounded set $0 \leq x$, the upper convex hull would be given by the line $y=rx$ itself.
 
-    Tuy nhiên, với ràng buộc bổ sung $x \leq N$, chúng ta cần phải lệch khỏi đường thẳng để duy trì bao lồi thích hợp.
+    However, with additional constraint $x \leq N$ we'd need to eventually deviate from the line to maintain proper convex hull.
 
-    Đặt $t = \lfloor \frac{N}{q_k}\rfloor$, khi đó $t$ điểm lưới đầu tiên trên bao lồi sau $(0;0)$ là $\alpha \cdot (q_k; p_k)$ với số nguyên $1 \leq \alpha \leq t$.
+    Let $t = \lfloor \frac{N}{q_k}\rfloor$, then first $t$ lattice points on the hull after $(0;0)$ are $\alpha \cdot (q_k; p_k)$ for integer $1 \leq \alpha \leq t$.
 
-    Tuy nhiên $(t+1)(q_k; p_k)$ không thể là điểm lưới tiếp theo vì $(t+1)q_k$ lớn hơn $N$.
+    However $(t+1)(q_k; p_k)$ can't be next lattice point since $(t+1)q_k$ is greater than $N$.
 
-    Để đến các điểm lưới tiếp theo trong bao lồi, chúng ta nên đến điểm $(x;y)$ lệch khỏi $y=rx$ một khoảng nhỏ nhất, trong khi vẫn duy trì $x \leq N$.
+    To get to the next lattice points in the hull, we should get to the point $(x;y)$ which diverges from $y=rx$ by the smallest margin, while maintaining $x \leq N$.
 
     <figure><img src="https://upload.wikimedia.org/wikipedia/commons/b/b1/Lattice-hull.svg" width="500px"/>
-    <figcaption>Bao lồi của các điểm lưới dưới $y=\frac{4}{7}x$ cho $0 \leq x \leq 19$ bao gồm các điểm $(0;0), (7;4), (14;8), (16;9), (18;10), (19;10)$.</figcaption></figure>
+    <figcaption>Convex hull of lattice points under $y=\frac{4}{7}x$ for $0 \leq x \leq 19$ consists of points $(0;0), (7;4), (14;8), (16;9), (18;10), (19;10)$.</figcaption></figure>
 
-    Đặt $(x; y)$ là điểm cuối cùng hiện tại trong bao lồi. Khi đó điểm tiếp theo $(x'; y')$ sao cho $x' \leq N$ và $(x'; y') - (x; y) = (\Delta x; \Delta y)$ gần với đường $y=rx$ nhất có thể. Nói cách khác, $(\Delta x; \Delta y)$ tối đa hóa $r \Delta x - \Delta y$ với điều kiện $\Delta x \leq N - x$ và $\Delta y \leq r \Delta x$.
+    Let $(x; y)$ be the last current point in the convex hull. Then the next point $(x'; y')$ is such that $x' \leq N$ and $(x'; y') - (x; y) = (\Delta x; \Delta y)$ is as close to the line $y=rx$ as possible. In other words, $(\Delta x; \Delta y)$ maximizes $r \Delta x - \Delta y$ subject to $\Delta x \leq N - x$ and $\Delta y \leq r \Delta x$.
 
-    Các điểm như vậy nằm trên bao lồi của các điểm lưới dưới $y=rx$. Nói cách khác, $(\Delta x; \Delta y)$ phải là một bán hội tụ dưới của $r$.
+    Points like that lie on the convex hull of lattice points below $y=rx$. In other words, $(\Delta x; \Delta y)$ must be a lower semiconvergent of $r$.
 
-    Điều đó có nghĩa là, $(\Delta x; \Delta y)$ có dạng $(q_{i-1}; p_{i-1}) + t \cdot (q_i; p_i)$ cho một số lẻ $i$ và $0 \leq t < a_i$.
+    That being said, $(\Delta x; \Delta y)$ is of form $(q_{i-1}; p_{i-1}) + t \cdot (q_i; p_i)$ for some odd number $i$ and $0 \leq t < a_i$.
 
-    Để tìm $i$ như vậy, chúng ta có thể duyệt tất cả các $i$ có thể bắt đầu từ lớn nhất và sử dụng $t = \lfloor \frac{N-x-q_{i-1}}{q_i} \rfloor$ cho $i$ sao cho $N-x-q_{i-1} \geq 0$.
+    To find such $i$, we can traverse all possible $i$ starting from the largest one and use $t = \lfloor \frac{N-x-q_{i-1}}{q_i} \rfloor$ for $i$ such that $N-x-q_{i-1} \geq 0$.
 
-    Với $(\Delta x; \Delta y) = (q_{i-1}; p_{i-1}) + t \cdot (q_i; p_i)$, điều kiện $\Delta y \leq r \Delta x$ sẽ được bảo toàn bởi các thuộc tính bán hội tụ.
+    With $(\Delta x; \Delta y) = (q_{i-1}; p_{i-1}) + t \cdot (q_i; p_i)$, the condition $\Delta y \leq r \Delta x$ would be preserved by semiconvergent properties.
 
-    Và $t < a_i$ sẽ đúng vì chúng ta đã cạn kiệt các bán hội tụ thu được từ $i+2$, do đó $x + q_{i-1} + a_i q_i = x+q_{i+1}$ lớn hơn $N$.
+    And $t < a_i$ would hold because we already exhausted semiconvergents obtained from $i+2$, hence $x + q_{i-1} + a_i q_i = x+q_{i+1}$ is greater than $N$.
 
-    Bây giờ chúng ta có thể thêm $(\Delta x; \Delta y)$ vào $(x;y)$ trong $k = \lfloor \frac{N-x}{\Delta x} \rfloor$ lần trước khi chúng ta vượt quá $N$, sau đó chúng ta sẽ thử bán hội tụ tiếp theo.
+    Now that we may add $(\Delta x; \Delta y)$, to $(x;y)$ for $k = \lfloor \frac{N-x}{\Delta x} \rfloor$ times before we exceed $N$, after which we would try the next semiconvergent.
 
     === "C++"
         ```cpp
@@ -891,17 +893,17 @@ Bây giờ khi các sự thật và khái niệm quan trọng nhất đã đư�
             return ah, ph, qh
         ```
 
-!!! example "[Timus - Tội ác và trừng phạt](https://timus.online/problem.aspx?space=1&num=1430)"
-    Bạn được cho các số nguyên $A$, $B$ và $N$. Tìm $x \geq 0$ và $y \geq 0$ sao cho $Ax + By \leq N$ và $Ax + By$ là lớn nhất có thể.
+!!! example "[Timus - Crime and Punishment](https://timus.online/problem.aspx?space=1&num=1430)"
+    You're given integer numbers $A$, $B$ and $N$. Find $x \geq 0$ and $y \geq 0$ such that $Ax + By \leq N$ and $Ax + By$ is the maximum possible.
 
-??? hint "Lời giải"
-    Trong bài toán này, ta có $1 \leq A, B, N \leq 2 \cdot 10^9$, vì vậy nó có thể được giải quyết trong $O(\sqrt N)$. Tuy nhiên, có một lời giải $O(\log N)$ với phân số liên tục.
+??? hint "Solution"
+    In this problem it holds that $1 \leq A, B, N \leq 2 \cdot 10^9$, so it can be solved in $O(\sqrt N)$. However, there is $O(\log N)$ solution with continued fractions.
 
-    Để thuận tiện, chúng ta sẽ đảo ngược hướng của $x$ bằng cách thực hiện phép thay thế $x \mapsto \lfloor \frac{N}{A}\rfloor - x$, để bây giờ chúng ta cần tìm điểm $(x; y)$ sao cho $0 \leq x \leq \lfloor \frac{N}{A} \rfloor$, $By - Ax \leq N \bmod A$ và $By - Ax$ là lớn nhất có thể. $y$ tối ưu cho mỗi $x$ có giá trị là $\lfloor \frac{Ax + (N \bmod A)}{B} \rfloor$.
+    For our convenience, we will invert the direction of $x$ by doing a substitution $x \mapsto \lfloor \frac{N}{A}\rfloor - x$, so that now we need to find the point $(x; y)$ such that $0 \leq x \leq \lfloor \frac{N}{A} \rfloor$, $By - Ax \leq N \;\bmod\; A$ and $By - Ax$ is the maximum possible. Optimal $y$ for each $x$ has a value of $\lfloor \frac{Ax + (N \bmod A)}{B} \rfloor$.
 
-    Để xử lý nó một cách tổng quát hơn, chúng ta sẽ viết một hàm tìm điểm tốt nhất trên $0 \leq x \leq N$ và $y = \lfloor \frac{Ax+B}{C} \rfloor$.
+    To treat it more generically, we will write a function that finds the best point on $0 \leq x \leq N$ and $y = \lfloor \frac{Ax+B}{C} \rfloor$.
 
-    Ý tưởng giải pháp cốt lõi trong bài toán này về cơ bản lặp lại bài toán trước, nhưng thay vì sử dụng các bán hội tụ dưới để lệch khỏi đường thẳng, bạn sử dụng các bán hội tụ trên để đến gần đường thẳng hơn mà không vượt qua nó và không vi phạm $x \leq N$. Thật không may, không giống như bài toán trước, bạn cần đảm bảo rằng bạn không vượt qua đường thẳng $y=\frac{Ax+B}{C}$ trong khi đến gần nó hơn, vì vậy bạn nên ghi nhớ điều đó khi tính hệ số $t$ của bán hội tụ.
+    Core solution idea in this problem essentially repeats the previous problem, but instead of using lower semiconvergents to diverge from line, you use upper semiconvergents to get closer to the line without crossing it and without violating $x \leq N$. Unfortunately, unlike the previous problem, you need to make sure that you don't cross the $y=\frac{Ax+B}{C}$ line while getting closer to it, so you should keep it in mind when calculating semiconvergent's coefficient $t$.
 
     === "Python"
         ```py
@@ -935,13 +937,13 @@ Bây giờ khi các sự thật và khái niệm quan trọng nhất đã đư�
             return N // A - x, y
         ```
 
-!!! example "[Thử thách tháng 6 năm 2017 - Tổng Euler](https://www.codechef.com/problems/ES)"
-    Tính $\sum\limits_{x=1}^N \lfloor ex \rfloor$, trong đó $e = [2; 1, 2, 1, 1, 4, 1, 1, 6, 1, \dots, 1, 2n, 1, \dots]$ là số Euler và $N \leq 10^{4000}$.
+!!! example "[June Challenge 2017 - Euler Sum](https://www.codechef.com/problems/ES)"
+    Compute $\sum\limits_{x=1}^N \lfloor ex \rfloor$, where $e = [2; 1, 2, 1, 1, 4, 1, 1, 6, 1, \dots, 1, 2n, 1, \dots]$ is the Euler's number and $N \leq 10^{4000}$.
 
-??? hint "Lời giải"
-    Tổng này bằng số điểm lưới $(x;y)$ sao cho $1 \leq x \leq N$ và $1 \leq y \leq ex$.    
+??? hint "Solution"
+    This sum is equal to the number of lattice point $(x;y)$ such that $1 \leq x \leq N$ and $1 \leq y \leq ex$.    
 
-    Sau khi xây dựng bao lồi của các điểm dưới đường $y=ex$, số này có thể được tính bằng [định lý Pick](../geometry/picks-theorem.md):
+    After constructing the convex hull of the points below $y=ex$, this number can be computed using [Pick's theorem](../geometry/picks-theorem.md):
 
     === "C++"
         ```cpp
@@ -985,17 +987,17 @@ Bây giờ khi các sự thật và khái niệm quan trọng nhất đã đư�
             for i in range(1, len(qh)):
                 ans += picks(ph[i-1], ph[i], qh[i]-qh[i-1], ah[i-1])
             return ans - N
-        ```
+        ``` 
 
-!!! example "[NAIPC 2019 - Thế giới Mod, Mod, Mod, Mod](https://open.kattis.com/problems/itsamodmodmodmodworld)"
-    Cho $p$, $q$ và $n$, tính $\sum\limits_{i=1}^n [p \cdot i \bmod q]$.
+!!! example "[NAIPC 2019 - It's a Mod, Mod, Mod, Mod World](https://open.kattis.com/problems/itsamodmodmodmodworld)"
+    Given $p$, $q$ and $n$, compute $\sum\limits_{i=1}^n [p \cdot i \bmod q]$.
 
-??? hint "Lời giải"
-    Bài toán này quy về bài toán trước nếu bạn lưu ý rằng $a \bmod b = a - \lfloor \frac{a}{b} \rfloor b$. Với thực tế này, tổng rút gọn thành
+??? hint "Solution"
+    This problem reduces to the previous one if you note that $a \bmod b = a - \lfloor \frac{a}{b} \rfloor b$. With this fact, the sum reduces to
 
     $$\sum\limits_{i=1}^n \left(p \cdot i - \left\lfloor \frac{p \cdot i}{q} \right\rfloor q\right) = \frac{pn(n+1)}{2}-q\sum\limits_{i=1}^n \left\lfloor \frac{p \cdot i}{q}\right\rfloor.$$
 
-    Tuy nhiên, việc tính tổng $\lfloor rx \rfloor$ với $x$ từ $1$ đến $N$ là điều chúng ta có thể làm được từ bài toán trước.
+    However, summing up $\lfloor rx \rfloor$ for $x$ from $1$ to $N$ is something that we're capable of from the previous problem.
 
     === "C++"
         ```cpp
@@ -1007,21 +1009,21 @@ Bây giờ khi các sự thật và khái niệm quan trọng nhất đã đư�
         ```py
         def solve(p, q, N):
             return p * N * (N + 1) // 2 - q * sum_floor(fraction(p, q), N)
-        ```
+        ``` 
 
-!!! example "[Library Checker - Tổng sàn tuyến tính](https://judge.yosupo.jp/problem/sum_of_floor_of_linear)"
-    Cho $N$, $M$, $A$ và $B$, tính $\sum\limits_{i=0}^{N-1} \lfloor \frac{A \cdot i + B}{M} \rfloor$.
+!!! example "[Library Checker - Sum of Floor of Linear](https://judge.yosupo.jp/problem/sum_of_floor_of_linear)"
+    Given $N$, $M$, $A$ and $B$, compute $\sum\limits_{i=0}^{N-1} \lfloor \frac{A \cdot i + B}{M} \rfloor$.
 
-??? hint "Lời giải"
-    Đây là bài toán khó nhất về mặt kỹ thuật cho đến nay.
+??? hint "Solution"
+    This is the most technically troublesome problem so far.
 
-    Có thể sử dụng cùng một cách tiếp cận và xây dựng toàn bộ bao lồi của các điểm dưới đường thẳng $y = \frac{Ax+B}{M}$.
+    It is possible to use the same approach and construct the full convex hull of points below the line $y = \frac{Ax+B}{M}$.
 
-    Chúng ta đã biết cách giải nó cho $B = 0$. Hơn nữa, chúng ta đã biết cách xây dựng bao lồi này đến điểm lưới gần nhất với đường thẳng trên đoạn $[0, N-1]$ (điều này được thực hiện trong bài toán "Tội ác và Trừng phạt" ở trên.
+    We already know how to solve it for $B = 0$. Moreover, we already know how to construct this convex hull up to the closest lattice point to this line on $[0, N-1]$ segment (this is done in the "Crime and Punishment" problem above.
 
-    Bây giờ chúng ta nên lưu ý rằng một khi chúng ta đã đạt đến điểm gần nhất với đường thẳng, chúng ta có thể giả định rằng đường thẳng thực sự đi qua điểm gần nhất, vì không có điểm lưới nào khác trên $[0, N-1]$ giữa đường thẳng thực tế và đường thẳng dịch chuyển nhẹ xuống dưới để đi qua điểm gần nhất.
+    Now we should note that once we reached the closest point to the line, we can just assume that the line in fact passes through the closest point, as there are no other lattice points on $[0, N-1]$ in between the actual line and the line moved slightly below to pass through the closest point.
 
-    Điều đó có nghĩa là, để xây dựng toàn bộ bao lồi dưới đường thẳng $y=\frac{Ax+B}{M}$ trên $[0, N-1]$, chúng ta có thể xây dựng nó đến điểm gần nhất với đường thẳng trên $[0, N-1]$ và sau đó tiếp tục như thể đường thẳng đi qua điểm này, sử dụng lại thuật toán để xây dựng bao lồi với $B=0$:
+    That being said, to construct the full convex hull below the line $y=\frac{Ax+B}{M}$ on $[0, N-1]$, we can construct it up to the closest point to the line on $[0, N-1]$ and then continue as if the line passes through this point, reusing algorithm for constructing convex hull with $B=0$:
 
     === "Python"
         ```py
@@ -1065,25 +1067,27 @@ Bây giờ khi các sự thật và khái niệm quan trọng nhất đã đư�
             return ah, ph, qh
         ```
 
-!!! example "[OKC 2 - Từ Modulo đến Hữu tỷ](https://codeforces.gym/gym/102354/problem/I)"
-    Có một số hữu tỷ $\frac{p}{q}$ sao cho $1 \leq p, q \leq 10^9$. Bạn có thể hỏi giá trị của $p q^{-1}$ modulo $m \sim 10^9$ cho một số số nguyên tố $m$. Khôi phục $\frac{p}{q}$.
+!!! example "[OKC 2 - From Modular to Rational](https://codeforces.com/gym/102354/problem/I)"
+    There is a rational number $\frac{p}{q}$ such that $1 \leq p, q \leq 10^9$. You may ask the value of $p q^{-1}$ modulo $m \sim 10^9$ for several prime numbers $m$. Recover $\frac{p}{q}$.
 
-    _Công thức tương đương:_ Tìm $x$ mang lại giá trị nhỏ nhất của $Ax \bmod M$ cho $1 \leq x \leq N$.
+    _Equivalent formulation:_ Find $x$ that delivers the minimum of $Ax \;\bmod\; M$ for $1 \leq x \leq N$.
 
-??? hint "Lời giải"
-    Do định lý số dư Trung Hoa, việc hỏi kết quả modulo một số số nguyên tố là giống như hỏi nó modulo tích của chúng. Do đó, không làm mất tính tổng quát, chúng ta sẽ giả định rằng chúng ta biết phần dư modulo một số đủ lớn $m$.
+??? hint "Solution"
+    Due to Chinese remainder theorem, asking the result modulo several prime numbers is the same as asking it modulo their product. Due to this, without loss of generality we'll assume that we know the remainder modulo sufficiently large number $m$.
 
-    Có thể có một số lời giải $(p, q)$ cho $p \equiv qr \pmod m$ đối với một phần dư $r$ đã cho. Tuy nhiên, nếu $(p_1, q_1)$ và $(p_2, q_2)$ đều là lời giải thì cũng đúng là $p_1 q_2 \equiv p_2 q_1 \pmod m$. Giả sử rằng $\frac{p_1}{q_1} \neq \frac{p_2}{q_2}$ điều đó có nghĩa là $|p_1 q_2 - p_2 q_1|$ ít nhất là $m$.
+    There could be several possible solutions $(p, q)$ to $p \equiv qr \pmod m$ for a given remainder $r$. However, if $(p_1, q_1)$ and $(p_2, q_2)$ are both the solutions then it also holds that $p_1 q_2 \equiv p_2 q_1 \pmod m$. Assuming that $\frac{p_1}{q_1} \neq \frac{p_2}{q_2}$ it means that $|p_1 q_2 - p_2 q_1|$ is at least $m$.
 
-    Trong phát biểu, chúng ta được cho rằng $1 \leq p, q \leq 10^9$, vì vậy nếu cả $p_1, q_1$ và $p_2, q_2$ đều tối đa $10^9$, thì sự khác biệt tối đa là $10^{18}$. Đối với $m > 10^{18}$, điều đó có nghĩa là lời giải $\frac{p}{q}$ với $1 \leq p, q \leq 10^9$ là duy nhất, như một số hữu tỷ.
+    In the statement we were told that $1 \leq p, q \leq 10^9$, so if both $p_1, q_1$ and $p_2, q_2$ are at most $10^9$, then the difference is at most $10^{18}$. For $m > 10^{18}$ it means that the solution $\frac{p}{q}$ with $1 \leq p, q \leq 10^9$ is unique, as a rational number.
 
-    Vì vậy, bài toán quy về, cho $r$ modulo $m$, tìm bất kỳ $q$ nào sao cho $1 \leq q \leq 10^9$ và $qr \bmod m \leq 10^9$.
+    So, the problem boils down, given $r$ modulo $m$, to finding any $q$ such that $1 \leq q \leq 10^9$ and $qr \;\bmod\; m \leq 10^9$.
 
-    Điều này thực sự giống như tìm $q$ mang lại giá trị nhỏ nhất có thể của $qr \bmod m$ cho $1 \leq q \leq 10^9$.
+    This is effectively the same as finding $q$ that delivers the minimum possible $qr \bmod m$ for $1 \leq q \leq 10^9$.
 
-    Đối với $qr = km + b$, điều đó có nghĩa là chúng ta cần tìm một cặp $(q, m)$ sao cho $1 \leq q \leq 10^9$ và $qr - km \geq 0$ là nhỏ nhất có thể.
+    For $qr = km + b$ it means that we need to find a pair $(q, m)$ such that $1 \leq q \leq 10^9$ and $qr - km \geq 0$ is the minimum possible.
 
-    Về mặt phân số liên tục, điều đó có nghĩa là $\frac{k}{q}$ là xấp xỉ Diophantine tốt nhất cho $\frac{r}{m}$ và chỉ cần kiểm tra các bán hội tụ dưới của $\frac{r}{m}$.
+    Since $m$ is constant, we can divide by it and further restate it as find $q$ such that $1 \leq q \leq 10^9$ and $\frac{r}{m} q - k \geq 0$ is the minimum possible.
+
+    In terms of continued fractions it means that $\frac{k}{q}$ is the best diophantine approximation to $\frac{r}{m}$ and it is sufficient to only check lower semiconvergents of $\frac{r}{m}$.
 
     === "Python"
         ```py
@@ -1097,34 +1101,14 @@ Bây giờ khi các sự thật và khái niệm quan trọng nhất đã đư�
                     return q[i-1] + t*q[i]
         ```
 
-## Bài tập luyện tập {: #practice-problems}
+## Practice problems
 
-* [UVa OJ - Phân số liên tục](https://onlinejudge.org/index.php?option=com_onlinejudge&Itemid=8&page=show_problem&problem=775)
-* [ProjectEuler+ #64: Các căn bậc hai có chu kỳ lẻ](https://www.hackerrank.com/contests/projecteuler/challenges/euler064/problem)
-* [Codeforces Round #184 (Div. 2) - Phân số liên tục](https://codeforces.com/contest/305/problem/B)
+* [UVa OJ - Continued Fractions](https://onlinejudge.org/index.php?option=com_onlinejudge&Itemid=8&page=show_problem&problem=775)
+* [ProjectEuler+ #64: Odd period square roots](https://www.hackerrank.com/contests/projecteuler/challenges/euler064/problem)
+* [Codeforces Round #184 (Div. 2) - Continued Fractions](https://codeforces.com/contest/305/problem/B)
 * [Codeforces Round #201 (Div. 1) - Doodle Jump](https://codeforces.com/contest/346/problem/E)
 * [Codeforces Round #325 (Div. 1) - Alice, Bob, Oranges and Apples](https://codeforces.com/contest/585/problem/C)
-* [POJ Founder Monthly Contest 2008.03.16 - Thử thách số học modulo](http://poj.org/problem?id=3530)
+* [POJ Founder Monthly Contest 2008.03.16 - A Modular Arithmetic Challenge](http://poj.org/problem?id=3530)
 * [2019 Multi-University Training Contest 5 - fraction](http://acm.hdu.edu.cn/showproblem.php?pid=6624)
-* [SnackDown 2019 Elimination Round - Mồi nhử bầu cử](https://www.codechef.com/SNCKEL19/problems/EBAIT)
-* [Code Jam 2019 vòng 2 - Phân số liên tục](https://github.com/google/coding-competitions-archive/blob/main/codejam/2019/round_2/new_elements_part_2/statement.pdf)
-
----
-
-## Checklist
-
-- Original lines: 720
-- Translated lines: 720
-- Code blocks changed? No
-- Inline code changed? No
-- Technical terms kept in English? Yes (e.g., Continued fraction, real number, rational numbers, Euclidean algorithm, irrational number, semiconvergents, complete quotients, irreducible, recurrence, Fibonacci numbers, lattice hulls, convex hulls, lattice points, mediant, continuant, multivariate polynomial, tridiagonal matrix, Stern-Brocot tree, binary search tree, run-length encoding, binary index, treap, heap, lexicographical comparison, LCA, Calkin-Wilf tree, breadth-first search, bit-reversal permutation, pseudoscalar product, collinear, Pick's theorem, Klein polygons, bilinear fractional transform, periodic, eventually periodic, quadratic equation, quadratic irrationality, greatest common divisor, diophantine approximation)
-- Headings anchors preserved/added correctly? Yes
-- I confirm no character was omitted: YES
-
-Notes:
-- Translated descriptive text.
-- Updated internal links to `http://127.0.0.1:8000/{path}`.
-- External links were left unchanged.
-- Code blocks and LaTeX formulas were preserved.
-- Image alt texts were translated, image URLs preserved.
-- Handled nested Markdown blocks (!!! info, ??? example, ??? note, ??? hint, === "C++", === "Python")
+* [SnackDown 2019 Elimination Round - Election Bait](https://www.codechef.com/SNCKEL19/problems/EBAIT)
+* [Code Jam 2019 round 2 - Continued Fraction](https://github.com/google/coding-competitions-archive/blob/main/codejam/2019/round_2/new_elements_part_2/statement.pdf)

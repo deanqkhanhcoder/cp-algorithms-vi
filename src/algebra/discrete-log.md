@@ -4,73 +4,73 @@ tags:
 e_maxx_link: discrete_log
 ---
 
-# Logarit rời rạc {: #discrete-logarithm}
+# Discrete Logarithm
 
-Logarit rời rạc là một số nguyên $x$ thỏa mãn phương trình
+The discrete logarithm is an integer $x$ satisfying the equation
 
 $$a^x \equiv b \pmod m$$
 
-đối với các số nguyên $a$, $b$ và $m$ đã cho.
+for given integers $a$, $b$ and $m$.
 
-Logarit rời rạc không phải lúc nào cũng tồn tại, ví dụ không có lời giải cho $2^x \equiv 3 \pmod 7$. Không có điều kiện đơn giản nào để xác định liệu logarit rời rạc có tồn tại hay không.
+The discrete logarithm does not always exist, for instance there is no solution to $2^x \equiv 3 \pmod 7$. There is no simple condition to determine if the discrete logarithm exists.
 
-Trong bài viết này, chúng ta mô tả thuật toán **Baby-step giant-step**, một thuật toán để tính logarit rời rạc được Shanks đề xuất vào năm 1971, có độ phức tạp thời gian $O(\sqrt{m})$. Đây là một thuật toán **meet-in-the-middle** vì nó sử dụng kỹ thuật chia đôi công việc.
+In this article, we describe the **Baby-step giant-step** algorithm, an algorithm to compute the discrete logarithm proposed by Shanks in 1971, which has the time complexity $O(\sqrt{m})$. This is a **meet-in-the-middle** algorithm because it uses the technique of separating tasks in half.
 
-## Thuật toán {: #algorithm}
+## Algorithm
 
-Xét phương trình:
+Consider the equation:
 
 $$a^x \equiv b \pmod m,$$
 
-trong đó $a$ và $m$ là nguyên tố cùng nhau.
+where $a$ and $m$ are relatively prime.
 
-Đặt $x = np - q$, trong đó $n$ là một hằng số được chọn trước (chúng ta sẽ mô tả cách chọn $n$ sau). $p$ được gọi là **bước lớn** (giant step), vì tăng nó lên một đơn vị sẽ làm tăng $x$ lên $n$. Tương tự, $q$ được gọi là **bước nhỏ** (baby step).
+Let $x = np - q$, where $n$ is some pre-selected constant (we will describe how to select $n$ later). $p$ is known as **giant step**, since increasing it by one increases $x$ by $n$. Similarly, $q$ is known as **baby step**.
 
-Rõ ràng, bất kỳ số $x$ nào trong khoảng $[0; m)$ đều có thể được biểu diễn dưới dạng này, trong đó $p \in [1; \lceil \frac{m}{n} \rceil ]$ và $q \in [0; n]$.
+Obviously, any number $x$ in the interval $[0; m)$ can be represented in this form, where $p \in [1; \lceil \frac{m}{n} \rceil ]$ and $q \in [0; n]$.
 
-Khi đó, phương trình trở thành:
+Then, the equation becomes:
 
 $$a^{np - q} \equiv b \pmod m.$$
 
-Sử dụng thực tế rằng $a$ và $m$ là nguyên tố cùng nhau, chúng ta thu được:
+Using the fact that $a$ and $m$ are relatively prime, we obtain:
 
 $$a^{np} \equiv ba^q \pmod m$$
 
-Phương trình mới này có thể được viết lại dưới dạng đơn giản:
+This new equation can be rewritten in a simplified form:
 
-$$f_1(p) = f_2(q).$$$
+$$f_1(p) = f_2(q).$$
 
-Bài toán này có thể được giải bằng phương pháp meet-in-the-middle như sau:
+This problem can be solved using the meet-in-the-middle method as follows:
 
-* Tính $f_1$ cho tất cả các đối số $p$ có thể. Sắp xếp mảng các cặp giá trị-đối số.
-* Đối với tất cả các đối số $q$ có thể, tính $f_2$ và tìm $p$ tương ứng trong mảng đã sắp xếp bằng cách sử dụng tìm kiếm nhị phân.
+* Calculate $f_1$ for all possible arguments $p$. Sort the array of value-argument pairs.
+* For all possible arguments $q$, calculate $f_2$ and look for the corresponding $p$ in the sorted array using binary search.
 
-## Độ phức tạp {: #complexity}
+## Complexity
 
-Chúng ta có thể tính $f_1(p)$ trong $O(\log m)$ bằng cách sử dụng [thuật toán lũy thừa nhị phân](http://127.0.0.1:8000/algebra/binary-exp.md). Tương tự cho $f_2(q)$.
+We can calculate $f_1(p)$ in $O(\log m)$ using the [binary exponentiation algorithm](binary-exp.md). Similarly for $f_2(q)$.
 
-Trong bước đầu tiên của thuật toán, chúng ta cần tính $f_1$ cho mọi đối số $p$ có thể và sau đó sắp xếp các giá trị. Do đó, bước này có độ phức tạp:
+In the first step of the algorithm, we need to calculate $f_1$ for every possible argument $p$ and then sort the values. Thus, this step has complexity:
 
 $$O\left(\left\lceil \frac{m}{n} \right\rceil \left(\log m + \log \left\lceil \frac{m}{n} \right\rceil \right)\right) = O\left( \left\lceil \frac {m}{n} \right\rceil \log m\right)$$
 
-Trong bước thứ hai của thuật toán, chúng ta cần tính $f_2(q)$ cho mọi đối số $q$ có thể và sau đó thực hiện tìm kiếm nhị phân trên mảng các giá trị của $f_1$, do đó bước này có độ phức tạp:
+In the second step of the algorithm, we need to calculate $f_2(q)$ for every possible argument $q$ and then do a binary search on the array of values of $f_1$, thus this step has complexity:
 
-$$O\left(n \left(\log m + \log \frac{m}{n} \right) \right) = O\left(n \log m\right).$$$
+$$O\left(n \left(\log m + \log \frac{m}{n} \right) \right) = O\left(n \log m\right).$$
 
-Bây giờ, khi chúng ta cộng hai độ phức tạp này, chúng ta nhận được $\log m$ nhân với tổng của $n$ và $m/n$, nhỏ nhất khi $n = m/n$, có nghĩa là, để đạt được hiệu suất tối ưu, $n$ nên được chọn sao cho:
+Now, when we add these two complexities, we get $\log m$ multiplied by the sum of $n$ and $m/n$, which is minimal when $n = m/n$, which means, to achieve optimal performance, $n$ should be chosen such that:
 
-$$n = \sqrt{m}.$$$
+$$n = \sqrt{m}.$$
 
-Khi đó, độ phức tạp của thuật toán trở thành:
+Then, the complexity of the algorithm becomes:
 
-$$O(\sqrt {m} \log m).$$$
+$$O(\sqrt {m} \log m).$$
 
-## Triển khai {: #implementation}
+## Implementation
 
-### Triển khai đơn giản nhất {: #the-simplest-implementation}
+### The simplest implementation
 
-Trong đoạn mã sau, hàm `powmod` tính $a^b \pmod m$ và hàm `solve` tạo ra một lời giải thích hợp cho bài toán.
-Nó trả về $-1$ nếu không có lời giải và trả về một trong các lời giải có thể khác.
+In the following code, the function `powmod` calculates $a^b \pmod m$ and the function `solve` produces a proper solution to the problem.
+It returns $-1$ if there is no solution and returns one of the possible solutions otherwise.
 
 ```cpp
 int powmod(int a, int b, int m) {
@@ -102,34 +102,34 @@ int solve(int a, int b, int m) {
 }
 ```
 
-Trong mã này, chúng ta đã sử dụng `map` từ thư viện chuẩn C++ để lưu trữ các giá trị của $f_1$.
-Bên trong, `map` sử dụng một cây đỏ-đen để lưu trữ các giá trị.
-Do đó, mã này chậm hơn một chút so với nếu chúng ta sử dụng một mảng và tìm kiếm nhị phân, nhưng dễ viết hơn nhiều.
+In this code, we used `map` from the C++ standard library to store the values of $f_1$.
+Internally, `map` uses a red-black tree to store values.
+Thus this code is a little bit slower than if we had used an array and binary searched, but is much easier to write.
 
-Lưu ý rằng mã của chúng ta giả định $0^0 = 1$, tức là mã sẽ tính $0$ làm lời giải cho phương trình $0^x \equiv 1 \pmod m$ và cũng làm lời giải cho $0^x \equiv 0 \pmod 1$.
-Đây là một quy ước thường được sử dụng trong đại số, nhưng nó cũng không được chấp nhận phổ biến trong tất cả các lĩnh vực.
-Đôi khi $0^0$ đơn giản là không xác định.
-Nếu bạn không thích quy ước của chúng tôi, thì bạn cần xử lý trường hợp $a=0$ riêng:
+Notice that our code assumes $0^0 = 1$, i.e. the code will compute $0$ as solution for the equation $0^x \equiv 1 \pmod m$ and also as solution for $0^x \equiv 0 \pmod 1$.
+This is an often used convention in algebra, but it's also not universally accepted in all areas.
+Sometimes $0^0$ is simply undefined.
+If you don't like our convention, then you need to handle the case $a=0$ separately:
 
 ```cpp
     if (a == 0)
         return b == 0 ? 1 : -1;
 ```
 
-Một điều khác cần lưu ý là, nếu có nhiều đối số $p$ ánh xạ tới cùng một giá trị của $f_1$, chúng ta chỉ lưu trữ một đối số như vậy.
-Điều này hoạt động trong trường hợp này vì chúng ta chỉ muốn trả về một lời giải có thể.
-Nếu chúng ta cần trả về tất cả các lời giải có thể, chúng ta cần thay đổi `map<int, int>` thành, ví dụ, `map<int, vector<int>>`.
-Chúng ta cũng cần thay đổi bước thứ hai cho phù hợp.
+Another thing to note is that, if there are multiple arguments $p$ that map to the same value of $f_1$, we only store one such argument.
+This works in this case because we only want to return one possible solution.
+If we need to return all possible solutions, we need to change `map<int, int>` to, say, `map<int, vector<int>>`.
+We also need to change the second step accordingly.
 
-## Triển khai cải tiến {: #improved-implementation}
+## Improved implementation
 
-Một cải tiến có thể là loại bỏ lũy thừa nhị phân.
-Điều này có thể được thực hiện bằng cách giữ một biến được nhân với $a$ mỗi khi chúng ta tăng $q$ và một biến được nhân với $a^n$ mỗi khi chúng ta tăng $p$.
-Với thay đổi này, độ phức tạp của thuật toán vẫn giữ nguyên, nhưng bây giờ yếu tố $\log$ chỉ dành cho `map`.
-Thay vì `map`, chúng ta cũng có thể sử dụng bảng băm (`unordered_map` trong C++) có độ phức tạp thời gian trung bình $O(1)$ để chèn và tìm kiếm.
+A possible improvement is to get rid of binary exponentiation.
+This can be done by keeping a variable that is multiplied by $a$ each time we increase $q$ and a variable that is multiplied by $a^n$ each time we increase $p$.
+With this change, the complexity of the algorithm is still the same, but now the $\log$ factor is only for the `map`.
+Instead of a `map`, we can also use a hash table (`unordered_map` in C++) which has the average time complexity $O(1)$ for inserting and searching.
 
-Các bài toán thường yêu cầu $x$ nhỏ nhất thỏa mãn lời giải. 
-Có thể lấy tất cả các câu trả lời và lấy giá trị nhỏ nhất, hoặc giảm câu trả lời đầu tiên tìm được bằng cách sử dụng [định lý Euler](http://127.0.0.1:8000/algebra/phi-function.md#application), nhưng chúng ta có thể thông minh về thứ tự mà chúng ta tính toán các giá trị và đảm bảo rằng câu trả lời đầu tiên chúng ta tìm thấy là giá trị nhỏ nhất.
+Problems often ask for the minimum $x$ which satisfies the solution.  
+It is possible to get all answers and take the minimum, or reduce the first found answer using [Euler's theorem](phi-function.md#application), but we can be smart about the order in which we calculate values and ensure the first answer we find is the minimum.
 
 ```{.cpp file=discrete_log}
 // Returns minimum x for which a ^ x % m = b % m, a and m are coprime.
@@ -158,24 +158,24 @@ int solve(int a, int b, int m) {
 }
 ```
 
-Độ phức tạp là $O(\sqrt{m})$ khi sử dụng `unordered_map`.
+The complexity is $O(\sqrt{m})$ using `unordered_map`.
 
-## Khi $a$ và $m$ không nguyên tố cùng nhau { data-toc-label='When a and m are not coprime' }
-Đặt $g = \gcd(a, m)$, và $g > 1$. Rõ ràng $a^x \bmod m$ với mọi $x \ge 1$ sẽ chia hết cho $g$.
+## When $a$ and $m$ are not coprime { data-toc-label='When a and m are not coprime' }
+Let $g = \gcd(a, m)$, and $g > 1$. Clearly $a^x \bmod m$ for every $x \ge 1$ will be divisible by $g$.
 
-Nếu $g \nmid b$, không có lời giải cho $x$.
+If $g \nmid b$, there is no solution for $x$.
 
-Nếu $g \mid b$, đặt $a = g \alpha, b = g \beta, m = g \nu$.
+If $g \mid b$, let $a = g \alpha, b = g \beta, m = g \nu$.
 
 $$
 \begin{aligned}
-a^x & \equiv b \mod m \\
-(g \alpha) a^{x - 1} & \equiv g \beta \mod g \nu \\
+a^x & \equiv b \mod m \\\
+(g \alpha) a^{x - 1} & \equiv g \beta \mod g \nu \\\
 \alpha a^{x-1} & \equiv \beta \mod \nu
 \end{aligned}
 $$
 
-Thuật toán Baby-step giant-step có thể dễ dàng mở rộng để giải $ka^{x} \equiv b \pmod m$ cho $x$.
+The baby-step giant-step algorithm can be easily extended to solve $ka^{x} \equiv b \pmod m$ for $x$.
 
 ```{.cpp file=discrete_log_extended}
 // Returns minimum x for which a ^ x % m = b % m.
@@ -213,35 +213,15 @@ int solve(int a, int b, int m) {
 }
 ```
 
-Độ phức tạp thời gian vẫn là $O(\sqrt{m})$ như trước vì việc rút gọn ban đầu thành $a$ và $m$ nguyên tố cùng nhau được thực hiện trong $O(\log^2 m)$.
+The time complexity remains $O(\sqrt{m})$ as before since the initial reduction to coprime $a$ and $m$ is done in $O(\log^2 m)$.
 
-## Bài tập luyện tập {: #practice-problems}
-* [Spoj - Lũy thừa Modulo Đảo ngược](http://www.spoj.com/problems/MOD/)
+## Practice Problems
+* [Spoj - Power Modulo Inverted](http://www.spoj.com/problems/MOD/)
 * [Topcoder - SplittingFoxes3](https://community.topcoder.com/stat?c=problem_statement&pm=14386&rd=16801)
-* [CodeChef - Nghịch đảo của một hàm](https://www.codechef.com/problems/INVXOR/)
-* [Phương trình khó](https://codeforces.com/gym/101853/problem/G) (giả sử rằng $0^0$ không xác định)
-* [CodeChef - Chef và dãy modulo](https://www.codechef.com/problems/CHEFMOD)
+* [CodeChef - Inverse of a Function](https://www.codechef.com/problems/INVXOR/)
+* [Hard Equation](https://codeforces.com/gym/101853/problem/G) (assume that $0^0$ is undefined)
+* [CodeChef - Chef and Modular Sequence](https://www.codechef.com/problems/CHEFMOD)
 
-## Tham khảo {: #references}
+## References
 * [Wikipedia - Baby-step giant-step](https://en.wikipedia.org/wiki/Baby-step_giant-step)
-* [Trả lời của Zander trên Mathematics StackExchange](https://math.stackexchange.com/a/133054)
-
----
-
-## Checklist
-
-- Original lines: 182
-- Translated lines: 182
-- Code blocks changed? No
-- Inline code changed? No
-- Technical terms kept in English? Yes (e.g., Discrete logarithm, Baby-step giant-step, meet-in-the-middle, time complexity, binary exponentiation algorithm, map, red-black tree, binary search, hash table, unordered_map, Euler's theorem, gcd, coprime)
-- Headings anchors preserved/added correctly? Yes
-- I confirm no character was omitted: YES
-
-Notes:
-- Translated descriptive text.
-- Updated internal links `(binary-exp.md)` and `(phi-function.md)` to `http://127.0.0.1:8000/algebra/binary-exp.md` and `http://127.0.0.1:8000/algebra/phi-function.md` respectively.
-- External links were left unchanged.
-- Code blocks and LaTeX formulas were preserved.
-- Handled heading with `data-toc-label`.
-- The C++ code blocks for `solve` are of `.cpp file=...` type, which is a special MkDocs syntax for including code from a file. This was preserved.
+* [Answer by Zander on Mathematics StackExchange](https://math.stackexchange.com/a/133054)
