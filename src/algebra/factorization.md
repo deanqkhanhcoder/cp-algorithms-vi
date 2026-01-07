@@ -3,25 +3,25 @@ tags:
   - Original
 ---
 
-# Phân tích thừa số nguyên tố
+# Integer factorization
 
-Trong bài viết này, chúng tôi liệt kê một số thuật toán để phân tích thừa số nguyên tố, mỗi thuật toán có thể nhanh hoặc chậm ở các mức độ khác nhau tùy thuộc vào đầu vào của chúng.
+In this article we list several algorithms for the factorization of integers, each of which can be either fast or varying levels of slow depending on their input.
 
-Lưu ý, nếu số mà bạn muốn phân tích thừa số thực sự là một số nguyên tố, hầu hết các thuật toán sẽ chạy rất chậm. Điều này đặc biệt đúng đối với các thuật toán phân tích thừa số của Fermat, Pollard p-1 và Pollard's rho.
-Do đó, có ý nghĩa nhất là thực hiện một [kiểm tra tính nguyên tố](primality_tests.md) xác suất (hoặc tất định nhanh) trước khi cố gắng phân tích thừa số.
+Notice, if the number that you want to factorize is actually a prime number, most of the algorithms will run very slowly. This is especially true for Fermat's, Pollard's p-1 and Pollard's rho factorization algorithms.
+Therefore, it makes the most sense to perform a probabilistic (or a fast deterministic) [primality test](primality_tests.md) before trying to factorize the number.
 
-## Phép chia thử
+## Trial division
 
-Đây là thuật toán cơ bản nhất để tìm một phân tích thừa số nguyên tố.
+This is the most basic algorithm to find a prime factorization.
 
-Chúng ta chia cho mỗi ước có thể có $d$.
-Có thể quan sát thấy rằng không thể tất cả các thừa số nguyên tố của một hợp số $n$ đều lớn hơn $\sqrt{n}$.
-Do đó, chúng ta chỉ cần kiểm tra các ước $2 \le d \le \sqrt{n}$, điều này cho chúng ta phân tích thừa số nguyên tố trong $O(\sqrt{n})$.
-(Đây là [thời gian đa thức giả](https://en.wikipedia.org/wiki/Pseudo-polynomial_time), tức là đa thức theo giá trị của đầu vào nhưng là hàm mũ theo số bit của đầu vào.)
+We divide by each possible divisor $d$.
+It can be observed that it is impossible for all prime factors of a composite number $n$ to be bigger than $\sqrt{n}$.
+Therefore, we only need to test the divisors $2 \le d \le \sqrt{n}$, which gives us the prime factorization in $O(\sqrt{n})$.
+(This is [pseudo-polynomial time](https://en.wikipedia.org/wiki/Pseudo-polynomial_time), i.e. polynomial in the value of the input but exponential in the number of bits of the input.)
 
-Ước nhỏ nhất phải là một số nguyên tố.
-Chúng ta loại bỏ số đã được phân tích và tiếp tục quá trình.
-Nếu chúng ta không thể tìm thấy bất kỳ ước nào trong phạm vi $[2; \sqrt{n}]$, thì chính số đó phải là số nguyên tố.
+The smallest divisor must be a prime number.
+We remove the factored number, and continue the process.
+If we cannot find any divisor in the range $[2; \sqrt{n}]$, then the number itself has to be prime.
 
 ```{.cpp file=factorization_trial_division1}
 vector<long long> trial_division1(long long n) {
@@ -38,12 +38,12 @@ vector<long long> trial_division1(long long n) {
 }
 ```
 
-### Phân tích bằng bánh xe
+### Wheel factorization
 
-Đây là một tối ưu hóa của phép chia thử.
-Một khi chúng ta biết rằng số đó không chia hết cho 2, chúng ta không cần phải kiểm tra các số chẵn khác.
-Điều này để lại cho chúng ta chỉ còn $50\%$ số để kiểm tra.
-Sau khi phân tích thừa số 2 và nhận được một số lẻ, chúng ta có thể chỉ cần bắt đầu với 3 và chỉ đếm các số lẻ khác.
+This is an optimization of the trial division.
+Once we know that the number is not divisible by 2, we don't need to check other even numbers.
+This leaves us with only $50\%$ of the numbers to check.
+After factoring out 2, and getting an odd number, we can simply start with 3 and only count other odd numbers.
 
 ```{.cpp file=factorization_trial_division2}
 vector<long long> trial_division2(long long n) {
@@ -64,16 +64,16 @@ vector<long long> trial_division2(long long n) {
 }
 ```
 
-Phương pháp này có thể được mở rộng thêm.
-Nếu số đó không chia hết cho 3, chúng ta cũng có thể bỏ qua tất cả các bội số khác của 3 trong các tính toán trong tương lai.
-Vì vậy, chúng ta chỉ cần kiểm tra các số $5, 7, 11, 13, 17, 19, 23, \dots$.
-Chúng ta có thể quan sát một mẫu của các số còn lại này.
-Chúng ta cần kiểm tra tất cả các số có $d \bmod 6 = 1$ và $d \bmod 6 = 5$.
-Vì vậy, điều này để lại cho chúng ta chỉ còn $33.3\%$ số để kiểm tra.
-Chúng ta có thể thực hiện điều này bằng cách phân tích thừa số nguyên tố 2 và 3 trước, sau đó chúng ta bắt đầu với 5 và chỉ đếm các số dư $1$ và $5$ modulo $6$.
+This method can be extended further.
+If the number is not divisible by 3, we can also ignore all other multiples of 3 in the future computations.
+So we only need to check the numbers $5, 7, 11, 13, 17, 19, 23, \dots$.
+We can observe a pattern of these remaining numbers.
+We need to check all numbers with $d \bmod 6 = 1$ and $d \bmod 6 = 5$.
+So this leaves us with only $33.3\%$ percent of the numbers to check.
+We can implement this by factoring out the primes 2 and 3 first, after which we start with 5 and only count remainders $1$ and $5$ modulo $6$.
 
-Đây là một triển khai cho các số nguyên tố 2, 3 và 5.
-Thuận tiện để lưu trữ các bước nhảy trong một mảng.
+Here is an implementation for the prime number 2, 3 and 5.
+It is convenient to store the skipping strides in an array.
 
 ```{.cpp file=factorization_trial_division3}
 vector<long long> trial_division3(long long n) {
@@ -100,12 +100,12 @@ vector<long long> trial_division3(long long n) {
 }
 ```
 
-Nếu chúng ta tiếp tục mở rộng phương pháp này để bao gồm cả các số nguyên tố nhiều hơn nữa, có thể đạt được tỷ lệ phần trăm tốt hơn, nhưng danh sách bỏ qua sẽ trở nên lớn hơn. 
+If we continue exending this method to include even more primes, better percentages can be reached, but the skip lists will become larger. 
 
-### Các số nguyên tố được tính trước
+### Precomputed primes
 
-Mở rộng phương pháp phân tích bằng bánh xe vô thời hạn, chúng ta sẽ chỉ còn lại các số nguyên tố để kiểm tra. 
-Một cách tốt để kiểm tra điều này là tính trước tất cả các số nguyên tố bằng [Sàng Eratosthenes](sieve-of-eratosthenes.md) cho đến $\sqrt{n}$, và kiểm tra chúng riêng lẻ.
+Extending the wheel factorization method indefinitely, we will only be left with prime numbers to check. 
+A good way of checking this is to precompute all prime numbers with the [Sieve of Eratosthenes](sieve-of-eratosthenes.md) until $\sqrt{n}$, and test them individually.
 
 ```{.cpp file=factorization_trial_division4}
 vector<long long> primes;
@@ -126,14 +126,14 @@ vector<long long> trial_division4(long long n) {
 }
 ```
 
-## Phương pháp phân tích thừa số của Fermat
+## Fermat's factorization method
 
-Chúng ta có thể viết một hợp số lẻ $n = p \cdot q$ dưới dạng hiệu của hai số chính phương $n = a^2 - b^2$:
+We can write an odd composite number $n = p \cdot q$ as the difference of two squares $n = a^2 - b^2$:
 
 $$n = \left(\frac{p + q}{2}\right)^2 - \left(\frac{p - q}{2}\right)^2$$
 
-Phương pháp phân tích thừa số của Fermat cố gắng khai thác thực tế này bằng cách đoán số chính phương đầu tiên $a^2$, và kiểm tra xem phần còn lại, $b^2 = a^2 - n$, có phải là một số chính phương không.
-Nếu có, thì chúng ta đã tìm thấy các thừa số $a - b$ và $a + b$ của $n$.
+Fermat's factorization method tries to exploit this fact by guessing the first square $a^2$, and checking if the remaining part, $b^2 = a^2 - n$, is also a square number.
+If it is, then we have found the factors $a - b$ and $a + b$ of $n$.
 
 ```cpp
 int fermat(int n) {
@@ -149,50 +149,50 @@ int fermat(int n) {
 }
 ```
 
-Phương pháp phân tích thừa số này có thể rất nhanh nếu sự khác biệt giữa hai thừa số $p$ và $q$ là nhỏ.
-Thuật toán chạy trong thời gian $O(|p - q|)$.
-Tuy nhiên, trong thực tế, phương pháp này hiếm khi được sử dụng. Một khi các thừa số cách xa nhau hơn, nó cực kỳ chậm. 
+This factorization method can be very fast if the difference between the two factors $p$ and $q$ is small.
+The algorithm runs in $O(|p - q|)$ time.
+In practice though, this method is rarely used. Once factors become further apart, it is extremely slow. 
 
-Tuy nhiên, vẫn còn một số lượng lớn các tùy chọn tối ưu hóa liên quan đến phương pháp này.
-Bằng cách xem xét các bình phương $a^2$ modulo một số nhỏ cố định, có thể quan sát thấy rằng một số giá trị $a$ nhất định không cần phải được xem xét, vì chúng không thể tạo ra một số chính phương $a^2 - n$.
+However, there are still a large number of optimization options regarding this approach.
+By looking at the squares $a^2$ modulo a fixed small number, it can be observed that certain values $a$ don't have to be viewed, since they cannot produce a square number $a^2 - n$.
 
 
-## Phương pháp $p - 1$ của Pollard { data-toc-label="Pollard's <script type='math/tex'>p - 1</script> method" }
+## Pollard's $p - 1$ method { data-toc-label="Pollard's <script type='math/tex'>p - 1</script> method" }
 
-Rất có khả năng một số $n$ có ít nhất một thừa số nguyên tố $p$ sao cho $p - 1$ là $\mathrm{B}$**-siêu trơn** đối với $\mathrm{B}$ nhỏ. Một số nguyên $m$ được cho là siêu trơn $\mathrm{B}$ nếu mọi lũy thừa nguyên tố chia hết cho $m$ đều không quá $\mathrm{B}$. Về mặt hình thức, cho $\mathrm{B} \ge 1$ và $m$ là một số nguyên dương bất kỳ. Giả sử phân tích thừa số nguyên tố của $m$ là $m = \prod {q_i}^{e_i}$, trong đó mỗi $q_i$ là một số nguyên tố và $e_i \ge 1$. Khi đó $m$ là siêu trơn $\mathrm{B}$ nếu, đối với mọi $i$, ${q_i}^{e_i} \le \mathrm{B}$. 
- Ví dụ: phân tích thừa số nguyên tố của $4817191$ là $1303 \cdot 3697$.
-Và các giá trị, $1303 - 1$ và $3697 - 1$, lần lượt là siêu trơn $31$ và siêu trơn $16$, vì $1303 - 1 = 2 \cdot 3 \cdot 7 \cdot 31$ và $3697 - 1 = 2^4 \cdot 3 \cdot 7 \cdot 11$.
-Năm 1974, John Pollard đã phát minh ra một phương pháp để trích xuất các thừa số $p$, sao cho $p-1$ là siêu trơn $\mathrm{B}$, từ một hợp số.
+It is very likely that a number $n$ has at least one prime factor $p$ such that $p - 1$ is $\mathrm{B}$**-powersmooth** for small $\mathrm{B}$. An integer $m$ is said to be $\mathrm{B}$-powersmooth if every prime power dividing $m$ is at most $\mathrm{B}$. Formally, let $\mathrm{B} \geqslant 1$ and let $m$ be any positive integer. Suppose the prime factorization of $m$ is $m = \prod {q_i}^{e_i}$, where each $q_i$ is a prime and $e_i \geqslant 1$. Then $m$ is $\mathrm{B}$-powersmooth if, for all $i$, ${q_i}^{e_i} \leqslant \mathrm{B}$. 
+E.g. the prime factorization of $4817191$ is $1303 \cdot 3697$.
+And the values, $1303 - 1$ and $3697 - 1$, are $31$-powersmooth and $16$-powersmooth respectively, because $1303 - 1 = 2 \cdot 3 \cdot 7 \cdot 31$ and $3697 - 1 = 2^4 \cdot 3 \cdot 7 \cdot 11$.
+In 1974 John Pollard invented a method to extract factors $p$, s.t. $p-1$ is $\mathrm{B}$-powersmooth, from a composite number.
 
-Ý tưởng xuất phát từ [định lý nhỏ Fermat](phi-function.md#application).
-Đặt phân tích thừa số của $n$ là $n = p \cdot q$.
-Nó nói rằng nếu $a$ nguyên tố cùng nhau với $p$, thì mệnh đề sau đây đúng:
+The idea comes from [Fermat's little theorem](phi-function.md#application).
+Let a factorization of $n$ be $n = p \cdot q$.
+It says that if $a$ is coprime to $p$, the following statement holds:
 
 $$a^{p - 1} \equiv 1 \pmod{p}$$
 
-Điều này cũng có nghĩa là
+This also means that
 
-$${\left(a^{(p - 1)}\right)}^k \equiv a^{k \cdot (p - 1)} \equiv 1 \pmod{p}.$$ 
+$${\left(a^{(p - 1)}\right)}^k \equiv a^{k \cdot (p - 1)} \equiv 1 \pmod{p}.$$
 
-Vì vậy, đối với bất kỳ $M$ nào với $p - 1 ~|~ M$, chúng ta biết rằng $a^M \equiv 1$.
-Điều này có nghĩa là $a^M - 1 = p \cdot r$, và do đó cũng có $p ~|~ \gcd(a^M - 1, n)$.
+So for any $M$ with $p - 1 ~|~ M$ we know that $a^M \equiv 1$.
+This means that $a^M - 1 = p \cdot r$, and because of that also $p ~|~ \gcd(a^M - 1, n)$.
 
-Do đó, nếu $p - 1$ đối với một thừa số $p$ của $n$ chia hết cho $M$, chúng ta có thể trích xuất một thừa số bằng cách sử dụng [thuật toán Euclid](euclid-algorithm.md).
+Therefore, if $p - 1$ for a factor $p$ of $n$ divides $M$, we can extract a factor using [Euclid's algorithm](euclid-algorithm.md).
 
-Rõ ràng, $M$ nhỏ nhất là bội số của mọi số siêu trơn $\mathrm{B}$ là $\text{lcm}(1,~2~,3~,4~,~	ext{dots},~B)$.
-Hoặc cách khác:
+It is clear, that the smallest $M$ that is a multiple of every $\mathrm{B}$-powersmooth number is $\text{lcm}(1,~2~,3~,4~,~\dots,~B)$.
+Or alternatively:
 
-$$M = \prod_{\text{số nguyên tố } q \le B} q^{\lfloor \log_q B \rfloor}$$
+$$M = \prod_{\text{prime } q \le B} q^{\lfloor \log_q B \rfloor}$$
 
-Lưu ý, nếu $p-1$ chia hết cho $M$ đối với tất cả các thừa số nguyên tố $p$ của $n$, thì $\gcd(a^M - 1, n)$ sẽ chỉ là $n$.
-Trong trường hợp này, chúng ta không nhận được một thừa số. 
-Do đó, chúng ta sẽ cố gắng thực hiện $\gcd$ nhiều lần, trong khi chúng ta tính $M$.
+Notice, if $p-1$ divides $M$ for all prime factors $p$ of $n$, then $\gcd(a^M - 1, n)$ will just be $n$.
+In this case we don't receive a factor.
+Therefore, we will try to perform the $\gcd$ multiple times, while we compute $M$.
 
-Một số hợp số không có các thừa số $p$ sao cho $p-1$ là siêu trơn $\mathrm{B}$ đối với $\mathrm{B}$ nhỏ.
-Ví dụ, đối với hợp số $100~000~000~000~000~493 = 763~013 \cdot 131~059~365~961$, các giá trị $p-1$ lần lượt là siêu trơn $190~753$ và siêu trơn $1~092~161~383$.
-Chúng ta sẽ phải chọn $B \geq 190~753$ để phân tích thừa số.
+Some composite numbers don't have factors $p$ s.t. $p-1$ is $\mathrm{B}$-powersmooth for small $\mathrm{B}$.
+For example, for the composite number $100~000~000~000~000~493 = 763~013 \cdot 131~059~365~961$, values $p-1$ are $190~753$-powersmooth and $1~092~161~383$-powersmooth correspondingly.
+We will have to choose $B \geq 190~753$ to factorize the number.
 
-Trong triển khai sau, chúng ta bắt đầu với $\mathrm{B} = 10$ và tăng $\mathrm{B}$ sau mỗi lần lặp.
+In the following implementation we start with $\mathrm{B} = 10$ and increase $\mathrm{B}$ after each each iteration.
 
 ```{.cpp file=factorization_p_minus_1}
 long long pollards_p_minus_1(long long n) {
@@ -204,7 +204,7 @@ long long pollards_p_minus_1(long long n) {
         if (g > 1)
             return g;
 
-        // tính a^M
+        // compute a^M
         for (int p : primes) {
             if (p >= B)
                 continue;
@@ -224,57 +224,57 @@ long long pollards_p_minus_1(long long n) {
 
 ```
 
-Lưu ý rằng đây là một thuật toán xác suất.
-Một hệ quả của điều này là có khả năng thuật toán không thể tìm thấy một thừa số nào cả. 
+Observe that this is a probabilistic algorithm.
+A consequence of this is that there is a possibility of the algorithm being unable to find a factor at all. 
 
-Độ phức tạp là $O(B \log B \log^2 n)$ mỗi lần lặp.
+The complexity is $O(B \log B \log^2 n)$ per iteration.
 
-## Thuật toán rho của Pollard
+## Pollard's rho algorithm
 
-Thuật toán Rho của Pollard là một thuật toán phân tích thừa số khác của John Pollard.
+Pollard's Rho Algorithm is yet another factorization algorithm from John Pollard.
 
-Đặt phân tích thừa số nguyên tố của một số là $n = p q$.
-Thuật toán xem xét một dãy giả ngẫu nhiên $\{x_i\} = \{x_0,~f(x_0),~f(f(x_0)),~	ext{dots}\}$ trong đó $f$ là một hàm đa thức, thường chọn $f(x) = (x^2 + c) \bmod n$ với $c = 1$.
+Let the prime factorization of a number be $n = p q$.
+The algorithm looks at a pseudo-random sequence $\{x_i\} = \{x_0,~f(x_0),~f(f(x_0)),~\dots\}$ where $f$ is a polynomial function, usually $f(x) = (x^2 + c) \bmod n$ is chosen with $c = 1$.
 
-Trong trường hợp này, chúng ta không quan tâm đến dãy $\{x_i\}$. 
-Chúng ta quan tâm hơn đến dãy $\{x_i \bmod p\}$.
-Vì $f$ là một hàm đa thức, và tất cả các giá trị đều nằm trong phạm vi $[0;~p)$, dãy này cuối cùng sẽ hội tụ thành một vòng lặp.
-**Nghịch lý ngày sinh** thực sự cho thấy rằng số phần tử dự kiến là $O(\sqrt{p})$ cho đến khi sự lặp lại bắt đầu.
-Nếu $p$ nhỏ hơn $\sqrt{n}$, sự lặp lại có khả năng bắt đầu trong $O(\sqrt[4]{n})$.
+In this instance, we are not interested in the sequence $\{x_i\}$. 
+We are more interested in the sequence $\{x_i \bmod p\}$.
+Since $f$ is a polynomial function, and all the values are in the range $[0;~p)$, this sequence will eventually converge into a loop.
+The **birthday paradox** actually suggests that the expected number of elements is $O(\sqrt{p})$ until the repetition starts.
+If $p$ is smaller than $\sqrt{n}$, the repetition will likely start in $O(\sqrt[4]{n})$.
 
-Đây là một hình dung về một dãy $\{x_i \bmod p\}$ với $n = 2206637$, $p = 317$, $x_0 = 2$ và $f(x) = x^2 + 1$.
-Từ hình dạng của dãy, bạn có thể thấy rất rõ tại sao thuật toán được gọi là thuật toán $\rho$ của Pollard.
+Here is a visualization of such a sequence $\{x_i \bmod p\}$ with $n = 2206637$, $p = 317$, $x_0 = 2$ and $f(x) = x^2 + 1$.
+From the form of the sequence you can see very clearly why the algorithm is called Pollard's $\rho$ algorithm.
 
 <div style="text-align: center;">
-  <img src="pollard_rho.png" alt="Minh họa thuật toán rho của Pollard">
+  <img src="pollard_rho.png" alt="Pollard's rho visualization">
 </div>
 
-Tuy nhiên, vẫn còn một câu hỏi mở.
-Làm thế nào chúng ta có thể khai thác các thuộc tính của dãy $\{x_i \bmod p\}$ để có lợi cho chúng ta mà không cần biết chính số $p$ đó?
+Yet, there is still an open question.
+How can we exploit the properties of the sequence $\{x_i \bmod p\}$ to our advantage without even knowing the number $p$ itself?
 
-Thực ra khá dễ dàng.
-Có một chu trình trong dãy $\{x_i \bmod p\}_{i \le j}$ khi và chỉ khi có hai chỉ số $s, t \le j$ sao cho $x_s \equiv x_t \bmod p$.
-Phương trình này có thể được viết lại là $x_s - x_t \equiv 0 \bmod p$ cũng giống như $p ~|~ \gcd(x_s - x_t, n)$.
+It's actually quite easy.
+There is a cycle in the sequence $\{x_i \bmod p\}_{i \le j}$ if and only if there are two indices $s, t \le j$ such that $x_s \equiv x_t \bmod p$.
+This equation can be rewritten as $x_s - x_t \equiv 0 \bmod p$ which is the same as $p ~|~ \gcd(x_s - x_t, n)$.
 
-Do đó, nếu chúng ta tìm thấy hai chỉ số $s$ và $t$ với $g = \gcd(x_s - x_t, n) > 1$, chúng ta đã tìm thấy một chu trình và cũng là một thừa số $g$ của $n$.
-Có thể là $g = n$.
-Trong trường hợp này, chúng ta chưa tìm thấy một thừa số thích hợp, vì vậy chúng ta phải lặp lại thuật toán với một tham số khác (giá trị bắt đầu $x_0$ khác, hằng số $c$ khác trong hàm đa thức $f$). 
+Therefore, if we find two indices $s$ and $t$ with $g = \gcd(x_s - x_t, n) > 1$, we have found a cycle and also a factor $g$ of $n$.
+It is possible that $g = n$.
+In this case we haven't found a proper factor, so we must repeat the algorithm with a different parameter (different starting value $x_0$, different constant $c$ in the polynomial function $f$).
 
-Để tìm chu trình, chúng ta có thể sử dụng bất kỳ thuật toán phát hiện chu trình phổ biến nào.
+To find the cycle, we can use any common cycle detection algorithm.
 
-### Thuật toán tìm chu trình của Floyd
+### Floyd's cycle-finding algorithm
 
-Thuật toán này tìm một chu trình bằng cách sử dụng hai con trỏ di chuyển trên dãy với tốc độ khác nhau.
-Trong mỗi lần lặp, con trỏ đầu tiên sẽ tiến một phần tử, trong khi con trỏ thứ hai tiến đến mọi phần tử khác. 
-Sử dụng ý tưởng này, dễ dàng quan sát thấy rằng nếu có một chu trình, tại một thời điểm nào đó, con trỏ thứ hai sẽ quay lại để gặp con trỏ đầu tiên trong các vòng lặp. 
-Nếu độ dài chu trình là $\lambda$ và $\mu$ là chỉ số đầu tiên mà chu trình bắt đầu, thì thuật toán sẽ chạy trong thời gian $O(\lambda + \mu)$.
+This algorithm finds a cycle by using two pointers moving over the sequence at differing speeds.
+During each iteration, the first pointer will advance one element over, while the second pointer advances to every other element. 
+Using this idea it is easy to observe that if there is a cycle, at some point the second pointer will come around to meet the first one during the loops. 
+If the cycle length is $\lambda$ and the $\mu$ is the first index at which the cycle starts, then the algorithm will run in $O(\lambda + \mu)$ time.
 
-Thuật toán này còn được gọi là [thuật toán Rùa và Thỏ](../others/tortoise_and_hare.md), dựa trên câu chuyện ngụ ngôn trong đó một con rùa (con trỏ chậm) và một con thỏ (con trỏ nhanh hơn) có một cuộc đua.
+This algorithm is also known as the [Tortoise and Hare algorithm](../others/tortoise_and_hare.md), based on the tale in which a tortoise (the slow pointer) and a hare (the faster pointer) have a race.
 
-Thực sự có thể xác định tham số $\lambda$ và $\mu$ bằng thuật toán này (cũng trong thời gian $O(\lambda + \mu)$ và không gian $O(1)$).
-Khi một chu trình được phát hiện, thuật toán sẽ trả về 'True'. 
-Nếu dãy không có chu trình, thì hàm sẽ lặp vô tận.
-Tuy nhiên, bằng cách sử dụng Thuật toán Rho của Pollard, điều này có thể được ngăn chặn. 
+It is actually possible to determine the parameter $\lambda$ and $\mu$ using this algorithm (also in $O(\lambda + \mu)$ time and $O(1)$ space).
+When a cycle is detected, the algorithm will return 'True'. 
+If the sequence doesn't have a cycle, then the function will loop endlessly.
+However, using Pollard's Rho Algorithm, this can be prevented. 
 
 ```text
 function floyd(f, x0):
@@ -286,10 +286,10 @@ function floyd(f, x0):
     return true
 ```
 
-### Cài đặt
+### Implementation
 
-Đầu tiên, đây là một triển khai sử dụng **thuật toán tìm chu trình của Floyd**.
-Thuật toán thường chạy trong thời gian $O(\sqrt[4]{n} \log(n))$.
+First, here is an implementation using the **Floyd's cycle-finding algorithm**.
+The algorithm generally runs in $O(\sqrt[4]{n} \log(n))$ time.
 
 ```{.cpp file=pollard_rho}
 long long mult(long long a, long long b, long long mod) {
@@ -314,28 +314,27 @@ long long rho(long long n, long long x0=2, long long c=1) {
 }
 ```
 
-Bảng sau đây cho thấy các giá trị của $x$ và $y$ trong quá trình thuật toán đối với $n = 2206637$, $x_0 = 2$ và $c = 1$.
+The following table shows the values of $x$ and $y$ during the algorithm for $n = 2206637$, $x_0 = 2$ and $c = 1$.
 
-$$ 
-\newcommand\T{\Rule{0pt}{1em}{.3em}}
-\begin{array}{|l|l|l|l|l|l|} 
-\hline
-i & x_i \bmod n & x_{2i} \bmod n & x_i \bmod 317 & x_{2i} \bmod 317 & \gcd(x_i - x_{2i}, n) \\ 
-\hline
-0   & 2       & 2       & 2       & 2       & -   \ 
-1   & 5       & 26      & 5       & 26      & 1   \ 
-2   & 26      & 458330  & 26      & 265     & 1   \ 
-3   & 677     & 1671573 & 43      & 32      & 1   \ 
-4   & 458330  & 641379  & 265     & 88      & 1   \ 
-5   & 1166412 & 351937  & 169     & 67      & 1   \ 
-6   & 1671573 & 2193080 & 32      & 74      & 1   \ 
-7   & 2193080 & 2088470 & 74      & 74      & 317 \ 
-\hline
-\end{array}
 $$
+\newcommand\T{\Rule{0pt}{1em}{.3em}}
+\begin{array}{|l|l|l|l|l|l|}
+\hline
+i & x_i \bmod n & x_{2i} \bmod n & x_i \bmod 317 & x_{2i} \bmod 317 & \gcd(x_i - x_{2i}, n) \\
+\hline
+0   & 2       & 2       & 2       & 2       & -   \\
+1   & 5       & 26      & 5       & 26      & 1   \\
+2   & 26      & 458330  & 26      & 265     & 1   \\
+3   & 677     & 1671573 & 43      & 32      & 1   \\
+4   & 458330  & 641379  & 265     & 88      & 1   \\
+5   & 1166412 & 351937  & 169     & 67      & 1   \\
+6   & 1671573 & 1264682 & 32      & 169     & 1   \\
+7   & 2193080 & 2088470 & 74      & 74      & 317 \\
+\hline
+\end{array}$$
 
-Việc triển khai sử dụng một hàm `mult`, nhân hai số nguyên $\le 10^{18}$ mà không bị tràn bằng cách sử dụng kiểu `__int128` của GCC cho số nguyên 128-bit.
-Nếu không có GCC, bạn có thể sử dụng một ý tưởng tương tự như [lũy thừa nhị phân](binary-exp.md).
+The implementation uses a function `mult`, that multiplies two integers $\le 10^{18}$ without overflow by using a GCC's type `__int128` for 128-bit integer.
+If GCC is not available, you can using a similar idea as [binary exponentiation](binary-exp.md).
 
 ```{.cpp file=pollard_rho_mult2}
 long long mult(long long a, long long b, long long mod) {
@@ -350,18 +349,18 @@ long long mult(long long a, long long b, long long mod) {
 }
 ```
 
-Ngoài ra, bạn cũng có thể triển khai [phép nhân Montgomery](montgomery_multiplication.md).
+Alternatively you can also implement the [Montgomery multiplication](montgomery_multiplication.md).
 
-Như đã nêu trước đó, nếu $n$ là hợp số và thuật toán trả về $n$ là thừa số, bạn phải lặp lại quy trình với các tham số $x_0$ và $c$ khác nhau.
-Ví dụ: lựa chọn $x_0 = c = 1$ sẽ không phân tích được $25 = 5 \cdot 5$.
-Thuật toán sẽ trả về $25$.
-Tuy nhiên, lựa chọn $x_0 = 1$, $c = 2$ sẽ phân tích được nó.
+As stated previously, if $n$ is composite and the algorithm returns $n$ as factor, you have to repeat the procedure with different parameters $x_0$ and $c$.
+E.g. the choice $x_0 = c = 1$ will not factor $25 = 5 \cdot 5$.
+The algorithm will return $25$.
+However, the choice $x_0 = 1$, $c = 2$ will factor it.
 
-### Thuật toán của Brent
+### Brent's algorithm
 
-Brent triển khai một phương pháp tương tự như Floyd, sử dụng hai con trỏ.
-Sự khác biệt là thay vì tiến các con trỏ lần lượt một và hai vị trí, chúng được tiến theo lũy thừa của hai. 
-Ngay khi $2^i$ lớn hơn $\lambda$ và $\mu$, chúng ta sẽ tìm thấy chu trình.
+Brent implements a similar method to Floyd, using two pointers.
+The difference being that instead of advancing the pointers by one and two places respectively, they are advanced by powers of two. 
+As soon as $2^i$ is greater than $\lambda$ and $\mu$, we will find the cycle.
 
 ```text
 function floyd(f, x0):
@@ -378,12 +377,12 @@ function floyd(f, x0):
     return true
 ```
 
-Thuật toán của Brent cũng chạy trong thời gian tuyến tính, nhưng nói chung nhanh hơn của Floyd, vì nó sử dụng ít lần đánh giá hàm $f$ hơn.
+Brent's algorithm also runs in linear time, but is generally faster than Floyd's, since it uses less evaluations of the function $f$.
 
-### Cài đặt
+### Implementation
 
-Việc triển khai thẳng thắn của thuật toán Brent có thể được tăng tốc bằng cách bỏ qua các số hạng $x_l - x_k$ nếu $k < \frac{3 \cdot l}{2}$.
-Ngoài ra, thay vì thực hiện tính toán $\gcd$ ở mỗi bước, chúng ta nhân các số hạng và chỉ thực sự kiểm tra $\gcd$ sau vài bước và quay lại nếu vượt quá.
+The straightforward implementation of Brent's algorithm can be sped up by omitting the terms $x_l - x_k$ if $k < \frac{3 \cdot l}{2}$.
+In addition, instead of performing the $\gcd$ computation at every step, we multiply the terms and only actually check $\gcd$ every few steps and backtrack if overshot.
 
 ```{.cpp file=pollard_rho_brent}
 long long brent(long long n, long long x0=2, long long c=1) {
@@ -420,13 +419,11 @@ long long brent(long long n, long long x0=2, long long c=1) {
 }
 ```
 
-Sự kết hợp giữa phép chia thử cho các số nguyên tố nhỏ cùng với phiên bản thuật toán rho của Pollard của Brent tạo nên một thuật toán phân tích thừa số rất mạnh mẽ.
+The combination of a trial division for small prime numbers together with Brent's version of Pollard's rho algorithm makes a very powerful factorization algorithm.
 
-## Bài tập luyện tập
+## Practice Problems
 
 - [SPOJ - FACT0](https://www.spoj.com/problems/FACT0/)
 - [SPOJ - FACT1](https://www.spoj.com/problems/FACT1/)
 - [SPOJ - FACT2](https://www.spoj.com/problems/FACT2/)
 - [GCPC 15 - Divisions](https://codeforces.com/gym/100753)
-
-```

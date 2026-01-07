@@ -4,51 +4,51 @@ tags:
 e_maxx_link: levit_algorithm
 ---
 
-# Thuật toán D´Esopo-Pape
+# D´Esopo-Pape algorithm
 
-Cho một đồ thị có $n$ đỉnh và $m$ cạnh với trọng số $w_i$ và một đỉnh bắt đầu $v_0$.
-Nhiệm vụ là tìm đường đi ngắn nhất từ đỉnh $v_0$ đến mọi đỉnh khác.
+Given a graph with $n$ vertices and $m$ edges with weights $w_i$ and a starting vertex $v_0$.
+The task is to find the shortest path from the vertex $v_0$ to every other vertex.
 
-Thuật toán của D´Esopo-Pape sẽ hoạt động nhanh hơn thuật toán [Dijkstra](dijkstra.md) và thuật toán [Bellman-Ford](bellman_ford.md) trong hầu hết các trường hợp, và cũng sẽ hoạt động với các cạnh có trọng số âm.
-Tuy nhiên, không hoạt động với các chu trình âm.
+The algorithm from D´Esopo-Pape will work faster than [Dijkstra's algorithm](dijkstra.md) and the [Bellman-Ford algorithm](bellman_ford.md) in most cases, and will also work for negative edges.
+However not for negative cycles.
 
-## Mô tả
+## Description
 
-Gọi mảng $d$ chứa độ dài đường đi ngắn nhất, tức là $d_i$ là độ dài hiện tại của đường đi ngắn nhất từ đỉnh $v_0$ đến đỉnh $i$.
-Ban đầu mảng này được điền với vô cùng cho mỗi đỉnh, ngoại trừ $d_{v_0} = 0$.
-Sau khi thuật toán kết thúc, mảng này sẽ chứa các khoảng cách ngắn nhất.
+Let the array $d$ contain the shortest path lengths, i.e. $d_i$ is the current length of the shortest path from the vertex $v_0$ to the vertex $i$.
+Initially this array is filled with infinity for every vertex, except $d_{v_0} = 0$.
+After the algorithm finishes, this array will contain the shortest distances.
 
-Gọi mảng $p$ chứa các tổ tiên hiện tại, tức là $p_i$ là tổ tiên trực tiếp của đỉnh $i$ trên đường đi ngắn nhất hiện tại từ $v_0$ đến $i$.
-Giống như mảng $d$, mảng $p$ thay đổi dần dần trong quá trình thuật toán và cuối cùng nhận các giá trị cuối cùng.
+Let the array $p$ contain the current ancestors, i.e. $p_i$ is the direct ancestor of the vertex $i$ on the current shortest path from $v_0$ to $i$.
+Just like the array $d$, the array $p$ changes gradually during the algorithm and at the end takes its final values.
 
-Bây giờ đến thuật toán.
-Tại mỗi bước, ba tập hợp các đỉnh được duy trì:
+Now to the algorithm.
+At each step three sets of vertices are maintained:
 
-- $M_0$ - các đỉnh, mà khoảng cách đã được tính toán (mặc dù nó có thể không phải là khoảng cách cuối cùng)
-- $M_1$ - các đỉnh, mà khoảng cách hiện đang được tính toán
-- $M_2$ - các đỉnh, mà khoảng cách chưa được tính toán
+- $M_0$ - vertices, for which the distance has already been calculated (although it might not be the final distance)
+- $M_1$ - vertices, for which the distance currently is calculated
+- $M_2$ - vertices, for which the distance has not yet been calculated
 
-Các đỉnh trong tập $M_1$ được lưu trữ trong một hàng đợi hai đầu (deque).
+The vertices in the set $M_1$ are stored in a bidirectional queue (deque).
 
-Tại mỗi bước của thuật toán, chúng ta lấy một đỉnh từ tập $M_1$ (từ đầu hàng đợi).
-Gọi $u$ là đỉnh được chọn.
-Chúng ta đặt đỉnh $u$ này vào tập $M_0$.
-Sau đó, chúng ta lặp qua tất cả các cạnh đi ra từ đỉnh này.
-Gọi $v$ là đầu kia của cạnh hiện tại, và $w$ là trọng số của nó.
+At each step of the algorithm we take a vertex from the set $M_1$ (from the front of the queue).
+Let $u$ be the selected vertex.
+We put this vertex $u$ into the set $M_0$.
+Then we iterate over all edges coming out of this vertex.
+Let $v$ be the second end of the current edge, and $w$ its weight.
 
-- Nếu $v$ thuộc $M_2$, thì $v$ được chèn vào tập $M_1$ bằng cách chèn nó vào cuối hàng đợi.
-$d_v$ được đặt thành $d_u + w$.
-- Nếu $v$ thuộc $M_1$, thì chúng ta cố gắng cải thiện giá trị của $d_v$: $d_v = \min(d_v, d_u + w)$.
-Vì $v$ đã có trong $M_1$, chúng ta không cần chèn nó vào $M_1$ và hàng đợi.
-- Nếu $v$ thuộc $M_0$, và nếu $d_v$ có thể được cải thiện $d_v > d_u + w$, thì chúng ta cải thiện $d_v$ và chèn đỉnh $v$ trở lại vào tập $M_1$, đặt nó ở đầu hàng đợi.
+- If $v$ belongs to $M_2$, then $v$ is inserted into the set $M_1$ by inserting it at the back of the queue.
+$d_v$ is set to $d_u + w$.
+- If $v$ belongs to $M_1$, then we try to improve the value of $d_v$: $d_v = \min(d_v, d_u + w)$.
+Since $v$ is already in $M_1$, we don't need to insert it into $M_1$ and the queue.
+- If $v$ belongs to $M_0$, and if $d_v$ can be improved $d_v > d_u + w$, then we improve $d_v$ and insert the vertex $v$ back to the set $M_1$, placing it at the beginning of the queue.
 
-Và tất nhiên, với mỗi lần cập nhật trong mảng $d$, chúng ta cũng phải cập nhật phần tử tương ứng trong mảng $p$.
+And of course, with each update in the array $d$ we also have to update the corresponding element in the array $p$.
 
-## Cài đặt
+## Implementation
 
-Chúng ta sẽ sử dụng một mảng $m$ để lưu trữ tập hợp mà mỗi đỉnh hiện đang thuộc về.
+We will use an array $m$ to store in which set each vertex is currently.
 
-```cpp
+```{.cpp file=desopo_pape}
 struct Edge {
     int to, w;
 };
@@ -87,7 +87,7 @@ void shortest_paths(int v0, vector<int>& d, vector<int>& p) {
 }
 ```
 
-## Độ phức tạp
+## Complexity
 
-Thuật toán thường hoạt động khá nhanh - trong hầu hết các trường hợp, thậm chí còn nhanh hơn thuật toán của Dijkstra.
-Tuy nhiên, có những trường hợp mà thuật toán mất thời gian theo cấp số nhân, làm cho nó không phù hợp trong trường hợp xấu nhất. Xem các cuộc thảo luận trên [Stack Overflow](https://stackoverflow.com/a/67642821) và [Codeforces](https://codeforces.com/blog/entry/3793) để tham khảo.
+The algorithm usually performs quite fast - in most cases, even faster than Dijkstra's algorithm.
+However there exist cases for which the algorithm takes exponential time, making it unsuitable in the worst-case. See discussions on [Stack Overflow](https://stackoverflow.com/a/67642821) and [Codeforces](https://codeforces.com/blog/entry/3793) for reference.

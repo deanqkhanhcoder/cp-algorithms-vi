@@ -76,17 +76,5 @@ plugins:
       token: !ENV MKDOCS_GIT_COMMITTERS_APIKEY
       enabled: !ENV [MKDOCS_ENABLE_GIT_COMMITTERS, False]
       branch: !ENV [MKDOCS_GIT_COMMITERS_BRANCH, main]
-  - macros
+  - macros:
   - rss
-
-extra:
-  social:
-    - icon: fontawesome/brands/github
-      link: https://github.com/cp-algorithms/cp-algorithms
-    - icon: fontawesome/brands/discord
-      link: https://discord.gg/HZ5AecN3KX
-    - icon: fontawesome/solid/circle-dollar-to-slot
-      link: https://github.com/sponsors/cp-algorithms
-  analytics:
-    provider: google
-    property: G-7FLS2HCYHH

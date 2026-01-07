@@ -4,67 +4,67 @@ tags:
 e_maxx_link: intersecting_segments
 ---
 
-# Tìm một cặp đoạn thẳng giao nhau
+# Search for a pair of intersecting segments
 
-Cho $n$ đoạn thẳng trên mặt phẳng. Yêu cầu kiểm tra xem có ít nhất hai trong số chúng giao nhau hay không.
-Nếu câu trả lời là có, thì in ra cặp đoạn thẳng giao nhau này; chỉ cần chọn bất kỳ cặp nào trong số nhiều câu trả lời.
+Given $n$ line segments on the plane. It is required to check whether at least two of them intersect with each other.
+If the answer is yes, then print this pair of intersecting segments; it is enough to choose any of them among several answers.
 
-Thuật toán giải pháp ngây thơ là lặp qua tất cả các cặp đoạn thẳng trong $O(n^2)$ và kiểm tra xem mỗi cặp có giao nhau hay không. Bài viết này mô tả một thuật toán với thời gian chạy là $O(n \log n)$, dựa trên **thuật toán đường quét**.
+The naive solution algorithm is to iterate over all pairs of segments in $O(n^2)$ and check for each pair whether they intersect or not. This article describes an algorithm with the runtime time $O(n \log n)$, which is based on the **sweep line algorithm**.
 
-## Thuật toán
+## Algorithm
 
-Hãy vẽ một đường thẳng đứng $x = -\infty$ trong đầu và bắt đầu di chuyển đường thẳng này sang phải.
-Trong quá trình di chuyển của nó, đường thẳng này sẽ gặp các đoạn thẳng, và mỗi khi một đoạn thẳng giao với đường thẳng của chúng ta, nó giao nhau tại đúng một điểm (chúng ta sẽ giả định rằng không có đoạn thẳng nào thẳng đứng).
-
-<div style="text-align: center;">
-  <img src="sweep_line_1.png" alt="đường quét và giao điểm của đoạn thẳng">
-</div>
-
-Do đó, đối với mỗi đoạn thẳng, tại một thời điểm nào đó, điểm của nó sẽ xuất hiện trên đường quét, sau đó với sự di chuyển của đường thẳng, điểm này sẽ di chuyển, và cuối cùng, tại một thời điểm nào đó, đoạn thẳng sẽ biến mất khỏi đường thẳng.
-
-Chúng ta quan tâm đến **thứ tự tương đối của các đoạn thẳng** dọc theo đường thẳng đứng.
-Cụ thể, chúng ta sẽ lưu trữ một danh sách các đoạn thẳng cắt đường quét tại một thời điểm đã cho, trong đó các đoạn thẳng sẽ được sắp xếp theo tọa độ $y$ của chúng trên đường quét.
+Let's draw a vertical line $x = -\infty$ mentally and start moving this line to the right.
+In the course of its movement, this line will meet with segments, and at each time a segment intersects with our line it intersects in exactly one point (we will assume that there are no vertical segments).
 
 <div style="text-align: center;">
-  <img src="sweep_line_2.png" alt="thứ tự tương đối của các đoạn thẳng trên đường quét">
+  <img src="sweep_line_1.png" alt="sweep line and line segment intersection">
 </div>
 
-Thứ tự này thú vị vì các đoạn thẳng giao nhau sẽ có cùng tọa độ $y$ ít nhất tại một thời điểm:
+Thus, for each segment, at some point in time, its point will appear on the sweep line, then with the movement of the line, this point will move, and finally, at some point, the segment will disappear from the line.
+
+We are interested in the **relative order of the segments** along the vertical.
+Namely, we will store a list of segments crossing the sweep line at a given time, where the segments will be sorted by their $y$-coordinate on the sweep line.
 
 <div style="text-align: center;">
-  <img src="sweep_line_3.png" alt="điểm giao có cùng tọa độ y">
+  <img src="sweep_line_2.png" alt="relative order of the segments across sweep line">
 </div>
 
-Chúng ta phát biểu các mệnh đề chính:
+This order is interesting because intersecting segments will have the same $y$-coordinate at least at one time:
 
-  - Để tìm một cặp giao nhau, chỉ cần xem xét **chỉ các đoạn thẳng liền kề** tại mỗi vị trí cố định của đường quét.
-  - Chỉ cần xem xét đường quét không phải ở tất cả các vị trí thực có thể có $(-\infty \ldots +\infty)$, mà **chỉ ở những vị trí khi các đoạn thẳng mới xuất hiện hoặc các đoạn thẳng cũ biến mất**. Nói cách khác, chỉ cần giới hạn bản thân chỉ ở các vị trí bằng với hoành độ của các điểm cuối của các đoạn thẳng.
-  - Khi một đoạn thẳng mới xuất hiện, chỉ cần **chèn** nó vào vị trí mong muốn trong danh sách thu được cho đường quét trước đó. Chúng ta chỉ nên kiểm tra giao điểm của **đoạn thẳng được thêm vào với các láng giềng ngay trên và dưới của nó trong danh sách**.
-  - Nếu đoạn thẳng biến mất, chỉ cần **xóa** nó khỏi danh sách hiện tại. Sau đó, cần phải **kiểm tra giao điểm của các láng giềng trên và dưới trong danh sách**.
-  - Các thay đổi khác trong chuỗi các đoạn thẳng trong danh sách, ngoại trừ những thay đổi đã được mô tả, không tồn tại. Không cần kiểm tra giao điểm nào khác.
+<div style="text-align: center;">
+  <img src="sweep_line_3.png" alt="intersection point having same y-coordinate">
+</div>
 
-Để hiểu sự thật của những phát biểu này, những nhận xét sau là đủ:
+We formulate key statements:
 
-  - Hai đoạn thẳng không giao nhau không bao giờ thay đổi **thứ tự tương đối** của chúng.<br>
-    Thật vậy, nếu một đoạn thẳng ban đầu cao hơn đoạn thẳng kia, và sau đó trở nên thấp hơn, thì giữa hai thời điểm đó đã có một giao điểm của hai đoạn thẳng này.
-  - Hai đoạn thẳng không giao nhau cũng không thể có cùng tọa độ $y$.
-  - Từ đó suy ra rằng tại thời điểm xuất hiện của đoạn thẳng, chúng ta có thể tìm vị trí cho đoạn thẳng này trong hàng đợi, và chúng ta sẽ không phải sắp xếp lại đoạn thẳng này trong hàng đợi nữa: **thứ tự tương đối của nó so với các đoạn thẳng khác trong hàng đợi sẽ không thay đổi**.
-  - Hai đoạn thẳng giao nhau tại thời điểm giao nhau của chúng sẽ là láng giềng của nhau trong hàng đợi.
-  - Do đó, để tìm các cặp đoạn thẳng giao nhau, chỉ cần kiểm tra giao điểm của tất cả và chỉ những cặp đoạn thẳng mà đôi khi trong quá trình di chuyển của đường quét ít nhất một lần là láng giềng của nhau. <br>
-    Dễ dàng nhận thấy rằng chỉ cần kiểm tra đoạn thẳng được thêm vào với các láng giềng trên và dưới của nó, cũng như khi xóa đoạn thẳng — các láng giềng trên và dưới của nó (mà sau khi xóa sẽ trở thành láng giềng của nhau).<br>
-  - Cần lưu ý rằng tại một vị trí cố định của đường quét, chúng ta phải **trước tiên thêm tất cả các đoạn thẳng** bắt đầu ở tọa độ x này, và chỉ **sau đó xóa tất cả các đoạn thẳng** kết thúc ở đây.<br>
-    Do đó, chúng ta không bỏ lỡ giao điểm của các đoạn thẳng trên đỉnh: tức là những trường hợp khi hai đoạn thẳng có một đỉnh chung.
-  - Lưu ý rằng **các đoạn thẳng đứng** không thực sự ảnh hưởng đến tính đúng đắn của thuật toán.<br>
-    Các đoạn thẳng này được phân biệt bởi thực tế là chúng xuất hiện và biến mất cùng một lúc. Tuy nhiên, do nhận xét trước đó, chúng ta biết rằng tất cả các đoạn thẳng sẽ được thêm vào hàng đợi trước, và chỉ sau đó chúng mới bị xóa. Do đó, nếu đoạn thẳng đứng giao với một đoạn thẳng khác được mở vào thời điểm đó (bao gồm cả đoạn thẳng đứng), nó sẽ được phát hiện.<br>
-    **Đặt các đoạn thẳng đứng ở vị trí nào trong hàng đợi?** Rốt cuộc, một đoạn thẳng đứng không có một tọa độ $y$ cụ thể, nó kéo dài trên toàn bộ một đoạn dọc theo tọa độ $y$. Tuy nhiên, dễ hiểu rằng bất kỳ tọa độ nào từ đoạn này đều có thể được lấy làm tọa độ $y$.
+  - To find an intersecting pair, it is sufficient to consider **only adjacent segments** at each fixed position of the sweep line.
+  - It is enough to consider the sweep line not in all possible real positions $(-\infty \ldots +\infty)$, but **only in those positions when new segments appear or old ones disappear**. In other words, it is enough to limit yourself only to the positions equal to the abscissas of the end points of the segments.
+  - When a new line segment appears, it is enough to **insert** it to the desired location in the list obtained for the previous sweep line. We should only check for the intersection of the **added segment with its immediate neighbors in the list above and below**.
+  - If the segment disappears, it is enough to **remove** it from the current list. After that, it is necessary **check for the intersection of the upper and lower neighbors in the list**.
+  - Other changes in the sequence of segments in the list, except for those described, do not exist. No other intersection checks are required.
 
-Do đó, toàn bộ thuật toán sẽ thực hiện không quá $2n$ lần kiểm tra giao điểm của một cặp đoạn thẳng, và sẽ thực hiện $O(n)$ phép toán với một hàng đợi các đoạn thẳng ($O(1)$ phép toán tại thời điểm xuất hiện và biến mất của mỗi đoạn thẳng).
+To understand the truth of these statements, the following remarks are sufficient:
 
-**Hành vi tiệm cận cuối cùng của thuật toán** do đó là $O(n \log n)$.
+  - Two disjoint segments never change their **relative order**.<br>
+    In fact, if one segment was first higher than the other, and then became lower, then between these two moments there was an intersection of these two segments.
+  - Two non-intersecting segments also cannot have the same $y$-coordinates.
+  - From this it follows that at the moment of the segment appearance we can find the position for this segment in the queue, and we will not have to rearrange this segment in the queue any more: **its order relative to other segments in the queue will not change**.
+  - Two intersecting segments at the moment of their intersection point will be neighbors of each other in the queue.
+  - Therefore, for finding pairs of intersecting line segments is sufficient to check the intersection of all and only those pairs of segments that sometime during the movement of the sweep line at least once were neighbors to each other. <br>
+    It is easy to notice that it is enough only to check the added segment with its upper and lower neighbors, as well as when removing the segment — its upper and lower neighbors (which after removal will become neighbors of each other).<br>
+  - It should be noted that at a fixed position of the sweep line, we must **first add all the segments** that start at this x-coordinate, and only **then remove all the segments** that end here.<br>
+    Thus, we do not miss the intersection of segments on the vertex: i.e. such cases when two segments have a common vertex.
+  - Note that **vertical segments** do not actually affect the correctness of the algorithm.<br>
+    These segments are distinguished by the fact that they appear and disappear at the same time. However, due to the previous comment, we know that all segments will be added to the queue first, and only then they will be deleted. Therefore, if the vertical segment intersects with some other segment opened at that moment (including the vertical one), it will be detected.<br>
+    **In what place of the queue to place vertical segments?** After all, a vertical segment does not have one specific $y$-coordinate, it extends for an entire segment along the $y$-coordinate. However, it is easy to understand that any coordinate from this segment can be taken as a $y$-coordinate.
 
-## Cài đặt
+Thus, the entire algorithm will perform no more than $2n$ tests on the intersection of a pair of segments, and will perform $O(n)$ operations with a queue of segments ($O(1)$ operations at the time of appearance and disappearance of each segment).
 
-Chúng tôi trình bày việc triển khai đầy đủ của thuật toán được mô tả:
+The final **asymptotic behavior of the algorithm** is thus $O(n \log n)$.
+
+## Implementation
+
+We present the full implementation of the described algorithm:
 
 ```cpp
 const double EPS = 1E-9;
@@ -168,15 +168,15 @@ pair<int, int> solve(const vector<seg>& a) {
 }
 ```
 
-Hàm chính ở đây là `solve()`, trả về các đoạn thẳng giao nhau nếu có, hoặc $(-1, -1)$, nếu không có giao điểm.
+The main function here is `solve()`, which returns the intersecting segments if exists, or $(-1, -1)$, if there are no intersections.
 
-Việc kiểm tra giao nhau của hai đoạn thẳng được thực hiện bởi hàm `intersect ()`, sử dụng một **thuật toán dựa trên diện tích có hướng của tam giác**.
+Checking for the intersection of two segments is carried out by the `intersect ()` function, using an **algorithm based on the oriented area of the triangle**.
 
-Hàng đợi các đoạn thẳng là biến toàn cục `s`, một `set<event>`. Các trình vòng lặp chỉ định vị trí của mỗi đoạn thẳng trong hàng đợi (để thuận tiện cho việc xóa các đoạn thẳng khỏi hàng đợi) được lưu trữ trong mảng toàn cục `where`.
+The queue of segments is the global variable `s`, a `set<event>`. Iterators that specify the position of each segment in the queue (for convenient removal of segments from the queue) are stored in the global array `where`.
 
-Hai hàm phụ `prev()` và `next()` cũng được giới thiệu, trả về các trình vòng lặp đến các phần tử trước và sau (hoặc `end()`, nếu không tồn tại).
+Two auxiliary functions `prev()` and `next()` are also introduced, which return iterators to the previous and next elements (or `end()`, if one does not exist).
 
-Hằng số `EPS` biểu thị sai số khi so sánh hai số thực (nó chủ yếu được sử dụng khi kiểm tra hai đoạn thẳng có giao nhau hay không).
+The constant `EPS` denotes the error of comparing two real numbers (it is mainly used when checking two segments for intersection).
 
-## Các bài toán
+## Problems
  * [TIMUS 1469 No Smoking!](https://acm.timus.ru/problem.aspx?space=1&num=1469)

@@ -1,22 +1,23 @@
 ---
-title: Sinh tất cả các tổ hợp chập K
+title: Generating all K-combinations
 tags:
   - Translated
 e_maxx_link: generating_combinations
 ---
-# Sinh tất cả các tổ hợp chập $K$
+# Generating all $K$-combinations
 
-Trong bài viết này, chúng ta sẽ thảo luận về bài toán sinh tất cả các tổ hợp chập $K$.
-Cho các số tự nhiên $N$ và $K$, và xét một tập hợp các số từ $1$ đến $N$.
-Nhiệm vụ là suy ra tất cả các **tập con có kích thước $K$**.
+In this article we will discuss the problem of generating all $K$-combinations.
+Given the natural numbers $N$ and $K$, and considering a set of numbers from $1$ to $N$.
+The task is to derive all **subsets of size $K$**.
 
-## Sinh tổ hợp chập K tiếp theo theo thứ tự từ điển {data-toc-label="Generate next lexicographical K-combination"}
+## Generate next lexicographical $K$-combination {data-toc-label="Generate next lexicographical K-combination"}
 
-Đầu tiên, chúng ta sẽ sinh chúng theo thứ tự từ điển.
-Thuật toán cho việc này rất đơn giản. Tổ hợp đầu tiên sẽ là ${1, 2, ..., K}$. Bây giờ hãy xem làm thế nào
-để tìm tổ hợp ngay sau tổ hợp này, theo thứ tự từ điển. Để làm điều đó, chúng ta xem xét tổ hợp hiện tại của mình,
-và tìm phần tử ngoài cùng bên phải chưa đạt đến giá trị cao nhất có thể của nó. Sau khi tìm thấy
-phần tử này, chúng ta tăng nó lên $1$, và gán giá trị hợp lệ thấp nhất cho tất cả các phần tử tiếp theo.
+First we will generate them in lexicographical order.
+The algorithm for this is simple. The first combination will be ${1, 2, ..., K}$. Now let's see how
+to find the combination that immediately follows this, lexicographically. To do so, we consider our
+current combination, and find the rightmost element that has not yet reached its highest possible value. Once
+finding this element, we increment it by $1$, and assign the lowest valid value to all subsequent
+elements.
 
 ```{.cpp file=next_combination}
 bool next_combination(vector<int>& a, int n) {
@@ -33,43 +34,43 @@ bool next_combination(vector<int>& a, int n) {
 }
 ```
 
-## Sinh tất cả các tổ hợp chập K sao cho các tổ hợp liền kề khác nhau một phần tử {data-toc-label="Generate all K-combinations such that adjacent combinations differ by one element"}
+## Generate all $K$-combinations such that adjacent combinations differ by one element {data-toc-label="Generate all K-combinations such that adjacent combinations differ by one element"}
 
-Lần này, chúng ta muốn sinh tất cả các tổ hợp chập $K$ theo một thứ tự
-sao cho các tổ hợp liền kề khác nhau chính xác một phần tử.
+This time we want to generate all $K$-combinations in such
+an order, that adjacent combinations differ exactly by one element.
 
-Điều này có thể được giải quyết bằng cách sử dụng [Mã Gray](../algebra/gray-code.md):
-Nếu chúng ta gán một bitmask cho mỗi tập con, thì bằng cách sinh và lặp qua các bitmask này bằng mã Gray, chúng ta có thể có được câu trả lời của mình.
+This can be solved using the [Gray Code](../algebra/gray-code.md):
+If we assign a bitmask to each subset, then by generating and iterating over these bitmasks with Gray codes, we can obtain our answer.
 
-Nhiệm vụ sinh các tổ hợp chập $K$ cũng có thể được giải quyết bằng cách sử dụng Mã Gray theo một cách khác:
-Sinh Mã Gray cho các số từ $0$ đến $2^N - 1$ và chỉ giữ lại những mã chứa $K$ bit $1$.
-Sự thật đáng ngạc nhiên là trong dãy kết quả của các bit được đặt $K$, bất kỳ hai mặt nạ lân cận nào (bao gồm cả
-mặt nạ đầu tiên và cuối cùng - lân cận theo nghĩa vòng) - sẽ khác nhau chính xác hai bit, đó là mục tiêu của chúng ta (loại bỏ
-một số, thêm một số).
+The task of generating $K$-combinations can also be solved using Gray Codes in a different way:
+Generate Gray Codes for the numbers from $0$ to $2^N - 1$ and leave only those codes containing $K$ $1$s.
+The surprising fact is that in the resulting sequence of $K$ set bits, any two neighboring masks (including the
+first and last mask - neighboring in a cyclic sense) - will differ exactly by two bits, which is our objective (remove
+a number, add a number).
 
-Hãy chứng minh điều này:
+Let us prove this:
 
-Để chứng minh, chúng ta nhớ lại thực tế rằng dãy $G(N)$ (đại diện cho Mã Gray thứ $N$) có thể 
-được thu được như sau:
+For the proof, we recall the fact that the sequence $G(N)$ (representing the $N$<sup>th</sup> Gray Code) can 
+be obtained as follows:
 
-$$G(N) = 0G(N-1) \cup 1G(N-1)^\text{R}$$ 
+$$G(N) = 0G(N-1) \cup 1G(N-1)^\text{R}$$
 
-Tức là, xét dãy Mã Gray cho $N-1$, và đặt tiền tố $0$ trước mỗi số hạng. Và xét dãy 
-Mã Gray đảo ngược cho $N-1$ và đặt tiền tố $1$ trước mỗi mặt nạ, và
-nối hai dãy này lại.
+That is, consider the Gray Code sequence for $N-1$, and prefix $0$ before every term. And consider the 
+reversed Gray Code sequence for $N-1$ and prefix a $1$ before every mask, and
+concatenate these two sequences.
 
-Bây giờ chúng ta có thể đưa ra chứng minh của mình.
+Now we may produce our proof.
 
-Đầu tiên, chúng ta chứng minh rằng mặt nạ đầu tiên và cuối cùng khác nhau chính xác hai bit. Để làm điều này, chỉ cần lưu ý
-rằng mặt nạ đầu tiên của dãy $G(N)$ sẽ có dạng $N-K$ số $0$, theo sau là $K$ số $1$. Vì
-bit đầu tiên được đặt là $0$, sau đó là $(N-K-1)$ số $0$, sau đó là $K$ bit được đặt và mặt nạ cuối cùng sẽ có dạng $1$, sau đó là $(N-K)$ số $0$, sau đó là $K-1$ số $1$.
-Áp dụng nguyên lý quy nạp toán học, và sử dụng công thức cho $G(N)$, kết thúc chứng minh.
+First, we prove that the first and last masks differ exactly in two bits. To do this, it is sufficient to note
+that the first mask of the sequence $G(N)$, will be of the form $N-K$ $0$s, followed by $K$ $1$s. As
+the first bit is set as $0$, after which $(N-K-1)$ $0$s follow, after which $K$ set bits follow and the last mask will be of the form $1$, then $(N-K)$ $0$s, then $K-1$ $1$s.
+Applying the principle of mathematical induction, and using the formula for $G(N)$, concludes the proof.
 
-Bây giờ nhiệm vụ của chúng ta là chỉ ra rằng bất kỳ hai mã liền kề nào cũng khác nhau chính xác hai bit, chúng ta có thể làm điều này bằng cách xem xét phương trình đệ quy của chúng ta để sinh Mã Gray. Hãy giả sử nội dung của hai nửa được hình thành bởi $G(N-1)$ là đúng. Bây giờ chúng ta cần chứng minh rằng cặp liên tiếp mới được hình thành tại điểm nối (bằng cách nối hai nửa này) cũng hợp lệ, tức là chúng khác nhau chính xác hai bit.
+Now our task is to show that any two adjacent codes also differ exactly in two bits, we can do this by considering our recursive equation for the generation of Gray Codes. Let us assume the content of the two halves formed by $G(N-1)$ is true. Now we need to prove that the new consecutive pair formed at the junction (by the concatenation of these two halves) is also valid, i.e. they differ by exactly two bits.
 
-Điều này có thể được thực hiện, vì chúng ta biết mặt nạ cuối cùng của nửa đầu tiên và mặt nạ đầu tiên của nửa thứ hai. Mặt nạ cuối cùng của nửa đầu tiên sẽ là $1$, sau đó là $(N-K-1)$ số $0$, sau đó là $K-1$ số $1$. Và mặt nạ đầu tiên của nửa thứ hai sẽ là $0$, sau đó là $(N-K-2)$ số $0$ sẽ theo sau, và sau đó là $K$ số $1$. Do đó, so sánh hai mặt nạ, chúng ta tìm thấy chính xác hai bit khác nhau.
+This can be done, as we know the last mask of the first half and the first mask of the second half. The last mask of the first half would be $1$, then $(N-K-1)$ $0$s, then $K-1$ $1$s. And the first mask of the second half would be $0$, then $(N-K-2)$ $0$s would follow, and then $K$ $1$s. Thus, comparing the two masks, we find exactly two bits that differ.
 
-Sau đây là một triển khai ngây thơ hoạt động bằng cách sinh tất cả $2^{n}$ tập con có thể, và tìm các tập con có kích thước
+The following is a naive implementation working by generating all $2^{n}$ possible subsets, and finding subsets of size
 $K$.
 
 ```{.cpp file=generate_all_combinations_naive}
@@ -98,19 +99,18 @@ void all_combinations (int n, int k) {
 }
 ```
 
-Đáng nói là tồn tại một triển khai hiệu quả hơn chỉ dựa vào việc xây dựng các tổ hợp hợp lệ và do đó
-hoạt động trong $O
-\cdot \binom{N}{K}\right)$ tuy nhiên nó có bản chất đệ quy và đối với các giá trị nhỏ hơn của $N$, nó có thể có hằng số lớn hơn
-so với giải pháp trước đó.
+It's worth mentioning that a more efficient implementation exists that only resorts to building valid combinations and thus
+works in $O\left(N \cdot \binom{N}{K}\right)$ however it is recursive in nature and for smaller values of $N$ it probably has a larger constant
+than the previous solution.
 
-Việc triển khai được suy ra từ công thức:
+The implementation is derived from the formula:
 
-$$G(N, K) = 0G(N-1, K) \cup 1G(N-1, K-1)^\text{R}$$ 
+$$G(N, K) = 0G(N-1, K) \cup 1G(N-1, K-1)^\text{R}$$
 
-Công thức này thu được bằng cách sửa đổi phương trình chung để xác định mã Gray, và hoạt động bằng cách chọn
-dãy con từ các phần tử thích hợp.
+This formula is obtained by modifying the general equation to determine the Gray code, and works by selecting the
+subsequence from appropriate elements.
 
-Việc triển khai của nó như sau:
+Its implementation is as follows:
 
 ```{.cpp file=generate_all_combinations_fast}
 vector<int> ans;

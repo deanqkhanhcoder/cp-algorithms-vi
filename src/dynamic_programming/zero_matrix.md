@@ -4,18 +4,18 @@ tags:
 e_maxx_link: maximum_zero_submatrix
 ---
 
-# Tìm ma trận con lớn nhất toàn phần tử 0
+# Finding the largest zero submatrix
 
-Cho một ma trận có `n` hàng và `m` cột. Hãy tìm ma trận con lớn nhất chỉ gồm các phần tử 0 (ma trận con là một vùng chữ nhật của ma trận).
+You are given a matrix with `n` rows and `m` columns. Find the largest submatrix consisting of only zeros (a submatrix is a rectangular area of the matrix).
 
-## Thuật toán
+## Algorithm
 
-Các phần tử của ma trận là `a[i][j]`, với `i = 0...n - 1`, `j = 0... m - 1`. Để đơn giản, ta coi mọi phần tử khác 0 đều bằng 1.
+Elements of the matrix will be `a[i][j]`, where `i = 0...n - 1`, `j = 0... m - 1`. For simplicity, we will consider all non-zero elements equal to 1.
 
-### Bước 1: Mảng phụ
+### Step 1: Auxiliary dynamic
 
-Trước hết ta tính mảng phụ sau: `d[j]` là hàng gần nhất phía trên ô `a[i][j]` có chứa giá trị 1. Nói chính xác hơn, `d[j]` là chỉ số hàng lớn nhất (từ `0` đến `i - 1`) mà ở đó cột `j` có một phần tử bằng 1.
-Khi duyệt từ trên xuống dưới và từ trái sang phải, khi đứng ở hàng `i` ta đã biết các giá trị từ hàng trước nên chỉ cần cập nhật những cột có giá trị 1. Ta có thể lưu các giá trị này trong một mảng một chiều `d` có kích thước `m`, vì trong phần còn lại của thuật toán chỉ cần xử lý từng hàng một.
+First, we calculate the following auxiliary matrix: `d[i][j]`, nearest row that has a 1 above `a[i][j]`. Formally speaking, `d[i][j]` is the largest row number (from `0` to `i - 1`), in which there is a element equal to `1` in the `j`-th column. 
+While iterating from top-left to bottom-right, when we stand in row `i`, we know the values from the previous row, so, it is enough to update just the elements with value `1`. We can save the values in a simple array `d[i]`, `i = 1...m - 1`, because in the further algorithm we will process the matrix one row at a time and only need the values of the current row.
 
 ```cpp
 vector<int> d(m, -1);
@@ -28,29 +28,31 @@ for (int i = 0; i < n; ++i) {
 }
 ```
 
-### Bước 2: Giải bài toán
+### Step 2: Problem solving
 
-Ta có thể giải bài toán bằng $O(n m^2)$ bằng cách duyệt các hàng và xét mọi cặp cột trái/phải là biên của ma trận con. Đáy của hình chữ nhật sẽ là hàng hiện tại, và dùng `d[j]` ta có thể tìm hàng trên cùng. Tuy nhiên ta có thể làm tốt hơn và cải thiện đáng kể độ phức tạp.
+We can solve the problem in $O(n m^2)$ iterating through rows, considering every possible left and right columns for a submatrix. The bottom of the rectangle will be the current row, and using `d[i][j]` we can find the top row. However, it is possible to go further and significantly improve the complexity of the solution.
 
-Rõ ràng ma trận con toàn số 0 tối ưu sẽ bị giới hạn bởi các phần tử 1 ở cả bốn phía, những phần tử này ngăn không cho ma trận con mở rộng thêm. Vì vậy đối với mỗi ô `j` ở hàng `i` (hàng đáy của một ma trận con khả dĩ), ta lấy `d[j]` làm hàng trên của ma trận con hiện thời. Việc còn lại là xác định biên trái và biên phải tối ưu, tức là mở rộng tối đa sang trái và phải của cột `j`.
+It is clear that the desired zero submatrix is bounded on all four sides by some ones, which prevent it from increasing in size and improving the answer. Therefore,  we will not miss the answer if we act as follows: for every cell `j` in row `i` (the bottom row of a potential zero submatrix) we will have `d[i][j]` as the top row of the current zero submatrix. It now remains to determine the optimal left and right boundaries of the zero submatrix, i.e. maximally push this submatrix to the left and right of the `j`-th column. 
 
-Mở rộng tối đa sang trái có nghĩa là tìm chỉ số `k1` là vị trí gần nhất phía trái của `j` sao cho `d[k1] > d[j]`. Khi đó `k1 + 1` là chỉ số cột trái của ma trận con cần tìm. Nếu không tồn tại, đặt `k1 = -1` (nghĩa là ta có thể mở rộng tới biên trái của ma trận).
+What does it mean to push the maximum to the left? It means to find an index `k1` for which `d[i][k1] > d[i][j]`, and at the same time `k1` - the closest one to the left of the index `j`. It is clear that then `k1 + 1` gives the number of the left column of the required zero submatrix. If there is no such index at all, then put `k1` = `-1`(this means that we were able to extend the current zero submatrix to the left all the way to the border of matrix `a`).
 
-Tương tự, chỉ số `k2` cho biên phải là vị trí gần nhất phía phải của `j` sao cho `d[k2] > d[j]` (hoặc `m` nếu không tồn tại).
+Symmetrically, you can define an index `k2` for the right border: this is the closest index to the right of `j` such that `d[i][k2] > d[i][j]` (or `m`, if there is no such index).
 
-Khi biết `k1` và `k2`, diện tích của ma trận con tương ứng là `(i - d[j]) * (k2 - k1 - 1)`.
+So, the indices `k1` and `k2`, if we learn to search for them effectively, will give us all the necessary information about the current zero submatrix. In particular, its area will be equal to `(i - d[i][j]) * (k2 - k1 - 1)`.
 
-Làm sao để tìm `k1` và `k2` hiệu quả cho mọi `i, j`? Ta có thể làm trung bình O(1) cho mỗi ô bằng cách sử dụng ngăn xếp.
+How to look for these indexes `k1` and `k2` effectively with fixed `i` and `j`? We can do that in $O(1)$ on average.
 
-Cụ thể, để tìm `k1` cho mỗi cột `j` trên hàng `i`, duyệt các cột từ trái sang phải và duy trì một ngăn xếp chỉ chứa các cột có `d[]` lớn hơn `d[j]`. Khi chuyển sang cột tiếp theo, loại bỏ các phần tử không phù hợp ở đỉnh ngăn xếp (tức `d[top] <= d[j]`) bằng cách pop. Giá trị `d1[j]` là chỉ số hiện đang đứng ở đỉnh ngăn xếp (hoặc `-1` nếu rỗng).
+To achieve such complexity, you can use the stack as follows. Let's first learn how to search for an index `k1`, and save its value for each index `j` within the current row `i` in matrix `d1[i][j]`. To do this, we will look through all the columns `j` from left to right, and we will store in the stack only those columns that have `d[][]` strictly greater than `d[i][j]`. It is clear that when moving from a column `j` to the next column, it is necessary to update the content of the stack. When there is an inappropriate element at the top of the stack (i.e. `d[][] <= d[i][j]`) pop it. It is easy to understand that it is enough to remove from the stack only from its top, and from none of its other places (because the stack will contain an increasing `d` sequence of columns).
 
-Tương tự, để tìm `k2` ta lặp các cột từ phải sang trái và dùng cùng ý tưởng để tính `d2[j]`.
+The value `d1[i][j]` for each `j` will be equal to the value lying at that moment on top of the stack.
 
-Mỗi cột được đẩy vào ngăn xếp đúng một lần và cũng bị pop tối đa một lần trên mỗi hàng, nên tổng chi phí cho mỗi hàng là O(m), và toàn bộ thuật toán chạy O(n m).
+The dynamics `d2[i][j]` for finding the indices `k2` is considered similar, only you need to view the columns from right to left.
 
-Thuật toán dùng thêm O(m) bộ nhớ (không tính dữ liệu vào `a[][]`).
+It is clear that since there are exactly `m` pieces added to the stack on each line, there could not be more deletions either, the sum of complexities will be linear, so the final complexity of the algorithm is $O(nm)$.
 
-### Cài đặt
+It should also be noted that this algorithm consumes $O(m)$ memory (not counting the input data - the matrix `a[][]`).
+
+### Implementation
 
 ```cpp
 int zero_matrix(vector<vector<int>> a) {

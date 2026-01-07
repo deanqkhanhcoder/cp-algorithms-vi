@@ -4,54 +4,54 @@ tags:
 e_maxx_link: counting_connected_graphs
 ---
 
-# Đếm đồ thị có nhãn
+# Counting labeled graphs
 
-## Đồ thị có nhãn
+## Labeled graphs
 
-Cho số đỉnh của một đồ thị là $n$.
-Chúng ta phải tính số lượng $G_n$ của các đồ thị có nhãn với $n$ đỉnh (có nhãn có nghĩa là các đỉnh được đánh dấu bằng các số từ $1$ đến $n$).
-Các cạnh của đồ thị được coi là vô hướng, và không cho phép khuyên và cạnh bội.
+Let the number of vertices in a graph be $n$.
+We have to compute the number $G_n$ of labeled graphs with $n$ vertices (labeled means that the vertices are marked with the numbers from $1$ to $n$).
+The edges of the graphs are considered undirected, and loops and multiple edges are forbidden.
 
-Chúng ta xét tập hợp tất cả các cạnh có thể có của đồ thị.
-Đối với mỗi cạnh $(i, j)$ chúng ta có thể giả sử rằng $i < j$ (vì đồ thị là vô hướng và không có khuyên).
-Do đó, tập hợp tất cả các cạnh có lực lượng là $\binom{n}{2}$, tức là $\frac{n(n-1)}{2}$.
+We consider the set of all possible edges of the graph.
+For each edge $(i, j)$ we can assume that $i < j$ (because the graph is undirected, and there are no loops).
+Therefore the set of all edges has the cardinality $\binom{n}{2}$, i.e. $\frac{n(n-1)}{2}$.
 
-Vì bất kỳ đồ thị có nhãn nào cũng được xác định duy nhất bởi các cạnh của nó, số lượng các đồ thị có nhãn với $n$ đỉnh bằng:
+Since any labeled graph is uniquely determined by its edges, the number of labeled graphs with $n$ vertices is equal to:
 
 $$G_n = 2^{\frac{n(n-1)}{2}}$$
 
-## Đồ thị có nhãn liên thông
+## Connected labeled graphs
 
-Ở đây, chúng ta thêm vào ràng buộc rằng đồ thị phải liên thông.
+Here, we additionally impose the restriction that the graph has to be connected.
 
-Hãy ký hiệu số lượng các đồ thị liên thông cần tìm với $n$ đỉnh là $C_n$.
+Let's denote the required number of connected graphs with $n$ vertices as $C_n$.
 
-Trước tiên, chúng ta sẽ thảo luận có bao nhiêu đồ thị **không liên thông** tồn tại.
-Sau đó, số lượng các đồ thị liên thông sẽ là $G_n$ trừ đi số lượng các đồ thị không liên thông.
-Hơn nữa, chúng ta sẽ đếm số lượng các **đồ thị có gốc, không liên thông**. Một đồ thị có gốc là một đồ thị, trong đó chúng ta nhấn mạnh một đỉnh bằng cách gán nhãn cho nó là gốc.
-Rõ ràng là chúng ta có $n$ khả năng để đặt gốc cho một đồ thị có $n$ đỉnh được gán nhãn, do đó chúng ta sẽ cần phải chia số lượng các đồ thị có gốc không liên thông cho $n$ ở cuối để có được số lượng các đồ thị không liên thông.
+We will first discuss how many **disconnected** graphs exists.
+Then the number of connected graphs will be $G_n$ minus the number of disconnected graphs.
+Even more, we will count the number of **disconnected, rooted graphs**.A rooted graph is a graph, where we emphasize one vertex by labeling it as root.
+Obviously we have $n$ possibilities to root a graph with $n$ labeled vertices, therefore we will need to divide the number of disconnected rooted graphs by $n$ at the end to get the number of disconnected graphs.
 
-Đỉnh gốc sẽ xuất hiện trong một thành phần liên thông có kích thước $1, \dots n-1$.
-Có $k \binom{n}{k} C_k G_{n-k}$ đồ thị sao cho đỉnh gốc nằm trong một thành phần liên thông với $k$ đỉnh (có $\binom{n}{k}$ cách để chọn $k$ đỉnh cho thành phần, chúng được kết nối theo một trong $C_k$ cách, đỉnh gốc có thể là bất kỳ trong số $k$ đỉnh, và $n-k$ đỉnh còn lại có thể được kết nối/không kết nối theo bất kỳ cách nào, điều này cho một hệ số $G_{n-k}$).
-Do đó, số lượng các đồ thị không liên thông với $n$ đỉnh là:
+The root vertex will appear in a connected component of size $1, \dots n-1$.
+There are $k \binom{n}{k} C_k G_{n-k}$ graphs such that the root vertex is in a connected component with $k$ vertices (there are $\binom{n}{k}$ ways to choose $k$ vertices for the component, these are connected in one of $C_k$ ways, the root vertex can be any of the $k$ vertices, and the remainder $n-k$ vertices can be connected/disconnected in any way, which gives a factor of $G_{n-k}$).
+Therefore the number of disconnected graphs with $n$ vertices is:
 
 $$\frac{1}{n} \sum_{k=1}^{n-1} k \binom{n}{k} C_k G_{n-k}$$
 
-Và cuối cùng, số lượng các đồ thị liên thông là:
+And finally the number of connected graphs is:
 
 $$C_n = G_n - \frac{1}{n} \sum_{k=1}^{n-1} k \binom{n}{k} C_k G_{n-k}$$
 
-## Đồ thị có nhãn với $k$ thành phần liên thông {data-toc-label="Labeled graphs with k connected components"}
+## Labeled graphs with $k$ connected components {data-toc-label="Labeled graphs with k connected components"}
 
-Dựa trên công thức từ phần trước, chúng ta sẽ học cách đếm số lượng các đồ thị có nhãn với $n$ đỉnh và $k$ thành phần liên thông.
+Based on the formula from the previous section, we will learn how to count the number of labeled graphs with $n$ vertices and $k$ connected components.
 
-Số này có thể được tính bằng quy hoạch động.
-Chúng ta sẽ tính $D[i][j]$ - số lượng các đồ thị có nhãn với $i$ đỉnh và $j$ thành phần - cho mỗi $i \le n$ và $j \le k$.
+This number can be computed using dynamic programming.
+We will compute $D[i][j]$ - the number of labeled graphs with $i$ vertices and $j$ components - for each $i \le n$ and $j \le k$.
 
-Hãy thảo luận cách tính phần tử tiếp theo $D[n][k]$ nếu chúng ta đã biết các giá trị trước đó.
-Chúng ta sử dụng một cách tiếp cận phổ biến, chúng ta lấy đỉnh cuối cùng (chỉ số $n$).
-Đỉnh này thuộc về một thành phần nào đó.
-Nếu kích thước của thành phần này là $s$, thì có $\binom{n-1}{s-1}$ cách để chọn một tập hợp các đỉnh như vậy, và $C_s$ cách để kết nối chúng. Sau khi loại bỏ thành phần này khỏi đồ thị, chúng ta còn lại $n-s$ đỉnh với $k-1$ thành phần liên thông.
-Do đó, chúng ta có được quan hệ truy hồi sau:
+Let's discuss how to compute the next element $D[n][k]$ if we already know the previous values.
+We use a common approach, we take the last vertex (index $n$).
+This vertex belongs to some component.
+If the size of this component be $s$, then there are $\binom{n-1}{s-1}$ ways to choose such a set of vertices, and $C_s$ ways to connect them.After removing this component from the graph we have $n-s$ remaining vertices with $k-1$ connected components.
+Therefore we obtain the following recurrence relation:
 
 $$D[n][k] = \sum_{s=1}^{n} \binom{n-1}{s-1} C_s D[n-s][k-1]$$

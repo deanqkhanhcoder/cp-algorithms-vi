@@ -4,114 +4,115 @@ tags:
 e_maxx_link: heavy_light
 ---
 
-# Phân rã nặng-nhẹ (Heavy-light decomposition)
+# Heavy-light decomposition
 
-**Phân rã nặng-nhẹ** là một kỹ thuật khá tổng quát cho phép chúng ta giải quyết hiệu quả nhiều bài toán quy về **truy vấn trên một cây** .
-
-
-## Mô tả
-
-Cho một cây $G$ có $n$ đỉnh, với một gốc tùy ý.
-
-Bản chất của việc phân rã cây này là **chia cây thành nhiều đường đi** sao cho chúng ta có thể đến đỉnh gốc từ bất kỳ đỉnh $v$ nào bằng cách duyệt qua nhiều nhất $\log n$ đường đi. Ngoài ra, không có đường đi nào trong số này nên giao nhau với đường đi khác.
-
-Rõ ràng là nếu chúng ta tìm thấy một sự phân rã như vậy cho bất kỳ cây nào, nó sẽ cho phép chúng ta quy các truy vấn đơn lẻ có dạng *“tính toán một cái gì đó trên đường đi từ $a$ đến $b$”* về một số truy vấn có dạng *”tính toán một cái gì đó trên đoạn $[l, r]$ của đường đi thứ $k$”* .
+**Heavy-light decomposition** is a fairly general technique that allows us to effectively solve many problems that come down to **queries on a tree** .
 
 
-### Thuật toán xây dựng
+## Description
 
-Chúng ta tính toán cho mỗi đỉnh $v$ kích thước của cây con của nó $s(v)$, tức là số lượng đỉnh trong cây con của đỉnh $v$ bao gồm cả chính nó.
+Let there be a tree $G$ of $n$ vertices, with an arbitrary root.
 
-Tiếp theo, xem xét tất cả các cạnh dẫn đến các con của một đỉnh $v$. Chúng ta gọi một cạnh là **nặng** nếu nó dẫn đến một đỉnh $c$ sao cho:
+The essence of this tree decomposition is to **split the tree into several paths** so that we can reach the root vertex from any $v$ by traversing at most $\log n$ paths. In addition, none of these paths should intersect with another.
+
+It is clear that if we find such a decomposition for any tree, it will allow us to reduce certain single queries of the form *“calculate something on the path from $a$ to $b$”* to several queries of the type *”calculate something on the segment $[l, r]$ of the $k^{th}$ path”*.
+
+
+### Construction algorithm
+
+We calculate for each vertex $v$ the size of its subtree  $s(v)$, i.e. the number of vertices in the subtree of the vertex $v$ including itself.
+
+Next, consider all the edges leading to the children of a vertex $v$. We call an edge  **heavy** if it leads to a vertex $c$ such that:
 
 $$
-s(c) \ge \frac{s(v)}{2} \iff \text{cạnh }(v, c)\text{ là nặng}
+s(c) \ge \frac{s(v)}{2} \iff \text{edge }(v, c)\text{ is heavy}
 $$
 
-Tất cả các cạnh khác được gán nhãn là **nhẹ**.
+All other edges are labeled **light**.
 
-Rõ ràng là nhiều nhất một cạnh nặng có thể xuất phát từ một đỉnh đi xuống, bởi vì nếu không thì đỉnh $v$ sẽ có ít nhất hai con có kích thước $\ge \frac{s(v)}{2}$, và do đó kích thước của cây con của $v$ sẽ quá lớn, $s(v) \ge 1 + 2 \frac{s(v)}{2} > s(v)$, điều này dẫn đến một mâu thuẫn.
+It is obvious that at most one heavy edge can emanate from one vertex downward, because otherwise the vertex $v$ would have at least two children of size $\ge \frac{s(v)}{2}$, and therefore the size of subtree of $v$ would be too big, $s(v) \ge 1 + 2 \frac{s(v)}{2} > s(v)$, which leads to a contradiction.
 
-Bây giờ chúng ta sẽ phân rã cây thành các đường đi không giao nhau. Xem xét tất cả các đỉnh mà từ đó không có cạnh nặng nào đi xuống. Chúng ta sẽ đi lên từ mỗi đỉnh như vậy cho đến khi chúng ta đến gốc của cây hoặc đi qua một cạnh nhẹ. Kết quả là, chúng ta sẽ nhận được một số đường đi được tạo thành từ không hoặc nhiều cạnh nặng cộng với một cạnh nhẹ. Đường đi có một đầu ở gốc là một ngoại lệ cho điều này và sẽ không có một cạnh nhẹ. Hãy gọi những đường đi này là **đường đi nặng** - đây là những đường đi mong muốn của phân rã nặng-nhẹ.
+Now we will decompose the tree into disjoint paths. Consider all the vertices from which no heavy edges come down. We will go up from each such vertex until we reach the root of the tree or go through a light edge. As a result, we will get several paths which are made up of zero or more heavy edges plus one light edge. The path which has an end at the root is an exception to this and will not have a light edge. Let these be called **heavy paths** - these are the desired paths of heavy-light decomposition.
 
 
-### Chứng minh tính đúng đắn
+### Proof of correctness
 
-Đầu tiên, chúng ta lưu ý rằng các đường đi nặng thu được bằng thuật toán sẽ **không giao nhau**. Thực tế, nếu hai đường đi như vậy có một cạnh chung, điều đó sẽ ngụ ý rằng có hai cạnh nặng đi ra từ một đỉnh, điều này là không thể.
+First, we note that the heavy paths obtained by the algorithm will be **disjoint** . In fact, if two such paths have a common edge, it would imply that there are two heavy edges coming out of one vertex, which is impossible.
 
-Thứ hai, chúng ta sẽ chỉ ra rằng đi xuống từ gốc của cây đến một đỉnh tùy ý, chúng ta sẽ **thay đổi không quá $\log n$ đường đi nặng trên đường đi** . Đi xuống một cạnh nhẹ làm giảm kích thước của cây con hiện tại xuống một nửa hoặc thấp hơn:
+Secondly, we will show that going down from the root of the tree to an arbitrary vertex, we will **change no more than $\log n$ heavy paths along the way** . Moving down a light edge reduces the size of the current subtree to half or lower:
 
-$$s(c) < \frac{s(v)}{2} \iff \text{cạnh }(v, c)\text{ là nhẹ}
+$$
+s(c) < \frac{s(v)}{2} \iff \text{edge }(v, c)\text{ is light}
 $$
 
 
-Do đó, chúng ta có thể đi qua nhiều nhất $\log n$ cạnh nhẹ trước khi kích thước cây con giảm xuống một.
+Thus, we can go through at most $\log n$ light edges before subtree size reduces to one.
 
-Vì chúng ta chỉ có thể di chuyển từ một đường đi nặng sang một đường đi nặng khác thông qua một cạnh nhẹ (mỗi đường đi nặng, ngoại trừ đường bắt đầu ở gốc, có một cạnh nhẹ), chúng ta không thể thay đổi đường đi nặng nhiều hơn $\log n$ lần trên đường đi từ gốc đến bất kỳ đỉnh nào, như yêu cầu.
+Since we can move from one heavy path to another only through a light edge (each heavy path, except the one starting at the root, has one light edge), we cannot change heavy paths more than $\log n$ times along the path from the root to any vertex, as required.
 
 
-Hình ảnh sau đây minh họa sự phân rã của một cây mẫu. Các cạnh nặng dày hơn các cạnh nhẹ. Các đường đi nặng được đánh dấu bằng các đường viền chấm.
+The following image illustrates the decomposition of a sample tree. The heavy edges are thicker than the light edges. The heavy paths are marked by dotted boundaries.
 
 <div style="text-align: center;">
-  <img src="hld.png" alt="Hình ảnh của HLD">
+  <img src="hld.png" alt="Image of HLD">
 </div>
 
 
-## Các bài toán mẫu
+## Sample problems
 
-Khi giải quyết các bài toán, đôi khi sẽ thuận tiện hơn khi xem xét phân rã nặng-nhẹ như một tập hợp các đường đi **không giao nhau về đỉnh** (thay vì các đường đi không giao nhau về cạnh). Để làm điều này, chỉ cần loại trừ cạnh cuối cùng khỏi mỗi đường đi nặng nếu đó là một cạnh nhẹ, thì không có thuộc tính nào bị vi phạm, nhưng bây giờ mỗi đỉnh thuộc về đúng một đường đi nặng.
+When solving problems, it is sometimes more convenient to consider the heavy-light decomposition as a set of **vertex disjoint** paths (rather than edge disjoint paths). To do this, it suffices to exclude the last edge from each heavy path if it is a light edge, then no properties are violated, but now each vertex belongs to exactly one heavy path.
 
-Dưới đây chúng ta sẽ xem xét một số nhiệm vụ điển hình có thể được giải quyết với sự trợ giúp của phân rã nặng-nhẹ.
+Below we will look at some typical tasks that can be solved with the help of heavy-light decomposition.
 
-Riêng biệt, đáng chú ý đến bài toán **tổng các số trên đường đi**, vì đây là một ví dụ về một bài toán có thể được giải quyết bằng các kỹ thuật đơn giản hơn.
-
-
-### Giá trị lớn nhất trên đường đi giữa hai đỉnh
-
-Cho một cây, mỗi đỉnh được gán một giá trị. Có các truy vấn có dạng $(a, b)$, trong đó $a$ và $b$ là hai đỉnh trong cây, và yêu cầu là tìm giá trị lớn nhất trên đường đi giữa các đỉnh $a$ và $b$.
-
-Chúng ta xây dựng trước một phân rã nặng-nhẹ của cây. Trên mỗi đường đi nặng, chúng ta sẽ xây dựng một [cây phân đoạn](../data_structures/segment_tree.md), cho phép chúng ta tìm kiếm một đỉnh có giá trị được gán lớn nhất trong đoạn được chỉ định của đường đi nặng được chỉ định trong $\mathcal{O}(\log n)$. Mặc dù số lượng đường đi nặng trong phân rã nặng-nhẹ có thể lên tới $n - 1$, tổng kích thước của tất cả các đường đi bị giới hạn bởi $\mathcal{O}(n)$, do đó tổng kích thước của các cây phân đoạn cũng sẽ là tuyến tính.
-
-Để trả lời một truy vấn $(a, b)$, chúng ta tìm [tổ tiên chung thấp nhất](https://en.wikipedia.org/wiki/Lowest_common_ancestor) của $a$ và $b$ là $l$, bằng bất kỳ phương pháp ưa thích nào. Bây giờ nhiệm vụ đã được quy về hai truy vấn $(a, l)$ và $(b, l)$, với mỗi truy vấn chúng ta có thể làm như sau: tìm đường đi nặng mà đỉnh thấp hơn nằm trong đó, thực hiện một truy vấn trên đường đi này, di chuyển lên đỉnh của đường đi này, một lần nữa xác định chúng ta đang ở trên đường đi nặng nào và thực hiện một truy vấn trên đó, và cứ thế, cho đến khi chúng ta đến đường đi chứa $l$.
-
-Cần cẩn thận với trường hợp khi, ví dụ, $a$ và $l$ nằm trên cùng một đường đi nặng - thì truy vấn lớn nhất trên đường đi này nên được thực hiện không phải trên bất kỳ tiền tố nào, mà trên đoạn bên trong giữa $a$ và $l$.
-
-Trả lời các truy vấn con $(a, l)$ và $(b, l)$ mỗi truy vấn yêu cầu đi qua $\mathcal{O}(\log n)$ đường đi nặng và đối với mỗi đường đi, một truy vấn lớn nhất được thực hiện trên một số đoạn của đường đi, lại yêu cầu $\mathcal{O}(\log n)$ thao tác trong cây phân đoạn.
-Do đó, một truy vấn $(a, b)$ mất thời gian $\mathcal{O}(\log^2 n)$.
-
-Nếu bạn tính toán và lưu trữ thêm các giá trị lớn nhất của tất cả các tiền tố cho mỗi đường đi nặng, thì bạn sẽ có một giải pháp $\mathcal{O}(\log n)$ vì tất cả các truy vấn lớn nhất đều nằm trên các tiền tố ngoại trừ nhiều nhất một lần khi chúng ta đến tổ tiên $l$.
+Separately, it is worth paying attention to the problem of the **sum of numbers on the path**, since this is an example of a problem that can be solved by simpler techniques.
 
 
-###  Tổng các số trên đường đi giữa hai đỉnh
+### Maximum value on the path between two vertices
 
-Cho một cây, mỗi đỉnh được gán một giá trị. Có các truy vấn có dạng $(a, b)$, trong đó $a$ và $b$ là hai đỉnh trong cây, và yêu cầu là tìm tổng các giá trị trên đường đi giữa các đỉnh $a$ và $b$. Một biến thể của nhiệm vụ này có thể có thêm các thao tác cập nhật thay đổi số được gán cho một hoặc nhiều đỉnh.
+Given a tree, each vertex is assigned a value. There are queries of the form $(a, b)$, where $a$ and $b$ are two vertices in the tree, and it is required to find the maximum value on the path between the vertices $a$ and $b$.
 
-Nhiệm vụ này có thể được giải quyết tương tự như bài toán trước về các giá trị lớn nhất với sự trợ giúp của phân rã nặng-nhẹ bằng cách xây dựng các cây phân đoạn trên các đường đi nặng. Tổng tiền tố có thể được sử dụng thay thế nếu không có cập nhật. Tuy nhiên, bài toán này có thể được giải quyết bằng các kỹ thuật đơn giản hơn.
+We construct in advance a heavy-light decomposition of the tree. Over each heavy path we will construct a [segment tree](../data_structures/segment_tree.md), which will allow us to search for a vertex with the maximum assigned value in the specified segment of the specified heavy path in $\mathcal{O}(\log n)$.  Although the number of heavy paths in heavy-light decomposition can reach $n - 1$, the total size of all paths is bounded by $\mathcal{O}(n)$, therefore the total size of the segment trees will also be linear.
 
-Nếu không có cập nhật, thì có thể tìm ra tổng trên đường đi giữa hai đỉnh song song với việc tìm kiếm LCA của hai đỉnh bằng cách [nhảy nhị phân](lca_binary_lifting.md) — để làm điều này, cùng với các tổ tiên thứ $2^k$ của mỗi đỉnh, cũng cần phải lưu trữ tổng trên các đường đi lên đến các tổ tiên đó trong quá trình tiền xử lý.
+In order to answer a query $(a, b)$, we find the [lowest common ancestor](https://en.wikipedia.org/wiki/Lowest_common_ancestor) of $a$ and $b$ as $l$, by any preferred method. Now the task has been reduced to two queries $(a, l)$ and $(b, l)$, for each of which we can do the following: find the heavy path that the lower vertex lies in, make a query on this path, move to the top of this path, again determine which heavy path we are on and make a query on it, and so on, until we get to the path containing $l$.
 
-Có một cách tiếp cận khác về cơ bản cho bài toán này - xem xét [chu trình Euler](https://en.wikipedia.org/wiki/Euler_tour_technique) của cây, và xây dựng một cây phân đoạn trên đó. Thuật toán này được xem xét trong một [bài viết về một bài toán tương tự](tree_painting.md). Một lần nữa, nếu không có cập nhật, việc lưu trữ tổng tiền tố là đủ và không cần cây phân đoạn.
+One should be careful with the case when, for example, $a$ and $l$ are on the same heavy path - then the maximum query on this path should be done not on any prefix, but on the internal section between $a$ and $l$.
 
-Cả hai phương pháp này đều cung cấp các giải pháp tương đối đơn giản mất $\mathcal{O}(\log n)$ cho một truy vấn.
+Responding to the subqueries $(a, l)$ and $(b, l)$ each requires going through $\mathcal{O}(\log n)$ heavy paths and for each path a maximum query is made on some section of the path, which again requires $\mathcal{O}(\log n)$ operations in the segment tree.
+Hence, one query $(a, b)$ takes $\mathcal{O}(\log^2 n)$ time.
 
-### Tô lại các cạnh của đường đi giữa hai đỉnh
+If you additionally calculate and store maximums of all prefixes for each heavy path, then you get a $\mathcal{O}(\log n)$ solution because all maximum queries are on prefixes except at most once when we reach the ancestor $l$.
 
-Cho một cây, mỗi cạnh ban đầu được tô màu trắng. Có các cập nhật có dạng $(a, b, c)$, trong đó $a$ và $b$ là hai đỉnh và $c$ là một màu, hướng dẫn rằng tất cả các cạnh trên đường đi từ $a$ đến $b$ phải được tô lại bằng màu $c$. Sau tất cả các lần tô lại, yêu cầu là báo cáo có bao nhiêu cạnh của mỗi màu đã thu được.
 
-Tương tự như các bài toán trên, giải pháp chỉ đơn giản là áp dụng phân rã nặng-nhẹ và tạo một [cây phân đoạn](../data_structures/segment_tree.md) trên mỗi đường đi nặng.
+###  Sum of the numbers on the path between two vertices
 
-Mỗi lần tô lại trên đường đi $(a, b)$ sẽ biến thành hai cập nhật $(a, l)$ và $(b, l)$, trong đó $l$ là tổ tiên chung thấp nhất của các đỉnh $a$ và $b$.   
-$\mathcal{O}(\log n)$ cho mỗi đường đi với $\mathcal{O}(\log n)$ đường đi dẫn đến độ phức tạp $\mathcal{O}(\log^2 n)$ cho mỗi cập nhật.
+Given a tree, each vertex is assigned a value. There are queries of the form $(a, b)$, where $a$ and $b$ are two vertices in the tree, and it is required to find the sum of the values on the path between the vertices $a$ and $b$. A variant of this task is possible where additionally there are update operations that change the number assigned to one or more vertices.
 
-## Cài đặt
+This task can be solved similar to the previous problem of maximums with the help of heavy-light decomposition by building segment trees on heavy paths. Prefix sums can be used instead if there are no updates. However, this problem can be solved by simpler techniques too.
 
-Một số phần nhất định của phương pháp tiếp cận đã thảo luận ở trên có thể được sửa đổi để làm cho việc triển khai dễ dàng hơn mà không làm mất hiệu quả.
+If there are no updates, then it is possible to find out the sum on the path between two vertices in parallel with the LCA search of two vertices by [binary lifting](lca_binary_lifting.md) — for this, along with the $2^k$-th ancestors of each vertex it is also necessary to store the sum on the paths up to those ancestors during the preprocessing.
 
-* Định nghĩa của **cạnh nặng** có thể được thay đổi thành **cạnh dẫn đến con có cây con lớn nhất**, với các trường hợp hòa được giải quyết một cách tùy ý. Điều này có thể dẫn đến một số cạnh nhẹ được chuyển đổi thành nặng, có nghĩa là một số đường đi nặng sẽ kết hợp để tạo thành một đường đi duy nhất, nhưng tất cả các đường đi nặng sẽ vẫn không giao nhau. Nó cũng vẫn được đảm bảo rằng việc đi xuống một cạnh nhẹ sẽ làm giảm kích thước cây con xuống một nửa hoặc ít hơn.
-* Thay vì xây dựng cây phân đoạn trên mỗi đường đi nặng, một cây phân đoạn duy nhất có thể được sử dụng với các đoạn không giao nhau được phân bổ cho mỗi đường đi nặng.
-* Đã đề cập rằng việc trả lời các truy vấn yêu cầu tính toán LCA. Mặc dù LCA có thể được tính toán riêng, cũng có thể tích hợp việc tính toán LCA vào quá trình trả lời các truy vấn.
+There is a fundamentally different approach to this problem - to consider the [Euler tour](https://en.wikipedia.org/wiki/Euler_tour_technique) of the tree, and build a segment tree on it. This algorithm is considered in an [article about a similar problem](tree_painting.md). Again, if there are no updates, storing prefix sums is enough and a segment tree is not required.
 
-Để thực hiện phân rã nặng-nhẹ:
+Both of these methods provide relatively simple solutions taking $\mathcal{O}(\log n)$ for one query.
+
+### Repainting the edges of the path between two vertices
+
+Given a tree, each edge is initially painted white. There are updates of the form $(a, b, c)$, where $a$ and $b$ are two vertices and $c$ is a color, which instructs that all the edges on the path from $a$ to $b$ must be repainted with color $c$. After all repaintings, it is required to report how many edges of each color were obtained.
+
+Similar to the above problems, the solution is to simply apply heavy-light decomposition and make a [segment tree](../data_structures/segment_tree.md) over each heavy path.
+
+Each repainting on the path $(a, b)$ will turn into two updates $(a, l)$ and $(b, l)$, where $l$ is the lowest common ancestor of the vertices $a$ and $b$.   
+$\mathcal{O}(\log n)$ per path for $\mathcal{O}(\log n)$ paths leads to a complexity of $\mathcal{O}(\log^2 n)$ per update.
+
+## Implementation
+
+Certain parts of the above discussed approach can be modified to make implementation easier without losing efficiency.
+
+* The definition of **heavy edge** can be changed to **the edge leading to the child with largest subtree**, with ties broken arbitrarily. This may result is some light edges being converted to heavy, which means some heavy paths will combine to form a single path, but all heavy paths will remain disjoint. It is also still guaranteed that going down a light edge reduces subtree size to half or less.
+* Instead of a building segment tree over every heavy path, a single segment tree can be used with disjoint segments allocated to each heavy path.
+* It has been mentioned that answering queries requires calculation of the LCA. While LCA can be calculated separately, it is also possible to integrate LCA calculation in the process of answering queries.
+
+To perform heavy-light decomposition:
 
 ```cpp
 vector<int> parent, depth, heavy, head, pos;
@@ -156,13 +157,13 @@ void init(vector<vector<int>> const& adj) {
 }
 ```
 
-Danh sách kề của cây phải được truyền cho hàm `init`, và việc phân rã được thực hiện giả sử đỉnh `0` là gốc.
+The adjacency list of the tree must be passed to the `init` function, and decomposition is performed assuming vertex `0` as root.
 
-Hàm `dfs` được sử dụng để tính toán `heavy[v]`, con ở đầu kia của cạnh nặng từ `v`, cho mọi đỉnh `v`. Ngoài ra `dfs` cũng lưu trữ cha và độ sâu của mỗi đỉnh, sẽ hữu ích sau này trong các truy vấn.
+The `dfs` function is used to calculate `heavy[v]`, the child at the other end of the heavy edge from `v`, for every vertex `v`. Additionally `dfs` also stores the parent and depth of each vertex, which will be useful later during queries.
 
-Hàm `decompose` gán cho mỗi đỉnh `v` các giá trị `head[v]` và `pos[v]`, tương ứng là đầu của đường đi nặng mà `v` thuộc về và vị trí của `v` trên cây phân đoạn duy nhất bao phủ tất cả các đỉnh.
+The `decompose` function assigns for each vertex `v` the values `head[v]` and `pos[v]`, which are respectively the head of the heavy path `v` belongs to and the position of `v` on the single segment tree that covers all vertices.
 
-Để trả lời các truy vấn trên các đường đi, ví dụ truy vấn lớn nhất đã thảo luận, chúng ta có thể làm như sau:
+To answer queries on paths, for example the maximum query discussed, we can do something like this:
 
 ```cpp
 int query(int a, int b) {
@@ -181,7 +182,7 @@ int query(int a, int b) {
 }
 ```
 
-## Bài tập thực hành
+## Practice problems
 
 - [SPOJ - QTREE - Query on a tree](https://www.spoj.com/problems/QTREE/)
 - [CSES - Path Queries II](https://cses.fi/problemset/task/2134)

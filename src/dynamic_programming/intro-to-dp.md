@@ -3,11 +3,11 @@ tags:
   - Original
 ---
 
-# Giới thiệu về Quy hoạch động
+# Introduction to Dynamic Programming
 
-Bản chất của quy hoạch động là tránh việc tính toán lặp lại. Thường thì các bài toán quy hoạch động có thể được giải một cách tự nhiên bằng đệ quy. Trong những trường hợp như vậy, dễ nhất là viết lời giải đệ quy rồi lưu các trạng thái bị lặp lại vào một bảng tra cứu. Quá trình này được gọi là quy hoạch động theo hướng từ trên xuống (top-down) với kỹ thuật *memoization*. Lưu ý đọc là "memoization" (như viết vào sổ ghi chú), không phải "memorization" (ghi nhớ).
+The essence of dynamic programming is to avoid repeated calculation.  Often, dynamic programming problems are naturally solvable by recursion. In such cases, it's easiest to write the recursive solution, then save repeated states in a lookup table. This process is known as top-down dynamic programming with memoization. That's read "memoization" (like we are writing in a memo pad) not memorization.
 
-Một trong những ví dụ cơ bản và kinh điển của quá trình này là dãy Fibonacci. Biểu thức đệ quy của nó là $f(n) = f(n-1) + f(n-2)$ với $n \ge 2$ và $f(0)=0$, $f(1)=1$. Trong C++, điều này được biểu diễn như sau:
+One of the most basic, classic examples of this process is the fibonacci sequence. Its recursive formulation is $f(n) = f(n-1) + f(n-2)$ where $n \ge 2$ and $f(0)=0$ and $f(1)=1$. In C++, this would be expressed as:
 
 ```cpp
 int f(int n) {
@@ -17,15 +17,15 @@ int f(int n) {
 }
 ```
 
-Độ phức tạp thời gian của hàm đệ quy này là cấp số nhân - xấp xỉ $O(2^n)$ vì một lời gọi hàm ($f(n)$) dẫn tới 2 lời gọi hàm tương tự có kích thước nhỏ hơn ($f(n-1)$ và $f(n-2)$).
+The runtime of this recursive function is exponential - approximately $O(2^n)$ since one function call ( $f(n)$ ) results in 2 similarly sized function calls ($f(n-1)$ and $f(n-2)$ ).
 
-## Tăng tốc Fibonacci bằng Quy hoạch động (Memoization)
+## Speeding up Fibonacci with Dynamic Programming (Memoization)
 
-Hàm đệ quy hiện tại giải Fibonacci theo thời gian cấp số nhân. Điều này có nghĩa là chúng ta chỉ xử lý được các giá trị đầu vào nhỏ trước khi bài toán trở nên quá khó. Ví dụ, $f(29)$ dẫn đến *hơn 1 triệu* lời gọi hàm!
+Our recursive function currently solves fibonacci in exponential time. This means that we can only handle small input values before the problem becomes too difficult. For instance, $f(29)$ results in *over 1 million* function calls!
 
-Để tăng tốc, ta nhận ra rằng số lượng bài toán con chỉ là $O(n)$. Tức là, để tính $f(n)$ ta chỉ cần biết $f(n-1), f(n-2), \dots, f(0)$. Do đó, thay vì tính lại các bài toán con này nhiều lần, ta giải chúng một lần rồi lưu kết quả vào bảng tra cứu. Các lời gọi sau đó sẽ sử dụng bảng tra cứu này và trả về kết quả ngay lập tức, từ đó loại bỏ công việc cấp số nhân!
+To increase the speed, we recognize that the number of subproblems is only $O(n)$. That is, in order to calculate $f(n)$ we only need to know $f(n-1),f(n-2), \dots ,f(0)$. Therefore, instead of recalculating these subproblems, we solve them once and then save the result in a lookup table.  Subsequent calls will use this lookup table and immediately return a result, thus eliminating exponential work! 
 
-Mỗi lời gọi đệ quy sẽ kiểm tra bảng tra cứu xem giá trị đã được tính hay chưa. Việc này thực hiện trong $O(1)$ thời gian. Nếu trước đó ta đã tính, trả về kết quả; ngược lại, ta tính như bình thường. Tổng thời gian chạy là $O(n)$. Đây là một cải thiện rất lớn so với thuật toán cấp số nhân trước đó!
+Each recursive call will check against a lookup table to see if the value has been calculated. This is done in $O(1)$ time.  If we have previously calculated it, return the result, otherwise, we calculate the function normally. The overall runtime is $O(n)$. This is an enormous improvement over our previous exponential time algorithm!
 
 ```cpp
 const int MAXN = 100;
@@ -42,11 +42,11 @@ int f(int n) {
 }
 ```
 
-Với hàm đệ quy có memo hóa này, $f(29)$, vốn trước đây dẫn đến *hơn 1 triệu lời gọi*, giờ chỉ dẫn đến *chỉ 57* lời gọi, gần như *ít hơn 20.000 lần*! Trớ trêu thay, giờ ta bị giới hạn bởi kiểu dữ liệu. $f(46)$ là số Fibonacci cuối cùng có thể vừa trong một số nguyên 32-bit có dấu.
+With our new memoized recursive function, $f(29)$, which used to result in *over 1 million calls*, now results in *only 57* calls, nearly *20,000 times* fewer function calls! Ironically, we are now limited by our data type. $f(46)$ is the last fibonacci number that can fit into a signed 32-bit integer.
 
-Thông thường, ta cố gắng lưu trạng thái trong mảng nếu có thể, vì thời gian tra cứu là $O(1)$ với chi phí thấp. Tuy nhiên, nói chung, ta có thể lưu trạng thái theo nhiều cách khác nhau. Ví dụ khác bao gồm cây tìm kiếm nhị phân (`map` trong C++) hoặc bảng băm (`unordered_map` trong C++).
+Typically, we try to save states in arrays, if possible, since the lookup time is $O(1)$ with minimal overhead.  However, more generically, we can save states any way we like. Other examples include binary search trees (`map` in C++) or hash tables (`unordered_map` in C++).
 
-Một ví dụ như sau:
+An example of this might be:
 
 ```cpp
 unordered_map<int, int> memo;
@@ -59,7 +59,7 @@ int f(int n) {
 }
 ```
 
-Hoặc tương tự:
+Or analogously:
 
 ```cpp
 map<int, int> memo;
@@ -72,22 +72,23 @@ int f(int n) {
 }
 ```
 
-Cả hai cách này hầu như luôn chậm hơn phiên bản dùng mảng cho các hàm đệ quy có memo hóa chung. Những cách lưu trạng thái này hữu ích khi ta cần lưu vector hoặc chuỗi như một phần của không gian trạng thái.
+Both of these will almost always be slower than the array-based version for a generic memoized recursive function.
+These alternative ways of saving state are primarily useful when saving vectors or strings as part of the state space.
 
-Cách hiểu đơn giản để phân tích thời gian chạy của hàm đệ quy có memo là:
+The layman's way of analyzing the runtime of a memoized recursive function is:
 
-$$\text{công việc trên mỗi bài toán con} * \text{số lượng bài toán con}$$
+$$\text{work per subproblem} * \text{number of subproblems}$$
 
-Việc sử dụng cây tìm kiếm nhị phân (map trong C++) để lưu trạng thái về mặt kỹ thuật sẽ dẫn đến $O(n \log n)$ vì mỗi thao tác tra cứu và chèn tốn $O(\log n)$ và với $O(n)$ bài toán con duy nhất ta có $O(n \log n)$ thời gian.
+Using a binary search tree (map in C++) to save states will technically result in $O(n \log n)$ as each lookup and insertion will take $O(\log n)$ work and with $O(n)$ unique subproblems we have $O(n \log n)$ time.
 
-Cách tiếp cận này gọi là từ trên xuống (top-down), vì ta có thể gọi hàm với một giá trị truy vấn và quá trình tính toán bắt đầu từ trên (giá trị truy vấn) đi xuống dưới (các trường hợp cơ sở của đệ quy), đồng thời rút ngắn nhờ memoization trên đường đi.
+This approach is called top-down, as we can call the function with a query value and the calculation starts going from the top (queried value) down to the bottom (base cases of the recursion), and makes shortcuts via memoization on the way.
 
-## Quy hoạch động từ dưới lên (Bottom-up)
+## Bottom-up Dynamic Programming
 
-Cho đến giờ bạn chỉ thấy quy hoạch động từ trên xuống với memoization. Tuy nhiên, ta cũng có thể giải bài toán bằng quy hoạch động từ dưới lên.
-Bottom-up hoàn toàn ngược lại với top-down: bắt đầu từ dưới (các trường hợp cơ sở của đệ quy), rồi mở rộng tới các giá trị lớn hơn.
+Until now you've only seen top-down dynamic programming with memoization. However, we can also solve problems with bottom-up dynamic programming. 
+Bottom-up is exactly the opposite of top-down, you start at the bottom (base cases of the recursion), and extend it to more and more values.
 
-Để tạo phương pháp bottom-up cho số Fibonacci, ta khởi tạo các trường hợp cơ sở trong một mảng. Sau đó, ta đơn giản áp dụng công thức đệ quy lên mảng:
+To create a bottom-up approach for fibonacci numbers, we initialize the base cases in an array. Then, we simply use the recursive definition on array:
 
 ```cpp
 const int MAXN = 100;
@@ -102,11 +103,11 @@ int f(int n) {
 }
 ```
 
-Tất nhiên, như đã viết, đoạn mã trên hơi lãng phí vì hai lý do:
-Thứ nhất, ta làm việc lặp lại nếu gọi hàm nhiều hơn một lần.
-Thứ hai, ta chỉ cần hai giá trị trước đó để tính phần tử hiện tại. Do đó, ta có thể giảm bộ nhớ từ $O(n)$ xuống $O(1)$.
+Of course, as written, this is a bit silly for two reasons: 
+Firstly, we do repeated work if we call the function more than once. 
+Secondly, we only need to use the two previous values to calculate the current element. Therefore, we can reduce our memory from $O(n)$ to $O(1)$. 
 
-Một ví dụ của lời giải bottom-up cho Fibonacci sử dụng bộ nhớ $O(1)$ có thể như sau:
+An example of a bottom-up dynamic programming solution for fibonacci which uses $O(1)$ memory might be:
 
 ```cpp
 const int MAX_SAVE = 3;
@@ -122,33 +123,33 @@ int f(int n) {
 }
 ```
 
-Lưu ý rằng ta đã đổi hằng từ `MAXN` sang `MAX_SAVE`. Lý do là tổng số phần tử cần truy cập chỉ là 3. Nó không còn tỉ lệ theo kích thước đầu vào nữa và theo định nghĩa là bộ nhớ $O(1)$. Thêm vào đó, ta sử dụng mẹo phổ biến (dùng toán tử modulo) để chỉ giữ các giá trị cần thiết.
+Note that we've changed the constant from `MAXN` TO `MAX_SAVE`. This is because the total number of elements we need to access is only 3. It no longer scales with the size of input and is, by definition, $O(1)$ memory. Additionally, we use a common trick (using the modulo operator) only maintaining the values we need.
 
-Đó là cơ bản của quy hoạch động: đừng lặp lại công việc bạn đã làm trước đó.
+That's it. That's the basics of dynamic programming: Don't repeat the work you've done before.
 
-Một trong những mẹo để tiến bộ về quy hoạch động là học các ví dụ kinh điển.
+One of the tricks to getting better at dynamic programming is to study some of the classic examples.
 
-## Các bài toán Quy hoạch động kinh điển
-| Tên                                            | Mô tả / Ví dụ                                                                                                                                                                                                                  |
+## Classic Dynamic Programming Problems
+| Name                                           | Description/Example                                                                                                                                                                                                            |
 | ---------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| [Balo 0-1 (0-1 Knapsack)](../dynamic_programming/knapsack.md)                                   | Cho $N$ vật với trọng lượng $w_i$ và giá trị $v_i$ và trọng lượng tối đa $W$, giá trị tối đa $\sum_{i=1}^{k} v_i$ cho mỗi tập con gồm $k$ vật ($1 \le k \le N$) sao cho $\sum_{i=1}^{k} w_i \le W$ là bao nhiêu?                  |
-| Subset Sum (Tổng con)                          | Cho $N$ số nguyên và $T$, xác định xem có tồn tại một tập con của các phần tử đã cho mà tổng bằng $T$ hay không.                                                                                                         |
-| [Dãy con tăng dài nhất (LIS)](../dynamic_programming/longest_increasing_subsequence.md)           | Cho một mảng gồm $N$ số nguyên. Nhiệm vụ của bạn là tìm dãy con tăng dài nhất (LIS) trong mảng, tức là một dãy con mà mỗi phần tử lớn hơn phần tử trước nó.                                                       |
-| Đếm đường đi trong mảng 2D                      | Cho $N$ và $M$, đếm tất cả các đường đi phân biệt từ $(1,1)$ đến $(N, M)$, trong đó mỗi bước là từ $(i,j)$ đến $(i+1,j)$ hoặc $(i,j+1)$.                                                                               |
-| Dãy con chung dài nhất                          | Cho hai chuỗi $s$ và $t$. Tìm độ dài của chuỗi dài nhất là dãy con chung của cả $s$ và $t$.                                                                                                            |
-| Đường đi dài nhất trong DAG                     | Tìm đường đi dài nhất trong đồ thị có hướng acyclic (DAG).                                                                                                                                                                      |
-| Dãy con đối xứng dài nhất (LPS)                 | Tìm dãy con đối xứng dài nhất (LPS) của một chuỗi cho trước.                                                                                                                                                           |
-| Bài toán cắt thanh                              | Cho một thanh có độ dài $n$, và một mảng số nguyên `cuts` trong đó `cuts[i]` là vị trí cần cắt. Chi phí cho mỗi lần cắt là độ dài của đoạn thanh bị cắt. Hỏi chi phí tối thiểu để thực hiện các lần cắt là bao nhiêu. |
-| Khoảng cách chỉnh sửa (Edit Distance)          | Khoảng cách chỉnh sửa giữa hai chuỗi là số thao tác tối thiểu cần để biến chuỗi này thành chuỗi kia. Các thao tác là ["Add", "Remove", "Replace"]                                                         |
+| [0-1 Knapsack](../dynamic_programming/knapsack.md)                                   | Given $N$ items with weights $w_i$ and values $v_i$ and maximum weight $W$, what is the maximum $\sum_{i=1}^{k} v_i$ for each subset of items of size $k$ ($1 \le k \le N$) while ensuring $\sum_{i=1}^{k} w_i \le W$?                  |
+| Subset Sum                                     | Given $N$ integers and $T$, determine whether there exists a subset of the given set whose elements sum up to the $T$.                                                                                                         |
+| [Longest Increasing Subsequence (LIS)](../dynamic_programming/longest_increasing_subsequence.md)           | You are given an array containing $N$ integers. Your task is to determine the LIS in the array, i.e., a subsequence where every element is larger than the previous one.                                                       |
+| Counting Paths in a 2D Array                   | Given $N$ and $M$, count all possible distinct paths from $(1,1)$ to $(N, M)$, where each step is either from $(i,j)$ to $(i+1,j)$ or $(i,j+1)$.                                                                               |
+| Longest Common Subsequence                     | You are given strings $s$ and $t$. Find the length of the longest string that is a subsequence of both $s$ and $t$.                                                                                                            |
+| Longest Path in a Directed Acyclic Graph (DAG) | Finding the longest path in Directed Acyclic Graph (DAG).                                                                                                                                                                      |
+| Longest Palindromic Subsequence                | Finding the Longest Palindromic Subsequence (LPS) of a given string.                                                                                                                                                           |
+| Rod Cutting                                    | Given a rod of length $n$ units, Given an integer array cuts where cuts[i] denotes a position you should perform a cut at. The cost of one cut is the length of the rod to be cut. What is the minimum total cost of the cuts. |
+| Edit Distance                                  | The edit distance between two strings is the minimum number of operations required to transform one string into the other. Operations are ["Add", "Remove", "Replace"]                                                         |
 
-## Các chủ đề liên quan
-* [Quy hoạch động bằng bitmask](../dynamic_programming/profile-dynamics.md)
-* Quy hoạch động theo chữ số
-* Quy hoạch động trên cây
+## Related Topics
+* [Bitmask Dynamic Programming](../dynamic_programming/profile-dynamics.md)
+* Digit Dynamic Programming
+* Dynamic Programming on Trees
 
-Tất nhiên, mẹo quan trọng nhất là luyện tập.
+Of course, the most important trick is to practice.
 
-## Bài tập thực hành
+## Practice Problems
 * [LeetCode - 1137. N-th Tribonacci Number](https://leetcode.com/problems/n-th-tribonacci-number/description/)
 * [LeetCode - 118. Pascal's Triangle](https://leetcode.com/problems/pascals-triangle/description/)
 * [LeetCode - 1025. Divisor Game](https://leetcode.com/problems/divisor-game/description/)
@@ -158,7 +159,7 @@ Tất nhiên, mẹo quan trọng nhất là luyện tập.
 * [LeetCode - 221. Maximal Square](https://leetcode.com/problems/maximal-square/description/)
 * [LeetCode - 1039. Minimum Score Triangulation of Polygon](https://leetcode.com/problems/minimum-score-triangulation-of-polygon/description/)
 
-## Các cuộc thi DP
+## DP Contests
 * [Atcoder - Educational DP Contest](https://atcoder.jp/contests/dp/tasks)
 * [CSES - Dynamic Programming](https://cses.fi/problemset/list/)
 

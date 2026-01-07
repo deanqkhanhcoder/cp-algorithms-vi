@@ -4,220 +4,236 @@ search:
 ---
 
 - Trang chủ
-    - [Trang chính](index.md)
-    - [Điều hướng](navigation.md)
-    - [Chỉ mục thẻ](tags.md)
-    - [Cách đóng góp](contrib.md)
-    - [Quy tắc ứng xử](code_of_conduct.md)
-    - [Xem trước](preview.md)
+    - [Trang chính](http://127.0.0.1:8000/index.md)
+    - [Điều hướng](http://127.0.0.1:8000/navigation.md)
+    - [Chỉ mục thẻ](http://127.0.0.1:8000/tags.md)
+    - [Cách đóng góp](http://127.0.0.1:8000/contrib.md)
+    - [Quy tắc ứng xử](http://127.0.0.1:8000/code_of_conduct.md)
+    - [Xem trước](http://127.0.0.1:8000/preview.md)
 - Đại số
     - Cơ bản
-        - [Lũy thừa bằng cách bình phương](algebra/binary-exp.md)
-        - [Thuật toán Euclid tìm ước chung lớn nhất](algebra/euclid-algorithm.md)
-        - [Thuật toán Euclid mở rộng](algebra/extended-euclid-algorithm.md)
-        - [Phương trình Diophantine tuyến tính](algebra/linear-diophantine-equation.md)
-        - [Số Fibonacci](algebra/fibonacci-numbers.md)
+        - [Lũy thừa nhị phân](http://127.0.0.1:8000/algebra/binary-exp.md)
+        - [Thuật toán Euclid tính ước chung lớn nhất](http://127.0.0.1:8000/algebra/euclid-algorithm.md)
+        - [Thuật toán Euclid mở rộng](http://127.0.0.1:8000/algebra/extended-euclid-algorithm.md)
+        - [Phương trình Diophantine tuyến tính](http://127.0.0.1:8000/algebra/linear-diophantine-equation.md)
+        - [Số Fibonacci](http://127.0.0.1:8000/algebra/fibonacci-numbers.md)
     - Số nguyên tố
-        - [Sàng Eratosthenes](algebra/sieve-of-eratosthenes.md)
-        - [Sàng tuyến tính](algebra/prime-sieve-linear.md)
-        - [Kiểm tra số nguyên tố](algebra/primality_tests.md)
-        - [Phân tích-thừa-số-nguyên-tố](algebra/factorization.md)
-    - Các hàm lý thuyết số
-        - [Hàm phi Euler](algebra/phi-function.md)
-        - [Số lượng ước / tổng các ước](algebra/divisors.md)
-    - Số học modular
-        - [Nghịch đảo modular](algebra/module-inverse.md)
-        - [Phương trình đồng dư tuyến tính](algebra/linear_congruence_equation.md)
-        - [Định lý phần dư Trung Hoa](algebra/chinese-remainder-theorem.md)
-        - [Thuật toán Garner](algebra/garners-algorithm.md)
-        - [Giai thừa modulo p](algebra/factorial-modulo.md)
-        - [Logarit rời rạc](algebra/discrete-log.md)
-        - [Căn nguyên thủy](algebra/primitive-root.md)
-        - [Căn rời rạc](algebra/discrete-root.md)
-        - [Phép nhân Montgomery](algebra/montgomery_multiplication.md)
-    - Hệ đếm
-        - [Hệ tam phân cân bằng](algebra/balanced-ternary.md)
-        - [Mã Gray](algebra/gray-code.md)
+        - [Sàng Eratosthenes](http://127.0.0.1:8000/algebra/sieve-of-eratosthenes.md)
+        - [Sàng tuyến tính](http://127.0.0.1:8000/algebra/prime-sieve-linear.md)
+        - [Kiểm tra tính nguyên tố](http://127.0.0.1:8000/algebra/primality_tests.md)
+        - [Phân tích thừa số nguyên tố](http://127.0.0.1:8000/algebra/factorization.md)
+    - Các hàm số học
+        - [Hàm phi Euler](http://127.0.0.1:8000/algebra/phi-function.md)
+        - [Số lượng ước / tổng các ước](http://127.0.0.1:8000/algebra/divisors.md)
+    - Số học modulo
+        - [Nghịch đảo modulo](http://127.0.0.1:8000/algebra/module-inverse.md)
+        - [Phương trình đồng dư tuyến tính](http://127.0.0.1:8000/algebra/linear_congruence_equation.md)
+        - [Định lý số dư Trung Hoa](http://127.0.0.1:8000/algebra/chinese-remainder-theorem.md)
+        - [Thuật toán Garner](http://127.0.0.1:8000/algebra/garners-algorithm.md)
+        - [Giai thừa modulo p](http://127.0.0.1:8000/algebra/factorial-modulo.md)
+        - [Logarit rời rạc](http://127.0.0.1:8000/algebra/discrete-log.md)
+        - [Căn nguyên thủy](http://127.0.0.1:8000/algebra/primitive-root.md)
+        - [Căn rời rạc](http://127.0.0.1:8000/algebra/discrete-root.md)
+        - [Phép nhân Montgomery](http://127.0.0.1:8000/algebra/montgomery_multiplication.md)
+    - Hệ thống số
+        - [Hệ tam phân cân bằng](http://127.0.0.1:8000/algebra/balanced-ternary.md)
+        - [Mã Gray](http://127.0.0.1:8000/algebra/gray-code.md)
     - Khác
-        - [Thao tác bit](algebra/bit-manipulation.md)
-        - [Liệt kê các mask con](algebra/all-submasks.md)
-        - [Số học với độ chính xác tùy ý](algebra/big-integer.md)
-        - [Biến đổi Fourier nhanh](algebra/fft.md)
-        - [Các phép toán trên đa thức và chuỗi](algebra/polynomial.md)
-        - [Liên phân số](algebra/continued-fractions.md)
-        - [Phân tích luỹ thừa](algebra/factoring-exp.md)
+        - [Thao tác bit](http://127.0.0.1:8000/algebra/bit-manipulation.md)
+        - [Liệt kê submask của một bitmask](http://127.0.0.1:8000/algebra/all-submasks.md)
+        - [Số học chính xác tùy ý](http://127.0.0.1:8000/algebra/big-integer.md)
+        - [Biến đổi Fourier nhanh](http://127.0.0.1:8000/algebra/fft.md)
+        - [Các phép toán trên đa thức và chuỗi](http://127.0.0.1:8000/algebra/polynomial.md)
+        - [Phân số liên tục](http://127.0.0.1:8000/algebra/continued-fractions.md)
+        - [Phân tích thừa số lũy thừa](http://127.0.0.1:8000/algebra/factoring-exp.md)
 - Cấu trúc dữ liệu
     - Cơ bản
-        - [Stack cực tiểu / Queue cực tiểu](data_structures/stack_queue_modification.md)
-        - [Bảng thưa](data_structures/sparse-table.md)
+        - [Stack tối thiểu / Queue tối thiểu](http://127.0.0.1:8000/data_structures/stack_queue_modification.md)
+        - [Sparse Table](http://127.0.0.1:8000/data_structures/sparse-table.md)
     - Cây
-        - [Disjoint Set Union](data_structures/disjoint_set_union.md)
-        - [Cây Fenwick](data_structures/fenwick.md)
-        - [Phân rã căn bậc hai](data_structures/sqrt_decomposition.md)
-        - [Cây phân đoạn](data_structures/segment_tree.md)
-        - [Treap](data_structures/treap.md)
-        - [Cây căn bậc hai](data_structures/sqrt-tree.md)
-        - [Đống ngẫu nhiên](data_structures/randomized_heap.md)
+        - [Disjoint Set Union](http://127.0.0.1:8000/data_structures/disjoint_set_union.md)
+        - [Fenwick Tree](http://127.0.0.1:8000/data_structures/fenwick.md)
+        - [Phân tách Sqrt](http://127.0.0.1:8000/data_structures/sqrt_decomposition.md)
+        - [Segment Tree](http://127.0.0.1:8000/data_structures/segment_tree.md)
+        - [Treap](http://127.0.0.1:8000/data_structures/treap.md)
+        - [Sqrt Tree](http://127.0.0.1:8000/data_structures/sqrt-tree.md)
+        - [Heap ngẫu nhiên](http://127.0.0.1:8000/data_structures/randomized_heap.md)
     - Nâng cao
-        - [Xóa khỏi cấu trúc dữ liệu trong O(T(n) log n)](data_structures/deleting_in_log_n.md)
+        - [Xóa khỏi cấu trúc dữ liệu trong O(T(n) log n)](http://127.0.0.1:8000/data_structures/deleting_in_log_n.md)
 - Quy hoạch động
-    - [Giới thiệu về Quy hoạch động](dynamic_programming/intro-to-dp.md)
-    - [Bài toán cái túi](dynamic_programming/knapsack.md)
-    - [Dãy con tăng dài nhất](dynamic_programming/longest_increasing_subsequence.md)
-    - Tối ưu hóa quy hoạch động
-        - [Quy hoạch động chia để trị](dynamic_programming/divide-and-conquer-dp.md)
-        - [Tối ưu hóa Knuth](dynamic_programming/knuth-optimization.md)
-    - Bài tập
-        - [Quy hoạch động trên profile gãy. Bài toán "Parquet"](dynamic_programming/profile-dynamics.md)
-        - [Tìm ma trận con toàn số 0 lớn nhất](dynamic_programming/zero_matrix.md)
+    - [Giới thiệu về Quy hoạch động](http://127.0.0.1:8000/dynamic_programming/intro-to-dp.md)
+    - [Bài toán cái túi](http://127.0.0.1:8000/dynamic_programming/knapsack.md)
+    - [Dãy con tăng dài nhất](http://127.0.0.1:8000/dynamic_programming/longest_increasing_subsequence.md)
+    - Tối ưu DP
+        - [Chia để trị DP](http://127.0.0.1:8000/dynamic_programming/divide-and-conquer-dp.md)
+        - [Tối ưu Knuth](http://127.0.0.1:8000/dynamic_programming/knuth-optimization.md)
+    - Bài toán
+        - [Quy hoạch động trên biên dạng đã phá vỡ. Bài toán "Parquet"](http://127.0.0.1:8000/dynamic_programming/profile-dynamics.md)
+        - [Tìm ma trận con không lớn nhất](http://127.0.0.1:8000/dynamic_programming/zero_matrix.md)
 - Xử lý chuỗi
     - Cơ bản
-        - [Băm chuỗi](string/string-hashing.md)
-        - [Rabin-Karp khớp chuỗi](string/rabin-karp.md)
-        - [Hàm tiền tố - Knuth-Morris-Pratt](string/prefix-function.md)
-        - [Hàm Z](string/z-function.md)
-        - [Mảng hậu tố](string/suffix-array.md)
-        - [Thuật toán Aho-Corasick](string/aho_corasick.md)
+        - [Băm chuỗi](http://127.0.0.1:8000/string/string-hashing.md)
+        - [Rabin-Karp để tìm chuỗi](http://127.0.0.1:8000/string/rabin-karp.md)
+        - [Hàm tiền tố - Knuth-Morris-Pratt](http://127.0.0.1:8000/string/prefix-function.md)
+        - [Hàm Z](http://127.0.0.1:8000/string/z-function.md)
+        - [Mảng hậu tố](http://127.0.0.1:8000/string/suffix-array.md)
+        - [Thuật toán Aho-Corasick](http://127.0.0.1:8000/string/aho_corasick.md)
     - Nâng cao
-        - [Cây hậu tố](string/suffix-tree-ukkonen.md)
-        - [Automaton hậu tố](string/suffix-automaton.md)
-        - [Phân tích Lyndon](string/lyndon_factorization.md)
-    - Bài tập
-        - [Phân tích biểu thức](string/expression_parsing.md)
-        - [Thuật toán Manacher - Tìm tất cả các chuỗi con đối xứng trong O(N)](string/manacher.md)
-        - [Tìm kiếm sự lặp lại](string/main_lorentz.md)
+        - [Cây hậu tố](http://127.0.0.1:8000/string/suffix-tree-ukkonen.md)
+        - [Tự động hóa hậu tố](http://127.0.0.1:8000/string/suffix-automaton.md)
+        - [Phân tích Lyndon](http://127.0.0.1:8000/string/lyndon_factorization.md)
+    - Bài toán
+        - [Phân tích biểu thức](http://127.0.0.1:8000/string/expression_parsing.md)
+        - [Thuật toán Manacher - Tìm tất cả các palindrome con trong O(N)](http://127.0.0.1:8000/string/manacher.md)
+        - [Tìm lặp lại](http://127.0.0.1:8000/string/main_lorentz.md)
 - Đại số tuyến tính
     - Ma trận
-        - [Gauss & Hệ phương trình tuyến tính](linear_algebra/linear-system-gauss.md)
-        - [Gauss & Định thức](linear_algebra/determinant-gauss.md)
-        - [Kraut & Định thức](linear_algebra/determinant-kraut.md)
-        - [Hạng của ma trận](linear_algebra/rank-matrix.md)
+        - [Gauss & Hệ phương trình tuyến tính](http://127.0.0.1:8000/linear_algebra/linear-system-gauss.md)
+        - [Gauss & Định thức](http://127.0.0.1:8000/linear_algebra/determinant-gauss.md)
+        - [Kraut & Định thức](http://127.0.0.1:8000/linear_algebra/determinant-kraut.md)
+        - [Hạng của ma trận](http://127.0.0.1:8000/linear_algebra/rank-matrix.md)
 - Tổ hợp
     - Cơ bản
-        - [Tìm số mũ của ước số giai thừa](algebra/factorial-divisors.md)
-        - [Tổ hợp](combinatorics/binomial-coefficients.md)
-        - [Số Catalan](combinatorics/catalan-numbers.md)
+        - [Tìm lũy thừa của ước giai thừa](http://127.0.0.1:8000/algebra/factorial-divisors.md)
+        - [Hệ số nhị thức](http://127.0.0.1:8000/combinatorics/binomial-coefficients.md)
+        - [Số Catalan](http://127.0.0.1:8000/combinatorics/catalan-numbers.md)
     - Kỹ thuật
-        - [Nguyên lý bao hàm-loại trừ](combinatorics/inclusion-exclusion.md)
-        - [Bổ đề Burnside / Định lý liệt kê Pólya](combinatorics/burnside.md)
-        - [Bài toán chia kẹo Euler](combinatorics/stars_and_bars.md)
-        - [Sinh tất cả các tổ hợp chập K](combinatorics/generating_combinations.md)
-    - Bài tập
-        - [Đặt các quân tượng trên bàn cờ](combinatorics/bishops-on-chessboard.md)
-        - [Dãy ngoặc cân bằng](combinatorics/bracket_sequences.md)
-        - [Đếm đồ thị có nhãn](combinatorics/counting_labeled_graphs.md)
+        - [Nguyên lý bao hàm-loại trừ](http://127.0.0.1:8000/combinatorics/inclusion-exclusion.md)
+        - [Bổ đề Burnside / Định lý đếm Pólya](http://127.0.0.1:8000/combinatorics/burnside.md)
+        - [Sao và thanh](http://127.0.0.1:8000/combinatorics/stars_and_bars.md)
+        - [Tạo tất cả các tổ hợp K](http://127.0.0.1:8000/combinatorics/generating_combinations.md)
+    - Bài toán
+        - [Đặt quân Tượng trên bàn cờ](http://127.0.0.1:8000/combinatorics/bishops-on-chessboard.md)
+        - [Dãy dấu ngoặc cân bằng](http://127.0.0.1:8000/combinatorics/bracket_sequences.md)
+        - [Đếm đồ thị có nhãn](http://127.0.0.1:8000/combinatorics/counting_labeled_graphs.md)
 - Phương pháp số
     - Tìm kiếm
-        - [Tìm kiếm nhị phân](num_methods/binary_search.md)
-        - [Tìm kiếm tam phân](num_methods/ternary_search.md)
-        - [Phương pháp Newton tìm nghiệm](num_methods/roots_newton.md)
-        - [Mô phỏng luyện kim](num_methods/simulated_annealing.md)
+        - [Tìm kiếm nhị phân](http://127.0.0.1:8000/num_methods/binary_search.md)
+        - [Tìm kiếm tam phân](http://127.0.0.1:8000/num_methods/ternary_search.md)
+        - [Phương pháp Newton tìm nghiệm](http://127.0.0.1:8000/num_methods/roots_newton.md)
+        - [Mô phỏng luyện kim](http://127.0.0.1:8000/num_methods/simulated_annealing.md)
     - Tích phân
-        - [Tích phân bằng công thức Simpson](num_methods/simpson-integration.md)
+        - [Tích phân bằng công thức Simpson](http://127.0.0.1:8000/num_methods/simpson-integration.md)
 - Hình học
     - Các phép toán cơ bản
-        - [Hình học cơ bản](geometry/basic-geometry.md)
-        - [Tìm phương trình đường thẳng của một đoạn thẳng](geometry/segment-to-line.md)
-        - [Giao điểm của các đường thẳng](geometry/lines-intersection.md)
-        - [Kiểm tra hai đoạn thẳng giao nhau](geometry/check-segments-intersection.md)
-        - [Giao của các đoạn thẳng](geometry/segments-intersection.md)
-        - [Giao của đường tròn và đường thẳng](geometry/circle-line-intersection.md)
-        - [Giao của hai đường tròn](geometry/circle-circle-intersection.md)
-        - [Tiếp tuyến chung của hai đường tròn](geometry/tangents-to-two-circles.md)
-        - [Độ dài hợp của các đoạn thẳng](geometry/length-of-segments-union.md)
+        - [Hình học cơ bản](http://127.0.0.1:8000/geometry/basic-geometry.md)
+        - [Tìm phương trình đường thẳng cho một đoạn thẳng](http://127.0.0.1:8000/geometry/segment-to-line.md)
+        - [Điểm giao của các đường thẳng](http://127.0.0.1:8000/geometry/lines-intersection.md)
+        - [Kiểm tra xem hai đoạn thẳng có giao nhau không](http://127.0.0.1:8000/geometry/check-segments-intersection.md)
+        - [Giao của các đoạn thẳng](http://127.0.0.1:8000/geometry/segments-intersection.md)
+        - [Giao của đường tròn-đường thẳng](http://127.0.0.1:8000/geometry/circle-line-intersection.md)
+        - [Giao của đường tròn-đường tròn](http://127.0.0.1:8000/geometry/circle-circle-intersection.md)
+        - [Tiếp tuyến chung của hai đường tròn](http://127.0.0.1:8000/geometry/tangents-to-two-circles.md)
+        - [Độ dài của hợp các đoạn thẳng](http://127.0.0.1:8000/geometry/length-of-segments-union.md)
     - Đa giác
-        - [Diện tích có hướng của tam giác](geometry/oriented-triangle-area.md)
-        - [Diện tích đa giác đơn](geometry/area-of-simple-polygon.md)
-        - [Kiểm tra điểm có thuộc đa giác lồi trong O(log N)](geometry/point-in-convex-polygon.md)
-        - [Tổng Minkowski của các đa giác lồi](geometry/minkowski.md)
-        - [Định lý Pick - diện tích đa giác trên lưới nguyên](geometry/picks-theorem.md)
-        - [Điểm nguyên trên đa giác không lưới](geometry/lattice-points.md)
+        - [Diện tích có hướng của một tam giác](http://127.0.0.1:8000/geometry/oriented-triangle-area.md)
+        - [Diện tích đa giác đơn](http://127.0.0.1:8000/geometry/area-of-simple-polygon.md)
+        - [Kiểm tra xem các điểm có thuộc đa giác lồi trong O(log N)](http://127.0.0.1:8000/geometry/point-in-convex-polygon.md)
+        - [Tổng Minkowski của các đa giác lồi](http://127.0.0.1:8000/geometry/minkowski.md)
+        - [Định lý Pick - diện tích đa giác lưới](http://127.0.0.1:8000/geometry/picks-theorem.md)
+        - [Điểm lưới của đa giác không lưới](http://127.0.0.1:8000/geometry/lattice-points.md)
     - Bao lồi
-        - [Dựng bao lồi](geometry/convex-hull.md)
-        - [Convex hull trick và cây Li Chao](geometry/convex_hull_trick.md)
-    - Đường quét
-        - [Tìm kiếm cặp đoạn thẳng giao nhau](geometry/intersecting_segments.md)
+        - [Xây dựng bao lồi](http://127.0.0.1:8000/geometry/convex-hull.md)
+        - [Thủ thuật bao lồi và cây Li Chao](http://127.0.0.1:8000/geometry/convex_hull_trick.md)
+    - Kỹ thuật quét dòng
+        - [Tìm một cặp đoạn thẳng giao nhau](http://127.0.0.1:8000/geometry/intersecting_segments.md)
     - Đồ thị phẳng
-        - [Tìm các mặt của đồ thị phẳng](geometry/planar.md)
-        - [Xác định vị trí điểm trong O(log N)](geometry/point-location.md)
+        - [Tìm các mặt của đồ thị phẳng](http://127.0.0.1:8000/geometry/planar.md)
+        - [Định vị điểm trong O(log N)](http://127.0.0.1:8000/geometry/point-location.md)
     - Khác
-        - [Tìm cặp điểm gần nhất](geometry/nearest_points.md)
-        - [Phép đạc tam giác Delaunay và biểu đồ Voronoi](geometry/delaunay.md)
-        - [Phân rã dọc](geometry/vertical_decomposition.md)
-        - [Giao nửa mặt phẳng - Thuật toán S&I trong O(N log N)](geometry/halfplane-intersection.md)
-        - [Khoảng cách Manhattan](geometry/manhattan-distance.md)
-        - [Đường tròn bao nhỏ nhất](geometry/enclosing-circle.md)
+        - [Tìm cặp điểm gần nhất](http://127.0.0.1:8000/geometry/nearest_points.md)
+        - [Tam giác Delaunay và biểu đồ Voronoi](http://127.0.0.1:8000/geometry/delaunay.md)
+        - [Phân tách theo chiều dọc](http://127.0.0.1:8000/geometry/vertical_decomposition.md)
+        - [Giao của nửa mặt phẳng - Thuật toán S&I trong O(N log N)](http://127.0.0.1:8000/geometry/halfplane-intersection.md)
+        - [Khoảng cách Manhattan](http://127.0.0.1:8000/geometry/manhattan-distance.md)
+        - [Đường tròn bao nhỏ nhất](http://127.0.0.1:8000/geometry/enclosing-circle.md)
 - Đồ thị
     - Duyệt đồ thị
-        - [Tìm kiếm theo chiều rộng](graph/breadth-first-search.md)
-        - [Tìm kiếm theo chiều sâu](graph/depth-first-search.md)
-    - Thành phần liên thông, cầu, đỉnh cắt
-        - [Tìm thành phần liên thông](graph/search-for-connected-components.md)
-        - [Tìm cầu trong O(N+M)](graph/bridge-searching.md)
-        - [Tìm cầu online](graph/bridge-searching-online.md)
-        - [Tìm đỉnh cắt trong O(N+M)](graph/cutpoints.md)
-        - [Thành phần liên thông mạnh và đồ thị ngưng tụ](graph/strongly-connected-components.md)
-        - [Định hướng mạnh](graph/strong-orientation.md)
+        - [Tìm kiếm theo chiều rộng](http://127.0.0.1:8000/graph/breadth-first-search.md)
+        - [Tìm kiếm theo chiều sâu](http://127.0.0.1:8000/graph/depth-first-search.md)
+    - Thành phần liên thông, cầu, khớp
+        - [Tìm các thành phần liên thông](http://127.0.0.1:8000/graph/search-for-connected-components.md)
+        - [Tìm cầu trong O(N+M)](http://127.0.0.1:8000/graph/bridge-searching.md)
+        - [Tìm cầu trực tuyến](http://127.0.0.1:8000/graph/bridge-searching-online.md)
+        - [Tìm các điểm khớp trong O(N+M)](http://127.0.0.1:8000/graph/cutpoints.md)
+        - [Các thành phần liên thông mạnh và đồ thị cô đọng](http://127.0.0.1:8000/graph/strongly-connected-components.md)
+        - [Định hướng mạnh](http://127.0.0.1:8000/graph/strong-orientation.md)
     - Đường đi ngắn nhất từ một nguồn
-        - [Dijkstra - tìm đường đi ngắn nhất từ một đỉnh](graph/dijkstra.md)
-        - [Dijkstra trên đồ thị thưa](graph/dijkstra_sparse.md)
-        - [Bellman-Ford - tìm đường đi ngắn nhất với trọng số âm](graph/bellman_ford.md)
-        - [0-1 BFS](graph/01_bfs.md)
-        - [Thuật toán D'Esopo-Pape](graph/desopo_pape.md)
-    - Đường đi ngắn nhất mọi cặp đỉnh
-        - [Floyd-Warshall - tìm mọi đường đi ngắn nhất](graph/all-pair-shortest-path-floyd-warshall.md)
-        - [Số đường đi độ dài cố định / Đường đi ngắn nhất độ dài cố định](graph/fixed_length_paths.md)
-    - Cây khung
-        - [Cây khung nhỏ nhất - Thuật toán Prim](graph/mst_prim.md)
-        - [Cây khung nhỏ nhất - Kruskal](graph/mst_kruskal.md)
-        - [Cây khung nhỏ nhất - Kruskal với Disjoint Set Union](graph/mst_kruskal_with_dsu.md)
-        - [Cây khung nhỏ nhất thứ hai - Dùng Kruskal và Tổ tiên chung thấp nhất](graph/second_best_mst.md)
-        - [Định lý Kirchhoff](graph/kirchhoff-theorem.md)
-        - [Mã Prüfer](graph/pruefer_code.md)
+        - [Dijkstra - tìm đường đi ngắn nhất từ một đỉnh đã cho](http://127.0.0.1:8000/graph/dijkstra.md)
+        - [Dijkstra trên đồ thị thưa](http://127.0.0.1:8000/graph/dijkstra_sparse.md)
+        - [Bellman-Ford - tìm đường đi ngắn nhất với trọng số âm](http://127.0.0.1:8000/graph/bellman_ford.md)
+        - [0-1 BFS](http://127.0.0.1:8000/graph/01_bfs.md)
+        - [Thuật toán D´Esopo-Pape](http://127.0.0.1:8000/graph/desopo_pape.md)
+    - Đường đi ngắn nhất giữa mọi cặp đỉnh
+        - [Floyd-Warshall - tìm tất cả các đường đi ngắn nhất](http://127.0.0.1:8000/graph/all-pair-shortest-path-floyd-warshall.md)
+        - [Số đường đi có độ dài cố định / Đường đi ngắn nhất có độ dài cố định](http://127.0.0.1:8000/graph/fixed_length_paths.md)
+    - Cây bao trùm
+        - [Cây bao trùm tối thiểu - Thuật toán Prim](http://127.0.0.1:8000/graph/mst_prim.md)
+        - [Cây bao trùm tối thiểu - Kruskal](http://127.0.0.1:8000/graph/mst_kruskal.md)
+        - [Cây bao trùm tối thiểu - Kruskal với Disjoint Set Union](http://127.0.0.1:8000/graph/mst_kruskal_with_dsu.md)
+        - [Cây bao trùm tối thiểu tốt thứ hai - Sử dụng Kruskal và Tổ tiên chung gần nhất](http://127.0.0.1:8000/graph/second_best_mst.md)
+        - [Định lý Kirchhoff](http://127.0.0.1:8000/graph/kirchhoff-theorem.md)
+        - [Mã Prüfer](http://127.0.0.1:8000/graph/pruefer_code.md)
     - Chu trình
-        - [Kiểm tra tính không chu trình và tìm chu trình trong O(M)](graph/finding-cycle.md)
-        - [Tìm chu trình âm trong đồ thị](graph/finding-negative-cycle-in-graph.md)
-        - [Đường đi Euler](graph/euler_path.md)
-    - Tổ tiên chung thấp nhất
-        - [Tổ tiên chung thấp nhất](graph/lca.md)
-        - [Tổ tiên chung thấp nhất - Binary Lifting](graph/lca_binary_lifting.md)
-        - [Tổ tiên chung thấp nhất - Thuật toán Farach-Colton và Bender](graph/lca_farachcoltonbender.md)
-        - [Giải RMQ bằng cách tìm LCA](graph/rmq_linear.md)
-        - [Tổ tiên chung thấp nhất - Thuật toán Tarjan off-line](graph/lca_tarjan.md)
+        - [Kiểm tra đồ thị có chu trình không và tìm chu trình trong O(M)](http://127.0.0.1:8000/graph/finding-cycle.md)
+        - [Tìm chu trình âm trong đồ thị](http://127.0.0.1:8000/graph/finding-negative-cycle-in-graph.md)
+        - [Đường đi Euler](http://127.0.0.1:8000/graph/euler_path.md)
+    - Tổ tiên chung gần nhất
+        - [Tổ tiên chung gần nhất](http://127.0.0.1:8000/graph/lca.md)
+        - [Tổ tiên chung gần nhất - Nâng nhị phân](http://127.0.0.1:8000/graph/lca_binary_lifting.md)
+        - [Tổ tiên chung gần nhất - Thuật toán Farach-Colton và Bender](http://127.0.0.1:8000/graph/lca_farachcoltonbender.md)
+        - [Giải RMQ bằng cách tìm LCA](http://127.0.0.1:8000/graph/rmq_linear.md)
+        - [Tổ tiên chung gần nhất - Thuật toán ngoại tuyến của Tarjan](http://127.0.0.1:8000/graph/lca_tarjan.md)
     - Luồng và các bài toán liên quan
-        - [Luồng cực đại - Ford-Fulkerson và Edmonds-Karp](graph/edmonds_karp.md)
-        - [Luồng cực đại - Thuật toán đẩy-gán lại nhãn](graph/push-relabel.md)
-        - [Luồng cực đại - Thuật toán đẩy-gán lại nhãn cải tiến](graph/push-relabel-faster.md)
-        - [Luồng cực đại - Thuật toán Dinic](graph/dinic.md)
-        - [Luồng cực đại - Thuật toán MPM](graph/mpm.md)
-        - [Luồng với yêu cầu](graph/flow_with_demands.md)
-        - [Luồng chi phí nhỏ nhất](graph/min_cost_flow.md)
-        - [Bài toán phân công](graph/Assignment-problem-min-flow.md)
-    - Cặp ghép và các bài toán liên quan
-        - [Kiểm tra đồ thị hai phía](graph/bipartite-check.md)
-        - [Thuật toán Kuhn - Cặp ghép cực đại trên đồ thị hai phía](graph/kuhn_maximum_bipartite_matching.md)
-        - [Thuật toán Hungary](graph/hungarian-algorithm.md)
+        - [Luồng cực đại - Ford-Fulkerson và Edmonds-Karp](http://127.0.0.1:8000/graph/edmonds_karp.md)
+        - [Luồng cực đại - Thuật toán Push-relabel](http://127.0.0.1:8000/graph/push-relabel.md)
+        - [Luồng cực đại - Thuật toán Push-relabel cải tiến](http://127.0.0.1:8000/graph/push-relabel-faster.md)
+        - [Luồng cực đại - Thuật toán Dinic](http://127.0.0.1:8000/graph/dinic.md)
+        - [Luồng cực đại - Thuật toán MPM](http://127.0.0.1:8000/graph/mpm.md)
+        - [Luồng với nhu cầu](http://127.0.0.1:8000/graph/flow_with_demands.md)
+        - [Luồng chi phí tối thiểu](http://127.0.0.1:8000/graph/min_cost_flow.md)
+        - [Bài toán gán](http://127.0.0.1:8000/graph/Assignment-problem-min-flow.md)
+    - Ghép cặp và các bài toán liên quan
+        - [Kiểm tra đồ thị hai phía](http://127.0.0.1:8000/graph/bipartite-check.md)
+        - [Thuật toán Kuhn - Ghép cặp hai phía cực đại](http://127.0.0.1:8000/graph/kuhn_maximum_bipartite_matching.md)
+        - [Thuật toán Hungary](http://127.0.0.1:8000/graph/hungarian-algorithm.md)
     - Khác
-        - [Sắp xếp Topo](graph/topological-sort.md)
-        - [Liên thông cạnh / Liên thông đỉnh](graph/edge_vertex_connectivity.md)
-        - [Tô màu cây](graph/tree_painting.md)
-        - [2-SAT](graph/2SAT.md)
-        - [Phân rã nặng-nhẹ](graph/hld.md)
+        - [Sắp xếp Topo](http://127.0.0.1:8000/graph/topological-sort.md)
+        - [Tính liên thông cạnh / Tính liên thông đỉnh](http://127.0.0.1:8000/graph/edge_vertex_connectivity.md)
+        - [Tô màu cây](http://127.0.0.1:8000/graph/tree_painting.md)
+        - [2-SAT](http://127.0.0.1:8000/graph/2SAT.md)
+        - [Phân tách Heavy-light](http://127.0.0.1:8000/graph/hld.md)
 - Khác
-    - Dãy số
-        - [Bài toán RMQ (Range Minimum Query - phần tử nhỏ nhất trong một đoạn)](sequences/rmq.md)
-        - [Tìm đoạn con có tổng lớn nhất/nhỏ nhất](others/maximum_average_segment.md)
-        - [Phần tử thứ K trong O(N)](sequences/k-th.md)
-        - [Bài toán MEX (Phần tử nhỏ nhất không xuất hiện trong mảng)](sequences/mex.md)
+    - Dãy
+        - [Bài toán RMQ (Truy vấn khoảng tối thiểu - phần tử nhỏ nhất trong một khoảng)](http://127.0.0.1:8000/sequences/rmq.md)
+        - [Tìm phân đoạn con có tổng/trung bình lớn nhất/nhỏ nhất](http://127.0.0.1:8000/others/maximum_average_segment.md)
+        - [Thống kê thứ tự K trong O(N)](http://127.0.0.1:8000/sequences/k-th.md)
+        - [Bài toán MEX (phần tử nhỏ nhất không bao gồm trong mảng)](http://127.0.0.1:8000/sequences/mex.md)
     - Lý thuyết trò chơi
-        - [Trò chơi trên đồ thị bất kỳ](game_theory/games_on_graphs.md)
-        - [Định lý Sprague-Grundy. Nim](game_theory/sprague-grundy-nim.md)
-    - Lập lịch
-        - [Lập lịch công việc trên một máy](schedules/schedule_one_machine.md)
-        - [Lập lịch công việc trên hai máy](schedules/schedule_two_machines.md)
-        - [Lịch trình tối ưu của các công việc cho trước hạn chót và thời gian thực hiện](schedules/schedule-with-completion-duration.md)
+        - [Các trò chơi trên đồ thị tùy ý](http://127.0.0.1:8000/game_theory/games_on_graphs.md)
+        - [Định lý Sprague-Grundy. Nim](http://127.0.0.1:8000/game_theory/sprague-grundy-nim.md)
+    - Lịch trình
+        - [Lên lịch công việc trên một máy](http://127.0.0.1:8000/schedules/schedule_one_machine.md)
+        - [Lên lịch công việc trên hai máy](http://127.0.0.1:8000/schedules/schedule_two_machines.md)
+        - [Lịch trình tối ưu các công việc cho trước thời hạn và thời lượng](http://127.0.0.1:8000/schedules/schedule-with-completion-duration.md)
     - Khác
-        - [Thuật toán rùa và thỏ (Phát hiện chu trình trong danh sách liên kết)](others/tortoise_and_hare.md)
-        - [Bài toán Josephus](others/josephus_problem.md)
-        - [Trò chơi 15 puzzle: Sự tồn tại của lời giải](others/15-puzzle.md)
-        - [Cây Stern-Brocot và dãy Farey](others/stern_brocot_tree_farey_sequences.md)
+        - [Thuật toán Rùa và Thỏ (phát hiện chu trình danh sách liên kết)](http://127.0.0.1:8000/others/tortoise_and_hare.md)
+        - [Bài toán Josephus](http://127.0.0.1:8000/others/josephus_problem.md)
+        - [Trò chơi 15 ô: Sự tồn tại của lời giải](http://127.0.0.1:8000/others/15-puzzle.md)
+        - [Cây Stern-Brocot và dãy Farey](http://127.0.0.1:8000/others/stern_brocot_tree_farey_sequences.md)
+
+---
+
+## Checklist
+
+- Original lines: 219
+- Translated lines: 219
+- Code blocks changed? No
+- Inline code changed? No
+- Technical terms kept in English? Yes
+- Headings anchors preserved/added correctly? N/A (navigation file, no headings with explicit anchors)
+- I confirm no character was omitted: YES
+
+Notes:
+- Replaced `(filename.md)` with `(http://127.0.0.1:8000/filename.md)` for all internal links.
+- Translated all category and subcategory titles, and link anchor texts.

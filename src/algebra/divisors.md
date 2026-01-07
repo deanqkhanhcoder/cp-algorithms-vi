@@ -3,42 +3,43 @@ tags:
   - Original
 ---
 
-# Số lượng ước / tổng các ước
+# Number of divisors / sum of divisors
 
-Trong bài viết này, chúng ta thảo luận cách tính số lượng ước $d(n)$ và tổng các ước $\sigma(n)$ của một số $n$ cho trước.
+In this article we discuss how to compute the number of divisors $d(n)$ and the sum of divisors $\sigma(n)$ of a given number $n$.
 
-## Số lượng ước
+## Number of divisors
 
-Rõ ràng là phân tích thừa số nguyên tố của một ước $d$ phải là một tập con của phân tích thừa số nguyên tố của $n$, ví dụ: $6 = 2 \cdot 3$ là một ước của $60 = 2^2 \cdot 3 \cdot 5$.
-Vì vậy, chúng ta chỉ cần tìm tất cả các tập con khác nhau của phân tích thừa số nguyên tố của $n$.
+It should be obvious that the prime factorization of a divisor $d$ has to be a subset of the prime factorization of $n$, e.g. $6 = 2 \cdot 3$ is a divisor of $60 = 2^2 \cdot 3 \cdot 5$.
+So we only need to find all different subsets of the prime factorization of $n$.
 
-Thông thường, số lượng tập con là $2^x$ cho một tập hợp có $x$ phần tử.
-Tuy nhiên, điều này không còn đúng nếu có các phần tử lặp lại trong tập hợp. Trong trường hợp của chúng ta, một số thừa số nguyên tố có thể xuất hiện nhiều lần trong phân tích thừa số nguyên tố của $n$.
+Usually the number of subsets is $2^x$ for a set with $x$ elements.
+However this is no longer true, if there are repeated elements in the set. In our case some prime factors may appear multiple times in the prime factorization of $n$.
 
-Nếu một thừa số nguyên tố $p$ xuất hiện $e$ lần trong phân tích thừa số nguyên tố của $n$, thì chúng ta có thể sử dụng thừa số $p$ tối đa $e$ lần trong tập con.
-Điều đó có nghĩa là chúng ta có $e+1$ lựa chọn.
+If a prime factor $p$ appears $e$ times in the prime factorization of $n$, then we can use the factor $p$ up to $e$ times in the subset.
+Which means we have $e+1$ choices.
 
-Do đó, nếu phân tích thừa số nguyên tố của $n$ là $p_1^{e_1} \cdot p_2^{e_2} \cdots p_k^{e_k}$, trong đó $p_i$ là các số nguyên tố phân biệt, thì số lượng ước là:
+Therefore if the prime factorization of $n$ is $p_1^{e_1} \cdot p_2^{e_2} \cdots p_k^{e_k}$, where $p_i$ are distinct prime numbers, then the number of divisors is:
 
 $$d(n) = (e_1 + 1) \cdot (e_2 + 1) \cdots (e_k + 1)$$
 
-Một cách suy nghĩ về nó là như sau:
+A way of thinking about it is the following:
 
-* Nếu chỉ có một ước nguyên tố phân biệt $n = p_1^{e_1}$, thì rõ ràng có $e_1 + 1$ ước ($1, p_1, p_1^2, \dots, p_1^{e_1}$).
+* If there is only one distinct prime divisor $n = p_1^{e_1}$, then there are obviously $e_1 + 1$ divisors ($1, p_1, p_1^2, \dots, p_1^{e_1}$).
 
-* Nếu có hai ước nguyên tố phân biệt $n = p_1^{e_1} \cdot p_2^{e_2}$, thì bạn có thể sắp xếp tất cả các ước dưới dạng một bảng.
+* If there are two distinct prime divisors $n = p_1^{e_1} \cdot p_2^{e_2}$, then you can arrange all divisors in form of a tabular.
 
 $$\begin{array}{c|ccccc}
-& 1 & p_2 & p_2^2 & \dots & p_2^{e_2} \\\hline
-1 & 1 & p_2 & p_2^2 & \dots & p_2^{e_2} \\
-p_1 & p_1 & p_1 \cdot p_2 & p_1 \cdot p_2^2 & \dots & p_1 \cdot p_2^{e_2} \\
-p_1^2 & p_1^2 & p_1^2 \cdot p_2 & p_1^2 \cdot p_2^2 & \dots & p_1^2 \cdot p_2^{e_2} \\
-\vdots & \vdots & \vdots & \vdots & \ddots & \vdots \\\np_1^{e_1} & p_1^{e_1} & p_1^{e_1} \cdot p_2 & p_1^{e_1} \cdot p_2^2 & \dots & p_1^{e_1} \cdot p_2^{e_2} \\
+& 1 & p_2 & p_2^2 & \dots & p_2^{e_2} \\\\\hline
+1 & 1 & p_2 & p_2^2 & \dots & p_2^{e_2} \\\\
+p_1 & p_1 & p_1 \cdot p_2 & p_1 \cdot p_2^2 & \dots & p_1 \cdot p_2^{e_2} \\\\
+p_1^2 & p_1^2 & p_1^2 \cdot p_2 & p_1^2 \cdot p_2^2 & \dots & p_1^2 \cdot p_2^{e_2} \\\\
+\vdots & \vdots & \vdots & \vdots & \ddots & \vdots \\\\
+p_1^{e_1} & p_1^{e_1} & p_1^{e_1} \cdot p_2 & p_1^{e_1} \cdot p_2^2 & \dots & p_1^{e_1} \cdot p_2^{e_2} \\\\
 \end{array}$$
 
-Vì vậy, số lượng ước là một cách tầm thường $(e_1 + 1) \cdot (e_2 + 1)$.
+So the number of divisors is trivially $(e_1 + 1) \cdot (e_2 + 1)$.
 
-* Một lập luận tương tự có thể được đưa ra nếu có nhiều hơn hai thừa số nguyên tố phân biệt.
+* A similar argument can be made if there are more then two distinct prime factors.
 
 
 ```cpp
@@ -61,23 +62,23 @@ long long numberOfDivisors(long long num) {
 }
 ```
 
-## Tổng các ước
+## Sum of divisors
 
-Chúng ta có thể sử dụng cùng một lập luận của phần trước.
+We can use the same argument of the previous section.
 
-* Nếu chỉ có một ước nguyên tố phân biệt $n = p_1^{e_1}$, thì tổng là:
+* If there is only one distinct prime divisor $n = p_1^{e_1}$, then the sum is:
 
 $$1 + p_1 + p_1^2 + \dots + p_1^{e_1} = \frac{p_1^{e_1 + 1} - 1}{p_1 - 1}$$
 
-* Nếu có hai ước nguyên tố phân biệt $n = p_1^{e_1} \cdot p_2^{e_2}$, thì chúng ta có thể lập cùng một bảng như trước.
-  Sự khác biệt duy nhất là bây giờ chúng ta muốn tính tổng thay vì đếm các phần tử.
-  Dễ dàng thấy rằng, tổng của mỗi tổ hợp có thể được biểu thị là:
+* If there are two distinct prime divisors $n = p_1^{e_1} \cdot p_2^{e_2}$, then we can make the same table as before.
+  The only difference is that now we now want to compute the sum instead of counting the elements.
+  It is easy to see, that the sum of each combination can be expressed as:
 
 $$\left(1 + p_1 + p_1^2 + \dots + p_1^{e_1}\right) \cdot \left(1 + p_2 + p_2^2 + \dots + p_2^{e_2}\right)$$
 
 $$ = \frac{p_1^{e_1 + 1} - 1}{p_1 - 1} \cdot \frac{p_2^{e_2 + 1} - 1}{p_2 - 1}$$
 
-* Nói chung, đối với $n = p_1^{e_1} \cdot p_2^{e_2} \cdots p_k^{e_k}$, chúng ta nhận được công thức:
+* In general, for $n = p_1^{e_1} \cdot p_2^{e_2} \cdots p_k^{e_k}$ we receive the formula:
 
 $$\sigma(n) = \frac{p_1^{e_1 + 1} - 1}{p_1 - 1} \cdot \frac{p_2^{e_2 + 1} - 1}{p_2 - 1} \cdots \frac{p_k^{e_k + 1} - 1}{p_k - 1}$$
 
@@ -108,20 +109,20 @@ long long SumOfDivisors(long long num) {
 }
 ```
 
-## Hàm nhân tính
+## Multiplicative functions
 
-Một hàm nhân tính là một hàm $f(x)$ thỏa mãn
+A multiplicative function is a function $f(x)$ which satisfies
 
 $$f(a \cdot b) = f(a) \cdot f(b)$$
 
-nếu $a$ và $b$ là nguyên tố cùng nhau.
+if $a$ and $b$ are coprime.
 
-Cả $d(n)$ và $\sigma(n)$ đều là các hàm nhân tính.
+Both $d(n)$ and $\sigma(n)$ are multiplicative functions.
 
-Các hàm nhân tính có rất nhiều thuộc tính thú vị, có thể rất hữu ích trong các bài toán lý thuyết số.
-Ví dụ, tích chập Dirichlet của hai hàm nhân tính cũng là một hàm nhân tính.
+Multiplicative functions have a huge variety of interesting properties, which can be very useful in number theory problems.
+For instance the Dirichlet convolution of two multiplicative functions is also multiplicative.
 
-## Bài tập luyện tập
+## Practice Problems
 
   - [SPOJ - COMDIV](https://www.spoj.com/problems/COMDIV/)
   - [SPOJ - DIVSUM](https://www.spoj.com/problems/DIVSUM/)

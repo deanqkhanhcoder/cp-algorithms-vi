@@ -4,56 +4,56 @@ tags:
 e_maxx_link: flow_with_limits
 ---
 
-# Luồng có yêu cầu
+# Flows with demands
 
-Trong một mạng luồng thông thường, luồng của một cạnh chỉ bị giới hạn bởi khả năng thông qua $c(e)$ từ phía trên và bởi 0 từ phía dưới.
-Trong bài viết này, chúng ta sẽ thảo luận về các mạng luồng, trong đó chúng ta còn yêu cầu luồng của mỗi cạnh phải có một lượng nhất định, tức là chúng ta giới hạn luồng từ phía dưới bằng một hàm **yêu cầu** $d(e)$:
+In a normal flow network the flow of an edge is only limited by the capacity $c(e)$ from above and by 0 from below.
+In this article we will discuss flow networks, where we additionally require the flow of each edge to have a certain amount, i.e. we bound the flow from below by a **demand** function $d(e)$:
 
 $$ d(e) \le f(e) \le c(e)$$
 
-Vì vậy, tiếp theo mỗi cạnh có một giá trị luồng tối thiểu, mà chúng ta phải đi qua cạnh đó.
+So next each edge has a minimal flow value, that we have to pass along the edge.
 
-Đây là một sự tổng quát hóa của bài toán luồng thông thường, vì việc đặt $d(e) = 0$ cho tất cả các cạnh $e$ sẽ cho một mạng luồng thông thường.
-Lưu ý, trong mạng luồng thông thường, việc tìm một luồng hợp lệ là cực kỳ tầm thường, chỉ cần đặt $f(e) = 0$ đã là một luồng hợp lệ.
-Tuy nhiên, nếu luồng của mỗi cạnh phải thỏa mãn một yêu cầu, thì việc tìm một luồng hợp lệ đột nhiên trở nên khá phức tạp.
+This is a generalization of the normal flow problem, since setting $d(e) = 0$ for all edges $e$ gives a normal flow network.
+Notice, that in the normal flow network it is extremely trivial to find a valid flow, just setting $f(e) = 0$ is already a valid one.
+However if the flow of each edge has to satisfy a demand, than suddenly finding a valid flow is already pretty complicated.
 
-Chúng ta sẽ xem xét hai bài toán:
+We will consider two problems:
 
-1. tìm một luồng bất kỳ thỏa mãn tất cả các ràng buộc
-2. tìm một luồng tối thiểu thỏa mãn tất cả các ràng buộc
+1. finding an arbitrary flow that satisfies all constraints
+2. finding a minimal flow that satisfies all constraints
 
-## Tìm một luồng bất kỳ
+## Finding an arbitrary flow
 
-Chúng ta thực hiện các thay đổi sau trong mạng.
-Chúng ta thêm một nguồn mới $s'$ và một đích mới $t'$, một cạnh mới từ nguồn $s'$ đến mọi đỉnh khác, một cạnh mới từ mọi đỉnh đến đích $t'$, và một cạnh từ $t$ đến $s$.
-Ngoài ra, chúng ta định nghĩa hàm khả năng thông qua mới $c'$ như sau:
+We make the following changes in the network.
+We add a new source $s'$ and a new sink $t'$, a new edge from the source $s'$ to every other vertex, a new edge for every vertex to the sink $t'$, and one edge from $t$ to $s$.
+Additionally we define the new capacity function $c'$ as:
 
-- $c'((s', v)) = \sum_{u \in V} d((u, v))$ cho mỗi cạnh $(s', v)$.
-- $c'((v, t')) = \sum_{w \in V} d((v, w))$ cho mỗi cạnh $(v, t')$.
-- $c'((u, v)) = c((u, v)) - d((u, v))$ cho mỗi cạnh $(u, v)$ trong mạng cũ.
+- $c'((s', v)) = \sum_{u \in V} d((u, v))$ for each edge $(s', v)$.
+- $c'((v, t')) = \sum_{w \in V} d((v, w))$ for each edge $(v, t')$.
+- $c'((u, v)) = c((u, v)) - d((u, v))$ for each edge $(u, v)$ in the old network.
 - $c'((t, s)) = \infty$
 
-Nếu mạng mới có một luồng bão hòa (một luồng trong đó mỗi cạnh đi ra từ $s'$ được lấp đầy hoàn toàn, tương đương với mỗi cạnh đi vào $t'$ được lấp đầy hoàn toàn), thì mạng có yêu cầu có một luồng hợp lệ, và luồng thực tế có thể được tái tạo dễ dàng từ mạng mới.
-Ngược lại, không tồn tại một luồng thỏa mãn tất cả các điều kiện.
-Vì một luồng bão hòa phải là một luồng cực đại, nó có thể được tìm thấy bằng bất kỳ thuật toán luồng cực đại nào, như thuật toán [Edmonds-Karp](edmonds_karp.md) hoặc thuật toán [Đẩy-nhãn lại](push-relabel.md).
+If the new network has a saturating flow (a flow where each edge outgoing from $s'$ is completely filled, which is equivalent to every edge incoming to $t'$ is completely filled), then the network with demands has a valid flow, and the actual flow can be easily reconstructed from the new network.
+Otherwise there doesn't exist a flow that satisfies all conditions.
+Since a saturating flow has to be a maximum flow, it can be found by any maximum flow algorithm, like the [Edmonds-Karp algorithm](edmonds_karp.md) or the [Push-relabel algorithm](push-relabel.md).
 
-Tính đúng đắn của những biến đổi này khó hiểu hơn.
-Chúng ta có thể nghĩ về nó theo cách sau:
-Mỗi cạnh $e = (u, v)$ với $d(e) > 0$ ban đầu được thay thế bằng hai cạnh: một với khả năng thông qua $d(i)$, và cạnh kia với $c(i) - d(i)$.
-Chúng ta muốn tìm một luồng làm bão hòa cạnh đầu tiên (tức là luồng dọc theo cạnh này phải bằng khả năng thông qua của nó).
-Cạnh thứ hai ít quan trọng hơn - luồng dọc theo nó có thể là bất cứ thứ gì, miễn là nó không vượt quá khả năng thông qua của nó.
-Xem xét mỗi cạnh phải được bão hòa, và chúng ta thực hiện thao tác sau:
-chúng ta vẽ cạnh từ nguồn mới $s'$ đến đầu cuối của nó là $v$, vẽ cạnh từ đầu bắt đầu của nó là $u$ đến đích mới $t'$, loại bỏ chính cạnh đó, và từ đích cũ $t$ đến nguồn cũ $s$, chúng ta vẽ một cạnh có khả năng thông qua vô hạn.
-Bằng những hành động này, chúng ta mô phỏng thực tế rằng cạnh này được bão hòa - từ $v$ sẽ có một luồng $d(e)$ bổ sung đi ra (chúng ta mô phỏng nó bằng một nguồn mới cung cấp lượng luồng phù hợp cho $v$), và $u$ cũng sẽ đẩy một luồng bổ sung $d(e)$ (nhưng thay vì dọc theo cạnh cũ, luồng này sẽ đi trực tiếp đến đích mới $t'$).
-Một luồng có giá trị $d(e)$, ban đầu chảy dọc theo đường đi $s - \dots - u - v - \dots t$ bây giờ có thể đi theo đường đi mới $s' - v - \dots - t - s - \dots - u - t'$.
-Điều duy nhất được đơn giản hóa trong định nghĩa của mạng mới, là nếu thủ tục tạo ra nhiều cạnh giữa cùng một cặp đỉnh, thì chúng được kết hợp thành một cạnh duy nhất với khả năng thông qua được cộng lại.
+The correctness of these transformations is more difficult to understand.
+We can think of it in the following way:
+Each edge $e = (u, v)$ with $d(e) > 0$ is originally replaced by two edges: one with the capacity $d(i)$ , and the other with $c(i) - d(i)$.
+We want to find a flow that saturates the first edge (i.e. the flow along this edge must be equal to its capacity).
+The second edge is less important - the flow along it can be anything, assuming that it doesn't exceed its capacity.
+Consider each edge that has to be saturated, and we perform the following operation:
+we draw the edge from the new source $s'$ to its end $v$, draw the edge from its start $u$ to the new sink $t'$, remove the edge itself, and from the old sink $t$ to the old source $s$ we draw an edge of infinite capacity.
+By these actions we simulate the fact that this edge is saturated - from $v$ there will be an additionally $d(e)$ flow outgoing (we simulate it with a new source that feeds the right amount of flow to $v$), and $u$ will also push $d(e)$ additional flow (but instead along the old edge, this flow will go directly to the new sink $t'$).
+A flow with the value $d(e)$, that originally flowed along the path $s - \dots - u - v - \dots t$ can now take the new path $s' - v - \dots - t - s - \dots - u - t'$.
+The only thing that got simplified in the definition of the new network, is that if procedure created multiple edges between the same pair of vertices, then they are combined to one single edge with the summed capacity.
 
-## Luồng tối thiểu
+## Minimal flow
 
-Lưu ý rằng dọc theo cạnh $(t, s)$ (từ đích cũ đến nguồn cũ) với khả năng thông qua $\infty$, toàn bộ luồng của mạng cũ tương ứng sẽ chảy qua.
-Tức là, khả năng thông qua của cạnh này ảnh hưởng đến giá trị luồng của mạng cũ.
-Bằng cách cho cạnh này một khả năng thông qua đủ lớn (tức là $\infty$), luồng của mạng cũ không bị giới hạn.
-Bằng cách giới hạn cạnh này bằng các khả năng thông qua nhỏ hơn, giá trị luồng sẽ giảm.
-Tuy nhiên, nếu chúng ta giới hạn cạnh này bằng một giá trị quá nhỏ, thì mạng sẽ không có giải pháp bão hòa, ví dụ: giải pháp tương ứng cho mạng ban đầu sẽ không thỏa mãn yêu cầu của các cạnh.
-Rõ ràng ở đây có thể sử dụng một tìm kiếm nhị phân để tìm giá trị thấp nhất mà tất cả các ràng buộc vẫn được thỏa mãn.
-Điều này cho luồng tối thiểu của mạng ban đầu.
+Note that along the edge $(t, s)$ (from the old sink to the old source) with the capacity $\infty$ flows the entire flow of the corresponding old network.
+I.e. the capacity of this edge effects the flow value of the old network.
+By giving this edge a sufficient large capacity (i.e. $\infty$), the flow of the old network is unlimited.
+By limiting this edge by smaller capacities, the flow value will decrease.
+However if we limit this edge by a too small value, than the network will not have a saturated solution, e.g. the corresponding solution for the original network will not satisfy the demand of the edges.
+Obviously here can use a binary search to find the lowest value with which all constraints are still satisfied.
+This gives the minimal flow of the original network.

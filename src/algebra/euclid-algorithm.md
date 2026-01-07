@@ -4,30 +4,30 @@ tags:
 e_maxx_link: euclid_algorithm
 ---
 
-# Thuật toán Euclid tìm ước chung lớn nhất
+# Euclidean algorithm for computing the greatest common divisor
 
-Cho hai số nguyên không âm $a$ và $b$, chúng ta phải tìm **ƯCLN** (ước chung lớn nhất) của chúng, tức là số lớn nhất là ước của cả $a$ và $b$.
-Nó thường được ký hiệu là $\gcd(a, b)$. Về mặt toán học, nó được định nghĩa là:
+Given two non-negative integers $a$ and $b$, we have to find their **GCD** (greatest common divisor), i.e. the largest number which is a divisor of both $a$ and $b$.
+It's commonly denoted by $\gcd(a, b)$. Mathematically it is defined as:
 
-$$\gcd(a, b) = \max \{k > 0 : (k \mid a) \text{ và } (k \mid b) \} $$
+$$\gcd(a, b) = \max \{k > 0 : (k \mid a) \text{ and } (k \mid b) \}$$
 
-(ở đây ký hiệu "$\|$" biểu thị tính chia hết, tức là "$k \mid a$" có nghĩa là "$k$ chia hết cho $a$")
+(here the symbol "$\mid$" denotes divisibility, i.e. "$k \mid a$" means "$k$ divides $a$")
 
-Khi một trong hai số bằng không, trong khi số kia khác không, ước chung lớn nhất của chúng, theo định nghĩa, là số thứ hai. Khi cả hai số đều bằng không, ước chung lớn nhất của chúng không được xác định (nó có thể là bất kỳ số lớn tùy ý nào), nhưng để bảo toàn tính kết hợp của $\gcd$, ta quy ước nó bằng không. Điều này cho chúng ta một quy tắc đơn giản: nếu một trong hai số bằng không, ước chung lớn nhất là số còn lại.
+When one of the numbers is zero, while the other is non-zero, their greatest common divisor, by definition, is the second number. When both numbers are zero, their greatest common divisor is undefined (it can be any arbitrarily large number), but it is convenient to define it as zero as well to preserve the associativity of $\gcd$. Which gives us a simple rule: if one of the numbers is zero, the greatest common divisor is the other number.
 
-Thuật toán Euclid, được thảo luận dưới đây, cho phép tìm ước chung lớn nhất của hai số $a$ và $b$ trong $O(\log \min(a, b))$. Vì hàm này có tính **kết hợp**, để tìm ƯCLN của **nhiều hơn hai số**, chúng ta có thể thực hiện $\gcd(a, b, c) = \gcd(a, \gcd(b, c))$ và cứ thế.
+The Euclidean algorithm, discussed below, allows to find the greatest common divisor of two numbers $a$ and $b$ in $O(\log \min(a, b))$. Since the function is **associative**, to find the GCD of **more than two numbers**, we can do $\gcd(a, b, c) = \gcd(a, \gcd(b, c))$ and so forth.
 
-Thuật toán được mô tả lần đầu tiên trong "Cơ sở" của Euclid (khoảng 300 TCN), nhưng có khả năng thuật toán này có nguồn gốc sớm hơn nữa.
+The algorithm was first described in Euclid's "Elements" (circa 300 BC), but it is possible that the algorithm has even earlier origins.
 
-## Thuật toán
+## Algorithm
 
-Ban đầu, thuật toán Euclid được phát biểu như sau: trừ số nhỏ hơn khỏi số lớn hơn cho đến khi một trong hai số bằng không. Thật vậy, nếu $g$ chia hết cho $a$ và $b$, nó cũng chia hết cho $a-b$. Mặt khác, nếu $g$ chia hết cho $a-b$ và $b$, thì nó cũng chia hết cho $a = b + (a-b)$, điều đó có nghĩa là tập hợp các ước chung của $\{a, b\}$ và $\{b,a-b\}$ trùng nhau.
+Originally, the Euclidean algorithm was formulated as follows: subtract the smaller number from the larger one until one of the numbers is zero. Indeed, if $g$ divides $a$ and $b$, it also divides $a-b$. On the other hand, if $g$ divides $a-b$ and $b$, then it also divides $a = b + (a-b)$, which means that the sets of the common divisors of $\{a, b\}$ and $\{b,a-b\}$ coincide.
 
-Lưu ý rằng $a$ vẫn là số lớn hơn cho đến khi $b$ được trừ khỏi nó ít nhất $\left\lfloor\frac{a}{b}\right\rfloor$ lần. Do đó, để tăng tốc, $a-b$ được thay thế bằng $a-\left\lfloor\frac{a}{b}\right\rfloor b = a \bmod b$. Khi đó thuật toán được phát biểu một cách cực kỳ đơn giản:
+Note that $a$ remains the larger number until $b$ is subtracted from it at least $\left\lfloor\frac{a}{b}\right\rfloor$ times. Therefore, to speed things up, $a-b$ is substituted with $a-\left\lfloor\frac{a}{b}\right\rfloor b = a \bmod b$. Then the algorithm is formulated in an extremely simple way:
 
-$$\gcd(a, b) = \begin{cases}a, & \text{nếu }b = 0 \\ \gcd(b, a \bmod b), & \text{nếu khác.}\\end{cases}$$ 
+$$\gcd(a, b) = \begin{cases}a,&\text{if }b = 0 \\ \gcd(b, a \bmod b),&\text{otherwise.}\end{cases}$$
 
-## Cài đặt {#implementation}
+## Implementation
 
 ```cpp
 int gcd (int a, int b) {
@@ -38,7 +38,7 @@ int gcd (int a, int b) {
 }
 ```
 
-Sử dụng toán tử ba ngôi trong C++, chúng ta có thể viết nó thành một dòng.
+Using the ternary operator in C++, we can write it as a one-liner.
 
 ```cpp
 int gcd (int a, int b) {
@@ -46,7 +46,7 @@ int gcd (int a, int b) {
 }
 ```
 
-Và cuối cùng, đây là một cài đặt không đệ quy:
+And finally, here is a non-recursive implementation:
 
 ```cpp
 int gcd (int a, int b) {
@@ -58,29 +58,29 @@ int gcd (int a, int b) {
 }
 ```
 
-Lưu ý rằng kể từ C++17, `gcd` được triển khai như một [hàm tiêu chuẩn](https://en.cppreference.com/w/cpp/numeric/gcd) trong C++.
+Note that since C++17, `gcd` is implemented as a [standard function](https://en.cppreference.com/w/cpp/numeric/gcd) in C++.
 
-## Độ phức tạp thời gian
+## Time Complexity
 
-Thời gian chạy của thuật toán được ước tính bằng định lý Lamé, định lý này thiết lập một mối liên hệ đáng ngạc nhiên giữa thuật toán Euclid và dãy Fibonacci:
+The running time of the algorithm is estimated by Lamé's theorem, which establishes a surprising connection between the Euclidean algorithm and the Fibonacci sequence:
 
-Nếu $a > b \geq 1$ và $b < F_n$ đối với một số $n$ nào đó, thuật toán Euclid thực hiện tối đa $n-2$ lần gọi đệ quy.
+If $a > b \geq 1$ and $b < F_n$ for some $n$, the Euclidean algorithm performs at most $n-2$ recursive calls.
 
-Hơn nữa, có thể chỉ ra rằng cận trên của định lý này là tối ưu. Khi $a = F_n$ và $b = F_{n-1}$, $\gcd(a, b)$ sẽ thực hiện chính xác $n-2$ lần gọi đệ quy. Nói cách khác, các số Fibonacci liên tiếp là trường hợp đầu vào xấu nhất cho thuật toán Euclid.
+Moreover, it is possible to show that the upper bound of this theorem is optimal. When $a = F_n$ and $b = F_{n-1}$, $gcd(a, b)$ will perform exactly $n-2$ recursive calls. In other words, consecutive Fibonacci numbers are the worst case input for Euclid's algorithm.
 
-Biết rằng các số Fibonacci tăng theo cấp số nhân, chúng ta có được thuật toán Euclid hoạt động trong $O(\log \min(a, b))$.
+Given that Fibonacci numbers grow exponentially, we get that the Euclidean algorithm works in $O(\log \min(a, b))$.
 
-Một cách khác để ước tính độ phức tạp là nhận thấy rằng $a \bmod b$ trong trường hợp $a \geq b$ nhỏ hơn ít nhất 2 lần so với $a$, vì vậy số lớn hơn bị giảm ít nhất một nửa sau mỗi lần lặp của thuật toán. Áp dụng lý luận này cho trường hợp khi chúng ta tính ƯCLN của tập hợp các số $a_1,\dots,a_n \leq C$, điều này cũng cho phép chúng ta ước tính tổng thời gian chạy là $O(n + \log C)$, thay vì $O(n \log C)$, vì mỗi lần lặp không tầm thường của thuật toán đều làm giảm ứng cử viên ƯCLN hiện tại đi ít nhất một hệ số 2.
+Another way to estimate the complexity is to notice that $a \bmod b$ for the case $a \geq b$ is at least $2$ times smaller than $a$, so the larger number is reduced at least in half on each iteration of the algorithm. Applying this reasoning to the case when we compute the GCD of the set of numbers $a_1,\dots,a_n \leq C$, this also allows us to estimate the total runtime as $O(n + \log C)$, rather than $O(n \log C)$, since every non-trivial iteration of the algorithm reduces the current GCD candidate by at least a factor of $2$.
 
-## Bội chung nhỏ nhất
+## Least common multiple
 
-Việc tính bội chung nhỏ nhất (thường được ký hiệu là **BCNN**) có thể được quy về việc tính ƯCLN bằng công thức đơn giản sau:
+Calculating the least common multiple (commonly denoted **LCM**) can be reduced to calculating the GCD with the following simple formula:
 
 $$\text{lcm}(a, b) = \frac{a \cdot b}{\gcd(a, b)}$$
 
-Do đó, BCNN có thể được tính bằng thuật toán Euclid với cùng độ phức tạp thời gian:
+Thus, LCM can be calculated using the Euclidean algorithm with the same time complexity:
 
-Một cài đặt khả thi, khéo léo tránh tràn số nguyên bằng cách chia $a$ cho ƯCLN trước, được đưa ra ở đây:
+A possible implementation, that cleverly avoids integer overflows by first dividing $a$ with the GCD, is given here:
 
 ```cpp
 int lcm (int a, int b) {
@@ -88,21 +88,21 @@ int lcm (int a, int b) {
 }
 ```
 
-## ƯCLN nhị phân
+## Binary GCD
 
-Thuật toán ƯCLN nhị phân là một tối ưu hóa cho thuật toán Euclid thông thường.
+The Binary GCD algorithm is an optimization to the normal Euclidean algorithm.
 
-Phần chậm của thuật toán thông thường là các phép toán modulo. Các phép toán modulo, mặc dù chúng ta coi chúng là $O(1)$, nhưng chậm hơn nhiều so với các phép toán đơn giản hơn như cộng, trừ hoặc các phép toán trên bit.
-Vì vậy, sẽ tốt hơn nếu tránh chúng.
+The slow part of the normal algorithm are the modulo operations. Modulo operations, although we see them as $O(1)$, are a lot slower than simpler operations like addition, subtraction or bitwise operations.
+So it would be better to avoid those.
 
-Hóa ra, bạn có thể thiết kế một thuật toán ƯCLN nhanh chóng tránh các phép toán modulo.
-Nó dựa trên một vài thuộc tính:
+It turns out, that you can design a fast GCD algorithm that avoids modulo operations.
+It's based on a few properties:
 
-  - Nếu cả hai số đều chẵn, thì chúng ta có thể tách thừa số hai ra khỏi cả hai và tính ƯCLN của các số còn lại: $\gcd(2a, 2b) = 2 \gcd(a, b)$.
-  - Nếu một trong hai số chẵn và số kia lẻ, thì chúng ta có thể loại bỏ thừa số 2 khỏi số chẵn: $\gcd(2a, b) = \gcd(a, b)$ nếu $b$ lẻ.
-  - Nếu cả hai số đều lẻ, thì việc trừ một số cho số kia sẽ không làm thay đổi ƯCLN: $\gcd(a, b) = \gcd(b, a-b)$
+  - If both numbers are even, then we can factor out a two of both and compute the GCD of the remaining numbers: $\gcd(2a, 2b) = 2 \gcd(a, b)$.
+  - If one of the numbers is even and the other one is odd, then we can remove the factor 2 from the even one: $\gcd(2a, b) = \gcd(a, b)$ if $b$ is odd.
+  - If both numbers are odd, then subtracting one number of the other one will not change the GCD: $\gcd(a, b) = \gcd(b, a-b)$
 
-Chỉ sử dụng các thuộc tính này và một số hàm thao tác bit nhanh từ GCC, chúng ta có thể triển khai một phiên bản nhanh:
+Using only these properties, and some fast bitwise functions from GCC, we can implement a fast version:
 
 ```cpp
 int gcd(int a, int b) {
@@ -120,10 +120,10 @@ int gcd(int a, int b) {
 }
 ```
 
-Lưu ý, một tối ưu hóa như vậy thường không cần thiết, và hầu hết các ngôn ngữ lập trình đã có một hàm ƯCLN trong thư viện chuẩn của họ.
-Ví dụ: C++17 có một hàm `std::gcd` như vậy trong header `numeric`.
+Notice, that such an optimization is usually not necessary, and most programming languages already have a GCD function in their standard libraries.
+E.g. C++17 has such a function `std::gcd` in the `numeric` header.
 
-## Bài tập luyện tập
+## Practice Problems
 
 - [CSAcademy - Greatest Common Divisor](https://csacademy.com/contest/archive/task/gcd/)
 - [Codeforces 1916B - Two Divisors](https://codeforces.com/contest/1916/problem/B)

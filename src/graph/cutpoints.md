@@ -1,48 +1,48 @@
---- 
-title: Tìm điểm khớp trong đồ thị trong O(N+M)
+---
+title: Finding articulation points in a graph in O(N+M)
 tags:
   - Translated
 e_maxx_link: cutpoints
 ---
-# Tìm điểm khớp trong đồ thị trong $O(N+M)$
+# Finding articulation points in a graph in $O(N+M)$
 
-Chúng ta được cho một đồ thị vô hướng. Một điểm khớp (hoặc đỉnh cắt) được định nghĩa là một đỉnh mà khi loại bỏ cùng với các cạnh liên quan, làm cho đồ thị bị ngắt kết nối (hoặc chính xác hơn, làm tăng số lượng thành phần liên thông trong đồ thị). Nhiệm vụ là tìm tất cả các điểm khớp trong đồ thị đã cho.
+We are given an undirected graph. An articulation point (or cut vertex) is defined as a vertex which, when removed along with associated edges, makes the graph disconnected (or more precisely, increases the number of connected components in the graph). The task is to find all articulation points in the given graph.
 
-Thuật toán được mô tả ở đây dựa trên [tìm kiếm theo chiều sâu](depth-first-search.md) và có độ phức tạp $O(N+M)$, trong đó $N$ là số đỉnh và $M$ là số cạnh trong đồ thị.
+The algorithm described here is based on [depth first search](depth-first-search.md) and has $O(N+M)$ complexity, where $N$ is the number of vertices and $M$ is the number of edges in the graph.
 
-## Thuật toán
+## Algorithm
 
-Chọn một đỉnh tùy ý của đồ thị $root$ và chạy [tìm kiếm theo chiều sâu](depth-first-search.md) từ nó. Lưu ý thực tế sau đây (dễ chứng minh):
+Pick an arbitrary vertex of the graph $root$ and run [depth first search](depth-first-search.md) from it. Note the following fact (which is easy to prove):
 
-- Giả sử chúng ta đang ở trong DFS, xem qua các cạnh bắt đầu từ đỉnh $v\ne root$.
-Nếu cạnh hiện tại $(v, to)$ sao cho không có đỉnh nào trong số $to$ hoặc các hậu duệ của nó trong cây duyệt DFS có một cạnh ngược đến bất kỳ tổ tiên nào của $v$, thì $v$ là một điểm khớp. Ngược lại, $v$ không phải là một điểm khớp.
+- Let's say we are in the DFS, looking through the edges starting from vertex $v\ne root$.
+If the current edge $(v, to)$ is such that none of the vertices $to$ or its descendants in the DFS traversal tree has a back-edge to any of ancestors of $v$, then $v$ is an articulation point. Otherwise, $v$ is not an articulation point.
 
-- Hãy xem xét trường hợp còn lại của $v=root$.
-Đỉnh này sẽ là điểm khớp khi và chỉ khi đỉnh này có nhiều hơn một con trong cây DFS.
+- Let's consider the remaining case of $v=root$.
+This vertex will be the point of articulation if and only if this vertex has more than one child in the DFS tree.
 
-Bây giờ chúng ta phải học cách kiểm tra thực tế này cho mỗi đỉnh một cách hiệu quả. Chúng ta sẽ sử dụng "thời gian vào nút" được tính toán bởi tìm kiếm theo chiều sâu.
+Now we have to learn to check this fact for each vertex efficiently. We'll use "time of entry into node" computed by the depth first search.
 
-Vì vậy, gọi $tin[v]$ là thời gian vào nút $v$. Chúng ta giới thiệu một mảng $low[v]$ sẽ cho phép chúng ta kiểm tra thực tế này cho mỗi đỉnh $v$. $low[v]$ là giá trị nhỏ nhất của $tin[v]$, thời gian vào $tin[p]$ cho mỗi nút $p$ được kết nối với nút $v$ thông qua một cạnh ngược $(v, p)$ và các giá trị của $low[to]$ cho mỗi đỉnh $to$ là một hậu duệ trực tiếp của $v$ trong cây DFS:
+So, let $tin[v]$ denote entry time for node $v$. We introduce an array $low[v]$ which will let us check the fact for each vertex $v$. $low[v]$ is the minimum of $tin[v]$, the entry times $tin[p]$ for each node $p$ that is connected to node $v$ via a back-edge $(v, p)$ and the values of $low[to]$ for each vertex $to$ which is a direct descendant of $v$ in the DFS tree:
 
-$$low[v] = \min \begin{cases} tin[v] \\ tin[p] &\text{ cho tất cả }p\text{ mà }(v, p)\text{ là một cạnh ngược} \\ low[to]& \text{ cho tất cả }to\text{ mà }(v, to)\text{ là một cạnh cây} \end{cases}$$
+$$low[v] = \min \begin{cases} tin[v] \\ tin[p] &\text{ for all }p\text{ for which }(v, p)\text{ is a back edge} \\ low[to]& \text{ for all }to\text{ for which }(v, to)\text{ is a tree edge} \end{cases}$$
 
-Bây giờ, có một cạnh ngược từ đỉnh $v$ hoặc một trong các hậu duệ của nó đến một trong các tổ tiên của nó khi và chỉ khi đỉnh $v$ có một con $to$ mà $low[to] < tin[v]$. Nếu $low[to] = tin[v]$, cạnh ngược đi trực tiếp đến $v$, nếu không nó sẽ đến một trong các tổ tiên của $v$.
+Now, there is a back edge from vertex $v$ or one of its descendants to one of its ancestors if and only if vertex $v$ has a child $to$ for which $low[to] < tin[v]$. If $low[to] = tin[v]$, the back edge comes directly to $v$, otherwise it comes to one of the ancestors of $v$.
 
-Do đó, đỉnh $v$ trong cây DFS là một điểm khớp khi và chỉ khi $low[to] \geq tin[v]$.
+Thus, the vertex $v$ in the DFS tree is an articulation point if and only if $low[to] \geq tin[v]$.
 
-## Cài đặt
+## Implementation
 
-Việc triển khai cần phân biệt ba trường hợp: khi chúng ta đi xuống cạnh trong cây DFS, khi chúng ta tìm thấy một cạnh ngược đến một tổ tiên của đỉnh và khi chúng ta trở về cha của một đỉnh. Đây là các trường hợp:
+The implementation needs to distinguish three cases: when we go down the edge in DFS tree, when we find a back edge to an ancestor of the vertex and when we return to a parent of the vertex. These are the cases:
 
-- $visited[to] = false$ - cạnh là một phần của cây DFS;
-- $visited[to] = true$ && $to \neq parent$ - cạnh là cạnh ngược đến một trong các tổ tiên;
-- $to = parent$ - cạnh dẫn trở lại cha trong cây DFS.
+- $visited[to] = false$ - the edge is part of DFS tree;
+- $visited[to] = true$ && $to \neq parent$ - the edge is back edge to one of the ancestors;
+- $to = parent$ - the edge leads back to parent in DFS tree.
 
-Để thực hiện điều này, chúng ta cần một hàm tìm kiếm theo chiều sâu chấp nhận đỉnh cha của nút hiện tại.
+To implement this, we need a depth first search function which accepts the parent vertex of the current node.
 
 ```cpp
-int n; // số nút
-vector<vector<int>> adj; // danh sách kề của đồ thị
+int n; // number of nodes
+vector<vector<int>> adj; // adjacency list of graph
 
 vector<bool> visited;
 vector<int> tin, low;
@@ -80,13 +80,13 @@ void find_cutpoints() {
 }
 ```
 
-Hàm chính là `find_cutpoints`; nó thực hiện khởi tạo cần thiết và bắt đầu tìm kiếm theo chiều sâu trong mỗi thành phần liên thông của đồ thị.
+Main function is `find_cutpoints`; it performs necessary initialization and starts depth first search in each connected component of the graph.
 
-Hàm `IS_CUTPOINT(a)` là một hàm nào đó sẽ xử lý việc đỉnh $a$ là một điểm khớp, ví dụ, in nó ra (Cảnh báo rằng hàm này có thể được gọi nhiều lần cho một đỉnh).
+Function `IS_CUTPOINT(a)` is some function that will process the fact that vertex $a$ is an articulation point, for example, print it (Caution that this can be called multiple times for a vertex).
 
-## Bài tập thực hành
+## Practice Problems
 
-- [UVA #10199 "Tourist Guide"](http://uva.onlinejudge.org/index.php?option=com_onlinejudge&Itemid=8&category=13&page=show_problem&problem=1140) [độ khó: thấp]
-- [UVA #315 "Network"](http://uva.onlinejudge.org/index.php?option=com_onlinejudge&Itemid=8&category=5&page=show_problem&problem=251) [độ khó: thấp]
+- [UVA #10199 "Tourist Guide"](http://uva.onlinejudge.org/index.php?option=com_onlinejudge&Itemid=8&category=13&page=show_problem&problem=1140) [difficulty: low]
+- [UVA #315 "Network"](http://uva.onlinejudge.org/index.php?option=com_onlinejudge&Itemid=8&category=5&page=show_problem&problem=251) [difficulty: low]
 - [SPOJ - Submerging Islands](http://www.spoj.com/problems/SUBMERGE/)
 - [Codeforces - Cutting Figure](https://codeforces.com/problemset/problem/193/A)

@@ -4,28 +4,29 @@ tags:
 e_maxx_link: longest_increasing_subseq_log
 ---
 
-# Dãy con tăng dài nhất
+# Longest increasing subsequence
 
-Cho một mảng gồm $n$ số: $a[0 \dots n-1]$.
-Nhiệm vụ là tìm dãy con tăng chặt (strictly increasing) dài nhất trong $a$.
+We are given an array with $n$ numbers: $a[0 \dots n-1]$.
+The task is to find the longest, strictly increasing, subsequence in $a$.
 
-Một cách chính thức ta tìm dãy chỉ số dài nhất $i_1, \dots, i_k$ sao cho
+Formally we look for the longest sequence of indices $i_1, \dots i_k$ such that
 
 $$i_1 < i_2 < \dots < i_k,\quad
 a[i_1] < a[i_2] < \dots < a[i_k]$$
 
-Bài viết này sẽ thảo luận nhiều thuật toán để giải bài toán này, và đồng thời đề cập đến một số bài toán khác có thể quy về bài toán này.
+In this article we discuss multiple algorithms for solving this task.
+Also we will discuss some other problems, that can be reduced to this problem.
 
-## Giải pháp $O(n^2)$ bằng quy hoạch động {data-toc-label="Solution in O(n^2) with dynamic programming"}
+## Solution in $O(n^2)$ with dynamic programming {data-toc-label="Solution in O(n^2) with dynamic programming"}
 
-Quy hoạch động là một kỹ thuật rất tổng quát cho phép giải một lớp lớn các bài toán.
-Ở đây chúng ta áp dụng kỹ thuật này cho bài toán cụ thể.
+Dynamic programming is a very general technique that allows to solve a huge class of problems.
+Here we apply the technique for our specific task.
 
-Trước hết ta chỉ tìm **độ dài** của dãy con tăng dài nhất, sau đó mới học cách phục hồi chính dãy con.
+First we will search only for the **length** of the longest increasing subsequence, and only later learn how to restore the subsequence itself.
 
-### Tìm độ dài
+### Finding the length
 
-Để làm việc này, định nghĩa mảng $d[0 \dots n-1]$, trong đó $d[i]$ là độ dài của dãy con tăng dài nhất kết thúc tại phần tử có chỉ số $i$.
+To accomplish this task, we define an array $d[0 \dots n-1]$, where $d[i]$ is the length of the longest increasing subsequence that ends in the element at index $i$.
 
 !!! example
 
@@ -34,34 +35,34 @@ Trước hết ta chỉ tìm **độ dài** của dãy con tăng dài nhất, sa
     d &= \{1, 1, 2, 3, 3, 1, 1, 4, 5, 2\}
     \end{array}$$
 
-    Dãy con tăng dài nhất kết thúc tại chỉ số 4 là $\{3, 4, 5\}$ có độ dài 3; dãy dài nhất kết thúc tại chỉ số 8 có thể là $\{3, 4, 5, 7, 9\}$ hoặc $\{3, 4, 6, 7, 9\}$, đều có độ dài 5; còn dãy dài nhất kết thúc tại chỉ số 9 là $\{0, 1\}$ có độ dài 2.
+    The longest increasing subsequence that ends at index 4 is $\{3, 4, 5\}$ with a length of 3, the longest ending at index 8 is either $\{3, 4, 5, 7, 9\}$ or $\{3, 4, 6, 7, 9\}$, both having length 5, and the longest ending at index 9 is $\{0, 1\}$ having length 2.
 
-Ta sẽ tính mảng này dần dần: trước tiên $d[0]$, rồi $d[1]$, v.v.
-Sau khi mảng $d[]$ được tính xong, đáp án là giá trị lớn nhất trong mảng $d[]$.
+We will compute this array gradually: first $d[0]$, then $d[1]$, and so on.
+After this array is computed, the answer to the problem will be the maximum value in the array $d[]$.
 
-Gọi chỉ số hiện tại là $i$.
-Tức là ta cần tính $d[i]$ và tất cả các giá trị $d[0], \dots, d[i-1]$ đã biết.
-Khi đó có hai trường hợp:
+So let the current index be $i$.
+I.e. we want to compute the value $d[i]$ and all previous values $d[0], \dots, d[i-1]$ are already known.
+Then there are two options:
 
--   $d[i] = 1$: dãy cần tìm chỉ gồm phần tử $a[i]$.
+-   $d[i] = 1$: the required subsequence consists only of the element $a[i]$.
 
--   $d[i] > 1$: Dãy con sẽ kết thúc tại $a[i]$, và phần tử đứng ngay trước nó là một số $a[j]$ với $j < i$ và $a[j] < a[i]$.
+-   $d[i] > 1$: The subsequence will end at $a[i]$, and right before it will be some number $a[j]$ with $j < i$ and $a[j] < a[i]$.
 
-    Rõ ràng dãy con kết thúc tại $a[j]$ là một trong các dãy con tăng dài nhất kết thúc tại $a[j]$.
-    Số $a[i]$ chỉ mở rộng dãy đó thêm một phần tử.
+    It's easy to see, that the subsequence ending in $a[j]$ will itself be one of the longest increasing subsequences that ends in $a[j]$.
+    The number $a[i]$ just extends that longest increasing subsequence by one number.
 
-    Do đó ta chỉ cần duyệt tất cả $j < i$ sao cho $a[j] < a[i]$, và lấy dãy dài nhất thu được bằng cách nối $a[i]$ vào dãy dài nhất kết thúc ở $a[j]$.
-    Dãy dài nhất kết thúc ở $a[j]$ có độ dài $d[j]$, thêm một phần tử cho được $d[j] + 1$.
+    Therefore, we can just iterate over all $j < i$ with $a[j] < a[i]$, and take the longest sequence that we get by appending $a[i]$ to the longest increasing subsequence ending in $a[j]$.
+    The longest increasing subsequence ending in $a[j]$ has length $d[j]$, extending it by one gives the length $d[j] + 1$.
   
     $$d[i] = \max_{\substack{j < i \\\\ a[j] < a[i]}} \left(d[j] + 1\right)$$
 
-Kết hợp hai trường hợp trên ta có:
+If we combine these two cases we get the final answer for $d[i]$:
 
 $$d[i] = \max\left(1, \max_{\substack{j < i \\\\ a[j] < a[i]}} \left(d[j] + 1\right)\right)$$
 
-### Cài đặt
+### Implementation
 
-Đây là hiện thực của thuật toán trên, tính độ dài dãy con tăng dài nhất:
+Here is an implementation of the algorithm described above, which computes the length of the longest increasing subsequence.
 
 ```{.cpp file=lis_n2}
 int lis(vector<int> const& a) {
@@ -82,23 +83,24 @@ int lis(vector<int> const& a) {
 }
 ```
 
-### Phục hồi dãy con
+### Restoring the subsequence
 
-Cho tới giờ ta mới biết cách tìm độ dài, chưa biết cách lấy chính dãy con.
+So far we only learned how to find the length of the subsequence, but not how to find the subsequence itself.
 
-Để phục hồi dãy con, ta sinh thêm mảng phụ $p[0 \dots n-1]$ tính cùng lúc với $d[]$.
-$p[i]$ là chỉ số $j$ của phần tử đứng trước cuối cùng trong dãy tăng dài nhất kết thúc tại $i$.
-Nói cách khác, $p[i]$ chính là chỉ số $j$ tại đó giá trị lớn nhất $d[i]$ được tạo ra.
-Mảng $p[]$ phần nào giống con trỏ đến tổ tiên.
+To be able to restore the subsequence we generate an additional auxiliary array $p[0 \dots n-1]$ that we will compute alongside the array $d[]$.
+$p[i]$ will be the index $j$ of the second last element in the longest increasing subsequence ending in $i$.
+In other words the index $p[i]$ is the same index $j$ at which the highest value $d[i]$ was obtained.
+This auxiliary array $p[]$ points in some sense to the ancestors.
 
-Để lấy dãy con, ta bắt đầu tại chỉ số $i$ có $d[i]$ lớn nhất, rồi theo các con trỏ tổ tiên cho đến khi tới phần tử có $d[i] = 1$.
+Then to derive the subsequence, we just start at the index $i$ with the maximal $d[i]$, and follow the ancestors until we deduced the entire subsequence, i.e. until we reach the element with $d[i] = 1$.
 
-### Cài đặt phục hồi
+### Implementation of restoring
 
-Chúng ta sửa chút mã ở phần trước: tính $p[]$ cùng với $d[]$, sau đó xây dãy con.
+We will change the code from the previous sections a little bit.
+We will compute the array $p[]$ alongside $d[]$, and afterwards compute the subsequence.
 
-Ban đầu khởi $p[i] = -1$.
-Với các phần tử có $d[i] = 1$, giá trị tổ tiên vẫn là $-1$, điều này tiện cho việc phục hồi.
+For convenience we originally assign the ancestors with $p[i] = -1$.
+For elements with $d[i] = 1$, the ancestors value will remain $-1$, which will be slightly more convenient for restoring the subsequence.
 
 ```{.cpp file=lis_n2_restore}
 vector<int> lis(vector<int> const& a) {
@@ -131,28 +133,29 @@ vector<int> lis(vector<int> const& a) {
 }
 ```
 
-### Cách thay thế để phục hồi dãy con
+### Alternative way of restoring the subsequence
 
-Cũng có thể phục hồi dãy con mà không dùng mảng phụ $p[]$.
-Ta chỉ cần tính lại giá trị hiện thời của $d[i]$ và xác định cách giá trị tối đa đó được tạo ra.
+It is also possible to restore the subsequence without the auxiliary array $p[]$.
+We can simply recalculate the current value of $d[i]$ and also see how the maximum was reached.
 
-Cách này mã dài hơn một chút, nhưng tiết kiệm bộ nhớ.
+This method leads to a slightly longer code, but in return we save some memory.
 
-## Giải pháp $O(n \log n)$ bằng quy hoạch động và tìm kiếm nhị phân {data-toc-label="Solution in O(n log n) with dynamic programming and binary search"}
+## Solution in $O(n \log n)$ with dynamic programming and binary search {data-toc-label="Solution in O(n log n) with dynamic programming and binary search"}
 
-Để có lời giải nhanh hơn, ta xây một phương pháp quy hoạch động khác ban đầu chạy như $O(n^2)$ rồi cải tiến lên $O(n \log n)$.
+In order to obtain a faster solution for the problem, we construct a different dynamic programming solution that runs in $O(n^2)$, and then later improve it to $O(n \log n)$.
 
-Ta dùng mảng quy hoạch động $d[0 \dots n]$.
-Lần này $d[l]$ không tương ứng với một phần tử $a[i]$ hay prefix của mảng.
-$d[l]$ là phần tử nhỏ nhất mà một dãy tăng độ dài $l$ có thể kết thúc tại đó.
+We will use the dynamic programming array $d[0 \dots n]$.
+This time $d[l]$ doesn't correspond to the element $a[i]$ or to a prefix of the array. 
+$d[l]$ will be the smallest element at which an increasing subsequence of length $l$ ends.
 
-Ban đầu đặt $d[0] = -\infty$ và với mọi $l > 0$ đặt $d[l] = \infty$.
+Initially we assume $d[0] = -\infty$ and for all other lengths $d[l] = \infty$.
 
-Ta xử lý từng phần tử $a[i]$ theo thứ tự, và tại mỗi bước giữ cho mảng $d[]$ luôn đúng.
+We will again gradually process the numbers, first $a[0]$, then $a[1]$, etc, and in each step maintain the array $d[]$ so that it is up to date.
 
 !!! example
 
-    Với mảng $a = \{8, 3, 4, 6, 5, 2, 0, 7, 9, 1\}$, dưới đây là các prefix và mảng quy hoạch động tương ứng.
+    Given the array $a = \{8, 3, 4, 6, 5, 2, 0, 7, 9, 1\}$, here are all their prefixes and their dynamic programming array.
+    Notice, that the values of the array don't always change at the end.
 
     $$
     \begin{array}{ll}
@@ -170,18 +173,20 @@ Ta xử lý từng phần tử $a[i]$ theo thứ tự, và tại mỗi bước g
     \end{array}
     $$
 
-Khi xử lý $a[i]$, ta xét điều kiện để ghi $a[i]$ vào mảng $d[0 \dots n]$.
+When we process $a[i]$, we can ask ourselves.
+What have the conditions to be, that we write the current number $a[i]$ into the $d[0 \dots n]$ array?
 
-Gánh ý: ta đặt $d[l] = a[i]$ nếu tồn tại dãy tăng dài $l$ kết thúc tại $a[i]$, và không tồn tại dãy tăng cùng độ dài $l$ kết thúc tại số nhỏ hơn.
-Tương tự như trước, nếu bỏ $a[i]$ ra khỏi dãy tăng dài $l$, ta được một dãy tăng dài $l-1$.
-Vì vậy ta muốn mở rộng một dãy dài $l-1$ bằng $a[i]$, và dãy dài $l-1$ có phần tử kết thúc nhỏ nhất (tức $d[l-1]$) là lựa chọn tốt nhất.
+We set $d[l] = a[i]$, if there is a longest increasing sequence of length $l$ that ends in $a[i]$, and there is no longest increasing sequence of length $l$ that ends in a smaller number.
+Similar to the previous approach, if we remove the number $a[i]$ from the longest increasing sequence of length $l$, we get another longest increasing sequence of length $l -1$.
+So we want to extend a longest increasing sequence of length $l - 1$ by the number $a[i]$, and obviously the longest increasing sequence of length $l - 1$ that ends with the smallest element will work the best, in other words the sequence of length $l-1$ that ends in element $d[l-1]$.
 
-Có thể mở rộng dãy dài $l-1$ bằng $a[i]$ khi và chỉ khi $d[l-1] < a[i]$.
-Vậy ta duyệt các $l$ và kiểm tra điều kiện trên.
+There is a longest increasing sequence of length $l - 1$ that we can extend with the number $a[i]$, exactly if $d[l-1] < a[i]$.
+So we can just iterate over each length $l$, and check if we can extend a longest increasing sequence of length $l - 1$ by checking the criteria.
 
-Thêm nữa, cần kiểm tra nếu trước đó đã tìm được dãy dài $l$ có phần tử kết thúc nhỏ hơn, nên chỉ cập nhật khi $a[i] < d[l]$.
+Additionally we also need to check, if we maybe have already found a longest increasing sequence of length $l$ with a smaller number at the end.
+So we only update if $a[i] < d[l]$.
 
-Sau khi xử lý tất cả phần tử, độ dài đáp án là $l$ lớn nhất sao cho $d[l] < \infty$.
+After processing all the elements of $a[]$ the length of the desired subsequence is the largest $l$ with $d[l] < \infty$.
 
 ```{.cpp file=lis_method2_n2}
 int lis(vector<int> const& a) {
@@ -206,22 +211,24 @@ int lis(vector<int> const& a) {
 }
 ```
 
-Ta có hai quan sát quan trọng:
+We now make two important observations.
 
-1.  Mảng $d$ luôn được sắp tăng: $d[l-1] < d[l]$ với mọi $l = 1 \dots n$.
+1.  The array $d$ will always be sorted: 
+    $d[l-1] < d[l]$ for all $i = 1 \dots n$.
 
-    Điều này rõ ràng: bỏ phần tử cuối của dãy dài $l$ ta được dãy dài $l-1$ có phần tử kết thúc nhỏ hơn.
+    This is trivial, as you can just remove the last element from the increasing subsequence of length $l$, and you get a increasing subsequence of length $l-1$ with a smaller ending number.
 
-2.  Phần tử $a[i]$ chỉ có thể cập nhật tối đa một giá trị $d[l]$.
+2.  The element $a[i]$ will only update at most one value $d[l]$.
 
-    Điều này suy ra từ cài đặt trên: chỉ có một vị trí thỏa $d[l-1] < a[i] < d[l]$.
+    This follows immediately from the above implementation.
+    There can only be one place in the array with $d[l-1] < a[i] < d[l]$.
 
-Do đó ta có thể tìm vị trí cần cập nhật trong mảng $d[]$ bằng cách dùng tìm kiếm nhị phân ([binary search](../num_methods/binary_search.md)) trong $O(\log n)$.
-Trên thực tế ta tìm phần tử đầu tiên lớn hơn $a[i]$ trong $d[]$ và cập nhật như trước.
+Thus we can find this element in the array $d[]$ using [binary search](../num_methods/binary_search.md) in $O(\log n)$.
+In fact we can simply look in the array $d[]$ for the first number that is strictly greater than $a[i]$, and we try to update this element in the same way as the above implementation.
 
-### Cài đặt
+### Implementation
 
-Đây là hiện thực $O(n \log n)$:
+This gives us the improved $O(n \log n)$ implementation:
 
 ```{.cpp file=lis_method2_nlogn}
 int lis(vector<int> const& a) {
@@ -245,59 +252,98 @@ int lis(vector<int> const& a) {
 }
 ```
 
-### Phục hồi dãy con
+### Restoring the subsequence
 
-Cũng có thể phục hồi dãy con với phương pháp này.
-Lần này cần duy trì hai mảng phụ: một mảng lưu chỉ số các phần tử trong $d[]$, và một mảng "tổ tiên" $p[i]$ (chỉ vị trí phần tử trước đó trong dãy tốt nhất kết thúc tại $i$).
+It is also possible to restore the subsequence using this approach.
+This time we have to maintain two auxiliary arrays.
+One that tells us the index of the elements in $d[]$.
+And again we have to create an array of "ancestors" $p[i]$.
+$p[i]$ will be the index of the previous element for the optimal subsequence ending in element $i$.
 
-Có thể cập nhật hai mảng này song song khi duyệt $a[]$ và sau đó dễ dàng phục hồi dãy con cần thiết.
+It's easy to maintain these two arrays in the course of iteration over the array $a[]$ alongside the computations of $d[]$.
+And at the end it is not difficult to restore the desired subsequence using these arrays.
 
-## Giải pháp $O(n \log n)$ bằng cấu trúc dữ liệu {data-toc-label="Solution in O(n log n) with data structures"}
+## Solution in $O(n \log n)$ with data structures {data-toc-label="Solution in O(n log n) with data structures"}
 
-Thay vì phương pháp ở trên, ta có thể dùng các cấu trúc dữ liệu đơn giản để giải bài toán này.
+Instead of the above method for computing the longest increasing subsequence in $O(n \log n)$ we can also solve the problem in a different way: using some simple data structures.
 
-Quay lại phương pháp đầu tiên: nhớ rằng $d[i]$ là $d[j] + 1$ với $j < i$ và $a[j] < a[i]$.
+Let's go back to the first method.
+Remember that $d[i]$ is the value $d[j] + 1$ with $j < i$ and $a[j] < a[i]$.
 
-Nếu định nghĩa mảng phụ $t[]$ sao cho
+Thus if we define an additional array $t[]$ such that
 
 $$t[a[i]] = d[i],$$
 
-thì bài toán tính $d[i]$ tương đương với tìm **giá trị lớn nhất trên một prefix** của mảng $t[]$:
+then the problem of computing the value $d[i]$ is equivalent to finding the **maximum value in a prefix** of the array $t[]$:
 
 $$d[i] = \max\left(t[0 \dots a[i] - 1] + 1\right)$$
 
-Bài toán tìm giá trị lớn nhất trên prefix của một mảng động là tiêu chuẩn và có thể giải bằng nhiều cấu trúc dữ liệu, ví dụ [Segment tree](../data_structures/segment_tree.md) hoặc [Fenwick tree](../data_structures/fenwick.md).
+The problem of finding the maximum of a prefix of an array (which changes) is a standard problem that can be solved by many different data structures. 
+For instance we can use a [Segment tree](../data_structures/segment_tree.md) or a [Fenwick tree](../data_structures/fenwick.md).
 
-Cách này có **nhược điểm**: về độ dài và độ phức tạp cài đặt sẽ tệ hơn so với phương pháp tìm kiếm nhị phân; nếu các $a[i]$ lớn thì cần nén tọa độ (coordinate compression) hoặc dùng segment tree động để tránh tốn bộ nhớ.
-Tuy nhiên có **ưu điểm**: không cần phải vận dụng các tính chất khó hiểu của thuật toán trước, và dễ dàng tổng quát hóa bài toán.
+This method has obviously some **shortcomings**:
+in terms of length and complexity of the implementation this approach will be worse than the method using binary search.
+In addition if the input numbers $a[i]$ are especially large, then we would have to use some tricks, like compressing the numbers (i.e. renumber them from $0$ to $n-1$), or use a dynamic segment tree (only generate the branches of the tree that are important).
+Otherwise the memory consumption will be too high.
 
-## Bài toán liên quan
+On the other hand this method has also some **advantages**:
+with this method you don't have to think about any tricky properties in the dynamic programming solution.
+And this approach allows us to generalize the problem very easily (see below).
 
-Dưới đây là một số bài toán liên quan chặt chẽ với LIS.
+## Related tasks
 
-### Dãy con không giảm dài nhất
+Here are several problems that are closely related to the problem of finding the longest increasing subsequence.
 
-Về bản chất gần như giống hệt, nhưng cho phép các phần tử bằng nhau xuất hiện trong dãy con.
-Giải pháp tương tự, chỉ thay đổi dấu bất đẳng thức và sửa tìm kiếm nhị phân tương ứng.
+### Longest non-decreasing subsequence
 
-### Số lượng dãy con tăng dài nhất
+This is in fact nearly the same problem.
+Only now it is allowed to use identical numbers in the subsequence.
 
-Có thể sử dụng phương pháp $O(n^2)$ hoặc phương pháp dùng cấu trúc dữ liệu; ta cần lưu thêm số lượng cách để đạt được dãy con dài nhất kết thúc tại mỗi vị trí $d[i]$.
-Số cách để tạo dãy dài nhất kết thúc tại $a[i]$ là tổng số cách của tất cả các $j$ sao cho $d[j]$ đạt giá trị tối đa trước $i$.
-Dùng segment tree ta có thể đạt $O(n \log n)$ cho bài toán này. (Không thể dùng cách tìm kiếm nhị phân đơn giản.)
+The solution is essentially also nearly the same.
+We just have to change the inequality signs, and make a slight modification to the binary search.
 
-### Số nhỏ nhất các dãy không tăng cần để bao phủ một dãy
+### Number of longest increasing subsequences
 
-Cho mảng $a[0 \dots n-1]$, ta muốn tô màu các phần tử bằng ít màu nhất sao cho mỗi màu tạo thành một dãy không tăng.
-Ta nhận thấy số màu tối thiểu bằng độ dài của dãy tăng dài nhất.
+We can use the first discussed method, either the $O(n^2)$ version or the version using data structures.
+We only have to additionally store in how many ways we can obtain longest increasing subsequences ending in the values $d[i]$.
 
-**Chứng minh**: Gọi $x$ độ dài LIS và $y$ là số dãy không tăng ít nhất để bao phủ.
-Rõ ràng $y < x$ không thể xảy ra, vì $x$ phần tử tăng chặt thì không thể có hai phần tử thuộc cùng một dãy không tăng, nên $y \ge x$.
-Nếu $y > x$, lấy một tập tối ưu gồm $y$ dãy không tăng; ta có thể biến đổi theo thuật toán mô tả để thu được $y$ số khởi đầu tạo thành một dãy tăng độ dài $y$, mâu thuẫn. Vì vậy $y = x$.
+The number of ways to form a longest increasing subsequences ending in $a[i]$ is the sum of all ways for all longest increasing subsequences ending in $j$ where $d[j]$ is maximal.
+There can be multiple such $j$, so we need to sum all of them.
 
-**Phục hồi phân hoạch**: Có thể làm tham lam: duyệt từ trái sang phải và gán số hiện tại vào dãy có phần tử kết thúc nhỏ nhất mà vẫn lớn hơn hoặc bằng số hiện tại.
+Using a Segment tree this approach can also be implemented in $O(n \log n)$.
 
-## Bài tập thực hành
+It is not possible to use the binary search approach for this task.
+
+### Smallest number of non-increasing subsequences covering a sequence
+
+For a given array with $n$ numbers $a[0 \dots n - 1]$ we have to colorize the numbers in the smallest number of colors, so that each color forms a non-increasing subsequence.
+
+To solve this, we notice that the minimum number of required colors is equal to the length of the longest increasing subsequence.
+
+**Proof**:
+We need to prove the **duality** of these two problems.
+
+Let's denote by $x$ the length of the longest increasing subsequence and by $y$ the least number of non-increasing subsequences that form a cover.
+We need to prove that $x = y$.
+
+It is clear that $y < x$ is not possible, because if we have $x$ strictly increasing elements, than no two can be part of the same non-increasing subsequence.
+Therefore we have $y \ge x$.
+
+We now show that $y > x$ is not possible by contradiction.
+Suppose that $y > x$.
+Then we consider any optimal set of $y$ non-increasing subsequences.
+We transform this in set in the following way:
+as long as there are two such subsequences such that the first begins before the second subsequence, and the first sequence start with a number greater than or equal to the second, then we unhook this starting number and attach it to the beginning of second.
+After a finite number of steps we have $y$ subsequences, and their starting numbers will form an increasing subsequence of length $y$.
+Since we assumed that $y > x$ we reached a contradiction.
+
+Thus it follows that $y = x$.
+
+**Restoring the sequences**:
+The desired partition of the sequence into subsequences can be done greedily.
+I.e. go from left to right and assign the current number or that subsequence ending with the minimal number which is greater than or equal to the current one.
+
+## Practice Problems
 
 - [ACMSGURU - "North-East"](http://codeforces.com/problemsets/acmsguru/problem/99999/521)
 - [Codeforces - LCIS](http://codeforces.com/problemset/problem/10/D)

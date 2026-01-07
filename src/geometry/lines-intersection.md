@@ -4,39 +4,39 @@ tags:
 e_maxx_link: lines_intersection
 ---
 
-# Giao điểm của các đường thẳng
+# Intersection Point of Lines
 
-Bạn được cho hai đường thẳng, được mô tả thông qua các phương trình $a_1 x + b_1 y + c_1 = 0$ và  $a_2 x + b_2 y + c_2 = 0$.
-Chúng ta phải tìm giao điểm của các đường thẳng, hoặc xác định rằng các đường thẳng song song.
+You are given two lines, described via the equations $a_1 x + b_1 y + c_1 = 0$ and  $a_2 x + b_2 y + c_2 = 0$.
+We have to find the intersection point of the lines, or determine that the lines are parallel.
 
-## Giải pháp
+## Solution
 
-Nếu hai đường thẳng không song song, chúng giao nhau.
-Để tìm giao điểm của chúng, chúng ta cần giải hệ phương trình tuyến tính sau:
+If two lines are not parallel, they intersect.
+To find their intersection point, we need to solve the following system of linear equations:
 
-$$\begin{cases} a_1 x + b_1 y + c_1 = 0 \ 
-a_2 x + b_2 y + c_2 = 0 
+$$\begin{cases} a_1 x + b_1 y + c_1 = 0 \\
+a_2 x + b_2 y + c_2 = 0
 \end{cases}$$
 
-Sử dụng quy tắc Cramer, chúng ta có thể viết ngay ra nghiệm cho hệ thống, điều này sẽ cho chúng ta giao điểm cần tìm của các đường thẳng:
+Using Cramer's rule, we can immediately write down the solution for the system, which will give us the required intersection point of the lines:
 
-$$x = - \frac{\begin{vmatrix}c_1 & b_1 \\ c_2 & b_2\end{vmatrix}}{\begin{vmatrix}a_1 & b_1 \\ a_2 & b_2\end{vmatrix} } = - \frac{c_1 b_2 - c_2 b_1}{a_1 b_2 - a_2 b_1},$$
+$$x = - \frac{\begin{vmatrix}c_1 & b_1 \cr c_2 & b_2\end{vmatrix}}{\begin{vmatrix}a_1 & b_1 \cr a_2 & b_2\end{vmatrix} } = - \frac{c_1 b_2 - c_2 b_1}{a_1 b_2 - a_2 b_1},$$
 
-$$y = - \frac{\begin{vmatrix}a_1 & c_1 \\ a_2 & c_2\end{vmatrix}}{\begin{vmatrix}a_1 & b_1 \\ a_2 & b_2\end{vmatrix}} = - \frac{a_1 c_2 - a_2 c_1}{a_1 b_2 - a_2 b_1}.$$ 
+$$y = - \frac{\begin{vmatrix}a_1 & c_1 \cr a_2 & c_2\end{vmatrix}}{\begin{vmatrix}a_1 & b_1 \cr a_2 & b_2\end{vmatrix}} = - \frac{a_1 c_2 - a_2 c_1}{a_1 b_2 - a_2 b_1}.$$
 
-Nếu mẫu số bằng $0$, tức là
+If the denominator equals $0$, i.e.
 
-$$\begin{vmatrix}a_1 & b_1 \\ a_2 & b_2\end{vmatrix} = a_1 b_2 - a_2 b_1 = 0 $$ 
+$$\begin{vmatrix}a_1 & b_1 \cr a_2 & b_2\end{vmatrix} = a_1 b_2 - a_2 b_1 = 0 $$
 
-thì hoặc hệ thống không có nghiệm (các đường thẳng song song và phân biệt) hoặc có vô số nghiệm (các đường thẳng trùng nhau).
-Nếu chúng ta cần phân biệt hai trường hợp này, chúng ta phải kiểm tra xem các hệ số $c$ có tỷ lệ với cùng một tỷ lệ như các hệ số $a$ và $b$ hay không.
-Để làm điều đó, chúng ta chỉ cần tính các định thức sau, và nếu cả hai đều bằng $0$, các đường thẳng trùng nhau:
+then either the system has no solutions (the lines are parallel and distinct) or there are infinitely many solutions (the lines overlap).
+If we need to distinguish these two cases, we have to check if coefficients $c$ are proportional with the same ratio as the coefficients $a$ and $b$.
+To do that we only have calculate the following determinants, and if they both equal $0$, the lines overlap:
 
-$$\begin{vmatrix}a_1 & c_1 \\ a_2 & c_2\end{vmatrix}, \begin{vmatrix}b_1 & c_1 \\ b_2 & c_2\end{vmatrix} $$ 
+$$\begin{vmatrix}a_1 & c_1 \cr a_2 & c_2\end{vmatrix}, \begin{vmatrix}b_1 & c_1 \cr b_2 & c_2\end{vmatrix} $$
 
-Lưu ý, một cách tiếp cận khác để tính toán giao điểm được giải thích trong bài viết [Hình học cơ bản](basic-geometry.md).
+Notice, a different approach for computing the intersection point is explained in the article [Basic Geometry](basic-geometry.md).
 
-## Cài đặt
+## Implementation
 
 ```{.cpp file=line_intersection}
 struct pt {

@@ -3,43 +3,44 @@ tags:
   - Original
 ---
 
-# Cây căn bậc hai
+# Sqrt Tree
 
-Cho một mảng $a$ chứa $n$ phần tử và phép toán $\circ$ thỏa mãn tính chất kết hợp: $(x \circ y) \circ z = x \circ (y \circ z)$ đúng với mọi $x$, $y$, $z$.
+Given an array $a$ that contains $n$ elements and the operation $\circ$ that satisfies associative property: $(x \circ y) \circ z = x \circ (y \circ z)$ is true for any $x$, $y$, $z$.
 
-Vì vậy, các phép toán như $\gcd$, $\min$, $\max$, $+$, $\text{and}$, $\text{or}$, $\text{xor}$, v.v. đều thỏa mãn các điều kiện này.
+So, such operations as $\gcd$, $\min$, $\max$, $+$, $\text{and}$, $\text{or}$, $\text{xor}$, etc. satisfy these conditions.
 
-Ngoài ra, chúng ta có một số truy vấn $q(l, r)$. Đối với mỗi truy vấn, chúng ta cần tính $a_l \circ a_{l+1} \circ \dots \circ a_r$.
-Cây căn bậc hai có thể xử lý các truy vấn như vậy trong thời gian $O(1)$ với thời gian tiền xử lý $O(n \cdot \log \log n)$ và bộ nhớ $O(n \cdot \log \log n)$.
+Also we have some queries $q(l, r)$. For each query, we need to compute $a_l \circ a_{l+1} \circ \dots \circ a_r$.
 
-## Mô tả
+Sqrt Tree can process such queries in $O(1)$ time with $O(n \cdot \log \log n)$ preprocessing time and $O(n \cdot \log \log n)$ memory.
 
-### Xây dựng phân rã căn bậc hai
+## Description
 
-Hãy thực hiện [phân rã căn bậc hai](sqrt_decomposition.md). Chúng ta chia mảng của mình thành $\sqrt{n}$ khối, mỗi khối có kích thước $\sqrt{n}$. Đối với mỗi khối, chúng ta tính toán:
+### Building sqrt decomposition
 
-1. Câu trả lời cho các truy vấn nằm trong khối và bắt đầu ở đầu khối ($\text{prefixOp}$)
-2. Câu trả lời cho các truy vấn nằm trong khối và kết thúc ở cuối khối ($\text{suffixOp}$)
+Let's make a [sqrt decomposition](sqrt_decomposition.md). We divide our array in $\sqrt{n}$ blocks, each block has size $\sqrt{n}$. For each block, we compute:
 
-Và chúng ta sẽ tính toán một mảng bổ sung:
+1. Answers to the queries that lie in the block and begin at the beginning of the block ($\text{prefixOp}$)
+2. Answers to the queries that lie in the block and end at the end of the block ($\text{suffixOp}$)
 
-3. $\text{between}_{i, j}$ (đối với $i \le j$) - câu trả lời cho truy vấn bắt đầu ở đầu khối $i$ và kết thúc ở cuối khối $j$. Lưu ý rằng chúng ta có $\sqrt{n}$ khối, vì vậy kích thước của mảng này sẽ là $O(\sqrt{n}^2) = O(n)$.
+And we'll compute an additional array:
 
-Hãy xem ví dụ.
+3. $\text{between}_{i, j}$ (for $i \le j$) - answer to the query that begins at the start of block $i$ and ends at the end of block $j$. Note that we have $\sqrt{n}$ blocks, so the size of this array will be $O(\sqrt{n}^2) = O(n)$.
 
-Đặt $\circ$ là $+$ (chúng ta tính tổng trên một đoạn) và chúng ta có mảng $a$ sau:
+Let's see the example.
+
+Let $\circ$ be $+$ (we calculate sum on a segment) and we have the following array $a$:
 
 `{1, 2, 3, 4, 5, 6, 7, 8, 9}`
 
-Nó sẽ được chia thành ba khối: `{1, 2, 3}`, `{4, 5, 6}` và `{7, 8, 9}`.
+It will be divided onto three blocks: `{1, 2, 3}`, `{4, 5, 6}` and `{7, 8, 9}`.
 
-Đối với khối đầu tiên, $\text{prefixOp}$ là `{1, 3, 6}` và $\text{suffixOp}$ là `{6, 5, 3}`.
+For first block $\text{prefixOp}$ is `{1, 3, 6}` and $\text{suffixOp}$ is `{6, 5, 3}`.
 
-Đối với khối thứ hai, $\text{prefixOp}$ là `{4, 9, 15}` và $\text{suffixOp}$ là `{15, 11, 6}`.
+For second block $\text{prefixOp}$ is `{4, 9, 15}` and $\text{suffixOp}$ is `{15, 11, 6}`.
 
-Đối với khối thứ ba, $\text{prefixOp}$ là `{7, 15, 24}` và $\text{suffixOp}$ là `{24, 17, 9}`.
+For third block $\text{prefixOp}$ is `{7, 15, 24}` and $\text{suffixOp}$ is `{24, 17, 9}`.
 
-Mảng $\text{between}$ là:
+$\text{between}$ array is:
 
 ~~~~~
 {
@@ -49,144 +50,144 @@ Mảng $\text{between}$ là:
 }
 ~~~~~
 
-(chúng ta giả định rằng các phần tử không hợp lệ nơi $i > j$ được điền bằng số không)
+(we assume that invalid elements where $i > j$ are filled with zeroes)
 
-Rõ ràng là các mảng này có thể được tính toán dễ dàng trong thời gian và bộ nhớ $O(n)$.
+It's obvious to see that these arrays can be easily calculated in $O(n)$ time and memory.
 
-Chúng ta đã có thể trả lời một số truy vấn bằng cách sử dụng các mảng này. Nếu truy vấn không vừa trong một khối, chúng ta có thể chia nó thành ba phần: hậu tố của một khối, sau đó là một đoạn gồm các khối liền kề và sau đó là tiền tố của một khối nào đó. Chúng ta có thể trả lời một truy vấn bằng cách chia nó thành ba phần và lấy phép toán của chúng ta cho một giá trị nào đó từ $\text{suffixOp}$, sau đó là một giá trị nào đó từ $\text{between}$, sau đó là một giá trị nào đó từ $\text{prefixOp}$.
+We already can answer some queries using these arrays. If the query doesn't fit into one block, we can divide it onto three parts: suffix of a block, then some segment of contiguous blocks and then prefix of some block. We can answer a query by dividing it into three parts and taking our operation of some value from $\text{suffixOp}$, then some value from $\text{between}$, then some value from $\text{prefixOp}$.
 
-Nhưng nếu chúng ta có các truy vấn hoàn toàn vừa vặn trong một khối, chúng ta không thể xử lý chúng bằng ba mảng này. Vì vậy, chúng ta cần phải làm gì đó.
+But if we have queries that entirely fit into one block, we cannot process them using these three arrays. So, we need to do something.
 
-### Tạo một cây
+### Making a tree
 
-Chúng ta không thể chỉ trả lời các truy vấn hoàn toàn vừa vặn trong một khối. Nhưng điều gì sẽ xảy ra **nếu chúng ta xây dựng cùng một cấu trúc như đã mô tả ở trên cho mỗi khối?** Có, chúng ta có thể làm điều đó. Và chúng ta làm điều đó một cách đệ quy, cho đến khi chúng ta đạt đến kích thước khối là $1$ hoặc $2$. Câu trả lời cho các khối như vậy có thể được tính toán dễ dàng trong $O(1)$.
+We cannot answer only the queries that entirely fit in one block. But what **if we build the same structure as described above for each block?** Yes, we can do it. And we do it recursively, until we reach the block size of $1$ or $2$. Answers for such blocks can be calculated easily in $O(1)$.
 
-Vì vậy, chúng ta có được một cây. Mỗi nút của cây đại diện cho một số đoạn của mảng. Nút đại diện cho đoạn mảng có kích thước $k$ có $\sqrt{k}$ con -- cho mỗi khối. Ngoài ra, mỗi nút chứa ba mảng được mô tả ở trên cho đoạn mà nó chứa. Gốc của cây đại diện cho toàn bộ mảng. Các nút có độ dài đoạn là $1$ hoặc $2$ là lá.
+So, we get a tree. Each node of the tree represents some segment of the array. Node that represents array segment with size $k$ has $\sqrt{k}$ children -- for each block. Also each node contains the three arrays described above for the segment it contains. The root of the tree represents the entire array. Nodes with segment lengths $1$ or $2$ are leaves.
 
-Cũng rõ ràng là chiều cao của cây này là $O(\log \log n)$, bởi vì nếu một đỉnh nào đó của cây đại diện cho một mảng có độ dài $k$, thì các con của nó có độ dài $\sqrt{k}$. $\log(\sqrt{k}) = \frac{\log{k}}{2}$, vì vậy $\log k$ giảm đi hai lần mỗi tầng của cây và do đó chiều cao của nó là $O(\log \log n)$. Thời gian để xây dựng và sử dụng bộ nhớ sẽ là $O(n \cdot \log \log n)$, vì mỗi phần tử của mảng xuất hiện chính xác một lần trên mỗi tầng của cây.
+Also it's obvious that the height of this tree is $O(\log \log n)$, because if some vertex of the tree represents an array with length $k$, then its children have length $\sqrt{k}$. $\log(\sqrt{k}) = \frac{\log{k}}{2}$, so $\log k$ decreases two times every layer of the tree and so its height is $O(\log \log n)$. The time for building and memory usage will be $O(n \cdot \log \log n)$, because every element of the array appears exactly once on each layer of the tree.
 
-Bây giờ chúng ta có thể trả lời các truy vấn trong $O(\log \log n)$. Chúng ta có thể đi xuống trên cây cho đến khi chúng ta gặp một đoạn có độ dài $1$ hoặc $2$ (câu trả lời cho nó có thể được tính trong thời gian $O(1)$) hoặc gặp đoạn đầu tiên trong đó truy vấn của chúng ta không vừa hoàn toàn vào một khối. Xem phần đầu tiên về cách trả lời truy vấn trong trường hợp này.
+Now we can answer the queries in $O(\log \log n)$. We can go down on the tree until we meet a segment with length $1$ or $2$ (answer for it can be calculated in $O(1)$ time) or meet the first segment in which our query doesn't fit entirely into one block. See the first section on how to answer the query in this case.
 
-OK, bây giờ chúng ta có thể làm $O(\log \log n)$ cho mỗi truy vấn. Có thể làm nhanh hơn không?
+OK, now we can do $O(\log \log n)$ per query. Can it be done faster?
 
-### Tối ưu hóa độ phức tạp của truy vấn
+### Optimizing the query complexity
 
-Một trong những tối ưu hóa rõ ràng nhất là tìm kiếm nhị phân trên nút cây mà chúng ta cần. Sử dụng tìm kiếm nhị phân, chúng ta có thể đạt được độ phức tạp $O(\log \log \log n)$ cho mỗi truy vấn. Chúng ta có thể làm nhanh hơn nữa không?
+One of the most obvious optimization is to binary search the tree node we need. Using binary search, we can reach the $O(\log \log \log n)$ complexity per query. Can we do it even faster?
 
-Câu trả lời là có. Hãy giả sử hai điều sau:
+The answer is yes. Let's assume the following two things:
 
-1. Kích thước của mỗi khối là một lũy thừa của hai.
-2. Tất cả các khối đều bằng nhau trên mỗi tầng.
+1. Each block size is a power of two.
+2. All the blocks are equal on each layer.
 
-Để đạt được điều này, chúng ta có thể thêm một số phần tử không vào mảng của mình để kích thước của nó trở thành một lũy thừa của hai.
+To reach this, we can add some zero elements to our array so that its size becomes a power of two.
 
-Khi chúng ta sử dụng điều này, một số kích thước khối có thể trở nên lớn gấp đôi để trở thành một lũy thừa của hai, nhưng nó vẫn sẽ có kích thước $O(\sqrt{k})$ và chúng ta vẫn giữ được độ phức tạp tuyến tính để xây dựng các mảng trong một đoạn.
+When we use this, some block sizes may become twice larger to be a power of two, but it still be $O(\sqrt{k})$ in size and we keep linear complexity for building the arrays in a segment.
 
-Bây giờ, chúng ta có thể dễ dàng kiểm tra xem truy vấn có vừa hoàn toàn vào một khối có kích thước $2^k$ hay không. Hãy viết các phạm vi của truy vấn, $l$ và $r$ (chúng ta sử dụng chỉ số 0) ở dạng nhị phân. Ví dụ, hãy giả sử $k=4, l=39, r=46$. Biểu diễn nhị phân của $l$ và $r$ là:
+Now, we can easily check if the query fits entirely into a block with size $2^k$. Let's write the ranges of the query, $l$ and $r$ (we use 0-indexation) in binary form. For instance, let's assume $k=4, l=39, r=46$. The binary representation of $l$ and $r$ is:
 
 $l = 39_{10} = 100111_2$
 
 $r = 46_{10} = 101110_2$
 
-Hãy nhớ rằng một tầng chứa các đoạn có kích thước bằng nhau, và khối trên một tầng cũng có kích thước bằng nhau (trong trường hợp của chúng ta, kích thước của chúng là $2^k = 2^4 = 16$. Các khối bao phủ toàn bộ mảng, vì vậy khối đầu tiên bao phủ các phần tử $(0 - 15)$ ($(000000_2 - 001111_2)$ ở dạng nhị phân), khối thứ hai bao phủ các phần tử $(16 - 31)$ ($(010000_2 - 011111_2)$ ở dạng nhị phân) và cứ thế. Chúng ta thấy rằng các chỉ số của các vị trí được bao phủ bởi một khối chỉ có thể khác nhau ở $k$ (trong trường hợp của chúng ta là $4$) bit cuối cùng. Trong trường hợp của chúng ta, $l$ và $r$ có các bit bằng nhau ngoại trừ bốn bit thấp nhất, vì vậy chúng nằm trong một khối.
+Remember that one layer contains segments of the equal size, and the block on one layer have also equal size (in our case, their size is $2^k = 2^4 = 16$. The blocks cover the array entirely, so the first block covers elements $(0 - 15)$ ($(000000_2 - 001111_2)$ in binary), the second one covers elements $(16 - 31)$ ($(010000_2 - 011111_2)$ in binary) and so on. We see that the indices of the positions covered by one block may differ only in $k$ (in our case, $4$) last bits. In our case $l$ and $r$ have equal bits except four lowest, so they lie in one block.
 
-Vì vậy, chúng ta cần kiểm tra xem không có gì nhiều hơn $k$ bit nhỏ nhất khác nhau (hoặc $l\ \text{xor}\\ \ r$ không vượt quá $2^k-1$).
+So, we need to check if nothing more that $k$ smallest bits differ (or $l\ \text{xor}\ r$ doesn't exceed $2^k-1$).
 
-Sử dụng quan sát này, chúng ta có thể tìm một tầng phù hợp để trả lời truy vấn một cách nhanh chóng. Làm thế nào để làm điều này:
+Using this observation, we can find a layer that is suitable to answer the query quickly. How to do this:
 
-1. Đối với mỗi $i$ không vượt quá kích thước mảng, chúng ta tìm bit cao nhất bằng $1$. Để làm điều này nhanh chóng, chúng ta sử dụng DP và một mảng đã được tính toán trước.
+1. For each $i$ that doesn't exceed the array size, we find the highest bit that is equal to $1$. To do this quickly, we use DP and a precalculated array.
 
-2. Bây giờ, đối với mỗi $q(l, r)$, chúng ta tìm bit cao nhất của $l\ \text{xor}\\ \ r$ và, sử dụng thông tin này, dễ dàng chọn tầng mà trên đó chúng ta có thể xử lý truy vấn một cách dễ dàng. Chúng ta cũng có thể sử dụng một mảng đã được tính toán trước ở đây.
+2. Now, for each $q(l, r)$ we find the highest bit of $l\ \text{xor}\ r$ and, using this information, it's easy to choose the layer on which we can process the query easily. We can also use a precalculated array here.
 
-Để biết thêm chi tiết, xem mã dưới đây.
+For more details, see the code below.
 
-Vì vậy, bằng cách này, chúng ta có thể trả lời mỗi truy vấn trong $O(1)$. Hoan hô! :)
+So, using this, we can answer the queries in $O(1)$ each. Hooray! :)
 
-## Cập nhật các phần tử
+## Updating elements
 
-Chúng ta cũng có thể cập nhật các phần tử trong Cây Sqrt. Cả cập nhật một phần tử và cập nhật trên một đoạn đều được hỗ trợ.
+We can also update elements in Sqrt Tree. Both single element updates and updates on a segment are supported.
 
-### Cập nhật một phần tử
+### Updating a single element
 
-Xét một truy vấn $\text{update}(x, val)$ thực hiện phép gán $a_x = val$. Chúng ta cần thực hiện truy vấn này đủ nhanh.
+Consider a query $\text{update}(x, val)$ that does the assignment $a_x = val$. We need to perform this query fast enough.
 
-#### Cách tiếp cận ngây thơ
+#### Naive approach
 
-Đầu tiên, hãy xem điều gì thay đổi trong cây khi một phần tử duy nhất thay đổi. Xét một nút cây có độ dài $l$ và các mảng của nó: $\text{prefixOp}$, $\text{suffixOp}$ và $\text{between}$. Dễ thấy rằng chỉ có $O(\sqrt{l})$ phần tử từ $\text{prefixOp}$ và $\text{suffixOp}$ thay đổi (chỉ bên trong khối có phần tử đã thay đổi). $O(l)$ phần tử bị thay đổi trong $\text{between}$. Do đó, $O(l)$ phần tử trong nút cây được cập nhật.
+First, let's take a look of what is changed in the tree when a single element changes. Consider a tree node with length $l$ and its arrays: $\text{prefixOp}$, $\text{suffixOp}$ and $\text{between}$. It is easy to see that only $O(\sqrt{l})$ elements from $\text{prefixOp}$ and $\text{suffixOp}$ change (only inside the block with the changed element). $O(l)$ elements are changed in $\text{between}$. Therefore, $O(l)$ elements in the tree node are updated.
 
-Chúng ta nhớ rằng bất kỳ phần tử $x$ nào cũng có mặt trong chính xác một nút cây ở mỗi tầng. Nút gốc (tầng $0$) có độ dài $O(n)$, các nút ở tầng $1$ có độ dài $O(\sqrt{n})$, các nút ở tầng $2$ có độ dài $O(\sqrt{\sqrt{n}})$, v.v. Vì vậy, độ phức tạp thời gian cho mỗi lần cập nhật là $O(n + \sqrt{n} + \sqrt{\sqrt{n}} + \dots) = O(n)$.
+We remember that any element $x$ is present in exactly one tree node at each layer. Root node (layer $0$) has length $O(n)$, nodes on layer $1$ have length $O(\sqrt{n})$, nodes on layer $2$ have length $O(\sqrt{\sqrt{n}})$, etc. So the time complexity per update is $O(n + \sqrt{n} + \sqrt{\sqrt{n}} + \dots) = O(n)$.
 
-Nhưng nó quá chậm. Có thể làm nhanh hơn không?
+But it's too slow. Can it be done faster?
 
-#### Một cây sqrt bên trong cây sqrt
+#### An sqrt-tree inside the sqrt-tree
 
-Lưu ý rằng nút thắt cổ chai của việc cập nhật là việc xây dựng lại $\text{between}$ của nút gốc. Để tối ưu hóa cây, hãy loại bỏ mảng này! Thay vì mảng $\text{between}$, chúng ta lưu trữ một cây sqrt khác cho nút gốc. Hãy gọi nó là $\text{index}$. Nó đóng vai trò tương tự như $\text{between}$—trả lời các truy vấn trên các đoạn của các khối. Lưu ý rằng phần còn lại của các nút cây không có $\text{index}$, chúng giữ các mảng $\text{between}$ của chúng.
+Note that the bottleneck of updating is rebuilding $\text{between}$ of the root node. To optimize the tree, let's get rid of this array! Instead of $\text{between}$ array, we store another sqrt-tree for the root node. Let's call it $\text{index}$. It plays the same role as $\text{between}$&mdash; answers the queries on segments of blocks. Note that the rest of the tree nodes don't have $\text{index}$, they keep their $\text{between}$ arrays.
 
-Một cây sqrt được _đánh chỉ số_, nếu nút gốc của nó có $\text{index}$. Một cây sqrt với mảng $\text{between}$ trong nút gốc của nó là _không được đánh chỉ số_. Lưu ý rằng $\text{index}$ **bản thân nó là _không được đánh chỉ số_**.
+A sqrt-tree is _indexed_, if its root node has $\text{index}$. A sqrt-tree with $\text{between}$ array in its root node is _unindexed_. Note that $\text{index}$ **is _unindexed_ itself**.
 
-Vì vậy, chúng ta có thuật toán sau để cập nhật một cây _được đánh chỉ số_:
+So, we have the following algorithm for updating an _indexed_ tree:
 
-* Cập nhật $\text{prefixOp}$ và $\text{suffixOp}$ trong $O(\sqrt{n})$.
+* Update $\text{prefixOp}$ and $\text{suffixOp}$ in $O(\sqrt{n})$.
 
-* Cập nhật $\text{index}$. Nó có độ dài $O(\sqrt{n})$ và chúng ta chỉ cần cập nhật một mục trong đó (đại diện cho khối đã thay đổi). Vì vậy, độ phức tạp thời gian cho bước này là $O(\sqrt{n})$. Chúng ta có thể sử dụng thuật toán được mô tả ở đầu phần này (thuật toán "chậm") để làm điều đó.
+* Update $\text{index}$. It has length $O(\sqrt{n})$ and we need to update only one item in it (that represents the changed block). So, the time complexity for this step is $O(\sqrt{n})$. We can use the algorithm described in the beginning of this section (the "slow" one) to do it.
 
-* Đi vào nút con đại diện cho khối đã thay đổi và cập nhật nó trong $O(\sqrt{n})$ với thuật toán "chậm".
+* Go into the child node that represents the changed block and update it in $O(\sqrt{n})$ with the "slow" algorithm.
 
-Lưu ý rằng độ phức tạp của truy vấn vẫn là $O(1)$: chúng ta cần sử dụng $\text{index}$ trong truy vấn không quá một lần, và điều này sẽ mất thời gian $O(1)$.
+Note that the query complexity is still $O(1)$: we need to use $\text{index}$ in query no more than once, and this will take $O(1)$ time.
 
-Vì vậy, tổng độ phức tạp thời gian để cập nhật một phần tử duy nhất là $O(\sqrt{n})$. Hoan hô! :)
+So, total time complexity for updating a single element is $O(\sqrt{n})$. Hooray! :)
 
-### Cập nhật một đoạn
+### Updating a segment
 
-Cây sqrt cũng có thể thực hiện các việc như gán một phần tử trên một đoạn. $\text{massUpdate}(x, l, r)$ có nghĩa là $a_i = x$ cho tất cả $l \le i \le r$.
+Sqrt-tree also can do things like assigning an element on a segment. $\text{massUpdate}(x, l, r)$ means $a_i = x$ for all $l \le i \le r$.
 
-Có hai cách tiếp cận để làm điều này: một trong số chúng thực hiện $\text{massUpdate}$ trong $O(\sqrt{n}\cdot \log \log n)$, giữ $O(1)$ cho mỗi truy vấn. Cách thứ hai thực hiện $\text{massUpdate}$ trong $O(\sqrt{n})$, nhưng độ phức tạp của truy vấn trở thành $O(\log \log n)$.
+There are two approaches to do this: one of them does $\text{massUpdate}$ in $O(\sqrt{n}\cdot \log \log n)$, keeping $O(1)$ per query. The second one does $\text{massUpdate}$ in $O(\sqrt{n})$, but the query complexity becomes $O(\log \log n)$.
 
-Chúng ta sẽ thực hiện truyền lười theo cách tương tự như được thực hiện trong các cây phân đoạn: chúng ta đánh dấu một số nút là _lười biếng_, có nghĩa là chúng ta sẽ đẩy chúng khi cần thiết. Nhưng có một điều khác với các cây phân đoạn: việc đẩy một nút rất tốn kém, vì vậy nó không thể được thực hiện trong các truy vấn. Ở tầng $0$, việc đẩy một nút mất thời gian $O(\sqrt{n})$. Vì vậy, chúng ta không đẩy các nút bên trong các truy vấn, chúng ta chỉ xem nút hiện tại hoặc cha của nó có _lười biếng_ không, và chỉ cần tính đến nó trong khi thực hiện các truy vấn.
+We will do lazy propagation in the same way as it is done in segment trees: we mark some nodes as _lazy_, meaning that we'll push them when it's necessary. But one thing is different from segment trees: pushing a node is expensive, so it cannot be done in queries. On the layer $0$, pushing a node takes $O(\sqrt{n})$ time. So, we don't push nodes inside queries, we only look if the current node or its parent are _lazy_, and just take it into account while performing queries.
 
-#### Cách tiếp cận thứ nhất
+#### First approach
 
-Trong cách tiếp cận đầu tiên, chúng ta nói rằng chỉ có các nút ở tầng $1$ (có độ dài $O(\sqrt{n}$) mới có thể _lười biếng_. Khi đẩy một nút như vậy, nó cập nhật tất cả cây con của nó bao gồm cả chính nó trong $O(\sqrt{n}\cdot \log \log n)$. Quá trình $\text{massUpdate}$ được thực hiện như sau:
+In the first approach, we say that only nodes on layer $1$ (with length $O(\sqrt{n}$) can be _lazy_. When pushing such node, it updates all its subtree including itself in $O(\sqrt{n}\cdot \log \log n)$. The $\text{massUpdate}$ process is done as follows:
 
-* Xem xét các nút ở tầng $1$ và các khối tương ứng với chúng.
+* Consider the nodes on layer $1$ and blocks corresponding to them.
 
-* Một số khối được bao phủ hoàn toàn bởi $\text{massUpdate}$. Đánh dấu chúng là _lười biếng_ trong $O(\sqrt{n})$.
+* Some blocks are entirely covered by $\text{massUpdate}$. Mark them as _lazy_ in $O(\sqrt{n})$.
 
-* Một số khối được bao phủ một phần. Lưu ý rằng có không quá hai khối loại này. Xây dựng lại chúng trong $O(\sqrt{n}\cdot \log \log n)$. Nếu chúng _lười biếng_, hãy tính đến điều đó.
+* Some blocks are partially covered. Note there are no more than two blocks of this kind. Rebuild them in $O(\sqrt{n}\cdot \log \log n)$. If they were _lazy_, take it into account.
 
-* Cập nhật $\text{prefixOp}$ và $\text{suffixOp}$ cho các khối được bao phủ một phần trong $O(\sqrt{n})$ (vì chỉ có hai khối như vậy).
+* Update $\text{prefixOp}$ and $\text{suffixOp}$ for partially covered blocks in $O(\sqrt{n})$ (because there are only two such blocks).
 
-* Xây dựng lại $\text{index}$ trong $O(\sqrt{n}\cdot \log \log n)$.
+* Rebuild the $\text{index}$ in $O(\sqrt{n}\cdot \log \log n)$.
 
-Vì vậy, chúng ta có thể thực hiện $\text{massUpdate}$ nhanh chóng. Nhưng truyền lười ảnh hưởng đến các truy vấn như thế nào? Chúng sẽ có các sửa đổi sau:
+So we can do $\text{massUpdate}$ fast. But how lazy propagation affects queries? They will have the following modifications:
 
-* Nếu truy vấn của chúng ta nằm hoàn toàn trong một khối _lười biếng_, hãy tính toán nó và tính đến _lười biếng_. $O(1)$.
+* If our query entirely lies in a _lazy_ block, calculate it and take _lazy_ into account. $O(1)$.
 
-* Nếu truy vấn của chúng ta bao gồm nhiều khối, một số trong đó _lười biếng_, chúng ta cần quan tâm đến _lười biếng_ chỉ trên khối ngoài cùng bên trái và ngoài cùng bên phải. Phần còn lại của các khối được tính toán bằng cách sử dụng $\text{index}$, đã biết câu trả lời trên khối _lười biếng_ (vì nó được xây dựng lại sau mỗi lần sửa đổi). $O(1)$.
+* If our query consists of many blocks, some of which are _lazy_, we need to take care of _lazy_ only on the leftmost and the rightmost block. The rest of the blocks are calculated using $\text{index}$, which already knows the answer on _lazy_ block (because it's rebuilt after each modification). $O(1)$.
 
-Độ phức tạp của truy vấn vẫn là $O(1)$.
+The query complexity still remains $O(1)$.
 
-#### Cách tiếp cận thứ hai
+#### Second approach
 
-Trong cách tiếp cận này, mỗi nút có thể _lười biếng_ (ngoại trừ gốc). Ngay cả các nút trong $\text{index}$ cũng có thể _lười biếng_. Vì vậy, trong khi xử lý một truy vấn, chúng ta phải tìm các thẻ _lười biếng_ trong tất cả các nút cha, tức là độ phức tạp của truy vấn sẽ là $O(\log \log n)$.
+In this approach, each node can be _lazy_ (except root). Even nodes in $\text{index}$ can be _lazy_. So, while processing a query, we have to look for _lazy_ tags in all the parent nodes, i. e. query complexity will be $O(\log \log n)$.
 
-Nhưng $\text{massUpdate}$ trở nên nhanh hơn. Nó trông như sau:
+But $\text{massUpdate}$ becomes faster. It looks in the following way:
 
-* Một số khối được bao phủ hoàn toàn bởi $\text{massUpdate}$. Vì vậy, các thẻ _lười biếng_ được thêm vào chúng. Đó là $O(\sqrt{n})$.
+* Some blocks are fully covered with $\text{massUpdate}$. So, _lazy_ tags are added to them. It is $O(\sqrt{n})$.
 
-* Cập nhật $\text{prefixOp}$ và $\text{suffixOp}$ cho các khối được bao phủ một phần trong $O(\sqrt{n})$ (vì chỉ có hai khối như vậy).
+* Update $\text{prefixOp}$ and $\text{suffixOp}$ for partially covered blocks in $O(\sqrt{n})$ (because there are only two such blocks).
 
-* Đừng quên cập nhật chỉ số. Đó là $O(\sqrt{n})$ (chúng ta sử dụng cùng một thuật toán $\text{massUpdate}$).
+* Do not forget to update the index. It is $O(\sqrt{n})$ (we use the same $\text{massUpdate}$ algorithm).
 
-* Cập nhật mảng $\text{between}$ cho các cây con _không được đánh chỉ số_.
+* Update $\text{between}$ array for _unindexed_ subtrees. 
 
-* Đi vào các nút đại diện cho các khối được bao phủ một phần và gọi $\text{massUpdate}$ một cách đệ quy.
+* Go into the nodes representing partially covered blocks and call $\text{massUpdate}$ recursively.
 
-Lưu ý rằng khi chúng ta thực hiện lệnh gọi đệ quy, chúng ta thực hiện $\text{massUpdate}$ tiền tố hoặc hậu tố. Nhưng đối với các cập nhật tiền tố và hậu tố, chúng ta có thể không có nhiều hơn một con được bao phủ một phần. Vì vậy, chúng ta truy cập một nút ở tầng $1$, hai nút ở tầng $2$ và hai nút ở bất kỳ cấp độ sâu hơn nào. Vì vậy, độ phức tạp thời gian là $O(\sqrt{n} + \sqrt{\sqrt{n}} + \dots) = O(\sqrt{n})$. Cách tiếp cận ở đây tương tự như cập nhật hàng loạt trên cây phân đoạn.
+Note that when we do the recursive call, we do prefix or suffix $\text{massUpdate}$. But for prefix and suffix updates we can have no more than one partially covered child. So, we visit one node on layer $1$, two nodes on layer $2$ and two nodes on any deeper level. So, the time complexity is $O(\sqrt{n} + \sqrt{\sqrt{n}} + \dots) = O(\sqrt{n})$. The approach here is similar to the segment tree mass update.
 
-## Cài đặt
+## Implementation
 
-Việc triển khai Sqrt Tree sau đây có thể thực hiện các hoạt động sau: xây dựng trong $O(n \cdot \log \log n)$, trả lời các truy vấn trong $O(1)$ và cập nhật một phần tử trong $O(\sqrt{n})$.
+The following implementation of Sqrt Tree can perform the following operations: build in $O(n \cdot \log \log n)$, answer queries in $O(1)$ and update an element in $O(\sqrt{n})$.
 
 ~~~~~cpp
 SqrtTreeItem op(const SqrtTreeItem &a, const SqrtTreeItem &b);
@@ -345,8 +346,6 @@ public:
 
 ~~~~~
 
-## Các bài toán
+## Problems
 
 [CodeChef - SEGPROD](https://www.codechef.com/NOV17/problems/SEGPROD)
-
-```

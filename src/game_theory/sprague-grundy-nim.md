@@ -4,221 +4,215 @@ tags:
 e_maxx_link: sprague_grundy
 ---
 
-# Định lý Sprague-Grundy. Trò chơi Nim
+# Sprague-Grundy theorem. Nim
 
-## Giới thiệu
+## Introduction
 
-Định lý này mô tả cái gọi là trò chơi hai người chơi **vô tư**,
-tức là những trò chơi mà các nước đi có thể và thắng/thua chỉ phụ thuộc vào trạng thái của trò chơi.
-Nói cách khác, sự khác biệt duy nhất giữa hai người chơi là một trong số họ đi trước.
+This theorem describes the so-called **impartial** two-player game,
+i.e. those in which the available moves and winning/losing depends only on the state of the game.
+In other words, the only difference between the two players is that one of them moves first.
 
-Ngoài ra, chúng ta giả định rằng trò chơi có **thông tin hoàn hảo**, tức là không có thông tin nào bị che giấu khỏi người chơi (họ biết các quy tắc và các nước đi có thể).
+Additionally, we assume that the game has **perfect information**, i.e. no information is hidden from the players (they know the rules and the possible moves).
 
-Giả định rằng trò chơi là **hữu hạn**, tức là sau một số nước đi nhất định, một trong những người chơi sẽ kết thúc ở một vị thế thua — từ đó họ không thể di chuyển đến một vị thế khác.
-Mặt khác, người chơi đã đặt đối thủ vào vị thế này sẽ thắng.
-Dễ hiểu là không có hòa trong trò chơi này.
+It is assumed that the game is **finite**, i.e. after a certain number of moves, one of the players will end up in a losing position — from which they can't move to another position.
+On the other side, the player who set up this position for the opponent wins.
+Understandably, there are no draws in this game.
 
-Những trò chơi như vậy có thể được mô tả hoàn toàn bằng một *đồ thị có hướng không có chu trình*: các đỉnh là các trạng thái của trò chơi và các cạnh là các chuyển tiếp (nước đi).
-Một đỉnh không có cạnh đi ra là một đỉnh thua (một người chơi phải thực hiện một nước đi từ đỉnh này sẽ thua).
+Such games can be completely described by a *directed acyclic graph*: the vertices are game states and the edges are transitions (moves).
+A vertex without outgoing edges is a losing vertex (a player who must make a move from this vertex loses).
 
-Vì không có hòa, chúng ta có thể phân loại tất cả các trạng thái của trò chơi thành **thắng** hoặc **thua**.
-Trạng thái thắng là những trạng thái mà từ đó có một nước đi gây ra thất bại không thể tránh khỏi cho người chơi kia, ngay cả khi họ có phản ứng tốt nhất.
-Trạng thái thua là những trạng thái mà từ đó tất cả các nước đi đều dẫn đến trạng thái thắng cho người chơi kia.
-Tóm lại, một trạng thái là thắng nếu có ít nhất một chuyển tiếp đến một trạng thái thua và là thua nếu không có ít nhất một chuyển tiếp đến một trạng thái thua.
+Since there are no draws, we can classify all game states as either **winning** or **losing**.
+Winning states are those from which there is a move that causes inevitable defeat of the other player, even with their best response.
+Losing states are those from which all moves lead to winning states for the other player.
+Summarizing, a state is winning if there is at least one transition to a losing state and is losing if there isn't at least one transition to a losing state.
 
-Nhiệm vụ của chúng ta là phân loại các trạng thái của một trò chơi đã cho.
+Our task is to classify the states of a given game.
 
-Lý thuyết về các trò chơi như vậy đã được Roland Sprague phát triển độc lập vào năm 1935 và Patrick Michael Grundy vào năm 1939.
+The theory of such games was independently developed by Roland Sprague in 1935 and Patrick Michael Grundy in 1939.
 
-## Trò chơi Nim
+## Nim
 
-Trò chơi này tuân thủ các hạn chế được mô tả ở trên.
-Hơn nữa, *bất kỳ* trò chơi hai người chơi vô tư có thông tin hoàn hảo nào cũng có thể được quy về trò chơi Nim.
-Việc nghiên cứu trò chơi này sẽ cho phép chúng ta giải quyết tất cả các trò chơi tương tự khác, nhưng sẽ nói thêm về điều đó sau.
+This game obeys the restrictions described above.
+Moreover, *any* perfect-information impartial two-player game can be reduced to the game of Nim.
+Studying this game will allow us to solve all other similar games, but more on that later.
 
-Trong lịch sử, trò chơi này phổ biến từ thời cổ đại.
-Nguồn gốc của nó có lẽ là ở Trung Quốc — hoặc ít nhất là trò chơi *Jianshizi* rất giống với nó.
-Ở châu Âu, những tài liệu tham khảo sớm nhất về nó là từ thế kỷ 16.
-Tên gọi này được đặt bởi Charles Bouton, người vào năm 1901 đã công bố một phân tích đầy đủ về trò chơi này.
+Historically this game was popular in ancient times.
+Its origin is probably in China — or at least the game *Jianshizi* is very similar to it.
+In Europe the earliest references to it are from the 16th century.
+The name was given by Charles Bouton, who in 1901 published a full analysis of this game.
 
-### Mô tả trò chơi
+### Game description
 
-Có một số đống, mỗi đống có một số viên đá.
-Trong một nước đi, một người chơi có thể lấy bất kỳ số lượng viên đá dương nào từ bất kỳ một đống nào và vứt chúng đi.
-Một người chơi thua nếu họ không thể thực hiện một nước đi, điều này xảy ra khi tất cả các đống đều trống.
+There are several piles, each with several stones.
+In a move a player can take any positive number of stones from any one pile and throw them away.
+A player loses if they can't make a move, which happens when all the piles are empty.
 
-Trạng thái của trò chơi được mô tả một cách rõ ràng bằng một đa tập hợp các số nguyên dương.
-Một nước đi bao gồm việc giảm nghiêm ngặt một số nguyên được chọn (nếu nó trở thành không, nó sẽ bị xóa khỏi tập hợp).
+The game state is unambiguously described by a multiset of positive integers.
+A move consists of strictly decreasing a chosen integer (if it becomes zero, it is removed from the set).
 
-### Giải pháp
+### The solution
 
-Giải pháp của Charles L. Bouton trông như thế này:
+The solution by Charles L. Bouton looks like this:
 
-**Định lý.**
-Người chơi hiện tại có một chiến lược thắng khi và chỉ khi tổng xor của các kích thước đống là khác không.
-Tổng xor của một dãy $a$ là $a_1 igoplus a_2 igoplus 	ext{…} igoplus  a_n$, trong đó $igoplus$ là *phép hoặc loại trừ từng bit*.
+**Theorem.**
+The current player has a winning strategy if and only if the xor-sum of the pile sizes is non-zero.
+The xor-sum of a sequence $a$ is $a_1 \oplus a_2 \oplus \ldots \oplus  a_n$, where $\oplus$ is the *bitwise exclusive or*.
 
-**Chứng minh.**
-Chìa khóa của chứng minh là sự hiện diện của một **chiến lược đối xứng cho đối thủ**.
-Chúng ta chỉ ra rằng một khi ở trong một vị trí có tổng xor bằng không, người chơi sẽ không thể làm cho nó khác không trong dài hạn —
-nếu họ chuyển đến một vị trí có tổng xor khác không, đối thủ sẽ luôn có một nước đi đưa tổng xor trở lại bằng không.
+**Proof.**
+The key to the proof is the presence of a **symmetric strategy for the opponent**.
+We show that a once in a position with the xor-sum equal to zero, the player won't be able to make it non-zero in the long term —
+if they transition to a position with a non-zero xor-sum, the opponent will always have a move returning the xor-sum back to zero.
 
-Chúng ta sẽ chứng minh định lý bằng quy nạp toán học.
+We will prove the theorem by mathematical induction.
 
-Đối với một Nim rỗng (nơi tất cả các đống đều trống, tức là đa tập hợp là rỗng) tổng xor là không và định lý là đúng.
+For an empty Nim (where all the piles are empty i.e. the multiset is empty) the xor-sum is zero and the theorem is true.
 
-Bây giờ giả sử chúng ta đang ở trong một trạng thái không rỗng.
-Sử dụng giả thuyết quy nạp (và tính không có chu trình của trò chơi), chúng ta giả định rằng định lý đã được chứng minh cho tất cả các trạng thái có thể đạt được từ trạng thái hiện tại.
+Now suppose we are in a non-empty state.
+Using the assumption of induction (and the acyclicity of the game) we assume that the theorem is proven for all states reachable from the current one.
 
-Khi đó, chứng minh được chia thành hai phần:
-nếu đối với vị trí hiện tại tổng xor $s = 0$, chúng ta phải chứng minh rằng trạng thái này là thua, tức là tất cả các trạng thái có thể đạt được đều có tổng xor $t 
-eq 0$.
-Nếu $s 
-eq 0$, chúng ta phải chứng minh rằng có một nước đi dẫn đến một trạng thái có $t = 0$.
+Then the proof splits into two parts:
+if for the current position the xor-sum $s = 0$, we have to prove that this state is losing, i.e. all reachable states have xor-sum $t \neq 0$.
+If $s \neq 0$, we have to prove that there is a move leading to a state with $t = 0$.
 
-*   Đặt $s = 0$ và hãy xem xét bất kỳ nước đi nào.
-    Nước đi này giảm kích thước của một đống $x$ xuống kích thước $y$.
-    Sử dụng các thuộc tính cơ bản của $igoplus$, chúng ta có
+*   Let $s = 0$ and let's consider any move.
+    This move reduces the size of a pile $x$ to a size $y$.
+    Using elementary properties of $\oplus$, we have
     
-    $$ t = s igoplus x igoplus y = 0 igoplus x igoplus y = x igoplus y $$  
+    \[ t = s \oplus x \oplus y = 0 \oplus x \oplus y = x \oplus y \]
     
-    Vì $y < x$, $y igoplus x$ không thể bằng không, vì vậy $t 
-eq 0$.
-    Điều đó có nghĩa là bất kỳ trạng thái nào có thể đạt được đều là một trạng thái thắng (theo giả thuyết quy nạp), vì vậy chúng ta đang ở trong một vị thế thua.
+    Since $y < x$, $y \oplus x$ can't be zero, so $t \neq 0$.
+    That means any reachable state is a winning one (by the assumption of induction), so we are in a losing position.
 
-*   Đặt $s 
-eq 0$.
-    Hãy xem xét biểu diễn nhị phân của số $s$.
-    Đặt $d$ là chỉ số của bit khác không hàng đầu (giá trị lớn nhất) của nó.
-    Nước đi của chúng ta sẽ là trên một đống có kích thước mà bit số $d$ được đặt (nó phải tồn tại, nếu không bit sẽ không được đặt trong $s$).
-    Chúng ta sẽ giảm kích thước $x$ của nó xuống $y = x igoplus s$.
-    Tất cả các bit ở các vị trí lớn hơn $d$ trong $x$ và $y$ khớp nhau và bit $d$ được đặt trong $x$ nhưng không được đặt trong $y$.
-    Do đó, $y < x$, đó là tất cả những gì chúng ta cần để một nước đi là hợp lệ.
-    Bây giờ chúng ta có:
+*   Let $s \neq 0$.
+    Consider the binary representation of the number $s$.
+    Let $d$ be the index of its leading (biggest value) non-zero bit.
+    Our move will be on a pile whose size's bit number $d$ is set (it must exist, otherwise the bit wouldn't be set in $s$).
+    We will reduce its size $x$ to $y = x \oplus s$.
+    All bits at positions greater than $d$ in $x$ and $y$ match and bit $d$ is set in $x$ but not set in $y$.
+    Therefore, $y < x$, which is all we need for a move to be legal.
+    Now we have:
     
-    $$ t = s igoplus x igoplus y = s igoplus x igoplus (s igoplus x) = 0 $$  
+    \[ t = s \oplus x \oplus y = s \oplus x \oplus (s \oplus x) = 0 \]
     
-    Điều này có nghĩa là chúng ta đã tìm thấy một trạng thái thua có thể đạt được (theo giả thuyết quy nạp) và trạng thái hiện tại là thắng.
+    This means we found a reachable losing state (by the assumption of induction) and the current state is winning.
 
-**Hệ quả.**
-Bất kỳ trạng thái nào của Nim đều có thể được thay thế bằng một trạng thái tương đương miễn là tổng xor không thay đổi.
-Hơn nữa, khi phân tích một Nim với nhiều đống, chúng ta có thể thay thế nó bằng một đống duy nhất có kích thước $s$.
+**Corollary.**
+Any state of Nim can be replaced by an equivalent state as long as the xor-sum doesn't change.
+Moreover, when analyzing a Nim with several piles, we can replace it with a single pile of size $s$.
 
-### Trò chơi Misère
+### Misère Game
 
-Trong một **trò chơi misère**, mục tiêu của trò chơi là ngược lại, vì vậy người chơi loại bỏ que diêm cuối cùng sẽ thua trò chơi.
-Hóa ra trò chơi nim misère có thể được chơi một cách tối ưu gần giống như một trò chơi nim tiêu chuẩn.
- Ý tưởng là trước tiên hãy chơi trò chơi misère giống như trò chơi tiêu chuẩn, nhưng thay đổi chiến lược ở cuối trò chơi.
- Chiến lược mới sẽ được giới thiệu trong một tình huống mà mỗi đống sẽ chứa nhiều nhất một que diêm sau nước đi tiếp theo.
-Trong trò chơi tiêu chuẩn, chúng ta nên chọn một nước đi sau đó có một số lượng chẵn các đống có một que diêm. Tuy nhiên, trong 
-trò chơi misère, chúng ta chọn một nước đi sao cho có một số lượng lẻ các đống có một que diêm.
-  Chiến lược này hoạt động vì một trạng thái mà chiến lược thay đổi luôn xuất hiện trong trò chơi, và trạng thái này là một 
-  trạng thái thắng, bởi vì nó chứa chính xác một đống có nhiều hơn một que diêm nên tổng nim không phải là 0.
+In a **misère game**, the goal of the game is opposite, so the player who removes the last stick loses the game.
+It turns out that the misère nim game can be optimally played almost like a standard nim game.
+ The idea is to first play the misère game like the standard game, but change the strategy at the end of the game.
+ The new strategy will be introduced in a situation where each heap would contain at most one stick after the next move.
+In the standard game, we should choose a move after which there is an even number of heaps with one stick. However, in 
+the misère game,we choose a move so that there is an odd number of heaps with one stick.
+  This strategy works because a state where the strategy changes always appears in the game, and this state is a 
+  winning state, because it contains exactly one heap that has more than one stick so the nim sum is not 0.
 
-## Sự tương đương của các trò chơi vô tư và Nim (Định lý Sprague-Grundy)
+## The equivalence of impartial games and Nim (Sprague-Grundy theorem)
 
-Bây giờ chúng ta sẽ học cách tìm, đối với bất kỳ trạng thái trò chơi nào của bất kỳ trò chơi vô tư nào, một trạng thái tương ứng của Nim.
+Now we will learn how to find, for any game state of any impartial game, a corresponding state of Nim.
 
-### Bổ đề về Nim với các lần tăng
+### Lemma about Nim with increases
 
-Chúng ta xem xét sửa đổi sau đây đối với Nim: chúng ta cũng cho phép **thêm các viên đá vào một đống đã chọn**.
-Các quy tắc chính xác về cách thức và thời điểm cho phép tăng **không làm chúng ta quan tâm**, tuy nhiên các quy tắc phải giữ cho trò chơi của chúng ta **không có chu trình**. Trong các phần sau, các trò chơi ví dụ được xem xét.
+We consider the following modification to Nim: we also allow **adding stones to a chosen pile**.
+The exact rules about how and when increasing is allowed **do not interest us**, however the rules should keep our game **acyclic**. In later sections, example games are considered.
 
-**Bổ đề.**
-Việc thêm các lần tăng vào Nim không thay đổi cách xác định các trạng thái thắng và thua.
-Nói cách khác, các lần tăng là vô ích, và chúng ta không phải sử dụng chúng trong một chiến lược thắng.
+**Lemma.**
+The addition of increasing to Nim doesn't change how winning and losing states are determined.
+In other words, increases are useless, and we don't have to use them in a winning strategy.
 
-**Chứng minh.**
-Giả sử một người chơi đã thêm các viên đá vào một đống. Khi đó đối thủ của họ có thể chỉ cần hoàn tác nước đi của họ — giảm số lượng trở lại giá trị trước đó.
-Vì trò chơi không có chu trình, sớm hay muộn người chơi hiện tại sẽ không thể sử dụng một nước đi tăng và sẽ phải thực hiện nước đi Nim thông thường.
+**Proof.**
+Suppose a player added stones to a pile. Then his opponent can simply undo his move — decrease the number back to the previous value.
+Since the game is acyclic, sooner or later the current player won't be able to use an increase move and will have to do the usual Nim move.
 
-### Định lý Sprague-Grundy
+### Sprague-Grundy theorem
 
-Hãy xem xét một trạng thái $v$ của một trò chơi hai người chơi vô tư và đặt $v_i$ là các trạng thái có thể đạt được từ nó (trong đó $i 	ext{ ∈ } \{ 1, 2, \dots, k \} , k 	ext{ ≥ } 0$).
-Đối với trạng thái này, chúng ta có thể gán một trò chơi Nim hoàn toàn tương đương với một đống có kích thước $x$.
-Số $x$ được gọi là giá trị Grundy hoặc giá trị nim của trạng thái $v$.
+Let's consider a state $v$ of a two-player impartial game and let $v_i$ be the states reachable from it (where $i \in \{ 1, 2, \dots, k \} , k \ge 0$).
+To this state, we can assign a fully equivalent game of Nim with one pile of size $x$.
+The number $x$ is called the Grundy value or nim-value of state $v$.
 
-Hơn nữa, số này có thể được tìm thấy theo cách đệ quy sau:
+Moreover, this number can be found in the following recursive way:
 
-$$ x = \text{mex}
-\{ x_1, \ldots, x_k \}, $$  
+$$ x = \text{mex}\ \{ x_1, \ldots, x_k \}, $$
 
-trong đó $x_i$ là giá trị Grundy cho trạng thái $v_i$ và hàm $\text{mex}$ (*số nguyên không âm nhỏ nhất không có trong tập hợp*) là số nguyên không âm nhỏ nhất không tìm thấy trong tập hợp đã cho.
+where $x_i$ is the Grundy value for state $v_i$ and the function $\text{mex}$ (*minimum excludant*) is the smallest non-negative integer not found in the given set.
 
-Xem trò chơi như một đồ thị, chúng ta có thể tính toán dần dần các giá trị Grundy bắt đầu từ các đỉnh không có cạnh đi ra.
-Giá trị Grundy bằng không có nghĩa là một trạng thái thua.
+Viewing the game as a graph, we can gradually calculate the Grundy values starting from vertices without outgoing edges.
+Grundy value being equal to zero means a state is losing.
 
-**Chứng minh.**
-Chúng ta sẽ sử dụng chứng minh bằng quy nạp.
+**Proof.**
+We will use a proof by induction.
 
-Đối với các đỉnh không có nước đi, giá trị $x$ là $\text{mex}$ của một tập hợp rỗng, là không.
-Điều đó đúng, vì một Nim rỗng là thua.
+For vertices without a move, the value $x$ is the $\text{mex}$ of an empty set, which is zero.
+That is correct, since an empty Nim is losing.
 
-Bây giờ hãy xem xét bất kỳ đỉnh nào khác $v$.
-Theo quy nạp, chúng ta giả định các giá trị $x_i$ tương ứng với các đỉnh có thể đạt được của nó đã được tính toán.
+Now consider any other vertex $v$.
+By induction, we assume the values $x_i$ corresponding to its reachable vertices are already calculated.
 
-Đặt $p = \text{mex}
-\{ x_1, \ldots, x_k \}$.
-Khi đó, chúng ta biết rằng đối với bất kỳ số nguyên $i \text{ ∈ } [0, p)$, tồn tại một đỉnh có thể đạt được với giá trị Grundy $i$.
-Điều này có nghĩa là $v$ **tương đương với một trạng thái của trò chơi Nim với các lần tăng với một đống có kích thước $p$**.
-Trong một trò chơi như vậy, chúng ta có các chuyển tiếp đến các đống có mọi kích thước nhỏ hơn $p$ và có thể có các chuyển tiếp đến các đống có kích thước lớn hơn $p$.
-Do đó, $p$ thực sự là giá trị Grundy mong muốn cho trạng thái đang được xem xét.
+Let $p = \text{mex}\ \{ x_1, \ldots, x_k \}$.
+Then we know that for any integer $i \in [0, p)$ there exists a reachable vertex with Grundy value $i$.
+This means $v$ is **equivalent to a state of the game of Nim with increases with one pile of size $p$**.
+In such a game we have transitions to piles of every size smaller than $p$ and possibly transitions to piles with sizes greater than $p$.
+Therefore, $p$ is indeed the desired Grundy value for the currently considered state.
 
-## Ứng dụng của định lý
+## Application of the theorem
 
-Cuối cùng, chúng tôi mô tả một thuật toán để xác định kết quả thắng/thua của một trò chơi, có thể áp dụng cho bất kỳ trò chơi hai người chơi vô tư nào.
+Finally, we describe an algorithm to determine the win/loss outcome of a game, which is applicable to any impartial two-player game.
 
-Để tính toán giá trị Grundy của một trạng thái đã cho, bạn cần:
+To calculate the Grundy value of a given state you need to:
 
-* Lấy tất cả các chuyển tiếp có thể có từ trạng thái này
+* Get all possible transitions from this state
 
-* Mỗi chuyển tiếp có thể dẫn đến một **tổng của các trò chơi độc lập** (một trò chơi trong trường hợp thoái hóa).
-Tính toán giá trị Grundy cho mỗi trò chơi độc lập và tổng xor chúng.
-Tất nhiên, xor không làm gì nếu chỉ có một trò chơi.
+* Each transition can lead to a **sum of independent games** (one game in the degenerate case).
+Calculate the Grundy value for each independent game and xor-sum them.
+Of course xor does nothing if there is just one game.
 
-* Sau khi chúng ta đã tính toán các giá trị Grundy cho mỗi chuyển tiếp, chúng ta tìm giá trị của trạng thái là $\text{mex}$ của các số này.
+* After we calculated Grundy values for each transition we find the state's value as the $\text{mex}$ of these numbers.
 
-* Nếu giá trị là không, thì trạng thái hiện tại là thua, nếu không thì là thắng.
+* If the value is zero, then the current state is losing, otherwise it is winning.
 
-So với phần trước, chúng ta tính đến thực tế là có thể có các chuyển tiếp đến các trò chơi kết hợp.
-Chúng ta coi chúng là một Nim với các kích thước đống bằng với các giá trị Grundy của các trò chơi độc lập.
-Chúng ta có thể tổng xor chúng giống như Nim thông thường theo định lý của Bouton.
+In comparison to the previous section, we take into account the fact that there can be transitions to combined games.
+We consider them a Nim with pile sizes equal to the independent games' Grundy values.
+We can xor-sum them just like usual Nim according to Bouton's theorem.
 
-## Các mẫu hình trong các giá trị Grundy
+## Patterns in Grundy values
 
-Rất thường xuyên khi giải quyết các nhiệm vụ cụ thể bằng cách sử dụng các giá trị Grundy, có thể có lợi khi **nghiên cứu bảng các giá trị** để tìm kiếm các mẫu hình.
+Very often when solving specific tasks using Grundy values, it may be beneficial to **study the table of the values** in search of patterns.
 
-Trong nhiều trò chơi, có thể có vẻ khá khó để phân tích lý thuyết,
-các giá trị Grundy hóa ra là tuần hoàn hoặc có một dạng dễ hiểu.
-Trong đại đa số các trường hợp, mẫu hình được quan sát hóa ra là đúng và có thể được chứng minh bằng quy nạp nếu muốn.
+In many games, which may seem rather difficult for theoretical analysis,
+the Grundy values turn out to be periodic or of an easily understandable form.
+In the overwhelming majority of cases the observed pattern turns out to be true and can be proved by induction if desired.
 
-Tuy nhiên, các giá trị Grundy không phải lúc nào cũng chứa các quy luật như vậy và ngay cả đối với một số trò chơi rất đơn giản, vấn đề hỏi liệu các quy luật đó có tồn tại hay không vẫn còn bỏ ngỏ (ví dụ: "trò chơi của Grundy").
+However, Grundy values are far from *always* containing such regularities and even for some very simple games, the problem asking if those regularities exist is still open (e.g. "Grundy's game").
 
-## Các trò chơi ví dụ
+## Example games
 
-### Chéo-chéo
+### Crosses-crosses
 
-**Luật chơi.**
-Xét một dải kẻ ô có kích thước $1 \times n$. Trong một nước đi, người chơi phải đặt một dấu chéo, nhưng bị cấm đặt hai dấu chéo cạnh nhau (trong các ô liền kề). Như thường lệ, người chơi không có nước đi hợp lệ sẽ thua.
+**The rules.**
+Consider a checkered strip of size $1 \times n$. In one move, the player must put one cross, but it is forbidden to put two crosses next to each other (in adjacent cells). As usual, the player without a valid move loses.
 
-**Giải pháp.**
-Khi một người chơi đặt một dấu chéo vào bất kỳ ô nào, chúng ta có thể nghĩ rằng dải bị chia thành hai phần độc lập:
-bên trái của dấu chéo và bên phải của nó.
-Trong trường hợp này, ô có dấu chéo, cũng như các ô láng giềng bên trái và bên phải của nó bị phá hủy — không thể đặt thêm gì vào chúng.
-Do đó, nếu chúng ta đánh số các ô từ $1$ đến $n$ thì việc đặt dấu chéo vào vị trí $1 < i < n$ sẽ phá vỡ dải
-thành hai dải có độ dài $i-2$ và $n-i-1$, tức là chúng ta đi đến tổng của các trò chơi $i-2$ và $n-i-1$.
-Đối với trường hợp cạnh của dấu chéo được đánh dấu ở vị trí $1$ hoặc $n$, chúng ta đi đến trò chơi $n-2$.
+**The solution.**
+When a player puts a cross in any cell, we can think of the strip being split into two independent parts:
+to the left of the cross and to the right of it.
+In this case, the cell with a cross, as well as its left and right neighbours are destroyed — nothing more can be put in them.
+Therefore, if we number the cells from $1$ to $n$ then putting the cross in position $1 < i < n$ breaks the strip
+into two strips of length $i-2$ and $n-i-1$ i.e. we go to the sum of games $i-2$ and $n-i-1$.
+For the edge case of the cross being marked on position $1$ or $n$, we go to the game $n-2$.
 
-Do đó, giá trị Grundy $g(n)$ có dạng:
+Thus, the Grundy value $g(n)$ has the form:
 
-$$g(n) = \text{mex} \Bigl( \{ g(n-2) \} \cup \{g(i-2) \oplus g(n-i-1) \mid 2 \leq i \leq n-1\} \Bigr) .$$  
+$$g(n) = \text{mex} \Bigl( \{ g(n-2) \} \cup \{g(i-2) \oplus g(n-i-1) \mid 2 \leq i \leq n-1\} \Bigr) .$$
 
-Vì vậy, chúng ta đã có một giải pháp $O(n^2)$.
+So we've got a $O(n^2)$ solution.
 
-Trên thực tế, $g(n)$ có chu kỳ dài 34 bắt đầu từ $n=52$.
+In fact, $g(n)$ has a period of length 34 starting with $n=52$.
 
 
-## Bài tập thực hành
+## Practice Problems
 
 - [KATTIS S-Nim](https://open.kattis.com/problems/snim)
 - [CodeForces - Marbles (2018-2019 ACM-ICPC Brazil Subregional)](https://codeforces.com/gym/101908/problem/B)
