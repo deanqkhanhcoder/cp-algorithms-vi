@@ -4,45 +4,29 @@ tags:
 e_maxx_link: convex_hull_graham
 ---
 
-# Convex Hull construction
+# Dựng bao lồi
 
-In this article we will discuss the problem of constructing a convex hull from a set of points.
+Trong bài viết này, chúng ta sẽ thảo luận về bài toán xây dựng bao lồi từ một tập hợp các điểm.
 
-Consider $N$ points given on a plane, and the objective is to generate a convex hull, i.e. the smallest
-convex polygon that contains all the given points.
+Xét $N$ điểm cho trước trên một mặt phẳng, và mục tiêu là tạo ra một bao lồi, tức là đa giác lồi nhỏ nhất chứa tất cả các điểm đã cho.
 
-We will see the **Graham's scan** algorithm published in 1972 by Graham, and
-also the **Monotone chain** algorithm published in 1979 by Andrew. Both
-are $\mathcal{O}(N \log N)$, and are asymptotically optimal (as it is proven that there
-is no algorithm asymptotically better), with the exception of a few problems where
-parallel or online processing is involved.
+Chúng ta sẽ xem xét thuật toán **quét Graham** được Graham công bố năm 1972, và cả thuật toán **chuỗi đơn điệu** được Andrew công bố năm 1979. Cả hai đều có độ phức tạp $\mathcal{O}(N \log N)$, và là tối ưu về mặt tiệm cận (vì đã được chứng minh rằng không có thuật toán nào tốt hơn về mặt tiệm cận), ngoại trừ một vài bài toán có liên quan đến xử lý song song hoặc trực tuyến.
 
-## Graham's scan Algorithm
-The algorithm first finds the bottom-most point $P_0$. If there are multiple points
-with the same Y coordinate, the one with the smaller X coordinate is considered. This
-step takes $\mathcal{O}(N)$ time.
+## Thuật toán quét Graham
+Thuật toán đầu tiên tìm điểm thấp nhất $P_0$. Nếu có nhiều điểm có cùng tọa độ Y, điểm có tọa độ X nhỏ hơn sẽ được xem xét. Bước này mất thời gian $\mathcal{O}(N)$.
 
-Next, all the other points are sorted by polar angle in clockwise order.
-If the polar angle between two or more points is the same, the tie should be broken by distance from $P_0$, in increasing order.
+Tiếp theo, tất cả các điểm khác được sắp xếp theo góc cực theo chiều kim đồng hồ.
+Nếu góc cực giữa hai hoặc nhiều điểm giống nhau, sự bằng nhau nên được phá vỡ bằng khoảng cách từ $P_0$, theo thứ tự tăng dần.
 
-Then we iterate through each point one by one, and make sure that the current
-point and the two before it make a clockwise turn, otherwise the previous
-point is discarded, since it would make a non-convex shape. Checking for clockwise or anticlockwise
-nature can be done by checking the [orientation](oriented-triangle-area.md).
+Sau đó, chúng ta lặp qua từng điểm một, và đảm bảo rằng điểm hiện tại và hai điểm trước đó tạo thành một vòng quay theo chiều kim đồng hồ, nếu không điểm trước đó sẽ bị loại bỏ, vì nó sẽ tạo ra một hình dạng không lồi. Việc kiểm tra tính chất theo chiều kim đồng hồ hoặc ngược chiều kim đồng hồ có thể được thực hiện bằng cách kiểm tra [hướng](oriented-triangle-area.md).
 
-We use a stack to store the points, and once we reach the original point $P_0$,
-the algorithm is done and we return the stack containing all the points of the
-convex hull in clockwise order.
+Chúng ta sử dụng một ngăn xếp để lưu trữ các điểm, và một khi chúng ta đến điểm ban đầu $P_0$,
+thuật toán kết thúc và chúng ta trả về ngăn xếp chứa tất cả các điểm của bao lồi theo thứ tự chiều kim đồng hồ.
 
-If you need to include the collinear points while doing a Graham scan, you need
-another step after sorting. You need to get the points that have the biggest
-polar distance from $P_0$ (these should be at the end of the sorted vector) and are collinear.
-The points in this line should be reversed so that we can output all the
-collinear points, otherwise the algorithm would get the nearest point in this
-line and bail. This step shouldn't be included in the non-collinear version
-of the algorithm, otherwise you wouldn't get the smallest convex hull.
+Nếu bạn cần bao gồm các điểm thẳng hàng khi thực hiện quét Graham, bạn cần một bước khác sau khi sắp xếp. Bạn cần lấy các điểm có khoảng cách cực lớn nhất từ $P_0$ (những điểm này phải ở cuối vector đã sắp xếp) và thẳng hàng.
+Các điểm trên đường thẳng này nên được đảo ngược để chúng ta có thể xuất ra tất cả các điểm thẳng hàng, nếu không thuật toán sẽ lấy điểm gần nhất trên đường thẳng này và thoát ra. Bước này không nên được bao gồm trong phiên bản không thẳng hàng của thuật toán, nếu không bạn sẽ không có được bao lồi nhỏ nhất.
 
-### Implementation
+### Cài đặt
 
 ```{.cpp file=graham_scan}
 struct pt {
@@ -54,8 +38,8 @@ struct pt {
 
 int orientation(pt a, pt b, pt c) {
     double v = a.x*(b.y-c.y)+b.x*(c.y-a.y)+c.x*(a.y-b.y);
-    if (v < 0) return -1; // clockwise
-    if (v > 0) return +1; // counter-clockwise
+    if (v < 0) return -1; // theo chiều kim đồng hồ
+    if (v > 0) return +1; // ngược chiều kim đồng hồ
     return 0;
 }
 
@@ -96,42 +80,42 @@ void convex_hull(vector<pt>& a, bool include_collinear = false) {
 }
 ```
 
-## Monotone chain Algorithm
-The algorithm first finds the leftmost and rightmost points A and B. In the event multiple such points exist,
-the lowest among the left (lowest Y-coordinate) is taken as A, and the highest among the right (highest Y-coordinate)
-is taken as B. Clearly, A and B must both belong to the convex hull as they are the farthest away and they cannot be contained
-by any line formed by a pair among the given points.
+## Thuật toán chuỗi đơn điệu
+Thuật toán đầu tiên tìm các điểm ngoài cùng bên trái và ngoài cùng bên phải A và B. Trong trường hợp có nhiều điểm như vậy,
+điểm thấp nhất trong số các điểm bên trái (tọa độ Y thấp nhất) được lấy làm A, và điểm cao nhất trong số các điểm bên phải (tọa độ Y cao nhất)
+được lấy làm B. Rõ ràng, cả A và B đều phải thuộc về bao lồi vì chúng ở xa nhất và chúng không thể được chứa
+bởi bất kỳ đường thẳng nào được tạo bởi một cặp trong số các điểm đã cho.
 
-Now, draw a line through AB. This divides all the other points into two sets, S1 and S2, where S1 contains all the points
-above the line connecting A and B, and S2 contains all the points below the line joining A and B. The points that lie on
-the line joining A and B may belong to either set. The points A and B belong to both sets. Now the algorithm
-constructs the upper set S1 and the lower set S2 and then combines them to obtain the answer. 
+Bây giờ, vẽ một đường thẳng qua AB. Điều này chia tất cả các điểm khác thành hai tập hợp, S1 và S2, trong đó S1 chứa tất cả các điểm
+phía trên đường thẳng nối A và B, và S2 chứa tất cả các điểm phía dưới đường thẳng nối A và B. Các điểm nằm trên
+đường thẳng nối A và B có thể thuộc một trong hai tập hợp. Các điểm A và B thuộc cả hai tập hợp. Bây giờ thuật toán
+xây dựng tập hợp trên S1 và tập hợp dưới S2 và sau đó kết hợp chúng để có được câu trả lời. 
 
-To get the upper set, we sort all points by the x-coordinate. For each point we check if either - the current point is the last point,
-(which we defined as B), or if the orientation between the line between A and the current point and the line between the current point and B is clockwise. In those cases the 
-current point belongs to the upper set S1. Checking for clockwise or anticlockwise nature can be done by checking the [orientation](oriented-triangle-area.md).
+Để có được tập hợp trên, chúng ta sắp xếp tất cả các điểm theo tọa độ x. Đối với mỗi điểm, chúng ta kiểm tra xem hoặc - điểm hiện tại là điểm cuối cùng,
+(mà chúng ta đã định nghĩa là B), hoặc nếu hướng giữa đường thẳng giữa A và điểm hiện tại và đường thẳng giữa điểm hiện tại và B là theo chiều kim đồng hồ. Trong những trường hợp đó, 
+điểm hiện tại thuộc tập hợp trên S1. Việc kiểm tra tính chất theo chiều kim đồng hồ hoặc ngược chiều kim đồng hồ có thể được thực hiện bằng cách kiểm tra [hướng](oriented-triangle-area.md).
 
-If the given point belongs to the upper set, we check the angle made by the line connecting the second last point and the last point in the upper convex hull,
-with the line connecting the last point in the upper convex hull and the current point. If the angle is not clockwise, we remove the most recent point added
-to the upper convex hull as the current point will be able to contain the previous point once it is added to the convex
-hull.
+Nếu điểm đã cho thuộc tập hợp trên, chúng ta kiểm tra góc được tạo bởi đường thẳng nối điểm thứ hai cuối cùng và điểm cuối cùng trong bao lồi trên,
+với đường thẳng nối điểm cuối cùng trong bao lồi trên và điểm hiện tại. Nếu góc không theo chiều kim đồng hồ, chúng ta xóa điểm được thêm gần đây nhất
+vào bao lồi trên vì điểm hiện tại sẽ có thể chứa điểm trước đó sau khi nó được thêm vào bao
+lồi.
 
-The same logic applies for the lower set S2. If either - the current point is B, or the orientation of the lines, formed by A and the 
-current point and the current point and B, is counterclockwise - then it belongs to S2.
+Logic tương tự áp dụng cho tập hợp dưới S2. Nếu hoặc - điểm hiện tại là B, hoặc hướng của các đường thẳng, được hình thành bởi A và 
+điểm hiện tại và điểm hiện tại và B, là ngược chiều kim đồng hồ - thì nó thuộc S2.
 
-If the given point belongs to the lower set, we act similarly as for a point on the upper set except we check for a counterclockwise
-orientation instead of a clockwise orientation. Thus, if the angle made by the line connecting the second last point and the last point in the lower convex hull,
-with the line connecting the last point in the lower convex hull and the current point is not counterclockwise, we remove the most recent point added to the lower convex hull as the current point will be able to contain
-the previous point once added to the hull.
+Nếu điểm đã cho thuộc tập hợp dưới, chúng ta hành động tương tự như đối với một điểm trên tập hợp trên ngoại trừ việc chúng ta kiểm tra hướng ngược chiều kim đồng hồ
+thay vì hướng theo chiều kim đồng hồ. Do đó, nếu góc được tạo bởi đường thẳng nối điểm thứ hai cuối cùng và điểm cuối cùng trong bao lồi dưới,
+với đường thẳng nối điểm cuối cùng trong bao lồi dưới và điểm hiện tại không phải là ngược chiều kim đồng hồ, chúng ta xóa điểm được thêm gần đây nhất vào bao lồi dưới vì điểm hiện tại sẽ có thể chứa
+điểm trước đó sau khi được thêm vào bao.
 
-The final convex hull is obtained from the union of the upper and lower convex hull, forming a clockwise hull, and the implementation is as follows.
+Bao lồi cuối cùng được thu được từ hợp của bao lồi trên và dưới, tạo thành một bao theo chiều kim đồng hồ, và việc triển khai như sau.
 
-If you need collinear points, you just need to check for them in the clockwise/counterclockwise routines.
-However, this allows for a degenerate case where all the input points are collinear in a single line, and the algorithm would output repeated points.
-To solve this, we check whether the upper hull contains all the points, and if it does, we just return the points in reverse, as that
-is what Graham's implementation would return in this case.
+Nếu bạn cần các điểm thẳng hàng, bạn chỉ cần kiểm tra chúng trong các quy trình theo chiều kim đồng hồ/ngược chiều kim đồng hồ.
+Tuy nhiên, điều này cho phép một trường hợp thoái hóa trong đó tất cả các điểm đầu vào đều thẳng hàng trên một đường thẳng duy nhất, và thuật toán sẽ xuất ra các điểm lặp lại.
+Để giải quyết vấn đề này, chúng ta kiểm tra xem bao trên có chứa tất cả các điểm hay không, và nếu có, chúng ta chỉ cần trả về các điểm theo thứ tự ngược lại, vì đó là những gì
+triển khai của Graham sẽ trả về trong trường hợp này.
 
-### Implementation
+### Cài đặt
 
 ```{.cpp file=monotone_chain}
 struct pt {
@@ -140,8 +124,8 @@ struct pt {
 
 int orientation(pt a, pt b, pt c) {
     double v = a.x*(b.y-c.y)+b.x*(c.y-a.y)+c.x*(a.y-b.y);
-    if (v < 0) return -1; // clockwise
-    if (v > 0) return +1; // counter-clockwise
+    if (v < 0) return -1; // theo chiều kim đồng hồ
+    if (v > 0) return +1; // ngược chiều kim đồng hồ
     return 0;
 }
 
@@ -190,7 +174,7 @@ void convex_hull(vector<pt>& a, bool include_collinear = false) {
 }
 ```
 
-## Practice Problems
+## Bài tập thực hành
 
 * [Kattis - Convex Hull](https://open.kattis.com/problems/convexhull)
 * [Kattis - Keep the Parade Safe](https://open.kattis.com/problems/parade)

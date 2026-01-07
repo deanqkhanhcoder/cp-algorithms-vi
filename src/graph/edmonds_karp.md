@@ -4,153 +4,153 @@ tags:
 e_maxx_link: edmonds_karp
 ---
 
-# Maximum flow - Ford-Fulkerson and Edmonds-Karp
+# Luồng cực đại - Ford-Fulkerson và Edmonds-Karp
 
-The Edmonds-Karp algorithm is an implementation of the Ford-Fulkerson method for computing a maximal flow in a flow network.
+Thuật toán Edmonds-Karp là một cách triển khai của phương pháp Ford-Fulkerson để tính toán một luồng cực đại trong một mạng luồng.
 
-## Flow network
+## Mạng luồng
 
-First let's define what a **flow network**, a **flow**, and a **maximum flow** is.
+Đầu tiên, hãy định nghĩa một **mạng luồng**, một **luồng**, và một **luồng cực đại** là gì.
 
-A **network** is a directed graph $G$ with vertices $V$ and edges $E$ combined with a function $c$, which assigns each edge $e \in E$ a non-negative integer value, the **capacity** of $e$.
-Such a network is called a **flow network**, if we additionally label two vertices, one as **source** and one as **sink**.
+Một **mạng** là một đồ thị có hướng $G$ với các đỉnh $V$ và các cạnh $E$ kết hợp với một hàm $c$, gán cho mỗi cạnh $e \in E$ một giá trị nguyên không âm, **khả năng thông qua** của $e$.
+Một mạng như vậy được gọi là **mạng luồng**, nếu chúng ta còn gán nhãn cho hai đỉnh, một là **nguồn** và một là **đích**.
 
-A **flow** in a flow network is function $f$, that again assigns each edge $e$ a non-negative integer value, namely the flow.
-The function has to fulfill the following two conditions:
+Một **luồng** trong một mạng luồng là một hàm $f$, lại gán cho mỗi cạnh $e$ một giá trị nguyên không âm, cụ thể là luồng.
+Hàm này phải thỏa mãn hai điều kiện sau:
 
-The flow of an edge cannot exceed the capacity.
+Luồng của một cạnh không thể vượt quá khả năng thông qua của nó.
 
 $$f(e) \le c(e)$$
 
-And the sum of the incoming flow of a vertex $u$ has to be equal to the sum of the outgoing flow of $u$ except in the source and sink vertices.
+Và tổng của luồng vào của một đỉnh $u$ phải bằng tổng của luồng ra của $u$ ngoại trừ ở các đỉnh nguồn và đích.
 
 $$\sum_{(v, u) \in E} f((v, u)) = \sum_{(u, v) \in E} f((u, v))$$
 
-The source vertex $s$ only has an outgoing flow, and the sink vertex $t$ has only incoming flow.
+Đỉnh nguồn $s$ chỉ có luồng ra, và đỉnh đích $t$ chỉ có luồng vào.
 
-It is easy to see that the following equation holds:
+Dễ thấy rằng phương trình sau đây đúng:
 
 $$\sum_{(s, u) \in E} f((s, u)) = \sum_{(u, t) \in E} f((u, t))$$
 
-A good analogy for a flow network is the following visualization:
-We represent edges as water pipes, the capacity of an edge is the maximal amount of water that can flow through the pipe per second, and the flow of an edge is the amount of water that currently flows through the pipe per second.
-This motivates the first flow condition. There cannot flow more water through a pipe than its capacity.
-The vertices act as junctions, where water comes out of some pipes, and then, these vertices distribute the water in some way to other pipes.
-This also motivates the second flow condition.
-All the incoming water has to be distributed to the other pipes in each junction.
-It cannot magically disappear or appear.
-The source $s$ is origin of all the water, and the water can only drain in the sink $t$.
+Một sự tương tự tốt cho một mạng luồng là sự hình dung sau đây:
+Chúng ta biểu diễn các cạnh như các đường ống nước, khả năng thông qua của một cạnh là lượng nước tối đa có thể chảy qua đường ống mỗi giây, và luồng của một cạnh là lượng nước hiện đang chảy qua đường ống mỗi giây.
+Điều này thúc đẩy điều kiện luồng đầu tiên. Không thể có nhiều nước chảy qua một đường ống hơn khả năng thông qua của nó.
+Các đỉnh hoạt động như các điểm giao, nơi nước ra khỏi một số đường ống, và sau đó, các đỉnh này phân phối nước theo một cách nào đó đến các đường ống khác.
+Điều này cũng thúc đẩy điều kiện luồng thứ hai.
+Tất cả nước vào phải được phân phối đến các đường ống khác trong mỗi điểm giao.
+Nó không thể biến mất hoặc xuất hiện một cách kỳ diệu.
+Nguồn $s$ là nguồn gốc của tất cả nước, và nước chỉ có thể thoát ra ở đích $t$.
 
-The following image shows a flow network.
-The first value of each edge represents the flow, which is initially 0, and the second value represents the capacity.
+Hình ảnh sau đây cho thấy một mạng luồng.
+Giá trị đầu tiên của mỗi cạnh biểu thị luồng, ban đầu là 0, và giá trị thứ hai biểu thị khả năng thông qua.
 <div style="text-align: center;">
-  <img src="Flow1.png" alt="Flow network">
+  <img src="Flow1.png" alt="Mạng luồng">
 </div>
 
-The value of the flow of a network is the sum of all the flows that get produced in the source $s$, or equivalently to the sum of all the flows that are consumed by the sink $t$.
-A **maximal flow** is a flow with the maximal possible value.
-Finding this maximal flow of a flow network is the problem that we want to solve.
+Giá trị của luồng của một mạng là tổng của tất cả các luồng được tạo ra ở nguồn $s$, hoặc tương đương với tổng của tất cả các luồng được tiêu thụ bởi đích $t$.
+Một **luồng cực đại** là một luồng có giá trị lớn nhất có thể.
+Tìm luồng cực đại này của một mạng luồng là bài toán mà chúng ta muốn giải quyết.
 
-In the visualization with water pipes, the problem can be formulated in the following way:
-how much water can we push through the pipes from the source to the sink?
+Trong hình dung với các đường ống nước, bài toán có thể được phát biểu theo cách sau:
+chúng ta có thể đẩy bao nhiêu nước qua các đường ống từ nguồn đến đích?
 
-The following image shows the maximal flow in the flow network.
+Hình ảnh sau đây cho thấy luồng cực đại trong mạng luồng.
 <div style="text-align: center;">
-  <img src="Flow9.png" alt="Maximal flow">
+  <img src="Flow9.png" alt="Luồng cực đại">
 </div>
 
-## Ford-Fulkerson method
+## Phương pháp Ford-Fulkerson
 
-Let's define one more thing.
-A **residual capacity** of a directed edge is the capacity minus the flow.
-It should be noted that if there is a flow along some directed edge $(u, v)$, then the reversed edge has capacity 0 and we can define the flow of it as $f((v, u)) = -f((u, v))$.
-This also defines the residual capacity for all the reversed edges.
-We can create a **residual network** from all these edges, which is just a network with the same vertices and edges, but we use the residual capacities as capacities.
+Hãy định nghĩa thêm một điều nữa.
+Một **khả năng thông qua còn dư** của một cạnh có hướng là khả năng thông qua trừ đi luồng.
+Cần lưu ý rằng nếu có một luồng dọc theo một cạnh có hướng $(u, v)$, thì cạnh ngược lại có khả năng thông qua là 0 và chúng ta có thể định nghĩa luồng của nó là $f((v, u)) = -f((u, v))$.
+Điều này cũng định nghĩa khả năng thông qua còn dư cho tất cả các cạnh ngược.
+Chúng ta có thể tạo ra một **mạng còn dư** từ tất cả các cạnh này, chỉ là một mạng có cùng các đỉnh và cạnh, nhưng chúng ta sử dụng các khả năng thông qua còn dư làm khả năng thông qua.
 
-The Ford-Fulkerson method works as follows.
-First, we set the flow of each edge to zero.
-Then we look for an **augmenting path** from $s$ to $t$.
-An augmenting path is a simple path in the residual graph where residual capacity is positive for all the edges along that path.
-If such a path is found, then we can increase the flow along these edges.
-We keep on searching for augmenting paths and increasing the flow.
-Once an augmenting path doesn't exist anymore, the flow is maximal.
+Phương pháp Ford-Fulkerson hoạt động như sau.
+Đầu tiên, chúng ta đặt luồng của mỗi cạnh về không.
+Sau đó, chúng ta tìm kiếm một **đường tăng luồng** từ $s$ đến $t$.
+Một đường tăng luồng là một đường đi đơn giản trong đồ thị còn dư nơi khả năng thông qua còn dư là dương cho tất cả các cạnh dọc theo đường đi đó.
+Nếu một đường đi như vậy được tìm thấy, thì chúng ta có thể tăng luồng dọc theo các cạnh này.
+Chúng ta tiếp tục tìm kiếm các đường tăng luồng và tăng luồng.
+Một khi một đường tăng luồng không còn tồn tại, luồng là cực đại.
 
-Let us specify in more detail, what increasing the flow along an augmenting path means.
-Let $C$ be the smallest residual capacity of the edges in the path.
-Then we increase the flow in the following way:
-we update $f((u, v)) ~\text{+=}~ C$ and $f((v, u)) ~\text{-=}~ C$ for every edge $(u, v)$ in the path.
+Hãy chỉ rõ hơn, việc tăng luồng dọc theo một đường tăng luồng có nghĩa là gì.
+Gọi $C$ là khả năng thông qua còn dư nhỏ nhất của các cạnh trong đường đi.
+Khi đó chúng ta tăng luồng theo cách sau:
+chúng ta cập nhật $f((u, v)) ~\text{+=}~ C$ và $f((v, u)) ~\text{-=}~ C$ cho mỗi cạnh $(u, v)$ trong đường đi.
 
-Here is an example to demonstrate the method.
-We use the same flow network as above.
-Initially we start with a flow of 0.
+Đây là một ví dụ để minh họa phương pháp.
+Chúng ta sử dụng cùng một mạng luồng như trên.
+Ban đầu chúng ta bắt đầu với một luồng là 0.
 <div style="text-align: center;">
-  <img src="Flow1.png" alt="Flow network">
+  <img src="Flow1.png" alt="Mạng luồng">
 </div>
 
-We can find the path $s - A - B - t$ with the residual capacities 7, 5, and 8.
-Their minimum is 5, therefore we can increase the flow along this path by 5.
-This gives a flow of 5 for the network.
+Chúng ta có thể tìm thấy đường đi $s - A - B - t$ với các khả năng thông qua còn dư là 7, 5, và 8.
+Giá trị nhỏ nhất của chúng là 5, do đó chúng ta có thể tăng luồng dọc theo đường đi này thêm 5.
+Điều này cho một luồng là 5 cho mạng.
 <div style="text-align: center;">
-  <img src="Flow2.png" alt="First path">
-  <img src="Flow3.png" alt="Network after first path">
+  <img src="Flow2.png" alt="Đường đi đầu tiên">
+  <img src="Flow3.png" alt="Mạng sau đường đi đầu tiên">
 </div>
 
-Again we look for an augmenting path, this time we find $s - D - A - C - t$ with the residual capacities 4, 3, 3, and 5.
-Therefore we can increase the flow by 3 and we get a flow of 8 for the network.
+Một lần nữa chúng ta tìm kiếm một đường tăng luồng, lần này chúng ta tìm thấy $s - D - A - C - t$ với các khả năng thông qua còn dư là 4, 3, 3, và 5.
+Do đó chúng ta có thể tăng luồng thêm 3 và chúng ta có một luồng là 8 cho mạng.
 <div style="text-align: center;">
-  <img src="Flow4.png" alt="Second path">
-  <img src="Flow5.png" alt="Network after second path">
+  <img src="Flow4.png" alt="Đường đi thứ hai">
+  <img src="Flow5.png" alt="Mạng sau đường đi thứ hai">
 </div>
 
-This time we find the path $s - D - C - B - t$ with the residual capacities 1, 2, 3, and 3, and hence, we increase the flow by 1.
+Lần này chúng ta tìm thấy đường đi $s - D - C - B - t$ với các khả năng thông qua còn dư là 1, 2, 3, và 3, và do đó, chúng ta tăng luồng thêm 1.
 <div style="text-align: center;">
-  <img src="Flow6.png" alt="Third path">
-  <img src="Flow7.png" alt="Network after third path">
+  <img src="Flow6.png" alt="Đường đi thứ ba">
+  <img src="Flow7.png" alt="Mạng sau đường đi thứ ba">
 </div>
 
-This time we find the augmenting path $s - A - D - C - t$ with the residual capacities 2, 3, 1, and 2.
-We can increase the flow by 1.
-But this path is very interesting.
-It includes the reversed edge $(A, D)$.
-In the original flow network, we are not allowed to send any flow from $A$ to $D$.
-But because we already have a flow of 3 from $D$ to $A$, this is possible.
-The intuition of it is the following:
-Instead of sending a flow of 3 from $D$ to $A$, we only send 2 and compensate this by sending an additional flow of 1 from $s$ to $A$, which allows us to send an additional flow of 1 along the path $D - C - t$.
+Lần này chúng ta tìm thấy đường tăng luồng $s - A - D - C - t$ với các khả năng thông qua còn dư là 2, 3, 1, và 2.
+Chúng ta có thể tăng luồng thêm 1.
+Nhưng đường đi này rất thú vị.
+Nó bao gồm cạnh ngược $(A, D)$.
+Trong mạng luồng ban đầu, chúng ta không được phép gửi bất kỳ luồng nào từ $A$ đến $D$.
+Nhưng vì chúng ta đã có một luồng là 3 từ $D$ đến $A$, điều này là có thể.
+Trực giác của nó là như sau:
+Thay vì gửi một luồng là 3 từ $D$ đến $A$, chúng ta chỉ gửi 2 và bù lại bằng cách gửi một luồng bổ sung là 1 từ $s$ đến $A$, điều này cho phép chúng ta gửi một luồng bổ sung là 1 dọc theo đường đi $D - C - t$.
 <div style="text-align: center;">
-  <img src="Flow8.png" alt="Fourth path">
-  <img src="Flow9.png" alt="Network after fourth path">
+  <img src="Flow8.png" alt="Đường đi thứ tư">
+  <img src="Flow9.png" alt="Mạng sau đường đi thứ tư">
 </div>
 
-Now, it is impossible to find an augmenting path between $s$ and $t$, therefore this flow of $10$ is the maximal possible.
-We have found the maximal flow.
+Bây giờ, không thể tìm thấy một đường tăng luồng giữa $s$ và $t$, do đó luồng này là $10$ là luồng cực đại có thể có.
+Chúng ta đã tìm thấy luồng cực đại.
 
-It should be noted, that the Ford-Fulkerson method doesn't specify a method of finding the augmenting path.
-Possible approaches are using [DFS](depth-first-search.md) or [BFS](breadth-first-search.md) which both work in $O(E)$.
-If all the capacities of the network are integers, then for each augmenting path the flow of the network increases by at least 1 (for more details see [Integral flow theorem](#integral-theorem)).
-Therefore, the complexity of Ford-Fulkerson is $O(E F)$, where $F$ is the maximal flow of the network.
-In the case of rational capacities, the algorithm will also terminate, but the complexity is not bounded.
-In the case of irrational capacities, the algorithm might never terminate, and might not even converge to the maximal flow.
+Cần lưu ý rằng, phương pháp Ford-Fulkerson không chỉ định một phương pháp tìm kiếm đường tăng luồng.
+Các cách tiếp cận có thể là sử dụng [DFS](depth-first-search.md) hoặc [BFS](breadth-first-search.md) đều hoạt động trong $O(E)$.
+Nếu tất cả các khả năng thông qua của mạng là số nguyên, thì với mỗi đường tăng luồng, luồng của mạng tăng ít nhất 1 (để biết thêm chi tiết, xem [định lý luồng nguyên](#integral-theorem)).
+Do đó, độ phức tạp của Ford-Fulkerson là $O(E F)$, trong đó $F$ là luồng cực đại của mạng.
+Trong trường hợp khả năng thông qua là số hữu tỉ, thuật toán cũng sẽ kết thúc, nhưng độ phức tạp không bị giới hạn.
+Trong trường hợp khả năng thông qua là số vô tỉ, thuật toán có thể không bao giờ kết thúc, và thậm chí có thể không hội tụ về luồng cực đại.
 
-## Edmonds-Karp algorithm
+## Thuật toán Edmonds-Karp
 
-Edmonds-Karp algorithm is just an implementation of the Ford-Fulkerson method that uses [BFS](breadth-first-search.md) for finding augmenting paths.
-The algorithm was first published by Yefim Dinitz in 1970, and later independently published by Jack Edmonds and Richard Karp in 1972.
+Thuật toán Edmonds-Karp chỉ là một cách triển khai của phương pháp Ford-Fulkerson sử dụng [BFS](breadth-first-search.md) để tìm các đường tăng luồng.
+Thuật toán lần đầu tiên được Yefim Dinitz công bố vào năm 1970, và sau đó được Jack Edmonds và Richard Karp công bố độc lập vào năm 1972.
 
-The complexity can be given independently of the maximal flow.
-The algorithm runs in $O(V E^2)$ time, even for irrational capacities.
-The intuition is, that every time we find an augmenting path one of the edges becomes saturated, and the distance from the edge to $s$ will be longer if it appears later again in an augmenting path.
-The length of the simple paths is bounded by $V$.
+Độ phức tạp có thể được đưa ra độc lập với luồng cực đại.
+Thuật toán chạy trong thời gian $O(V E^2)$, ngay cả với các khả năng thông qua là số vô tỉ.
+Trực giác là, mỗi lần chúng ta tìm thấy một đường tăng luồng, một trong các cạnh trở nên bão hòa, và khoảng cách từ cạnh đó đến $s$ sẽ dài hơn nếu nó xuất hiện lại sau này trong một đường tăng luồng.
+Độ dài của các đường đi đơn giản bị giới hạn bởi $V$.
 
-### Implementation
+### Cài đặt
 
-The matrix `capacity` stores the capacity for every pair of vertices.
-`adj` is the adjacency list of the **undirected graph**, since we have also to use the reversed of directed edges when we are looking for augmenting paths.
+Ma trận `capacity` lưu trữ khả năng thông qua cho mọi cặp đỉnh.
+`adj` là danh sách kề của **đồ thị vô hướng**, vì chúng ta cũng phải sử dụng các cạnh ngược của các cạnh có hướng khi chúng ta tìm kiếm các đường tăng luồng.
 
-The function `maxflow` will return the value of the maximal flow.
-During the algorithm, the matrix `capacity` will actually store the residual capacity of the network.
-The value of the flow in each edge will actually not be stored, but it is easy to extend the implementation - by using an additional matrix - to also store the flow and return it.
+Hàm `maxflow` sẽ trả về giá trị của luồng cực đại.
+Trong quá trình thuật toán, ma trận `capacity` thực sự sẽ lưu trữ khả năng thông qua còn dư của mạng.
+Giá trị của luồng trong mỗi cạnh thực sự sẽ không được lưu trữ, nhưng rất dễ dàng để mở rộng việc triển khai - bằng cách sử dụng một ma trận bổ sung - để cũng lưu trữ luồng và trả về nó.
 
-```{.cpp file=edmondskarp}
+```cpp
 int n;
 vector<vector<int>> capacity;
 vector<vector<int>> adj;
@@ -200,37 +200,39 @@ int maxflow(int s, int t) {
 }
 ```
 
-## Integral flow theorem ## { #integral-theorem}
+## Định lý luồng nguyên ## { #integral-theorem}
 
-The theorem says, that if every capacity in the network is an integer, then the size of the maximum flow is an integer, and there is a maximum flow such that the flow in each edge is an integer as well. In particular, Ford-Fulkerson method finds such a flow.
+Định lý nói rằng, nếu mọi khả năng thông qua trong mạng là một số nguyên, thì kích thước của luồng cực đại là một số nguyên, và có một luồng cực đại sao cho luồng trong mỗi cạnh cũng là một số nguyên. Cụ thể, phương pháp Ford-Fulkerson tìm thấy một luồng như vậy.
 
-## Max-flow min-cut theorem
+## Định lý luồng cực đại - lát cắt tối thiểu
 
-A **$s$-$t$-cut** is a partition of the vertices of a flow network into two sets, such that a set includes the source $s$ and the other one includes the sink $t$.
-The capacity of a $s$-$t$-cut is defined as the sum of capacities of the edges from the source side to the sink side.
+Một **$s$-$t$-cắt** là một sự phân hoạch các đỉnh của một mạng luồng thành hai tập, sao cho một tập bao gồm nguồn $s$ và tập còn lại bao gồm đích $t$.
+Khả năng thông qua của một $s$-$t$-cắt được định nghĩa là tổng các khả năng thông qua của các cạnh từ phía nguồn đến phía đích.
 
-Obviously, we cannot send more flow from $s$ to $t$ than the capacity of any $s$-$t$-cut.
-Therefore, the maximum flow is bounded by the minimum cut capacity.
+Rõ ràng, chúng ta không thể gửi nhiều luồng hơn từ $s$ đến $t$ so với khả năng thông qua của bất kỳ $s$-$t$-cắt nào.
+Do đó, luồng cực đại bị giới hạn bởi khả năng thông qua của lát cắt tối thiểu.
 
-The max-flow min-cut theorem goes even further.
-It says that the capacity of the maximum flow has to be equal to the capacity of the minimum cut.
+Định lý luồng cực đại - lát cắt tối thiểu thậm chí còn đi xa hơn.
+Nó nói rằng khả năng thông qua của luồng cực đại phải bằng khả năng thông qua của lát cắt tối thiểu.
 
-In the following image, you can see the minimum cut of the flow network we used earlier.
-It shows that the capacity of the cut $\{s, A, D\}$ and $\{B, C, t\}$ is $5 + 3 + 2 = 10$, which is equal to the maximum flow that we found.
-Other cuts will have a bigger capacity, like the capacity between $\{s, A\}$ and $\{B, C, D, t\}$ is $4 + 3 + 5 = 12$.
+Trong hình ảnh sau, bạn có thể thấy lát cắt tối thiểu của mạng luồng mà chúng ta đã sử dụng trước đó.
+Nó cho thấy rằng khả năng thông qua của lát cắt {s, A, D} và {B, C, t} là $5 + 3 + 2 = 10$, bằng với luồng cực đại mà chúng ta đã tìm thấy.
+Các lát cắt khác sẽ có khả năng thông qua lớn hơn, như khả năng thông qua giữa {s, A} và {B, C, D, t} là $4 + 3 + 5 = 12$.
 <div style="text-align: center;">
-  <img src="Cut.png" alt="Minimum cut">
+  <img src="Cut.png" alt="Lát cắt tối thiểu">
 </div>
 
-A minimum cut can be found after performing a maximum flow computation using the Ford-Fulkerson method.
-One possible minimum cut is the following:
-the set of all the vertices that can be reached from $s$ in the residual graph (using edges with positive residual capacity), and the set of all the other vertices.
-This partition can be easily found using [DFS](depth-first-search.md) starting at $s$.
+Một lát cắt tối thiểu có thể được tìm thấy sau khi thực hiện một phép tính luồng cực đại bằng phương pháp Ford-Fulkerson.
+Một lát cắt tối thiểu có thể là như sau:
+tập hợp tất cả các đỉnh có thể đến được từ $s$ trong đồ thị còn dư (sử dụng các cạnh có khả năng thông qua còn dư dương), và tập hợp tất cả các đỉnh khác.
+Sự phân hoạch này có thể được tìm thấy dễ dàng bằng cách sử dụng [DFS](depth-first-search.md) bắt đầu tại $s$.
 
-## Practice Problems
+## Bài tập thực hành
 - [Codeforces - Array and Operations](https://codeforces.com/contest/498/problem/c)
 - [Codeforces - Red-Blue Graph](https://codeforces.com/contest/1288/problem/f)
 - [CSES - Download Speed](https://cses.fi/problemset/task/1694)
 - [CSES - Police Chase](https://cses.fi/problemset/task/1695)
 - [CSES - School Dance](https://cses.fi/problemset/task/1696)
 - [CSES - Distinct Routes](https://cses.fi/problemset/task/1711)
+
+```

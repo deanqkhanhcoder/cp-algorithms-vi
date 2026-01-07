@@ -1,4 +1,4 @@
----
+--- 
 tags:
   - Translated
 e_maxx_link:
@@ -6,90 +6,90 @@ e_maxx_link:
   - vertex_connectivity
 ---
 
-# Edge connectivity / Vertex connectivity
+# Liên thông cạnh / Liên thông đỉnh
 
-## Definition
+## Định nghĩa
 
-Given an undirected graph $G$ with $n$ vertices and $m$ edges.
-Both the edge connectivity and the vertex connectivity are characteristics describing the graph.
+Cho một đồ thị vô hướng $G$ với $n$ đỉnh và $m$ cạnh.
+Cả liên thông cạnh và liên thông đỉnh đều là các đặc tính mô tả đồ thị.
 
-### Edge connectivity
+### Liên thông cạnh
 
-The **edge connectivity** $\lambda$ of the graph $G$ is the minimum number of edges that need to be deleted, such that the graph $G$ gets disconnected.
+**Liên thông cạnh** $\lambda$ của đồ thị $G$ là số cạnh tối thiểu cần phải xóa để đồ thị $G$ bị ngắt kết nối.
 
-For example an already disconnected graph has an edge connectivity of $0$, a connected graph with at least one bridge has an edge connectivity of $1$, and a connected graph with no bridges has an edge connectivity of at least $2$.
+Ví dụ, một đồ thị đã bị ngắt kết nối có liên thông cạnh là $0$, một đồ thị liên thông có ít nhất một cầu có liên thông cạnh là $1$, và một đồ thị liên thông không có cầu có liên thông cạnh ít nhất là $2$.
 
-We say that a set $S$ of edges **separates** the vertices $s$ and $t$, if, after removing all edges in $S$ from the graph $G$, the vertices $s$ and $t$ end up in different connected components.
+Chúng ta nói rằng một tập hợp các cạnh $S$ **chia tách** các đỉnh $s$ và $t$, nếu sau khi xóa tất cả các cạnh trong $S$ khỏi đồ thị $G$, các đỉnh $s$ và $t$ nằm trong các thành phần liên thông khác nhau.
 
-It is clear, that the edge connectivity of a graph is equal to the minimum size of such a set separating two vertices $s$ and $t$, taken among all possible pairs $(s, t)$.
+Rõ ràng, liên thông cạnh của một đồ thị bằng kích thước tối thiểu của một tập hợp như vậy chia tách hai đỉnh $s$ và $t$, được lấy trên tất cả các cặp có thể có $(s, t)$.
 
-### Vertex connectivity
+### Liên thông đỉnh
 
-The **vertex connectivity** $\kappa$ of the graph $G$ is the minimum number of vertices that need to be deleted, such that the graph $G$ gets disconnected.
+**Liên thông đỉnh** $\kappa$ của đồ thị $G$ là số đỉnh tối thiểu cần phải xóa để đồ thị $G$ bị ngắt kết nối.
 
-For example an already disconnected graph has the vertex connectivity $0$, and a connected graph with an articulation point has the vertex connectivity $1$.
-We define that a complete graph has the vertex connectivity $n-1$.
-For all other graphs the vertex connectivity doesn't exceed $n-2$, because you can find a pair of vertices which are not connected by an edge, and remove all other $n-2$ vertices.
+Ví dụ, một đồ thị đã bị ngắt kết nối có liên thông đỉnh là $0$, và một đồ thị liên thông có một điểm khớp có liên thông đỉnh là $1$.
+Chúng ta định nghĩa rằng một đồ thị đầy đủ có liên thông đỉnh là $n-1$.
+Đối với tất cả các đồ thị khác, liên thông đỉnh không vượt quá $n-2$, vì bạn có thể tìm thấy một cặp đỉnh không được nối bằng một cạnh, và xóa tất cả $n-2$ đỉnh khác.
 
-We say that a set $T$ of vertices **separates** the vertices $s$ and $t$, if, after removing all vertices in $T$ from the graph $G$, the vertices end up in different connected components.
+Chúng ta nói rằng một tập hợp các đỉnh $T$ **chia tách** các đỉnh $s$ và $t$, nếu sau khi xóa tất cả các đỉnh trong $T$ khỏi đồ thị $G$, các đỉnh nằm trong các thành phần liên thông khác nhau.
 
-It is clear, that the vertex connectivity of a graph is equal to the minimal size of such a set separating two vertices $s$ and $t$, taken among all possible pairs $(s, t)$.
+Rõ ràng, liên thông đỉnh của một đồ thị bằng kích thước tối thiểu của một tập hợp như vậy chia tách hai đỉnh $s$ và $t$, được lấy trên tất cả các cặp có thể có $(s, t)$.
 
-## Properties
+## Các tính chất
 
-### The Whitney inequalities
+### Bất đẳng thức Whitney
 
-The **Whitney inequalities** (1932) gives a relation between the edge connectivity $\lambda$, the vertex connectivity $\kappa$, and the minimum degree of any vertex in the graph $\delta$:
+**Bất đẳng thức Whitney** (1932) đưa ra một mối quan hệ giữa liên thông cạnh $\lambda$, liên thông đỉnh $\kappa$, và bậc tối thiểu của bất kỳ đỉnh nào trong đồ thị $\delta$:
 
 $$\kappa \le \lambda \le \delta$$
 
-Intuitively if we have a set of edges of size $\lambda$, which make the graph disconnected, we can choose one of each end point, and create a set of vertices, that also disconnect the graph.
-And this set has size $\le \lambda$.
+Một cách trực quan, nếu chúng ta có một tập hợp các cạnh có kích thước $\lambda$, làm cho đồ thị bị ngắt kết nối, chúng ta có thể chọn một trong mỗi điểm cuối, và tạo ra một tập hợp các đỉnh, cũng làm cho đồ thị bị ngắt kết nối.
+Và tập hợp này có kích thước $\le \lambda$.
 
-And if we pick the vertex and the minimal degree $\delta$, and remove all edges connected to it, then we also end up with a disconnected graph.
-Therefore the second inequality $\lambda \le \delta$.
+Và nếu chúng ta chọn đỉnh có bậc tối thiểu $\delta$, và xóa tất cả các cạnh nối với nó, thì chúng ta cũng sẽ có một đồ thị bị ngắt kết nối.
+Do đó, bất đẳng thức thứ hai là $\lambda \le \delta$.
 
-It is interesting to note, that the Whitney inequalities cannot be improved:
-i.e. for any triple of numbers satisfying this inequality there exists at least one corresponding graph.
-One such graph can be constructed in the following way:
-The graph will consists of $2(\delta + 1)$ vertices, the first $\delta + 1$ vertices form a clique (all pairs of vertices are connected via an edge), and the second $\delta + 1$ vertices form a second clique.
-In addition we connect the two cliques with $\lambda$ edges, such that it uses $\lambda$ different vertices in the first clique, and only $\kappa$ vertices in the second clique.
-The resulting graph will have the three characteristics.
+Điều thú vị cần lưu ý là, bất đẳng thức Whitney không thể được cải thiện:
+tức là, với bất kỳ bộ ba số nào thỏa mãn bất đẳng thức này đều tồn tại ít nhất một đồ thị tương ứng.
+Một đồ thị như vậy có thể được xây dựng theo cách sau:
+Đồ thị sẽ bao gồm $2(\delta + 1)$ đỉnh, $\delta + 1$ đỉnh đầu tiên tạo thành một clique (tất cả các cặp đỉnh được nối với nhau bằng một cạnh), và $\delta + 1$ đỉnh thứ hai tạo thành một clique thứ hai.
+Ngoài ra, chúng ta nối hai clique bằng $\lambda$ cạnh, sao cho nó sử dụng $\lambda$ đỉnh khác nhau trong clique thứ nhất, và chỉ $\kappa$ đỉnh trong clique thứ hai.
+Đồ thị kết quả sẽ có ba đặc tính này.
 
-### The Ford-Fulkerson theorem
+### Định lý Ford-Fulkerson
 
-The **Ford-Fulkerson theorem** implies, that the biggest number of edge-disjoint paths connecting two vertices, is equal to the smallest number of edges separating these vertices.
+**Định lý Ford-Fulkerson** ngụ ý rằng, số lượng lớn nhất các đường đi không giao nhau về cạnh nối hai đỉnh, bằng với số lượng nhỏ nhất các cạnh chia tách hai đỉnh này.
 
-## Computing the values
+## Tính toán các giá trị
 
-### Edge connectivity using maximum flow
+### Liên thông cạnh sử dụng luồng cực đại
 
-This method is based on the Ford-Fulkerson theorem.
+Phương pháp này dựa trên định lý Ford-Fulkerson.
 
-We iterate over all pairs of vertices $(s, t)$ and between each pair we find the largest number of disjoint paths between them.
-This value can be found using a maximum flow algorithm:
-we use $s$ as the source, $t$ as the sink, and assign each edge a capacity of $1$.
-Then the maximum flow is the number of disjoint paths.
+Chúng ta lặp qua tất cả các cặp đỉnh $(s, t)$ và giữa mỗi cặp, chúng ta tìm số lượng lớn nhất các đường đi không giao nhau giữa chúng.
+Giá trị này có thể được tìm thấy bằng thuật toán luồng cực đại:
+chúng ta sử dụng $s$ làm nguồn, $t$ làm đích, và gán cho mỗi cạnh một khả năng thông qua là $1$.
+Khi đó luồng cực đại là số lượng các đường đi không giao nhau.
 
-The complexity for the algorithm using [Edmonds-Karp](../graph/edmonds_karp.md) is $O(V^2 V E^2) = O(V^3 E^2)$. 
-But we should note, that this includes a hidden factor, since it is practically impossible to create a graph such that the maximum flow algorithm will be slow for all sources and sinks.
-Especially the algorithm will run pretty fast for random graphs.
+Độ phức tạp của thuật toán sử dụng [Edmonds-Karp](../graph/edmonds_karp.md) là $O(V^2 V E^2) = O(V^3 E^2)$. 
+Nhưng chúng ta nên lưu ý rằng, điều này bao gồm một yếu tố ẩn, vì thực tế không thể tạo ra một đồ thị sao cho thuật toán luồng cực đại sẽ chậm cho tất cả các nguồn và đích.
+Đặc biệt, thuật toán sẽ chạy khá nhanh trên các đồ thị ngẫu nhiên.
 
-### Special algorithm for edge connectivity 
+### Thuật toán đặc biệt cho liên thông cạnh 
 
-The task of finding the edge connectivity is equal to the task of finding the **global minimum cut**.
+Nhiệm vụ tìm liên thông cạnh tương đương với nhiệm vụ tìm **lát cắt tối thiểu toàn cục**.
 
-Special algorithms have been developed for this task.
-One of them is the Stoer-Wagner algorithm, which works in $O(V^3)$ or $O(V E)$ time.
+Các thuật toán đặc biệt đã được phát triển cho nhiệm vụ này.
+Một trong số đó là thuật toán Stoer-Wagner, hoạt động trong thời gian $O(V^3)$ hoặc $O(V E)$.
 
-### Vertex connectivity
+### Liên thông đỉnh
 
-Again we iterate over all pairs of vertices $s$ and $t$, and for each pair we find the minimum number of vertices that separates $s$ and $t$.
+Một lần nữa, chúng ta lặp qua tất cả các cặp đỉnh $s$ và $t$, và với mỗi cặp, chúng ta tìm số lượng đỉnh tối thiểu chia tách $s$ và $t$.
 
-By doing this, we can apply the same maximum flow approach as described in the previous sections.
+Bằng cách làm này, chúng ta có thể áp dụng cùng một phương pháp luồng cực đại như đã mô tả trong các phần trước.
 
-We split each vertex $x$ with $x \neq s$ and $x \neq t$ into two vertices $x_1$ and $x_2$.
-We connect these to vertices with a directed edge $(x_1, x_2)$ with the capacity $1$, and replace all edges $(u, v)$ by the two directed edges $(u_2, v_1)$ and $(v_2, u_1)$, both with the capacity of 1.
-The by the construction the value of the maximum flow will be equal to the minimum number of vertices that are needed to separate $s$ and $t$.
+Chúng ta chia mỗi đỉnh $x$ với $x \neq s$ và $x \neq t$ thành hai đỉnh $x_1$ và $x_2$.
+Chúng ta nối hai đỉnh này bằng một cạnh có hướng $(x_1, x_2)$ với khả năng thông qua là $1$, và thay thế tất cả các cạnh $(u, v)$ bằng hai cạnh có hướng $(u_2, v_1)$ và $(v_2, u_1)$, cả hai đều có khả năng thông qua là 1.
+Theo cấu trúc, giá trị của luồng cực đại sẽ bằng số lượng đỉnh tối thiểu cần thiết để chia tách $s$ và $t$.
 
-This approach has the same complexity as the flow approach for finding the edge connectivity.
+Phương pháp này có cùng độ phức tạp với phương pháp luồng để tìm liên thông cạnh.

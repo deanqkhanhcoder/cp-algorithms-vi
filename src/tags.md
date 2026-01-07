@@ -1,5 +1,5 @@
-# Tags
+# Thẻ
 
-This file contains a global index of all tags used on the pages.
+Tệp này chứa chỉ mục chung của tất cả các thẻ được sử dụng trên các trang.
 
 <!-- material/tags -->

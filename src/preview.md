@@ -6,7 +6,7 @@
       var URL = "https://us-central1-cp-algorithms.cloudfunctions.net/convert-markdown-mkdocs";
       var data = {"markdown": markdown};
       var refresh_script = `<scr` + `ipt>MathJax.typeset();</scr` + `ipt>`;
-      $("#previewBtn").html("Loading...");
+      $("#previewBtn").html("Đang tải...");
       $.ajax({
         url: URL,
         contentType: "application/json",
@@ -14,9 +14,9 @@
         data: JSON.stringify(data),
         success: function(data) {
           $("#previewArea").html(data + "\n" + refresh_script);
-          $("#previewBtn").html("Preview (Ctrl + Enter)");
+          $("#previewBtn").html("Xem trước (Ctrl + Enter)");
         },
-        error: function() {$("#previewArea").html("Internal error!")}
+        error: function() {$("#previewArea").html("Lỗi nội bộ!")}
       });
     });
 
@@ -27,13 +27,13 @@
     })
   });
 </script>
-# Article Preview
+# Xem trước bài viết
 
-<a href="contrib.html">Information for contributors</a>
+<a href="contrib.html">Thông tin cho người đóng góp</a>
 <center>
 <form>
   <textarea style="width:100%;height:300px;" id="markdownInput">
-# Example article
+# Bài viết ví dụ
 
 $$a^2 + b^2 = c^2$$
 
@@ -47,7 +47,7 @@ int gcd (int a, int b) {
 ```</textarea>
   <br/>
   <br/>
-  <button type='button' class="md-button md-button--primary" id="previewBtn">Preview (Ctrl + Enter)</button>
+  <button type='button' class="md-button md-button--primary" id="previewBtn">Xem trước (Ctrl + Enter)</button>
 </form>
 </center>
 <hr/>

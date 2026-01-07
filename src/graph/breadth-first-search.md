@@ -4,41 +4,37 @@ tags:
 e_maxx_link: bfs
 ---
 
-# Breadth-first search
+# Tìm kiếm theo chiều rộng (BFS)
 
-Breadth first search is one of the basic and essential searching algorithms on graphs.
+Tìm kiếm theo chiều rộng (Breadth-first search - BFS) là một trong những thuật toán tìm kiếm cơ bản và thiết yếu trên đồ thị.
 
-As a result of how the algorithm works, the path found by breadth first search to any node is the shortest path to that node, i.e the path that contains the smallest number of edges in unweighted graphs.
+Do cách hoạt động của thuật toán, đường đi được tìm thấy bởi BFS đến bất kỳ đỉnh nào cũng là đường đi ngắn nhất đến đỉnh đó, tức là đường đi chứa số cạnh ít nhất trong các đồ thị không có trọng số.
 
-The algorithm works in $O(n + m)$ time, where $n$ is number of vertices and $m$ is the number of edges.
+Thuật toán hoạt động trong thời gian $O(n + m)$, trong đó $n$ là số đỉnh và $m$ là số cạnh.
 
-## Description of the algorithm
+## Mô tả thuật toán
 
-The algorithm takes as input an unweighted graph and the id of the source vertex $s$. The input graph can be directed or undirected,
-it does not matter to the algorithm.
+Thuật toán nhận đầu vào là một đồ thị không có trọng số và ID của đỉnh nguồn $s$. Đồ thị đầu vào có thể là đồ thị có hướng hoặc vô hướng, điều này không ảnh hưởng đến thuật toán.
 
-The algorithm can be understood as a fire spreading on the graph: at the zeroth step only the source $s$ is on fire. At each step, the fire burning at each vertex spreads to all of its neighbors. In one iteration of the algorithm, the "ring of
-fire" is expanded in width by one unit (hence the name of the algorithm).
+Thuật toán có thể được hiểu như một đám cháy lan trên đồ thị: ở bước thứ không, chỉ có đỉnh nguồn $s$ bị cháy. Ở mỗi bước, ngọn lửa đang cháy tại mỗi đỉnh sẽ lan sang tất cả các đỉnh kề của nó. Trong một lần lặp của thuật toán, "vòng lửa" được mở rộng ra một đơn vị chiều rộng (do đó có tên của thuật toán).
 
-More precisely, the algorithm can be stated as follows: Create a queue $q$ which will contain the vertices to be processed and a
-Boolean array $used[]$ which indicates for each vertex, if it has been lit (or visited) or not.
+Chính xác hơn, thuật toán có thể được phát biểu như sau: Tạo một hàng đợi $q$ chứa các đỉnh cần xử lý và một mảng Boolean $used[]$ cho biết mỗi đỉnh đã được đốt cháy (hoặc đã được thăm) hay chưa.
 
-Initially, push the source $s$ to the queue and set $used[s] = true$, and for all other vertices $v$ set $used[v] = false$.
-Then, loop until the queue is empty and in each iteration, pop a vertex from the front of the queue. Iterate through all the edges going out
-of this vertex and if some of these edges go to vertices that are not already lit, set them on fire and place them in the queue.
+Ban đầu, đẩy đỉnh nguồn $s$ vào hàng đợi và đặt $used[s] = true$, và với tất cả các đỉnh $v$ khác, đặt $used[v] = false$.
+Sau đó, lặp cho đến khi hàng đợi rỗng và trong mỗi lần lặp, lấy một đỉnh ra khỏi đầu hàng đợi. Lặp qua tất cả các cạnh đi ra từ đỉnh này và nếu một số cạnh này đi đến các đỉnh chưa bị cháy, hãy đốt cháy chúng và đặt chúng vào hàng đợi.
 
-As a result, when the queue is empty, the "ring of fire" contains all vertices reachable from the source $s$, with each vertex reached in the shortest possible way.
-You can also calculate the lengths of the shortest paths (which just requires maintaining an array of path lengths $d[]$) as well as save information to restore all of these shortest paths (for this, it is necessary to maintain an array of "parents" $p[]$, which stores for each vertex the vertex from which we reached it).
+Kết quả là, khi hàng đợi rỗng, "vòng lửa" chứa tất cả các đỉnh có thể đến được từ nguồn $s$, với mỗi đỉnh được đến theo cách ngắn nhất có thể.
+Bạn cũng có thể tính độ dài của các đường đi ngắn nhất (chỉ cần duy trì một mảng độ dài đường đi $d[]$) cũng như lưu thông tin để khôi phục tất cả các đường đi ngắn nhất này (đối với điều này, cần duy trì một mảng "cha" $p[]$, lưu trữ cho mỗi đỉnh đỉnh mà chúng ta đã đến từ đó).
 
-## Implementation
+## Cài đặt
 
-We write code for the described algorithm in C++ and Java.
+Chúng tôi viết mã cho thuật toán được mô tả bằng C++ và Java.
 
 === "C++"
     ```cpp
-    vector<vector<int>> adj;  // adjacency list representation
-    int n; // number of nodes
-    int s; // source vertex
+    vector<vector<int>> adj;  // biểu diễn bằng danh sách kề
+    int n; // số đỉnh
+    int s; // đỉnh nguồn
 
     queue<int> q;
     vector<bool> used(n);
@@ -62,10 +58,10 @@ We write code for the described algorithm in C++ and Java.
     ```
 === "Java"
     ```java
-    ArrayList<ArrayList<Integer>> adj = new ArrayList<>(); // adjacency list representation
+    ArrayList<ArrayList<Integer>> adj = new ArrayList<>(); // biểu diễn bằng danh sách kề
         
-    int n; // number of nodes
-    int s; // source vertex
+    int n; // số đỉnh
+    int s; // đỉnh nguồn
 
 
     LinkedList<Integer> q = new LinkedList<Integer>();
@@ -89,7 +85,7 @@ We write code for the described algorithm in C++ and Java.
     }
     ```
     
-If we have to restore and display the shortest path from the source to some vertex $u$, it can be done in the following manner:
+Nếu chúng ta phải khôi phục và hiển thị đường đi ngắn nhất từ nguồn đến một đỉnh $u$ nào đó, có thể thực hiện như sau:
     
 === "C++"
     ```cpp
@@ -119,45 +115,45 @@ If we have to restore and display the shortest path from the source to some vert
     }
     ```
     
-## Applications of BFS
+## Ứng dụng của BFS
 
-* Find the shortest path from a source to other vertices in an unweighted graph.
+* Tìm đường đi ngắn nhất từ một đỉnh nguồn đến các đỉnh khác trong một đồ thị không có trọng số.
 
-* Find all connected components in an undirected graph in $O(n + m)$ time:
-To do this, we just run BFS starting from each vertex, except for vertices which have already been visited from previous runs.
-Thus, we perform normal BFS from each of the vertices, but do not reset the array $used[]$ each and every time we get a new connected component, and the total running time will still be $O(n + m)$ (performing multiple BFS on the graph without zeroing the array $used []$ is called a series of breadth first searches).
+* Tìm tất cả các thành phần liên thông trong một đồ thị vô hướng trong thời gian $O(n + m)$:
+Để làm điều này, chúng ta chỉ cần chạy BFS bắt đầu từ mỗi đỉnh, ngoại trừ các đỉnh đã được thăm từ các lần chạy trước.
+Do đó, chúng ta thực hiện BFS bình thường từ mỗi đỉnh, nhưng không đặt lại mảng $used[]$ mỗi khi chúng ta có một thành phần liên thông mới, và tổng thời gian chạy vẫn sẽ là $O(n + m)$ (thực hiện nhiều BFS trên đồ thị mà không đặt lại mảng $used []$ được gọi là một chuỗi các tìm kiếm theo chiều rộng).
 
-* Finding a solution to a problem or a game with the least number of moves, if each state of the game can be represented by a vertex of the graph, and the transitions from one state to the other are the edges of the graph.
+* Tìm giải pháp cho một bài toán hoặc một trò chơi với số lần di chuyển ít nhất, nếu mỗi trạng thái của trò chơi có thể được biểu diễn bằng một đỉnh của đồ thị, và các chuyển đổi từ trạng thái này sang trạng thái khác là các cạnh của đồ thị.
 
-* Finding the shortest path in a graph with weights 0 or 1:
-This requires just a little modification to normal breadth-first search: Instead of maintaining array $used[]$, we will now check if the distance to vertex is shorter than current found distance, then if the current edge is of zero weight, we add it to the front of the queue else we add it to the back of the queue.This modification is explained in more detail in the article [0-1 BFS](01_bfs.md).
+* Tìm đường đi ngắn nhất trong một đồ thị có trọng số 0 hoặc 1:
+Điều này chỉ cần một sửa đổi nhỏ cho tìm kiếm theo chiều rộng thông thường: Thay vì duy trì mảng $used[]$, bây giờ chúng ta sẽ kiểm tra xem khoảng cách đến đỉnh có ngắn hơn khoảng cách hiện tại đã tìm thấy hay không, sau đó nếu cạnh hiện tại có trọng số bằng không, chúng ta thêm nó vào đầu hàng đợi, nếu không chúng ta thêm nó vào cuối hàng đợi. Sửa đổi này được giải thích chi tiết hơn trong bài viết [0-1 BFS](01_bfs.md).
 
-* Finding the shortest cycle in a directed unweighted graph:
-Start a breadth-first search from each vertex.
-As soon as we try to go from the current vertex back to the source vertex, we have found the shortest cycle containing the source vertex.
-At this point we can stop the BFS, and start a new BFS from the next vertex.
-From all such cycles (at most one from each BFS) choose the shortest.
+* Tìm chu trình ngắn nhất trong một đồ thị có hướng không có trọng số:
+Bắt đầu một tìm kiếm theo chiều rộng từ mỗi đỉnh.
+Ngay khi chúng ta cố gắng đi từ đỉnh hiện tại trở lại đỉnh nguồn, chúng ta đã tìm thấy chu trình ngắn nhất chứa đỉnh nguồn.
+Tại thời điểm này, chúng ta có thể dừng BFS và bắt đầu một BFS mới từ đỉnh tiếp theo.
+Từ tất cả các chu trình như vậy (tối đa một chu trình từ mỗi BFS), chọn chu trình ngắn nhất.
 
-* Find all the edges that lie on any shortest path between a given pair of vertices $(a, b)$.
-To do this, run two breadth first searches:
-one from $a$ and one from $b$.
-Let $d_a []$ be the array containing shortest distances obtained from the first BFS (from $a$) and $d_b []$ be the array containing shortest distances obtained from the second BFS from $b$.
-Now for every edge $(u, v)$ it is easy to check whether that edge lies on any shortest path between $a$ and $b$:
-the criterion is the condition $d_a [u] + 1 + d_b [v] = d_a [b]$.
+* Tìm tất cả các cạnh nằm trên bất kỳ đường đi ngắn nhất nào giữa một cặp đỉnh cho trước $(a, b)$.
+Để làm điều này, chạy hai tìm kiếm theo chiều rộng:
+một từ $a$ và một từ $b$.
+Gọi $d_a []$ là mảng chứa các khoảng cách ngắn nhất thu được từ BFS đầu tiên (từ $a$) và $d_b []$ là mảng chứa các khoảng cách ngắn nhất thu được từ BFS thứ hai từ $b$.
+Bây giờ với mọi cạnh $(u, v)$, dễ dàng kiểm tra xem cạnh đó có nằm trên bất kỳ đường đi ngắn nhất nào giữa $a$ và $b$ hay không:
+tiêu chí là điều kiện $d_a [u] + 1 + d_b [v] = d_a [b]$.
 
-* Find all the vertices on any shortest path between a given pair of vertices $(a, b)$.
-To accomplish that, run two breadth first searches:
-one from $a$ and one from $b$.
-Let $d_a []$ be the array containing shortest distances obtained from the first BFS (from $a$) and $d_b []$ be the array containing shortest distances obtained from the second BFS (from $b$).
-Now for each vertex it is easy to check whether it lies on any shortest path between $a$ and $b$:
-the criterion is the condition $d_a [v] + d_b [v] = d_a [b]$.
+* Tìm tất cả các đỉnh trên bất kỳ đường đi ngắn nhất nào giữa một cặp đỉnh cho trước $(a, b)$.
+Để thực hiện điều đó, chạy hai tìm kiếm theo chiều rộng:
+một từ $a$ và một từ $b$.
+Gọi $d_a []$ là mảng chứa các khoảng cách ngắn nhất thu được từ BFS đầu tiên (từ $a$) và $d_b []$ là mảng chứa các khoảng cách ngắn nhất thu được từ BFS thứ hai (từ $b$).
+Bây giờ với mỗi đỉnh, dễ dàng kiểm tra xem nó có nằm trên bất kỳ đường đi ngắn nhất nào giữa $a$ và $b$ hay không:
+tiêu chí là điều kiện $d_a [v] + d_b [v] = d_a [b]$.
 
-* Find the shortest walk of even length from a source vertex $s$ to a target vertex $t$ in an unweighted graph:
-For this, we must construct an auxiliary graph, whose vertices are the state $(v, c)$, where $v$ - the current node, $c = 0$ or $c = 1$ - the current parity.
-Any edge $(u, v)$ of the original graph in this new column will turn into two edges $((u, 0), (v, 1))$ and $((u, 1), (v, 0))$.
-After that we run a BFS to find the shortest walk from the starting vertex $(s, 0)$ to the end vertex $(t, 0)$.<br>**Note**: This item uses the term "_walk_" rather than a "_path_" for a reason, as the vertices may potentially repeat in the found walk in order to make its length even. The problem of finding the shortest _path_ of even length is NP-Complete in directed graphs, and [solvable in linear time](https://onlinelibrary.wiley.com/doi/abs/10.1002/net.3230140403) in undirected graphs, but with a much more involved approach.
+* Tìm đường đi bộ (walk) ngắn nhất có độ dài chẵn từ một đỉnh nguồn $s$ đến một đỉnh đích $t$ trong một đồ thị không có trọng số:
+Để làm điều này, chúng ta phải xây dựng một đồ thị phụ, có các đỉnh là trạng thái $(v, c)$, trong đó $v$ - đỉnh hiện tại, $c = 0$ hoặc $c = 1$ - tính chẵn lẻ hiện tại.
+Bất kỳ cạnh nào $(u, v)$ của đồ thị gốc trong cột mới này sẽ biến thành hai cạnh $((u, 0), (v, 1))$ và $((u, 1), (v, 0))$.
+Sau đó, chúng ta chạy một BFS để tìm đường đi bộ ngắn nhất từ đỉnh bắt đầu $(s, 0)$ đến đỉnh cuối $(t, 0)$.<br>**Lưu ý**: Mục này sử dụng thuật ngữ "_đường đi bộ_" (walk) thay vì "_đường đi_" (path) vì một lý do, vì các đỉnh có thể lặp lại trong đường đi bộ được tìm thấy để làm cho độ dài của nó chẵn. Bài toán tìm _đường đi_ ngắn nhất có độ dài chẵn là NP-Complete trong đồ thị có hướng, và [có thể giải quyết trong thời gian tuyến tính](https://onlinelibrary.wiley.com/doi/abs/10.1002/net.3230140403) trong đồ thị vô hướng, nhưng với một cách tiếp cận phức tạp hơn nhiều.
 
-## Practice Problems
+## Bài tập thực hành
 
 * [SPOJ: AKBAR](http://spoj.com/problems/AKBAR)
 * [SPOJ: NAKANJ](http://www.spoj.com/problems/NAKANJ/)

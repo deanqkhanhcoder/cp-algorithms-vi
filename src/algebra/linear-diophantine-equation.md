@@ -4,78 +4,77 @@ tags:
 e_maxx_link: diofant_2_equation
 ---
 
-# Linear Diophantine Equation
+# Phương trình Diophantine tuyến tính
 
-A Linear Diophantine Equation (in two variables) is an equation of the general form:
+Một phương trình Diophantine tuyến tính (hai biến) là một phương trình có dạng tổng quát:
 
 $$ax + by = c$$
 
-where $a$, $b$, $c$ are given integers, and $x$, $y$ are unknown integers.
+trong đó $a$, $b$, $c$ là các số nguyên đã cho, và $x$, $y$ là các số nguyên chưa biết.
 
-In this article, we consider several classical problems on these equations:
+Trong bài viết này, chúng ta xem xét một số bài toán cổ điển về các phương trình này:
 
-* finding one solution
-* finding all solutions
-* finding the number of solutions and the solutions themselves in a given interval
-* finding a solution with minimum value of $x + y$
+* tìm một nghiệm
+* tìm tất cả các nghiệm
+* tìm số lượng nghiệm và chính các nghiệm đó trong một khoảng cho trước
+* tìm nghiệm có giá trị nhỏ nhất của $x + y$
 
-## The degenerate case
+## Trường hợp suy biến
 
-A degenerate case that needs to be taken care of is when $a = b = 0$. It is easy to see that we either have no solutions or infinitely many solutions, depending on whether $c = 0$ or not. In the rest of this article, we will ignore this case.
+Một trường hợp suy biến cần được quan tâm là khi $a = b = 0$. Dễ dàng thấy rằng chúng ta hoặc không có nghiệm hoặc có vô số nghiệm, tùy thuộc vào việc $c = 0$ hay không. Trong phần còn lại của bài viết này, chúng ta sẽ bỏ qua trường hợp này.
 
-## Analytic solution
+## Giải pháp giải tích
 
-When $a \neq 0$ and $b \neq 0$, the equation $ax+by=c$ can be equivalently treated as either of the following:
+Khi $a \neq 0$ và $b \neq 0$, phương trình $ax+by=c$ có thể được coi tương đương với một trong các phương trình sau:
 
 \begin{align}
 ax &\equiv c \pmod b \\
 by &\equiv c \pmod a
 \end{align}
 
-Without loss of generality, assume that $b \neq 0$ and consider the first equation. When $a$ and $b$ are co-prime, the solution to it is given as
+Không mất tính tổng quát, giả sử $b \neq 0$ và xét phương trình đầu tiên. Khi $a$ và $b$ nguyên tố cùng nhau, nghiệm của nó được cho là
 
-$$x \equiv ca^{-1} \pmod b,$$
+$$x \equiv ca^{-1} \pmod b,$$ 
 
-where $a^{-1}$ is the [modular inverse](module-inverse.md) of $a$ modulo $b$.
+trong đó $a^{-1}$ là [nghịch đảo modular](module-inverse.md) của $a$ modulo $b$.
 
-When $a$ and $b$ are not co-prime, values of $ax$ modulo $b$ for all integer $x$ are divisible by $g=\gcd(a, b)$, so the solution only exists when $c$ is divisible by $g$. In this case, one of solutions can be found by reducing the equation by $g$:
+Khi $a$ và $b$ không nguyên tố cùng nhau, các giá trị của $ax$ modulo $b$ đối với mọi số nguyên $x$ đều chia hết cho $g=\gcd(a, b)$, vì vậy nghiệm chỉ tồn tại khi $c$ chia hết cho $g$. Trong trường hợp này, một trong các nghiệm có thể được tìm thấy bằng cách rút gọn phương trình cho $g$:
 
-$$(a/g) x \equiv (c/g) \pmod{b/g}.$$
+$$(a/g) x \equiv (c/g) \pmod{b/g}.$$ 
 
-By the definition of $g$, the numbers $a/g$ and $b/g$ are co-prime, so the solution is given explicitly as
+Theo định nghĩa của $g$, các số $a/g$ và $b/g$ là nguyên tố cùng nhau, vì vậy nghiệm được cho một cách tường minh là
 
 $$\begin{cases}
-x \equiv (c/g)(a/g)^{-1}\pmod{b/g},\\
-y = \frac{c-ax}{b}.
-\end{cases}$$
+x \equiv (c/g)(a/g)^{-1}\pmod{b/g},\\y = \frac{c-ax}{b}.
+\end{cases}$$ 
 
-## Algorithmic solution
+## Giải pháp thuật toán
 
-**Bézout's lemma** (also called Bézout's identity) is a useful result that can be used to understand the following solution. 
+**Bổ đề Bézout** (còn gọi là đồng nhất thức Bézout) là một kết quả hữu ích có thể được sử dụng để hiểu giải pháp sau. 
 
-> Let $g = \gcd(a,b)$. Then there exist integers $x,y$ such that $ax + by = g$.
+> Đặt $g = \gcd(a,b)$. Khi đó tồn tại các số nguyên $x,y$ sao cho $ax + by = g$. 
 > 
-> Moreover, $g$ is the least such positive integer that can be written as $ax + by$; all integers of the form $ax + by$ are multiples of $g$. 
+> Hơn nữa, $g$ là số nguyên dương nhỏ nhất có thể được viết dưới dạng $ax + by$; tất cả các số nguyên có dạng $ax + by$ đều là bội của $g$. 
 
-To find one solution of the Diophantine equation with 2 unknowns, you can use the [Extended Euclidean algorithm](extended-euclid-algorithm.md). First, assume that $a$ and $b$ are non-negative. When we apply Extended Euclidean algorithm for $a$ and $b$, we can find their greatest common divisor $g$ and 2 numbers $x_g$ and $y_g$ such that:
+Để tìm một nghiệm của phương trình Diophantine với 2 ẩn, bạn có thể sử dụng [Thuật toán Euclid mở rộng](extended-euclid-algorithm.md). Đầu tiên, giả sử rằng $a$ và $b$ không âm. Khi chúng ta áp dụng thuật toán Euclid mở rộng cho $a$ và $b$, chúng ta có thể tìm thấy ước chung lớn nhất $g$ của chúng và 2 số $x_g$ và $y_g$ sao cho:
 
-$$a x_g + b y_g = g$$
+$$a x_g + b y_g = g$$ 
 
-If $c$ is divisible by $g = \gcd(a, b)$, then the given Diophantine equation has a solution, otherwise it does not have any solution. The proof is straight-forward: a linear combination of two numbers is divisible by their common divisor.
+Nếu $c$ chia hết cho $g = \gcd(a, b)$, thì phương trình Diophantine đã cho có nghiệm, nếu không thì nó không có nghiệm nào. Chứng minh rất đơn giản: một tổ hợp tuyến tính của hai số chia hết cho ước chung của chúng.
 
-Now suppose that $c$ is divisible by $g$, then we have:
+Bây giờ giả sử rằng $c$ chia hết cho $g$, thì chúng ta có:
 
-$$a \cdot x_g \cdot \frac{c}{g} + b \cdot y_g \cdot \frac{c}{g} = c$$
+$$a \cdot x_g \cdot \frac{c}{g} + b \cdot y_g \cdot \frac{c}{g} = c$$ 
 
-Therefore one of the solutions of the Diophantine equation is:
+Do đó một trong các nghiệm của phương trình Diophantine là:
 
-$$x_0 = x_g \cdot \frac{c}{g},$$
+$$x_0 = x_g \cdot \frac{c}{g},$$ 
 
-$$y_0 = y_g \cdot \frac{c}{g}.$$
+$$y_0 = y_g \cdot \frac{c}{g}.$$ 
 
-The above idea still works when $a$ or $b$ or both of them are negative. We only need to change the sign of $x_0$ and $y_0$ when necessary.
+Ý tưởng trên vẫn hoạt động khi $a$ hoặc $b$ hoặc cả hai đều âm. Chúng ta chỉ cần thay đổi dấu của $x_0$ và $y_0$ khi cần thiết.
 
-Finally, we can implement this idea as follows (note that this code does not consider the case $a = b = 0$):
+Cuối cùng, chúng ta có thể triển khai ý tưởng này như sau (lưu ý rằng mã này không xét trường hợp $a = b = 0$):
 
 ```{.cpp file=linear_diophantine_any}
 int gcd(int a, int b, int& x, int& y) {
@@ -105,48 +104,48 @@ bool find_any_solution(int a, int b, int c, int &x0, int &y0, int &g) {
 }
 ```
 
-## Getting all solutions
+## Tìm tất cả các nghiệm
 
-From one solution $(x_0, y_0)$, we can obtain all the solutions of the given equation.
+Từ một nghiệm $(x_0, y_0)$, chúng ta có thể thu được tất cả các nghiệm của phương trình đã cho.
 
-Let $g = \gcd(a, b)$ and let $x_0, y_0$ be integers which satisfy the following:
+Đặt $g = \gcd(a, b)$ và đặt $x_0, y_0$ là các số nguyên thỏa mãn:
 
-$$a \cdot x_0 + b \cdot y_0 = c$$
+$$a \cdot x_0 + b \cdot y_0 = c$$ 
 
-Now, we should see that adding $b / g$ to $x_0$, and, at the same time subtracting $a / g$ from $y_0$ will not break the equality:
+Bây giờ, chúng ta nên thấy rằng việc cộng $b / g$ vào $x_0$, và đồng thời trừ $a / g$ khỏi $y_0$ sẽ không phá vỡ đẳng thức:
 
-$$a \cdot \left(x_0 + \frac{b}{g}\right) + b \cdot \left(y_0 - \frac{a}{g}\right) = a \cdot x_0 + b \cdot y_0 + a \cdot \frac{b}{g} - b \cdot \frac{a}{g} = c$$
+$$a \cdot \left(x_0 + \frac{b}{g}\right) + b \cdot \left(y_0 - \frac{a}{g}\right) = a \cdot x_0 + b \cdot y_0 + a \cdot \frac{b}{g} - b \cdot \frac{a}{g} = c$$ 
 
-Obviously, this process can be repeated again, so all the numbers of the form:
+Rõ ràng, quá trình này có thể được lặp lại, vì vậy tất cả các số có dạng:
 
-$$x = x_0 + k \cdot \frac{b}{g}$$
+$$x = x_0 + k \cdot \frac{b}{g}$$ 
 
-$$y = y_0 - k \cdot \frac{a}{g}$$
+$$y = y_0 - k \cdot \frac{a}{g}$$ 
 
-are solutions of the given Diophantine equation.
+đều là nghiệm của phương trình Diophantine đã cho.
 
-Since the equation is linear, all solutions lie on the same line, and by the definition of $g$ this is the set of all possible solutions of the given Diophantine equation.
+Vì phương trình là tuyến tính, tất cả các nghiệm nằm trên cùng một đường thẳng, và theo định nghĩa của $g$, đây là tập hợp tất cả các nghiệm có thể có của phương trình Diophantine đã cho.
 
-## Finding the number of solutions and the solutions in a given interval
+## Tìm số lượng nghiệm và các nghiệm trong một khoảng cho trước
 
-From previous section, it should be clear that if we don't impose any restrictions on the solutions, there would be infinite number of them. So in this section, we add some restrictions on the interval of $x$ and $y$, and we will try to count and enumerate all the solutions.
+Từ phần trước, rõ ràng là nếu chúng ta không áp đặt bất kỳ hạn chế nào đối với các nghiệm, sẽ có vô số nghiệm. Vì vậy, trong phần này, chúng ta thêm một số hạn chế về khoảng của $x$ và $y$, và chúng ta sẽ cố gắng đếm và liệt kê tất cả các nghiệm.
 
-Let there be two intervals: $[min_x; max_x]$ and $[min_y; max_y]$ and let's say we only want to find the solutions in these two intervals.
+Đặt có hai khoảng: $[min_x; max_x]$ và $[min_y; max_y]$ và giả sử chúng ta chỉ muốn tìm các nghiệm trong hai khoảng này.
 
-Note that if $a$ or $b$ is $0$, then the problem only has one solution. We don't consider this case here.
+Lưu ý rằng nếu $a$ hoặc $b$ bằng $0$, thì bài toán chỉ có một nghiệm. Chúng ta không xét trường hợp này ở đây.
 
-First, we can find a solution which has minimum value of $x$, such that $x \ge min_x$. To do this, we first find any solution of the Diophantine equation. Then, we shift this solution to get $x \ge min_x$ (using what we know about the set of all solutions in previous section). This can be done in $O(1)$.
-Denote this minimum value of $x$ by $l_{x1}$.
+Đầu tiên, chúng ta có thể tìm một nghiệm có giá trị nhỏ nhất của $x$, sao cho $x \ge min_x$. Để làm điều này, trước tiên chúng ta tìm một nghiệm bất kỳ của phương trình Diophantine. Sau đó, chúng ta dịch chuyển nghiệm này để có được $x \ge min_x$ (sử dụng những gì chúng ta biết về tập hợp tất cả các nghiệm trong phần trước). Điều này có thể được thực hiện trong $O(1)$.
+Đồng ký hiệu giá trị nhỏ nhất này của $x$ là $l_{x1}$.
 
-Similarly, we can find the maximum value of $x$ which satisfies $x \le max_x$. Denote this maximum value of $x$ by $r_{x1}$.
+Tương tự, chúng ta có thể tìm giá trị lớn nhất của $x$ thỏa mãn $x \le max_x$. Ký hiệu giá trị lớn nhất này của $x$ là $r_{x1}$.
 
-Similarly, we can find the minimum value of $y$ $(y \ge min_y)$ and maximum value of $y$ $(y \le max_y)$. Denote the corresponding values of $x$ by $l_{x2}$ and $r_{x2}$.
+Tương tự, chúng ta có thể tìm giá trị nhỏ nhất của $y$ $(y \ge min_y)$ và giá trị lớn nhất của $y$ $(y \le max_y)$. Ký hiệu các giá trị tương ứng của $x$ là $l_{x2}$ và $r_{x2}$.
 
-The final solution is all solutions with x in intersection of $[l_{x1}, r_{x1}]$ and $[l_{x2}, r_{x2}]$. Let denote this intersection by $[l_x, r_x]$.
+Nghiệm cuối cùng là tất cả các nghiệm với x trong giao của $[l_{x1}, r_{x1}]$ và $[l_{x2}, r_{x2}]$. Đặt giao này là $[l_x, r_x]$.
 
-Following is the code implementing this idea.
-Notice that we divide $a$ and $b$ at the beginning by $g$.
-Since the equation $a x + b y = c$ is equivalent to the equation $\frac{a}{g} x + \frac{b}{g} y = \frac{c}{g}$, we can use this one instead and have $\gcd(\frac{a}{g}, \frac{b}{g}) = 1$, which simplifies the formulas.
+Sau đây là đoạn mã thực hiện ý tưởng này.
+Lưu ý rằng chúng ta chia $a$ và $b$ ở đầu cho $g$.
+Vì phương trình $a x + b y = c$ tương đương với phương trình $\frac{a}{g} x + \frac{b}{g} y = \frac{c}{g}$, chúng ta có thể sử dụng phương trình này thay thế và có $\gcd(\frac{a}{g}, \frac{b}{g}) = 1$, điều này đơn giản hóa các công thức.
 
 ```{.cpp file=linear_diophantine_all}
 void shift_solution(int & x, int & y, int a, int b, int cnt) {
@@ -199,27 +198,27 @@ int find_all_solutions(int a, int b, int c, int minx, int maxx, int miny, int ma
 }
 ```
 
-Once we have $l_x$ and $r_x$, it is also simple to enumerate through all the solutions. Just need to iterate through $x = l_x + k \cdot \frac{b}{g}$ for all $k \ge 0$ until $x = r_x$, and find the corresponding $y$ values using the equation $a x + b y = c$.
+Khi chúng ta có $l_x$ và $r_x$, việc liệt kê tất cả các nghiệm cũng rất đơn giản. Chỉ cần lặp qua $x = l_x + k \cdot \frac{b}{g}$ với mọi $k \ge 0$ cho đến khi $x = r_x$, và tìm các giá trị $y$ tương ứng bằng cách sử dụng phương trình $a x + b y = c$.
 
-## Find the solution with minimum value of $x + y$ { data-toc-label='Find the solution with minimum value of <script type="math/tex">x + y</script>' }
+## Tìm nghiệm có giá trị nhỏ nhất của $x + y$ { data-toc-label='Find the solution with minimum value of <script type="math/tex">x + y</script>' }
 
-Here, $x$ and $y$ also need to be given some restriction, otherwise, the answer may become negative infinity.
+Ở đây, $x$ và $y$ cũng cần được đưa ra một số hạn chế, nếu không, câu trả lời có thể trở thành vô cực âm.
 
-The idea is similar to previous section: We find any solution of the Diophantine equation, and then shift the solution to satisfy some conditions.
+Ý tưởng tương tự như phần trước: Chúng ta tìm một nghiệm bất kỳ của phương trình Diophantine, và sau đó dịch chuyển nghiệm để thỏa mãn một số điều kiện.
 
-Finally, use the knowledge of the set of all solutions to find the minimum:
+Cuối cùng, sử dụng kiến thức về tập hợp tất cả các nghiệm để tìm giá trị nhỏ nhất:
 
-$$x' = x + k \cdot \frac{b}{g},$$
+$$x' = x + k \cdot \frac{b}{g},$$ 
 
-$$y' = y - k \cdot \frac{a}{g}.$$
+$$y' = y - k \cdot \frac{a}{g}.$$ 
 
-Note that $x + y$ change as follows:
+Lưu ý rằng $x + y$ thay đổi như sau:
 
-$$x' + y' = x + y + k \cdot \left(\frac{b}{g} - \frac{a}{g}\right) = x + y + k \cdot \frac{b-a}{g}$$
+$$x' + y' = x + y + k \cdot \left(\frac{b}{g} - \frac{a}{g}\right) = x + y + k \cdot \frac{b-a}{g}$$ 
 
-If $a < b$, we need to select smallest possible value of $k$. If $a > b$, we need to select the largest possible value of $k$. If $a = b$, all solution will have the same sum $x + y$.
+Nếu $a < b$, chúng ta cần chọn giá trị nhỏ nhất có thể của $k$. Nếu $a > b$, chúng ta cần chọn giá trị lớn nhất có thể của $k$. Nếu $a = b$, tất cả các nghiệm sẽ có cùng tổng $x + y$.
 
-## Practice Problems
+## Bài tập luyện tập
 
 * [Spoj - Crucial Equation](http://www.spoj.com/problems/CEQU/)
 * [SGU 106](http://codeforces.com/problemsets/acmsguru/problem/99999/106)

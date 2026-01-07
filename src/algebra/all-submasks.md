@@ -4,73 +4,73 @@ tags:
 e_maxx_link: all_submasks
 ---
 
-# Submask Enumeration
+# Liệt kê các mask con
 
-## Enumerating all submasks of a given mask
+## Liệt kê tất cả các mask con của một mask cho trước
 
-Given a bitmask $m$, you want to efficiently iterate through all of its submasks, that is, masks $s$ in which only bits that were included in mask $m$ are set.
+Cho một bitmask $m$, ta muốn duyệt qua tất cả các mask con của nó một cách hiệu quả. Mask con $s$ là mask mà chỉ các bit đã được bật trong $m$ mới có thể được bật.
 
-Consider the implementation of this algorithm, based on tricks with bit operations:
+Xem xét cách cài đặt thuật toán này, dựa trên các thủ thuật với phép toán trên bit:
 
 ```cpp
 int s = m;
 while (s > 0) {
- ... you can use s ...
+ ... bạn có thể dùng s ...
  s = (s-1) & m;
 }
 ```
 
-or, using a more compact `for` statement:
+hoặc, dùng câu lệnh `for` gọn hơn:
 
 ```cpp
 for (int s=m; s; s=(s-1)&m)
- ... you can use s ...
+ ... bạn có thể dùng s ...
 ```
 
-In both variants of the code, the submask equal to zero will not be processed. We can either process it outside the loop, or use a less elegant design, for example:
+Trong cả hai phiên bản, mask con bằng 0 sẽ không được xử lý. Ta có thể xử lý nó bên ngoài vòng lặp, hoặc dùng một thiết kế kém thanh lịch hơn, ví dụ:
 
 ```cpp
 for (int s=m; ; s=(s-1)&m) {
- ... you can use s ...
+ ... bạn có thể dùng s ...
  if (s==0)  break;
 }
 ```
 
-Let us examine why the above code visits all submasks of $m$, without repetition, and in descending order.
+Hãy xem xét tại sao đoạn mã trên duyệt qua tất cả các mask con của $m$, không lặp lại, và theo thứ tự giảm dần.
 
-Suppose we have a current bitmask $s$, and we want to move on to the next bitmask. By subtracting from the mask $s$ one unit, we will remove the rightmost set bit and all bits to the right of it will become 1. Then we remove all the "extra" one bits that are not included in the mask $m$ and therefore can't be a part of a submask. We do this removal by using the bitwise operation `(s-1) & m`. As a result, we "cut" mask $s-1$ to determine the highest value that it can take, that is, the next submask after $s$ in descending order.
+Giả sử ta có một bitmask hiện tại là $s$, và ta muốn chuyển sang mask con tiếp theo. Bằng cách trừ đi một đơn vị từ $s$, ta sẽ xóa bit 1 bên phải nhất và tất cả các bit bên phải nó sẽ trở thành 1. Sau đó, ta loại bỏ tất cả các bit 1 "thừa" không có trong mask $m$ và do đó không thể là một phần của mask con. Ta thực hiện việc loại bỏ này bằng cách sử dụng phép toán bit `(s-1) & m`. Kết quả là, ta "cắt" mask $s-1$ để xác định giá trị lớn nhất mà nó có thể nhận, tức là mask con ngay sau $s$ theo thứ tự giảm dần.
 
-Thus, this algorithm generates all submasks of this mask in descending order, performing only two operations per iteration.
+Do đó, thuật toán này sinh ra tất cả các mask con của mask đã cho theo thứ tự giảm dần, chỉ thực hiện hai phép toán mỗi vòng lặp.
 
-A special case is when $s = 0$. After executing $s-1$ we get a mask where all bits are set (bit representation of -1), and after `(s-1) & m` we will have that $s$ will be equal to $m$. Therefore, with the mask $s = 0$ be careful — if the loop does not end at zero, the algorithm may enter an infinite loop.
+Một trường hợp đặc biệt là khi $s = 0$. Sau khi thực hiện $s-1$, ta nhận được một mask mà tất cả các bit đều được bật (biểu diễn bit của -1), và sau phép toán `(s-1) & m`, ta sẽ có $s$ bằng $m$. Do đó, với mask $s = 0$ cần phải cẩn thận - nếu vòng lặp không kết thúc tại 0, thuật toán có thể bị lặp vô hạn.
 
-## Iterating through all masks with their submasks. Complexity $O(3^n)$
+## Duyệt qua tất cả các mask và các mask con của chúng. Độ phức tạp $O(3^n)$
 
-In many problems, especially those that use bitmask dynamic programming, you want to iterate through all bitmasks and for each mask, iterate through all of its submasks:
+Trong nhiều bài toán, đặc biệt là những bài sử dụng quy hoạch động bitmask, bạn muốn duyệt qua tất cả các bitmask và với mỗi mask, duyệt qua tất cả các mask con của nó:
 
 ```cpp
 for (int m=0; m<(1<<n); ++m)
 	for (int s=m; s; s=(s-1)&m)
- ... s and m ...
+ ... s và m ...
 ```
 
-Let's prove that the inner loop will execute a total of $O(3^n)$ iterations.
+Hãy chứng minh rằng vòng lặp bên trong sẽ thực hiện tổng cộng $O(3^n)$ lần lặp.
 
-**First proof**: Consider the $i$-th bit. There are exactly three options for it:
+**Chứng minh thứ nhất**: Xét bit thứ $i$. Có chính xác ba lựa chọn cho nó:
 
-1. it is not included in the mask $m$ (and therefore not included in submask $s$),
-2. it is included in $m$, but not included in $s$, or
-3. it is included in both $m$ and $s$.
+1. nó không nằm trong mask $m$ (và do đó cũng không nằm trong mask con $s$),
+2. nó nằm trong $m$, nhưng không nằm trong $s$, hoặc
+3. nó nằm trong cả $m$ và $s$.
 
-As there are a total of $n$ bits, there will be $3^n$ different combinations.
+Vì có tổng cộng $n$ bit, sẽ có $3^n$ tổ hợp khác nhau.
 
-**Second proof**: Note that if mask $m$ has $k$ enabled bits, then it will have $2^k$ submasks. As we have a total of $\binom{n}{k}$ masks with $k$ enabled bits (see [binomial coefficients](../combinatorics/binomial-coefficients.md)), then the total number of combinations for all masks will be:
+**Chứng minh thứ hai**: Lưu ý rằng nếu mask $m$ có $k$ bit được bật, thì nó sẽ có $2^k$ mask con. Vì chúng ta có tổng cộng $\binom{n}{k}$ mask có $k$ bit được bật (xem [Tổ hợp](../combinatorics/binomial-coefficients.md)), nên tổng số tổ hợp cho tất cả các mask sẽ là:
 
 $$\sum_{k=0}^n \binom{n}{k} \cdot 2^k$$
 
-To calculate this number, note that the sum above is equal to the expansion of $(1+2)^n$ using the binomial theorem. Therefore, we have $3^n$ combinations, as we wanted to prove.
+Để tính con số này, lưu ý rằng tổng trên bằng khai triển của $(1+2)^n$ theo nhị thức Newton. Do đó, chúng ta có $3^n$ tổ hợp, như ta cần chứng minh.
 
-## Practice Problems
+## Bài tập luyện tập
 
 * [Atcoder - Close Group](https://atcoder.jp/contests/abc187/tasks/abc187_f)
 * [Codeforces - Nuclear Fusion](http://codeforces.com/problemset/problem/71/E)

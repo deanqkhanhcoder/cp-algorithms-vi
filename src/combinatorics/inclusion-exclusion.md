@@ -4,196 +4,196 @@ tags:
 e_maxx_link: inclusion_exclusion_principle
 ---
 
-# The Inclusion-Exclusion Principle
+# Nguyên lý bao hàm-loại trừ
 
-The inclusion-exclusion principle is an important combinatorial way to compute the size of a set or the probability of complex events. It relates the sizes of individual sets with their union.
+Nguyên lý bao hàm-loại trừ là một phương pháp tổ hợp quan trọng để tính kích thước của một tập hợp hoặc xác suất của các sự kiện phức tạp. Nó liên quan đến kích thước của các tập hợp riêng lẻ với hợp của chúng.
 
-## Statement
+## Phát biểu
 
-### The verbal formula
+### Công thức bằng lời
 
-The inclusion-exclusion principle can be expressed as follows:
+Nguyên lý bao hàm-loại trừ có thể được biểu diễn như sau:
 
-To compute the size of a union of multiple sets, it is necessary to sum the sizes of these sets **separately**, and then subtract the sizes of all **pairwise** intersections of the sets, then add back the size of the intersections of **triples** of the sets, subtract the size of **quadruples** of the sets, and so on, up to the intersection of **all** sets.
+Để tính kích thước của hợp của nhiều tập hợp, cần phải cộng kích thước của các tập hợp này **riêng lẻ**, sau đó trừ đi kích thước của tất cả các giao **cặp đôi** của các tập hợp, sau đó cộng lại kích thước của các giao **bộ ba** của các tập hợp, trừ đi kích thước của các giao **bộ bốn** của các tập hợp, và cứ thế, cho đến giao của **tất cả** các tập hợp.
 
-### The formulation in terms of sets
+### Phát biểu theo thuật ngữ tập hợp
 
-The above definition can be expressed mathematically as follows:
+Định nghĩa trên có thể được biểu diễn toán học như sau:
 
 $$\left| \bigcup_{i=1}^n A_i \right| = \sum_{i=1}^n|A_i| - \sum_{1\leq i<j\leq n} |A_i \cap A_j| + \sum _{1\leq i<j<k\leq n}|A_i \cap A_j \cap A_k| - \cdots + (-1)^{n-1} | A_1 \cap \cdots \cap A_n |$$
 
-And in a more compact way:
+Và một cách nhỏ gọn hơn:
 
 $$\left|\bigcup_{i=1}^n A_i \right| = \sum_{\emptyset \neq J\subseteq \{1,2,\ldots ,n\}} (-1)^{|J|-1}{\Biggl |}\bigcap_{j\in J}A_{j}{\Biggr |}$$
 
-### The formulation using Venn diagrams
+### Phát biểu bằng biểu đồ Venn
 
-Let the diagram show three sets $A$, $B$ and $C$:
+Hãy để biểu đồ hiển thị ba tập hợp $A$, $B$ và $C$:
 
-![Venn diagram](venn-inclusion-exclusion.png "Venn diagram")
+![Biểu đồ Venn](venn-inclusion-exclusion.png "Venn diagram")
 
-Then the area of their union $A \cup B \cup C$ is equal to the sum of the areas $A$, $B$ and $C$ less double-covered areas $A \cap B$, $A \cap C$, $B \cap C$, but with the addition of the area covered by three sets $A \cap B \cap C$:
+Khi đó diện tích của hợp của chúng $A \cup B \cup C$ bằng tổng diện tích của $A$, $B$ và $C$ trừ đi các vùng bị che phủ hai lần $A \cap B$, $A \cap C$, $B \cap C$, nhưng cộng thêm diện tích được che phủ bởi ba tập hợp $A \cap B \cap C$:
 
 $$S(A \cup B \cup C) = S(A) + S(B) + S(C) - S(A \cap B) - S(A \cap C) - S(B \cap C) + S(A \cap B \cap C)$$
 
-It can also be generalized for an association of $n$ sets.
+Nó cũng có thể được tổng quát hóa cho một liên kết của $n$ tập hợp.
 
-### The formulation in terms of probability theory
+### Phát biểu theo thuật ngữ lý thuyết xác suất
 
-If $A_i$ $(i = 1,2...n)$ are events and ${\cal P}(A_i)$ the probability of an event from $A_i$ to occur, then the probability of their union (i.e. the probability that at least one of the events occur) is equal to:
+Nếu $A_i$ $(i = 1,2...n)$ là các sự kiện và ${\cal P}(A_i)$ là xác suất để một sự kiện từ $A_i$ xảy ra, thì xác suất của hợp của chúng (tức là xác suất để ít nhất một trong các sự kiện xảy ra) bằng:
 
 $$\begin{eqnarray}
 {\cal P} \left( \bigcup_{i=1}^n A_i \right) &=& \sum_{i=1}^n{\cal P}(A_i)\ - \sum_{1\leq i<j\leq n} {\cal P}(A_i \cap A_j)\  + \\
 &+& \sum _{1\leq i<j<k\leq n}{\cal P}(A_i \cap A_j \cap A_k) - \cdots + (-1)^{n-1} {\cal P}( A_1 \cap \cdots \cap A_n )
 \end{eqnarray}$$
 
-And in a more compact way:
+Và một cách nhỏ gọn hơn:
 
-$${\cal P} \left(\bigcup_{i=1}^n A_i \right) = \sum_{\emptyset \neq J\subseteq \{1,2,\ldots ,n\}} (-1)^{|J|-1}\ {\cal P}{\Biggl (}\bigcap_{j\in J}A_{j}{\Biggr )}$$
+$${\cal P} \left(\bigcup_{i=1}^n A_i \right) = \sum_{\emptyset \neq J\subseteq \{1,2,\ldots ,n\}} (-1)^{|J|-1}\ {\cal P}{\Biggl (}\bigcap_{j\in J}A_{j}{\Biggr )}$$ 
 
-## Proof
+## Chứng minh
 
-For the proof it is convenient to use the mathematical formulation in terms of set theory:
+Để chứng minh, thuận tiện để sử dụng công thức toán học theo thuật ngữ lý thuyết tập hợp:
 
 $$\left|\bigcup_{i=1}^n A_i \right| = \sum_{\emptyset \neq J\subseteq \{1,2,\ldots ,n\}} (-1)^{|J|-1}{\Biggl |}\bigcap_{j\in J}A_{j}{\Biggr |}$$
 
-We want to prove that any element contained in at least one of the sets $A_i$ will occur in the formula only once (note that elements which are not present in any of the sets $A_i$ will never be considered on the right part of the formula).
+Chúng ta muốn chứng minh rằng bất kỳ phần tử nào chứa trong ít nhất một trong các tập hợp $A_i$ sẽ chỉ xuất hiện trong công thức một lần (lưu ý rằng các phần tử không có trong bất kỳ tập hợp $A_i$ nào sẽ không bao giờ được xem xét ở vế phải của công thức).
 
-Consider an element $x$ occurring in $k \geq 1$ sets $A_i$. We will show it is counted only once in the formula. Note that:
+Xét một phần tử $x$ xuất hiện trong $k \geq 1$ tập hợp $A_i$. Chúng ta sẽ chỉ ra rằng nó chỉ được đếm một lần trong công thức. Lưu ý rằng:
 
-* in terms which $|J| = 1$, the item $x$ will be counted **$+\ k$** times;
-* in terms which $|J| = 2$, the item $x$ will be counted **$-\ \binom{k}{2}$** times - because it will be counted in those terms that include two of the $k$ sets containing $x$;
-* in terms which $|J| = 3$, the item $x$ will be counted **$+\ \binom{k}{3}$** times;
+* trong các số hạng mà $|J| = 1$, mục $x$ sẽ được đếm **$+\ k$** lần;
+* trong các số hạng mà $|J| = 2$, mục $x$ sẽ được đếm **$-\ \binom{k}{2}$** lần - bởi vì nó sẽ được đếm trong những số hạng bao gồm hai trong số $k$ tập hợp chứa $x$;
+* trong các số hạng mà $|J| = 3$, mục $x$ sẽ được đếm **$+\ \binom{k}{3}$** lần;
 * $\cdots$
-* in terms which $|J| = k$, the item $x$ will be counted **$(-1)^{k-1}\cdot \binom{k}{k}$** times;
-* in terms which $|J| \gt k$, the item $x$ will be counted **zero** times;
+* trong các số hạng mà $|J| = k$, mục $x$ sẽ được đếm **$(-1)^{k-1}\cdot \binom{k}{k}$** lần;
+* trong các số hạng mà $|J| \gt k$, mục $x$ sẽ được đếm **không** lần;
 
-This leads us to the following sum of [binomial coefficients](binomial-coefficients.md):
+Điều này dẫn chúng ta đến tổng sau của các [tổ hợp](binomial-coefficients.md):
 
 $$ T = \binom{k}{1} - \binom{k}{2} + \binom{k}{3} - \cdots + (-1)^{i-1}\cdot \binom{k}{i} + \cdots + (-1)^{k-1}\cdot \binom{k}{k}$$
 
-This expression is very similar to the binomial expansion of $(1 - x)^k$:
+Biểu thức này rất giống với khai triển nhị thức của $(1 - x)^k$:
 
 $$ (1 - x)^k = \binom{k}{0} - \binom{k}{1} \cdot x + \binom{k}{2} \cdot x^2 - \binom{k}{3} \cdot x^3 + \cdots + (-1)^k\cdot \binom{k}{k} \cdot x^k $$
 
-When $x = 1$, $(1 - x)^k$ looks a lot like $T$. However, the expression has an additional $\binom{k}{0} = 1$, and it is multiplied by $-1$. That leads us to $(1 - 1)^k = 1 - T$. Therefore $T = 1 - (1 - 1)^k = 1$, what was required to prove. The element is counted only once.
+Khi $x = 1$, $(1 - x)^k$ trông rất giống $T$. Tuy nhiên, biểu thức có thêm một $\binom{k}{0} = 1$, và nó được nhân với $-1$. Điều đó dẫn chúng ta đến $(1 - 1)^k = 1 - T$. Do đó $T = 1 - (1 - 1)^k = 1$, điều cần phải chứng minh. Phần tử chỉ được đếm một lần.
 
-## Generalization for calculating number of elements in exactly $r$ sets {data-toc-label="Generalization for calculating number of elements in exactly r sets"}
+## Tổng quát hóa để tính số phần tử trong đúng $r$ tập hợp {data-toc-label="Generalization for calculating number of elements in exactly r sets"}
 
-Inclusion-exclusion principle can be rewritten to calculate number of elements which are present in zero sets:
+Nguyên lý bao hàm-loại trừ có thể được viết lại để tính số phần tử có trong không tập hợp nào:
 
 $$\left|\bigcap_{i=1}^n \overline{A_i}\right|=\sum_{m=0}^n (-1)^m \sum_{|X|=m} \left|\bigcap_{i\in X} A_{i}\right|$$
 
-Consider its generalization to calculate number of elements which are present in exactly $r$ sets:
+Hãy xem xét sự tổng quát hóa của nó để tính số phần tử có trong đúng $r$ tập hợp:
 
 $$\left|\bigcup_{|B|=r}\left[\bigcap_{i \in B} A_i \cap \bigcap_{j \not\in B} \overline{A_j}\right]\right|=\sum_{m=r}^n (-1)^{m-r}\dbinom{m}{r} \sum_{|X|=m} \left|\bigcap_{i \in X} A_{i}\right|$$
 
-To prove this formula, consider some particular $B$. Due to basic inclusion-exclusion principle we can say about it that:
+Để chứng minh công thức này, hãy xem xét một $B$ cụ thể. Do nguyên lý bao hàm-loại trừ cơ bản, chúng ta có thể nói về nó rằng:
 
-$$\left|\bigcap_{i \in B} A_i \cap \bigcap_{j \not \in B} \overline{A_j}\right|=\sum_{m=r}^{n} (-1)^{m-r} \sum_{\substack{|X|=m \newline B \subset X}}\left|\bigcap_{i\in X} A_{i}\right|$$
+$$\left|\bigcap_{i \in B} A_i \cap \bigcap_{j \not \in B} \overline{A_j}\right|=\sum_{m=r}^{n} (-1)^{m-r} \sum_{\substack{|X|=m \\ B \subset X}}\left|\bigcap_{i\in X} A_{i}\right|$$
 
-The sets on the left side do not intersect for different $B$, thus we can sum them up directly. Also one should note that any set $X$ will always have coefficient $(-1)^{m-r}$ if it occurs and it will occur for exactly $\dbinom{m}{r}$ sets $B$. 
+Các tập hợp ở vế trái không giao nhau đối với các $B$ khác nhau, do đó chúng ta có thể cộng chúng trực tiếp. Cũng cần lưu ý rằng bất kỳ tập hợp $X$ nào cũng sẽ luôn có hệ số $(-1)^{m-r}$ nếu nó xuất hiện và nó sẽ xuất hiện cho chính xác $\dbinom{m}{r}$ tập hợp $B$. 
 
-## Usage when solving problems
+## Sử dụng khi giải quyết vấn đề
 
-The inclusion-exclusion principle is hard to understand without studying its applications.
+Nguyên lý bao hàm-loại trừ khó hiểu nếu không nghiên cứu các ứng dụng của nó.
 
-First, we will look at three simplest tasks "at paper", illustrating applications of the principle, and then consider more practical problems which are difficult to solve without inclusion-exclusion principle.
+Đầu tiên, chúng ta sẽ xem xét ba nhiệm vụ đơn giản nhất "trên giấy", minh họa các ứng dụng của nguyên tắc, và sau đó xem xét các vấn đề thực tế hơn khó giải quyết nếu không có nguyên lý bao hàm-loại trừ.
 
-Tasks asking to "find the **number** of ways" are worth of note, as they sometimes lead to polynomial solutions, not necessarily exponential.
+Các nhiệm vụ yêu cầu "tìm **số** cách" đáng chú ý, vì chúng đôi khi dẫn đến các giải pháp đa thức, không nhất thiết là hàm mũ.
 
-### A simple task on permutations
+### Một nhiệm vụ đơn giản về hoán vị
 
-Task: count how many permutations of numbers from $0$ to $9$ exist such that the first element is greater than $1$ and the last one is less than $8$.
+Nhiệm vụ: đếm có bao nhiêu hoán vị của các số từ $0$ đến $9$ tồn tại sao cho phần tử đầu tiên lớn hơn $1$ và phần tử cuối cùng nhỏ hơn $8$.
 
-Let's count the number of "bad" permutations, that is, permutations in which the first element is $\leq 1$ and/or the last is $\geq 8$.
+Hãy đếm số lượng các hoán vị "xấu", tức là các hoán vị trong đó phần tử đầu tiên $\leq 1$ và/hoặc phần tử cuối cùng $\geq 8$.
 
-We will denote by $X$ the set of permutations in which the first element is $\leq 1$ and $Y$ the set of permutations in which the last element is $\geq 8$. Then the number of "bad" permutations, as on the inclusion-exclusion formula, will be:
+Chúng ta sẽ ký hiệu $X$ là tập hợp các hoán vị trong đó phần tử đầu tiên $\leq 1$ và $Y$ là tập hợp các hoán vị trong đó phần tử cuối cùng $\geq 8$. Khi đó số lượng các hoán vị "xấu", theo công thức bao hàm-loại trừ, sẽ là:
 
 $$ |X \cup Y| = |X| + |Y| - |X \cap Y| $$
 
-After a simple combinatorial calculation, we will get to:
+Sau một phép tính tổ hợp đơn giản, chúng ta sẽ có được:
 
 $$ 2 \cdot 9! + 2 \cdot 9! - 2 \cdot 2 \cdot 8! $$
 
-The only thing left is to subtract this number from the total of $10!$ to get the number of "good" permutations.
+Điều duy nhất còn lại là trừ số này khỏi tổng số $10!$ để có được số lượng các hoán vị "tốt".
 
-### A simple task on (0, 1, 2) sequences
+### Một nhiệm vụ đơn giản về các dãy (0, 1, 2)
 
-Task: count how many sequences of length $n$ exist consisting only of numbers $0,1,2$ such that each number occurs **at least once**.
+Nhiệm vụ: đếm có bao nhiêu dãy có độ dài $n$ chỉ bao gồm các số $0,1,2$ sao cho mỗi số xuất hiện **ít nhất một lần**.
 
-Again let us turn to the inverse problem, i.e. we calculate the number of sequences which do **not** contain **at least one** of the numbers.
+Một lần nữa, chúng ta chuyển sang bài toán nghịch đảo, tức là chúng ta tính số lượng các dãy **không** chứa **ít nhất một** trong các số.
 
-Let's denote by $A_i (i = 0,1,2)$ the set of sequences in which the digit $i$ does **not** occur.
-The formula of inclusion-exclusion on the number of "bad" sequences will be:
+Hãy ký hiệu $A_i (i = 0,1,2)$ là tập hợp các dãy trong đó chữ số $i$ **không** xuất hiện.
+Công thức bao hàm-loại trừ về số lượng các dãy "xấu" sẽ là:
 
 $$ |A_0 \cup A_1 \cup A_2| = |A_0| + |A_1| + |A_2| - |A_0 \cap A_1| - |A_0 \cap A_2| - |A_1 \cap A_2| + |A_0 \cap A_1 \cap A_2| $$
 
-* The size of each $A_i$ is $2^n$, as each sequence can only contain two of the digits.
-* The size of each pairwise intersection $A_i \cap A_j$  is equal to $1$, as there will be only one digit to build the sequence.
-* The size of the intersection of all three sets is equal to $0$, as there will be no digits to build the sequence.
+* Kích thước của mỗi $A_i$ là $2^n$, vì mỗi dãy chỉ có thể chứa hai trong số các chữ số.
+* Kích thước của mỗi giao cặp đôi $A_i \cap A_j$ bằng $1$, vì sẽ chỉ có một chữ số để xây dựng dãy.
+* Kích thước của giao của cả ba tập hợp bằng $0$, vì sẽ không có chữ số nào để xây dựng dãy.
 
-As we solved the inverse problem, we subtract it from the total of $3^n$ sequences:
+Vì chúng ta đã giải quyết bài toán nghịch đảo, chúng ta trừ nó khỏi tổng số $3^n$ dãy:
 
 $$3^n - (3 \cdot 2^n - 3 \cdot 1 + 0)$$
 
 <div id="the-number-of-integer-solutions-to-the-equation"></div>
-### Number of upper-bound integer sums {: #number-of-upper-bound-integer-sums }
+### Số lượng tổng số nguyên có giới hạn trên {: #number-of-upper-bound-integer-sums }
 
-Consider the following equation:
+Xét phương trình sau:
 
 $$x_1 + x_2 + x_3 + x_4 + x_5 + x_6 = 20$$
 
-where $0 \le x_i \le 8 ~ (i = 1,2,\ldots 6)$.
+trong đó $0 \le x_i \le 8 ~ (i = 1,2,\ldots 6)$.
 
-Task: count the number of solutions to the equation.
+Nhiệm vụ: đếm số nghiệm của phương trình.
 
-Forget the restriction on $x_i$ for a moment and just count the number of nonnegative solutions to this equation. This is easily done using [Stars and Bars](stars_and_bars.md):
-we want to break a sequence of $20$ units into $6$ groups, which is the same as arranging $5$ _bars_ and $20$ _stars_:
+Hãy quên đi giới hạn trên $x_i$ một lúc và chỉ đếm số nghiệm không âm của phương trình này. Điều này dễ dàng được thực hiện bằng cách sử dụng [Sao và Vạch](stars_and_bars.md):
+chúng ta muốn chia một dãy gồm $20$ đơn vị thành $6$ nhóm, điều này giống như sắp xếp $5$ _vạch_ và $20$ _sao_:
 
 $$N_0 = \binom{25}{5}$$
 
-We will now calculate the number of "bad" solutions with the inclusion-exclusion principle. The "bad" solutions will be those in which one or more $x_i$ are greater than or equal to $9$.
+Bây giờ chúng ta sẽ tính số lượng các nghiệm "xấu" bằng nguyên lý bao hàm-loại trừ. Các nghiệm "xấu" sẽ là những nghiệm trong đó một hoặc nhiều $x_i$ lớn hơn hoặc bằng $9$.
 
-Denote by $A_k ~ (k = 1,2\ldots 6)$ the set of solutions where $x_k \ge 9$, and all other $x_i \ge 0 ~ (i \ne k)$ (they may be $\ge 9$ or not). To calculate the size of $A_k$, note that we have essentially the same combinatorial problem that was solved in the two paragraphs above, but now $9$ of the units are excluded from the slots and definitely belong to the first group. Thus:
+Ký hiệu $A_k ~ (k = 1,2\ldots 6)$ là tập hợp các nghiệm trong đó $x_k \ge 9$, và tất cả các $x_i \ge 0 ~ (i \ne k)$ khác (chúng có thể $\ge 9$ hoặc không). Để tính kích thước của $A_k$, lưu ý rằng chúng ta về cơ bản có cùng một bài toán tổ hợp đã được giải quyết trong hai đoạn trên, nhưng bây giờ $9$ trong số các đơn vị bị loại khỏi các vị trí và chắc chắn thuộc về nhóm đầu tiên. Do đó:
 
 $$ | A_k | = \binom{16}{5} $$
 
-Similarly, the size of the intersection between two sets $A_k$ and $A_p$ (for $k \ne p$) is equal to:
+Tương tự, kích thước của giao giữa hai tập hợp $A_k$ và $A_p$ (đối với $k \ne p$) bằng:
 
 $$ \left| A_k \cap A_p \right| = \binom{7}{5}$$
 
-The size of each intersection of three sets is zero, since $20$ units will not be enough for three or more variables greater than or equal to $9$.
+Kích thước của mỗi giao của ba tập hợp là không, vì $20$ đơn vị sẽ không đủ cho ba hoặc nhiều biến lớn hơn hoặc bằng $9$.
 
-Combining all this into the formula of inclusions-exceptions and given that we solved the inverse problem, we finally get the answer:
+Kết hợp tất cả những điều này vào công thức bao hàm-loại trừ và cho rằng chúng ta đã giải quyết bài toán nghịch đảo, cuối cùng chúng ta nhận được câu trả lời:
 
 $$\binom{25}{5} - \left(\binom{6}{1} \cdot \binom{16}{5} - \binom{6}{2} \cdot \binom{7}{5}\right) $$
 
-This easily generalizes to $d$ numbers that sum up to $s$ with the restriction $0 \le x_i \le b$:
+Điều này dễ dàng tổng quát hóa cho $d$ số có tổng bằng $s$ với giới hạn $0 \le x_i \le b$:
 
 $$\sum_{i=0}^d (-1)^i \binom{d}{i} \binom{s+d-1-(b+1)i}{d-1}$$
 
-As above, we treat binomial coefficients with negative upper index as zero. 
+Như trên, chúng ta coi các tổ hợp với chỉ số trên âm là không. 
 
-Note this problem could also be solved with dynamic programming or generating functions. The inclusion-exclusion answer is computed in $O(d)$ time (assuming math operations like binomial coefficient are constant time), while a simple DP approach would take $O(ds)$ time. 
+Lưu ý rằng bài toán này cũng có thể được giải quyết bằng quy hoạch động hoặc hàm sinh. Câu trả lời bằng bao hàm-loại trừ được tính trong thời gian $O(d)$ (giả sử các phép toán toán học như tổ hợp là thời gian không đổi), trong khi một phương pháp DP đơn giản sẽ mất thời gian $O(ds)$. 
 
-### The number of relative primes in a given interval
+### Số lượng các số nguyên tố cùng nhau trong một khoảng cho trước
 
-Task: given two numbers $n$ and $r$, count the number of integers in the interval $[1;r]$ that are relatively prime to n (their greatest common divisor is $1$).
+Nhiệm vụ: cho hai số $n$ và $r$, đếm số lượng các số nguyên trong khoảng $[1;r]$ nguyên tố cùng nhau với n (ước chung lớn nhất của chúng là $1$). 
 
-Let's solve the inverse problem - compute the number of not mutually primes with $n$.
+Hãy giải quyết bài toán nghịch đảo - tính số lượng các số không nguyên tố cùng nhau với $n$.
 
-We will denote the prime factors of $n$ as $p_i (i = 1\cdots k)$.
+Chúng ta sẽ ký hiệu các thừa số nguyên tố của $n$ là $p_i (i = 1\cdots k)$. 
 
-How many numbers in the interval $[1;r]$ are divisible by $p_i$? The answer to this question is:
+Có bao nhiêu số trong khoảng $[1;r]$ chia hết cho $p_i$? Câu trả lời cho câu hỏi này là:
 
 $$ \left\lfloor \frac{ r }{ p_i } \right\rfloor $$
 
-However, if we simply sum these numbers, some numbers will be summarized several times (those that share multiple $p_i$ as their factors). Therefore, it is necessary to use the inclusion-exclusion principle.
+Tuy nhiên, nếu chúng ta chỉ đơn giản là cộng các số này, một số số sẽ được tổng hợp nhiều lần (những số chia sẻ nhiều $p_i$ làm thừa số của chúng). Do đó, cần phải sử dụng nguyên lý bao hàm-loại trừ.
 
-We will iterate over all $2^k$ subsets of $p_i$s, calculate their product and add or subtract the number of multiples of their product.
+Chúng ta sẽ lặp qua tất cả $2^k$ tập con của các $p_i$, tính tích của chúng và cộng hoặc trừ số lượng các bội số của tích của chúng.
 
-Here is a C++ implementation:
+Đây là một triển khai C++:
 
 ```cpp
 int solve (int n, int r) {
@@ -228,140 +228,140 @@ int solve (int n, int r) {
 }
 ```
 
-Asymptotics of the solution is $O (\sqrt{n})$.
+Độ phức tạp của giải pháp là $O (\sqrt{n})$.
 
-### The number of integers in a given interval which are multiple of at least one of the given numbers
+### Số lượng các số nguyên trong một khoảng cho trước là bội của ít nhất một trong các số đã cho
 
-Given $n$ numbers $a_i$ and number $r$. You want to count the number of integers in the interval $[1; r]$ that are multiple of at least one of the $a_i$.
+Cho $n$ số $a_i$ và số $r$. Bạn muốn đếm số lượng các số nguyên trong khoảng $[1; r]$ là bội của ít nhất một trong các $a_i$.
 
-The solution algorithm is almost identical to the one for previous task — construct the formula of inclusion-exclusion on the numbers $a_i$, i.e. each term in this formula is the number of numbers divisible by a given subset of numbers $a_i$ (in other words, divisible by their [least common multiple](../algebra/euclid-algorithm.md)).
+Thuật toán giải pháp gần như giống hệt với nhiệm vụ trước đó — xây dựng công thức bao hàm-loại trừ trên các số $a_i$, tức là mỗi số hạng trong công thức này là số lượng các số chia hết cho một tập con đã cho của các số $a_i$ (nói cách khác, chia hết cho [bội chung nhỏ nhất](../algebra/euclid-algorithm.md) của chúng).
 
-So we will now iterate over all $2^n$ subsets of integers $a_i$ with $O(n \log r)$ operations to find their least common multiple, adding or subtracting the number of multiples of it in the interval. Asymptotics is $O (2^n\cdot n\cdot \log r)$.
+Vì vậy, bây giờ chúng ta sẽ lặp qua tất cả $2^n$ tập con của các số nguyên $a_i$ với $O(n \log r)$ phép toán để tìm bội chung nhỏ nhất của chúng, cộng hoặc trừ số lượng các bội số của nó trong khoảng. Độ phức tạp là $O (2^n\cdot n\cdot \log r)$.
 
-### The number of strings that satisfy a given pattern
+### Số lượng chuỗi thỏa mãn một mẫu cho trước
 
-Consider $n$ patterns of strings of the same length, consisting only of letters ($a...z$) or question marks. You're also given a number $k$. A string matches a pattern if it has the same length as the pattern, and at each position, either the corresponding characters are equal or the character in the pattern is a question mark. The task is to count the number of strings that match exactly $k$ of the patterns (first problem) and at least $k$ of the patterns (second problem).
+Xét $n$ mẫu chuỗi có cùng độ dài, chỉ bao gồm các chữ cái ($a...z$) hoặc dấu hỏi. Bạn cũng được cho một số $k$. Một chuỗi khớp với một mẫu nếu nó có cùng độ dài với mẫu, và ở mỗi vị trí, hoặc các ký tự tương ứng bằng nhau hoặc ký tự trong mẫu là một dấu hỏi. Nhiệm vụ là đếm số lượng các chuỗi khớp với đúng $k$ mẫu (bài toán thứ nhất) và ít nhất $k$ mẫu (bài toán thứ hai).
 
-Notice first that we can easily count the number of strings that satisfy at once all of the specified patterns. To do this, simply "cross" patterns: iterate though the positions ("slots") and look at a position over all patterns. If all patterns have a question mark in this position, the character can be any letter from $a$ to $z$. Otherwise, the character of this position is uniquely defined by the patterns that do not contain a question mark.
+Lưu ý đầu tiên là chúng ta có thể dễ dàng đếm số lượng các chuỗi thỏa mãn cùng một lúc tất cả các mẫu được chỉ định. Để làm điều này, chỉ cần "chéo" các mẫu: lặp qua các vị trí ("khe") và xem xét một vị trí trên tất cả các mẫu. Nếu tất cả các mẫu đều có dấu hỏi ở vị trí này, ký tự có thể là bất kỳ chữ cái nào từ $a$ đến $z$. Nếu không, ký tự của vị trí này được xác định duy nhất bởi các mẫu không chứa dấu hỏi.
 
-Learn now to solve the first version of the problem: when the string must satisfy exactly $k$ of the patterns.
+Bây giờ hãy học cách giải phiên bản đầu tiên của bài toán: khi chuỗi phải thỏa mãn đúng $k$ mẫu.
 
-To solve it, iterate and fix a specific subset $X$ from the set of patterns consisting of $k$ patterns. Then we have to count the number of strings that satisfy this set of patterns, and only matches it, that is, they don't match any other pattern. We will use the inclusion-exclusion principle in a slightly different manner: we sum on all supersets $Y$ (subsets from the original set of strings that contain $X$), and either add to the current answer or subtract it from the number of strings:
+Để giải quyết nó, lặp và cố định một tập con cụ thể $X$ từ tập hợp các mẫu bao gồm $k$ mẫu. Sau đó, chúng ta phải đếm số lượng các chuỗi thỏa mãn tập hợp các mẫu này, và chỉ khớp với nó, tức là chúng không khớp với bất kỳ mẫu nào khác. Chúng ta sẽ sử dụng nguyên lý bao hàm-loại trừ theo một cách hơi khác: chúng ta tổng trên tất cả các tập hợp cha $Y$ (các tập con từ tập hợp các chuỗi ban đầu chứa $X$), và hoặc cộng vào câu trả lời hiện tại hoặc trừ nó khỏi số lượng các chuỗi:
 
 $$ ans(X) = \sum_{Y \supseteq X} (-1)^{|Y|-k} \cdot f(Y) $$
 
-Where $f(Y)$ is the number of strings that match $Y$ (at least $Y$).
+Trong đó $f(Y)$ là số lượng các chuỗi khớp với $Y$ (ít nhất là $Y$). 
 
-(If you have a hard time figuring out this, you can try drawing Venn Diagrams.)
+(Nếu bạn gặp khó khăn trong việc tìm ra điều này, bạn có thể thử vẽ Biểu đồ Venn.)
 
-If we sum up on all $ans(X)$, we will get the final answer:
+Nếu chúng ta tổng hợp trên tất cả các $ans(X)$, chúng ta sẽ có được câu trả lời cuối cùng:
 
 $$ ans = \sum_{X ~ : ~ |X| = k} ans(X) $$
 
-However, asymptotics of this solution is $O(3^k \cdot k)$. To improve it, notice that different $ans(X)$ computations very often share $Y$ sets.
+Tuy nhiên, độ phức tạp của giải pháp này là $O(3^k \cdot k)$. Để cải thiện nó, hãy lưu ý rằng các tính toán $ans(X)$ khác nhau rất thường chia sẻ các tập hợp $Y$.
 
-We will reverse the formula of inclusion-exclusion and sum in terms of $Y$ sets. Now it becomes clear that the same set $Y$ would be taken into account in the computation of $ans(X)$ of $\binom{|Y|}{k}$ sets with the same sign $(-1)^{|Y| - k}$.
+Chúng ta sẽ đảo ngược công thức bao hàm-loại trừ và tổng hợp theo các tập hợp $Y$. Bây giờ rõ ràng là cùng một tập hợp $Y$ sẽ được tính đến trong việc tính toán $ans(X)$ của $\binom{|Y|}{k}$ tập hợp có cùng dấu $(-1)^{|Y| - k}$.
 
 $$ ans = \sum_{Y ~ : ~ |Y| \ge k} (-1)^{|Y|-k} \cdot \binom{|Y|}{k} \cdot f(Y) $$
 
-Now our solution has asymptotics $O(2^k \cdot k)$.
+Bây giờ giải pháp của chúng ta có độ phức tạp $O(2^k \cdot k)$.
 
-We will now solve the second version of the problem: find the number of strings that match **at least** $k$ of the patterns.
+Bây giờ chúng ta sẽ giải phiên bản thứ hai của bài toán: tìm số lượng các chuỗi khớp với **ít nhất** $k$ mẫu.
 
-Of course, we can just use the solution to the first version of the problem and add the answers for sets with size greater than $k$. However, you may notice that in this problem, a set |Y| is considered in the formula for all sets with size $\ge k$ which are contained in $Y$. That said, we can write the part of the expression that is being multiplied by $f(Y)$ as:
+Tất nhiên, chúng ta có thể chỉ cần sử dụng giải pháp cho phiên bản đầu tiên của bài toán và cộng các câu trả lời cho các tập hợp có kích thước lớn hơn $k$. Tuy nhiên, bạn có thể nhận thấy rằng trong bài toán này, một tập hợp |Y| được xem xét trong công thức cho tất cả các tập hợp có kích thước $\ge k$ được chứa trong $Y$. Nói như vậy, chúng ta có thể viết phần của biểu thức được nhân với $f(Y)$ là:
 
 
 $$ (-1)^{|Y|-k} \cdot \binom{|Y|}{k} + (-1)^{|Y|-k-1} \cdot \binom{|Y|}{k+1} + (-1)^{|Y|-k-2} \cdot \binom{|Y|}{k+2} + \cdots + (-1)^{|Y|-|Y|} \cdot \binom{|Y|}{|Y|} $$
 
-Looking at Graham's (Graham, Knuth, Patashnik. "Concrete mathematics" [1998] ), we see a well-known formula for [binomial coefficients](binomial-coefficients.md):
+Nhìn vào Graham (Graham, Knuth, Patashnik. "Toán học cụ thể" [1998]), chúng ta thấy một công thức nổi tiếng cho [tổ hợp](binomial-coefficients.md):
 
 $$ \sum_{k=0}^m (-1)^k \cdot \binom{n}{k} = (-1)^m \cdot \binom{n-1}{m} $$
 
-Applying it here, we find that the entire sum of binomial coefficients is minimized:
+Áp dụng nó ở đây, chúng ta thấy rằng toàn bộ tổng của các tổ hợp được tối thiểu hóa:
 
 $$ (-1)^{|Y|-k} \cdot \binom{|Y|-1}{|Y|-k} $$
 
-Thus, for this task, we also obtained a solution with the asymptotics $O(2^k \cdot k)$:
+Do đó, đối với nhiệm vụ này, chúng ta cũng có được một giải pháp với độ phức tạp $O(2^k \cdot k)$:
 
 $$ ans = \sum_{Y ~ : ~ |Y| \ge k} (-1)^{|Y|-k} \cdot \binom{|Y|-1}{|Y|-k} \cdot f(Y) $$
 
-### The number of ways of going from a cell to another
+### Số cách đi từ một ô đến một ô khác
 
-There is a field $n \times m$, and $k$ of its cells are impassable walls. A robot is initially at the cell $(1,1)$ (bottom left). The robot can only move right or up, and eventually it needs to get into the cell $(n,m)$, avoiding all obstacles. You need to count the number of ways he can do it.
+Có một trường $n \times m$, và $k$ ô của nó là các bức tường không thể đi qua. Một con robot ban đầu ở ô $(1,1)$ (dưới cùng bên trái). Robot chỉ có thể di chuyển sang phải hoặc lên, và cuối cùng nó cần đến ô $(n,m)$, tránh tất cả các chướng ngại vật. Bạn cần đếm số cách nó có thể làm điều đó.
 
-Assume that the sizes $n$ and $m$ are very large (say, $10^9$), and the number $k$ is small (around $100$).
+Giả sử rằng kích thước $n$ và $m$ rất lớn (ví dụ: $10^9$), và số lượng $k$ nhỏ (khoảng $100$). 
 
-For now, sort the obstacles by their coordinate $x$, and in case of equality — coordinate $y$.
+Đầu tiên, hãy sắp xếp các chướng ngại vật theo tọa độ $x$ của chúng, và trong trường hợp bằng nhau — tọa độ $y$.
 
-Also just learn how to solve a problem without obstacles: i.e. learn how to count the number of ways to get from one cell to another. In one axis, we need to go through $x$ cells, and on the other, $y$ cells. From simple combinatorics, we get a formula using [binomial coefficients](binomial-coefficients.md):
+Cũng chỉ cần học cách giải một bài toán không có chướng ngại vật: tức là học cách đếm số cách để đi từ một ô đến một ô khác. Trong một trục, chúng ta cần đi qua $x$ ô, và trên trục kia, $y$ ô. Từ tổ hợp đơn giản, chúng ta có được một công thức sử dụng [tổ hợp](binomial-coefficients.md):
 
 $$\binom{x+y}{x}$$
 
-Now to count the number of ways to get from one cell to another, avoiding all obstacles, you can use inclusion-exclusion to solve the inverse problem: count the number of ways to walk through the board stepping at a subset of obstacles (and subtract it from the total number of ways).
+Bây giờ để đếm số cách đi từ một ô đến một ô khác, tránh tất cả các chướng ngại vật, bạn có thể sử dụng nguyên lý bao hàm-loại trừ để giải bài toán nghịch đảo: đếm số cách đi qua bàn cờ bằng cách bước vào một tập con của các chướng ngại vật (và trừ nó khỏi tổng số cách).
 
-When iterating over a subset of the obstacles that we'll step, to count the number of ways to do this simply multiply the number of all paths from starting cell to the first of the selected obstacles, a first obstacle to the second, and so on, and then add or subtract this number from the answer, in accordance with the standard formula of inclusion-exclusion.
+Khi lặp qua một tập con của các chướng ngại vật mà chúng ta sẽ bước vào, để đếm số cách làm điều này, chỉ cần nhân số lượng tất cả các đường đi từ ô bắt đầu đến chướng ngại vật đầu tiên được chọn, từ chướng ngại vật đầu tiên đến thứ hai, và cứ thế, và sau đó cộng hoặc trừ số này khỏi câu trả lời, theo công thức chuẩn của nguyên lý bao hàm-loại trừ.
 
-However, this will again be non-polynomial in complexity $O(2^k \cdot k)$.
+Tuy nhiên, điều này một lần nữa sẽ không phải là đa thức về độ phức tạp $O(2^k \cdot k)$.
 
-Here goes a polynomial solution:
+Đây là một giải pháp đa thức:
 
-We will use dynamic programming. For convenience, push (1,1) to the beginning and (n,m) at the end of the obstacles array. Let's compute the numbers $d[i]$ — the number of ways to get from the starting point ($0-th$) to $i-th$, without stepping on any other obstacle (except for $i$, of course). We will compute this number for all the obstacle cells, and also for the ending one.
+Chúng ta sẽ sử dụng quy hoạch động. Để thuận tiện, đẩy (1,1) vào đầu và (n,m) vào cuối mảng chướng ngại vật. Hãy tính các số $d[i]$ — số cách để đi từ điểm bắt đầu ($0$) đến $i$, mà không bước vào bất kỳ chướng ngại vật nào khác (ngoại trừ $i$, tất nhiên). Chúng ta sẽ tính số này cho tất cả các ô chướng ngại vật, và cả cho ô kết thúc.
 
-Let's forget for a second the obstacles and just count the number of paths from cell $0$ to $i$. We need to consider some "bad" paths, the ones that pass through the obstacles, and subtract them from the total number of ways of going from $0$ to $i$.
+Hãy quên đi một giây các chướng ngại vật và chỉ đếm số đường đi từ ô $0$ đến $i$. Chúng ta cần xem xét một số đường đi "xấu", những đường đi qua các chướng ngại vật, và trừ chúng khỏi tổng số cách đi từ $0$ đến $i$.
 
-When considering an obstacle $t$ between $0$ and $i$ ($0 < t < i$), on which we can step, we see that the number of paths from $0$ to $i$ that pass through $t$ which have $t$ as the **first obstacle between start and $i$**. We can compute that as: $d[t]$ multiplied by the number of arbitrary paths from $t$ to $i$. We can count the number of "bad" ways summing this for all $t$ between $0$ and $i$.
+Khi xem xét một chướng ngại vật $t$ giữa $0$ và $i$ ($0 < t < i$), mà chúng ta có thể bước vào, chúng ta thấy rằng số đường đi từ $0$ đến $i$ đi qua $t$ mà có $t$ là **chướng ngại vật đầu tiên giữa điểm bắt đầu và $i$**. Chúng ta có thể tính điều đó là: $d[t]$ nhân với số lượng các đường đi tùy ý từ $t$ đến $i$. Chúng ta có thể đếm số cách "xấu" bằng cách tổng hợp điều này cho tất cả các $t$ giữa $0$ và $i$.
 
-We can compute $d[i]$ in $O(k)$ for $O(k)$ obstacles, so this solution has complexity $O(k^2)$.
+Chúng ta có thể tính $d[i]$ trong $O(k)$ đối với $O(k)$ chướng ngại vật, vì vậy giải pháp này có độ phức tạp $O(k^2)$.
 
-### The number of coprime quadruples
+### Số lượng các bộ bốn số nguyên tố cùng nhau
 
-You're given $n$ numbers: $a_1, a_2, \ldots, a_n$. You are required to count the number of ways to choose four numbers so that their combined greatest common divisor is equal to one.
+Bạn được cho $n$ số: $a_1, a_2, \ldots, a_n$. Bạn được yêu cầu đếm số cách để chọn bốn số sao cho ước chung lớn nhất kết hợp của chúng bằng một.
 
-We will solve the inverse problem — compute the number of "bad" quadruples, i.e. quadruples in which all numbers are divisible by a number $d > 1$.
+Chúng ta sẽ giải bài toán nghịch đảo — tính số lượng các bộ bốn "xấu", tức là các bộ bốn trong đó tất cả các số đều chia hết cho một số $d > 1$.
 
-We will use the inclusion-exclusion principle while summing over all possible groups of four numbers divisible by a divisor $d$.
+Chúng ta sẽ sử dụng nguyên lý bao hàm-loại trừ trong khi tổng hợp trên tất cả các nhóm có thể có của bốn số chia hết cho một ước $d$.
 
 $$ans = \sum_{d \ge 2} (-1)^{deg(d)-1} \cdot f(d)$$
 
-where $deg(d)$ is the number of primes in the factorization of the number $d$ and $f(d)$ the number of quadruples divisible by $d$.
+trong đó $deg(d)$ là số lượng các số nguyên tố trong phân tích thừa số của số $d$ và $f(d)$ là số lượng các bộ bốn chia hết cho $d$.
 
-To calculate the function $f(d)$, you just have to count the number of multiples of $d$ (as mentioned on a previous task) and use [binomial coefficients](binomial-coefficients.md) to count the number of ways to choose four of them.
+Để tính hàm $f(d)$, bạn chỉ cần đếm số lượng các bội số của $d$ (như đã đề cập trong một nhiệm vụ trước đó) và sử dụng [tổ hợp](binomial-coefficients.md) để đếm số cách chọn bốn trong số chúng.
 
-Thus, using the formula of inclusions-exclusions we sum the number of groups of four divisible by a prime number, then subtract the number of quadruples which are divisible by the product of two primes, add quadruples divisible by three primes, etc.
+Do đó, sử dụng công thức bao hàm-loại trừ, chúng ta cộng số lượng các nhóm bốn chia hết cho một số nguyên tố, sau đó trừ số lượng các bộ bốn chia hết cho tích của hai số nguyên tố, cộng các bộ bốn chia hết cho ba số nguyên tố, v.v.
 
 
-### The number of harmonic triplets
+### Số lượng các bộ ba hài hòa
 
-You are given a number $n \le 10^6$. You are required to count the number of triples $2 \le a < b < c \le n$ that satisfy one of the following conditions:
+Bạn được cho một số $n \le 10^6$. Bạn được yêu cầu đếm số lượng các bộ ba $2 \le a < b < c \le n$ thỏa mãn một trong các điều kiện sau:
 
-* or ${\rm gcd}(a,b) = {\rm gcd}(a,c) = {\rm gcd}(b,c) = 1$,
-* or ${\rm gcd}(a,b) > 1, {\rm gcd}(a,c) > 1, {\rm gcd}(b,c) > 1$.
+* hoặc ${\rm gcd}(a,b) = {\rm gcd}(a,c) = {\rm gcd}(b,c) = 1$,
+* hoặc ${\rm gcd}(a,b) > 1, {m gcd}(a,c) > 1, {m gcd}(b,c) > 1$.
 
-First, go straight to the inverse problem — i.e. count the number of non-harmonic triples.
+Đầu tiên, hãy đi thẳng vào bài toán nghịch đảo — tức là đếm số lượng các bộ ba không hài hòa.
 
-Second, note that any non-harmonic triplet is made of a pair of coprimes and a third number that is not coprime with at least one from the pair.
+Thứ hai, lưu ý rằng bất kỳ bộ ba không hài hòa nào cũng được tạo thành từ một cặp số nguyên tố cùng nhau và một số thứ ba không nguyên tố cùng nhau với ít nhất một trong cặp.
 
-Thus, the number of non-harmonic triples that contain $i$ is equal the number of integers from $2$ to $n$ that are coprimes with $i$ multiplied by the number of integers that are not coprime with $i$.
+Do đó, số lượng các bộ ba không hài hòa chứa $i$ bằng số lượng các số nguyên từ $2$ đến $n$ nguyên tố cùng nhau với $i$ nhân với số lượng các số nguyên không nguyên tố cùng nhau với $i$.
 
-Either $gcd(a,b) = 1 \wedge gcd(a,c) > 1 \wedge gcd(b,c) > 1$
+Hoặc $gcd(a,b) = 1 \wedge gcd(a,c) > 1 \wedge gcd(b,c) > 1$
 
-or $gcd(a,b) = 1 \wedge gcd(a,c) = 1 \wedge gcd(b,c) > 1$
+hoặc $gcd(a,b) = 1 \wedge gcd(a,c) = 1 \wedge gcd(b,c) > 1$
 
-In both of these cases, it will be counted twice. The first case will be counted when $i = a$ and when $i = b$. The second case will be counted when $i = b$ and when $i = c$. Therefore, to compute the number of non-harmonic triples, we sum this calculation through all $i$ from $2$ to $n$ and divide it by $2$.
+Trong cả hai trường hợp này, nó sẽ được đếm hai lần. Trường hợp đầu tiên sẽ được đếm khi $i = a$ và khi $i = b$. Trường hợp thứ hai sẽ được đếm khi $i = b$ và khi $i = c$. Do đó, để tính số lượng các bộ ba không hài hòa, chúng ta tổng hợp phép tính này trên tất cả các $i$ từ $2$ đến $n$ và chia nó cho $2$.
 
-Now all we have left to solve is to learn to count the number of coprimes to $i$ in the interval $[2;n]$. Although this problem has already been mentioned, the above solution is not suitable here — it would require the factorization of each of the integers from $2$ to $n$, and then iterating through all subsets of these primes.
+Bây giờ tất cả những gì chúng ta còn lại để giải quyết là học cách đếm số lượng các số nguyên tố cùng nhau với $i$ trong khoảng $[2;n]$. Mặc dù bài toán này đã được đề cập, giải pháp trên không phù hợp ở đây — nó sẽ đòi hỏi phân tích thừa số của mỗi số nguyên từ $2$ đến $n$, và sau đó lặp qua tất cả các tập con của các số nguyên tố này.
 
-A faster solution is possible with such modification of the sieve of Eratosthenes:
+Một giải pháp nhanh hơn có thể có với một sửa đổi của sàng Eratosthenes như sau:
 
-1. First, we find all numbers in the interval $[2;n]$ such that its simple factorization does not include a prime factor twice. We will also need to know, for these numbers, how many factors it includes.
-    * To do this we will maintain an array $deg[i]$ to store the number of primes in the factorization of $i$, and an array $good[i]$, to mark either if $i$ contains each factor at most once ($good[i] = 1$) or not ($good[i] = 0$). When iterating from $2$ to $n$, if we reach a number that has $deg$ equal to $0$, then it is a prime and its $deg$ is $1$.
-    * During the sieve of Eratosthenes, we will iterate $i$ from $2$ to $n$. When processing a prime number we go through all of its multiples and increase their $deg[]$. If one of these multiples is multiple of the square of $i$, then we can put $good$ as false.
+1. Đầu tiên, chúng ta tìm tất cả các số trong khoảng $[2;n]$ sao cho phân tích thừa số đơn giản của nó không bao gồm một thừa số nguyên tố hai lần. Chúng ta cũng cần biết, đối với những số này, chúng bao gồm bao nhiêu thừa số.
+    * Để làm điều này, chúng ta sẽ duy trì một mảng $deg[i]$ để lưu trữ số lượng các số nguyên tố trong phân tích thừa số của $i$, và một mảng $good[i]$, để đánh dấu liệu $i$ có chứa mỗi thừa số nhiều nhất một lần ($good[i] = 1$) hay không ($good[i] = 0$). Khi lặp từ $2$ đến $n$, nếu chúng ta đến một số có $deg$ bằng $0$, thì nó là một số nguyên tố và $deg$ của nó là $1$.
+    * Trong quá trình sàng Eratosthenes, chúng ta sẽ lặp $i$ từ $2$ đến $n$. Khi xử lý một số nguyên tố, chúng ta đi qua tất cả các bội số của nó và tăng $deg[]$ của chúng. Nếu một trong những bội số này là bội của bình phương của $i$, thì chúng ta có thể đặt $good$ là false.
 
-2. Second, we need to calculate the answer for all $i$ from $2$ to $n$, i.e., the array $cnt[]$ — the number of integers not coprime with $i$.
-    * To do this, remember how the formula of inclusion-exclusion works — actually here we implement the same concept, but with inverted logic: we iterate over a component (a product of primes from the factorization) and add or subtract its term on the formula of inclusion-exclusion of each of its multiples.
-    * So, let's say we are processing a number $i$ such that $good[i] = true$, i.e., it is involved in the formula of inclusion-exclusion. Iterate through all numbers that are multiples of $i$, and either add or subtract $\lfloor N/i \rfloor$ from their $cnt[]$ (the signal depends on $deg[i]$: if $deg[i]$ is odd, then we must add, otherwise subtract).
+2. Thứ hai, chúng ta cần tính câu trả lời cho tất cả các $i$ từ $2$ đến $n$, tức là mảng $cnt[]$ — số lượng các số nguyên không nguyên tố cùng nhau với $i$.
+    * Để làm điều này, hãy nhớ cách hoạt động của công thức bao hàm-loại trừ — thực ra ở đây chúng ta thực hiện cùng một khái niệm, nhưng với logic đảo ngược: chúng ta lặp qua một thành phần (một tích của các số nguyên tố từ phân tích thừa số) và cộng hoặc trừ số hạng của nó trên công thức bao hàm-loại trừ của mỗi bội số của nó.
+    * Vì vậy, giả sử chúng ta đang xử lý một số $i$ sao cho $good[i] = true$, tức là nó có liên quan đến công thức bao hàm-loại trừ. Lặp qua tất cả các số là bội của $i$, và hoặc cộng hoặc trừ $\lfloor N/i \rfloor$ khỏi $cnt[]$ của chúng (tín hiệu phụ thuộc vào $deg[i]$: nếu $deg[i]$ lẻ, thì chúng ta phải cộng, nếu không thì trừ).
 
-Here's a C++ implementation:
+Đây là một triển khai C++:
 
 ```cpp
 int n;
@@ -393,69 +393,69 @@ long long solve() {
 }
 ```
 
-The asymptotics of our solution is $O(n \log n)$, as for almost every number up to $n$ we make $n/i$ iterations on the nested loop.
+Độ phức tạp của giải pháp của chúng ta là $O(n \log n)$, vì đối với hầu hết mọi số lên đến $n$, chúng ta thực hiện $n/i$ lần lặp trong vòng lặp lồng nhau.
 
-### The number of permutations without fixed points (derangements)
+### Số hoán vị không có điểm cố định (hoán vị lộn xộn)
 
-Prove that the number of permutations of length $n$ without fixed points (i.e. no number $i$ is in position $i$ - also called a derangement) is equal to the following number:
+Chứng minh rằng số hoán vị có độ dài $n$ không có điểm cố định (tức là không có số $i$ nào ở vị trí $i$ - còn được gọi là một hoán vị lộn xộn) bằng số sau:
 
 $$n! - \binom{n}{1} \cdot (n-1)! + \binom{n}{2} \cdot (n-2)! - \binom{n}{3} \cdot (n-3)! + \cdots \pm \binom{n}{n} \cdot (n-n)! $$
 
-and approximately equal to:
+và xấp xỉ bằng:
 
 $$ \frac{ n! }{ e } $$
 
-(if you round this expression to the nearest whole number — you get exactly the number of permutations without fixed points)
+(nếu bạn làm tròn biểu thức này đến số nguyên gần nhất — bạn sẽ có được chính xác số hoán vị không có điểm cố định)
 
-Denote by $A_k$ the set of permutations of length $n$ with a fixed point at position $k$ ($1 \le k \le n$) (i.e. element $k$ is at position $k$).
+Ký hiệu $A_k$ là tập hợp các hoán vị có độ dài $n$ với một điểm cố định ở vị trí $k$ ($1 \le k \le n$) (tức là phần tử $k$ ở vị trí $k$). 
 
-We now use the formula of inclusion-exclusion to count the number of permutations with at least one fixed point. For this we need to learn to count sizes of an intersection of sets $A_i$, as follows:
+Bây giờ chúng ta sử dụng công thức bao hàm-loại trừ để đếm số hoán vị có ít nhất một điểm cố định. Đối với điều này, chúng ta cần học cách đếm kích thước của một giao của các tập hợp $A_i$, như sau:
 
 $$\begin{eqnarray}
-\left| A_p \right| &=& (n-1)!\ , \\
-\left| A_p \cap A_q \right| &=& (n-2)!\ , \\
-\left| A_p \cap A_q \cap A_r \right| &=& (n-3)!\ , \\
-\cdots ,
+\left| A_p \right| &=& (n-1)!\ ,
+\left| A_p \cap A_q \right| &=& (n-2)!\ ,
+\left| A_p \cap A_q \cap A_r \right| &=& (n-3)!\ ,
+\cdots \ ,
 \end{eqnarray}$$
 
-because if we know that the number of fixed points is equal $x$, then we know the position of $x$ elements of the permutation, and all other $(n-x)$ elements can be placed anywhere.
+bởi vì nếu chúng ta biết rằng số lượng các điểm cố định bằng $x$, thì chúng ta biết vị trí của $x$ phần tử của hoán vị, và tất cả các phần tử khác $(n-x)$ có thể được đặt ở bất cứ đâu.
 
-Substituting this into the formula of inclusion-exclusion, and given that the number of ways to choose a subset of size $x$ from the set of $n$ elements is equal to $\binom{n}{x}$, we obtain a formula for the number of permutations with at least one fixed point:
+Thay thế điều này vào công thức bao hàm-loại trừ, và cho rằng số cách để chọn một tập con có kích thước $x$ từ tập hợp $n$ phần tử bằng $\binom{n}{x}$, chúng ta có được một công thức cho số hoán vị có ít nhất một điểm cố định:
 
 $$\binom{n}{1} \cdot (n-1)! - \binom{n}{2} \cdot (n-2)! + \binom{n}{3} \cdot (n-3)! - \cdots \pm \binom{n}{n} \cdot (n-n)! $$
 
-Then the number of permutations without fixed points is equal to:
+Khi đó số hoán vị không có điểm cố định bằng:
 
 $$n! - \binom{n}{1} \cdot (n-1)! + \binom{n}{2} \cdot (n-2)! - \binom{n}{3} \cdot (n-3)! + \cdots \pm \binom{n}{n} \cdot (n-n)! $$
 
-Simplifying this expression, we obtain **exact and approximate expressions for the number of permutations without fixed points**:
+Đơn giản hóa biểu thức này, chúng ta có được **biểu thức chính xác và gần đúng cho số hoán vị không có điểm cố định**:
 
 $$ n! \left( 1 - \frac{1}{1!} + \frac{1}{2!} - \frac{1}{3!} + \cdots \pm \frac{1}{n!} \right ) \approx \frac{n!}{e} $$
 
-(because the sum in brackets are the first $n+1$ terms of the expansion in Taylor series $e^{-1}$)
+(vì tổng trong ngoặc là $n+1$ số hạng đầu tiên của khai triển chuỗi Taylor $e^{-1}$)
 
-It is worth noting that a similar problem can be solved this way: when you need the fixed points were not among the $m$ first elements of permutations (and not among all, as we just solved). The formula obtained is as the given above accurate formula, but it will go up to the sum of $k$, instead of $n$.
+Đáng chú ý là một bài toán tương tự có thể được giải quyết theo cách này: khi bạn cần các điểm cố định không nằm trong số $m$ phần tử đầu tiên của hoán vị (và không phải trong số tất cả, như chúng ta vừa giải quyết). Công thức thu được giống như công thức chính xác đã cho ở trên, nhưng nó sẽ đi đến tổng của $k$, thay vì $n$.
 
-## Practice Problems
+## Bài tập thực hành
 
-A list of tasks that can be solved using the principle of inclusions-exclusions:
+Một danh sách các nhiệm vụ có thể được giải quyết bằng nguyên lý bao hàm-loại trừ:
 
-* [UVA #10325 "The Lottery" [difficulty: low]](http://uva.onlinejudge.org/index.php?option=onlinejudge&page=show_problem&problem=1266)
-* [UVA #11806 "Cheerleaders" [difficulty: low]](http://uva.onlinejudge.org/index.php?option=com_onlinejudge&Itemid=8&page=show_problem&problem=2906)
-* [TopCoder SRM 477 "CarelessSecretary" [difficulty: low]](http://www.topcoder.com/stat?c=problem_statement&pm=10875)
-* [TopCoder TCHS 16 "Divisibility" [difficulty: low]](http://community.topcoder.com/stat?c=problem_statement&pm=6658&rd=10068)
-* [SPOJ #6285 NGM2 , "Another Game With Numbers" [difficulty: low]](http://www.spoj.com/problems/NGM2/)
-* [TopCoder SRM 382 "CharmingTicketsEasy" [difficulty: medium]](http://community.topcoder.com/stat?c=problem_statement&pm=8470)
-* [TopCoder SRM 390 "SetOfPatterns" [difficulty: medium]](http://www.topcoder.com/stat?c=problem_statement&pm=8307)
-* [TopCoder SRM 176 "Deranged" [difficulty: medium]](http://community.topcoder.com/stat?c=problem_statement&pm=2013)
-* [TopCoder SRM 457 "TheHexagonsDivOne" [difficulty: medium]](http://community.topcoder.com/stat?c=problem_statement&pm=10702&rd=14144&rm=303184&cr=22697599)
-* [SPOJ #4191 MSKYCODE "Sky Code" [difficulty: medium]](http://www.spoj.com/problems/MSKYCODE/)
-* [SPOJ #4168 SQFREE "Square-free integers" [difficulty: medium]](http://www.spoj.com/problems/SQFREE/)
-* [CodeChef "Count Relations" [difficulty: medium]](http://www.codechef.com/JAN11/problems/COUNTREL/)
+* [UVA #10325 "The Lottery" [độ khó: thấp]](http://uva.onlinejudge.org/index.php?option=onlinejudge&page=show_problem&problem=1266)
+* [UVA #11806 "Cheerleaders" [độ khó: thấp]](http://uva.onlinejudge.org/index.php?option=com_onlinejudge&Itemid=8&page=show_problem&problem=2906)
+* [TopCoder SRM 477 "CarelessSecretary" [độ khó: thấp]](http://www.topcoder.com/stat?c=problem_statement&pm=10875)
+* [TopCoder TCHS 16 "Divisibility" [độ khó: thấp]](http://community.topcoder.com/stat?c=problem_statement&pm=6658&rd=10068)
+* [SPOJ #6285 NGM2 , "Another Game With Numbers" [độ khó: thấp]](http://www.spoj.com/problems/NGM2/)
+* [TopCoder SRM 382 "CharmingTicketsEasy" [độ khó: trung bình]](http://community.topcoder.com/stat?c=problem_statement&pm=8470)
+* [TopCoder SRM 390 "SetOfPatterns" [độ khó: trung bình]](http://www.topcoder.com/stat?c=problem_statement&pm=8307)
+* [TopCoder SRM 176 "Deranged" [độ khó: trung bình]](http://community.topcoder.com/stat?c=problem_statement&pm=2013)
+* [TopCoder SRM 457 "TheHexagonsDivOne" [độ khó: trung bình]](http://community.topcoder.com/stat?c=problem_statement&pm=10702&rd=14144&rm=303184&cr=22697599)
+* [SPOJ #4191 MSKYCODE "Sky Code" [độ khó: trung bình]](http://www.spoj.com/problems/MSKYCODE/)
+* [SPOJ #4168 SQFREE "Square-free integers" [độ khó: trung bình]](http://www.spoj.com/problems/SQFREE/)
+* [CodeChef "Count Relations" [độ khó: trung bình]](http://www.codechef.com/JAN11/problems/COUNTREL/)
 * [SPOJ - Almost Prime Numbers Again](http://www.spoj.com/problems/KPRIMESB/)
 * [SPOJ - Find number of Pair of Friends](http://www.spoj.com/problems/IITKWPCH/)
 * [SPOJ - Balanced Cow Subsets](http://www.spoj.com/problems/SUBSET/)
-* [SPOJ - EASY MATH [difficulty: medium]](http://www.spoj.com/problems/EASYMATH/)
-* [SPOJ - MOMOS - FEASTOFPIGS [difficulty: easy]](https://www.spoj.com/problems/MOMOS/)
-* [Atcoder - Grid 2 [difficulty: easy]](https://atcoder.jp/contests/dp/tasks/dp_y/)
+* [SPOJ - EASY MATH [độ khó: trung bình]](http://www.spoj.com/problems/EASYMATH/)
+* [SPOJ - MOMOS - FEASTOFPIGS [độ khó: dễ]](https://www.spoj.com/problems/MOMOS/)
+* [Atcoder - Grid 2 [độ khó: dễ]](https://atcoder.jp/contests/dp/tasks/dp_y/)
 * [Codeforces - Count GCD](https://codeforces.com/contest/1750/problem/D)

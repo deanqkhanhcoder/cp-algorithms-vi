@@ -4,58 +4,55 @@ tags:
 e_maxx_link: circle_line_intersection
 ---
 
-# Circle-Line Intersection
+# Giao của đường tròn và đường thẳng
 
-Given the coordinates of the center of a circle and its radius, and the equation of a line, you're required to find the points of intersection.
+Cho tọa độ tâm và bán kính của một đường tròn, và phương trình của một đường thẳng, bạn được yêu cầu tìm các điểm giao.
 
-## Solution
+## Giải pháp
 
-Instead of solving the system of two equations, we will approach the problem geometrically. This way we get a more accurate solution from the point of view of numerical stability.
+Thay vì giải hệ hai phương trình, chúng ta sẽ tiếp cận bài toán một cách hình học. Bằng cách này, chúng ta có được một giải pháp chính xác hơn từ quan điểm ổn định số.
 
-We assume without loss of generality that the circle is centered at the origin. If it's not, we translate it there and correct the $C$ constant in the line equation. So we have a circle centered at $(0,0)$ of radius $r$ and a line with equation $Ax+By+C=0$.
+Không mất tính tổng quát, chúng ta giả sử rằng đường tròn có tâm tại gốc tọa độ (nếu không đúng, chúng ta tịnh tiến nó đến đó và sửa hằng số $C$ trong phương trình đường thẳng). Vì vậy, chúng ta có một đường tròn có tâm tại $(0,0)$ bán kính $r$ và một đường thẳng có phương trình $Ax+By+C=0$.
 
-Let's start by find the point on the line which is closest to the origin $(x_0, y_0)$. First, it has to be at a distance
+Hãy bắt đầu bằng cách tìm điểm trên đường thẳng gần gốc tọa độ nhất $(x_0, y_0)$. Đầu tiên, nó phải ở một khoảng cách
 
 $$ d_0 = \frac{|C|}{\sqrt{A^2+B^2}} $$
 
-Second, since the vector $(A, B)$ is perpendicular to the line, the coordinates of the point must be proportional to the coordinates of this vector. Since we know the distance of the point to the origin, we just need to scale the vector $(A, B)$ to this length, and we'll get:
+Thứ hai, vì vector $(A, B)$ vuông góc với đường thẳng, tọa độ của điểm phải tỷ lệ với tọa độ của vector này. Vì chúng ta biết khoảng cách của điểm đến gốc tọa độ, chúng ta chỉ cần co giãn vector $(A, B)$ đến độ dài này, và chúng ta sẽ có:
 
 $$\begin{align}
-x_0 &= - \frac{AC}{A^2 + B^2} \\
-y_0 &= - \frac{BC}{A^2 + B^2} 
+x_0 &= - \frac{AC}{A^2 + B^2} \\y_0 &= - \frac{BC}{A^2 + B^2} 
 \end{align}$$
 
-The minus signs are not obvious, but they can be easily verified by substituting $x_0$ and $y_0$ in the equation of the line.
+Các dấu trừ không rõ ràng, nhưng chúng có thể dễ dàng được xác minh bằng cách thay thế $x_0$ và $y_0$ vào phương trình của đường thẳng.
 
-At this stage we can determine the number of intersection points, and even find the solution when there is one or zero points. Indeed, if the distance from $(x_0, y_0)$ to the origin $d_0$ is greater than the radius $r$, the answer is **zero points**. If $d_0=r$, the answer is **one point** $(x_0, y_0)$. If $d_0<r$, there are two points of intersection, and now we have to find their coordinates.
+Ở giai đoạn này, chúng ta có thể xác định số điểm giao, và thậm chí tìm ra nghiệm khi có một hoặc không có điểm nào. Thật vậy, nếu khoảng cách từ $(x_0, y_0)$ đến gốc tọa độ $d_0$ lớn hơn bán kính $r$, câu trả lời là **không có điểm nào**. Nếu $d_0=r$, câu trả lời là **một điểm** $(x_0, y_0)$. Nếu $d_0<r$, có hai điểm giao, và bây giờ chúng ta phải tìm tọa độ của chúng.
 
-So, we know that the point $(x_0, y_0)$ is inside the circle. The two points of intersection, $(a_x, a_y)$ and $(b_x, b_y)$, must belong to the line $Ax+By+C=0$ and must be at the same distance $d$ from $(x_0, y_0)$, and this distance is easy to find:
+Vì vậy, chúng ta biết rằng điểm $(x_0, y_0)$ nằm bên trong đường tròn. Hai điểm giao, $(a_x, a_y)$ và $(b_x, b_y)$, phải thuộc đường thẳng $Ax+By+C=0$ và phải ở cùng một khoảng cách $d$ từ $(x_0, y_0)$, và khoảng cách này dễ dàng tìm thấy:
 
 $$ d = \sqrt{r^2 - \frac{C^2}{A^2 + B^2}} $$
 
-Note that the vector $(-B, A)$ is collinear to the line, and thus we can find the points in question by adding and subtracting  vector $(-B,A)$, scaled to the length $d$, to the point $(x_0, y_0)$. 
+Lưu ý rằng vector $(-B, A)$ cùng phương với đường thẳng, và do đó chúng ta có thể tìm các điểm cần tìm bằng cách cộng và trừ vector $(-B,A)$, được co giãn đến độ dài $d$, vào điểm $(x_0, y_0)$. 
 
-Finally, the equations of the two points of intersection are:
+Cuối cùng, phương trình của hai điểm giao là:
 
 $$\begin{align}
-m &= \sqrt{\frac{d^2}{A^2 + B^2}} \\
-a_x &= x_0 + B \cdot m, a_y = y_0 - A \cdot m \\
-b_x &= x_0 - B \cdot m, b_y = y_0 + A \cdot m
+m &= \sqrt{\frac{d^2}{A^2 + B^2}} \\a_x &= x_0 + B \cdot m, a_y = y_0 - A \cdot m \\b_x &= x_0 - B \cdot m, b_y = y_0 + A \cdot m
 \end{align}$$
 
-Had we solved the original system of equations using algebraic methods, we would likely get an answer in a different form with a larger error. The geometric method described here is more graphic and more accurate.
+Nếu chúng ta đã giải hệ phương trình ban đầu bằng các phương pháp đại số, chúng ta có thể sẽ nhận được một câu trả lời ở dạng khác với sai số lớn hơn. Phương pháp hình học được mô tả ở đây sinh động hơn và chính xác hơn.
 
-## Implementation
+## Cài đặt
 
-As indicated at the outset, we assume that the circle is centered at the origin, and therefore the input to the program is the radius $r$ of the circle and the parameters $A$, $B$ and $C$ of the equation of the line.
+Như đã chỉ ra ở đầu, chúng ta giả sử rằng đường tròn có tâm tại gốc tọa độ, và do đó đầu vào của chương trình là bán kính $r$ của đường tròn và các tham số $A$, $B$ và $C$ của phương trình đường thẳng.
 
 ```cpp
-double r, a, b, c; // given as input
+double r, a, b, c; // được cho làm đầu vào
 double x0 = -a*c/(a*a+b*b), y0 = -b*c/(a*a+b*b);
 if (c*c > r*r*(a*a+b*b)+EPS)
-    puts ("no points");
+    puts ("không có điểm nào");
 else if (abs (c*c - r*r*(a*a+b*b)) < EPS) {
-    puts ("1 point");
+    puts ("1 điểm");
     cout << x0 << ' ' << y0 << '\n';
 }
 else {
@@ -66,11 +63,13 @@ else {
     bx = x0 - b * mult;
     ay = y0 - a * mult;
     by = y0 + a * mult;
-    puts ("2 points");
+    puts ("2 điểm");
     cout << ax << ' ' << ay << '\n' << bx << ' ' << by << '\n';
 }
 ```
 
-## Practice Problems
+## Bài tập thực hành
 
 - [CODECHEF: ANDOOR](https://www.codechef.com/problems/ANDOOR)
+
+```

@@ -3,124 +3,121 @@ tags:
   - Original
 ---
 
-# Knapsack Problem
-Prerequisite knowledge: [Introduction to Dynamic Programming](https://cp-algorithms.com/dynamic_programming/intro-to-dp.html)
+# Bài toán Balo
+Kiến thức yêu cầu: [Giới thiệu về Quy hoạch động](http://127.0.0.1:8000/dynamic_programming/intro-to-dp.html)
 
-## Introduction
-Consider the following example:
-
+## Giới thiệu
+Xét ví dụ sau:
 ### [[USACO07 Dec] Charm Bracelet](https://www.acmicpc.net/problem/6144) 
-There are $n$ distinct items and a knapsack of capacity $W$. Each item has 2 attributes, weight ($w_{i}$) and value ($v_{i}$). 
-You have to select a subset of items to put into the knapsack such that the total weight does not exceed the capacity $W$ and the total value is maximized.
+Có $n$ vật phẩm phân biệt và một chiếc balo có sức chứa $W$. Mỗi vật có hai thuộc tính: trọng lượng ($w_{i}$) và giá trị ($v_{i}$).
+Bạn cần chọn một tập con các vật để bỏ vào balo sao cho tổng trọng lượng không vượt quá $W$ và tổng giá trị là lớn nhất.
 
-In the example above, each object has only two possible states (taken or not taken),
-corresponding to binary 0 and 1. Thus, this type of problem is called "0-1 knapsack problem".
+Trong ví dụ trên, mỗi vật chỉ có hai trạng thái (lấy hoặc không lấy), tương ứng với nhị phân 0 và 1. Vì vậy, loại bài toán này được gọi là "balo 0-1".
 
-## 0-1 Knapsack
+## Balo 0-1
 
-### Explanation
+### Giải thích
 
-In the example above, the input to the problem is the following: the weight of $i^{th}$ item $w_{i}$, the value of $i^{th}$ item $v_{i}$, and the total capacity of the knapsack $W$.
+Với ví dụ trên, đầu vào của bài toán là: trọng lượng của vật thứ $i$ là $w_{i}$, giá trị là $v_{i}$, và sức chứa tối đa của balo là $W$.
 
-Let $f_{i, j}$ be the dynamic programming state holding the maximum total value the knapsack can carry with capacity $j$, when only the first $i$ items are considered.
+Gọi $f_{i, j}$ là trạng thái quy hoạch động lưu giá trị lớn nhất balo có thể đạt khi chỉ xét $i$ vật đầu tiên và sức chứa còn lại là $j$.
 
-Assuming that all states of the first $i-1$ items have been processed, what are the options for the $i^{th}$ item?
+Giả sử tất cả các trạng thái của $i-1$ vật đầu đã được xử lý, vật thứ $i$ có những lựa chọn nào?
 
-- When it is not put into the knapsack, the remaining capacity remains unchanged and total value does not change. Therefore, the maximum value in this case is $f_{i-1, j}$
-- When it is put into the knapsack, the remaining capacity decreases by $w_{i}$ and the total value increases by $v_{i}$,
-so the maximum value in this case is $f_{i-1, j-w_i} + v_i$
+- Nếu không cho vật vào balo, sức chứa còn lại không đổi và tổng giá trị không thay đổi. Do đó, giá trị tối đa trong trường hợp này là $f_{i-1, j}$.
+- Nếu cho vật vào balo, sức chứa còn lại giảm $w_{i}$ và tổng giá trị tăng $v_{i}$, nên giá trị tối đa trong trường hợp này là $f_{i-1, j-w_i} + v_i$.
 
-From this we can derive the dp transition equation:
+Từ đó suy ra công thức chuyển tiếp:
 
 $$f_{i, j} = \max(f_{i-1, j}, f_{i-1, j-w_i} + v_i)$$
 
-Further, as $f_{i}$ is only dependent on $f_{i-1}$, we can remove the first dimension. We obtain the transition rule
+Hơn nữa, vì $f_{i}$ chỉ phụ thuộc vào $f_{i-1}$ nên ta có thể loại bỏ chỉ số $i$. Ta có quy tắc chuyển tiếp:
 
 $$f_j \gets \max(f_j, f_{j-w_i}+v_i)$$
 
-that should be executed in the **decreasing** order of $j$ (so that $f_{j-w_i}$ implicitly corresponds to $f_{i-1,j-w_i}$ and not $f_{i,j-w_i}$).
+quy tắc này phải được thực hiện theo thứ tự **giảm dần** của $j$ (để $f_{j-w_i}$ tương ứng với $f_{i-1,j-w_i}$ chứ không phải $f_{i,j-w_i}$).
 
-**It is important to understand this transition rule, because most of the transitions for knapsack problems are derived in a similar way.**
+**Hiểu rõ quy tắc chuyển tiếp này rất quan trọng, vì hầu hết các chuyển tiếp cho bài toán balo được suy ra theo cách tương tự.**
 
-### Implementation
+### Cài đặt
 
-The algorithm described can be implemented in $O(nW)$ as:
+Thuật toán mô tả có thể được cài đặt trong $O(nW)$ như sau:
 
-```.c++
+``` .c++
 for (int i = 1; i <= n; i++)
   for (int j = W; j >= w[i]; j--)
     f[j] = max(f[j], f[j - w[i]] + v[i]);
 ```
 
-Again, note the order of execution. It should be strictly followed to ensure the following invariant: Right before the pair $(i, j)$ is processed, $f_k$ corresponds to $f_{i,k}$ for $k > j$, but to $f_{i-1,k}$ for $k < j$. This ensures that $f_{j-w_i}$ is taken from the $(i-1)$-th step, rather than from the $i$-th one.
+Một lần nữa, lưu ý thứ tự thực thi. Cần tuân thủ chặt chẽ để đảm bảo bất biến sau: Ngay trước khi cặp $(i, j)$ được xử lý, $f_k$ tương ứng với $f_{i,k}$ khi $k > j$, nhưng tương ứng với $f_{i-1,k}$ khi $k < j$. Điều này đảm bảo $f_{j-w_i}$ được lấy từ bước $(i-1)$ thay vì bước $i$.
 
-## Complete Knapsack
+## Balo đầy đủ (Complete Knapsack)
 
-The complete knapsack model is similar to the 0-1 knapsack, the only difference from the 0-1 knapsack is that an item can be selected an unlimited number of times instead of only once.
+Mô hình balo đầy đủ tương tự như balo 0-1, khác biệt duy nhất là một vật có thể được chọn số lần không giới hạn thay vì chỉ một lần.
 
-We can refer to the idea of 0-1 knapsack to define the state: $f_{i, j}$, the maximum value the knapsack can obtain using the first $i$ items with maximum capacity $j$.
+Ta vẫn có thể dùng ý tưởng của balo 0-1 để định nghĩa trạng thái: $f_{i, j}$ là giá trị lớn nhất balo có thể đạt được khi xét $i$ vật đầu tiên với sức chứa tối đa $j$.
 
-It should be noted that although the state definition is similar to that of a 0-1 knapsack, its transition rule is different from that of a 0-1 knapsack.
+Cần lưu ý rằng mặc dù định nghĩa trạng thái giống balo 0-1, quy tắc chuyển tiếp lại khác.
 
-### Explanation
+### Giải thích
 
-The trivial approach is, for the first $i$ items, enumerate how many times each item is to be taken. The time complexity of this is $O(n^2W)$.
+Cách hiển nhiên là với $i$ vật đầu, liệt kê số lần lấy mỗi vật. Độ phức tạp của cách này là $O(n^2W)$.
 
-This yields the following transition equation:
+Công thức chuyển tiếp thu được là:
 
 $$f_{i, j} = \max\limits_{k=0}^{\infty}(f_{i-1, j-k\cdot w_i} + k\cdot v_i)$$
 
-At the same time, it simplifies into a "flat" equation:
+Đồng thời, nó có thể được đơn giản hóa thành dạng "phẳng":
 
 $$f_{i, j} = \max(f_{i-1, j},f_{i, j-w_i} + v_i)$$
 
-The reason this works is that $f_{i, j-w_i}$ has already been updated by $f_{i, j-2\cdot w_i}$ and so on.
+Lý do cách này hoạt động là vì $f_{i, j-w_i}$ đã được cập nhật từ $f_{i, j-2\cdot w_i}$ và các bước trước đó.
 
-Similar to the 0-1 knapsack, we can remove the first dimension to optimize the space complexity. This gives us the same transition rule as 0-1 knapsack.
+Tương tự balo 0-1, ta có thể loại bỏ chỉ số $i$ để tối ưu bộ nhớ, dẫn tới cùng quy tắc chuyển tiếp:
 
 $$f_j \gets \max(f_j, f_{j-w_i}+v_i)$$
 
-### Implementation
+### Cài đặt
 
-The algorithm described can be implemented in $O(nW)$ as:
+Thuật toán có thể được cài đặt trong $O(nW)$ như sau:
 
-```.c++
+``` .c++
 for (int i = 1; i <= n; i++)
   for (int j = w[i]; j <= W; j++)
     f[j] = max(f[j], f[j - w[i]] + v[i]);
 ```
 
-Despite having the same transition rule, the code above is incorrect for 0-1 knapsack.
+Mặc dù có cùng quy tắc chuyển tiếp, đoạn mã trên không đúng cho balo 0-1.
 
-Observing the code carefully, we see that for the currently processed item $i$ and the current state $f_{i,j}$, 
-when $j\geqslant w_{i}$, $f_{i,j}$ will be affected by $f_{i,j-w_{i}}$. 
-This is equivalent to being able to put item $i$ into the backpack multiple times, which is consistent with the complete knapsack problem and not the 0-1 knapsack problem.
+Quan sát kỹ, ta thấy với vật đang xử lý $i$ và trạng thái hiện tại $f_{i,j}$,
+khi $j\geqslant w_{i}$, $f_{i,j}$ sẽ bị ảnh hưởng bởi $f_{i,j-w_{i}}$.
+Điều này tương đương với việc có thể cho vật $i$ vào balo nhiều lần, phù hợp với balo đầy đủ chứ không phải balo 0-1.
 
-## Multiple Knapsack
+## Balo nhiều (Multiple Knapsack)
 
-Multiple knapsack is also a variant of 0-1 knapsack. The main difference is that there are $k_i$ of each item instead of just $1$.
+Balo nhiều là một biến thể của balo 0-1. Khác biệt chính là có $k_i$ bản sao của mỗi vật thay vì chỉ 1.
 
-### Explanation
+### Giải thích
 
-A very simple idea is: "choose each item $k_i$ times" is equivalent to "$k_i$ of the same item is selected one by one". Thus converting it to a 0-1 knapsack model, which can be described by the transition function:
+Ý tưởng rất đơn giản là: "chọn mỗi vật $k_i$ lần" tương đương với "chọn $k_i$ bản sao của cùng một vật từng cái một". Do đó chuyển về mô hình balo 0-1, có thể mô tả bằng công thức chuyển tiếp:
 
 $$f_{i, j} = \max_{k=0}^{k_i}(f_{i-1,j-k\cdot w_i} + k\cdot v_i)$$
 
-The time complexity of this process is $O(W\sum\limits_{i=1}^{n}k_i)$
+Độ phức tạp thời gian của cách này là $O(W\sum\limits_{i=1}^{n}k_i)$.
 
-### Binary Grouping Optimization
+### Tối ưu hoá chia theo nhị phân (Binary Grouping)
 
-We still consider converting the multiple knapsack model into a 0-1 knapsack model for optimization. The time complexity $O(Wn)$ can not be further optimized with the approach above, so we focus on $O(\sum k_i)$ component.
+Chúng ta vẫn cân nhắc chuyển mô hình balo nhiều sang mô hình balo 0-1 để tối ưu. Độ phức tạp $O(Wn)$ không thể tối ưu thêm bằng cách trên, do đó ta tập trung vào thành phần $O(\sum k_i)$.
 
-Let $A_{i, j}$ denote the $j^{th}$ item split from the $i^{th}$ item. In the trivial approach discussed above, $A_{i, j}$ represents the same item for all $j \leq k_i$. The main reason for our low efficiency is that we are doing a lot of repetetive work. For example, consider selecting $\{A_{i, 1},A_{i, 2}\}$, and selecting $\{A_{i, 2}, A_{i, 3}\}$. These two situations are completely equivalent. Thus optimizing the splitting method will greatly reduce the time complexity.
+Gọi $A_{i, j}$ là bản tách thứ $j$ của vật thứ $i$. Trong cách tách đơn giản đã nêu, $A_{i, j}$ biểu diễn cùng một vật cho mọi $j \le k_i$. Nguyên nhân chính dẫn đến hiệu suất thấp là ta thực hiện nhiều công việc lặp lại. Ví dụ, việc chọn \{A_{i, 1},A_{i, 2}\} và chọn \{A_{i, 2}, A_{i, 3}\} đôi khi tương đương. Do đó tối ưu phương pháp tách sẽ làm giảm đáng kể độ phức tạp thời gian.
 
-The grouping is made more efficient by using binary grouping.
+Việc gom nhóm được thực hiện hiệu quả hơn bằng cách sử dụng phân nhóm theo nhị phân.
 
-Specifically, $A_{i, j}$ holds $2^j$ individual items ($j\in[0,\lfloor \log_2(k_i+1)\rfloor-1]$).If $k_i + 1$ is not an integer power of $2$, another bundle of size $k_i-(2^{\lfloor \log_2(k_i+1)\rfloor}-1)$ is used to make up for it.
+Cụ thể, $A_{i, j}$ tương ứng với $2^j$ vật đơn lẻ ($j\in[0,\lfloor \log_2(k_i+1)\rfloor-1]$). Nếu $k_i + 1$ không phải lũy thừa của 2, một nhóm bổ sung có kích thước $k_i-(2^{\lfloor \log_2(k_i+1)\rfloor}-1)$ sẽ được dùng để bù.
 
-Through the above splitting method, it is possible to obtain any sum of $\leq k_i$ items by selecting a few $A_{i, j}$'s. After splitting each item in the described way, it is sufficient to use 0-1 knapsack method to solve the new formulation of the problem.
+Thông qua phương pháp tách trên, có thể tạo mọi tổng không vượt quá $k_i$ bằng cách chọn một vài $A_{i, j}$. Sau khi tách, ta chỉ cần áp dụng phương pháp balo 0-1 để giải bài toán đã chuyển đổi.
 
-This optimization gives us a time complexity of $O(W\sum\limits_{i=1}^{n}\log k_i)$.
+Tối ưu này cho độ phức tạp thời gian $O(W\sum\limits_{i=1}^{n}\log k_i)$.
 
 ### Implementation
 
@@ -140,27 +137,27 @@ for (int i = 1; i <= n; i++) {
 }
 ```
 
-### Monotone Queue Optimization
+### Tối ưu bằng hàng đợi đơn điệu (Monotone Queue Optimization)
 
-In this optimization, we aim to convert the knapsack problem into a [maximum queue](https://cp-algorithms.com/data_structures/stack_queue_modification.html) one.
+Trong tối ưu này, mục tiêu là chuyển bài toán balo thành bài toán [hàng đợi cực đại](http://127.0.0.1:8000/data_structures/stack_queue_modification.html).
 
-For convenience of description, let $g_{x, y} = f_{i, x \cdot w_i + y} ,\space g'_{x, y} = f_{i-1, x \cdot w_i + y}$. Then the transition rule can be written as:
+Để tiện mô tả, đặt $g_{x, y} = f_{i, x \cdot w_i + y}$ và $g'_{x, y} = f_{i-1, x \cdot w_i + y}$. Khi đó quy tắc chuyển tiếp có thể viết là:
 
 $$g_{x, y} = \max_{k=0}^{k_i}(g'_{x-k, y} + v_i \cdot k)$$
 
-Further, let $G_{x, y} = g'_{x, y} - v_i \cdot x$. Then the transition rule can be expressed as:
+Đặt tiếp $G_{x, y} = g'_{x, y} - v_i \cdot x$. Khi đó quy tắc chuyển tiếp có thể biểu diễn là:
 
 $$g_{x, y} \gets \max_{k=0}^{k_i}(G_{x-k, y}) + v_i \cdot x$$
 
-This transforms into a classic monotone queue optimization form. $G_{x, y}$ can be calculated in $O(1)$, so for a fixed $y$, we can calculate $g_{x, y}$ in $O(\lfloor \frac{W}{w_i} \rfloor)$ time.
-Therefore, the complexity of finding all $g_{x, y}$ is $O(\lfloor \frac{W}{w_i} \rfloor) \times O(w_i) = O(W)$.
-In this way, the total complexity of the algorithm is reduced to $O(nW)$. 
+Điều này biến thành dạng tối ưu điển hình sử dụng hàng đợi đơn điệu. $G_{x, y}$ có thể được tính trong $O(1)$, nên với mỗi $y$ cố định, ta có thể tính $g_{x, y}$ trong $O(\lfloor \frac{W}{w_i} \rfloor)$ thời gian.
+Do đó, độ phức tạp để tìm tất cả $g_{x, y}$ là $O(\lfloor \frac{W}{w_i} \rfloor) \times O(w_i) = O(W)$.
+Bằng cách này, tổng độ phức tạp của thuật toán giảm xuống còn $O(nW)$.
 
-## Mixed Knapsack
+## Balo hỗn hợp (Mixed Knapsack)
 
-The mixed knapsack problem involves a combination of the three problems described above. That is, some items can only be taken once, some can be taken infinitely, and some can be taken atmost $k$ times.
+Bài toán balo hỗn hợp là tổ hợp của ba mô hình đã mô tả ở trên. Tức là: có vật chỉ lấy được một lần, có vật lấy vô hạn lần, và có vật chỉ lấy được tối đa $k$ lần.
 
-The problem may seem daunting, but as long as you understand the core ideas of the previous knapsack problems and combine them together, you can do it. The pseudo code for the solution is as:
+Bài toán có vẻ phức tạp, nhưng nếu bạn hiểu các ý tưởng cốt lõi của các bài toán balo trước đó và kết hợp chúng lại, bạn có thể giải được. Pseudocode cho lời giải như sau:
 
 ```c++
 for (each item) {
@@ -173,7 +170,7 @@ for (each item) {
 }
 ```
 
-## Practise Problems
+## Bài tập thực hành
 
 - [Atcoder: Knapsack-1](https://atcoder.jp/contests/dp/tasks/dp_d)
 - [Atcoder: Knapsack-2](https://atcoder.jp/contests/dp/tasks/dp_e)

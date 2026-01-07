@@ -4,102 +4,102 @@ tags:
 e_maxx_link: fibonacci_numbers
 ---
 
-# Fibonacci Numbers
+# Số Fibonacci
 
-The Fibonacci sequence is defined as follows:
+Dãy Fibonacci được định nghĩa như sau:
 
 $$F_0 = 0, F_1 = 1, F_n = F_{n-1} + F_{n-2}$$
 
-The first elements of the sequence ([OEIS A000045](http://oeis.org/A000045)) are:
+Các phần tử đầu tiên của dãy ([OEIS A000045](http://oeis.org/A000045)) là:
 
 $$0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, ...$$
 
-## Properties
+## Các tính chất
 
-Fibonacci numbers possess a lot of interesting properties. Here are a few of them:
+Số Fibonacci có rất nhiều tính chất thú vị. Dưới đây là một vài trong số đó:
 
-* Cassini's identity:
+* Đồng nhất thức Cassini:
   
 $$F_{n-1} F_{n+1} - F_n^2 = (-1)^n$$
 
->This can be proved by induction. A one-line proof by Knuth comes from taking the determinant of the 2x2 matrix form below.
+>Điều này có thể được chứng minh bằng quy nạp. Một chứng minh một dòng của Knuth đến từ việc lấy định thức của dạng ma trận 2x2 dưới đây.
 
-* The "addition" rule:
+* Quy tắc "cộng":
   
 $$F_{n+k} = F_k F_{n+1} + F_{k-1} F_n$$
 
-* Applying the previous identity to the case $k = n$, we get:
+* Áp dụng đồng nhất thức trước đó cho trường hợp $k = n$, chúng ta có được:
   
 $$F_{2n} = F_n (F_{n+1} + F_{n-1})$$
 
-* From this we can prove by induction that for any positive integer $k$,  $F_{nk}$ is multiple of $F_n$.
+* Từ đó chúng ta có thể chứng minh bằng quy nạp rằng với mọi số nguyên dương $k$, $F_{nk}$ là bội của $F_n$.
 
-* The inverse is also true: if $F_m$ is multiple of $F_n$, then $m$ is multiple of $n$.
+* Điều ngược lại cũng đúng: nếu $F_m$ là bội của $F_n$, thì $m$ là bội của $n$.
 
-* GCD identity:
+* Đồng nhất thức ƯCLN:
   
 $$GCD(F_m, F_n) = F_{GCD(m, n)}$$
 
-* Fibonacci numbers are the worst possible inputs for Euclidean algorithm (see Lame's theorem in [Euclidean algorithm](euclid-algorithm.md))
+* Các số Fibonacci là các đầu vào tồi tệ nhất có thể cho thuật toán Euclid (xem định lý Lamé trong [thuật toán Euclid](euclid-algorithm.md))
 
-## Fibonacci Coding
+## Mã hóa Fibonacci
 
-We can use the sequence to encode positive integers into binary code words. According to Zeckendorf's theorem, any natural number $n$ can be uniquely represented as a sum of Fibonacci numbers:
+Chúng ta có thể sử dụng dãy số này để mã hóa các số nguyên dương thành các từ mã nhị phân. Theo định lý Zeckendorf, bất kỳ số tự nhiên $n$ nào cũng có thể được biểu diễn duy nhất dưới dạng tổng của các số Fibonacci:
 
 $$N = F_{k_1} + F_{k_2} + \ldots + F_{k_r}$$
 
-such that $k_1 \ge k_2 + 2,\ k_2 \ge k_3 + 2,\  \ldots,\  k_r \ge 2$ (i.e.: the representation cannot use two consecutive Fibonacci numbers).
+sao cho $k_1 \ge k_2 + 2,\ k_2 \ge k_3 + 2,\ \ldots,\ k_r \ge 2$ (tức là: biểu diễn không thể sử dụng hai số Fibonacci liên tiếp).
 
-It follows that any number can be uniquely encoded in the Fibonacci coding.
-And we can describe this representation with binary codes $d_0 d_1 d_2 \dots d_s 1$, where $d_i$ is $1$ if $F_{i+2}$ is used in the representation.
-The code will be appended by a $1$ to indicate the end of the code word.
-Notice that this is the only occurrence where two consecutive 1-bits appear.
+Từ đó suy ra rằng bất kỳ số nào cũng có thể được mã hóa duy nhất trong mã hóa Fibonacci.
+Và chúng ta có thể mô tả biểu diễn này bằng các mã nhị phân $d_0 d_1 d_2 \dots d_s 1$, trong đó $d_i$ là $1$ nếu $F_{i+2}$ được sử dụng trong biểu diễn.
+Mã sẽ được nối thêm một $1$ để chỉ ra cuối của từ mã.
+Lưu ý rằng đây là lần xuất hiện duy nhất mà hai bit 1 liên tiếp xuất hiện.
 
 $$\begin{eqnarray}
-1 &=& 1 &=& F_2 &=& (11)_F \\
-2 &=& 2 &=& F_3 &=& (011)_F \\
-6 &=& 5 + 1 &=& F_5 + F_2 &=& (10011)_F \\
-8 &=& 8 &=& F_6 &=& (000011)_F \\
-9 &=& 8 + 1 &=& F_6 + F_2 &=& (100011)_F \\
+1 &=& 1 &=& F_2 &=& (11)_F \
+2 &=& 2 &=& F_3 &=& (011)_F \
+6 &=& 5 + 1 &=& F_5 + F_2 &=& (10011)_F \
+8 &=& 8 &=& F_6 &=& (000011)_F \
+9 &=& 8 + 1 &=& F_6 + F_2 &=& (100011)_F \
 19 &=& 13 + 5 + 1 &=& F_7 + F_5 + F_2 &=& (1001011)_F
 \end{eqnarray}$$
 
-The encoding of an integer $n$ can be done with a simple greedy algorithm:
+Việc mã hóa một số nguyên $n$ có thể được thực hiện bằng một thuật toán tham lam đơn giản:
 
-1. Iterate through the Fibonacci numbers from the largest to the smallest until you find one less than or equal to $n$.
+1. Lặp qua các số Fibonacci từ lớn nhất đến nhỏ nhất cho đến khi bạn tìm thấy một số nhỏ hơn hoặc bằng $n$.
 
-2. Suppose this number was $F_i$. Subtract $F_i$ from $n$ and put a $1$ in the $i-2$ position of the code word (indexing from 0 from the leftmost to the rightmost bit).
+2. Giả sử số này là $F_i$. Trừ $F_i$ khỏi $n$ và đặt một $1$ vào vị trí $i-2$ của từ mã (đánh chỉ số từ 0 từ bit ngoài cùng bên trái đến bit ngoài cùng bên phải).
 
-3. Repeat until there is no remainder.
+3. Lặp lại cho đến khi không còn phần dư.
 
-4. Add a final $1$ to the codeword to indicate its end.
+4. Thêm một $1$ cuối cùng vào từ mã để chỉ ra cuối của nó.
 
-To decode a code word, first remove the final $1$. Then, if the $i$-th bit is set (indexing from 0 from the leftmost to the rightmost bit), sum $F_{i+2}$ to the number.
+Để giải mã một từ mã, trước tiên hãy xóa số $1$ cuối cùng. Sau đó, nếu bit thứ $i$ được bật (đánh chỉ số từ 0 từ bit ngoài cùng bên trái đến bit ngoài cùng bên phải), cộng $F_{i+2}$ vào số đó.
 
 
-## Formulas for the $n^{\text{th}}$ Fibonacci number { data-toc-label="Formulas for the <script type='math/tex'>n</script>-th Fibonacci number" }
+## Các công thức cho số Fibonacci thứ $n$ { data-toc-label="Formulas for the <script type='math/tex'>n</script>-th Fibonacci number" }
 
-### Closed-form expression
+### Biểu thức dạng đóng
 
-There is a formula known as "Binet's formula", even though it was already known by Moivre:
+Có một công thức được gọi là "công thức Binet", mặc dù nó đã được Moivre biết đến:
 
 $$F_n = \frac{\left(\frac{1 + \sqrt{5}}{2}\right)^n - \left(\frac{1 - \sqrt{5}}{2}\right)^n}{\sqrt{5}}$$
 
-This formula is easy to prove by induction, but it can be deduced with the help of the concept of generating functions or by solving a functional equation.
+Công thức này dễ chứng minh bằng quy nạp, nhưng nó có thể được suy ra với sự trợ giúp của khái niệm hàm sinh hoặc bằng cách giải một phương trình hàm.
 
-You can immediately notice that the second term's absolute value is always less than $1$, and it also decreases very rapidly (exponentially). Hence the value of the first term alone is "almost" $F_n$. This can be written strictly as: 
+Bạn có thể ngay lập tức nhận thấy rằng giá trị tuyệt đối của số hạng thứ hai luôn nhỏ hơn $1$, và nó cũng giảm rất nhanh (theo cấp số nhân). Do đó, giá trị của riêng số hạng đầu tiên là "gần như" $F_n$. Điều này có thể được viết một cách chính xác là:
 
 $$F_n = \left[\frac{\left(\frac{1 + \sqrt{5}}{2}\right)^n}{\sqrt{5}}\right]$$
 
-where the square brackets denote rounding to the nearest integer.
+trong đó dấu ngoặc vuông biểu thị làm tròn đến số nguyên gần nhất.
 
-As these two formulas would require very high accuracy when working with fractional numbers, they are of little use in practical calculations.
+Vì hai công thức này sẽ đòi hỏi độ chính xác rất cao khi làm việc với các số phân số, chúng ít được sử dụng trong các tính toán thực tế.
 
-### Fibonacci in linear time
+### Fibonacci trong thời gian tuyến tính
 
-The $n$-th Fibonacci number can be easily found in $O(n)$ by computing the numbers one by one up to $n$. However, there are also faster ways, as we will see.
+Số Fibonacci thứ $n$ có thể dễ dàng tìm thấy trong $O(n)$ bằng cách tính toán các số một theo một cho đến $n$. Tuy nhiên, cũng có những cách nhanh hơn, như chúng ta sẽ thấy.
 
-We can start from an iterative approach, to take advantage of the use of the formula $F_n = F_{n-1} + F_{n-2}$, therefore, we will simply precalculate those values in an array. Taking into account the base cases for $F_0$ and $F_1$.
+Chúng ta có thể bắt đầu từ một phương pháp lặp, để tận dụng việc sử dụng công thức $F_n = F_{n-1} + F_{n-2}$, do đó, chúng ta sẽ chỉ cần tính trước các giá trị đó trong một mảng. Có tính đến các trường hợp cơ sở cho $F_0$ và $F_1$.
 
 ```{.cpp file=fibonacci_linear}
 int fib(int n) {
@@ -114,11 +114,11 @@ int fib(int n) {
 }
 ```
 
-In this way, we obtain a linear solution, $O(n)$ time, saving all the values prior to $n$ in the sequence.
+Theo cách này, chúng ta có được một giải pháp tuyến tính, thời gian $O(n)$, lưu tất cả các giá trị trước $n$ trong dãy.
 
-### Matrix form
+### Dạng ma trận
 
-To go from $(F_n, F_{n-1})$ to $(F_{n+1}, F_n)$, we can express the linear recurrence as a 2x2 matrix multiplication:
+Để đi từ $(F_n, F_{n-1})$ đến $(F_{n+1}, F_n)$, chúng ta có thể biểu diễn công thức truy hồi tuyến tính dưới dạng một phép nhân ma trận 2x2:
 
 $$
 \begin{pmatrix}
@@ -141,9 +141,9 @@ F_{n}
 \end{pmatrix}
 $$
 
-This lets us treat iterating the recurrence as repeated matrix multiplication, which has nice properties. In particular,
+Điều này cho phép chúng ta xem việc lặp lại công thức truy hồi như là phép nhân ma trận lặp đi lặp lại, có các thuộc tính tốt. Cụ thể,
 
-$$
+$$ 
 \begin{pmatrix}
 1 & 1 \\
 1 & 0
@@ -159,22 +159,32 @@ F_{n}
 \end{pmatrix}
 $$
 
-where $F_1 = 1, F_0 = 0$. 
-In fact, since 
+trong đó $F_1 = 1, F_0 = 0$. 
+Trên thực tế, vì 
 
-$$
-\begin{pmatrix} 1 & 1 \\ 1 & 0 \end{pmatrix}
-= \begin{pmatrix} F_2 & F_1 \\ F_1 & F_0 \end{pmatrix}
-$$
-
-we can use the matrix directly:
-
-$$
-\begin{pmatrix} 1 & 1 \\ 1 & 0 \end{pmatrix}^n
-= \begin{pmatrix} F_{n+1} & F_n \\ F_n & F_{n-1} \end{pmatrix}
+$$ 
+\begin{pmatrix} 1 & 1 \\
+1 & 0 
+\end{pmatrix}
+= 
+\begin{pmatrix} F_2 & F_1 \\
+F_1 & F_0 
+\end{pmatrix}
 $$
 
-Thus, in order to find $F_n$ in $O(\log  n)$ time, we must raise the matrix to n. (See [Binary exponentiation](binary-exp.md))
+chúng ta có thể sử dụng ma trận trực tiếp:
+
+$$ 
+\begin{pmatrix} 1 & 1 \\
+1 & 0 
+\end{pmatrix}^n
+= 
+\begin{pmatrix} F_{n+1} & F_n \\
+F_n & F_{n-1} 
+\end{pmatrix}
+$$
+
+Do đó, để tìm $F_n$ trong thời gian $O(\log  n)$, chúng ta phải nâng ma trận lên lũy thừa n. (Xem [Lũy thừa nhị phân](binary-exp.md))
 
 ```{.cpp file=fibonacci_matrix}
 struct matrix {
@@ -216,36 +226,33 @@ long long fib(int n) {
 }
 ```
 
-### Fast Doubling Method
+### Phương pháp nhân đôi nhanh
 
-By expanding the above matrix expression for $n = 2\cdot k$
+Bằng cách khai triển biểu thức ma trận ở trên cho $n = 2\cdot k$
 
-$$
+$$ 
 \begin{pmatrix}
-F_{2k+1} & F_{2k}\\
-F_{2k} & F_{2k-1}
+F_{2k+1} & F_{2k}\\ F_{2k} & F_{2k-1}
 \end{pmatrix}
 =
 \begin{pmatrix}
-1 & 1\\
-1 & 0
+1 & 1\\ 1 & 0
 \end{pmatrix}^{2k}
 =
 \begin{pmatrix}
-F_{k+1} & F_{k}\\
-F_{k} & F_{k-1}
+F_{k+1} & F_{k}\\ F_{k} & F_{k-1}
 \end{pmatrix}
 ^2
 $$
 
-we can find these simpler equations:
+chúng ta có thể tìm thấy các phương trình đơn giản hơn này:
 
 $$ \begin{align}
-F_{2k+1} &= F_{k+1}^2 + F_{k}^2 \\
-F_{2k} &= F_k(F_{k+1}+F_{k-1}) = F_k (2F_{k+1} - F_{k})\\
-\end{align}.$$
+F_{2k+1} &= F_{k+1}^2 + F_{k}^2 \\ F_{2k} &= F_k(F_{k+1}+F_{k-1}) = F_k (2F_{k+1} - F_{k})\\
+\end{align}.
+$$
 
-Thus using above two equations Fibonacci numbers can be calculated easily by the following code:
+Do đó, sử dụng hai phương trình trên, các số Fibonacci có thể được tính toán dễ dàng bằng đoạn mã sau:
 
 ```{.cpp file=fibonacci_doubling}
 pair<int, int> fib (int n) {
@@ -261,21 +268,21 @@ pair<int, int> fib (int n) {
         return {c, d};
 }
 ```
-The above code returns $F_n$ and $F_{n+1}$ as a pair.
+Đoạn mã trên trả về $F_n$ và $F_{n+1}$ dưới dạng một cặp.
 
-## Periodicity modulo p
+## Tính tuần hoàn modulo p
 
-Consider the Fibonacci sequence modulo $p$. We will prove the sequence is periodic.
+Xét dãy Fibonacci modulo $p$. Chúng ta sẽ chứng minh dãy số này là tuần hoàn.
 
-Let us prove this by contradiction. Consider the first $p^2 + 1$ pairs of Fibonacci numbers taken modulo $p$:
+Hãy chứng minh điều này bằng phản chứng. Xét $p^2 + 1$ cặp số Fibonacci đầu tiên lấy modulo $p$:
 
 $$(F_0,\ F_1),\ (F_1,\ F_2),\ \ldots,\ (F_{p^2},\ F_{p^2 + 1})$$
 
-There can only be $p$ different remainders modulo $p$, and at most $p^2$ different pairs of remainders, so there are at least two identical pairs among them. This is sufficient to prove the sequence is periodic, as a Fibonacci number is only determined by its two predecessors. Hence if two pairs of consecutive numbers repeat, that would also mean the numbers after the pair will repeat in the same fashion.
+Chỉ có thể có $p$ số dư khác nhau modulo $p$, và tối đa là $p^2$ cặp số dư khác nhau, vì vậy có ít nhất hai cặp giống hệt nhau trong số đó. Điều này đủ để chứng minh dãy số là tuần hoàn, vì một số Fibonacci chỉ được xác định bởi hai số liền trước nó. Do đó, nếu hai cặp số liên tiếp lặp lại, điều đó cũng có nghĩa là các số sau cặp đó sẽ lặp lại theo cùng một cách.
 
-We now choose two pairs of identical remainders with the smallest indices in the sequence. Let the pairs be $(F_a,\ F_{a + 1})$ and $(F_b,\ F_{b + 1})$. We will prove that $a = 0$. If this was false, there would be two previous pairs $(F_{a-1},\ F_a)$ and $(F_{b-1},\ F_b)$, which, by the property of Fibonacci numbers, would also be equal. However, this contradicts the fact that we had chosen pairs with the smallest indices, completing our proof that there is no pre-period (i.e the numbers are periodic starting from $F_0$).
+Bây giờ chúng ta chọn hai cặp số dư giống hệt nhau có chỉ số nhỏ nhất trong dãy. Đặt các cặp là $(F_a,\ F_{a + 1})$ và $(F_b,\ F_{b + 1})$. Chúng ta sẽ chứng minh rằng $a = 0$. Nếu điều này là sai, sẽ có hai cặp trước đó $(F_{a-1},\ F_a)$ và $(F_{b-1},\ F_b)$, mà theo thuộc tính của số Fibonacci, cũng sẽ bằng nhau. Tuy nhiên, điều này mâu thuẫn với thực tế là chúng ta đã chọn các cặp có chỉ số nhỏ nhất, hoàn thành chứng minh của chúng ta rằng không có chu kỳ tiền tố (tức là các số là tuần hoàn bắt đầu từ $F_0$).
 
-## Practice Problems
+## Bài tập luyện tập
 
 * [SPOJ - Euclid Algorithm Revisited](http://www.spoj.com/problems/MAIN74/)
 * [SPOJ - Fibonacci Sum](http://www.spoj.com/problems/FIBOSUM/)

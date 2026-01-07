@@ -1,97 +1,98 @@
----
+--- 
 tags:
   - Translated
+  - Vietnamese
 e_maxx_link: dijkstra
 ---
 
-# Dijkstra Algorithm
+# Thuật toán Dijkstra
 
-You are given a directed or undirected weighted graph with $n$ vertices and $m$ edges. The weights of all edges are non-negative. You are also given a starting vertex $s$. This article discusses finding the lengths of the shortest paths from a starting vertex $s$ to all other vertices, and output the shortest paths themselves.
+Bạn được cho một đồ thị có hướng hoặc vô hướng có trọng số với $n$ đỉnh và $m$ cạnh. Trọng số của tất cả các cạnh là không âm. Bạn cũng được cho một đỉnh bắt đầu $s$. Bài viết này thảo luận về việc tìm độ dài của các đường đi ngắn nhất từ một đỉnh bắt đầu $s$ đến tất cả các đỉnh khác, và xuất ra các đường đi ngắn nhất đó.
 
-This problem is also called **single-source shortest paths problem**.
+Bài toán này còn được gọi là **bài toán đường đi ngắn nhất từ một nguồn**.
 
-## Algorithm
+## Thuật toán
 
-Here is an algorithm described by the Dutch computer scientist Edsger W. Dijkstra in 1959.
+Đây là một thuật toán được mô tả bởi nhà khoa học máy tính người Hà Lan Edsger W. Dijkstra vào năm 1959.
 
-Let's create an array $d[]$ where for each vertex $v$ we store the current length of the shortest path from $s$ to $v$ in $d[v]$.
-Initially $d[s] = 0$, and for all other vertices this length equals infinity.
-In the implementation a sufficiently large number (which is guaranteed to be greater than any possible path length) is chosen as infinity.
+Hãy tạo một mảng $d[]$ trong đó với mỗi đỉnh $v$, chúng ta lưu trữ độ dài hiện tại của đường đi ngắn nhất từ $s$ đến $v$ trong $d[v]$.
+Ban đầu $d[s] = 0$, và với tất cả các đỉnh khác, độ dài này bằng vô cùng.
+Trong việc triển khai, một số đủ lớn (được đảm bảo lớn hơn bất kỳ độ dài đường đi nào có thể) được chọn làm vô cùng.
 
 $$d[v] = \infty,~ v \ne s$$
 
-In addition, we maintain a Boolean array $u[]$ which stores for each vertex $v$ whether it's marked. Initially all vertices are unmarked:
+Ngoài ra, chúng ta duy trì một mảng Boolean $u[]$ lưu trữ cho mỗi đỉnh $v$ xem nó có được đánh dấu hay không. Ban đầu tất cả các đỉnh đều chưa được đánh dấu:
 
-$$u[v] = {\rm false}$$
+$$u[v] = \rm false$$
 
-The Dijkstra's algorithm runs for $n$ iterations. At each iteration a vertex $v$ is chosen as unmarked vertex which has the least value $d[v]$:
+Thuật toán của Dijkstra chạy trong $n$ lần lặp. Ở mỗi lần lặp, một đỉnh $v$ được chọn làm đỉnh chưa được đánh dấu có giá trị $d[v]$ nhỏ nhất:
 
-Evidently, in the first iteration the starting vertex $s$ will be selected.
+Rõ ràng, trong lần lặp đầu tiên, đỉnh bắt đầu $s$ sẽ được chọn.
 
-The selected vertex $v$ is marked. Next, from vertex $v$ **relaxations** are performed: all edges of the form $(v,\text{to})$ are considered, and for each vertex $\text{to}$ the algorithm tries to improve the value $d[\text{to}]$. If the length of the current edge equals $len$, the code for relaxation is:
+Đỉnh được chọn $v$ được đánh dấu. Tiếp theo, từ đỉnh $v$ thực hiện các **sự nới lỏng (relaxations)**: tất cả các cạnh có dạng $(v,\text{to})$ được xem xét, và với mỗi đỉnh $\text{to}$, thuật toán cố gắng cải thiện giá trị $d[\text{to}]$. Nếu độ dài của cạnh hiện tại bằng $len$, mã cho sự nới lỏng là:
 
 $$d[\text{to}] = \min (d[\text{to}], d[v] + len)$$
 
-After all such edges are considered, the current iteration ends. Finally, after $n$ iterations, all vertices will be marked, and the algorithm terminates. We claim that the found values $d[v]$ are the lengths of shortest paths from $s$ to all vertices $v$.
+Sau khi tất cả các cạnh như vậy được xem xét, lần lặp hiện tại kết thúc. Cuối cùng, sau $n$ lần lặp, tất cả các đỉnh sẽ được đánh dấu, và thuật toán kết thúc. Chúng tôi khẳng định rằng các giá trị $d[v]$ được tìm thấy là độ dài của các đường đi ngắn nhất từ $s$ đến tất cả các đỉnh $v$.
 
-Note that if some vertices are unreachable from the starting vertex $s$, the values $d[v]$ for them will remain infinite. Obviously, the last few iterations of the algorithm will choose those vertices, but no useful work will be done for them. Therefore, the algorithm can be stopped as soon as the selected vertex has infinite distance to it.
+Lưu ý rằng nếu một số đỉnh không thể đến được từ đỉnh bắt đầu $s$, các giá trị $d[v]$ cho chúng sẽ vẫn là vô cùng. Rõ ràng, một vài lần lặp cuối cùng của thuật toán sẽ chọn các đỉnh đó, nhưng không có công việc hữu ích nào được thực hiện cho chúng. Do đó, thuật toán có thể được dừng lại ngay khi đỉnh được chọn có khoảng cách vô cùng đến nó.
 
-### Restoring Shortest Paths 
+### Khôi phục đường đi ngắn nhất 
 
-Usually one needs to know not only the lengths of shortest paths but also the shortest paths themselves. Let's see how to maintain sufficient information to restore the shortest path from $s$ to any vertex. We'll maintain an array of predecessors $p[]$ in which for each vertex $v \ne s$, $p[v]$ is the penultimate vertex in the shortest path from $s$ to $v$. Here we use the fact that if we take the shortest path to some vertex $v$ and remove $v$ from this path, we'll get a path ending in at vertex $p[v]$, and this path will be the shortest for the vertex $p[v]$. This array of predecessors can be used to restore the shortest path to any vertex: starting with $v$, repeatedly take the predecessor of the current vertex until we reach the starting vertex $s$ to get the required shortest path with vertices listed in reverse order. So, the shortest path $P$ to the vertex $v$ is equal to:
+Thường thì người ta cần biết không chỉ độ dài của các đường đi ngắn nhất mà còn cả các đường đi ngắn nhất đó. Hãy xem cách duy trì đủ thông tin để khôi phục đường đi ngắn nhất từ $s$ đến bất kỳ đỉnh nào. Chúng ta sẽ duy trì một mảng các đỉnh tiền nhiệm $p[]$ trong đó với mỗi đỉnh $v \ne s$, $p[v]$ là đỉnh áp chót trong đường đi ngắn nhất từ $s$ đến $v$. Ở đây chúng ta sử dụng thực tế là nếu chúng ta lấy đường đi ngắn nhất đến một đỉnh $v$ nào đó và loại bỏ $v$ khỏi đường đi này, chúng ta sẽ có một đường đi kết thúc tại đỉnh $p[v]$, và đường đi này sẽ là đường đi ngắn nhất cho đỉnh $p[v]$. Mảng các đỉnh tiền nhiệm này có thể được sử dụng để khôi phục đường đi ngắn nhất đến bất kỳ đỉnh nào: bắt đầu từ $v$, lặp đi lặp lại việc lấy đỉnh tiền nhiệm của đỉnh hiện tại cho đến khi chúng ta đến đỉnh bắt đầu $s$ để có được đường đi ngắn nhất cần thiết với các đỉnh được liệt kê theo thứ tự ngược lại. Vì vậy, đường đi ngắn nhất $P$ đến đỉnh $v$ bằng:
 
 $$P = (s, \ldots, p[p[p[v]]], p[p[v]], p[v], v)$$
 
-Building this array of predecessors is very simple: for each successful relaxation, i.e. when for some selected vertex $v$, there is an improvement in the distance to some vertex $\text{to}$, we update the predecessor vertex for $\text{to}$ with vertex $v$:
+Xây dựng mảng các đỉnh tiền nhiệm này rất đơn giản: với mỗi lần nới lỏng thành công, tức là khi với một đỉnh $v$ được chọn nào đó, có sự cải thiện về khoảng cách đến một đỉnh $\text{to}$ nào đó, chúng ta cập nhật đỉnh tiền nhiệm cho $\text{to}$ bằng đỉnh $v$:
 
 $$p[\text{to}] = v$$
 
-## Proof
+## Chứng minh
 
-The main assertion on which Dijkstra's algorithm correctness is based is the following:
+Khẳng định chính mà tính đúng đắn của thuật toán Dijkstra dựa vào là như sau:
 
-**After any vertex $v$ becomes marked, the current distance to it $d[v]$ is the shortest, and will no longer change.**
+**Sau khi bất kỳ đỉnh $v$ nào được đánh dấu, khoảng cách hiện tại đến nó $d[v]$ là ngắn nhất, và sẽ không thay đổi nữa.**
 
-The proof is done by induction. For the first iteration this statement is obvious: the only marked vertex is $s$, and the distance to is $d[s] = 0$ is indeed the length of the shortest path to $s$. Now suppose this statement is true for all previous iterations, i.e. for all already marked vertices; let's prove that it is not violated after the current iteration completes. Let $v$ be the vertex selected in the current iteration, i.e. $v$ is the vertex that the algorithm will mark. Now we have to prove that $d[v]$ is indeed equal to the length of the shortest path to it $l[v]$.
+Chứng minh được thực hiện bằng quy nạp. Đối với lần lặp đầu tiên, khẳng định này là rõ ràng: đỉnh được đánh dấu duy nhất là $s$, và khoảng cách đến nó là $d[s] = 0$ thực sự là độ dài của đường đi ngắn nhất đến $s$. Bây giờ giả sử khẳng định này đúng cho tất cả các lần lặp trước đó, tức là cho tất cả các đỉnh đã được đánh dấu; hãy chứng minh rằng nó không bị vi phạm sau khi lần lặp hiện tại hoàn thành. Gọi $v$ là đỉnh được chọn trong lần lặp hiện tại, tức là $v$ là đỉnh mà thuật toán sẽ đánh dấu. Bây giờ chúng ta phải chứng minh rằng $d[v]$ thực sự bằng độ dài của đường đi ngắn nhất đến nó $l[v]$.
 
-Consider the shortest path $P$ to the vertex $v$. This path can be split into two parts: $P_1$ which consists of only marked nodes (at least the starting vertex $s$ is part of $P_1$), and the rest of the path $P_2$ (it may include a marked vertex, but it always starts with an unmarked vertex). Let's denote the first vertex of the path $P_2$ as $p$, and the last vertex of the path $P_1$ as $q$.
+Xét đường đi ngắn nhất $P$ đến đỉnh $v$. Đường đi này có thể được chia thành hai phần: $P_1$ chỉ bao gồm các nút đã được đánh dấu (ít nhất là đỉnh bắt đầu $s$ là một phần của $P_1$), và phần còn lại của đường đi $P_2$ (nó có thể bao gồm một đỉnh đã được đánh dấu, nhưng nó luôn bắt đầu bằng một đỉnh chưa được đánh dấu). Hãy ký hiệu đỉnh đầu tiên của đường đi $P_2$ là $p$, và đỉnh cuối cùng của đường đi $P_1$ là $q$.
 
-First we prove our statement for the vertex $p$, i.e. let's prove that $d[p] = l[p]$.
-This is almost obvious: on one of the previous iterations we chose the vertex $q$ and performed relaxation from it.
-Since (by virtue of the choice of vertex $p$) the shortest path to $p$ is the shortest path to $q$ plus edge $(p,q)$, the relaxation from $q$ set the value of $d[p]$ to the length of the shortest path $l[p]$.
+Đầu tiên chúng ta chứng minh khẳng định của chúng ta cho đỉnh $p$, tức là hãy chứng minh rằng $d[p] = l[p]$.
+Điều này gần như là rõ ràng: trong một trong các lần lặp trước đó, chúng ta đã chọn đỉnh $q$ và thực hiện nới lỏng từ nó.
+Vì (nhờ việc chọn đỉnh $p$) đường đi ngắn nhất đến $p$ là đường đi ngắn nhất đến $q$ cộng với cạnh $(p,q)$, việc nới lỏng từ $q$ đã đặt giá trị của $d[p]$ thành độ dài của đường đi ngắn nhất $l[p]$.
 
-Since the edges' weights are non-negative, the length of the shortest path $l[p]$ (which we just proved to be equal to $d[p]$) does not exceed the length $l[v]$ of the shortest path to the vertex $v$. Given that $l[v] \le d[v]$ (because Dijkstra's algorithm could not have found a shorter way than the shortest possible one), we get the inequality:
+Vì trọng số của các cạnh là không âm, độ dài của đường đi ngắn nhất $l[p]$ (mà chúng ta vừa chứng minh là bằng $d[p]$) không vượt quá độ dài $l[v]$ của đường đi ngắn nhất đến đỉnh $v$. Với việc $l[v] \le d[v]$ (vì thuật toán của Dijkstra không thể tìm thấy một đường đi ngắn hơn đường đi ngắn nhất có thể), chúng ta có được bất đẳng thức:
 
 $$d[p] = l[p] \le l[v] \le d[v]$$
 
-On the other hand, since both vertices $p$ and $v$ are unmarked, and the current iteration chose vertex $v$, not $p$, we get another inequality:
+Mặt khác, vì cả hai đỉnh $p$ và $v$ đều chưa được đánh dấu, và lần lặp hiện tại đã chọn đỉnh $v$, không phải $p$, chúng ta có một bất đẳng thức khác:
 
 $$d[p] \ge d[v]$$
 
-From these two inequalities we conclude that $d[p] = d[v]$, and then from previously found equations we get:
+Từ hai bất đẳng thức này, chúng ta kết luận rằng $d[p] = d[v]$, và sau đó từ các phương trình đã tìm thấy trước đó, chúng ta có:
 
 $$d[v] = l[v]$$
 
 Q.E.D.
 
-## Implementation
+## Cài đặt
 
-Dijkstra's algorithm performs $n$ iterations. On each iteration it selects an unmarked vertex $v$ with the lowest value $d[v]$, marks it and checks all the edges $(v, \text{to})$ attempting to improve the value $d[\text{to}]$.
+Thuật toán của Dijkstra thực hiện $n$ lần lặp. Ở mỗi lần lặp, nó chọn một đỉnh chưa được đánh dấu $v$ có giá trị $d[v]$ nhỏ nhất, đánh dấu nó và kiểm tra tất cả các cạnh $(v, \text{to})$ cố gắng cải thiện giá trị $d[\text{to}]$.
 
-The running time of the algorithm consists of:
+Thời gian chạy của thuật toán bao gồm:
 
-* $n$ searches for a vertex with the smallest value $d[v]$ among $O(n)$ unmarked vertices
-* $m$ relaxation attempts
+* $n$ lần tìm kiếm một đỉnh có giá trị $d[v]$ nhỏ nhất trong số $O(n)$ đỉnh chưa được đánh dấu
+* $m$ lần thử nới lỏng
 
-For the simplest implementation of these operations on each iteration vertex search requires $O(n)$ operations, and each relaxation can be performed in $O(1)$. Hence, the resulting asymptotic behavior of the algorithm is:
+Đối với việc triển khai đơn giản nhất, ở mỗi lần lặp, việc tìm kiếm đỉnh yêu cầu $O(n)$ thao tác, và mỗi lần nới lỏng có thể được thực hiện trong $O(1)$. Do đó, độ phức tạp tiệm cận kết quả của thuật toán là:
 
-$$O(n^2+m)$$ 
+$$O(n^2+m)$$
 
-This complexity is optimal for dense graph, i.e. when $m \approx n^2$.
-However in sparse graphs, when $m$ is much smaller than the maximal number of edges $n^2$, the problem can be solved in $O(n \log n + m)$ complexity. The algorithm and implementation can be found on the article [Dijkstra on sparse graphs](dijkstra_sparse.md).
+Độ phức tạp này là tối ưu cho đồ thị dày đặc, tức là khi $m \approx n^2$.
+Tuy nhiên, trong các đồ thị thưa, khi $m$ nhỏ hơn nhiều so với số cạnh tối đa $n^2$, bài toán có thể được giải quyết với độ phức tạp $O(n \log n + m)$. Thuật toán và việc triển khai có thể được tìm thấy trong bài viết [Dijkstra trên đồ thị thưa](dijkstra_sparse.md).
 
 
-```{.cpp file=dijkstra_dense}
+```cpp
 const int INF = 1000000000;
 vector<vector<pair<int, int>>> adj;
 
@@ -126,15 +127,15 @@ void dijkstra(int s, vector<int> & d, vector<int> & p) {
 }
 ```
 
-Here the graph $\text{adj}$ is stored as adjacency list: for each vertex $v$ $\text{adj}[v]$ contains the list of edges going from this vertex, i.e. the list of `pair<int,int>` where the first element in the pair is the vertex at the other end of the edge, and the second element is the edge weight.
+Ở đây đồ thị $\text{adj}$ được lưu trữ dưới dạng danh sách kề: với mỗi đỉnh $v$, $\text{adj}[v]$ chứa danh sách các cạnh đi ra từ đỉnh này, tức là danh sách `pair<int,int>` trong đó phần tử đầu tiên trong cặp là đỉnh ở đầu kia của cạnh, và phần tử thứ hai là trọng số cạnh.
 
-The function takes the starting vertex $s$ and two vectors that will be used as return values.
+Hàm nhận đỉnh bắt đầu $s$ và hai vector sẽ được sử dụng làm giá trị trả về.
 
-First of all, the code initializes arrays: distances $d[]$, labels $u[]$ and predecessors $p[]$. Then it performs $n$ iterations. At each iteration the vertex $v$ is selected which has the smallest distance $d[v]$ among all the unmarked vertices. If the distance to selected vertex $v$ is equal to infinity, the algorithm stops. Otherwise the vertex is marked, and all the edges going out from this vertex are checked. If relaxation along the edge is possible (i.e. distance $d[\text{to}]$ can be improved), the distance $d[\text{to}]$ and predecessor $p[\text{to}]$ are updated.
+Đầu tiên, mã khởi tạo các mảng: khoảng cách $d[]$, nhãn $u[]$ và các đỉnh tiền nhiệm $p[]$. Sau đó, nó thực hiện $n$ lần lặp. Ở mỗi lần lặp, đỉnh $v$ được chọn là đỉnh có khoảng cách $d[v]$ nhỏ nhất trong số tất cả các đỉnh chưa được đánh dấu. Nếu khoảng cách đến đỉnh được chọn $v$ bằng vô cùng, thuật toán dừng lại. Ngược lại, đỉnh được đánh dấu, và tất cả các cạnh đi ra từ đỉnh này được kiểm tra. Nếu có thể nới lỏng dọc theo cạnh (tức là khoảng cách $d[\text{to}]$ có thể được cải thiện), khoảng cách $d[\text{to}]$ và đỉnh tiền nhiệm $p[\text{to}]$ được cập nhật.
 
-After performing all the iterations array $d[]$ stores the lengths of the shortest paths to all vertices, and array $p[]$ stores the predecessors of all vertices (except starting vertex $s$). The path to any vertex $t$ can be restored in the following way:
+Sau khi thực hiện tất cả các lần lặp, mảng $d[]$ lưu trữ độ dài của các đường đi ngắn nhất đến tất cả các đỉnh, và mảng $p[]$ lưu trữ các đỉnh tiền nhiệm của tất cả các đỉnh (ngoại trừ đỉnh bắt đầu $s$). Đường đi đến bất kỳ đỉnh $t$ nào có thể được khôi phục theo cách sau:
 
-```{.cpp file=dijkstra_restore_path}
+```cpp
 vector<int> restore_path(int s, int t, vector<int> const& p) {
     vector<int> path;
 
@@ -147,16 +148,16 @@ vector<int> restore_path(int s, int t, vector<int> const& p) {
 }
 ```
 
-## References
+## Tài liệu tham khảo
 
-* Edsger Dijkstra. A note on two problems in connexion with graphs [1959]
+*Edsger Dijkstra. A note on two problems in connexion with graphs [1959]
 * Thomas Cormen, Charles Leiserson, Ronald Rivest, Clifford Stein. Introduction to Algorithms [2005]
 
-## Practice Problems
-* [Timus - Ivan's Car](http://acm.timus.ru/problem.aspx?space=1&num=1930) [Difficulty:Medium]
+## Bài tập thực hành
+* [Timus - Ivan's Car](http://acm.timus.ru/problem.aspx?space=1&num=1930) [Độ khó: Trung bình]
 * [Timus - Sightseeing Trip](http://acm.timus.ru/problem.aspx?space=1&num=1004)
-* [SPOJ - SHPATH](http://www.spoj.com/problems/SHPATH/) [Difficulty:Easy]
-* [Codeforces - Dijkstra?](http://codeforces.com/problemset/problem/20/C) [Difficulty:Easy]
+* [SPOJ - SHPATH](http://www.spoj.com/problems/SHPATH/) [Độ khó: Dễ]
+* [Codeforces - Dijkstra?](http://codeforces.com/problemset/problem/20/C) [Độ khó: Dễ]
 * [Codeforces - Shortest Path](http://codeforces.com/problemset/problem/59/E)
 * [Codeforces - Jzzhu and Cities](http://codeforces.com/problemset/problem/449/B)
 * [Codeforces - The Classic Problem](http://codeforces.com/problemset/problem/464/E)
@@ -191,4 +192,3 @@ vector<int> restore_path(int s, int t, vector<int> const& p) {
 * [CSES - Shortest Routes 1](https://cses.fi/problemset/task/1671)
 * [CSES - Flight Discount](https://cses.fi/problemset/task/1195)
 * [CSES - Flight Routes](https://cses.fi/problemset/task/1196)
-

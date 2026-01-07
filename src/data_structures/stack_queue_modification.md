@@ -4,95 +4,95 @@ tags:
 e_maxx_link: stacks_for_minima
 ---
 
-# Minimum stack / Minimum queue
+# Ngăn xếp cực tiểu / Hàng đợi cực tiểu
 
-In this article we will consider three problems: 
-first we will modify a stack in a way that allows us to find the smallest element of the stack in $O(1)$, then we will do the same thing with a queue, and finally we will use these data structures to find the minimum in all subarrays of a fixed length in an array in $O(n)$
+Trong bài viết này, chúng ta sẽ xem xét ba bài toán: 
+đầu tiên, chúng ta sẽ sửa đổi một ngăn xếp theo cách cho phép chúng ta tìm phần tử nhỏ nhất của ngăn xếp trong $O(1)$, sau đó chúng ta sẽ làm điều tương tự với một hàng đợi, và cuối cùng, chúng ta sẽ sử dụng các cấu trúc dữ liệu này để tìm giá trị nhỏ nhất trong tất cả các mảng con có độ dài cố định trong một mảng trong $O(n)$
 
-## Stack modification
+## Sửa đổi ngăn xếp
 
-We want to modify the stack data structure in such a way, that it is possible to find the smallest element in the stack in $O(1)$ time, while maintaining the same asymptotic behavior for adding and removing elements from the stack.
-Quick reminder, on a stack we only add and remove elements on one end.
+Chúng ta muốn sửa đổi cấu trúc dữ liệu ngăn xếp theo cách mà có thể tìm thấy phần tử nhỏ nhất trong ngăn xếp trong thời gian $O(1)$, trong khi vẫn duy trì hành vi tiệm cận tương tự cho việc thêm và xóa các phần tử khỏi ngăn xếp.
+Nhắc lại nhanh, trên một ngăn xếp, chúng ta chỉ thêm và xóa các phần tử ở một đầu.
 
-To do this, we will not only store the elements in the stack, but we will store them in pairs: the element itself and the minimum in the stack starting from this element and below.
+Để làm điều này, chúng ta sẽ không chỉ lưu trữ các phần tử trong ngăn xếp, mà chúng ta sẽ lưu trữ chúng theo cặp: phần tử đó và giá trị nhỏ nhất trong ngăn xếp bắt đầu từ phần tử này trở xuống.
 
 ```cpp
 stack<pair<int, int>> st;
 ```
 
-It is clear that finding the minimum in the whole stack consists only of looking at the value `stack.top().second`.
+Rõ ràng là việc tìm giá trị nhỏ nhất trong toàn bộ ngăn xếp chỉ bao gồm việc xem giá trị `stack.top().second`.
 
-It is also obvious that adding or removing a new element to the stack can be done in constant time.
+Cũng rõ ràng là việc thêm hoặc xóa một phần tử mới vào ngăn xếp có thể được thực hiện trong thời gian không đổi.
 
-Implementation:
+Triển khai:
 
-* Adding an element:
+* Thêm một phần tử:
 ```cpp
 int new_min = st.empty() ? new_elem : min(new_elem, st.top().second);
 st.push({new_elem, new_min});
 ```
 
-* Removing an element:
+* Xóa một phần tử:
 ```cpp
 int removed_element = st.top().first;
 st.pop();
 ```
 
-* Finding the minimum:
+* Tìm giá trị nhỏ nhất:
 ```cpp
 int minimum = st.top().second;
 ```
 
-## Queue modification (method 1)
+## Sửa đổi hàng đợi (phương pháp 1)
 
-Now we want to achieve the same operations with a queue, i.e. we want to add elements at the end and remove them from the front.
+Bây giờ chúng ta muốn đạt được các hoạt động tương tự với một hàng đợi, tức là chúng ta muốn thêm các phần tử vào cuối và xóa chúng khỏi đầu.
 
-Here we consider a simple method for modifying a queue.
-It has a big disadvantage though, because the modified queue will actually not store all elements.
+Ở đây chúng ta xem xét một phương pháp đơn giản để sửa đổi một hàng đợi.
+Tuy nhiên, nó có một nhược điểm lớn, vì hàng đợi đã sửa đổi sẽ thực sự không lưu trữ tất cả các phần tử.
 
-The key idea is to only store the items in the queue that are needed to determine the minimum.
-Namely we will keep the queue in nondecreasing order (i.e. the smallest value will be stored in the head), and of course not in any arbitrary way, the actual minimum has to be always contained in the queue.
-This way the smallest element will always be in the head of the queue.
-Before adding a new element to the queue, it is enough to make a "cut":
-we will remove all trailing elements of the queue that are larger than the new element, and afterwards add the new element to the queue. 
-This way we don't break the order of the queue, and we will also not loose the current element if it is at any subsequent step the minimum. 
-All the elements that we removed can never be a minimum itself, so this operation is allowed.
-When we want to extract an element from the head, it actually might not be there (because we removed it previously while adding a smaller element). 
-Therefore when deleting an element from a queue we need to know the value of the element.
-If the head of the queue has the same value, we can safely remove it, otherwise we do nothing.
+Ý tưởng chính là chỉ lưu trữ các mục trong hàng đợi cần thiết để xác định giá trị nhỏ nhất.
+Cụ thể, chúng ta sẽ giữ hàng đợi theo thứ tự không giảm (tức là giá trị nhỏ nhất sẽ được lưu trữ ở đầu), và tất nhiên không phải theo bất kỳ cách tùy ý nào, giá trị nhỏ nhất thực tế phải luôn được chứa trong hàng đợi.
+Bằng cách này, phần tử nhỏ nhất sẽ luôn ở đầu hàng đợi.
+Trước khi thêm một phần tử mới vào hàng đợi, chỉ cần thực hiện một "cắt":
+chúng ta sẽ xóa tất cả các phần tử ở cuối hàng đợi lớn hơn phần tử mới, và sau đó thêm phần tử mới vào hàng đợi. 
+Bằng cách này, chúng ta không phá vỡ thứ tự của hàng đợi, và chúng ta cũng sẽ không mất phần tử hiện tại nếu nó là giá trị nhỏ nhất ở bất kỳ bước tiếp theo nào. 
+Tất cả các phần tử mà chúng ta đã xóa không bao giờ có thể tự nó là một giá trị nhỏ nhất, vì vậy hoạt động này được cho phép.
+Khi chúng ta muốn trích xuất một phần tử từ đầu, nó thực sự có thể không ở đó (vì chúng ta đã xóa nó trước đó trong khi thêm một phần tử nhỏ hơn). 
+Do đó, khi xóa một phần tử khỏi hàng đợi, chúng ta cần biết giá trị của phần tử đó.
+Nếu đầu hàng đợi có cùng giá trị, chúng ta có thể xóa nó một cách an toàn, nếu không thì chúng ta không làm gì cả.
 
-Consider the implementations of the above operations:
+Hãy xem xét các triển khai của các hoạt động trên:
 
 ```cpp
 deque<int> q;
 ```
 
-* Finding the minimum:
+* Tìm giá trị nhỏ nhất:
 ```cpp
 int minimum = q.front();
 ```
 
-* Adding an element:
+* Thêm một phần tử:
 ```cpp
 while (!q.empty() && q.back() > new_element)
     q.pop_back();
 q.push_back(new_element);
 ```
 
-* Removing an element:
+* Xóa một phần tử:
 ```cpp
 if (!q.empty() && q.front() == remove_element)
     q.pop_front();
 ```
 
-It is clear that on average all these operation only take $O(1)$ time (because every element can only be pushed and popped once).
+Rõ ràng là trung bình tất cả các hoạt động này chỉ mất thời gian $O(1)$ (vì mỗi phần tử chỉ có thể được đẩy và lấy ra một lần).
 
-## Queue modification (method 2)
+## Sửa đổi hàng đợi (phương pháp 2)
 
-This is a modification of method 1.
-We want to be able to remove elements without knowing which element we have to remove.
-We can accomplish that by storing the index for each element in the queue.
-And we also remember how many elements we already have added and removed.
+Đây là một sửa đổi của phương pháp 1.
+Chúng ta muốn có thể xóa các phần tử mà không cần biết chúng ta phải xóa phần tử nào.
+Chúng ta có thể thực hiện điều đó bằng cách lưu trữ chỉ số cho mỗi phần tử trong hàng đợi.
+Và chúng ta cũng nhớ có bao nhiêu phần tử chúng ta đã thêm và xóa.
 
 ```cpp
 deque<pair<int, int>> q;
@@ -100,12 +100,12 @@ int cnt_added = 0;
 int cnt_removed = 0;
 ```
 
-* Finding the minimum:
+* Tìm giá trị nhỏ nhất:
 ```cpp
 int minimum = q.front().first;
 ```
 
-* Adding an element:
+* Thêm một phần tử:
 ```cpp
 while (!q.empty() && q.back().first > new_element)
     q.pop_back();
@@ -113,37 +113,37 @@ q.push_back({new_element, cnt_added});
 cnt_added++;
 ```
 
-* Removing an element:
+* Xóa một phần tử:
 ```cpp
 if (!q.empty() && q.front().second == cnt_removed) 
     q.pop_front();
 cnt_removed++;
 ```
 
-## Queue modification (method 3)
+## Sửa đổi hàng đợi (phương pháp 3)
 
-Here we consider another way of modifying a queue to find the minimum in $O(1)$.
-This way is somewhat more complicated to implement, but this time we actually store all elements.
-And we also can remove an element from the front without knowing its value.
+Ở đây chúng ta xem xét một cách khác để sửa đổi một hàng đợi để tìm giá trị nhỏ nhất trong $O(1)$.
+Cách này hơi phức tạp hơn để triển khai, nhưng lần này chúng ta thực sự lưu trữ tất cả các phần tử.
+Và chúng ta cũng có thể xóa một phần tử từ đầu mà không cần biết giá trị của nó.
 
-The idea is to reduce the problem to the problem of stacks, which was already solved by us.
-So we only need to learn how to simulate a queue using two stacks.
+Ý tưởng là quy bài toán về bài toán ngăn xếp, đã được chúng ta giải quyết.
+Vì vậy, chúng ta chỉ cần học cách mô phỏng một hàng đợi bằng hai ngăn xếp.
 
-We make two stacks, `s1` and `s2`. 
-Of course these stack will be of the modified form, so that we can find the minimum in $O(1)$. 
-We will add new elements to the stack `s1`, and remove elements from the stack `s2`.
-If at any time the stack `s2` is empty, we move all elements from `s1` to `s2` (which essentially reverses the order of those elements).
-Finally finding the minimum in a queue involves just finding the minimum of both stacks.
+Chúng ta tạo hai ngăn xếp, `s1` và `s2`. 
+Tất nhiên, các ngăn xếp này sẽ ở dạng đã sửa đổi, để chúng ta có thể tìm thấy giá trị nhỏ nhất trong $O(1)$. 
+Chúng ta sẽ thêm các phần tử mới vào ngăn xếp `s1`, và xóa các phần tử khỏi ngăn xếp `s2`.
+Nếu tại bất kỳ thời điểm nào ngăn xếp `s2` trống, chúng ta di chuyển tất cả các phần tử từ `s1` sang `s2` (thực chất là đảo ngược thứ tự của các phần tử đó).
+Cuối cùng, việc tìm giá trị nhỏ nhất trong một hàng đợi chỉ liên quan đến việc tìm giá trị nhỏ nhất của cả hai ngăn xếp.
 
-Thus we perform all operations in $O(1)$ on average (each element will be once added to stack `s1`, once transferred to `s2`, and once popped from `s2`)
+Do đó, chúng ta thực hiện tất cả các hoạt động trong $O(1)$ trung bình (mỗi phần tử sẽ được thêm vào ngăn xếp `s1` một lần, chuyển sang `s2` một lần, và lấy ra khỏi `s2` một lần)
 
-Implementation:
+Triển khai:
 
 ```cpp
 stack<pair<int, int>> s1, s2;
 ```
 
-* Finding the minimum:
+* Tìm giá trị nhỏ nhất:
 ```cpp
 if (s1.empty() || s2.empty()) 
     minimum = s1.empty() ? s2.top().second : s1.top().second;
@@ -151,13 +151,13 @@ else
     minimum = min(s1.top().second, s2.top().second);
 ```
 
-* Add element:
+* Thêm phần tử:
 ```cpp
 int minimum = s1.empty() ? new_element : min(new_element, s1.top().second);
 s1.push({new_element, minimum});
 ```
 
-* Removing an element:
+* Xóa một phần tử:
 ```cpp
 if (s2.empty()) {
     while (!s1.empty()) {
@@ -171,22 +171,21 @@ int remove_element = s2.top().first;
 s2.pop();
 ```
 
-## Finding the minimum for all subarrays of fixed length
+## Tìm giá trị nhỏ nhất cho tất cả các mảng con có độ dài cố định
 
-Suppose we are given an array $A$ of length $N$ and a given $M \le N$.
-We have to find the minimum of each subarray of length $M$ in this array, i.e. we have to find:
+Giả sử chúng ta được cho một mảng $A$ có độ dài $N$ và một số $M \le N$ đã cho.
+Chúng ta phải tìm giá trị nhỏ nhất của mỗi mảng con có độ dài $M$ trong mảng này, tức là chúng ta phải tìm:
 
 $$\min_{0 \le i \le M-1} A[i], \min_{1 \le i \le M} A[i], \min_{2 \le i \le M+1} A[i],~\dots~, \min_{N-M \le i \le N-1} A[i]$$
 
-We have to solve this problem in linear time, i.e. $O(n)$.
+Chúng ta phải giải quyết bài toán này trong thời gian tuyến tính, tức là $O(n)$.
 
-We can use any of the three modified queues to solve the problem.
-The solutions should be clear:
-we add the first $M$ element of the array, find and output its minimum, then add the next element to the queue and remove the first element of the array, find and output its minimum, etc. 
-Since all operations with the queue are performed in constant time on average, the complexity of the whole algorithm will be $O(n)$.
+Chúng ta có thể sử dụng bất kỳ trong ba hàng đợi đã sửa đổi nào để giải quyết bài toán.
+Các giải pháp nên rõ ràng:
+chúng ta thêm $M$ phần tử đầu tiên của mảng, tìm và xuất ra giá trị nhỏ nhất của nó, sau đó thêm phần tử tiếp theo vào hàng đợi và xóa phần tử đầu tiên của mảng, tìm và xuất ra giá trị nhỏ nhất của nó, v.v. 
+Vì tất cả các hoạt động với hàng đợi được thực hiện trong thời gian không đổi trung bình, độ phức tạp của toàn bộ thuật toán sẽ là $O(n)$.
 
-## Practice Problems
+## Các bài toán thực hành
 * [Queries with Fixed Length](https://www.hackerrank.com/challenges/queries-with-fixed-length/problem)
 * [Sliding Window Minimum](https://cses.fi/problemset/task/3221)
 * [Binary Land](https://www.codechef.com/MAY20A/problems/BINLAND)
-

@@ -7,7 +7,7 @@ search:
 
 Thank you for your interest in contributing to the cp-algorithms project! Whether you want to fix a typo, improve an article, or add new content, your help is welcome. All you need is a [GitHub account](https://github.com). Contributions are managed through our [GitHub repository](https://github.com/cp-algorithms/cp-algorithms), where you can directly submit changes or propose improvements.
 
-The pages are compiled and published at [https://cp-algorithms.com](https://cp-algorithms.com).
+The pages are compiled and published at [http://127.0.0.1:8000](http://127.0.0.1:8000).
 
 ## Steps to Contribute
 

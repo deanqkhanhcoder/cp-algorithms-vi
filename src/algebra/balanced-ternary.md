@@ -4,16 +4,15 @@ tags:
 e_maxx_link: balanced_ternary
 ---
 
-# Balanced Ternary
+# Hệ tam phân cân bằng
 
-!["Setun computer using Balanced Ternary system"](https://earltcampbell.files.wordpress.com/2014/12/setun.jpeg?w=300)
+!["Máy tính Setun sử dụng hệ tam phân cân bằng"](https://earltcampbell.files.wordpress.com/2014/12/setun.jpeg?w=300)
 
-This is a non-standard but still positional **numeral system**. Its feature is that digits can have one of the values `-1`, `0` and `1`.
-Nevertheless, its base is still `3` (because there are three possible values). Since it is not convenient to write `-1` as a digit,
-we'll use letter `Z` further for this purpose. If you think it is quite a strange system - look at the picture - here is one of the
-computers utilizing it.
+Đây là một **hệ đếm** không tiêu chuẩn nhưng vẫn là hệ đếm theo vị trí. Đặc điểm của nó là các chữ số có thể có một trong các giá trị `-1`, `0` và `1`.
+Tuy nhiên, cơ số của nó vẫn là `3` (vì có ba giá trị khả dĩ). Vì không tiện để viết `-1` như một chữ số,
+chúng ta sẽ sử dụng chữ cái `Z` cho mục đích này. Nếu bạn nghĩ rằng đây là một hệ thống khá lạ - hãy nhìn vào bức tranh - đây là một trong những máy tính sử dụng nó.
 
-So here are few first numbers written in balanced ternary:
+Dưới đây là một vài số đầu tiên được viết trong hệ tam phân cân bằng:
 
 ```nohighlight
     0    0
@@ -28,7 +27,7 @@ So here are few first numbers written in balanced ternary:
     9    100
 ```
 
-This system allows you to write negative values without leading minus sign: you can simply invert digits in any positive number.
+Hệ thống này cho phép bạn viết các giá trị âm mà không cần dấu trừ ở đầu: bạn chỉ cần đảo ngược các chữ số trong bất kỳ số dương nào.
 
 ```nohighlight
     -1   Z
@@ -38,47 +37,46 @@ This system allows you to write negative values without leading minus sign: you 
     -5   Z11
 ```
 
-Note that a negative number starts with `Z` and positive with `1`.
+Lưu ý rằng một số âm bắt đầu bằng `Z` và số dương bắt đầu bằng `1`.
 
-## Conversion algorithm
+## Thuật toán chuyển đổi
 
-It is easy to represent a given number in **balanced ternary** via temporary representing it in normal ternary number system. When value is
-in standard ternary, its digits are either `0` or `1` or `2`. Iterating from the lowest digit we can safely skip any `0`s and `1`s,
-however `2` should be turned into `Z` with adding `1` to the next digit. Digits `3` should be turned into `0` on the same terms -
-such digits are not present in the number initially but they can be encountered after increasing some `2`s.
+Ta có thể dễ dàng biểu diễn một số đã cho trong **hệ tam phân cân bằng** bằng cách biểu diễn tạm thời nó trong hệ tam phân thông thường. Khi một giá trị ở dạng tam phân tiêu chuẩn, các chữ số của nó là `0`, `1` hoặc `2`. Lặp từ chữ số thấp nhất, ta có thể bỏ qua bất kỳ chữ số `0` và `1` nào,
+tuy nhiên `2` phải được chuyển thành `Z` và cộng `1` vào chữ số tiếp theo. Chữ số `3` cũng được chuyển thành `0` theo cách tương tự -
+những chữ số như vậy không có trong số ban đầu nhưng chúng có thể xuất hiện sau khi ta tăng một vài chữ số `2`.
 
-**Example 1:** Let us convert `64` to balanced ternary. At first we use normal ternary to rewrite the number:
+**Ví dụ 1:** Hãy chuyển `64` sang hệ tam phân cân bằng. Trước tiên, ta sử dụng hệ tam phân thông thường để viết lại số:
 
 $$ 64_{10} = 02101_{3} $$
 
-Let us process it from the least significant (rightmost) digit:
+Hãy xử lý nó từ chữ số có nghĩa nhỏ nhất (ngoài cùng bên phải):
 
-- `1`,`0` and `1` are skipped as it is.( Because `0` and `1` are allowed in balanced ternary )
-- `2` is turned into `Z` increasing the digit to its left, so we get `1Z101`.
+- `1`,`0` và `1` được giữ nguyên. (Vì `0` và `1` được cho phép trong hệ tam phân cân bằng)
+- `2` được chuyển thành `Z` và tăng chữ số bên trái nó lên, ta được `1Z101`.
 
-The final result is `1Z101`.
+Kết quả cuối cùng là `1Z101`.
 
-Let us convert it back to the decimal system by adding the weighted positional values:
+Hãy chuyển nó trở lại hệ thập phân bằng cách cộng các giá trị vị trí có trọng số:
 
 $$ 1Z101 = 81 \cdot 1 + 27 \cdot (-1) + 9 \cdot 1 + 3 \cdot 0 + 1 \cdot 1 = 64_{10} $$
 
-**Example 2:** Let us convert `237` to balanced ternary. At first we use normal ternary to rewrite the number:
+**Ví dụ 2:** Hãy chuyển `237` sang hệ tam phân cân bằng. Trước tiên, ta sử dụng hệ tam phân thông thường để viết lại số:
 
 $$ 237_{10} = 22210_{3} $$
 
-Let us process it from the least significant (rightmost) digit:
+Hãy xử lý nó từ chữ số có nghĩa nhỏ nhất (ngoài cùng bên phải):
 
-- `0` and `1` are skipped as it is.( Because `0` and `1` are allowed in balanced ternary )
-- `2` is turned into `Z` increasing the digit to its left, so we get `23Z10`.
-- `3` is turned into `0` increasing the digit to its left, so we get `30Z10`.
-- `3` is turned into `0` increasing the digit to its left( which is by default `0` ), and so we get `100Z10`.
+- `0` và `1` được giữ nguyên. (Vì `0` và `1` được cho phép trong hệ tam phân cân bằng)
+- `2` được chuyển thành `Z` và tăng chữ số bên trái nó lên, ta được `23Z10`.
+- `3` được chuyển thành `0` và tăng chữ số bên trái nó lên, ta được `30Z10`.
+- `3` được chuyển thành `0` và tăng chữ số bên trái nó lên (mặc định là `0`), và ta được `100Z10`.
 
-The final result is `100Z10`.
+Kết quả cuối cùng là `100Z10`.
 
-Let us convert it back to the decimal system by adding the weighted positional values:
+Hãy chuyển nó trở lại hệ thập phân bằng cách cộng các giá trị vị trí có trọng số:
 
 $$ 100Z10 = 243 \cdot 1 + 81 \cdot 0 + 27 \cdot 0 + 9 \cdot (-1) + 3 \cdot 1 + 1 \cdot 0 = 237_{10} $$
 
-## Practice Problems
+## Bài tập luyện tập
 
 * [Topcoder SRM 604, Div1-250](http://community.topcoder.com/stat?c=problem_statement&pm=12917&rd=15837)

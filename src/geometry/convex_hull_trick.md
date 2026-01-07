@@ -1,40 +1,40 @@
 ---
 tags:
-  - Original
+  - Translated
 ---
 
-# Convex hull trick and Li Chao tree
+# Mẹo bao lồi và cây Li Chao
 
-Consider the following problem. There are $n$ cities. You want to travel from city $1$ to city $n$ by car. To do this you have to buy some gasoline. It is known that a liter of gasoline costs $cost_k$ in the $k^{th}$ city. Initially your fuel tank is empty and you spend one liter of gasoline per kilometer. Cities are located on the same line in ascending order with $k^{th}$ city having coordinate $x_k$. Also you have to pay $toll_k$ to enter $k^{th}$ city. Your task is to make the trip with minimum possible cost. It's obvious that the solution can be calculated via dynamic programming:
+Xét bài toán sau. Có $n$ thành phố. Bạn muốn đi từ thành phố $1$ đến thành phố $n$ bằng ô tô. Để làm điều này, bạn phải mua một ít xăng. Được biết, một lít xăng có giá $cost_k$ ở thành phố thứ $k$. Ban đầu, bình xăng của bạn trống và bạn tiêu thụ một lít xăng mỗi ki-lô-mét. Các thành phố nằm trên cùng một đường thẳng theo thứ tự tăng dần với thành phố thứ $k$ có tọa độ $x_k$. Bạn cũng phải trả $toll_k$ để vào thành phố thứ $k$. Nhiệm vụ của bạn là thực hiện chuyến đi với chi phí thấp nhất có thể. Rõ ràng là nghiệm có thể được tính toán thông qua quy hoạch động:
 
 $$dp_i = toll_i+\min\limits_{j<i}(cost_j \cdot (x_i - x_j)+dp_j)$$
 
-Naive approach will give you $O(n^2)$ complexity which can be improved to $O(n \log n)$ or $O(n \log [C \varepsilon^{-1}])$ where $C$ is largest possible $|x_i|$ and $\varepsilon$ is precision with which $x_i$ is considered ($\varepsilon = 1$ for integers which is usually the case). To do this one should note that the problem can be reduced to adding linear functions $k \cdot x + b$ to the set and finding minimum value of the functions in some particular point $x$. There are two main approaches one can use here.
+Cách tiếp cận ngây thơ sẽ cho bạn độ phức tạp $O(n^2)$ có thể được cải thiện thành $O(n \log n)$ hoặc $O(n \log [C \varepsilon^{-1}])$ trong đó $C$ là $|x_i|$ lớn nhất có thể và $\varepsilon$ là độ chính xác mà $x_i$ được xem xét ($\varepsilon = 1$ đối với các số nguyên, đây là trường hợp thông thường). Để làm điều này, người ta nên lưu ý rằng bài toán có thể được quy về việc thêm các hàm tuyến tính $k \cdot x + b$ vào tập hợp và tìm giá trị nhỏ nhất của các hàm tại một điểm cụ thể $x$. Có hai cách tiếp cận chính có thể sử dụng ở đây.
 
-## Convex hull trick
+## Mẹo bao lồi
 
-The idea of this approach is to maintain a lower convex hull of linear functions.
-Actually it would be a bit more convenient to consider them not as linear functions, but as points $(k;b)$ on the plane such that we will have to find the point which has the least dot product with a given point $(x;1)$, that is, for this point $kx+b$ is minimized which is the same as initial problem.
-Such minimum will necessarily be on lower convex envelope of these points as can be seen below:
+Ý tưởng của cách tiếp cận này là duy trì một bao lồi dưới của các hàm tuyến tính.
+Thực ra, sẽ thuận tiện hơn một chút nếu coi chúng không phải là các hàm tuyến tính, mà là các điểm $(k;b)$ trên mặt phẳng sao cho chúng ta sẽ phải tìm điểm có tích vô hướng nhỏ nhất với một điểm đã cho $(x;1)$, tức là, đối với điểm này, $kx+b$ được tối thiểu hóa, điều này giống như bài toán ban đầu.
+Cực tiểu như vậy nhất thiết phải nằm trên bao lồi dưới của các điểm này như có thể thấy dưới đây:
 
 <div style="text-align: center;">
-  <img src="convex_hull_trick.png" alt="lower convex hull">
+  <img src="convex_hull_trick.png" alt="bao lồi dưới">
 </div>
 
-One has to keep points on the convex hull and normal vectors of the hull's edges.
-When you have a $(x;1)$ query you'll have to find the normal vector closest to it in terms of angles between them, then the optimum linear function will correspond to one of its endpoints.
-To see that, one should note that points having a constant dot product with $(x;1)$ lie on a line which is orthogonal to $(x;1)$, so the optimum linear function will be the one in which tangent to convex hull which is collinear with normal to $(x;1)$ touches the hull.
-This point is the one such that normals of edges lying to the left and to the right of it are headed in different sides of $(x;1)$.
+Người ta phải giữ các điểm trên bao lồi và các vector pháp tuyến của các cạnh của bao.
+Khi bạn có một truy vấn $(x;1)$, bạn sẽ phải tìm vector pháp tuyến gần nhất với nó về mặt góc giữa chúng, sau đó hàm tuyến tính tối ưu sẽ tương ứng với một trong các điểm cuối của nó.
+Để thấy điều đó, người ta nên lưu ý rằng các điểm có tích vô hướng không đổi với $(x;1)$ nằm trên một đường thẳng vuông góc với $(x;1)$, vì vậy hàm tuyến tính tối ưu sẽ là hàm mà trong đó tiếp tuyến với bao lồi cùng phương với pháp tuyến của $(x;1)$ chạm vào bao.
+Điểm này là điểm sao cho các pháp tuyến của các cạnh nằm bên trái và bên phải nó hướng về các phía khác nhau của $(x;1)$.
 
-This approach is useful when queries of adding linear functions are monotone in terms of $k$ or if we work offline, i.e. we may firstly add all linear functions and answer queries afterwards.
-So we cannot solve the cities/gasoline problems using this way.
-That would require handling online queries.
-When it comes to deal with online queries however, things will go tough and one will have to use some kind of set data structure to implement a proper convex hull.
-Online approach will however not be considered in this article due to its hardness and because second approach (which is Li Chao tree) allows to solve the problem way more simply.
-Worth mentioning that one can still use this approach online without complications by square-root-decomposition.
-That is, rebuild convex hull from scratch each $\sqrt n$ new lines. 
+Cách tiếp cận này hữu ích khi các truy vấn thêm các hàm tuyến tính là đơn điệu về $k$ hoặc nếu chúng ta làm việc ngoại tuyến, tức là chúng ta có thể trước tiên thêm tất cả các hàm tuyến tính và trả lời các truy vấn sau đó.
+Vì vậy, chúng ta không thể giải quyết bài toán thành phố/xăng dầu bằng cách này.
+Điều đó sẽ đòi hỏi phải xử lý các truy vấn trực tuyến.
+Tuy nhiên, khi đối phó với các truy vấn trực tuyến, mọi thứ sẽ trở nên khó khăn và người ta sẽ phải sử dụng một loại cấu trúc dữ liệu tập hợp nào đó để triển khai một bao lồi thích hợp.
+Tuy nhiên, cách tiếp cận trực tuyến sẽ không được xem xét trong bài viết này do độ khó của nó và vì cách tiếp cận thứ hai (là cây Li Chao) cho phép giải quyết vấn đề một cách đơn giản hơn nhiều.
+Đáng nói là người ta vẫn có thể sử dụng cách tiếp cận này trực tuyến mà không gặp phức tạp bằng cách phân rã căn bậc hai.
+Tức là, xây dựng lại bao lồi từ đầu sau mỗi $\sqrt n$ đường thẳng mới. 
 
-To implement this approach one should begin with some geometric utility functions, here we suggest to use the C++ complex number type.
+Để triển khai cách tiếp cận này, người ta nên bắt đầu với một số hàm tiện ích hình học, ở đây chúng tôi đề nghị sử dụng kiểu số phức C++.
 
 ```cpp
 typedef int ftype;
@@ -51,11 +51,11 @@ ftype cross(point a, point b) {
 }
 ```
 
-Here we will assume that when linear functions are added, their $k$ only increases and we want to find minimum values.
-We will keep points in vector $hull$ and normal vectors in vector $vecs$.
-When we add a new point, we have to look at the angle formed between last edge in convex hull and vector from last point in convex hull to new point.
-This angle has to be directed counter-clockwise, that is the dot product of the last normal vector in the hull (directed inside hull) and the vector from the last point to the new one has to be non-negative.
-As long as this isn't true, we should erase the last point in the convex hull alongside with the corresponding edge.
+Ở đây chúng ta sẽ giả định rằng khi các hàm tuyến tính được thêm vào, $k$ của chúng chỉ tăng và chúng ta muốn tìm giá trị nhỏ nhất.
+Chúng ta sẽ giữ các điểm trong vector $hull$ và các vector pháp tuyến trong vector $vecs$.
+Khi chúng ta thêm một điểm mới, chúng ta phải xem xét góc được tạo bởi cạnh cuối cùng trong bao lồi và vector từ điểm cuối cùng trong bao lồi đến điểm mới.
+Góc này phải hướng ngược chiều kim đồng hồ, tức là tích vô hướng của vector pháp tuyến cuối cùng trong bao (hướng vào trong bao) và vector từ điểm cuối cùng đến điểm mới phải không âm.
+Chừng nào điều này không đúng, chúng ta nên xóa điểm cuối cùng trong bao lồi cùng với cạnh tương ứng.
 
 ```cpp
 vector<point> hull, vecs;
@@ -73,7 +73,7 @@ void add_line(ftype k, ftype b) {
 }
  
 ```
-Now to get the minimum value in some point we will find the first normal vector in the convex hull that is directed counter-clockwise from $(x;1)$. The left endpoint of such edge will be the answer. To check if vector $a$ is not directed counter-clockwise of vector $b$, we should check if their cross product $[a,b]$ is positive.
+Bây giờ để có được giá trị nhỏ nhất tại một điểm nào đó, chúng ta sẽ tìm vector pháp tuyến đầu tiên trong bao lồi hướng ngược chiều kim đồng hồ từ $(x;1)$. Điểm cuối bên trái của cạnh đó sẽ là câu trả lời. Để kiểm tra xem vector $a$ có không hướng ngược chiều kim đồng hồ của vector $b$ hay không, chúng ta nên kiểm tra xem tích có hướng của chúng $[a,b]$ có dương không.
 ```cpp
 int get(ftype x) {
     point query = {x, 1};
@@ -84,19 +84,19 @@ int get(ftype x) {
 }
 ```
 
-## Li Chao tree
+## Cây Li Chao
 
-Assume you're given a set of functions such that each two can intersect at most once. Let's keep in each vertex of a segment tree some function in such way, that if we go from root to the leaf it will be guaranteed that one of the functions we met on the path will be the one giving the minimum value in that leaf. Let's see how to construct it.
+Giả sử bạn được cho một tập hợp các hàm sao cho mỗi hai hàm có thể giao nhau nhiều nhất một lần. Hãy giữ trong mỗi đỉnh của một cây phân đoạn một hàm nào đó theo cách mà nếu chúng ta đi từ gốc đến lá, sẽ được đảm bảo rằng một trong những hàm chúng ta đã gặp trên đường đi sẽ là hàm cho giá trị nhỏ nhất trong lá đó. Hãy xem cách xây dựng nó.
 
-Assume we're in some vertex corresponding to half-segment $[l,r)$ and the function $f_{old}$ is kept there and we add the function $f_{new}$. Then the intersection point will be either in $[l;m)$ or in $[m;r)$ where $m=\left\lfloor\tfrac{l+r}{2}\right\rfloor$. We can efficiently find that out by comparing the values of the functions in points $l$ and $m$. If the dominating function changes, then it is in $[l;m)$ otherwise it is in $[m;r)$. Now for the half of the segment with no intersection we will pick the lower function and write it in the current vertex. You can see that it will always be the one which is lower in point $m$. After that we recursively go to the other half of the segment with the function which was the upper one. As you can see this will keep correctness on the first half of segment and in the other one correctness will be maintained during the recursive call. Thus we can add functions and check the minimum value in the point in $O(\log [C\varepsilon^{-1}])$.
+Giả sử chúng ta đang ở một đỉnh nào đó tương ứng với nửa đoạn $[l,r)$ và hàm $f_{old}$ được giữ ở đó và chúng ta thêm hàm $f_{new}$. Khi đó, điểm giao sẽ nằm trong $[l;m)$ hoặc trong $[m;r)$ trong đó $m=\left\lfloor\tfrac{l+r}{2}\right\rfloor$. Chúng ta có thể tìm ra điều đó một cách hiệu quả bằng cách so sánh các giá trị của các hàm tại các điểm $l$ và $m$. Nếu hàm chiếm ưu thế thay đổi, thì nó nằm trong $[l;m)$ nếu không thì nó nằm trong $[m;r)$. Bây giờ đối với nửa đoạn không có giao điểm, chúng ta sẽ chọn hàm thấp hơn và viết nó vào đỉnh hiện tại. Bạn có thể thấy rằng nó sẽ luôn là hàm thấp hơn tại điểm $m$. Sau đó, chúng ta đệ quy đi đến nửa còn lại của đoạn với hàm là hàm trên. Như bạn có thể thấy, điều này sẽ giữ đúng trên nửa đầu của đoạn và trong nửa còn lại, tính đúng đắn sẽ được duy trì trong quá trình gọi đệ quy. Do đó, chúng ta có thể thêm các hàm và kiểm tra giá trị nhỏ nhất tại điểm đó trong $O(\log [C\varepsilon^{-1}])$.
 
-Here is the illustration of what is going on in the vertex when we add new function:
+Đây là minh họa về những gì đang xảy ra trong đỉnh khi chúng ta thêm hàm mới:
 
 <div style="text-align: center;">
-  <img src="li_chao_vertex.png" alt="Li Chao Tree vertex">
+  <img src="li_chao_vertex.png" alt="Đỉnh cây Li Chao">
 </div>
 
-Let's go to implementation now. Once again we will use complex numbers to keep linear functions.
+Bây giờ hãy chuyển sang triển khai. Một lần nữa, chúng ta sẽ sử dụng số phức để giữ các hàm tuyến tính.
 
 ```{.cpp file=lichaotree_line_definition}
 typedef long long ftype;
@@ -112,8 +112,8 @@ ftype f(point a,  ftype x) {
     return dot(a, {x, 1});
 }
 ```
-We will keep functions in the array $line$ and use binary indexing of the segment tree. If you want to use it on large numbers or doubles, you should use a dynamic segment tree. 
-The segment tree should be initialized with default values, e.g. with lines $0x + \infty$.
+Chúng ta sẽ giữ các hàm trong mảng $line$ và sử dụng chỉ số nhị phân của cây phân đoạn. Nếu bạn muốn sử dụng nó trên các số lớn hoặc số thực, bạn nên sử dụng một cây phân đoạn động. 
+Cây phân đoạn nên được khởi tạo với các giá trị mặc định, ví dụ: với các đường thẳng $0x + \infty$.
 
 ```{.cpp file=lichaotree_addline}
 const int maxn = 2e5;
@@ -136,7 +136,7 @@ void add_line(point nw, int v = 1, int l = 0, int r = maxn) {
     }
 }
 ```
-Now to get the minimum in some point $x$ we simply choose the minimum value along the path to the point.
+Bây giờ để có được giá trị nhỏ nhất tại một điểm $x$ nào đó, chúng ta chỉ cần chọn giá trị nhỏ nhất dọc theo đường đi đến điểm đó.
 ```{.cpp file=lichaotree_getminimum}
 ftype get(int x, int v = 1, int l = 0, int r = maxn) {
     int m = (l + r) / 2;
@@ -150,9 +150,9 @@ ftype get(int x, int v = 1, int l = 0, int r = maxn) {
 }
 ```
 
-## Problems
+## Các bài toán
 
-* [Codebreaker - TROUBLES](https://codeforces.com/gym/103536/problem/B) (simple application of Convex Hull Trick after a couple of observations)
+* [Codebreaker - TROUBLES](https://codeforces.com/gym/103536/problem/B) (ứng dụng đơn giản của Mẹo bao lồi sau một vài quan sát)
 * [CS Academy - Squared Ends](https://csacademy.com/contest/archive/task/squared-ends)
 * [Codeforces - Escape Through Leaf](http://codeforces.com/contest/932/problem/F)
 * [CodeChef - Polynomials](https://www.codechef.com/NOV17/problems/POLY)
@@ -160,3 +160,5 @@ ftype get(int x, int v = 1, int l = 0, int r = maxn) {
 * [Codeforces - Product Sum](https://codeforces.com/problemset/problem/631/E)
 * [Codeforces - Bear and Bowling 4](https://codeforces.com/problemset/problem/660/F)
 * [APIO 2010 - Commando](https://dmoj.ca/problem/apio10p1)
+
+```

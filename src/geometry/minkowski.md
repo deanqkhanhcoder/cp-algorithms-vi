@@ -3,63 +3,61 @@ tags:
   - Original
 ---
 
-# Minkowski sum of convex polygons
+# Tổng Minkowski của các đa giác lồi
 
-## Definition
-Consider two sets $A$ and $B$ of points on a plane. Minkowski sum $A + B$ is defined as $\{a + b| a \in A, b \in B\}$.
-Here we will consider the case when $A$ and $B$ consist of convex polygons $P$ and $Q$ with their interiors.
-Throughout this article we will identify polygons with ordered sequences of their vertices, so that notation like $|P|$ or
-$P_i$ makes sense.
-It turns out that the sum of convex polygons $P$ and $Q$ is a convex polygon with at most $|P| + |Q|$ vertices.
+## Định nghĩa
+Xét hai tập hợp $A$ và $B$ gồm các điểm trên một mặt phẳng. Tổng Minkowski $A + B$ được định nghĩa là $\{a + b| a \in A, b \in B\}$.
+Ở đây, chúng ta sẽ xem xét trường hợp khi $A$ và $B$ bao gồm các đa giác lồi $P$ và $Q$ cùng với phần bên trong của chúng.
+Trong suốt bài viết này, chúng ta sẽ đồng nhất các đa giác với các dãy có thứ tự của các đỉnh của chúng, để ký hiệu như $|P|$ hoặc
+$P_i$ có ý nghĩa.
+Hóa ra tổng của các đa giác lồi $P$ và $Q$ là một đa giác lồi có nhiều nhất $|P| + |Q|$ đỉnh.
 
-## Algorithm
+## Thuật toán
 
-Here we consider the polygons to be cyclically enumerated, i. e. $P_{|P|} = P_0,\ Q_{|Q|} = Q_0$ and so on.
+Ở đây chúng ta coi các đa giác được liệt kê theo chu kỳ, tức là $P_{|P|} = P_0,\ Q_{|Q|} = Q_0$ và cứ thế.
 
-Since the size of the sum is linear in terms of the sizes of initial polygons, we should aim at finding a linear-time algorithm.
-Suppose that both polygons are ordered counter-clockwise. Consider sequences of edges $\{\overrightarrow{P_iP_{i+1}}\}$
-and $\{\overrightarrow{Q_jQ_{j+1}}\}$ ordered by polar angle. We claim that the sequence of edges of $P + Q$ can be obtained by merging
-these two sequences preserving polar angle order and replacing consecutive co-directed vectors with their sum. Straightforward usage of this idea results
-in a linear-time algorithm, however, restoring the vertices of $P + Q$ from the sequence of sides requires repeated addition of vectors,
-which may introduce unwanted precision issues if we're working with floating-point coordinates, so we will describe a slight
-modification of this idea.
+Vì kích thước của tổng là tuyến tính theo kích thước của các đa giác ban đầu, chúng ta nên nhắm đến việc tìm một thuật toán thời gian tuyến tính.
+Giả sử rằng cả hai đa giác đều được sắp xếp ngược chiều kim đồng hồ. Xét các dãy cạnh $\{\overrightarrow{P_iP_{i+1}}\}$
+và $\{\overrightarrow{Q_jQ_{j+1}}\}$ được sắp xếp theo góc cực. Chúng tôi khẳng định rằng dãy các cạnh của $P + Q$ có thể thu được bằng cách hợp nhất
+hai dãy này bảo toàn thứ tự góc cực và thay thế các vector cùng hướng liên tiếp bằng tổng của chúng. Việc sử dụng trực tiếp ý tưởng này dẫn đến
+một thuật toán thời gian tuyến tính, tuy nhiên, việc khôi phục các đỉnh của $P + Q$ từ dãy các cạnh đòi hỏi phải cộng lặp đi lặp lại các vector,
+điều này có thể gây ra các vấn đề về độ chính xác không mong muốn nếu chúng ta làm việc với các tọa độ dấu phẩy động, vì vậy chúng tôi sẽ mô tả một sửa đổi nhỏ của ý tưởng này.
 
 
-Firstly we should reorder the vertices in such a way that the first vertex
-of each polygon has the lowest y-coordinate (in case of several such vertices pick the one with the smallest x-coordinate). After that the sides of both polygons
-will become sorted by polar angle, so there is no need to sort them manually.
-Now we create two pointers $i$ (pointing to a vertex of $P$) and $j$ (pointing to a vertex of $Q$), both initially set to 0.
-We repeat the following steps while $i < |P|$ or $j < |Q|$.
+Đầu tiên, chúng ta nên sắp xếp lại các đỉnh theo cách sao cho đỉnh đầu tiên của mỗi đa giác có tọa độ y thấp nhất (trong trường hợp có nhiều đỉnh như vậy, hãy chọn đỉnh có tọa độ x nhỏ nhất). Sau đó, các cạnh của cả hai đa giác
+sẽ được sắp xếp theo góc cực, vì vậy không cần phải sắp xếp chúng thủ công.
+Bây giờ chúng ta tạo hai con trỏ $i$ (trỏ đến một đỉnh của $P$) và $j$ (trỏ đến một đỉnh của $Q$), cả hai ban đầu được đặt thành 0.
+Chúng ta lặp lại các bước sau trong khi $i < |P|$ hoặc $j < |Q|$.
 
-1. Append $P_i + Q_j$ to $P + Q$.
+1. Nối $P_i + Q_j$ vào $P + Q$.
 
-2. Compare polar angles of $\overrightarrow{P_iP_{i + 1}}$ and $\overrightarrow{Q_jQ_{j+1}}$.
+2. So sánh các góc cực của $\overrightarrow{P_iP_{i + 1}}$ và $\overrightarrow{Q_jQ_{j+1}}$.
 
-3. Increment the pointer which corresponds to the smallest angle (if the angles are equal, increment both).
+3. Tăng con trỏ tương ứng với góc nhỏ nhất (nếu các góc bằng nhau, tăng cả hai).
 
-## Visualization
+## Trực quan hóa
 
-Here is a nice visualization, which may help you understand what is going on.
+Đây là một hình dung hay, có thể giúp bạn hiểu những gì đang diễn ra.
 
 <div style="text-align: center;">
-  <img src="minkowski.gif" alt="Visual">
+  <img src="minkowski.gif" alt="Trực quan">
 </div>
 
-## Distance between two polygons
-One of the most common applications of Minkowski sum is computing the distance between two convex polygons (or simply checking whether they intersect).
-The distance between two convex polygons $P$ and $Q$ is defined as $\min\limits_{a \in P, b \in Q} ||a - b||$. One can note that
-the distance is always attained between two vertices or a vertex and an edge, so we can easily find the distance in $O(|P||Q|)$. However,
-with clever usage of Minkowski sum we can reduce the complexity to $O(|P| + |Q|)$.
+## Khoảng cách giữa hai đa giác
+Một trong những ứng dụng phổ biến nhất của tổng Minkowski là tính khoảng cách giữa hai đa giác lồi (hoặc đơn giản là kiểm tra xem chúng có giao nhau không).
+Khoảng cách giữa hai đa giác lồi $P$ và $Q$ được định nghĩa là $\min\limits_{a \in P, b \in Q} ||a - b||$. Người ta có thể lưu ý rằng
+khoảng cách luôn đạt được giữa hai đỉnh hoặc một đỉnh và một cạnh, vì vậy chúng ta có thể dễ dàng tìm thấy khoảng cách trong $O(|P||Q|)$. Tuy nhiên,
+với việc sử dụng thông minh tổng Minkowski, chúng ta có thể giảm độ phức tạp xuống còn $O(|P| + |Q|)$.
 
-If we reflect $Q$ through the point $(0, 0)$ obtaining polygon $-Q$, the problem boils down to finding the smallest distance between a point in
-$P + (-Q)$ and $(0, 0)$. We can find that distance in linear time using the following idea.
-If $(0, 0)$ is inside or on the boundary of polygon, the distance is $0$, otherwise the distance is attained between $(0, 0)$ and some vertex or edge of the polygon.
-Since Minkowski sum can be computed
-in linear time, we obtain a linear-time algorithm for finding the distance between two convex polygons.
+Nếu chúng ta phản xạ $Q$ qua điểm $(0, 0)$ để thu được đa giác $-Q$, bài toán thu gọn về việc tìm khoảng cách nhỏ nhất giữa một điểm trong
+$P + (-Q)$ và $(0, 0)$. Chúng ta có thể tìm khoảng cách đó trong thời gian tuyến tính bằng cách sử dụng ý tưởng sau.
+Nếu $(0, 0)$ nằm bên trong hoặc trên biên của đa giác, khoảng cách là $0$, nếu không thì khoảng cách đạt được giữa $(0, 0)$ và một đỉnh hoặc cạnh nào đó của đa giác.
+Vì tổng Minkowski có thể được tính toán
+trong thời gian tuyến tính, chúng ta có được một thuật toán thời gian tuyến tính để tìm khoảng cách giữa hai đa giác lồi.
 
-## Implementation
-Below is the implementation of Minkowski sum for polygons with integer points. Note that in this case all computations can be done in integers since
-instead of computing polar angles and directly comparing them we can look at the sign of cross product of two vectors.
+## Cài đặt
+Dưới đây là việc triển khai tổng Minkowski cho các đa giác có các điểm nguyên. Lưu ý rằng trong trường hợp này, tất cả các tính toán có thể được thực hiện bằng số nguyên vì
+thay vì tính toán các góc cực và so sánh chúng trực tiếp, chúng ta có thể xem xét dấu của tích có hướng của hai vector.
 
 ```{.cpp file=minkowski}
 struct pt{
@@ -85,15 +83,15 @@ void reorder_polygon(vector<pt> & P){
 }
 
 vector<pt> minkowski(vector<pt> P, vector<pt> Q){
-    // the first vertex must be the lowest
+    // đỉnh đầu tiên phải là đỉnh thấp nhất
     reorder_polygon(P);
     reorder_polygon(Q);
-    // we must ensure cyclic indexing
+    // chúng ta phải đảm bảo chỉ số vòng
     P.push_back(P[0]);
     P.push_back(P[1]);
     Q.push_back(Q[0]);
     Q.push_back(Q[1]);
-    // main part
+    // phần chính
     vector<pt> result;
     size_t i = 0, j = 0;
     while(i < P.size() - 2 || j < Q.size() - 2){
@@ -109,7 +107,7 @@ vector<pt> minkowski(vector<pt> P, vector<pt> Q){
 
 ```
 
-## Problems
+## Các bài toán
  * [Codeforces 87E Mogohu-Rea Idol](https://codeforces.com/problemset/problem/87/E)
  * [Codeforces 1195F Geometers Anonymous Club](https://codeforces.com/contest/1195/problem/F)
  * [TIMUS 1894 Non-Flying Weather](https://acm.timus.ru/problem.aspx?space=1&num=1894)

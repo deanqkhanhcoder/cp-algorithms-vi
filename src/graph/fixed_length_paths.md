@@ -4,90 +4,90 @@ tags:
 e_maxx_link: fixed_length_paths
 ---
 
-# Number of paths of fixed length / Shortest paths of fixed length
+# Số lượng đường đi có độ dài cố định / Đường đi ngắn nhất có độ dài cố định
 
-The following article describes solutions to these two problems built on the same idea:
-reduce the problem to the construction of matrix and compute the solution with the usual matrix multiplication or with a modified multiplication.
+Bài viết sau đây mô tả các giải pháp cho hai bài toán này được xây dựng trên cùng một ý tưởng:
+quy bài toán về việc xây dựng ma trận và tính toán giải pháp bằng phép nhân ma trận thông thường hoặc bằng một phép nhân được sửa đổi.
 
-## Number of paths of a fixed length
+## Số lượng đường đi có độ dài cố định
 
-We are given a directed, unweighted graph $G$ with $n$ vertices and we are given an integer $k$.
-The task is the following:
-for each pair of vertices $(i, j)$ we have to find the number of paths of length $k$ between these vertices.
-Paths don't have to be simple, i.e. vertices and edges can be visited any number of times in a single path.
+Chúng ta được cho một đồ thị có hướng, không trọng số $G$ với $n$ đỉnh và một số nguyên $k$.
+Nhiệm vụ như sau:
+với mỗi cặp đỉnh $(i, j)$, chúng ta phải tìm số lượng đường đi có độ dài $k$ giữa các đỉnh này.
+Các đường đi không cần phải đơn giản, tức là các đỉnh và các cạnh có thể được thăm bất kỳ số lần nào trong một đường đi duy nhất.
 
-We assume that the graph is specified with an adjacency matrix, i.e. the matrix $G[][]$ of size $n \times n$, where each element $G[i][j]$ equal to $1$ if the vertex $i$ is connected with $j$ by an edge, and $0$ is they are not connected by an edge.
-The following algorithm works also in the case of multiple edges:
-if some pair of vertices $(i, j)$ is connected with $m$ edges, then we can record this in the adjacency matrix by setting $G[i][j] = m$.
-Also the algorithm works if the graph contains loops (a loop is an edge that connect a vertex with itself).
+Chúng ta giả định rằng đồ thị được chỉ định bằng một ma trận kề, tức là ma trận $G[][]$ kích thước $n \times n$, trong đó mỗi phần tử $G[i][j]$ bằng $1$ nếu đỉnh $i$ được nối với $j$ bằng một cạnh, và $0$ nếu chúng không được nối bằng một cạnh.
+Thuật toán sau đây cũng hoạt động trong trường hợp có nhiều cạnh:
+nếu một cặp đỉnh $(i, j)$ nào đó được nối với $m$ cạnh, thì chúng ta có thể ghi lại điều này trong ma trận kề bằng cách đặt $G[i][j] = m$.
+Thuật toán cũng hoạt động nếu đồ thị chứa các vòng lặp (vòng lặp là một cạnh nối một đỉnh với chính nó).
 
-It is obvious that the constructed adjacency matrix is the answer to the problem for the case $k = 1$.
-It contains the number of paths of length $1$ between each pair of vertices.
+Rõ ràng là ma trận kề được xây dựng là câu trả lời cho bài toán cho trường hợp $k = 1$.
+Nó chứa số lượng đường đi có độ dài $1$ giữa mỗi cặp đỉnh.
 
-We will build the solution iteratively:
-Let's assume we know the answer for some $k$.
-Here we describe a method how we can construct the answer for $k + 1$.
-Denote by $C_k$ the matrix for the case $k$, and by $C_{k+1}$ the matrix we want to construct.
-With the following formula we can compute every entry of $C_{k+1}$:
+Chúng ta sẽ xây dựng giải pháp một cách lặp đi lặp lại:
+Giả sử chúng ta biết câu trả lời cho một $k$ nào đó.
+Ở đây chúng ta mô tả một phương pháp làm thế nào chúng ta có thể xây dựng câu trả lời cho $k + 1$.
+Ký hiệu $C_k$ là ma trận cho trường hợp $k$, và $C_{k+1}$ là ma trận chúng ta muốn xây dựng.
+Với công thức sau, chúng ta có thể tính toán mọi mục của $C_{k+1}$:
 
 $$C_{k+1}[i][j] = \sum_{p = 1}^{n} C_k[i][p] \cdot G[p][j]$$
 
-It is easy to see that the formula computes nothing other than the product of the matrices $C_k$ and $G$:
+Dễ thấy rằng công thức này không tính toán gì khác ngoài tích của các ma trận $C_k$ và $G$:
 
-$$C_{k+1} = C_k \cdot G$$
+$$C_{k+1} = C_k \cdot G$$ 
 
-Thus the solution of the problem can be represented as follows:
+Do đó, giải pháp của bài toán có thể được biểu diễn như sau:
 
-$$C_k = \underbrace{G \cdot G \cdots G}_{k \text{ times}} = G^k$$
+$$C_k = \underbrace{G \cdot G \cdots G}_{k \text{ lần}} = G^k$$ 
 
-It remains to note that the matrix products can be raised to a high power efficiently using [Binary exponentiation](../algebra/binary-exp.md).
-This gives a solution with $O(n^3 \log k)$ complexity.
+Chỉ cần lưu ý rằng tích ma trận có thể được nâng lên một lũy thừa cao một cách hiệu quả bằng cách sử dụng [Lũy thừa nhị phân](../algebra/binary-exp.md).
+Điều này cho một giải pháp với độ phức tạp $O(n^3 \log k)$.
 
-## Shortest paths of a fixed length
+## Đường đi ngắn nhất có độ dài cố định
 
-We are given a directed weighted graph $G$ with $n$ vertices and an integer $k$.
-For each pair of vertices $(i, j)$ we have to find the length of the shortest path between $i$ and $j$ that consists of exactly $k$ edges.
+Chúng ta được cho một đồ thị có hướng có trọng số $G$ với $n$ đỉnh và một số nguyên $k$.
+Với mỗi cặp đỉnh $(i, j)$, chúng ta phải tìm độ dài của đường đi ngắn nhất giữa $i$ và $j$ bao gồm chính xác $k$ cạnh.
 
-We assume that the graph is specified by an adjacency matrix, i.e. via the matrix $G[][]$ of size $n \times n$ where each element $G[i][j]$ contains the length of the edges from the vertex $i$ to the vertex $j$.
-If there is no edge between two vertices, then the corresponding element of the matrix will be assigned to infinity $\infty$.
+Chúng ta giả định rằng đồ thị được chỉ định bằng một ma trận kề, tức là thông qua ma trận $G[][]$ kích thước $n \times n$, trong đó mỗi phần tử $G[i][j]$ chứa độ dài của các cạnh từ đỉnh $i$ đến đỉnh $j$.
+Nếu không có cạnh nào giữa hai đỉnh, thì phần tử tương ứng của ma trận sẽ được gán là vô cùng $\infty$.
 
-It is obvious that in this form the adjacency matrix is the answer to the problem for $k = 1$.
-It contains the lengths of shortest paths between each pair of vertices, or $\infty$ if a path consisting of one edge doesn't exist.
+Rõ ràng là ở dạng này, ma trận kề là câu trả lời cho bài toán cho $k = 1$.
+Nó chứa độ dài của các đường đi ngắn nhất giữa mỗi cặp đỉnh, hoặc $\infty$ nếu không tồn tại đường đi bao gồm một cạnh.
 
-Again we can build the solution to the problem iteratively:
-Let's assume we know the answer for some $k$.
-We show how we can compute the answer for $k+1$.
-Let us denote $L_k$ the matrix for $k$ and $L_{k+1}$ the matrix we want to build.
-Then the following formula computes each entry of $L_{k+1}$:
+Một lần nữa, chúng ta có thể xây dựng giải pháp cho bài toán một cách lặp đi lặp lại:
+Giả sử chúng ta biết câu trả lời cho một $k$ nào đó.
+Chúng ta chỉ ra cách chúng ta có thể tính toán câu trả lời cho $k+1$.
+Hãy ký hiệu $L_k$ là ma trận cho $k$ và $L_{k+1}$ là ma trận chúng ta muốn xây dựng.
+Khi đó, công thức sau tính toán mỗi mục của $L_{k+1}$:
 
 $$L_{k+1}[i][j] = \min_{p = 1 \ldots n} \left(L_k[i][p] + G[p][j]\right)$$
 
-When looking closer at this formula, we can draw an analogy with the matrix multiplication:
-in fact the matrix $L_k$ is multiplied by the matrix $G$, the only difference is that instead in the multiplication operation we take the minimum instead of the sum, and the sum instead of the multiplication as the inner operation.
+Khi xem xét kỹ hơn công thức này, chúng ta có thể rút ra một sự tương tự với phép nhân ma trận:
+thực tế ma trận $L_k$ được nhân với ma trận $G$, sự khác biệt duy nhất là thay vì trong phép nhân, chúng ta lấy giá trị nhỏ nhất thay vì tổng, và tổng thay vì phép nhân làm phép toán bên trong.
 
 $$L_{k+1} = L_k \odot G,$$
 
-where the operation $\odot$ is defined as follows:
+trong đó phép toán $\odot$ được định nghĩa như sau:
 
 $$A \odot B = C~~\Longleftrightarrow~~C_{i j} = \min_{p = 1 \ldots n}\left(A_{i p} + B_{p j}\right)$$
 
-Thus the solution of the task can be represented using the modified multiplication:
+Do đó, giải pháp của nhiệm vụ có thể được biểu diễn bằng cách sử dụng phép nhân đã sửa đổi:
 
-$$L_k = \underbrace{G \odot \ldots \odot G}_{k~\text{times}} = G^{\odot k}$$
+$$L_k = \underbrace{G \odot \ldots \odot G}_{k~\text{lần}} = G^{\odot k}$$
 
-It remains to note that we also can compute this exponentiation efficiently with [Binary exponentiation](../algebra/binary-exp.md), because the modified multiplication is obviously associative.
-So also this solution has $O(n^3 \log k)$ complexity.
+Chỉ cần lưu ý rằng chúng ta cũng có thể tính toán lũy thừa này một cách hiệu quả với [Lũy thừa nhị phân](../algebra/binary-exp.md), vì phép nhân đã sửa đổi rõ ràng là có tính kết hợp.
+Vì vậy, giải pháp này cũng có độ phức tạp $O(n^3 \log k)$.
 
-## Generalization of the problems for paths with length up to $k$ {data-toc-label="Generalization of the problems for paths with length up to k"}
+## Tổng quát hóa các bài toán cho các đường đi có độ dài lên tới $k$ {data-toc-label="Tổng quát hóa các bài toán cho các đường đi có độ dài lên tới k"}
 
-The above solutions solve the problems for a fixed $k$.
-However the solutions can be adapted for solving problems for which the paths are allowed to contain no more than $k$ edges.
+Các giải pháp trên giải quyết các bài toán cho một $k$ cố định.
+Tuy nhiên, các giải pháp có thể được điều chỉnh để giải quyết các bài toán cho phép các đường đi chứa không quá $k$ cạnh.
 
-This can be done by slightly modifying the input graph.
+Điều này có thể được thực hiện bằng cách sửa đổi một chút đồ thị đầu vào.
 
-We duplicate each vertex:
-for each vertex $v$ we create one more vertex $v'$ and add the edge $(v, v')$ and the loop $(v', v')$.
-The number of paths between $i$ and $j$ with at most $k$ edges is the same number as the number of paths between $i$ and $j'$ with exactly $k + 1$ edges, since there is a bijection that maps every path $[p_0 = i,~p_1,~\ldots,~p_{m-1},~p_m = j]$ of length $m \le k$ to the path $[p_0 = i,~p_1,~\ldots,~p_{m-1},~p_m = j, j', \ldots, j']$ of length $k + 1$.
+Chúng ta nhân đôi mỗi đỉnh:
+với mỗi đỉnh $v$, chúng ta tạo thêm một đỉnh $v'$ và thêm cạnh $(v, v')$ và vòng lặp $(v', v')$.
+Số lượng đường đi giữa $i$ và $j$ có nhiều nhất $k$ cạnh bằng với số lượng đường đi giữa $i$ và $j'$ có chính xác $k + 1$ cạnh, vì có một song ánh ánh xạ mọi đường đi $[p_0 = i,~p_1,~\...~p_{m-1},~p_m = j]$ có độ dài $m \le k$ thành đường đi $[p_0 = i,~p_1,~\...~p_{m-1},~p_m = j, j', \ldots, j']$ có độ dài $k + 1$.
 
-The same trick can be applied to compute the shortest paths with at most $k$ edges.
-We again duplicate each vertex and add the two mentioned edges with weight $0$.
+Thủ thuật tương tự có thể được áp dụng để tính toán các đường đi ngắn nhất có nhiều nhất $k$ cạnh.
+Chúng ta lại nhân đôi mỗi đỉnh và thêm hai cạnh đã đề cập với trọng số $0$.

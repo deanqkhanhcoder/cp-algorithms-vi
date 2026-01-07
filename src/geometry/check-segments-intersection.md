@@ -4,23 +4,23 @@ tags:
 e_maxx_link: segments_intersection_checking
 ---
 
-# Check if two segments intersect
+# Kiểm tra hai đoạn thẳng giao nhau
 
-You are given two segments $(a, b)$ and $(c, d)$.
-You have to check if they intersect.
-Of course, you may find their intersection and check if it isn't empty, but this can't be done in integers for segments with integer coordinates.
-The approach described here can work in integers.
+Bạn được cho hai đoạn thẳng $(a, b)$ và $(c, d)$.
+Bạn phải kiểm tra xem chúng có giao nhau không.
+Tất nhiên, bạn có thể tìm giao điểm của chúng và kiểm tra xem nó có rỗng không, nhưng điều này không thể thực hiện được bằng số nguyên đối với các đoạn thẳng có tọa độ nguyên.
+Cách tiếp cận được mô tả ở đây có thể hoạt động với số nguyên.
 
-## Algorithm
+## Thuật toán
 
-Firstly, consider the case when the segments are part of the same line.
-In this case it is sufficient to check if their projections on $Ox$ and $Oy$ intersect.
-In the other case $a$ and $b$ must not lie on the same side of line $(c, d)$, and $c$ and $d$ must not lie on the same side of line $(a, b)$.
-It can be checked with a couple of cross products.
+Đầu tiên, hãy xem xét trường hợp các đoạn thẳng là một phần của cùng một đường thẳng.
+Trong trường hợp này, chỉ cần kiểm tra xem hình chiếu của chúng trên $Ox$ và $Oy$ có giao nhau hay không.
+Trong trường hợp khác, $a$ và $b$ không được nằm trên cùng một phía của đường thẳng $(c, d)$, và $c$ và $d$ không được nằm trên cùng một phía của đường thẳng $(a, b)$.
+Điều này có thể được kiểm tra bằng một vài tích có hướng.
 
-## Implementation
+## Cài đặt
 
-The given algorithm is implemented for integer points. Of course, it can be easily modified to work with doubles.
+Thuật toán đã cho được triển khai cho các điểm có tọa độ nguyên. Tất nhiên, nó có thể dễ dàng được sửa đổi để hoạt động với số thực.
 
 ```{.cpp file=check-segments-inter}
 struct pt {

@@ -4,28 +4,28 @@ tags:
 e_maxx_link: randomized_heap
 ---
 
-# Randomized Heap
+# Đống ngẫu nhiên
 
-A randomized heap is a heap that, through using randomization, allows to perform all operations in expected logarithmic time.
+Đống ngẫu nhiên là một loại đống, thông qua việc sử dụng ngẫu nhiên, cho phép thực hiện tất cả các hoạt động trong thời gian kỳ vọng logarit.
 
-A **min heap** is a binary tree in which the value of each vertex is less than or equal to the values of its children.
-Thus the minimum of the tree is always in the root vertex.
+Một **đống cực tiểu (min heap)** là một cây nhị phân trong đó giá trị của mỗi đỉnh nhỏ hơn hoặc bằng giá trị của các con của nó.
+Do đó, giá trị nhỏ nhất của cây luôn ở đỉnh gốc.
 
-A max heap can be defined in a similar way: by replacing less with greater.
+Một đống cực đại có thể được định nghĩa theo cách tương tự: bằng cách thay thế nhỏ hơn bằng lớn hơn.
 
-The default operations of a heap are:
+Các hoạt động mặc định của một đống là:
 
-- Adding a value
-- Extracting the minimum
-- Removing the minimum
-- Merging two heaps (without deleting duplicates)
-- Removing an arbitrary element (if its position in the tree is known)
+- Thêm một giá trị
+- Trích xuất giá trị nhỏ nhất
+- Loại bỏ giá trị nhỏ nhất
+- Hợp nhất hai đống (không xóa các bản sao)
+- Loại bỏ một phần tử tùy ý (nếu vị trí của nó trong cây đã biết)
 
-A randomized heap can perform all these operations in expected $O(\log n)$ time with a very simple implementation.
+Một đống ngẫu nhiên có thể thực hiện tất cả các hoạt động này trong thời gian kỳ vọng $O(\log n)$ với một triển khai rất đơn giản.
 
-## Data structure
+## Cấu trúc dữ liệu
 
-We can immediately describe the structure of the binary heap:
+Chúng ta có thể mô tả ngay cấu trúc của đống nhị phân:
 
 ```{.cpp file=randomized_heap_structure}
 struct Tree {
@@ -35,33 +35,33 @@ struct Tree {
 };
 ```
 
-In the vertex we store a value.
-In addition we have pointers to the left and right children, which are point to null if the corresponding child doesn't exist.
+Trong đỉnh, chúng ta lưu trữ một giá trị.
+Ngoài ra, chúng ta có các con trỏ đến các con trái và phải, trỏ đến null nếu con tương ứng không tồn tại.
 
-## Operations
+## Các hoạt động
 
-It is not difficult to see, that all operations can be reduced to a single one: **merging** two heaps into one.
-Indeed, adding a new value to the heap is equivalent to merging the heap with a heap consisting of a single vertex with that value. 
-Finding a minimum doesn't require any operation at all - the minimum is simply the value at the root.
-Removing the minimum is equivalent to the result of merging the left and right children of the root vertex.
-And removing an arbitrary element is similar.
-We merge the children of the vertex and replace the vertex with the result of the merge.
+Không khó để thấy rằng, tất cả các hoạt động có thể được quy về một hoạt động duy nhất: **hợp nhất** hai đống thành một.
+Thật vậy, việc thêm một giá trị mới vào đống tương đương với việc hợp nhất đống với một đống chỉ bao gồm một đỉnh duy nhất với giá trị đó. 
+Việc tìm giá trị nhỏ nhất không đòi hỏi bất kỳ hoạt động nào - giá trị nhỏ nhất chỉ đơn giản là giá trị ở gốc.
+Việc loại bỏ giá trị nhỏ nhất tương đương với kết quả của việc hợp nhất các con trái và phải của đỉnh gốc.
+Và việc loại bỏ một phần tử tùy ý cũng tương tự.
+Chúng ta hợp nhất các con của đỉnh và thay thế đỉnh bằng kết quả của việc hợp nhất.
 
-So we actually only need to implement the operation of merging two heaps.
-All other operations are trivially reduced to this operation.
+Vì vậy, chúng ta thực sự chỉ cần triển khai hoạt động hợp nhất hai đống.
+Tất cả các hoạt động khác đều được quy về hoạt động này một cách tầm thường.
 
-Let two heaps $T_1$ and $T_2$ be given.
-It is clear that the root of each of these heaps contains its minimum.
-So the root of the resulting heap will be the minimum of these two values.
-So we compare both values, and use the smaller one as the new root.
-Now we have to combine the children of the selected vertex with the remaining heap.
-For this we select one of the children, and merge it with the remaining heap.
-Thus we again have the operation of merging two heaps.
-Sooner of later this process will end (the number of such steps is limited by the sum of the heights of the two heaps)
+Cho hai đống $T_1$ và $T_2$.
+Rõ ràng là gốc của mỗi đống này chứa giá trị nhỏ nhất của nó.
+Vì vậy, gốc của đống kết quả sẽ là giá trị nhỏ nhất của hai giá trị này.
+Vì vậy, chúng ta so sánh cả hai giá trị, và sử dụng giá trị nhỏ hơn làm gốc mới.
+Bây giờ chúng ta phải kết hợp các con của đỉnh đã chọn với đống còn lại.
+Để làm điều này, chúng ta chọn một trong các con, và hợp nhất nó với đống còn lại.
+Do đó, chúng ta lại có hoạt động hợp nhất hai đống.
+Sớm hay muộn quá trình này sẽ kết thúc (số bước như vậy bị giới hạn bởi tổng chiều cao của hai đống)
 
-To achieve logarithmic complexity on average, we need to specify a method for choosing one of the two children so that the average path length is logarithmic.
-It is not difficult to guess, that we will make this decision **randomly**.
-Thus the implementation of the merging operation is as follows:
+Để đạt được độ phức tạp logarit trung bình, chúng ta cần chỉ định một phương pháp để chọn một trong hai con sao cho độ dài đường đi trung bình là logarit.
+Không khó để đoán rằng, chúng ta sẽ đưa ra quyết định này một cách **ngẫu nhiên**.
+Do đó, việc triển khai hoạt động hợp nhất như sau:
 
 ```{.cpp file=randomized_heap_merge}
 Tree* merge(Tree* t1, Tree* t2) {
@@ -76,54 +76,56 @@ Tree* merge(Tree* t1, Tree* t2) {
 }
 ```
 
-Here first we check if one of the heaps is empty, then we don't need to perform any merge action at all.
-Otherwise we make the heap `t1` the one with the smaller value (by swapping `t1` and `t2` if necessary).
-We want to merge the left child of `t1` with `t2`, therefore we randomly swap the children of `t1`, and then perform the merge.
+Ở đây, trước tiên chúng ta kiểm tra xem một trong các đống có rỗng không, sau đó chúng ta không cần thực hiện bất kỳ hành động hợp nhất nào cả.
+Nếu không, chúng ta biến đống `t1` thành đống có giá trị nhỏ hơn (bằng cách hoán đổi `t1` và `t2` nếu cần).
+Chúng ta muốn hợp nhất con trái của `t1` với `t2`, do đó chúng ta hoán đổi ngẫu nhiên các con của `t1`, và sau đó thực hiện việc hợp nhất.
 
-## Complexity
+## Độ phức tạp
 
-We introduce the random variable $h(T)$ which will denote the **length of the random path** from the root to the leaf (the length in the number of edges).
-It is clear that the algorithm `merge` performs $O(h(T_1) + h(T_2))$ steps.
-Therefore to understand the complexity of the operations, we must look into the random variable $h(T)$.
+Chúng ta giới thiệu biến ngẫu nhiên $h(T)$ sẽ biểu thị **độ dài của đường đi ngẫu nhiên** từ gốc đến lá (độ dài tính bằng số cạnh).
+Rõ ràng là thuật toán `merge` thực hiện $O(h(T_1) + h(T_2))$ bước.
+Do đó, để hiểu độ phức tạp của các hoạt động, chúng ta phải xem xét biến ngẫu nhiên $h(T)$.
 
-### Expected value
+### Giá trị kỳ vọng
 
-We assume that the expectation $h(T)$ can be estimated from above by the logarithm of the number of vertices in the heap:
+Chúng ta giả định rằng kỳ vọng $h(T)$ có thể được ước tính từ trên bằng logarit của số đỉnh trong đống:
 
 $$\mathbf{E} h(T) \le \log(n+1)$$
 
-This can be easily proven by induction.
-Let $L$ and $R$ be the left and the right subtrees of the root $T$, and $n_L$ and $n_R$ the number of vertices in them ($n = n_L + n_R + 1$).
+Điều này có thể dễ dàng được chứng minh bằng quy nạp.
+Đặt $L$ và $R$ là các cây con trái và phải của gốc $T$, và $n_L$ và $n_R$ là số đỉnh trong chúng ($n = n_L + n_R + 1$).
 
-The following shows the induction step:
+Phần sau đây cho thấy bước quy nạp:
 
 $$\begin{align}
 \mathbf{E} h(T) &= 1 + \frac{\mathbf{E} h(L) + \mathbf{E} h(R)}{2} 
-\le 1 + \frac{\log(n_L + 1) \log(n_R + 1)}{2} \\\\
-&= 1 + \log\sqrt{(n_L + 1)(n_R + 1)} = \log 2\sqrt{(n_L + 1)(n_R + 1)} \\\\
+\le 1 + \frac{\log(n_L + 1) \log(n_R + 1)}{2} \\
+
+&= 1 + \log\sqrt{(n_L + 1)(n_R + 1)} = \log 2\sqrt{(n_L + 1)(n_R + 1)} \\
+
 &\le \log \frac{2\left((n_L + 1) + (n_R + 1)\right)}{2} = \log(n_L + n_R + 2) = \log(n+1)
 \end{align}$$
 
-### Exceeding the expected value
+### Vượt quá giá trị kỳ vọng
 
-Of course we are still not happy.
-The expected value of $h(T)$ doesn't say anything about the worst case.
-It is still possible that the paths from the root to the vertices is on average much greater than $\log(n + 1)$ for a specific tree.
+Tất nhiên, chúng ta vẫn chưa hài lòng.
+Giá trị kỳ vọng của $h(T)$ không nói gì về trường hợp xấu nhất.
+Vẫn có thể xảy ra trường hợp các đường đi từ gốc đến các đỉnh trung bình lớn hơn nhiều so với $\log(n + 1)$ đối với một cây cụ thể.
 
-Let us prove that exceeding the expected value is indeed very small:
+Hãy chứng minh rằng việc vượt quá giá trị kỳ vọng thực sự rất nhỏ:
 
 $$P\{h(T) > (c+1) \log n\} < \frac{1}{n^c}$$
 
-for any positive constant $c$.
+đối với bất kỳ hằng số dương $c$ nào.
 
-Here we denote by $P$ the set of paths from the root of the heap to the leaves where the length exceeds $(c+1) \log n$.
-Note that for any path $p$ of length $|p|$ the probability that it will be chosen as random path is $2^{-|p|}$.
-Therefore we get:
+Ở đây, chúng ta ký hiệu $P$ là tập hợp các đường đi từ gốc của đống đến các lá mà độ dài vượt quá $(c+1) \log n$.
+Lưu ý rằng đối với bất kỳ đường đi $p$ nào có độ dài $|p|$, xác suất nó sẽ được chọn làm đường đi ngẫu nhiên là $2^{-|p|}$.
+Do đó, chúng ta có:
 
 $$P\{h(T) > (c+1) \log n\} = \sum_{p \in P} 2^{-|p|} < \sum_{p \in P} 2^{-(c+1) \log n} = |P| n^{-(c+1)} \le n^{-c}$$
 
-### Complexity of the algorithm
+### Độ phức tạp của thuật toán
 
-Thus the algorithm `merge`, and hence all other operations expressed with it, can be performed in $O(\log n)$ on average.
+Do đó, thuật toán `merge`, và do đó tất cả các hoạt động khác được biểu diễn bằng nó, có thể được thực hiện trong $O(\log n)$ trung bình.
 
-Moreover for any positive constant $\epsilon$ there is a positive constant $c$, such that the probability that the operation will require more than $c \log n$ steps is less than $n^{-\epsilon}$ (in some sense this describes the worst case behavior of the algorithm).
+Hơn nữa, đối với bất kỳ hằng số dương $\epsilon$ nào, có một hằng số dương $c$, sao cho xác suất để hoạt động sẽ yêu cầu nhiều hơn $c \log n$ bước là nhỏ hơn $n^{-\epsilon}$ (theo một nghĩa nào đó, điều này mô tả hành vi trường hợp xấu nhất của thuật toán).

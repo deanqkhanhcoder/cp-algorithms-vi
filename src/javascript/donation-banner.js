@@ -10,12 +10,12 @@ document.addEventListener("DOMContentLoaded", () => {
   banner.innerHTML = `
     <div class="donation-banner">
       <p class="donation-text">
-        <strong>Please consider
+        <strong>Hãy cân nhắc
           <a class="donation-link" href="https://github.com/sponsors/cp-algorithms">
-            supporting us</a>
-        </strong> — ad-free, volunteer-run.
+            hỗ trợ chúng tôi</a>
+        </strong> — không quảng cáo, hoạt động tình nguyện.
       </p>
-      <button class="donation-close" type="button" aria-label="Dismiss">×</button>
+      <button class="donation-close" type="button" aria-label="Đóng">×</button>
     </div>
   `;
 

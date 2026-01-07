@@ -4,46 +4,46 @@ tags:
 e_maxx_link: prime_sieve_linear
 ---
 
-# Linear Sieve
+# Sàng tuyến tính
 
-Given a number $n$, find all prime numbers in a segment $[2;n]$.
+Cho một số $n$, tìm tất cả các số nguyên tố trong một đoạn $[2;n]$.
 
-The standard way of solving a task is to use [the sieve of Eratosthenes](sieve-of-eratosthenes.md). This algorithm is very simple, but it has runtime $O(n \log \log n)$.
+Cách tiêu chuẩn để giải quyết một nhiệm vụ là sử dụng [sàng Eratosthenes](sieve-of-eratosthenes.md). Thuật toán này rất đơn giản, nhưng nó có thời gian chạy là $O(n \log \log n)$.
 
-Although there are a lot of known algorithms with sublinear runtime (i.e. $o(n)$), the algorithm described below is interesting by its simplicity: it isn't any more complex than the classic sieve of Eratosthenes.
+Mặc dù có rất nhiều thuật toán đã biết với thời gian chạy dưới tuyến tính (tức là $o(n)$), thuật toán được mô tả dưới đây thú vị bởi sự đơn giản của nó: nó không phức tạp hơn sàng Eratosthenes cổ điển.
 
-Besides, the algorithm given here calculates **factorizations of all numbers** in the segment $[2; n]$ as a side effect, and that can be helpful in many practical applications.
+Bên cạnh đó, thuật toán được đưa ra ở đây tính toán **phân tích thừa số của tất cả các số** trong đoạn $[2; n]$ như một hiệu ứng phụ, và điều đó có thể hữu ích trong nhiều ứng dụng thực tế.
 
-The weakness of the given algorithm is in using more memory than the classic sieve of Eratosthenes': it requires an array of $n$ numbers, while for the classic sieve of Eratosthenes it is enough to have $n$ bits of memory (which is 32 times less).
+Điểm yếu của thuật toán đã cho là sử dụng nhiều bộ nhớ hơn sàng Eratosthenes cổ điển: nó đòi hỏi một mảng gồm $n$ số, trong khi đối với sàng Eratosthenes cổ điển, chỉ cần $n$ bit bộ nhớ là đủ (ít hơn 32 lần).
 
-Thus, it makes sense to use the described algorithm only until for numbers of order $10^7$ and not greater.
+Do đó, chỉ có ý nghĩa khi sử dụng thuật toán được mô tả cho các số có bậc $10^7$ và không lớn hơn.
 
-The algorithm is due to Paul Pritchard. It is a variant of Algorithm 3.3 in (Pritchard, 1987: see references in the end of the article).
+Thuật toán này là của Paul Pritchard. Nó là một biến thể của Thuật toán 3.3 trong (Pritchard, 1987: xem tài liệu tham khảo ở cuối bài viết).
 
-## Algorithm
+## Thuật toán
 
-Our goal is to calculate **minimum prime factor** $lp [i]$ for every number $i$ in the segment $[2; n]$.
+Mục tiêu của chúng ta là tính toán **thừa số nguyên tố nhỏ nhất** $lp [i]$ cho mọi số $i$ trong đoạn $[2; n]$.
 
-Besides, we need to store the list of all the found prime numbers - let's call it $pr []$.
+Bên cạnh đó, chúng ta cần lưu trữ danh sách tất cả các số nguyên tố đã tìm thấy - hãy gọi nó là $pr []$.
 
-We'll initialize the values $lp [i]$ with zeros, which means that we assume all numbers are prime. During the algorithm execution this array will be filled gradually.
+Chúng ta sẽ khởi tạo các giá trị $lp [i]$ bằng không, điều đó có nghĩa là chúng ta giả định tất cả các số đều là số nguyên tố. Trong quá trình thực hiện thuật toán, mảng này sẽ được điền dần.
 
-Now we'll go through the numbers from 2 to $n$. We have two cases for the current number $i$:
+Bây giờ chúng ta sẽ đi qua các số từ 2 đến $n$. Chúng ta có hai trường hợp cho số hiện tại $i$:
 
-- $lp[i] = 0$ - that means that $i$ is prime, i.e. we haven't found any smaller factors for it.  
-  Hence, we assign $lp [i] = i$ and add $i$ to the end of the list $pr[]$.
+- $lp[i] = 0$ - điều đó có nghĩa là $i$ là số nguyên tố, tức là chúng ta chưa tìm thấy bất kỳ thừa số nào nhỏ hơn cho nó.  
+  Do đó, chúng ta gán $lp [i] = i$ và thêm $i$ vào cuối danh sách $pr[]$.
 
-- $lp[i] \neq 0$ - that means that $i$ is composite, and its minimum prime factor is $lp [i]$.
+- $lp[i] \neq 0$ - điều đó có nghĩa là $i$ là hợp số, và thừa số nguyên tố nhỏ nhất của nó là $lp [i]$.
 
-In both cases we update values of $lp []$ for the numbers that are divisible by $i$. However, our goal is to learn to do so as to set a value $lp []$ at most once for every number. We can do it as follows:
+Trong cả hai trường hợp, chúng ta cập nhật các giá trị của $lp []$ cho các số chia hết cho $i$. Tuy nhiên, mục tiêu của chúng ta là học cách làm như vậy để đặt một giá trị $lp []$ nhiều nhất một lần cho mỗi số. Chúng ta có thể làm như sau:
 
-Let's consider numbers $x_j = i \cdot p_j$, where $p_j$ are all prime numbers less than or equal to $lp [i]$ (this is why we need to store the list of all prime numbers).
+Hãy xem xét các số $x_j = i \cdot p_j$, trong đó $p_j$ là tất cả các số nguyên tố nhỏ hơn hoặc bằng $lp [i]$ (đây là lý do tại sao chúng ta cần lưu trữ danh sách tất cả các số nguyên tố).
 
-We'll set a new value $lp [x_j] = p_j$ for all numbers of this form.
+Chúng ta sẽ đặt một giá trị mới $lp [x_j] = p_j$ cho tất cả các số có dạng này.
 
-The proof of correctness of this algorithm and its runtime can be found after the implementation.
+Chứng minh tính đúng đắn của thuật toán này và thời gian chạy của nó có thể được tìm thấy sau phần triển khai.
 
-## Implementation
+## Cài đặt
 
 ```cpp
 const int N = 10000000;
@@ -64,35 +64,35 @@ for (int i=2; i <= N; ++i) {
 }
 ```
 
-## Correctness Proof
+## Chứng minh tính đúng đắn
 
-We need to prove that the algorithm sets all values $lp []$ correctly, and that every value will be set exactly once. Hence, the algorithm will have linear runtime, since all the remaining actions of the algorithm, obviously, work for $O (n)$.
+Chúng ta cần chứng minh rằng thuật toán đặt tất cả các giá trị $lp []$ một cách chính xác, và mỗi giá trị sẽ được đặt chính xác một lần. Do đó, thuật toán sẽ có thời gian chạy tuyến tính, vì tất cả các hành động còn lại của thuật toán, rõ ràng, hoạt động trong $O (n)$.
 
-Notice that every number $i$ has exactly one representation in form:
+Lưu ý rằng mọi số $i$ có chính xác một biểu diễn dưới dạng:
 
-$$i = lp [i] \cdot x,$$
+$$i = lp [i] \cdot x,$$ 
 
-where $lp [i]$ is the minimal prime factor of $i$, and the number $x$ doesn't have any prime factors less than $lp [i]$, i.e.
+trong đó $lp [i]$ là thừa số nguyên tố nhỏ nhất của $i$, và số $x$ không có bất kỳ thừa số nguyên tố nào nhỏ hơn $lp [i]$, tức là.
 
-$$lp [i] \le lp [x].$$
+$$lp [i] \le lp [x].$$ 
 
-Now, let's compare this with the actions of our algorithm: in fact, for every $x$ it goes through all prime numbers it could be multiplied by, i.e. all prime numbers up to $lp [x]$ inclusive, in order to get the numbers in the form given above.
+Bây giờ, hãy so sánh điều này với các hành động của thuật toán của chúng ta: trên thực tế, đối với mọi $x$, nó đi qua tất cả các số nguyên tố mà nó có thể được nhân với, tức là tất cả các số nguyên tố cho đến $lp [x]$ bao gồm, để có được các số ở dạng đã cho ở trên.
 
-Hence, the algorithm will go through every composite number exactly once, setting the correct values $lp []$ there. Q.E.D.
+Do đó, thuật toán sẽ đi qua mọi hợp số chính xác một lần, đặt các giá trị $lp []$ chính xác ở đó. Q.E.D.
 
-## Runtime and Memory
+## Thời gian chạy và bộ nhớ
 
-Although the running time of $O(n)$ is better than $O(n \log \log n)$ of the classic sieve of Eratosthenes, the difference between them is not so big.
-In practice the linear sieve runs about as fast as a typical implementation of the sieve of Eratosthenes.
+Mặc dù thời gian chạy của $O(n)$ tốt hơn $O(n \log \log n)$ của sàng Eratosthenes cổ điển, sự khác biệt giữa chúng không quá lớn.
+Trong thực tế, sàng tuyến tính chạy nhanh gần bằng một triển khai thông thường của sàng Eratosthenes.
 
-In comparison to optimized versions of the sieve of Erathosthenes, e.g. the segmented sieve, it is much slower.
+So với các phiên bản tối ưu hóa của sàng Eratosthenes, ví dụ: sàng phân đoạn, nó chậm hơn nhiều.
 
-Considering the memory requirements of this algorithm - an array $lp []$ of length $n$, and an array of $pr []$ of length  $\frac n {\ln n}$, this algorithm seems to be worse than the classic sieve in every way.
+Xem xét các yêu cầu về bộ nhớ của thuật toán này - một mảng $lp []$ có độ dài $n$, và một mảng của $pr []$ có độ dài  $rac n {\ln n}$, thuật toán này có vẻ tệ hơn sàng cổ điển về mọi mặt.
 
-However, its redeeming quality is that this algorithm calculates an array $lp []$, which allows us to find factorization of any number in the segment $[2; n]$ in the time of the size order of this factorization. Moreover, using just one extra array will allow us to avoid divisions when looking for factorization.
+Tuy nhiên, phẩm chất cứu vãn của nó là thuật toán này tính toán một mảng $lp []$, cho phép chúng ta tìm phân tích thừa số của bất kỳ số nào trong đoạn $[2; n]$ trong thời gian bậc kích thước của phân tích thừa số này. Hơn nữa, chỉ cần sử dụng một mảng phụ sẽ cho phép chúng ta tránh các phép chia khi tìm phân tích thừa số.
 
-Knowing the factorizations of all numbers is very useful for some tasks, and this algorithm is one of the few which allow to find them in linear time.
+Biết phân tích thừa số của tất cả các số là rất hữu ích cho một số nhiệm vụ, và thuật toán này là một trong số ít thuật toán cho phép tìm thấy chúng trong thời gian tuyến tính.
 
-## References
+## Tài liệu tham khảo
 
 - Paul Pritchard, **Linear Prime-Number Sieves: a Family Tree**, Science of Computer Programming, vol. 9 (1987), pp.17-35.

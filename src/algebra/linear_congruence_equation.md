@@ -4,53 +4,53 @@ tags:
 e_maxx_link: diofant_1_equation
 ---
 
-# Linear Congruence Equation
+# Phương trình đồng dư tuyến tính
 
-This equation is of the form:
+Phương trình này có dạng:
 
 $$a \cdot x \equiv b \pmod n,$$
 
-where $a$, $b$ and $n$ are given integers and $x$ is an unknown integer.
+trong đó $a$, $b$ và $n$ là các số nguyên đã cho và $x$ là một số nguyên chưa biết.
 
-It is required to find the value $x$ from the interval $[0, n-1]$ (clearly, on the entire number line there can be infinitely many solutions that will differ from each other in $n \cdot k$ , where $k$ is any integer). If the solution is not unique, then we will consider how to get all the solutions.
+Yêu cầu là tìm giá trị $x$ trong khoảng $[0, n-1]$ (rõ ràng, trên toàn bộ trục số có thể có vô số nghiệm khác nhau $n \cdot k$, trong đó $k$ là một số nguyên bất kỳ). Nếu nghiệm không duy nhất, thì chúng ta sẽ xem xét cách lấy tất cả các nghiệm.
 
-## Solution by finding the inverse element
+## Giải pháp bằng cách tìm phần tử nghịch đảo
 
-Let us first consider a simpler case where $a$ and $n$ are **coprime** ($\gcd(a, n) = 1$).
-Then one can find the [inverse](module-inverse.md) of $a$, and multiplying both sides of the equation with the inverse, and we can get a **unique** solution.
+Trước tiên, hãy xem xét một trường hợp đơn giản hơn trong đó $a$ và $n$ là **nguyên tố cùng nhau** ($\gcd(a, n) = 1$).
+Khi đó, người ta có thể tìm thấy [nghịch đảo](module-inverse.md) của $a$, và nhân cả hai vế của phương trình với nghịch đảo, và chúng ta có thể nhận được một nghiệm **duy nhất**.
 
 $$x \equiv b \cdot a ^ {- 1} \pmod n$$
 
-Now consider the case where $a$ and $n$ are **not coprime** ($\gcd(a, n) \ne 1$).
-Then the solution will not always exist (for example $2 \cdot x \equiv 1 \pmod 4$ has no solution).
+Bây giờ hãy xem xét trường hợp $a$ và $n$ **không nguyên tố cùng nhau** ($\gcd(a, n) \ne 1$).
+Khi đó, nghiệm sẽ không phải lúc nào cũng tồn tại (ví dụ $2 \cdot x \equiv 1 \pmod 4$ không có nghiệm).
 
-Let $g = \gcd(a, n)$, i.e. the [greatest common divisor](euclid-algorithm.md) of $a$ and $n$ (which in this case is greater than one).
+Đặt $g = \gcd(a, n)$, tức là [ước chung lớn nhất](euclid-algorithm.md) của $a$ và $n$ (trong trường hợp này lớn hơn một).
 
-Then, if $b$ is not divisible by $g$, there is no solution. In fact, for any $x$ the left side of the equation $a \cdot x \pmod n$ , is always divisible by $g$, while the right-hand side is not divisible by it, hence it follows that there are no solutions.
+Khi đó, nếu $b$ không chia hết cho $g$, thì không có nghiệm. Trên thực tế, với bất kỳ $x$ nào, vế trái của phương trình $a \cdot x \pmod n$, luôn chia hết cho $g$, trong khi vế phải không chia hết cho nó, do đó suy ra không có nghiệm.
 
-If $g$ divides $b$, then by dividing both sides of the equation by $g$ (i.e. dividing $a$, $b$ and $n$ by $g$), we receive a new equation:
+Nếu $g$ chia hết cho $b$, thì bằng cách chia cả hai vế của phương trình cho $g$ (tức là chia $a$, $b$ và $n$ cho $g$), chúng ta nhận được một phương trình mới:
 
 $$a^\prime \cdot x \equiv b^\prime \pmod{n^\prime}$$
 
-in which $a^\prime$ and $n^\prime$ are already relatively prime, and we have already learned how to handle such an equation.
-We get $x^\prime$ as solution for $x$.
+trong đó $a^\prime$ và $n^\prime$ đã nguyên tố cùng nhau, và chúng ta đã học cách xử lý một phương trình như vậy.
+Chúng ta nhận được $x^\prime$ là nghiệm cho $x$.
 
-It is clear that this $x^\prime$ will also be a solution of the original equation.
-However it will **not be the only solution**.
-It can be shown that the original equation has exactly $g$ solutions, and they will look like this:
+Rõ ràng là $x^\prime$ này cũng sẽ là một nghiệm của phương trình ban đầu.
+Tuy nhiên, nó sẽ **không phải là nghiệm duy nhất**.
+Có thể chỉ ra rằng phương trình ban đầu có chính xác $g$ nghiệm, và chúng sẽ trông như thế này:
 
-$$x_i \equiv (x^\prime + i\cdot n^\prime) \pmod n \quad \text{for } i = 0 \ldots g-1$$
+$$x_i \equiv (x^\prime + i\cdot n^\prime) \pmod n \quad \text{cho } i = 0 \ldots g-1$$
 
-Summarizing, we can say that the **number of solutions** of the linear congruence equation is equal to either $g = \gcd(a, n)$ or to zero.
+Tóm lại, chúng ta có thể nói rằng **số lượng nghiệm** của phương trình đồng dư tuyến tính bằng $g = \gcd(a, n)$ hoặc bằng không.
 
-## Solution with the Extended Euclidean Algorithm
+## Giải pháp với Thuật toán Euclid mở rộng
 
-We can rewrite the linear congruence to the following Diophantine equation:
+Chúng ta có thể viết lại đồng dư tuyến tính thành phương trình Diophantine sau:
 
 $$a \cdot x + n \cdot k = b,$$
 
-where $x$ and $k$ are unknown integers.
+trong đó $x$ và $k$ là các số nguyên chưa biết.
 
-The method of solving this equation is described in the corresponding article [Linear Diophantine equations](linear-diophantine-equation.md) and it consists of applying the [Extended Euclidean Algorithm](extended-euclid-algorithm.md).
+Phương pháp giải phương trình này được mô tả trong bài viết tương ứng [Phương trình Diophantine tuyến tính](linear-diophantine-equation.md) và nó bao gồm việc áp dụng [Thuật toán Euclid mở rộng](extended-euclid-algorithm.md).
 
-It also describes the method of obtaining all solutions of this equation from one found solution, and incidentally this method, when carefully considered, is absolutely equivalent to the method described in the previous section.
+Nó cũng mô tả phương pháp thu được tất cả các nghiệm của phương trình này từ một nghiệm đã tìm thấy, và tình cờ phương pháp này, khi được xem xét cẩn thận, hoàn toàn tương đương với phương pháp được mô tả trong phần trước.

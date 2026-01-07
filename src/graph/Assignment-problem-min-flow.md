@@ -4,27 +4,27 @@ tags:
 e_maxx_link: assignment_mincostflow
 ---
 
-# Solving assignment problem using min-cost-flow
+# Giải bài toán phân công bằng luồng chi phí nhỏ nhất
 
-The **assignment problem** has two equivalent statements:
+**Bài toán phân công** có hai phát biểu tương đương:
 
-   - Given a square matrix $A[1..N, 1..N]$, you need to select $N$ elements in it so that exactly one element is selected in each row and column, and the sum of the values of these elements is the smallest.
-   - There are $N$ orders and $N$ machines. The cost of manufacturing on each machine is known for each order.  Only one order can be performed on each machine. It is required to assign all orders to the machines so that the total cost is minimized.
+   - Cho một ma trận vuông $A[1..N, 1..N]$, bạn cần chọn $N$ phần tử trong đó sao cho có đúng một phần tử được chọn trong mỗi hàng và mỗi cột, và tổng giá trị của các phần tử này là nhỏ nhất.
+   - Có $N$ đơn hàng và $N$ máy móc. Chi phí sản xuất trên mỗi máy cho mỗi đơn hàng đã được biết. Mỗi máy chỉ có thể thực hiện một đơn hàng. Yêu cầu là phân công tất cả các đơn hàng cho các máy sao cho tổng chi phí là nhỏ nhất.
 
-Here we will consider the solution of the problem based on the algorithm for finding the [minimum cost flow (min-cost-flow)](min_cost_flow.md), solving the assignment problem in $\mathcal{O}(N^3)$.
+Ở đây chúng ta sẽ xem xét giải pháp của bài toán dựa trên thuật toán tìm [luồng chi phí nhỏ nhất (min-cost-flow)](min_cost_flow.md), giải bài toán phân công trong $\mathcal{O}(N^3)$.
 
-## Description
+## Mô tả
 
-Let's build a bipartite network: there is a source $S$, a drain $T$, in the first part there are $N$ vertices (corresponding to rows of the matrix, or orders), in the second there are also $N$ vertices (corresponding to the columns of the matrix, or machines). Between each vertex $i$ of the first set and each vertex $j$ of the second set, we draw an edge with bandwidth 1 and cost $A_{ij}$. From the source $S$ we draw edges to all vertices $i$ of the first set with bandwidth 1 and cost 0. We draw an edge with bandwidth 1 and cost 0 from each vertex of the second set $j$ to the drain $T$.
+Hãy xây dựng một mạng hai phía: có một nguồn $S$, một đích $T$, ở phần thứ nhất có $N$ đỉnh (tương ứng với các hàng của ma trận, hoặc các đơn hàng), ở phần thứ hai cũng có $N$ đỉnh (tương ứng với các cột của ma trận, hoặc các máy). Giữa mỗi đỉnh $i$ của tập hợp thứ nhất và mỗi đỉnh $j$ của tập hợp thứ hai, chúng ta vẽ một cạnh có thông lượng 1 và chi phí $A_{ij}$. Từ nguồn $S$ chúng ta vẽ các cạnh đến tất cả các đỉnh $i$ của tập hợp thứ nhất với thông lượng 1 và chi phí 0. Chúng ta vẽ một cạnh có thông lượng 1 và chi phí 0 từ mỗi đỉnh của tập hợp thứ hai $j$ đến đích $T$.
 
-We find in the resulting network the maximum flow of the minimum cost. Obviously, the value of the flow will be $N$. Further, for each vertex $i$ of the first segment there is exactly one vertex $j$ of the second segment, such that the flow $F_{ij}$ = 1. Finally, this is a one-to-one correspondence between the vertices of the first segment and the vertices of the second part, which is the solution to the problem (since the found flow has a minimal cost, then the sum of the costs of the selected edges will be the lowest possible, which is the optimality criterion).
+Chúng ta tìm trong mạng kết quả luồng cực đại có chi phí nhỏ nhất. Rõ ràng, giá trị của luồng sẽ là $N$. Hơn nữa, với mỗi đỉnh $i$ của phần thứ nhất có đúng một đỉnh $j$ của phần thứ hai, sao cho luồng $F_{ij}$ = 1. Cuối cùng, đây là một tương ứng một-một giữa các đỉnh của phần thứ nhất và các đỉnh của phần thứ hai, đó là giải pháp của bài toán (vì luồng tìm được có chi phí nhỏ nhất, nên tổng chi phí của các cạnh được chọn sẽ là nhỏ nhất có thể, đó là tiêu chí tối ưu).
 
-The complexity of this solution of the assignment problem depends on the algorithm by which the search for the maximum flow of the minimum cost is performed. The complexity will be $\mathcal{O}(N^3)$ using [Dijkstra](dijkstra.md) or $\mathcal{O}(N^4)$ using [Bellman-Ford](bellman_ford.md). This is due to the fact that the flow is of size $O(N)$ and each iteration of Dijkstra algorithm can be performed in $O(N^2)$, while it is $O(N^3)$ for Bellman-Ford.
+Độ phức tạp của giải pháp này cho bài toán phân công phụ thuộc vào thuật toán được sử dụng để tìm kiếm luồng cực đại có chi phí nhỏ nhất. Độ phức tạp sẽ là $\mathcal{O}(N^3)$ nếu sử dụng [Dijkstra](dijkstra.md) hoặc $\mathcal{O}(N^4)$ nếu sử dụng [Bellman-Ford](bellman_ford.md). Điều này là do luồng có kích thước $O(N)$ và mỗi lần lặp của thuật toán Dijkstra có thể được thực hiện trong $O(N^2)$, trong khi đó là $O(N^3)$ cho Bellman-Ford.
 
-## Implementation
+## Cài đặt
 
-The implementation given here is long, it can probably be significantly reduced.
-It uses the [SPFA algorithm](bellman_ford.md) for finding shortest paths.
+Việc cài đặt được đưa ra ở đây khá dài, có thể được rút ngắn đáng kể.
+Nó sử dụng thuật toán [SPFA](bellman_ford.md) để tìm đường đi ngắn nhất.
 
 ```cpp
 const int INF = 1000 * 1000 * 1000;

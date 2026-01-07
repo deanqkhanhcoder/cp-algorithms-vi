@@ -3,40 +3,40 @@ tags:
   - Original
 ---
 
-# Binary Exponentiation by Factoring
+# Lũy thừa nhị phân bằng cách phân tích
 
-Consider a problem of computing $ax^y \pmod{2^d}$, given integers $a$, $x$, $y$ and $d \geq 3$, where $x$ is odd.
+Xét bài toán tính $ax^y \pmod{2^d}$, cho các số nguyên $a$, $x$, $y$ và $d \geq 3$, trong đó $x$ là số lẻ.
 
-The algorithm below allows to solve this problem with $O(d)$ additions and binary operations and a single multiplication by $y$.
+Thuật toán dưới đây cho phép giải quyết bài toán này với $O(d)$ phép cộng và các phép toán nhị phân cùng một phép nhân duy nhất với $y$.
 
-Due to the structure of the multiplicative group modulo $2^d$, any number $x$ such that $x \equiv 1 \pmod 4$ can be represented as
+Do cấu trúc của nhóm nhân modulo $2^d$, bất kỳ số $x$ nào sao cho $x \equiv 1 \pmod 4$ đều có thể được biểu diễn dưới dạng
 
 $$
 x \equiv b^{L(x)} \pmod{2^d},
 $$
 
-where $b \equiv 5 \pmod 8$. Without loss of generality we assume that $x \equiv 1 \pmod 4$, as we can reduce $x \equiv 3 \pmod 4$ to $x \equiv 1 \pmod 4$ by substituting $x \mapsto -x$ and $a \mapsto (-1)^{y} a$. In this notion, $ax^y$ is represented as
+trong đó $b \equiv 5 \pmod 8$. Không mất tính tổng quát, chúng ta giả sử rằng $x \equiv 1 \pmod 4$, vì chúng ta có thể quy $x \equiv 3 \pmod 4$ về $x \equiv 1 \pmod 4$ bằng cách thay thế $x \mapsto -x$ và $a \mapsto (-1)^{y} a$. Trong khái niệm này, $ax^y$ được biểu diễn là
 
 $$
 a x^y \equiv a b^{yL(x)} \pmod{2^d}.
 $$
 
-The core idea of the algorithm is to simplify the computation of $L(x)$ and $b^{y L(x)}$ using the fact that we're working modulo $2^d$. For reasons that will be apparent later on, we'll be working with $4L(x)$ rather than $L(x)$, but taken modulo $2^d$ instead of $2^{d-2}$.
+Ý tưởng cốt lõi của thuật toán là đơn giản hóa việc tính toán $L(x)$ và $b^{y L(x)}$ bằng cách sử dụng thực tế là chúng ta đang làm việc modulo $2^d$. Vì những lý do sẽ rõ ràng sau này, chúng ta sẽ làm việc với $4L(x)$ thay vì $L(x)$, nhưng lấy modulo $2^d$ thay vì $2^{d-2}$.
 
-In this article, we will cover the implementation for $32$-bit integers. Let
+Trong bài viết này, chúng ta sẽ trình bày cách triển khai cho các số nguyên 32 bit. Đặt
 
-* `mbin_log_32(r, x)` be a function that computes $r+4L(x) \pmod{2^d}$;
-* `mbin_exp_32(r, x)` be a function that computes $r b^{\frac{x}{4}} \pmod{2^d}$;
-* `mbin_power_odd_32(a, x, y)` be a function that computes $ax^y \pmod{2^d}$.
+* `mbin_log_32(r, x)` là một hàm tính $r+4L(x) \pmod{2^d}$;
+* `mbin_exp_32(r, x)` là một hàm tính $r b^{\frac{x}{4}} \pmod{2^d}$;
+* `mbin_power_odd_32(a, x, y)` là một hàm tính $ax^y \pmod{2^d}$.
 
-Then `mbin_power_odd_32` is implemented as follows:
+Khi đó `mbin_power_odd_32` được triển khai như sau:
 
 ```cpp
 uint32_t mbin_power_odd_32(uint32_t rem, uint32_t base, uint32_t exp) {
     if (base & 2) {
-        /* divider is considered negative */
+        /* số chia được coi là âm */
         base = -base;
-        /* check if result should be negative */
+        /* kiểm tra xem kết quả có nên là số âm không */
         if (exp & 1) {
             rem = -rem;
         }
@@ -45,23 +45,23 @@ uint32_t mbin_power_odd_32(uint32_t rem, uint32_t base, uint32_t exp) {
 }
 ```
 
-## Computing 4L(x) from x
+## Tính 4L(x) từ x
 
-Let $x$ be an odd number such that $x \equiv 1 \pmod 4$. It can be represented as 
+Cho $x$ là một số lẻ sao cho $x \equiv 1 \pmod 4$. Nó có thể được biểu diễn dưới dạng
 
 $$
 x \equiv (2^{a_1}+1)\dots(2^{a_k}+1) \pmod{2^d},
 $$
 
-where $1 < a_1 < \dots < a_k < d$. Here $L(\cdot)$ is well-defined for each multiplier, as they're equal to $1$ modulo $4$. Hence,
+trong đó $1 < a_1 < \dots < a_k < d$. Ở đây $L(\cdot)$ được định nghĩa rõ ràng cho mỗi nhân tử, vì chúng bằng $1$ modulo $4$. Do đó,
 
 $$
 4L(x) \equiv 4L(2^{a_1}+1)+\dots+4L(2^{a_k}+1) \pmod{2^{d}}.
 $$
 
-So, if we precompute $t_k = 4L(2^n+1)$ for all $1 < k < d$, we will be able to compute $4L(x)$ for any number $x$.
+Vì vậy, nếu chúng ta tính trước $t_k = 4L(2^n+1)$ cho tất cả $1 < k < d$, chúng ta sẽ có thể tính $4L(x)$ cho bất kỳ số $x$ nào.
 
-For 32-bit integers, we can use the following table:
+Đối với số nguyên 32 bit, chúng ta có thể sử dụng bảng sau:
 
 ```cpp
 const uint32_t mbin_log_32_table[32] = {
@@ -76,15 +76,15 @@ const uint32_t mbin_log_32_table[32] = {
 };
 ```
 
-On practice, a slightly different approach is used than described above. Rather than finding the factorization for $x$, we will consequently multiply $x$ with $2^n+1$ until we turn it into $1$ modulo $2^d$. In this way, we will find the representation of $x^{-1}$, that is
+Trong thực tế, một cách tiếp cận hơi khác được sử dụng so với mô tả ở trên. Thay vì tìm phân tích thừa số cho $x$, chúng ta sẽ nhân liên tiếp $x$ với $2^n+1$ cho đến khi nó trở thành $1$ modulo $2^d$. Bằng cách này, chúng ta sẽ tìm thấy biểu diễn của $x^{-1}$, tức là
 
 $$
 x (2^{a_1}+1)\dots(2^{a_k}+1) \equiv 1 \pmod {2^d}.
 $$
 
-To do this, we iterate over $n$ such that $1 < n < d$. If the current $x$ has $n$-th bit set, we multiply $x$ with $2^n+1$, which is conveniently done in C++ as `x = x + (x << n)`. This won't change bits lower than $n$, but will turn the $n$-th bit to zero, because $x$ is odd.
+Để làm điều này, chúng ta lặp qua $n$ sao cho $1 < n < d$. Nếu $x$ hiện tại có bit thứ $n$ được bật, chúng ta nhân $x$ với $2^n+1$, điều này được thực hiện thuận tiện trong C++ là `x = x + (x << n)`. Điều này sẽ không thay đổi các bit thấp hơn $n$, nhưng sẽ biến bit thứ $n$ thành không, vì $x$ là số lẻ.
 
-With all this in mind, the function `mbin_log_32(r, x)` is implemented as follows:
+Với tất cả những điều này, hàm `mbin_log_32(r, x)` được triển khai như sau:
 
 ```cpp
 uint32_t mbin_log_32(uint32_t r, uint32_t x) {
@@ -101,33 +101,33 @@ uint32_t mbin_log_32(uint32_t r, uint32_t x) {
 }
 ```
 
-Note that $4L(x) = -4L(x^{-1})$, so instead of adding $4L(2^n+1)$, we subtract it from $r$, which initially equates to $0$.
+Lưu ý rằng $4L(x) = -4L(x^{-1})$, vì vậy thay vì cộng $4L(2^n+1)$, chúng ta trừ nó khỏi $r$, mà ban đầu bằng $0$.
 
-## Computing x from 4L(x)
+## Tính x từ 4L(x)
 
-Note that for $k \geq 1$ it holds that
+Lưu ý rằng đối với $k \geq 1$ nó đúng rằng
 
 $$
 (a 2^{k}+1)^2 = a^2 2^{2k} +a 2^{k+1}+1 = b2^{k+1}+1,
 $$
 
-from which (by repeated squaring) we can deduce that
+từ đó (bằng cách bình phương lặp đi lặp lại) chúng ta có thể suy ra rằng
 
 $$
 (2^a+1)^{2^b} \equiv 1 \pmod{2^{a+b}}.
 $$
 
-Applying this result to $a=2^n+1$ and $b=d-k$ we deduce that the multiplicative order of $2^n+1$ is a divisor of $2^{d-n}$.
+Áp dụng kết quả này cho $a=2^n+1$ và $b=d-k$, chúng ta suy ra rằng cấp nhân của $2^n+1$ là một ước của $2^{d-n}$.
 
-This, in turn, means that $L(2^n+1)$ must be divisible by $2^{n}$, as the order of $b$ is $2^{d-2}$ and the order of $b^y$ is $2^{d-2-v}$, where $2^v$ is the highest power of $2$ that divides $y$, so we need
+Điều này, đến lượt nó, có nghĩa là $L(2^n+1)$ phải chia hết cho $2^{n}$, vì cấp của $b$ là $2^{d-2}$ và cấp của $b^y$ là $2^{d-2-v}$, trong đó $2^v$ là lũy thừa cao nhất của $2$ chia hết cho $y$, vì vậy chúng ta cần
 
 $$
 2^{d-k} \equiv 0 \pmod{2^{d-2-v}},
 $$
 
-thus $v$ must be greater or equal than $k-2$. This is a bit ugly and to mitigate this we said in the beginning that we multiply $L(x)$ by $4$. Now if we know $4L(x)$, we can uniquely decomposing it into a sum of $4L(2^n+1)$ by consequentially checking bits in $4L(x)$. If the $n$-th bit is set to $1$, we will multiply the result with $2^n+1$ and reduce the current $4L(x)$ by $4L(2^n+1)$.
+do đó $v$ phải lớn hơn hoặc bằng $k-2$. Điều này hơi xấu và để giảm thiểu điều này, chúng ta đã nói ở đầu rằng chúng ta nhân $L(x)$ với $4$. Bây giờ nếu chúng ta biết $4L(x)$, chúng ta có thể phân rã duy nhất nó thành một tổng của $4L(2^n+1)$ bằng cách kiểm tra liên tiếp các bit trong $4L(x)$. Nếu bit thứ $n$ được đặt thành $1$, chúng ta sẽ nhân kết quả với $2^n+1$ và giảm $4L(x)$ hiện tại đi $4L(2^n+1)$.
 
-Thus, `mbin_exp_32` is implemented as follows:
+Do đó, `mbin_exp_32` được triển khai như sau:
 
 ```cpp
 uint32_t mbin_exp_32(uint32_t r, uint32_t x) {
@@ -144,15 +144,15 @@ uint32_t mbin_exp_32(uint32_t r, uint32_t x) {
 }
 ```
 
-## Further optimizations
+## Tối ưu hóa thêm
 
-It is possible to halve the number of iterations if you note that $4L(2^{d-1}+1)=2^{d-1}$ and that for $2k \geq d$ it holds that
+Có thể giảm một nửa số lần lặp nếu bạn lưu ý rằng $4L(2^{d-1}+1)=2^{d-1}$ và đối với $2k \geq d$ nó đúng rằng
 
 $$
 (2^n+1)^2 \equiv 2^{2n} + 2^{n+1}+1 \equiv 2^{n+1}+1 \pmod{2^d},
 $$
 
-which allows to deduce that $4L(2^n+1)=2^n$ for $2n \geq d$. So, you could simplify the algorithm by only going up to $\frac{d}{2}$ and then use the fact above to compute the remaining part with bitwise operations:
+điều này cho phép suy ra rằng $4L(2^n+1)=2^n$ đối với $2n \geq d$. Vì vậy, bạn có thể đơn giản hóa thuật toán bằng cách chỉ đi đến $\frac{d}{2}$ và sau đó sử dụng thực tế ở trên để tính toán phần còn lại bằng các phép toán trên bit:
 
 ```cpp
 uint32_t mbin_log_32(uint32_t r, uint32_t x) {
@@ -186,32 +186,32 @@ uint32_t mbin_exp_32(uint32_t r, uint32_t x) {
 }
 ```
 
-## Computing logarithm table
+## Tính bảng logarit
 
-To compute log-table, one could modify the [Pohlig–Hellman algorithm](https://en.wikipedia.org/wiki/Pohlig–Hellman_algorithm) for the case when modulo is a power of $2$.
+Để tính bảng logarit, người ta có thể sửa đổi [thuật toán Pohlig–Hellman](https://en.wikipedia.org/wiki/Pohlig–Hellman_algorithm) cho trường hợp khi modulo là một lũy thừa của $2$.
 
-Our main task here is to compute $x$ such that $g^x \equiv y \pmod{2^d}$, where $g=5$ and $y$ is a number of kind $2^n+1$. 
+Nhiệm vụ chính của chúng ta ở đây là tính $x$ sao cho $g^x \equiv y \pmod{2^d}$, trong đó $g=5$ và $y$ là một số loại $2^n+1$. 
 
-Squaring both parts $k$ times we arrive to
+Bình phương cả hai vế $k$ lần chúng ta đến
 
 $$
 g^{2^k x} \equiv y^{2^k} \pmod{2^d}.
 $$
 
-Note that the order of $g$ is not greater than $2^{d}$ (in fact, than $2^{d-2}$, but we will stick to $2^d$ for convenience), hence using $k=d-1$ we will have either $g^1$ or $g^0$ on the left hand side which allows us to determine the smallest bit of $x$ by comparing $y^{2^k}$ to $g$. Now assume that $x=x_0 + 2^k x_1$, where $x_0$ is a known part and $x_1$ is not yet known. Then
+Lưu ý rằng cấp của $g$ không lớn hơn $2^{d}$ (trên thực tế, là $2^{d-2}$, nhưng chúng ta sẽ gắn với $2^d$ cho tiện), do đó sử dụng $k=d-1$ chúng ta sẽ có $g^1$ hoặc $g^0$ ở vế trái, điều này cho phép chúng ta xác định bit nhỏ nhất của $x$ bằng cách so sánh $y^{2^k}$ với $g$. Bây giờ giả sử rằng $x=x_0 + 2^k x_1$, trong đó $x_0$ là một phần đã biết và $x_1$ chưa được biết. Khi đó
 
 $$
 g^{x_0+2^k x_1} \equiv y \pmod{2^d}.
 $$
 
-Multiplying both parts with $g^{-x_0}$, we get
+Nhân cả hai vế với $g^{-x_0}$, chúng ta có được
 
 $$
 g^{2^k x_1} \equiv (g^{-x_0} y) \pmod{2^d}.
 $$
 
-Now, squaring both sides $d-k-1$ times we can obtain the next bit of $x$, eventually recovering all its bits.
+Bây giờ, bình phương cả hai vế $d-k-1$ lần chúng ta có thể thu được bit tiếp theo của $x$, cuối cùng khôi phục tất cả các bit của nó.
 
-## References
+## Tài liệu tham khảo
 
 * [M30, Hans Petter Selasky, 2009](https://ia601602.us.archive.org/29/items/B-001-001-251/B-001-001-251.pdf#page=640)
