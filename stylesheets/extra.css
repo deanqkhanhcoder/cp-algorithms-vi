@@ -1,3 +1,8 @@
+/* ==========================================================================
+   1. CẤU HÌNH GIAO DIỆN CHUNG (THEME & COLORS)
+   ========================================================================== */
+
+/* Định nghĩa màu sắc cho theme */
 [data-md-color-scheme="cpalgo"] {
   --md-primary-fg-color: #7777aa;
   --md-primary-fg-color--light: #7777aa;
@@ -13,12 +18,191 @@
   background-color: lightgray;
 }
 
-/* Move primary sidebar to the right */
+/* Di chuyển sidebar chính sang phải */
 .md-sidebar--primary {
   order: 100;
 }
 
-/* For proper rendering of contribution meta */
+/* ==========================================================================
+   2. HEADER & NAVIGATION (THANH ĐIỀU HƯỚNG - CÓ KÍNH MỜ)
+   ========================================================================== */
+
+/* --- CẤU HÌNH CHUNG --- */
+.md-header__source .md-source__repository {
+  max-width: 150px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-left: 0;
+}
+
+.md-source__facts {
+  display: none !important;
+}
+
+.md-header__option {
+  flex-shrink: 0;
+}
+
+/* --- HIỆU ỨNG KÍNH MỜ (GLASSMORPHISM) --- */
+
+/* 1. Kính mờ cho Chế độ Tối (Dark Mode) */
+[data-md-color-scheme="slate"] .md-header {
+  /* Màu nền tối (Dark Grey) có độ trong suốt 85% */
+  background-color: rgba(30, 32, 35, 0.85) !important;
+
+  /* Hiệu ứng làm mờ background bên dưới */
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+
+  /* Đường viền mỏng ngăn cách */
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* 2. Kính mờ cho Chế độ Sáng (Light Mode) */
+[data-md-color-scheme="default"] .md-header {
+  /* Màu nền trắng có độ trong suốt 85% */
+  background-color: rgba(255, 255, 255, 0.85) !important;
+
+  /* Hiệu ứng làm mờ */
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+
+  /* Đường viền mỏng ngăn cách */
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+
+  /* Ép màu chữ thành ĐEN để dễ đọc trên nền trắng */
+  color: #000000 !important;
+}
+
+/* --- XỬ LÝ MÀU CHỮ/ICON KHI Ở LIGHT MODE --- */
+[data-md-color-scheme="default"] .md-header__button,
+[data-md-color-scheme="default"] .md-header__title,
+[data-md-color-scheme="default"] .md-header__topic {
+  color: #202020 !important;
+  /* Màu đen dịu */
+}
+
+/* Khi di chuột vào icon ở Light Mode thì đậm lên */
+[data-md-color-scheme="default"] .md-header__button:hover {
+  color: #000000 !important;
+  opacity: 0.7;
+}
+
+/* ==========================================================================
+   3. HIỆU ỨNG CHUYỂN ĐỔI (TRANSITION & ANIMATION)
+   ========================================================================== */
+
+/* Hiệu ứng chuyển màu MƯỢT MÀ cho toàn bộ trang (Không giật) */
+body,
+.md-header,
+.md-container,
+.md-sidebar,
+.md-content,
+.md-footer,
+.md-typeset,
+.md-nav__link,
+.md-header__button,
+.md-search__input {
+  transition: background-color 0.3s ease-in-out,
+    color 0.3s ease-in-out,
+    border-color 0.3s ease-in-out,
+    box-shadow 0.3s ease-in-out !important;
+}
+
+/* Hiệu ứng xoay icon Mặt trăng/Mặt trời */
+.md-header__option[data-md-component="palette"] .md-icon {
+  transition: transform 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55) !important;
+}
+
+/* Xoay 180 độ khi bấm */
+input[data-md-color-scheme="slate"]:checked~label .md-icon,
+input[data-md-color-scheme="default"]:checked~label .md-icon {
+  transform: rotate(180deg);
+}
+
+/* Hiệu ứng Fade-in khi tải nội dung trang */
+.md-content {
+  animation: fade-in 0.6s ease-in-out forwards;
+  opacity: 0;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ==========================================================================
+   4. NỘI DUNG BÀI VIẾT (MARKDOWN STYLING)
+   ========================================================================== */
+
+/* Code Block phong cách MacOS (3 nút tròn màu) */
+.md-typeset pre>code {
+  padding-top: 35px !important;
+  position: relative;
+  border: 1px solid rgba(128, 128, 128, 0.2);
+}
+
+.md-typeset pre>code::before {
+  content: "";
+  position: absolute;
+  top: 12px;
+  left: 15px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #ff5f56;
+  /* Đỏ */
+  box-shadow: 20px 0 0 #ffbd2e, 40px 0 0 #27c93f;
+  /* Vàng, Xanh */
+}
+
+.md-typeset pre>code::-webkit-scrollbar {
+  height: 6px;
+}
+
+/* Bo tròn ảnh và đổ bóng */
+.md-content img {
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+}
+
+.md-content img:hover {
+  transform: scale(1.02);
+}
+
+/* Tùy chỉnh thanh cuộn trình duyệt */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--md-default-fg-color--lighter);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: var(--md-primary-fg-color);
+}
+
+/* ==========================================================================
+   5. CÁC THÀNH PHẦN KHÁC (BANNER, METADATA, CARDS)
+   ========================================================================== */
+
+/* Metadata (Tác giả, ngày tháng) */
 .metadata {
   list-style: none;
   padding: 0;
@@ -29,29 +213,23 @@
 }
 
 .metadata.page-metadata .contributors-text {
-  margin-right: 5px
-}
-
-body[dir=rtl] .metadata.page-metadata .contributors-text {
-  margin-right: 0;
-  margin-left: 5px
+  margin-right: 5px;
 }
 
 .page-metadata .contributors {
   display: inline-block;
   list-style: none;
   margin: 0 !important;
-  padding: 0 !important
+  padding: 0 !important;
 }
 
 .page-metadata .contributors li {
   display: inline-block;
-  vertical-align: top;
   margin: 0;
-  padding: 0
+  padding: 0;
 }
 
-/* Visually hide latex code */
+/* Ẩn code LaTeX thô */
 .mjx-copytext {
   font-size: 0;
 }
@@ -60,45 +238,37 @@ body[dir=rtl] .metadata.page-metadata .contributors-text {
   overflow-y: hidden !important;
 }
 
-/* Container chính */
+/* Donation Banner */
 #donation-banner {
   margin-bottom: 1.5rem;
   border-radius: 0.2rem;
   background-color: var(--md-default-bg-color);
-  /* Màu nền theo theme */
   border: 1px solid var(--md-default-fg-color--lighter);
-  /* Viền mờ */
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
-  /* Đổ bóng nhẹ */
   overflow: hidden;
   position: relative;
+  border-left: 4px solid var(--md-primary-fg-color);
 }
 
-/* Sử dụng Flexbox để căn chỉnh */
 .donation-banner-container {
   display: flex;
   align-items: flex-start;
-  /* Căn lề trên */
   padding: 1rem;
   gap: 1rem;
 }
 
-/* Style cho icon trái tim */
 .donation-icon {
   font-size: 1.5rem;
   line-height: 1;
   animation: heartbeat 1.5s infinite;
 }
 
-/* Nội dung chữ */
 .donation-content {
   flex: 1;
-  /* Chiếm hết khoảng trống còn lại */
 }
 
 .donation-text {
   margin: 0 !important;
-  /* Ghi đè margin mặc định của thẻ p */
   font-size: 0.9rem;
   line-height: 1.4;
   color: var(--md-default-fg-color);
@@ -107,7 +277,6 @@ body[dir=rtl] .metadata.page-metadata .contributors-text {
 .donation-link {
   font-weight: 700;
   color: var(--md-primary-fg-color);
-  /* Màu tím chủ đạo của web bạn */
   text-decoration: none;
 }
 
@@ -115,7 +284,6 @@ body[dir=rtl] .metadata.page-metadata .contributors-text {
   text-decoration: underline;
 }
 
-/* Nút đóng (X) */
 .donation-close {
   background: none;
   border: none;
@@ -134,12 +302,6 @@ body[dir=rtl] .metadata.page-metadata .contributors-text {
   color: var(--md-default-fg-color);
 }
 
-/* Highlight border bên trái cho nổi bật (giống Admonition) */
-#donation-banner {
-  border-left: 4px solid var(--md-primary-fg-color);
-}
-
-/* Animation trái tim đập */
 @keyframes heartbeat {
   0% {
     transform: scale(1);
@@ -162,69 +324,38 @@ body[dir=rtl] .metadata.page-metadata .contributors-text {
   }
 }
 
-/* --- Tùy chỉnh thanh cuộn (Scrollbar) cho hiện đại --- */
-::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+/* Grid Cards (Trang chủ) */
+.grid-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+  margin-top: 2rem;
 }
 
-::-webkit-scrollbar-track {
-  background: transparent;
+.card {
+  display: block;
+  padding: 20px;
+  border-radius: 12px;
+  background: var(--md-default-bg-color);
+  border: 1px solid var(--md-default-fg-color--lighter);
+  text-decoration: none !important;
+  transition: transform 0.2s, box-shadow 0.2s;
+  color: var(--md-default-fg-color) !important;
 }
 
-::-webkit-scrollbar-thumb {
-  background-color: var(--md-default-fg-color--lighter);
-  border-radius: 4px;
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+  border-color: var(--md-primary-fg-color);
 }
 
-::-webkit-scrollbar-thumb:hover {
-  background-color: var(--md-primary-fg-color);
+.card-icon {
+  font-size: 2rem;
+  margin-bottom: 10px;
 }
 
-/* --- Bo tròn ảnh trong bài viết --- */
-.md-content img {
-  border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  /* Đổ bóng nhẹ */
-  transition: transform 0.3s ease;
-}
-
-/* Hiệu ứng khi di chuột vào ảnh */
-.md-content img:hover {
-  transform: scale(1.02);
-}
-
-/* --- Làm đẹp các khối code --- */
-.md-typeset pre>code {
-  font-size: 0.9em;
-  /* Chữ code nhỏ lại chút cho gọn */
-  border-radius: 6px;
-}
-
-/* --- Tùy chỉnh màu nền Sidebar (Menu trái) nếu muốn --- */
-/* (Bỏ comment dòng dưới nếu muốn menu trái tối hơn chút để tách biệt) */
-/*
-.md-sidebar--primary {
-    background-color: rgba(0,0,0,0.02); 
-}
-*/
-/* Ẩn số sao và fork cạnh icon GitHub để tiết kiệm chỗ */
-/* 1. Ẩn hoàn toàn dòng chứa số Stars và Forks */
-.md-source__facts {
-  display: none !important;
-}
-
-/* 2. Thu gọn tên Repo tối đa để nhường chỗ cho Instagram */
-.md-header__source .md-source__repository {
-  max-width: 150px;
-  /* Giảm xuống 150px cho chắc chắn */
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  margin-left: 0;
-}
-
-/* 3. Đảm bảo các icon không bị co lại */
-.md-header__option {
-  flex-shrink: 0;
+.card h3 {
+  margin: 0 !important;
+  font-weight: bold;
+  color: var(--md-primary-fg-color);
 }
