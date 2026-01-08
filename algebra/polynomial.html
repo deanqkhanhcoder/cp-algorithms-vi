@@ -10,29 +10,31 @@
       
       
       
-        <link rel="canonical" href="https://deanqkhanhcoder.github.io/cp-algorithms-vi/index.html">
+        <link rel="canonical" href="https://deanqkhanhcoder.github.io/cp-algorithms-vi/algebra/polynomial.html">
       
       
+        <link rel="prev" href="fft.html">
       
-        <link rel="next" href="navigation.html">
+      
+        <link rel="next" href="continued-fractions.html">
       
       
         
       
       
-      <link rel="icon" href="favicon.ico">
+      <link rel="icon" href="../favicon.ico">
       <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
     
     
       
-        <title>Trang chủ - Algorithms for Competitive Programming</title>
+        <title>Các phép toán trên đa thức và chuỗi - Algorithms for Competitive Programming</title>
       
     
     
-      <link rel="stylesheet" href="assets/stylesheets/main.484c7ddc.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
       
         
-        <link rel="stylesheet" href="assets/stylesheets/palette.ab4e12ef.min.css">
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
       
       
 
@@ -51,15 +53,15 @@
       
     
     
-      <link rel="stylesheet" href="stylesheets/extra.css">
+      <link rel="stylesheet" href="../stylesheets/extra.css">
     
-    <script>__md_scope=new URL(".",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
     
     
-  <script src="assets/javascripts/toggle-sidebar.js"></script></head>
+  <script src="../assets/javascripts/toggle-sidebar.js"></script></head>
   
   
     
@@ -78,7 +80,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#cp-algorithms-vietnamese-translation" class="md-skip">
+        <a href="#operations-on-polynomials-and-series" class="md-skip">
           Skip to content
         </a>
       
@@ -98,10 +100,10 @@
     }
   </script>
   <nav class="md-header__inner md-grid" aria-label="header.title">
-    <a href="." title="Algorithms for Competitive Programming"
+    <a href=".." title="Algorithms for Competitive Programming"
       class="md-header__button md-logo" aria-label="Algorithms for Competitive Programming" data-md-component="logo">
       
-  <img src="favicon.ico" alt="logo">
+  <img src="../favicon.ico" alt="logo">
 
     </a>
     <label class="md-header__button md-icon" for="__drawer">
@@ -111,7 +113,7 @@
       <div class="md-header__ellipsis">
         <div class="md-header__topic">
           <span class="md-ellipsis">
-            <a href="." title="Algorithms for Competitive Programming"
+            <a href=".." title="Algorithms for Competitive Programming"
               aria-label="Algorithms for Competitive Programming" data-md-component="logo">
               Algorithms for Competitive Programming
             </a>
@@ -121,7 +123,7 @@
           <span class="md-ellipsis">
             <a href="#" onclick="scrollToTop()">
               
-              Trang chủ
+              Các phép toán trên đa thức và chuỗi
               
             </a>
           </span>
@@ -255,9 +257,9 @@
 
 <nav class="md-nav md-nav--primary md-nav--integrated" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="." title="Algorithms for Competitive Programming" class="md-nav__button md-logo" aria-label="Algorithms for Competitive Programming" data-md-component="logo">
+    <a href=".." title="Algorithms for Competitive Programming" class="md-nav__button md-logo" aria-label="Algorithms for Competitive Programming" data-md-component="logo">
       
-  <img src="favicon.ico" alt="logo">
+  <img src="../favicon.ico" alt="logo">
 
     </a>
     Algorithms for Competitive Programming
@@ -281,20 +283,18 @@
       
   
   
-    
   
   
-  
     
     
     
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1" >
         
           
           <label class="md-nav__link" for="__nav_1" id="__nav_1_label" tabindex="0">
@@ -315,7 +315,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_1_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_1_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_1">
             <span class="md-nav__icon md-icon"></span>
             
@@ -330,37 +330,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Trang chủ
-  
-
-    
-  </span>
-  
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="index.html" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../index.html" class="md-nav__link">
         
   
   
@@ -376,114 +349,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#gioi-thieu" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        📌 Giới thiệu
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#noi-dung-a-dich" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        📚 Nội dung đã dịch
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#quy-uoc-dich-thuat" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        🧠 Quy ước dịch thuật
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#nguon-goc-ban-quyen" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        🔗 Nguồn gốc &amp; Bản quyền
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#ong-gop" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        🤝 Đóng góp
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#tac-gia-ban-dich" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        👤 Tác giả bản dịch
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#loi-cam-on" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        ⭐ Lời cảm ơn
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#checklist" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Checklist
-      
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -496,7 +361,7 @@
   
   
     <li class="md-nav__item">
-      <a href="navigation.html" class="md-nav__link">
+      <a href="../navigation.html" class="md-nav__link">
         
   
   
@@ -524,7 +389,7 @@
   
   
     <li class="md-nav__item">
-      <a href="tags.html" class="md-nav__link">
+      <a href="../tags.html" class="md-nav__link">
         
   
   
@@ -552,7 +417,7 @@
   
   
     <li class="md-nav__item">
-      <a href="contrib.html" class="md-nav__link">
+      <a href="../contrib.html" class="md-nav__link">
         
   
   
@@ -580,7 +445,7 @@
   
   
     <li class="md-nav__item">
-      <a href="code_of_conduct.html" class="md-nav__link">
+      <a href="../code_of_conduct.html" class="md-nav__link">
         
   
   
@@ -608,7 +473,7 @@
   
   
     <li class="md-nav__item">
-      <a href="preview.html" class="md-nav__link">
+      <a href="../preview.html" class="md-nav__link">
         
   
   
@@ -640,18 +505,20 @@
       
   
   
+    
   
   
+  
     
     
     
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
         
           
           <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
@@ -672,7 +539,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_2">
             <span class="md-nav__icon md-icon"></span>
             
@@ -737,7 +604,7 @@
   
   
     <li class="md-nav__item">
-      <a href="algebra/binary-exp.html" class="md-nav__link">
+      <a href="binary-exp.html" class="md-nav__link">
         
   
   
@@ -765,7 +632,7 @@
   
   
     <li class="md-nav__item">
-      <a href="algebra/euclid-algorithm.html" class="md-nav__link">
+      <a href="euclid-algorithm.html" class="md-nav__link">
         
   
   
@@ -793,7 +660,7 @@
   
   
     <li class="md-nav__item">
-      <a href="algebra/extended-euclid-algorithm.html" class="md-nav__link">
+      <a href="extended-euclid-algorithm.html" class="md-nav__link">
         
   
   
@@ -821,7 +688,7 @@
   
   
     <li class="md-nav__item">
-      <a href="algebra/linear-diophantine-equation.html" class="md-nav__link">
+      <a href="linear-diophantine-equation.html" class="md-nav__link">
         
   
   
@@ -849,7 +716,7 @@
   
   
     <li class="md-nav__item">
-      <a href="algebra/fibonacci-numbers.html" class="md-nav__link">
+      <a href="fibonacci-numbers.html" class="md-nav__link">
         
   
   
@@ -932,7 +799,7 @@
   
   
     <li class="md-nav__item">
-      <a href="algebra/sieve-of-eratosthenes.html" class="md-nav__link">
+      <a href="sieve-of-eratosthenes.html" class="md-nav__link">
         
   
   
@@ -960,7 +827,7 @@
   
   
     <li class="md-nav__item">
-      <a href="algebra/prime-sieve-linear.html" class="md-nav__link">
+      <a href="prime-sieve-linear.html" class="md-nav__link">
         
   
   
@@ -988,7 +855,7 @@
   
   
     <li class="md-nav__item">
-      <a href="algebra/primality_tests.html" class="md-nav__link">
+      <a href="primality_tests.html" class="md-nav__link">
         
   
   
@@ -1016,7 +883,7 @@
   
   
     <li class="md-nav__item">
-      <a href="algebra/factorization.html" class="md-nav__link">
+      <a href="factorization.html" class="md-nav__link">
         
   
   
@@ -1099,7 +966,7 @@
   
   
     <li class="md-nav__item">
-      <a href="algebra/phi-function.html" class="md-nav__link">
+      <a href="phi-function.html" class="md-nav__link">
         
   
   
@@ -1127,7 +994,7 @@
   
   
     <li class="md-nav__item">
-      <a href="algebra/divisors.html" class="md-nav__link">
+      <a href="divisors.html" class="md-nav__link">
         
   
   
@@ -1210,7 +1077,7 @@
   
   
     <li class="md-nav__item">
-      <a href="algebra/module-inverse.html" class="md-nav__link">
+      <a href="module-inverse.html" class="md-nav__link">
         
   
   
@@ -1238,7 +1105,7 @@
   
   
     <li class="md-nav__item">
-      <a href="algebra/linear_congruence_equation.html" class="md-nav__link">
+      <a href="linear_congruence_equation.html" class="md-nav__link">
         
   
   
@@ -1266,7 +1133,7 @@
   
   
     <li class="md-nav__item">
-      <a href="algebra/chinese-remainder-theorem.html" class="md-nav__link">
+      <a href="chinese-remainder-theorem.html" class="md-nav__link">
         
   
   
@@ -1294,7 +1161,7 @@
   
   
     <li class="md-nav__item">
-      <a href="algebra/garners-algorithm.html" class="md-nav__link">
+      <a href="garners-algorithm.html" class="md-nav__link">
         
   
   
@@ -1322,7 +1189,7 @@
   
   
     <li class="md-nav__item">
-      <a href="algebra/factorial-modulo.html" class="md-nav__link">
+      <a href="factorial-modulo.html" class="md-nav__link">
         
   
   
@@ -1350,7 +1217,7 @@
   
   
     <li class="md-nav__item">
-      <a href="algebra/discrete-log.html" class="md-nav__link">
+      <a href="discrete-log.html" class="md-nav__link">
         
   
   
@@ -1378,7 +1245,7 @@
   
   
     <li class="md-nav__item">
-      <a href="algebra/primitive-root.html" class="md-nav__link">
+      <a href="primitive-root.html" class="md-nav__link">
         
   
   
@@ -1406,7 +1273,7 @@
   
   
     <li class="md-nav__item">
-      <a href="algebra/discrete-root.html" class="md-nav__link">
+      <a href="discrete-root.html" class="md-nav__link">
         
   
   
@@ -1434,7 +1301,7 @@
   
   
     <li class="md-nav__item">
-      <a href="algebra/montgomery_multiplication.html" class="md-nav__link">
+      <a href="montgomery_multiplication.html" class="md-nav__link">
         
   
   
@@ -1517,7 +1384,7 @@
   
   
     <li class="md-nav__item">
-      <a href="algebra/balanced-ternary.html" class="md-nav__link">
+      <a href="balanced-ternary.html" class="md-nav__link">
         
   
   
@@ -1545,7 +1412,7 @@
   
   
     <li class="md-nav__item">
-      <a href="algebra/gray-code.html" class="md-nav__link">
+      <a href="gray-code.html" class="md-nav__link">
         
   
   
@@ -1578,18 +1445,20 @@
                 
   
   
+    
   
   
+  
     
     
     
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_6" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_6" checked>
         
           
           <label class="md-nav__link" for="__nav_2_6" id="__nav_2_6_label" tabindex="0">
@@ -1610,7 +1479,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_6_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_6_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_2_6">
             <span class="md-nav__icon md-icon"></span>
             
@@ -1628,7 +1497,7 @@
   
   
     <li class="md-nav__item">
-      <a href="algebra/bit-manipulation.html" class="md-nav__link">
+      <a href="bit-manipulation.html" class="md-nav__link">
         
   
   
@@ -1656,7 +1525,7 @@
   
   
     <li class="md-nav__item">
-      <a href="algebra/all-submasks.html" class="md-nav__link">
+      <a href="all-submasks.html" class="md-nav__link">
         
   
   
@@ -1684,7 +1553,7 @@
   
   
     <li class="md-nav__item">
-      <a href="algebra/big-integer.html" class="md-nav__link">
+      <a href="big-integer.html" class="md-nav__link">
         
   
   
@@ -1712,7 +1581,7 @@
   
   
     <li class="md-nav__item">
-      <a href="algebra/fft.html" class="md-nav__link">
+      <a href="fft.html" class="md-nav__link">
         
   
   
@@ -1737,10 +1606,37 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="algebra/polynomial.html" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Các phép toán trên đa thức và chuỗi
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="polynomial.html" class="md-nav__link md-nav__link--active">
         
   
   
@@ -1756,6 +1652,376 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#basic-notion-and-facts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Khái niệm cơ bản và sự thật (Basic Notion and facts)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Khái niệm cơ bản và sự thật (Basic Notion and facts)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#polynomial-multiplication" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Nhân đa thức (Polynomial multiplication)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#formal-power-series" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Chuỗi lũy thừa hình thức (Formal power series)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#long-polynomial-division" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Chia đa thức (Long polynomial division)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#basic-implementation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cài đặt cơ bản (Basic implementation)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#arithmetic" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Số học (Arithmetic)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Số học (Arithmetic)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#multiplication" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phép nhân (Multiplication)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#inverse-series" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Chuỗi nghịch đảo (Inverse series)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Chuỗi nghịch đảo (Inverse series)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#divide-and-conquer" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Chia để trị (Divide and conquer)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sieveking-kung-algorithm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Thuật toán Sieveking–Kung (Sieveking–Kung algorithm)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#euclidean-division" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phép chia Euclid (Euclidean division)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#calculating-functions-of-polynomial" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tính toán các hàm của đa thức (Calculating functions of polynomial)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Tính toán các hàm của đa thức (Calculating functions of polynomial)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#newtons-method" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phương pháp Newton (Newton's method)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Phương pháp Newton (Newton&#39;s method)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#hensels-lemma" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bổ đề Hensel (Hensel's lemma)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#logarithm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Logarit (Logarithm)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#inverse-series-1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Chuỗi nghịch đảo (Inverse series)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exponent" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Hàm mũ (Exponent)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#k-th-power" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        k-th power
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#evaluation-and-interpolation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Đánh giá và Nội suy (Evaluation and Interpolation)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Đánh giá và Nội suy (Evaluation and Interpolation)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#chirp-z-transform" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Biến đổi Chirp-z (Chirp-z Transform)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#multi-point-evaluation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Đánh giá đa điểm (Multi-point Evaluation)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#interpolation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Nội suy (Interpolation)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#gcd-and-resultants" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        GCD và Kết thức (GCD and Resultants)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="GCD và Kết thức (GCD and Resultants)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#euclidean-algorithm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Thuật toán Euclid (Euclidean algorithm)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#resultant" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Kết thức (Resultant)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#half-gcd-algorithm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Thuật toán Half-GCD (Half-GCD algorithm)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#problems" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bài tập
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#checklist" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Checklist
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -1768,7 +2034,7 @@
   
   
     <li class="md-nav__item">
-      <a href="algebra/continued-fractions.html" class="md-nav__link">
+      <a href="continued-fractions.html" class="md-nav__link">
         
   
   
@@ -1796,7 +2062,7 @@
   
   
     <li class="md-nav__item">
-      <a href="algebra/factoring-exp.html" class="md-nav__link">
+      <a href="factoring-exp.html" class="md-nav__link">
         
   
   
@@ -1933,7 +2199,7 @@
   
   
     <li class="md-nav__item">
-      <a href="data_structures/stack_queue_modification.html" class="md-nav__link">
+      <a href="../data_structures/stack_queue_modification.html" class="md-nav__link">
         
   
   
@@ -1961,7 +2227,7 @@
   
   
     <li class="md-nav__item">
-      <a href="data_structures/sparse-table.html" class="md-nav__link">
+      <a href="../data_structures/sparse-table.html" class="md-nav__link">
         
   
   
@@ -2044,7 +2310,7 @@
   
   
     <li class="md-nav__item">
-      <a href="data_structures/disjoint_set_union.html" class="md-nav__link">
+      <a href="../data_structures/disjoint_set_union.html" class="md-nav__link">
         
   
   
@@ -2072,7 +2338,7 @@
   
   
     <li class="md-nav__item">
-      <a href="data_structures/fenwick.html" class="md-nav__link">
+      <a href="../data_structures/fenwick.html" class="md-nav__link">
         
   
   
@@ -2100,7 +2366,7 @@
   
   
     <li class="md-nav__item">
-      <a href="data_structures/sqrt_decomposition.html" class="md-nav__link">
+      <a href="../data_structures/sqrt_decomposition.html" class="md-nav__link">
         
   
   
@@ -2128,7 +2394,7 @@
   
   
     <li class="md-nav__item">
-      <a href="data_structures/segment_tree.html" class="md-nav__link">
+      <a href="../data_structures/segment_tree.html" class="md-nav__link">
         
   
   
@@ -2156,7 +2422,7 @@
   
   
     <li class="md-nav__item">
-      <a href="data_structures/treap.html" class="md-nav__link">
+      <a href="../data_structures/treap.html" class="md-nav__link">
         
   
   
@@ -2184,7 +2450,7 @@
   
   
     <li class="md-nav__item">
-      <a href="data_structures/sqrt-tree.html" class="md-nav__link">
+      <a href="../data_structures/sqrt-tree.html" class="md-nav__link">
         
   
   
@@ -2212,7 +2478,7 @@
   
   
     <li class="md-nav__item">
-      <a href="data_structures/randomized_heap.html" class="md-nav__link">
+      <a href="../data_structures/randomized_heap.html" class="md-nav__link">
         
   
   
@@ -2295,7 +2561,7 @@
   
   
     <li class="md-nav__item">
-      <a href="data_structures/deleting_in_log_n.html" class="md-nav__link">
+      <a href="../data_structures/deleting_in_log_n.html" class="md-nav__link">
         
   
   
@@ -2385,7 +2651,7 @@
   
   
     <li class="md-nav__item">
-      <a href="dynamic_programming/intro-to-dp.html" class="md-nav__link">
+      <a href="../dynamic_programming/intro-to-dp.html" class="md-nav__link">
         
   
   
@@ -2413,7 +2679,7 @@
   
   
     <li class="md-nav__item">
-      <a href="dynamic_programming/knapsack.html" class="md-nav__link">
+      <a href="../dynamic_programming/knapsack.html" class="md-nav__link">
         
   
   
@@ -2441,7 +2707,7 @@
   
   
     <li class="md-nav__item">
-      <a href="dynamic_programming/longest_increasing_subsequence.html" class="md-nav__link">
+      <a href="../dynamic_programming/longest_increasing_subsequence.html" class="md-nav__link">
         
   
   
@@ -2516,7 +2782,7 @@
   
   
     <li class="md-nav__item">
-      <a href="dynamic_programming/divide-and-conquer-dp.html" class="md-nav__link">
+      <a href="../dynamic_programming/divide-and-conquer-dp.html" class="md-nav__link">
         
   
   
@@ -2544,7 +2810,7 @@
   
   
     <li class="md-nav__item">
-      <a href="dynamic_programming/knuth-optimization.html" class="md-nav__link">
+      <a href="../dynamic_programming/knuth-optimization.html" class="md-nav__link">
         
   
   
@@ -2627,7 +2893,7 @@
   
   
     <li class="md-nav__item">
-      <a href="dynamic_programming/profile-dynamics.html" class="md-nav__link">
+      <a href="../dynamic_programming/profile-dynamics.html" class="md-nav__link">
         
   
   
@@ -2655,7 +2921,7 @@
   
   
     <li class="md-nav__item">
-      <a href="dynamic_programming/zero_matrix.html" class="md-nav__link">
+      <a href="../dynamic_programming/zero_matrix.html" class="md-nav__link">
         
   
   
@@ -2792,7 +3058,7 @@
   
   
     <li class="md-nav__item">
-      <a href="string/string-hashing.html" class="md-nav__link">
+      <a href="../string/string-hashing.html" class="md-nav__link">
         
   
   
@@ -2820,7 +3086,7 @@
   
   
     <li class="md-nav__item">
-      <a href="string/rabin-karp.html" class="md-nav__link">
+      <a href="../string/rabin-karp.html" class="md-nav__link">
         
   
   
@@ -2848,7 +3114,7 @@
   
   
     <li class="md-nav__item">
-      <a href="string/prefix-function.html" class="md-nav__link">
+      <a href="../string/prefix-function.html" class="md-nav__link">
         
   
   
@@ -2876,7 +3142,7 @@
   
   
     <li class="md-nav__item">
-      <a href="string/z-function.html" class="md-nav__link">
+      <a href="../string/z-function.html" class="md-nav__link">
         
   
   
@@ -2904,7 +3170,7 @@
   
   
     <li class="md-nav__item">
-      <a href="string/suffix-array.html" class="md-nav__link">
+      <a href="../string/suffix-array.html" class="md-nav__link">
         
   
   
@@ -2932,7 +3198,7 @@
   
   
     <li class="md-nav__item">
-      <a href="string/aho_corasick.html" class="md-nav__link">
+      <a href="../string/aho_corasick.html" class="md-nav__link">
         
   
   
@@ -3015,7 +3281,7 @@
   
   
     <li class="md-nav__item">
-      <a href="string/suffix-tree-ukkonen.html" class="md-nav__link">
+      <a href="../string/suffix-tree-ukkonen.html" class="md-nav__link">
         
   
   
@@ -3043,7 +3309,7 @@
   
   
     <li class="md-nav__item">
-      <a href="string/suffix-automaton.html" class="md-nav__link">
+      <a href="../string/suffix-automaton.html" class="md-nav__link">
         
   
   
@@ -3071,7 +3337,7 @@
   
   
     <li class="md-nav__item">
-      <a href="string/lyndon_factorization.html" class="md-nav__link">
+      <a href="../string/lyndon_factorization.html" class="md-nav__link">
         
   
   
@@ -3154,7 +3420,7 @@
   
   
     <li class="md-nav__item">
-      <a href="string/expression_parsing.html" class="md-nav__link">
+      <a href="../string/expression_parsing.html" class="md-nav__link">
         
   
   
@@ -3182,7 +3448,7 @@
   
   
     <li class="md-nav__item">
-      <a href="string/manacher.html" class="md-nav__link">
+      <a href="../string/manacher.html" class="md-nav__link">
         
   
   
@@ -3210,7 +3476,7 @@
   
   
     <li class="md-nav__item">
-      <a href="string/main_lorentz.html" class="md-nav__link">
+      <a href="../string/main_lorentz.html" class="md-nav__link">
         
   
   
@@ -3347,7 +3613,7 @@
   
   
     <li class="md-nav__item">
-      <a href="linear_algebra/linear-system-gauss.html" class="md-nav__link">
+      <a href="../linear_algebra/linear-system-gauss.html" class="md-nav__link">
         
   
   
@@ -3375,7 +3641,7 @@
   
   
     <li class="md-nav__item">
-      <a href="linear_algebra/determinant-gauss.html" class="md-nav__link">
+      <a href="../linear_algebra/determinant-gauss.html" class="md-nav__link">
         
   
   
@@ -3403,7 +3669,7 @@
   
   
     <li class="md-nav__item">
-      <a href="linear_algebra/determinant-kraut.html" class="md-nav__link">
+      <a href="../linear_algebra/determinant-kraut.html" class="md-nav__link">
         
   
   
@@ -3431,7 +3697,7 @@
   
   
     <li class="md-nav__item">
-      <a href="linear_algebra/rank-matrix.html" class="md-nav__link">
+      <a href="../linear_algebra/rank-matrix.html" class="md-nav__link">
         
   
   
@@ -3568,7 +3834,7 @@
   
   
     <li class="md-nav__item">
-      <a href="algebra/factorial-divisors.html" class="md-nav__link">
+      <a href="factorial-divisors.html" class="md-nav__link">
         
   
   
@@ -3596,7 +3862,7 @@
   
   
     <li class="md-nav__item">
-      <a href="combinatorics/binomial-coefficients.html" class="md-nav__link">
+      <a href="../combinatorics/binomial-coefficients.html" class="md-nav__link">
         
   
   
@@ -3624,7 +3890,7 @@
   
   
     <li class="md-nav__item">
-      <a href="combinatorics/catalan-numbers.html" class="md-nav__link">
+      <a href="../combinatorics/catalan-numbers.html" class="md-nav__link">
         
   
   
@@ -3707,7 +3973,7 @@
   
   
     <li class="md-nav__item">
-      <a href="combinatorics/inclusion-exclusion.html" class="md-nav__link">
+      <a href="../combinatorics/inclusion-exclusion.html" class="md-nav__link">
         
   
   
@@ -3735,7 +4001,7 @@
   
   
     <li class="md-nav__item">
-      <a href="combinatorics/burnside.html" class="md-nav__link">
+      <a href="../combinatorics/burnside.html" class="md-nav__link">
         
   
   
@@ -3763,7 +4029,7 @@
   
   
     <li class="md-nav__item">
-      <a href="combinatorics/stars_and_bars.html" class="md-nav__link">
+      <a href="../combinatorics/stars_and_bars.html" class="md-nav__link">
         
   
   
@@ -3791,7 +4057,7 @@
   
   
     <li class="md-nav__item">
-      <a href="combinatorics/generating_combinations.html" class="md-nav__link">
+      <a href="../combinatorics/generating_combinations.html" class="md-nav__link">
         
   
   
@@ -3874,7 +4140,7 @@
   
   
     <li class="md-nav__item">
-      <a href="combinatorics/bishops-on-chessboard.html" class="md-nav__link">
+      <a href="../combinatorics/bishops-on-chessboard.html" class="md-nav__link">
         
   
   
@@ -3902,7 +4168,7 @@
   
   
     <li class="md-nav__item">
-      <a href="combinatorics/bracket_sequences.html" class="md-nav__link">
+      <a href="../combinatorics/bracket_sequences.html" class="md-nav__link">
         
   
   
@@ -3930,7 +4196,7 @@
   
   
     <li class="md-nav__item">
-      <a href="combinatorics/counting_labeled_graphs.html" class="md-nav__link">
+      <a href="../combinatorics/counting_labeled_graphs.html" class="md-nav__link">
         
   
   
@@ -4067,7 +4333,7 @@
   
   
     <li class="md-nav__item">
-      <a href="num_methods/binary_search.html" class="md-nav__link">
+      <a href="../num_methods/binary_search.html" class="md-nav__link">
         
   
   
@@ -4095,7 +4361,7 @@
   
   
     <li class="md-nav__item">
-      <a href="num_methods/ternary_search.html" class="md-nav__link">
+      <a href="../num_methods/ternary_search.html" class="md-nav__link">
         
   
   
@@ -4123,7 +4389,7 @@
   
   
     <li class="md-nav__item">
-      <a href="num_methods/roots_newton.html" class="md-nav__link">
+      <a href="../num_methods/roots_newton.html" class="md-nav__link">
         
   
   
@@ -4151,7 +4417,7 @@
   
   
     <li class="md-nav__item">
-      <a href="num_methods/simulated_annealing.html" class="md-nav__link">
+      <a href="../num_methods/simulated_annealing.html" class="md-nav__link">
         
   
   
@@ -4234,7 +4500,7 @@
   
   
     <li class="md-nav__item">
-      <a href="num_methods/simpson-integration.html" class="md-nav__link">
+      <a href="../num_methods/simpson-integration.html" class="md-nav__link">
         
   
   
@@ -4371,7 +4637,7 @@
   
   
     <li class="md-nav__item">
-      <a href="geometry/basic-geometry.html" class="md-nav__link">
+      <a href="../geometry/basic-geometry.html" class="md-nav__link">
         
   
   
@@ -4399,7 +4665,7 @@
   
   
     <li class="md-nav__item">
-      <a href="geometry/segment-to-line.html" class="md-nav__link">
+      <a href="../geometry/segment-to-line.html" class="md-nav__link">
         
   
   
@@ -4427,7 +4693,7 @@
   
   
     <li class="md-nav__item">
-      <a href="geometry/lines-intersection.html" class="md-nav__link">
+      <a href="../geometry/lines-intersection.html" class="md-nav__link">
         
   
   
@@ -4455,7 +4721,7 @@
   
   
     <li class="md-nav__item">
-      <a href="geometry/check-segments-intersection.html" class="md-nav__link">
+      <a href="../geometry/check-segments-intersection.html" class="md-nav__link">
         
   
   
@@ -4483,7 +4749,7 @@
   
   
     <li class="md-nav__item">
-      <a href="geometry/segments-intersection.html" class="md-nav__link">
+      <a href="../geometry/segments-intersection.html" class="md-nav__link">
         
   
   
@@ -4511,7 +4777,7 @@
   
   
     <li class="md-nav__item">
-      <a href="geometry/circle-line-intersection.html" class="md-nav__link">
+      <a href="../geometry/circle-line-intersection.html" class="md-nav__link">
         
   
   
@@ -4539,7 +4805,7 @@
   
   
     <li class="md-nav__item">
-      <a href="geometry/circle-circle-intersection.html" class="md-nav__link">
+      <a href="../geometry/circle-circle-intersection.html" class="md-nav__link">
         
   
   
@@ -4567,7 +4833,7 @@
   
   
     <li class="md-nav__item">
-      <a href="geometry/tangents-to-two-circles.html" class="md-nav__link">
+      <a href="../geometry/tangents-to-two-circles.html" class="md-nav__link">
         
   
   
@@ -4595,7 +4861,7 @@
   
   
     <li class="md-nav__item">
-      <a href="geometry/length-of-segments-union.html" class="md-nav__link">
+      <a href="../geometry/length-of-segments-union.html" class="md-nav__link">
         
   
   
@@ -4678,7 +4944,7 @@
   
   
     <li class="md-nav__item">
-      <a href="geometry/oriented-triangle-area.html" class="md-nav__link">
+      <a href="../geometry/oriented-triangle-area.html" class="md-nav__link">
         
   
   
@@ -4706,7 +4972,7 @@
   
   
     <li class="md-nav__item">
-      <a href="geometry/area-of-simple-polygon.html" class="md-nav__link">
+      <a href="../geometry/area-of-simple-polygon.html" class="md-nav__link">
         
   
   
@@ -4734,7 +5000,7 @@
   
   
     <li class="md-nav__item">
-      <a href="geometry/point-in-convex-polygon.html" class="md-nav__link">
+      <a href="../geometry/point-in-convex-polygon.html" class="md-nav__link">
         
   
   
@@ -4762,7 +5028,7 @@
   
   
     <li class="md-nav__item">
-      <a href="geometry/minkowski.html" class="md-nav__link">
+      <a href="../geometry/minkowski.html" class="md-nav__link">
         
   
   
@@ -4790,7 +5056,7 @@
   
   
     <li class="md-nav__item">
-      <a href="geometry/picks-theorem.html" class="md-nav__link">
+      <a href="../geometry/picks-theorem.html" class="md-nav__link">
         
   
   
@@ -4818,7 +5084,7 @@
   
   
     <li class="md-nav__item">
-      <a href="geometry/lattice-points.html" class="md-nav__link">
+      <a href="../geometry/lattice-points.html" class="md-nav__link">
         
   
   
@@ -4901,7 +5167,7 @@
   
   
     <li class="md-nav__item">
-      <a href="geometry/convex-hull.html" class="md-nav__link">
+      <a href="../geometry/convex-hull.html" class="md-nav__link">
         
   
   
@@ -4929,7 +5195,7 @@
   
   
     <li class="md-nav__item">
-      <a href="geometry/convex_hull_trick.html" class="md-nav__link">
+      <a href="../geometry/convex_hull_trick.html" class="md-nav__link">
         
   
   
@@ -5012,7 +5278,7 @@
   
   
     <li class="md-nav__item">
-      <a href="geometry/intersecting_segments.html" class="md-nav__link">
+      <a href="../geometry/intersecting_segments.html" class="md-nav__link">
         
   
   
@@ -5095,7 +5361,7 @@
   
   
     <li class="md-nav__item">
-      <a href="geometry/planar.html" class="md-nav__link">
+      <a href="../geometry/planar.html" class="md-nav__link">
         
   
   
@@ -5123,7 +5389,7 @@
   
   
     <li class="md-nav__item">
-      <a href="geometry/point-location.html" class="md-nav__link">
+      <a href="../geometry/point-location.html" class="md-nav__link">
         
   
   
@@ -5206,7 +5472,7 @@
   
   
     <li class="md-nav__item">
-      <a href="geometry/nearest_points.html" class="md-nav__link">
+      <a href="../geometry/nearest_points.html" class="md-nav__link">
         
   
   
@@ -5234,7 +5500,7 @@
   
   
     <li class="md-nav__item">
-      <a href="geometry/delaunay.html" class="md-nav__link">
+      <a href="../geometry/delaunay.html" class="md-nav__link">
         
   
   
@@ -5262,7 +5528,7 @@
   
   
     <li class="md-nav__item">
-      <a href="geometry/vertical_decomposition.html" class="md-nav__link">
+      <a href="../geometry/vertical_decomposition.html" class="md-nav__link">
         
   
   
@@ -5290,7 +5556,7 @@
   
   
     <li class="md-nav__item">
-      <a href="geometry/halfplane-intersection.html" class="md-nav__link">
+      <a href="../geometry/halfplane-intersection.html" class="md-nav__link">
         
   
   
@@ -5318,7 +5584,7 @@
   
   
     <li class="md-nav__item">
-      <a href="geometry/manhattan-distance.html" class="md-nav__link">
+      <a href="../geometry/manhattan-distance.html" class="md-nav__link">
         
   
   
@@ -5346,7 +5612,7 @@
   
   
     <li class="md-nav__item">
-      <a href="geometry/enclosing-circle.html" class="md-nav__link">
+      <a href="../geometry/enclosing-circle.html" class="md-nav__link">
         
   
   
@@ -5483,7 +5749,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/breadth-first-search.html" class="md-nav__link">
+      <a href="../graph/breadth-first-search.html" class="md-nav__link">
         
   
   
@@ -5511,7 +5777,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/depth-first-search.html" class="md-nav__link">
+      <a href="../graph/depth-first-search.html" class="md-nav__link">
         
   
   
@@ -5594,7 +5860,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/search-for-connected-components.html" class="md-nav__link">
+      <a href="../graph/search-for-connected-components.html" class="md-nav__link">
         
   
   
@@ -5622,7 +5888,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/bridge-searching.html" class="md-nav__link">
+      <a href="../graph/bridge-searching.html" class="md-nav__link">
         
   
   
@@ -5650,7 +5916,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/bridge-searching-online.html" class="md-nav__link">
+      <a href="../graph/bridge-searching-online.html" class="md-nav__link">
         
   
   
@@ -5678,7 +5944,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/cutpoints.html" class="md-nav__link">
+      <a href="../graph/cutpoints.html" class="md-nav__link">
         
   
   
@@ -5706,7 +5972,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/strongly-connected-components.html" class="md-nav__link">
+      <a href="../graph/strongly-connected-components.html" class="md-nav__link">
         
   
   
@@ -5734,7 +6000,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/strong-orientation.html" class="md-nav__link">
+      <a href="../graph/strong-orientation.html" class="md-nav__link">
         
   
   
@@ -5817,7 +6083,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/dijkstra.html" class="md-nav__link">
+      <a href="../graph/dijkstra.html" class="md-nav__link">
         
   
   
@@ -5845,7 +6111,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/dijkstra_sparse.html" class="md-nav__link">
+      <a href="../graph/dijkstra_sparse.html" class="md-nav__link">
         
   
   
@@ -5873,7 +6139,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/bellman_ford.html" class="md-nav__link">
+      <a href="../graph/bellman_ford.html" class="md-nav__link">
         
   
   
@@ -5901,7 +6167,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/01_bfs.html" class="md-nav__link">
+      <a href="../graph/01_bfs.html" class="md-nav__link">
         
   
   
@@ -5929,7 +6195,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/desopo_pape.html" class="md-nav__link">
+      <a href="../graph/desopo_pape.html" class="md-nav__link">
         
   
   
@@ -6012,7 +6278,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/all-pair-shortest-path-floyd-warshall.html" class="md-nav__link">
+      <a href="../graph/all-pair-shortest-path-floyd-warshall.html" class="md-nav__link">
         
   
   
@@ -6040,7 +6306,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/fixed_length_paths.html" class="md-nav__link">
+      <a href="../graph/fixed_length_paths.html" class="md-nav__link">
         
   
   
@@ -6123,7 +6389,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/mst_prim.html" class="md-nav__link">
+      <a href="../graph/mst_prim.html" class="md-nav__link">
         
   
   
@@ -6151,7 +6417,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/mst_kruskal.html" class="md-nav__link">
+      <a href="../graph/mst_kruskal.html" class="md-nav__link">
         
   
   
@@ -6179,7 +6445,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/mst_kruskal_with_dsu.html" class="md-nav__link">
+      <a href="../graph/mst_kruskal_with_dsu.html" class="md-nav__link">
         
   
   
@@ -6207,7 +6473,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/second_best_mst.html" class="md-nav__link">
+      <a href="../graph/second_best_mst.html" class="md-nav__link">
         
   
   
@@ -6235,7 +6501,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/kirchhoff-theorem.html" class="md-nav__link">
+      <a href="../graph/kirchhoff-theorem.html" class="md-nav__link">
         
   
   
@@ -6263,7 +6529,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/pruefer_code.html" class="md-nav__link">
+      <a href="../graph/pruefer_code.html" class="md-nav__link">
         
   
   
@@ -6346,7 +6612,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/finding-cycle.html" class="md-nav__link">
+      <a href="../graph/finding-cycle.html" class="md-nav__link">
         
   
   
@@ -6374,7 +6640,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/finding-negative-cycle-in-graph.html" class="md-nav__link">
+      <a href="../graph/finding-negative-cycle-in-graph.html" class="md-nav__link">
         
   
   
@@ -6402,7 +6668,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/euler_path.html" class="md-nav__link">
+      <a href="../graph/euler_path.html" class="md-nav__link">
         
   
   
@@ -6485,7 +6751,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/lca.html" class="md-nav__link">
+      <a href="../graph/lca.html" class="md-nav__link">
         
   
   
@@ -6513,7 +6779,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/lca_binary_lifting.html" class="md-nav__link">
+      <a href="../graph/lca_binary_lifting.html" class="md-nav__link">
         
   
   
@@ -6541,7 +6807,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/lca_farachcoltonbender.html" class="md-nav__link">
+      <a href="../graph/lca_farachcoltonbender.html" class="md-nav__link">
         
   
   
@@ -6569,7 +6835,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/rmq_linear.html" class="md-nav__link">
+      <a href="../graph/rmq_linear.html" class="md-nav__link">
         
   
   
@@ -6597,7 +6863,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/lca_tarjan.html" class="md-nav__link">
+      <a href="../graph/lca_tarjan.html" class="md-nav__link">
         
   
   
@@ -6680,7 +6946,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/edmonds_karp.html" class="md-nav__link">
+      <a href="../graph/edmonds_karp.html" class="md-nav__link">
         
   
   
@@ -6708,7 +6974,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/push-relabel.html" class="md-nav__link">
+      <a href="../graph/push-relabel.html" class="md-nav__link">
         
   
   
@@ -6736,7 +7002,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/push-relabel-faster.html" class="md-nav__link">
+      <a href="../graph/push-relabel-faster.html" class="md-nav__link">
         
   
   
@@ -6764,7 +7030,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/dinic.html" class="md-nav__link">
+      <a href="../graph/dinic.html" class="md-nav__link">
         
   
   
@@ -6792,7 +7058,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/mpm.html" class="md-nav__link">
+      <a href="../graph/mpm.html" class="md-nav__link">
         
   
   
@@ -6820,7 +7086,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/flow_with_demands.html" class="md-nav__link">
+      <a href="../graph/flow_with_demands.html" class="md-nav__link">
         
   
   
@@ -6848,7 +7114,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/min_cost_flow.html" class="md-nav__link">
+      <a href="../graph/min_cost_flow.html" class="md-nav__link">
         
   
   
@@ -6876,7 +7142,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/Assignment-problem-min-flow.html" class="md-nav__link">
+      <a href="../graph/Assignment-problem-min-flow.html" class="md-nav__link">
         
   
   
@@ -6959,7 +7225,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/bipartite-check.html" class="md-nav__link">
+      <a href="../graph/bipartite-check.html" class="md-nav__link">
         
   
   
@@ -6987,7 +7253,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/kuhn_maximum_bipartite_matching.html" class="md-nav__link">
+      <a href="../graph/kuhn_maximum_bipartite_matching.html" class="md-nav__link">
         
   
   
@@ -7015,7 +7281,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/hungarian-algorithm.html" class="md-nav__link">
+      <a href="../graph/hungarian-algorithm.html" class="md-nav__link">
         
   
   
@@ -7098,7 +7364,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/topological-sort.html" class="md-nav__link">
+      <a href="../graph/topological-sort.html" class="md-nav__link">
         
   
   
@@ -7126,7 +7392,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/edge_vertex_connectivity.html" class="md-nav__link">
+      <a href="../graph/edge_vertex_connectivity.html" class="md-nav__link">
         
   
   
@@ -7154,7 +7420,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/tree_painting.html" class="md-nav__link">
+      <a href="../graph/tree_painting.html" class="md-nav__link">
         
   
   
@@ -7182,7 +7448,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/2SAT.html" class="md-nav__link">
+      <a href="../graph/2SAT.html" class="md-nav__link">
         
   
   
@@ -7210,7 +7476,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/hld.html" class="md-nav__link">
+      <a href="../graph/hld.html" class="md-nav__link">
         
   
   
@@ -7347,7 +7613,7 @@
   
   
     <li class="md-nav__item">
-      <a href="sequences/rmq.html" class="md-nav__link">
+      <a href="../sequences/rmq.html" class="md-nav__link">
         
   
   
@@ -7375,7 +7641,7 @@
   
   
     <li class="md-nav__item">
-      <a href="others/maximum_average_segment.html" class="md-nav__link">
+      <a href="../others/maximum_average_segment.html" class="md-nav__link">
         
   
   
@@ -7403,7 +7669,7 @@
   
   
     <li class="md-nav__item">
-      <a href="sequences/k-th.html" class="md-nav__link">
+      <a href="../sequences/k-th.html" class="md-nav__link">
         
   
   
@@ -7431,7 +7697,7 @@
   
   
     <li class="md-nav__item">
-      <a href="sequences/mex.html" class="md-nav__link">
+      <a href="../sequences/mex.html" class="md-nav__link">
         
   
   
@@ -7514,7 +7780,7 @@
   
   
     <li class="md-nav__item">
-      <a href="game_theory/games_on_graphs.html" class="md-nav__link">
+      <a href="../game_theory/games_on_graphs.html" class="md-nav__link">
         
   
   
@@ -7542,7 +7808,7 @@
   
   
     <li class="md-nav__item">
-      <a href="game_theory/sprague-grundy-nim.html" class="md-nav__link">
+      <a href="../game_theory/sprague-grundy-nim.html" class="md-nav__link">
         
   
   
@@ -7625,7 +7891,7 @@
   
   
     <li class="md-nav__item">
-      <a href="schedules/schedule_one_machine.html" class="md-nav__link">
+      <a href="../schedules/schedule_one_machine.html" class="md-nav__link">
         
   
   
@@ -7653,7 +7919,7 @@
   
   
     <li class="md-nav__item">
-      <a href="schedules/schedule_two_machines.html" class="md-nav__link">
+      <a href="../schedules/schedule_two_machines.html" class="md-nav__link">
         
   
   
@@ -7681,7 +7947,7 @@
   
   
     <li class="md-nav__item">
-      <a href="schedules/schedule-with-completion-duration.html" class="md-nav__link">
+      <a href="../schedules/schedule-with-completion-duration.html" class="md-nav__link">
         
   
   
@@ -7764,7 +8030,7 @@
   
   
     <li class="md-nav__item">
-      <a href="others/tortoise_and_hare.html" class="md-nav__link">
+      <a href="../others/tortoise_and_hare.html" class="md-nav__link">
         
   
   
@@ -7792,7 +8058,7 @@
   
   
     <li class="md-nav__item">
-      <a href="others/josephus_problem.html" class="md-nav__link">
+      <a href="../others/josephus_problem.html" class="md-nav__link">
         
   
   
@@ -7820,7 +8086,7 @@
   
   
     <li class="md-nav__item">
-      <a href="others/15-puzzle.html" class="md-nav__link">
+      <a href="../others/15-puzzle.html" class="md-nav__link">
         
   
   
@@ -7848,7 +8114,7 @@
   
   
     <li class="md-nav__item">
-      <a href="others/stern_brocot_tree_farey_sequences.html" class="md-nav__link">
+      <a href="../others/stern_brocot_tree_farey_sequences.html" class="md-nav__link">
         
   
   
@@ -7900,9 +8166,9 @@
                   <script type="text/javascript">
   window.onload = function () {
     const newIssueURL = "https://github.com/cp-algorithms/cp-algorithms/issues/new";
-    const issueTitle = "Problem on article " + "Trang ch\u1ee7";
+    const issueTitle = "Problem on article " + "C\u00e1c ph\u00e9p to\u00e1n tr\u00ean \u0111a th\u1ee9c v\u00e0 chu\u1ed7i";
   const issueBody = `
-**Article:** [`+ "Trang ch\u1ee7" + `](${window.location.href})
+**Article:** [`+ "C\u00e1c ph\u00e9p to\u00e1n tr\u00ean \u0111a th\u1ee9c v\u00e0 chu\u1ed7i" + `](${window.location.href})
 
 **Problem:**
 `;
@@ -7914,7 +8180,7 @@
 </script>
 
 
-<a href="https://github.com/deanqkhanhcoder/cp-algorithms-vi/edit/main/src/index.md" title="Edit this page" class="md-content__button md-icon">
+<a href="https://github.com/deanqkhanhcoder/cp-algorithms-vi/edit/main/src/algebra/polynomial.md" title="Edit this page" class="md-content__button md-icon">
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75z"/></svg>
 </a>
 <a id="report_issue_a" href="" title="Report a problem" class="md-content__button md-icon">
@@ -7924,93 +8190,352 @@
 
 <ul class="metadata page-metadata" data-bi-name="page info" lang="en-us" dir="ltr">
   
+  
+  <a href="../tags.html#tag:original" class="md-tag">
+    Original
+  </a>
+  
+  
 
   
 </ul>
 
 
-<h1 id="cp-algorithms-vietnamese-translation">CP-Algorithms (Vietnamese Translation)<a class="headerlink" href="#cp-algorithms-vietnamese-translation" title="Permanent link">&para;</a></h1>
-<blockquote>
-<p>📘 Bản dịch tiếng Việt của <strong>cp-algorithms</strong> – tài nguyên thuật toán kinh điển cho Competitive Programming.</p>
-</blockquote>
-<hr />
-<h2 id="gioi-thieu">📌 Giới thiệu<a class="headerlink" href="#gioi-thieu" title="Permanent link">&para;</a></h2>
-<p>Repository này là <strong>bản dịch tiếng Việt</strong> của dự án mã nguồn mở nổi tiếng<br />
-👉 <strong>https://github.com/cp-algorithms/cp-algorithms</strong></p>
-<p>Dự án gốc cung cấp các bài viết chất lượng cao về:
-- Thuật toán (Algorithms)
-- Cấu trúc dữ liệu (Data Structures)
-- Quy hoạch động, đồ thị, hình học, số học, v.v.
-- Ứng dụng thực tế trong <strong>Competitive Programming</strong></p>
-<p>🎯 <strong>Mục tiêu của repo này</strong>:
-- Giúp người học Việt Nam tiếp cận kiến thức CP dễ dàng hơn
-- Giữ nguyên <strong>thuật ngữ tiếng Anh quan trọng</strong> (DP, BFS, Segment Tree, …)
-- Dịch sát nghĩa, ưu tiên <strong>tính chính xác học thuật</strong></p>
-<hr />
-<h2 id="noi-dung-a-dich">📚 Nội dung đã dịch<a class="headerlink" href="#noi-dung-a-dich" title="Permanent link">&para;</a></h2>
+<h1 id="operations-on-polynomials-and-series">Các phép toán trên đa thức và chuỗi (Operations on polynomials and series)<a class="headerlink" href="#operations-on-polynomials-and-series" title="Permanent link">&para;</a></h1>
+<p>Các bài toán trong lập trình thi đấu, đặc biệt là các bài toán liên quan đến liệt kê một loại nào đó, thường được giải quyết bằng cách đưa bài toán về tính toán trên đa thức và chuỗi lũy thừa hình thức.</p>
+<p>Điều này bao gồm các khái niệm như nhân đa thức, nội suy, và những cái phức tạp hơn, như logarit và hàm mũ của đa thức. Trong bài viết này, một cái nhìn tổng quan ngắn gọn về các phép toán như vậy và các cách tiếp cận phổ biến cho chúng được trình bày.</p>
+<h2 id="basic-notion-and-facts">Khái niệm cơ bản và sự thật (Basic Notion and facts)<a class="headerlink" href="#basic-notion-and-facts" title="Permanent link">&para;</a></h2>
+<p>Trong phần này, chúng tôi tập trung nhiều hơn vào các định nghĩa và tính chất "trực quan" của các phép toán đa thức khác nhau. Các chi tiết kỹ thuật về việc cài đặt và độ phức tạp của chúng sẽ được đề cập trong các phần sau.</p>
+<h3 id="polynomial-multiplication">Nhân đa thức (Polynomial multiplication)<a class="headerlink" href="#polynomial-multiplication" title="Permanent link">&para;</a></h3>
+<div class="admonition info">
+<p class="admonition-title">Định nghĩa</p>
+<p><strong>Đa thức một biến (Univariate polynomial)</strong> là một biểu thức có dạng <span class="arithmatex">$A(x) = a_0 + a_1 x + \dots + a_n x^n$</span>.</p>
+</div>
+<p>Các giá trị <span class="arithmatex">$a_0, \dots, a_n$</span> là các hệ số đa thức, thường được lấy từ một tập hợp số hoặc cấu trúc giống số nào đó. Trong bài viết này, chúng tôi giả sử rằng các hệ số được lấy từ một <a href="https://en.wikipedia.org/wiki/Field_(mathematics)">trường (field)</a> nào đó, nghĩa là các phép toán cộng, trừ, nhân và chia được xác định rõ ràng cho chúng (ngoại trừ phép chia cho <span class="arithmatex">$0$</span>) và chúng thường cư xử theo cách tương tự như số thực.</p>
+<p>Ví dụ điển hình của trường như vậy là trường các số dư modulo số nguyên tố <span class="arithmatex">$p$</span>.</p>
+<p>Để đơn giản, chúng tôi sẽ bỏ thuật ngữ <em>một biến</em>, vì đây là loại đa thức duy nhất chúng tôi xem xét trong bài viết này. Chúng tôi cũng sẽ viết <span class="arithmatex">$A$</span> thay vì <span class="arithmatex">$A(x)$</span> bất cứ khi nào có thể, điều này sẽ dễ hiểu từ ngữ cảnh. Giả sử rằng hoặc <span class="arithmatex">$a_n \neq 0$</span> hoặc <span class="arithmatex">$A(x)=0$</span>.</p>
+<div class="admonition info">
+<p class="admonition-title">Định nghĩa</p>
+<p><strong>Tích</strong> của hai đa thức được định nghĩa bằng cách khai triển nó như một biểu thức số học:</p>
+<div class="arithmatex">$$
+A(x) B(x) = \left(\sum\limits_{i=0}^n a_i x^i \right)\left(\sum\limits_{j=0}^m b_j x^j\right) = \sum\limits_{i,j} a_i b_j x^{i+j} = \sum\limits_{k=0}^{n+m} c_k x^k = C(x).
+$$</div>
+<p>Dãy <span class="arithmatex">$c_0, c_1, \dots, c_{n+m}$</span> của các hệ số của <span class="arithmatex">$C(x)$</span> được gọi là <strong>tích chập (convolution)</strong> của <span class="arithmatex">$a_0, \dots, a_n$</span> và <span class="arithmatex">$b_0, \dots, b_m$</span>.</p>
+</div>
+<div class="admonition info">
+<p class="admonition-title">Định nghĩa</p>
+<p><strong>Bậc</strong> của một đa thức <span class="arithmatex">$A$</span> với <span class="arithmatex">$a_n \neq 0$</span> được định nghĩa là <span class="arithmatex">$\deg A = n$</span>.</p>
+<p>Để nhất quán, bậc của <span class="arithmatex">$A(x) = 0$</span> được định nghĩa là <span class="arithmatex">$\deg A = -\infty$</span>.</p>
+</div>
+<p>Theo khái niệm này, <span class="arithmatex">$\deg AB = \deg A + \deg B$</span> cho bất kỳ đa thức <span class="arithmatex">$A$</span> và <span class="arithmatex">$B$</span> nào.</p>
+<p>Tích chập là cơ sở để giải quyết nhiều bài toán liệt kê.</p>
+<div class="admonition example">
+<p class="admonition-title">Ví dụ</p>
+<p>Bạn có <span class="arithmatex">$n$</span> vật thể loại thứ nhất và <span class="arithmatex">$m$</span> vật thể loại thứ hai.</p>
+<p>Các vật thể loại thứ nhất có giá trị <span class="arithmatex">$a_1, \dots, a_n$</span>, và các vật thể loại thứ hai có giá trị <span class="arithmatex">$b_1, \dots, b_m$</span>.</p>
+<p>Bạn chọn một vật thể loại thứ nhất và một vật thể loại thứ hai. Có bao nhiêu cách để có được tổng giá trị là <span class="arithmatex">$k$</span>?</p>
+</div>
+<details class="hint">
+<summary>Lời giải</summary>
+<p>Xem xét tích <span class="arithmatex">$(x^{a_1} + \dots + x^{a_n})(x^{b_1} + \dots + x^{b_m})$</span>. Nếu bạn khai triển nó, mỗi đơn thức sẽ tương ứng với cập <span class="arithmatex">$(a_i, b_j)$</span> và đóng góp vào hệ số gần <span class="arithmatex">$x^{a_i+b_j}$</span>. Nói cách khác, câu trả lời là hệ số gần <span class="arithmatex">$x^k$</span> trong tích.</p>
+</details>
+<div class="admonition example">
+<p class="admonition-title">Ví dụ</p>
+<p>Bạn gieo một xúc xắc <span class="arithmatex">$6$</span> mặt <span class="arithmatex">$n$</span> lần và tính tổng kết quả từ tất cả các lần gieo. Xác suất để nhận được tổng <span class="arithmatex">$k$</span> là bao nhiêu?</p>
+</div>
+<details class="hint">
+<summary>Lời giải</summary>
+<p>Câu trả lời là số lượng kết quả có tổng <span class="arithmatex">$k$</span>, chia cho tổng số kết quả, đó là <span class="arithmatex">$6^n$</span>.</p>
+<p>Số lượng kết quả có tổng <span class="arithmatex">$k$</span> là bao nhiêu? Với <span class="arithmatex">$n=1$</span>, nó có thể được biểu diễn bởi một đa thức <span class="arithmatex">$A(x) = x^1+x^2+\dots+x^6$</span>.</p>
+<p>Với <span class="arithmatex">$n=2$</span>, sử dụng cùng cách tiếp cận như ví dụ trên, chúng tôi kết luận rằng nó được biểu diễn bởi đa thức <span class="arithmatex">$(x^1+x^2+\dots+x^6)^2$</span>.</p>
+<p>Như vậy, câu trả lời cho bài toán là hệ số thứ <span class="arithmatex">$k$</span> của <span class="arithmatex">$(x^1+x^2+\dots+x^6)^n$</span>, chia cho <span class="arithmatex">$6^n$</span>.</p>
+</details>
+<p>Hệ số gần <span class="arithmatex">$x^k$</span> trong đa thức <span class="arithmatex">$A(x)$</span> được ký hiệu ngắn gọn là <span class="arithmatex">$[x^k]A$</span>.</p>
+<h3 id="formal-power-series">Chuỗi lũy thừa hình thức (Formal power series)<a class="headerlink" href="#formal-power-series" title="Permanent link">&para;</a></h3>
+<div class="admonition info">
+<p class="admonition-title">Định nghĩa</p>
+<p>Một <strong>chuỗi lũy thừa hình thức</strong> là một tổng vô hạn <span class="arithmatex">$A(x) = a_0 + a_1 x + a_2 x^2 + \dots$</span>, được xem xét bất kể tính chất hội tụ của nó.</p>
+</div>
+<p>Nói cách khác, khi chúng ta xem xét ví dụ một tổng <span class="arithmatex">$1+\frac{1}{2}+\frac{1}{4}+\frac{1}{8}+\dots=2$</span>, chúng ta ngụ ý rằng nó <em>hội tụ</em> về <span class="arithmatex">$2$</span> khi số lượng số hạng tiến tới vô cùng. Tuy nhiên, chuỗi hình thức chỉ được xem xét dưới dạng các dãy tạo nên chúng.</p>
+<div class="admonition info">
+<p class="admonition-title">Định nghĩa</p>
+<p><strong>Tích</strong> của chuỗi lũy thừa hình thức <span class="arithmatex">$A(x)$</span> và <span class="arithmatex">$B(x)$</span>, cũng được định nghĩa bằng cách khai triển nó như một biểu thức số học:</p>
+<div class="arithmatex">$$
+A(x) B(x) = \left(\sum\limits_{i=0}^\infty a_i x^i \right)\left(\sum\limits_{j=0}^\infty b_j x^j\right) = \sum\limits_{i,j} a_i b_j x^{i+j} = \sum\limits_{k=0}^{\infty} c_k x^k = C(x),
+$$</div>
+<p>trong đó các hệ số <span class="arithmatex">$c_0, c_1, \dots$</span> được định nghĩa là các tổng hữu hạn</p>
+<div class="arithmatex">$$
+c_k = \sum\limits_{i=0}^k a_i b_{k-i}.
+$$</div>
+<p>Dãy <span class="arithmatex">$c_0, c_1, \dots$</span> cũng được gọi là một <strong>tích chập (convolution)</strong> của <span class="arithmatex">$a_0, a_1, \dots$</span> và <span class="arithmatex">$b_0, b_1, \dots$</span>, khái quát hóa khái niệm cho các dãy vô hạn.</p>
+</div>
+<p>Do đó, các đa thức có thể được coi là chuỗi lũy thừa hình thức, nhưng với số lượng hữu hạn các hệ số.</p>
+<p>Chuỗi lũy thừa hình thức đóng một vai trò quan trọng trong tổ hợp liệt kê, nơi chúng được nghiên cứu như là <a href="https://en.wikipedia.org/wiki/Generating_function">hàm sinh</a> cho các dãy khác nhau. Thật không may, giải thích chi tiết về hàm sinh và trực giác đằng sau chúng sẽ nằm ngoài phạm vi của bài viết này, do đó độc giả tò mò được tham khảo ví dụ <a href="https://codeforces.com/blog/entry/103979">tại đây</a> để biết chi tiết về ý nghĩa tổ hợp của chúng.</p>
+<p>Tuy nhiên, chúng tôi sẽ đề cập rất ngắn gọn rằng nếu <span class="arithmatex">$A(x)$</span> và <span class="arithmatex">$B(x)$</span> là các hàm sinh cho các dãy liệt kê một số vật thể theo số lượng "nguyên tử" trong chúng (ví dụ: cây theo số lượng đỉnh), thì tích <span class="arithmatex">$A(x) B(x)$</span> liệt kê các vật thể có thể được mô tả như là các cặp vật thể của loại <span class="arithmatex">$A$</span> và <span class="arithmatex">$B$</span>, liệt kê theo tổng số lượng "nguyên tử" trong cặp.</p>
+<div class="admonition example">
+<p class="admonition-title">Ví dụ</p>
+<p>Gọi <span class="arithmatex">$A(x) = \sum\limits_{i=0}^\infty 2^i x^i$</span> liệt kê các gói đá, mỗi viên đá được tô bằng một trong <span class="arithmatex">$2$</span> màu (vì vậy, có <span class="arithmatex">$2^i$</span> gói như vậy kích thước <span class="arithmatex">$i$</span>) và <span class="arithmatex">$B(x) = \sum\limits_{j=0}^{\infty} 3^j x^j$</span> liệt kê các gói đá, mỗi viên đá được tô bằng một trong <span class="arithmatex">$3$</span> màu. Khi đó <span class="arithmatex">$C(x) = A(x) B(x) = \sum\limits_{k=0}^\infty c_k x^k$</span> sẽ liệt kê các vật thể có thể được mô tả là "hai gói đá, gói thứ nhất chỉ gồm các viên đá loại <span class="arithmatex">$A$</span>, gói thứ hai chỉ gồm các viên đá loại <span class="arithmatex">$B$</span>, với tổng số viên đá là <span class="arithmatex">$k$</span>" cho <span class="arithmatex">$c_k$</span>.</p>
+</div>
+<p>Tương tự, có một ý nghĩa trực quan đối với một số hàm khác trên chuỗi lũy thừa hình thức.</p>
+<h3 id="long-polynomial-division">Chia đa thức (Long polynomial division)<a class="headerlink" href="#long-polynomial-division" title="Permanent link">&para;</a></h3>
+<p>Tương tự như số nguyên, có thể định nghĩa phép chia dài trên đa thức.</p>
+<div class="admonition info">
+<p class="admonition-title">Định nghĩa</p>
+<p>Đối với bất kỳ đa thức <span class="arithmatex">$A$</span> và <span class="arithmatex">$B \neq 0$</span> nào, người ta có thể biểu diễn <span class="arithmatex">$A$</span> dưới dạng</p>
+<div class="arithmatex">$$
+A = D \cdot B + R,~ \deg R &lt; \deg B,
+$$</div>
+<p>trong đó <span class="arithmatex">$R$</span> được gọi là <strong>phần dư (remainder)</strong> của <span class="arithmatex">$A$</span> modulo <span class="arithmatex">$B$</span> và <span class="arithmatex">$D$</span> được gọi là <strong>thương (quotient)</strong>.</p>
+</div>
+<p>Gọi <span class="arithmatex">$\deg A = n$</span> và <span class="arithmatex">$\deg B = m$</span>, cách ngây thơ để làm điều đó là sử dụng phép chia dài, trong đó bạn nhân <span class="arithmatex">$B$</span> với đơn thức <span class="arithmatex">$\frac{a_n}{b_m} x^{n - m}$</span> và trừ nó khỏi <span class="arithmatex">$A$</span>, cho đến khi bậc của <span class="arithmatex">$A$</span> nhỏ hơn bậc của <span class="arithmatex">$B$</span>. Những gì còn lại của <span class="arithmatex">$A$</span> cuối cùng sẽ là phần dư (do đó có tên gọi như vậy), và các đa thức mà bạn đã nhân <span class="arithmatex">$B$</span> trong quá trình đó, cộng lại với nhau, tạo thành thương.</p>
+<div class="admonition info">
+<p class="admonition-title">Định nghĩa</p>
+<p>Nếu <span class="arithmatex">$A$</span> và <span class="arithmatex">$B$</span> có cùng phần dư modulo <span class="arithmatex">$C$</span>, chúng được gọi là <strong>tương đương</strong> modulo <span class="arithmatex">$C$</span>, được ký hiệu là</p>
+<div class="arithmatex">$$
+A \equiv B \pmod{C}.
+$$</div>
+</div>
+<p>Phép chia đa thức dài hữu ích vì nhiều tính chất quan trọng của nó:</p>
 <ul>
-<li>Đại số (Algebra)</li>
-<li>Cấu trúc dữ liệu (Data Structures)</li>
-<li>Quy hoạch động (Dynamic Programming)</li>
-<li>Đồ thị (Graph)</li>
-<li>Hình học (Geometry)</li>
-<li>Game Theory</li>
-<li>Tổ hợp (Combinatorics)</li>
-<li>…</li>
+<li>
+<p><span class="arithmatex">$A$</span> là bội của <span class="arithmatex">$B$</span> khi và chỉ khi <span class="arithmatex">$A \equiv 0 \pmod B$</span>.</p>
+</li>
+<li>
+<p>Nó ngụ ý rằng <span class="arithmatex">$A \equiv B \pmod C$</span> khi và chỉ khi <span class="arithmatex">$A-B$</span> là bội của <span class="arithmatex">$C$</span>.</p>
+</li>
+<li>
+<p>Cụ thể, <span class="arithmatex">$A \equiv B \pmod{C \cdot D}$</span> ngụ ý <span class="arithmatex">$A \equiv B \pmod{C}$</span>.</p>
+</li>
+<li>
+<p>Đối với bất kỳ đa thức tuyến tính <span class="arithmatex">$x-r$</span> nào, điều này giữ đúng <span class="arithmatex">$A(x) \equiv A(r) \pmod{x-r}$</span>.</p>
+</li>
+<li>
+<p>Nó ngụ ý rằng <span class="arithmatex">$A$</span> là bội của <span class="arithmatex">$x-r$</span> khi và chỉ khi <span class="arithmatex">$A(r)=0$</span>.</p>
+</li>
+<li>
+<p>Đối với modulo là <span class="arithmatex">$x^k$</span>, điều này giữ đúng <span class="arithmatex">$A \equiv a_0 + a_1 x + \dots + a_{k-1} x^{k-1} \pmod{x^k}$</span>.</p>
+</li>
 </ul>
-<p>📈 <strong>Tiến độ</strong>: HOÀN THÀNH</p>
-<hr />
-<h2 id="quy-uoc-dich-thuat">🧠 Quy ước dịch thuật<a class="headerlink" href="#quy-uoc-dich-thuat" title="Permanent link">&para;</a></h2>
+<p>Lưu ý rằng phép chia dài không thể được định nghĩa đúng cho chuỗi lũy thừa hình thức. Thay vào đó, đối với bất kỳ <span class="arithmatex">$A(x)$</span> nào sao cho <span class="arithmatex">$a_0 \neq 0$</span>, có thể định nghĩa một chuỗi lũy thừa hình thức nghịch đảo <span class="arithmatex">$A^{-1}(x)$</span>, sao cho <span class="arithmatex">$A(x) A^{-1}(x) = 1$</span>. Thực tế này, đến lượt nó, có thể được sử dụng để tính kết quả của phép chia dài cho các đa thức.</p>
+<h2 id="basic-implementation">Cài đặt cơ bản (Basic implementation)<a class="headerlink" href="#basic-implementation" title="Permanent link">&para;</a></h2>
+<p><a href="https://cp-algorithms.github.io/cp-algorithms-aux/cp-algo/math/poly.hpp">Tại đây</a> bạn có thể tìm thấy cài đặt cơ bản của đại số đa thức.</p>
+<p>Nó hỗ trợ tất cả các phép toán tầm thường và một số phương thức hữu ích khác. Class chính là <code>poly&lt;T&gt;</code> cho các đa thức với các hệ số kiểu <code>T</code>.</p>
+<p>Tất cả các phép toán số học <code>+</code>, <code>-</code>, <code>*</code>, <code>%</code> và <code>/</code> đều được hỗ trợ, <code>%</code> và <code>/</code> đại diện cho phần dư và thương trong phép chia Euclid.</p>
+<p>Ngoài ra còn có class <code>modular&lt;m&gt;</code> để thực hiện các phép toán số học trên các phần dư modulo một số nguyên tố <code>m</code>.</p>
+<p>Các hàm hữu ích khác:</p>
 <ul>
-<li>❗ <strong>KHÔNG dịch</strong> các thuật ngữ CP phổ biến:</li>
-<li>DP, BFS, DFS, Fenwick Tree, Segment Tree, Bitmask, v.v.</li>
-<li>Thuật ngữ tiếng Anh sẽ được:</li>
-<li>Giữ nguyên</li>
-<li>Hoặc chú thích tiếng Việt trong lần xuất hiện đầu tiên</li>
-<li>Công thức, code, độ phức tạp được <strong>giữ nguyên 100%</strong></li>
+<li><code>deriv()</code>: tính đạo hàm <span class="arithmatex">$P'(x)$</span> của <span class="arithmatex">$P(x)$</span>.</li>
+<li><code>integr()</code>: tính tích phân bất định <span class="arithmatex">$Q(x) = \int P(x)$</span> của <span class="arithmatex">$P(x)$</span> sao cho <span class="arithmatex">$Q(0)=0$</span>.</li>
+<li><code>inv(size_t n)</code>: tính <span class="arithmatex">$n$</span> hệ số đầu tiên của <span class="arithmatex">$P^{-1}(x)$</span> trong <span class="arithmatex">$O(n \log n)$</span>.</li>
+<li><code>log(size_t n)</code>: tính <span class="arithmatex">$n$</span> hệ số đầu tiên của <span class="arithmatex">$\ln P(x)$</span> trong <span class="arithmatex">$O(n \log n)$</span>.</li>
+<li><code>exp(size_t n)</code>: tính <span class="arithmatex">$n$</span> hệ số đầu tiên của <span class="arithmatex">$\exp P(x)$</span> trong <span class="arithmatex">$O(n \log n)$</span>.</li>
+<li><code>pow(size_t k, size_t n)</code>: tính <span class="arithmatex">$n$</span> hệ số đầu tiên cho <span class="arithmatex">$P^{k}(x)$</span> trong <span class="arithmatex">$O(n \log nk)$</span>.</li>
+<li><code>deg()</code>: trả về bậc của <span class="arithmatex">$P(x)$</span>.</li>
+<li><code>lead()</code>: trả về hệ số của <span class="arithmatex">$x^{\deg P(x)}$</span>.</li>
+<li><code>resultant(poly&lt;T&gt; a, poly&lt;T&gt; b)</code>: tính kết thức của <span class="arithmatex">$a$</span> và <span class="arithmatex">$b$</span> trong <span class="arithmatex">$O(|a| \cdot |b|)$</span>.</li>
+<li><code>bpow(T x, size_t n)</code>: tính <span class="arithmatex">$x^n$</span>.</li>
+<li><code>bpow(T x, size_t n, T m)</code>: tính <span class="arithmatex">$x^n \pmod{m}$</span>.</li>
+<li><code>chirpz(T z, size_t n)</code>: tính <span class="arithmatex">$P(1), P(z), P(z^2), \dots, P(z^{n-1})$</span> trong <span class="arithmatex">$O(n \log n)$</span>.</li>
+<li><code>vector&lt;T&gt; eval(vector&lt;T&gt; x)</code>: đánh giá <span class="arithmatex">$P(x_1), \dots, P(x_n)$</span> trong <span class="arithmatex">$O(n \log^2 n)$</span>.</li>
+<li><code>poly&lt;T&gt; inter(vector&lt;T&gt; x, vector&lt;T&gt; y)</code>: nội suy một đa thức bởi một tập hợp các cặp <span class="arithmatex">$P(x_i) = y_i$</span> trong <span class="arithmatex">$O(n \log^2 n)$</span>.</li>
+<li>Và nhiều hơn nữa, hãy thoải mái khám phá mã!</li>
 </ul>
-<hr />
-<h2 id="nguon-goc-ban-quyen">🔗 Nguồn gốc &amp; Bản quyền<a class="headerlink" href="#nguon-goc-ban-quyen" title="Permanent link">&para;</a></h2>
+<h2 id="arithmetic">Số học (Arithmetic)<a class="headerlink" href="#arithmetic" title="Permanent link">&para;</a></h2>
+<h3 id="multiplication">Phép nhân (Multiplication)<a class="headerlink" href="#multiplication" title="Permanent link">&para;</a></h3>
+<p>Phép toán cốt lõi là phép nhân của hai đa thức. Nghĩa là, cho các đa thức <span class="arithmatex">$A$</span> và <span class="arithmatex">$B$</span>:</p>
+<div class="arithmatex">$$A = a_0 + a_1 x + \dots + a_n x^n$$</div>
+<div class="arithmatex">$$B = b_0 + b_1 x + \dots + b_m x^m$$</div>
+<p>Bạn phải tính đa thức <span class="arithmatex">$C = A \cdot B$</span>, được định nghĩa là</p>
+<div class="arithmatex">$$\boxed{C = \sum\limits_{i=0}^n \sum\limits_{j=0}^m a_i b_j x^{i+j}}  = c_0 + c_1 x + \dots + c_{n+m} x^{n+m}.$$</div>
+<p>Nó có thể được tính trong <span class="arithmatex">$O(n \log n)$</span> thông qua <a href="fft.html">Biến đổi Fourier nhanh</a> và hầu như tất cả các phương pháp ở đây sẽ sử dụng nó như chương trình con.</p>
+<h3 id="inverse-series">Chuỗi nghịch đảo (Inverse series)<a class="headerlink" href="#inverse-series" title="Permanent link">&para;</a></h3>
+<p>Nếu <span class="arithmatex">$A(0) \neq 0$</span> luôn tồn tại một chuỗi lũy thừa hình thức vô hạn <span class="arithmatex">$A^{-1}(x) = q_0+q_1 x + q_2 x^2 + \dots$</span> sao cho <span class="arithmatex">$A^{-1} A = 1$</span>. Thường hữu ích khi tính <span class="arithmatex">$k$</span> hệ số đầu tiên của <span class="arithmatex">$A^{-1}$</span> (nghĩa là, tính nó modulo <span class="arithmatex">$x^k$</span>). Có hai cách chính để tính nó.</p>
+<h4 id="divide-and-conquer">Chia để trị (Divide and conquer)<a class="headerlink" href="#divide-and-conquer" title="Permanent link">&para;</a></h4>
+<p>Thuật toán này đã được đề cập trong <a href="http://algo.inria.fr/seminars/sem00-01/schoenhage.pdf">bài viết của Schönhage</a> và được lấy cảm hứng từ <a href="https://en.wikipedia.org/wiki/Graeffe's_method">phương pháp Graeffe</a>. Được biết rằng đối với <span class="arithmatex">$B(x)=A(x)A(-x)$</span> điều này giữ đúng <span class="arithmatex">$B(x)=B(-x)$</span>, nghĩa là, <span class="arithmatex">$B(x)$</span> là một đa thức chẵn. Nó có nghĩa là nó chỉ có các hệ số khác không với số mũ chẵn và có thể được biểu diễn dưới dạng <span class="arithmatex">$B(x)=T(x^2)$</span>. Do đó, chúng ta có thể thực hiện chuyển đổi sau:</p>
+<div class="arithmatex">$$A^{-1}(x) \equiv \frac{1}{A(x)} \equiv \frac{A(-x)}{A(x)A(-x)} \equiv \frac{A(-x)}{T(x^2)} \pmod{x^k}$$</div>
+<p>Lưu ý rằng <span class="arithmatex">$T(x)$</span> có thể được tính bằng một phép nhân duy nhất, sau đó chúng ta chỉ quan tâm đến nửa đầu của các hệ số của chuỗi nghịch đảo của nó. Điều này làm giảm hiệu quả bài toán ban đầu về việc tính <span class="arithmatex">$A^{-1} \pmod{x^k}$</span> thành tính <span class="arithmatex">$T^{-1} \pmod{x^{\lceil k / 2 \rceil}}$</span>.</p>
+<p>Độ phức tạp của phương pháp này có thể được ước tính là</p>
+<div class="arithmatex">$$T(n) = T(n/2) + O(n \log n) = O(n \log n).$$</div>
+<h4 id="sieveking-kung-algorithm">Thuật toán Sieveking–Kung (Sieveking–Kung algorithm)<a class="headerlink" href="#sieveking-kung-algorithm" title="Permanent link">&para;</a></h4>
+<p>Quy trình chung được mô tả ở đây được gọi là nâng Hensel (Hensel lifting), vì nó tuân theo bổ đề Hensel. Chúng tôi sẽ đề cập chi tiết hơn ở phần dưới, nhưng bây giờ hãy tập trung vào giải pháp ad hoc. Phần "nâng" ở đây có nghĩa là chúng ta bắt đầu với xấp xỉ <span class="arithmatex">$B_0=q_0=a_0^{-1}$</span>, đó là <span class="arithmatex">$A^{-1} \pmod x$</span> và sau đó lặp đi lặp lại nâng từ <span class="arithmatex">$\bmod x^a$</span> lên <span class="arithmatex">$\bmod x^{2a}$</span>.</p>
+<p>Gọi <span class="arithmatex">$B_k \equiv A^{-1} \pmod{x^a}$</span>. Xấp xỉ tiếp theo cần tuân theo phương trình <span class="arithmatex">$A B_{k+1} \equiv 1 \pmod{x^{2a}}$</span> và có thể được biểu diễn dưới dạng <span class="arithmatex">$B_{k+1} = B_k + x^a C$</span>. Từ đây suy ra phương trình</p>
+<div class="arithmatex">$$A(B_k + x^{a}C) \equiv 1 \pmod{x^{2a}}.$$</div>
+<p>Gọi <span class="arithmatex">$A B_k \equiv 1 + x^a D \pmod{x^{2a}}$</span>, thì phương trình trên ngụ ý</p>
+<div class="arithmatex">$$x^a(D+AC) \equiv 0 \pmod{x^{2a}} \implies D \equiv -AC \pmod{x^a} \implies C \equiv -B_k D \pmod{x^a}.$$</div>
+<p>Từ đây, người ta có thể thu được công thức cuối cùng, đó là</p>
+<div class="arithmatex">$$x^a C \equiv -B_k x^a D  \equiv B_k(1-AB_k) \pmod{x^{2a}} \implies \boxed{B_{k+1} \equiv B_k(2-AB_k) \pmod{x^{2a}}}$$</div>
+<p>Do đó bắt đầu với <span class="arithmatex">$B_0 \equiv a_0^{-1} \pmod x$</span> chúng ta sẽ tính toán dãy <span class="arithmatex">$B_k$</span> sao cho <span class="arithmatex">$AB_k \equiv 1 \pmod{x^{2^k}}$</span> với độ phức tạp</p>
+<div class="arithmatex">$$T(n) = T(n/2) + O(n \log n) = O(n \log n).$$</div>
+<p>Thuật toán ở đây có vẻ phức tạp hơn một chút so với thuật toán đầu tiên, nhưng nó có một lý luận rất vững chắc và thực tế đằng sau nó, cũng như tiềm năng tổng quát hóa lớn nếu nhìn từ một góc độ khác, sẽ được giải thích thêm ở phần dưới.</p>
+<h3 id="euclidean-division">Phép chia Euclid (Euclidean division)<a class="headerlink" href="#euclidean-division" title="Permanent link">&para;</a></h3>
+<p>Xét hai đa thức <span class="arithmatex">$A(x)$</span> và <span class="arithmatex">$B(x)$</span> có bậc <span class="arithmatex">$n$</span> và <span class="arithmatex">$m$</span>. Như đã nói trước đó, bạn có thể viết lại <span class="arithmatex">$A(x)$</span> thành</p>
+<div class="arithmatex">$$A(x) = B(x) D(x) + R(x), \deg R &lt; \deg B.$$</div>
+<p>Gọi <span class="arithmatex">$n \geq m$</span>, nó sẽ ngụ ý rằng <span class="arithmatex">$\deg D = n - m$</span> và <span class="arithmatex">$n-m+1$</span> hệ số dẫn đầu của <span class="arithmatex">$A$</span> không ảnh hưởng đến <span class="arithmatex">$R$</span>. Nó có nghĩa là bạn có thể khôi phục <span class="arithmatex">$D(x)$</span> từ <span class="arithmatex">$n-m+1$</span> hệ số lớn nhất của <span class="arithmatex">$A(x)$</span> và <span class="arithmatex">$B(x)$</span> nếu bạn coi nó như một hệ phương trình.</p>
+<p>Hệ phương trình tuyến tính chúng ta đang nói đến có thể được viết dưới dạng sau:</p>
+<div class="arithmatex">$$\begin{bmatrix} a_n \\ \vdots \\ a_{m+1} \\ a_{m} \end{bmatrix} = \begin{bmatrix}
+b_m &amp; \dots &amp; 0 &amp; 0 \\
+\vdots &amp; \ddots &amp; \vdots &amp; \vdots \\
+\dots &amp; \dots &amp; b_m &amp; 0 \\
+\dots &amp; \dots &amp; b_{m-1} &amp; b_m
+\end{bmatrix} \begin{bmatrix}d_{n-m} \\ \vdots \\ d_1 \\ d_0\end{bmatrix}$$</div>
+<p>Từ vẻ ngoài của nó, chúng ta có thể kết luận rằng với sự ra đời của các đa thức đảo ngược</p>
+<div class="arithmatex">$$A^R(x) = x^nA(x^{-1})= a_n + a_{n-1} x + \dots + a_0 x^n$$</div>
+<div class="arithmatex">$$B^R(x) = x^m B(x^{-1}) = b_m + b_{m-1} x + \dots + b_0 x^m$$</div>
+<div class="arithmatex">$$D^R(x) = x^{n-m}D(x^{-1}) = d_{n-m} + d_{n-m-1} x + \dots + d_0 x^{n-m}$$</div>
+<p>hệ thống có thể được viết lại thành</p>
+<div class="arithmatex">$$A^R(x) \equiv B^R(x) D^R(x) \pmod{x^{n-m+1}}.$$</div>
+<p>Từ đây bạn có thể khôi phục tất cả các hệ số của <span class="arithmatex">$D(x)$</span> một cách rõ ràng:</p>
+<div class="arithmatex">$$\boxed{D^R(x) \equiv A^R(x) (B^R(x))^{-1} \pmod{x^{n-m+1}}}$$</div>
+<p>Và từ đây, đến lượt nó, bạn có thể khôi phục <span class="arithmatex">$R(x)$</span> dưới dạng <span class="arithmatex">$R(x) = A(x) - B(x)D(x)$</span>.</p>
+<p>Lưu ý rằng ma trận ở trên được gọi là <a href="https://en.wikipedia.org/wiki/Toeplitz_matrix">ma trận Toeplitz</a> tam giác và, như chúng ta thấy ở đây, việc giải hệ phương trình tuyến tính với ma trận Toeplitz tùy ý, thực tế, tương đương với phép đảo ngược đa thức. Hơn nữa, ma trận nghịch đảo của nó cũng sẽ là ma trận Toeplitz tam giác và các mục của nó, theo thuật ngữ được sử dụng ở trên, là các hệ số của <span class="arithmatex">$(B^R(x))^{-1} \pmod{x^{n-m+1}}$</span>.</p>
+<h2 id="calculating-functions-of-polynomial">Tính toán các hàm của đa thức (Calculating functions of polynomial)<a class="headerlink" href="#calculating-functions-of-polynomial" title="Permanent link">&para;</a></h2>
+<h3 id="newtons-method">Phương pháp Newton (Newton's method)<a class="headerlink" href="#newtons-method" title="Permanent link">&para;</a></h3>
+<p>Hãy tổng quát hóa thuật toán Sieveking–Kung. Xét phương trình <span class="arithmatex">$F(P) = 0$</span> trong đó <span class="arithmatex">$P(x)$</span> phải là một đa thức và <span class="arithmatex">$F(x)$</span> là một hàm giá trị đa thức nào đó được định nghĩa là</p>
+<div class="arithmatex">$$F(x) = \sum\limits_{i=0}^\infty \alpha_i (x-\beta)^i,$$</div>
+<p>trong đó <span class="arithmatex">$\beta$</span> là một hằng số nào đó. Có thể chứng minh rằng nếu chúng ta giới thiệu một biến hình thức mới <span class="arithmatex">$y$</span>, chúng ta có thể biểu diễn <span class="arithmatex">$F(x)$</span> dưới dạng</p>
+<div class="arithmatex">$$F(x) = F(y) + (x-y)F'(y) + (x-y)^2 G(x,y),$$</div>
+<p>trong đó <span class="arithmatex">$F'(x)$</span> là chuỗi lũy thừa hình thức đạo hàm được định nghĩa là</p>
+<div class="arithmatex">$$F'(x) = \sum\limits_{i=0}^\infty (i+1)\alpha_{i+1}(x-\beta)^i,$$</div>
+<p>và <span class="arithmatex">$G(x, y)$</span> là một chuỗi lũy thừa hình thức nào đó của <span class="arithmatex">$x$</span> và <span class="arithmatex">$y$</span>. Với kết quả này, chúng ta có thể tìm nghiệm lặp đi lặp lại.</p>
+<p>Gọi <span class="arithmatex">$F(Q_k) \equiv 0 \pmod{x^{a}}$</span>. Chúng ta cần tìm <span class="arithmatex">$Q_{k+1} \equiv Q_k + x^a C \pmod{x^{2a}}$</span> sao cho <span class="arithmatex">$F(Q_{k+1}) \equiv 0 \pmod{x^{2a}}$</span>.</p>
+<p>Thay thế <span class="arithmatex">$x = Q_{k+1}$</span> và <span class="arithmatex">$y=Q_k$</span> trong công thức trên, chúng ta nhận được</p>
+<div class="arithmatex">$$F(Q_{k+1}) \equiv F(Q_k) + (Q_{k+1} - Q_k) F'(Q_k) + (Q_{k+1} - Q_k)^2 G(x, y) \pmod x^{2a}.$$</div>
+<p>Vì <span class="arithmatex">$Q_{k+1} - Q_k \equiv 0 \pmod{x^a}$</span>, điều đó cũng giữ đúng rằng <span class="arithmatex">$(Q_{k+1} - Q_k)^2 \equiv 0 \pmod{x^{2a}}$</span>, do đó</p>
+<div class="arithmatex">$$0 \equiv F(Q_{k+1}) \equiv F(Q_k) + (Q_{k+1} - Q_k) F'(Q_k) \pmod{x^{2a}}.$$</div>
+<p>Công thức cuối cùng cho chúng ta giá trị của <span class="arithmatex">$Q_{k+1}$</span>:</p>
+<div class="arithmatex">$$\boxed{Q_{k+1} = Q_k - \dfrac{F(Q_k)}{F'(Q_k)} \pmod{x^{2a}}}$$</div>
+<p>Do đó, biết cách đảo ngược đa thức và cách tính <span class="arithmatex">$F(Q_k)$</span>, chúng ta có thể tìm <span class="arithmatex">$n$</span> hệ số của <span class="arithmatex">$P$</span> với độ phức tạp</p>
+<div class="arithmatex">$$T(n) = T(n/2) + f(n),$$</div>
+<p>trong đó <span class="arithmatex">$f(n)$</span> là thời gian cần thiết để tính <span class="arithmatex">$F(Q_k)$</span> và <span class="arithmatex">$F'(Q_k)^{-1}$</span> thường là <span class="arithmatex">$O(n \log n)$</span>.</p>
+<p>Quy tắc lặp trên được gọi trong phân tích số là <a href="https://en.wikipedia.org/wiki/Newton%27s_method">Phương pháp Newton</a>.</p>
+<h4 id="hensels-lemma">Bổ đề Hensel (Hensel's lemma)<a class="headerlink" href="#hensels-lemma" title="Permanent link">&para;</a></h4>
+<p>Như đã đề cập trước đó, về mặt hình thức và tổng quát kết quả này được gọi là <a href="https://en.wikipedia.org/wiki/Hensel%27s_lemma">Bổ đề Hensel</a> và nó thực tế có thể được sử dụng theo nghĩa rộng hơn nữa khi chúng ta làm việc với một chuỗi các vành lồng nhau. Trong trường hợp cụ thể này, chúng ta đã làm việc với một chuỗi các phần dư đa thức modulo <span class="arithmatex">$x$</span>, <span class="arithmatex">$x^2$</span>, <span class="arithmatex">$x^3$</span>, v.v.</p>
+<p>Một ví dụ khác mà việc nâng Hensel có thể hữu ích là cái gọi là <a href="https://en.wikipedia.org/wiki/P-adic_number">số p-adic</a> nơi chúng ta, thực tế, làm việc với dãy các phần dư số nguyên modulo <span class="arithmatex">$p$</span>, <span class="arithmatex">$p^2$</span>, <span class="arithmatex">$p^3$</span>, v.v. Ví dụ, phương pháp Newton có thể được sử dụng để tìm tất cả các <a href="https://en.wikipedia.org/wiki/Automorphic_number">số tự đồng cấu (automorphic numbers)</a> (các số có tận cùng là chính nó khi bình phương) với một cơ số đã cho. Bài toán được để lại như một bài tập cho người đọc. Bạn có thể xem xét bài toán <a href="https://acm.timus.ru/problem.aspx?space=1&amp;num=1698">này</a> để kiểm tra xem giải pháp của bạn có hoạt động cho các số cơ số <span class="arithmatex">$10$</span> hay không.</p>
+<h3 id="logarithm">Logarit (Logarithm)<a class="headerlink" href="#logarithm" title="Permanent link">&para;</a></h3>
+<p>Đối với hàm <span class="arithmatex">$\ln P(x)$</span> được biết rằng: </p>
+<div class="arithmatex">$$
+\boxed{(\ln P(x))' = \dfrac{P'(x)}{P(x)}}
+$$</div>
+<p>Do đó chúng ta có thể tính <span class="arithmatex">$n$</span> hệ số của <span class="arithmatex">$\ln P(x)$</span> trong <span class="arithmatex">$O(n \log n)$</span>.</p>
+<h3 id="inverse-series-1">Chuỗi nghịch đảo (Inverse series)<a class="headerlink" href="#inverse-series-1" title="Permanent link">&para;</a></h3>
+<p>Turns out, chúng ta có thể nhận được công thức cho <span class="arithmatex">$A^{-1}$</span> bằng cách sử dụng phương pháp Newton.
+Đối với điều này chúng ta lấy phương trình <span class="arithmatex">$A=Q^{-1}$</span>, do đó:</p>
+<div class="arithmatex">$$F(Q) = Q^{-1} - A$$</div>
+<div class="arithmatex">$$F'(Q) = -Q^{-2}$$</div>
+<div class="arithmatex">$$\boxed{Q_{k+1} \equiv Q_k(2-AQ_k) \pmod{x^{2^{k+1}}}}$$</div>
+<h3 id="exponent">Hàm mũ (Exponent)<a class="headerlink" href="#exponent" title="Permanent link">&para;</a></h3>
+<p>Hãy tìm hiểu cách tính <span class="arithmatex">$e^{P(x)}=Q(x)$</span>. Điều đó phải giữ đúng rằng <span class="arithmatex">$\ln Q = P$</span>, do đó:</p>
+<div class="arithmatex">$$F(Q) = \ln Q - P$$</div>
+<div class="arithmatex">$$F'(Q) = Q^{-1}$$</div>
+<div class="arithmatex">$$\boxed{Q_{k+1} \equiv Q_k(1 + P - \ln Q_k) \pmod{x^{2^{k+1}}}}$$</div>
+<h3 id="k-th-power">Lũy thừa thứ <span class="arithmatex">$k$</span> (<span class="arithmatex">$k$</span>-th power)<a class="headerlink" href="#k-th-power" title="Permanent link">&para;</a></h3>
+<p>Bây giờ chúng ta cần tính <span class="arithmatex">$P^k(x)=Q$</span>. Điều này có thể được thực hiện thông qua công thức sau:</p>
+<div class="arithmatex">$$Q = \exp\left[k \ln P(x)\right]$$</div>
+<p>Tuy nhiên hãy lưu ý rằng, bạn có thể tính logarit và hàm mũ một cách chính xác chỉ khi bạn có thể tìm thấy một số <span class="arithmatex">$Q_0$</span> ban đầu.</p>
+<p>Để tìm nó, bạn nên tính logarit hoặc hàm mũ của hệ số hằng số của đa thức.</p>
+<p>Nhưng cách hợp lý duy nhất để làm điều đó là nếu <span class="arithmatex">$P(0)=1$</span> cho <span class="arithmatex">$Q = \ln P$</span> để <span class="arithmatex">$Q(0)=0$</span> và nếu <span class="arithmatex">$P(0)=0$</span> cho <span class="arithmatex">$Q = e^P$</span> để <span class="arithmatex">$Q(0)=1$</span>.</p>
+<p>Do đó bạn có thể sử dụng công thức trên chỉ nếu <span class="arithmatex">$P(0) = 1$</span>. Nếu không, nếu <span class="arithmatex">$P(x) = \alpha x^t T(x)$</span> trong đó <span class="arithmatex">$T(0)=1$</span> bạn có thể viết rằng:</p>
+<div class="arithmatex">$$\boxed{P^k(x) = \alpha^kx^{kt} \exp[k \ln T(x)]}$$</div>
+<p>Lưu ý rằng bạn cũng có thể tính một số căn bậc <span class="arithmatex">$k$</span> của một đa thức nếu bạn có thể tính <span class="arithmatex">$\sqrt[k]{\alpha}$</span>, ví dụ cho <span class="arithmatex">$\alpha=1$</span>.</p>
+<h2 id="evaluation-and-interpolation">Đánh giá và Nội suy (Evaluation and Interpolation)<a class="headerlink" href="#evaluation-and-interpolation" title="Permanent link">&para;</a></h2>
+<h3 id="chirp-z-transform">Biến đổi Chirp-z (Chirp-z Transform)<a class="headerlink" href="#chirp-z-transform" title="Permanent link">&para;</a></h3>
+<p>Đối với trường hợp cụ thể khi bạn cần đánh giá một đa thức tại các điểm <span class="arithmatex">$x_r = z^{2r}$</span> bạn có thể thực hiện những điều sau:</p>
+<div class="arithmatex">$$A(z^{2r}) = \sum\limits_{k=0}^n a_k z^{2kr}$$</div>
+<p>Hãy thay thế <span class="arithmatex">$2kr = r^2+k^2-(r-k)^2$</span>. Khi đó tổng này viết lại thành:</p>
+<div class="arithmatex">$$\boxed{A(z^{2r}) = z^{r^2}\sum\limits_{k=0}^n (a_k z^{k^2}) z^{-(r-k)^2}}$$</div>
+<p>Điều này lên đến hệ số <span class="arithmatex">$z^{r^2}$</span> bằng với tích chập của các dãy <span class="arithmatex">$u_k = a_k z^{k^2}$</span> và <span class="arithmatex">$v_k = z^{-k^2}$</span>.</p>
+<p>Lưu ý rằng <span class="arithmatex">$u_k$</span> có chỉ số từ <span class="arithmatex">$0$</span> đến <span class="arithmatex">$n$</span> ở đây và <span class="arithmatex">$v_k$</span> có chỉ số từ <span class="arithmatex">$-n$</span> đến <span class="arithmatex">$m$</span> trong đó <span class="arithmatex">$m$</span> là lũy thừa tối đa của <span class="arithmatex">$z$</span> mà bạn cần.</p>
+<p>Bây giờ nếu bạn cần đánh giá một đa thức tại các điểm <span class="arithmatex">$x_r = z^{2r+1}$</span> bạn có thể giảm nó về nhiệm vụ trước đó bằng biến đổi <span class="arithmatex">$a_k \to a_k z^k$</span>.</p>
+<p>Nó cung cấp cho chúng ta một thuật toán <span class="arithmatex">$O(n \log n)$</span> khi bạn cần tính toán các giá trị trong lũy thừa của <span class="arithmatex">$z$</span>, do đó bạn có thể tính DFT cho các lũy thừa không phải là hai.</p>
+<p>Một quan sát khác là <span class="arithmatex">$kr = \binom{k+r}{2} - \binom{k}{2} - \binom{r}{2}$</span>. Khi đó chúng ta có</p>
+<div class="arithmatex">$$\boxed{A(z^r) = z^{-\binom{r}{2}}\sum\limits_{k=0}^n \left(a_k z^{-\binom{k}{2}}\right)z^{\binom{k+r}{2}}}$$</div>
+<p>Hệ số của <span class="arithmatex">$x^{n+r}$</span> của tích của các đa thức <span class="arithmatex">$A_0(x) = \sum\limits_{k=0}^n a_{n-k}z^{-\binom{n-k}{2}}x^k$</span> và <span class="arithmatex">$A_1(x) = \sum\limits_{k\geq 0}z^{\binom{k}{2}}x^k$</span> bằng <span class="arithmatex">$z^{\binom{r}{2}}A(z^r)$</span>. Bạn có thể sử dụng công thức <span class="arithmatex">$z^{\binom{k+1}{2}}=z^{\binom{k}{2}+k}$</span> để tính các hệ số của <span class="arithmatex">$A_0(x)$</span> và <span class="arithmatex">$A_1(x)$</span>.</p>
+<h3 id="multi-point-evaluation">Đánh giá đa điểm (Multi-point Evaluation)<a class="headerlink" href="#multi-point-evaluation" title="Permanent link">&para;</a></h3>
+<p>Giả sử bạn cần tính <span class="arithmatex">$A(x_1), \dots, A(x_n)$</span>. Như đã đề cập trước đó, <span class="arithmatex">$A(x) \equiv A(x_i) \pmod{x-x_i}$</span>. Do đó bạn có thể làm như sau:</p>
+<ol>
+<li>Tính một cây phân đoạn sao cho trong đoạn <span class="arithmatex">$[l,r)$</span> chứa tích <span class="arithmatex">$P_{l, r}(x) = (x-x_l)(x-x_{l+1})\dots(x-x_{r-1})$</span>.</li>
+<li>Bắt đầu với <span class="arithmatex">$l=1$</span> và <span class="arithmatex">$r=n+1$</span> tại nút gốc. Gọi <span class="arithmatex">$m=\lfloor(l+r)/2\rfloor$</span>. Hãy di chuyển xuống <span class="arithmatex">$[l,m)$</span> với đa thức <span class="arithmatex">$A(x) \pmod{P_{l,m}(x)}$</span>.</li>
+<li>Điều này sẽ tính toán đệ quy <span class="arithmatex">$A(x_l), \dots, A(x_{m-1})$</span>, bây giờ làm tương tự cho <span class="arithmatex">$[m,r)$</span> với <span class="arithmatex">$A(x) \pmod{P_{m,r}(x)}$</span>.</li>
+<li>Nối các kết quả từ cuộc gọi đệ quy thứ nhất và thứ hai và trả về chúng.</li>
+</ol>
+<p>Toàn bộ quy trình sẽ chạy trong <span class="arithmatex">$O(n \log^2 n)$</span>.</p>
+<h3 id="interpolation">Nội suy (Interpolation)<a class="headerlink" href="#interpolation" title="Permanent link">&para;</a></h3>
+<p>Có một công thức trực tiếp của Lagrange để nội suy một đa thức, cho tập hợp các cặp <span class="arithmatex">$(x_i, y_i)$</span>:</p>
+<div class="arithmatex">$$\boxed{A(x) = \sum\limits_{i=1}^n y_i \prod\limits_{j \neq i}\dfrac{x-x_j}{x_i - x_j}}$$</div>
+<p>Tính toán trực tiếp nó là một điều khó nhưng hóa ra, chúng ta có thể tính nó trong <span class="arithmatex">$O(n \log^2 n)$</span> với cách tiếp cận chia để trị:</p>
+<p>Xét <span class="arithmatex">$P(x) = (x-x_1)\dots(x-x_n)$</span>. Để biết các hệ số của các mẫu số trong <span class="arithmatex">$A(x)$</span> chúng ta nên tính các tích như: </p>
+<div class="arithmatex">$$
+P_i = \prod\limits_{j \neq i} (x_i-x_j)
+$$</div>
+<p>Nhưng nếu bạn xem xét đạo hàm <span class="arithmatex">$P'(x)$</span> bạn sẽ thấy rằng <span class="arithmatex">$P'(x_i) = P_i$</span>. Do đó bạn có thể tính <span class="arithmatex">$P_i$</span> thông qua đánh giá trong <span class="arithmatex">$O(n \log^2 n)$</span>.</p>
+<p>Bây giờ hãy xem xét thuật toán đệ quy được thực hiện trên cùng một cây phân đoạn như trong đánh giá đa điểm. Nó bắt đầu ở các lá với giá trị <span class="arithmatex">$\dfrac{y_i}{P_i}$</span> trong mỗi lá.</p>
+<p>Khi chúng ta quay trở lại từ đệ quy, chúng ta nên hợp nhất các kết quả từ các đỉnh bên trái và bên phải dưới dạng <span class="arithmatex">$A_{l,r} = A_{l,m}P_{m,r} + P_{l,m} A_{m,r}$</span>.</p>
+<p>Theo cách này khi bạn quay lại gốc, bạn sẽ có chính xác <span class="arithmatex">$A(x)$</span> trong đó.
+Toàn bộ quy trình cũng hoạt động trong <span class="arithmatex">$O(n \log^2 n)$</span>.</p>
+<h2 id="gcd-and-resultants">GCD và Kết thức (GCD and Resultants)<a class="headerlink" href="#gcd-and-resultants" title="Permanent link">&para;</a></h2>
+<p>Giả sử bạn được cho các đa thức <span class="arithmatex">$A(x) = a_0 + a_1 x + \dots + a_n x^n$</span> và <span class="arithmatex">$B(x) = b_0 + b_1 x + \dots + b_m x^m$</span>.</p>
+<p>Gọi <span class="arithmatex">$\lambda_0, \dots, \lambda_n$</span> là các nghiệm của <span class="arithmatex">$A(x)$</span> và gọi <span class="arithmatex">$\mu_0, \dots, \mu_m$</span> là các nghiệm của <span class="arithmatex">$B(x)$</span> được tính với số bội của chúng.</p>
+<p>Bạn muốn biết liệu <span class="arithmatex">$A(x)$</span> và <span class="arithmatex">$B(x)$</span> có bất kỳ nghiệm nào chung hay không. Có hai cách liên kết với nhau để làm điều đó.</p>
+<h3 id="euclidean-algorithm">Thuật toán Euclid (Euclidean algorithm)<a class="headerlink" href="#euclidean-algorithm" title="Permanent link">&para;</a></h3>
+<p>Chà, chúng tôi đã có một <a href="euclid-algorithm.html">bài viết</a> về nó. Đối với một miền tùy ý, bạn có thể viết thuật toán Euclid dễ dàng như:</p>
+<div class="highlight"><pre><span></span><code><span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span><span class="w"> </span><span class="nc">T</span><span class="o">&gt;</span>
+<span class="n">T</span><span class="w"> </span><span class="n">gcd</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">T</span><span class="w"> </span><span class="o">&amp;</span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">T</span><span class="w"> </span><span class="o">&amp;</span><span class="n">b</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">T</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">gcd</span><span class="p">(</span><span class="n">b</span><span class="p">,</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="n">b</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>Có thể chứng minh rằng đối với các đa thức <span class="arithmatex">$A(x)$</span> và <span class="arithmatex">$B(x)$</span>, nó sẽ hoạt động trong <span class="arithmatex">$O(nm)$</span>.</p>
+<h3 id="resultant">Kết thức (Resultant)<a class="headerlink" href="#resultant" title="Permanent link">&para;</a></h3>
+<p>Hãy tính tích <span class="arithmatex">$A(\mu_0)\cdots A(\mu_m)$</span>. Nó sẽ bằng không khi và chỉ khi một số <span class="arithmatex">$\mu_i$</span> là nghiệm của <span class="arithmatex">$A(x)$</span>.</p>
+<p>Để đối xứng, chúng ta cũng có thể nhân nó với <span class="arithmatex">$b_m^n$</span> và viết lại toàn bộ tích dưới dạng sau:</p>
+<div class="arithmatex">$$\boxed{\mathcal{R}(A, B) = b_m^n\prod\limits_{j=0}^m A(\mu_j) = b_m^n a_m^n \prod\limits_{i=0}^n \prod\limits_{j=0}^m (\mu_j - \lambda_i)= (-1)^{mn}a_n^m \prod\limits_{i=0}^n B(\lambda_i)}$$</div>
+<p>Giá trị được định nghĩa ở trên được gọi là kết thức của các đa thức <span class="arithmatex">$A(x)$</span> và <span class="arithmatex">$B(x)$</span>. Từ định nghĩa, bạn có thể tìm thấy các tính chất sau:</p>
+<ol>
+<li><span class="arithmatex">$\mathcal R(A, B) = (-1)^{nm} \mathcal R(B, A)$</span>.</li>
+<li><span class="arithmatex">$\mathcal R(A, B)= a_n^m b_m^n$</span> khi <span class="arithmatex">$n=0$</span> hoặc <span class="arithmatex">$m=0$</span>.</li>
+<li>Nếu <span class="arithmatex">$b_m=1$</span> thì <span class="arithmatex">$\mathcal R(A - CB, B) = \mathcal R(A, B)$</span> cho một đa thức tùy ý <span class="arithmatex">$C(x)$</span> và <span class="arithmatex">$n,m \geq 1$</span>.</li>
+<li>Từ điều này suy ra <span class="arithmatex">$\mathcal R(A, B) = b_m^{\deg(A) - \deg(A-CB)}\mathcal R(A - CB, B)$</span> cho <span class="arithmatex">$A(x)$</span>, <span class="arithmatex">$B(x)$</span>, <span class="arithmatex">$C(x)$</span> tùy ý.</li>
+</ol>
+<p>Kỳ diệu thay, nó có nghĩa là kết thức của hai đa thức thực sự luôn nằm trong cùng một vành với các hệ số của chúng!</p>
+<p>Ngoài ra, các tính chất này cho phép chúng ta tính kết thức cùng với thuật toán Euclid, hoạt động trong <span class="arithmatex">$O(nm)$</span>.</p>
+<div class="highlight"><pre><span></span><code><span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span><span class="w"> </span><span class="nc">T</span><span class="o">&gt;</span>
+<span class="n">T</span><span class="w"> </span><span class="n">resultant</span><span class="p">(</span><span class="n">poly</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="w"> </span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="n">poly</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="w"> </span><span class="n">b</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">if</span><span class="p">(</span><span class="n">b</span><span class="p">.</span><span class="n">is_zero</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="p">(</span><span class="n">b</span><span class="p">.</span><span class="n">deg</span><span class="p">()</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">bpow</span><span class="p">(</span><span class="n">b</span><span class="p">.</span><span class="n">lead</span><span class="p">(),</span><span class="w"> </span><span class="n">a</span><span class="p">.</span><span class="n">deg</span><span class="p">());</span>
+<span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="n">pw</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">a</span><span class="p">.</span><span class="n">deg</span><span class="p">();</span>
+<span class="w">        </span><span class="n">a</span><span class="w"> </span><span class="o">%=</span><span class="w"> </span><span class="n">b</span><span class="p">;</span>
+<span class="w">        </span><span class="n">pw</span><span class="w"> </span><span class="o">-=</span><span class="w"> </span><span class="n">a</span><span class="p">.</span><span class="n">deg</span><span class="p">();</span>
+<span class="w">        </span><span class="n">base</span><span class="w"> </span><span class="n">mul</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">bpow</span><span class="p">(</span><span class="n">b</span><span class="p">.</span><span class="n">lead</span><span class="p">(),</span><span class="w"> </span><span class="n">pw</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">base</span><span class="p">((</span><span class="n">b</span><span class="p">.</span><span class="n">deg</span><span class="p">()</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">a</span><span class="p">.</span><span class="n">deg</span><span class="p">()</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="mi">-1</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="mi">1</span><span class="p">);</span>
+<span class="w">        </span><span class="n">base</span><span class="w"> </span><span class="n">ans</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">resultant</span><span class="p">(</span><span class="n">b</span><span class="p">,</span><span class="w"> </span><span class="n">a</span><span class="p">);</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">ans</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">mul</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<h3 id="half-gcd-algorithm">Thuật toán Half-GCD (Half-GCD algorithm)<a class="headerlink" href="#half-gcd-algorithm" title="Permanent link">&para;</a></h3>
+<p>Có một cách để tính GCD và kết thức trong <span class="arithmatex">$O(n \log^2 n)$</span>.</p>
+<p>Quy trình để làm điều đó thực hiện một biến đổi tuyến tính <span class="arithmatex">$2 \times 2$</span> ánh xạ một cặp đa thức <span class="arithmatex">$a(x)$</span>, <span class="arithmatex">$b(x)$</span> thành cặp khác <span class="arithmatex">$c(x), d(x)$</span> sao cho <span class="arithmatex">$\deg d(x) \leq \frac{\deg a(x)}{2}$</span>. Nếu bạn đủ cẩn thận, bạn có thể tính half-GCD của bất kỳ cặp đa thức nào với tối đa <span class="arithmatex">$2$</span> cuộc gọi đệ quy đến các đa thức nhỏ hơn ít nhất <span class="arithmatex">$2$</span> lần.</p>
+<p>Các chi tiết cụ thể của thuật toán hơi tẻ nhạt để giải thích, tuy nhiên bạn có thể tìm thấy cài đặt của nó trong thư viện, dưới dạng hàm <code>half_gcd</code>.</p>
+<p>Sau khi half-GCD được cài đặt, bạn có thể áp dụng lặp đi lặp lại nó cho các đa thức cho đến khi bạn giảm xuống còn cặp <span class="arithmatex">$\gcd(a, b)$</span> và <span class="arithmatex">$0$</span>.</p>
+<h2 id="problems">Bài tập<a class="headerlink" href="#problems" title="Permanent link">&para;</a></h2>
 <ul>
-<li>📌 Dự án gốc: https://github.com/cp-algorithms/cp-algorithms</li>
-<li>📌 Nội dung ban đầu được dịch từ: https://e-maxx.ru/algo</li>
-<li>Repository này <strong>KHÔNG phải repo chính thức</strong></li>
-<li>Mọi công lao học thuật thuộc về <strong>đội ngũ cp-algorithms</strong></li>
+<li><a href="https://www.codechef.com/problems/RNG">CodeChef - RNG</a></li>
+<li><a href="https://codeforces.com/gym/102129/problem/D">CodeForces - Basis Change</a></li>
+<li><a href="https://codeforces.com/gym/102129/problem/G">CodeForces - Permutant</a></li>
+<li><a href="https://codeforces.com/gym/102129/problem/C">CodeForces - Medium Hadron Collider</a></li>
 </ul>
-<p>📄 Việc dịch được thực hiện với mục đích <strong>giáo dục – phi thương mại</strong></p>
-<hr />
-<h2 id="ong-gop">🤝 Đóng góp<a class="headerlink" href="#ong-gop" title="Permanent link">&para;</a></h2>
-<p>Nếu bạn muốn:
-- Sửa lỗi dịch
-- Chuẩn hóa thuật ngữ
-- Dịch thêm bài mới</p>
-<p>👉 Hoàn toàn hoan nghênh!<br />
-Bạn có thể:
-- Tạo Issue
-- Hoặc Pull Request trực tiếp</p>
-<hr />
-<h2 id="tac-gia-ban-dich">👤 Tác giả bản dịch<a class="headerlink" href="#tac-gia-ban-dich" title="Permanent link">&para;</a></h2>
-<ul>
-<li>GitHub: https://github.com/deanqkhanhcoder</li>
-<li>Mục tiêu: học sâu Competitive Programming &amp; xây dựng tài nguyên tiếng Việt chất lượng</li>
-</ul>
-<hr />
-<h2 id="loi-cam-on">⭐ Lời cảm ơn<a class="headerlink" href="#loi-cam-on" title="Permanent link">&para;</a></h2>
-<p>Xin gửi lời cảm ơn chân thành tới đội ngũ <strong>cp-algorithms</strong><br />
-vì đã xây dựng một trong những tài nguyên CP tốt nhất thế giới 🌍</p>
 <hr />
 <h2 id="checklist">Checklist<a class="headerlink" href="#checklist" title="Permanent link">&para;</a></h2>
 <ul>
-<li>Original lines: 8</li>
-<li>Translated lines: 8</li>
+<li>Original lines: 492</li>
+<li>Translated lines: 492</li>
 <li>Code blocks changed? No</li>
 <li>Inline code changed? No</li>
 <li>Technical terms kept in English? Yes</li>
 <li>Headings anchors preserved/added correctly? Yes</li>
 <li>I confirm no character was omitted: YES</li>
 </ul>
-<p>Notes:
-- Translated title 'Main Page' to 'Trang chủ'.</p>
                 
               </article>
             </div>
@@ -8062,14 +8587,14 @@ vì đã xây dựng một trong những tài nguyên CP tốt nhất thế gi�
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": ".", "features": ["navigation.top", "navigation.tracking", "toc.follow", "toc.integrate", "search.suggest", "content.code.copy"], "search": "assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.top", "navigation.tracking", "toc.follow", "toc.integrate", "search.suggest", "content.code.copy"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="assets/javascripts/bundle.79ae519e.min.js"></script>
+      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
       
-        <script src="javascript/config.js"></script>
+        <script src="../javascript/config.js"></script>
       
-        <script src="javascript/donation-banner.js"></script>
+        <script src="../javascript/donation-banner.js"></script>
       
         <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
       

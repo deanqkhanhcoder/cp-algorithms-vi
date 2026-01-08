@@ -10,29 +10,31 @@
       
       
       
-        <link rel="canonical" href="https://deanqkhanhcoder.github.io/cp-algorithms-vi/index.html">
+        <link rel="canonical" href="https://deanqkhanhcoder.github.io/cp-algorithms-vi/string/expression_parsing.html">
       
       
+        <link rel="prev" href="lyndon_factorization.html">
       
-        <link rel="next" href="navigation.html">
+      
+        <link rel="next" href="manacher.html">
       
       
         
       
       
-      <link rel="icon" href="favicon.ico">
+      <link rel="icon" href="../favicon.ico">
       <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
     
     
       
-        <title>Trang chủ - Algorithms for Competitive Programming</title>
+        <title>Phân tích biểu thức - Algorithms for Competitive Programming</title>
       
     
     
-      <link rel="stylesheet" href="assets/stylesheets/main.484c7ddc.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
       
         
-        <link rel="stylesheet" href="assets/stylesheets/palette.ab4e12ef.min.css">
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
       
       
 
@@ -51,15 +53,15 @@
       
     
     
-      <link rel="stylesheet" href="stylesheets/extra.css">
+      <link rel="stylesheet" href="../stylesheets/extra.css">
     
-    <script>__md_scope=new URL(".",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
     
     
-  <script src="assets/javascripts/toggle-sidebar.js"></script></head>
+  <script src="../assets/javascripts/toggle-sidebar.js"></script></head>
   
   
     
@@ -78,7 +80,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#cp-algorithms-vietnamese-translation" class="md-skip">
+        <a href="#expression-parsing" class="md-skip">
           Skip to content
         </a>
       
@@ -98,10 +100,10 @@
     }
   </script>
   <nav class="md-header__inner md-grid" aria-label="header.title">
-    <a href="." title="Algorithms for Competitive Programming"
+    <a href=".." title="Algorithms for Competitive Programming"
       class="md-header__button md-logo" aria-label="Algorithms for Competitive Programming" data-md-component="logo">
       
-  <img src="favicon.ico" alt="logo">
+  <img src="../favicon.ico" alt="logo">
 
     </a>
     <label class="md-header__button md-icon" for="__drawer">
@@ -111,7 +113,7 @@
       <div class="md-header__ellipsis">
         <div class="md-header__topic">
           <span class="md-ellipsis">
-            <a href="." title="Algorithms for Competitive Programming"
+            <a href=".." title="Algorithms for Competitive Programming"
               aria-label="Algorithms for Competitive Programming" data-md-component="logo">
               Algorithms for Competitive Programming
             </a>
@@ -121,7 +123,7 @@
           <span class="md-ellipsis">
             <a href="#" onclick="scrollToTop()">
               
-              Trang chủ
+              Phân tích biểu thức
               
             </a>
           </span>
@@ -255,9 +257,9 @@
 
 <nav class="md-nav md-nav--primary md-nav--integrated" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="." title="Algorithms for Competitive Programming" class="md-nav__button md-logo" aria-label="Algorithms for Competitive Programming" data-md-component="logo">
+    <a href=".." title="Algorithms for Competitive Programming" class="md-nav__button md-logo" aria-label="Algorithms for Competitive Programming" data-md-component="logo">
       
-  <img src="favicon.ico" alt="logo">
+  <img src="../favicon.ico" alt="logo">
 
     </a>
     Algorithms for Competitive Programming
@@ -281,20 +283,18 @@
       
   
   
-    
   
   
-  
     
     
     
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1" >
         
           
           <label class="md-nav__link" for="__nav_1" id="__nav_1_label" tabindex="0">
@@ -315,7 +315,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_1_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_1_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_1">
             <span class="md-nav__icon md-icon"></span>
             
@@ -330,37 +330,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Trang chủ
-  
-
-    
-  </span>
-  
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="index.html" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../index.html" class="md-nav__link">
         
   
   
@@ -376,114 +349,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#gioi-thieu" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        📌 Giới thiệu
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#noi-dung-a-dich" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        📚 Nội dung đã dịch
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#quy-uoc-dich-thuat" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        🧠 Quy ước dịch thuật
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#nguon-goc-ban-quyen" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        🔗 Nguồn gốc &amp; Bản quyền
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#ong-gop" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        🤝 Đóng góp
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#tac-gia-ban-dich" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        👤 Tác giả bản dịch
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#loi-cam-on" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        ⭐ Lời cảm ơn
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#checklist" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Checklist
-      
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -496,7 +361,7 @@
   
   
     <li class="md-nav__item">
-      <a href="navigation.html" class="md-nav__link">
+      <a href="../navigation.html" class="md-nav__link">
         
   
   
@@ -524,7 +389,7 @@
   
   
     <li class="md-nav__item">
-      <a href="tags.html" class="md-nav__link">
+      <a href="../tags.html" class="md-nav__link">
         
   
   
@@ -552,7 +417,7 @@
   
   
     <li class="md-nav__item">
-      <a href="contrib.html" class="md-nav__link">
+      <a href="../contrib.html" class="md-nav__link">
         
   
   
@@ -580,7 +445,7 @@
   
   
     <li class="md-nav__item">
-      <a href="code_of_conduct.html" class="md-nav__link">
+      <a href="../code_of_conduct.html" class="md-nav__link">
         
   
   
@@ -608,7 +473,7 @@
   
   
     <li class="md-nav__item">
-      <a href="preview.html" class="md-nav__link">
+      <a href="../preview.html" class="md-nav__link">
         
   
   
@@ -737,7 +602,7 @@
   
   
     <li class="md-nav__item">
-      <a href="algebra/binary-exp.html" class="md-nav__link">
+      <a href="../algebra/binary-exp.html" class="md-nav__link">
         
   
   
@@ -765,7 +630,7 @@
   
   
     <li class="md-nav__item">
-      <a href="algebra/euclid-algorithm.html" class="md-nav__link">
+      <a href="../algebra/euclid-algorithm.html" class="md-nav__link">
         
   
   
@@ -793,7 +658,7 @@
   
   
     <li class="md-nav__item">
-      <a href="algebra/extended-euclid-algorithm.html" class="md-nav__link">
+      <a href="../algebra/extended-euclid-algorithm.html" class="md-nav__link">
         
   
   
@@ -821,7 +686,7 @@
   
   
     <li class="md-nav__item">
-      <a href="algebra/linear-diophantine-equation.html" class="md-nav__link">
+      <a href="../algebra/linear-diophantine-equation.html" class="md-nav__link">
         
   
   
@@ -849,7 +714,7 @@
   
   
     <li class="md-nav__item">
-      <a href="algebra/fibonacci-numbers.html" class="md-nav__link">
+      <a href="../algebra/fibonacci-numbers.html" class="md-nav__link">
         
   
   
@@ -932,7 +797,7 @@
   
   
     <li class="md-nav__item">
-      <a href="algebra/sieve-of-eratosthenes.html" class="md-nav__link">
+      <a href="../algebra/sieve-of-eratosthenes.html" class="md-nav__link">
         
   
   
@@ -960,7 +825,7 @@
   
   
     <li class="md-nav__item">
-      <a href="algebra/prime-sieve-linear.html" class="md-nav__link">
+      <a href="../algebra/prime-sieve-linear.html" class="md-nav__link">
         
   
   
@@ -988,7 +853,7 @@
   
   
     <li class="md-nav__item">
-      <a href="algebra/primality_tests.html" class="md-nav__link">
+      <a href="../algebra/primality_tests.html" class="md-nav__link">
         
   
   
@@ -1016,7 +881,7 @@
   
   
     <li class="md-nav__item">
-      <a href="algebra/factorization.html" class="md-nav__link">
+      <a href="../algebra/factorization.html" class="md-nav__link">
         
   
   
@@ -1099,7 +964,7 @@
   
   
     <li class="md-nav__item">
-      <a href="algebra/phi-function.html" class="md-nav__link">
+      <a href="../algebra/phi-function.html" class="md-nav__link">
         
   
   
@@ -1127,7 +992,7 @@
   
   
     <li class="md-nav__item">
-      <a href="algebra/divisors.html" class="md-nav__link">
+      <a href="../algebra/divisors.html" class="md-nav__link">
         
   
   
@@ -1210,7 +1075,7 @@
   
   
     <li class="md-nav__item">
-      <a href="algebra/module-inverse.html" class="md-nav__link">
+      <a href="../algebra/module-inverse.html" class="md-nav__link">
         
   
   
@@ -1238,7 +1103,7 @@
   
   
     <li class="md-nav__item">
-      <a href="algebra/linear_congruence_equation.html" class="md-nav__link">
+      <a href="../algebra/linear_congruence_equation.html" class="md-nav__link">
         
   
   
@@ -1266,7 +1131,7 @@
   
   
     <li class="md-nav__item">
-      <a href="algebra/chinese-remainder-theorem.html" class="md-nav__link">
+      <a href="../algebra/chinese-remainder-theorem.html" class="md-nav__link">
         
   
   
@@ -1294,7 +1159,7 @@
   
   
     <li class="md-nav__item">
-      <a href="algebra/garners-algorithm.html" class="md-nav__link">
+      <a href="../algebra/garners-algorithm.html" class="md-nav__link">
         
   
   
@@ -1322,7 +1187,7 @@
   
   
     <li class="md-nav__item">
-      <a href="algebra/factorial-modulo.html" class="md-nav__link">
+      <a href="../algebra/factorial-modulo.html" class="md-nav__link">
         
   
   
@@ -1350,7 +1215,7 @@
   
   
     <li class="md-nav__item">
-      <a href="algebra/discrete-log.html" class="md-nav__link">
+      <a href="../algebra/discrete-log.html" class="md-nav__link">
         
   
   
@@ -1378,7 +1243,7 @@
   
   
     <li class="md-nav__item">
-      <a href="algebra/primitive-root.html" class="md-nav__link">
+      <a href="../algebra/primitive-root.html" class="md-nav__link">
         
   
   
@@ -1406,7 +1271,7 @@
   
   
     <li class="md-nav__item">
-      <a href="algebra/discrete-root.html" class="md-nav__link">
+      <a href="../algebra/discrete-root.html" class="md-nav__link">
         
   
   
@@ -1434,7 +1299,7 @@
   
   
     <li class="md-nav__item">
-      <a href="algebra/montgomery_multiplication.html" class="md-nav__link">
+      <a href="../algebra/montgomery_multiplication.html" class="md-nav__link">
         
   
   
@@ -1517,7 +1382,7 @@
   
   
     <li class="md-nav__item">
-      <a href="algebra/balanced-ternary.html" class="md-nav__link">
+      <a href="../algebra/balanced-ternary.html" class="md-nav__link">
         
   
   
@@ -1545,7 +1410,7 @@
   
   
     <li class="md-nav__item">
-      <a href="algebra/gray-code.html" class="md-nav__link">
+      <a href="../algebra/gray-code.html" class="md-nav__link">
         
   
   
@@ -1628,7 +1493,7 @@
   
   
     <li class="md-nav__item">
-      <a href="algebra/bit-manipulation.html" class="md-nav__link">
+      <a href="../algebra/bit-manipulation.html" class="md-nav__link">
         
   
   
@@ -1656,7 +1521,7 @@
   
   
     <li class="md-nav__item">
-      <a href="algebra/all-submasks.html" class="md-nav__link">
+      <a href="../algebra/all-submasks.html" class="md-nav__link">
         
   
   
@@ -1684,7 +1549,7 @@
   
   
     <li class="md-nav__item">
-      <a href="algebra/big-integer.html" class="md-nav__link">
+      <a href="../algebra/big-integer.html" class="md-nav__link">
         
   
   
@@ -1712,7 +1577,7 @@
   
   
     <li class="md-nav__item">
-      <a href="algebra/fft.html" class="md-nav__link">
+      <a href="../algebra/fft.html" class="md-nav__link">
         
   
   
@@ -1740,7 +1605,7 @@
   
   
     <li class="md-nav__item">
-      <a href="algebra/polynomial.html" class="md-nav__link">
+      <a href="../algebra/polynomial.html" class="md-nav__link">
         
   
   
@@ -1768,7 +1633,7 @@
   
   
     <li class="md-nav__item">
-      <a href="algebra/continued-fractions.html" class="md-nav__link">
+      <a href="../algebra/continued-fractions.html" class="md-nav__link">
         
   
   
@@ -1796,7 +1661,7 @@
   
   
     <li class="md-nav__item">
-      <a href="algebra/factoring-exp.html" class="md-nav__link">
+      <a href="../algebra/factoring-exp.html" class="md-nav__link">
         
   
   
@@ -1933,7 +1798,7 @@
   
   
     <li class="md-nav__item">
-      <a href="data_structures/stack_queue_modification.html" class="md-nav__link">
+      <a href="../data_structures/stack_queue_modification.html" class="md-nav__link">
         
   
   
@@ -1961,7 +1826,7 @@
   
   
     <li class="md-nav__item">
-      <a href="data_structures/sparse-table.html" class="md-nav__link">
+      <a href="../data_structures/sparse-table.html" class="md-nav__link">
         
   
   
@@ -2044,7 +1909,7 @@
   
   
     <li class="md-nav__item">
-      <a href="data_structures/disjoint_set_union.html" class="md-nav__link">
+      <a href="../data_structures/disjoint_set_union.html" class="md-nav__link">
         
   
   
@@ -2072,7 +1937,7 @@
   
   
     <li class="md-nav__item">
-      <a href="data_structures/fenwick.html" class="md-nav__link">
+      <a href="../data_structures/fenwick.html" class="md-nav__link">
         
   
   
@@ -2100,7 +1965,7 @@
   
   
     <li class="md-nav__item">
-      <a href="data_structures/sqrt_decomposition.html" class="md-nav__link">
+      <a href="../data_structures/sqrt_decomposition.html" class="md-nav__link">
         
   
   
@@ -2128,7 +1993,7 @@
   
   
     <li class="md-nav__item">
-      <a href="data_structures/segment_tree.html" class="md-nav__link">
+      <a href="../data_structures/segment_tree.html" class="md-nav__link">
         
   
   
@@ -2156,7 +2021,7 @@
   
   
     <li class="md-nav__item">
-      <a href="data_structures/treap.html" class="md-nav__link">
+      <a href="../data_structures/treap.html" class="md-nav__link">
         
   
   
@@ -2184,7 +2049,7 @@
   
   
     <li class="md-nav__item">
-      <a href="data_structures/sqrt-tree.html" class="md-nav__link">
+      <a href="../data_structures/sqrt-tree.html" class="md-nav__link">
         
   
   
@@ -2212,7 +2077,7 @@
   
   
     <li class="md-nav__item">
-      <a href="data_structures/randomized_heap.html" class="md-nav__link">
+      <a href="../data_structures/randomized_heap.html" class="md-nav__link">
         
   
   
@@ -2295,7 +2160,7 @@
   
   
     <li class="md-nav__item">
-      <a href="data_structures/deleting_in_log_n.html" class="md-nav__link">
+      <a href="../data_structures/deleting_in_log_n.html" class="md-nav__link">
         
   
   
@@ -2385,7 +2250,7 @@
   
   
     <li class="md-nav__item">
-      <a href="dynamic_programming/intro-to-dp.html" class="md-nav__link">
+      <a href="../dynamic_programming/intro-to-dp.html" class="md-nav__link">
         
   
   
@@ -2413,7 +2278,7 @@
   
   
     <li class="md-nav__item">
-      <a href="dynamic_programming/knapsack.html" class="md-nav__link">
+      <a href="../dynamic_programming/knapsack.html" class="md-nav__link">
         
   
   
@@ -2441,7 +2306,7 @@
   
   
     <li class="md-nav__item">
-      <a href="dynamic_programming/longest_increasing_subsequence.html" class="md-nav__link">
+      <a href="../dynamic_programming/longest_increasing_subsequence.html" class="md-nav__link">
         
   
   
@@ -2516,7 +2381,7 @@
   
   
     <li class="md-nav__item">
-      <a href="dynamic_programming/divide-and-conquer-dp.html" class="md-nav__link">
+      <a href="../dynamic_programming/divide-and-conquer-dp.html" class="md-nav__link">
         
   
   
@@ -2544,7 +2409,7 @@
   
   
     <li class="md-nav__item">
-      <a href="dynamic_programming/knuth-optimization.html" class="md-nav__link">
+      <a href="../dynamic_programming/knuth-optimization.html" class="md-nav__link">
         
   
   
@@ -2627,7 +2492,7 @@
   
   
     <li class="md-nav__item">
-      <a href="dynamic_programming/profile-dynamics.html" class="md-nav__link">
+      <a href="../dynamic_programming/profile-dynamics.html" class="md-nav__link">
         
   
   
@@ -2655,7 +2520,7 @@
   
   
     <li class="md-nav__item">
-      <a href="dynamic_programming/zero_matrix.html" class="md-nav__link">
+      <a href="../dynamic_programming/zero_matrix.html" class="md-nav__link">
         
   
   
@@ -2695,18 +2560,20 @@
       
   
   
+    
   
   
+  
     
     
     
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" checked>
         
           
           <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
@@ -2727,7 +2594,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_5">
             <span class="md-nav__icon md-icon"></span>
             
@@ -2792,7 +2659,7 @@
   
   
     <li class="md-nav__item">
-      <a href="string/string-hashing.html" class="md-nav__link">
+      <a href="string-hashing.html" class="md-nav__link">
         
   
   
@@ -2820,7 +2687,7 @@
   
   
     <li class="md-nav__item">
-      <a href="string/rabin-karp.html" class="md-nav__link">
+      <a href="rabin-karp.html" class="md-nav__link">
         
   
   
@@ -2848,7 +2715,7 @@
   
   
     <li class="md-nav__item">
-      <a href="string/prefix-function.html" class="md-nav__link">
+      <a href="prefix-function.html" class="md-nav__link">
         
   
   
@@ -2876,7 +2743,7 @@
   
   
     <li class="md-nav__item">
-      <a href="string/z-function.html" class="md-nav__link">
+      <a href="z-function.html" class="md-nav__link">
         
   
   
@@ -2904,7 +2771,7 @@
   
   
     <li class="md-nav__item">
-      <a href="string/suffix-array.html" class="md-nav__link">
+      <a href="suffix-array.html" class="md-nav__link">
         
   
   
@@ -2932,7 +2799,7 @@
   
   
     <li class="md-nav__item">
-      <a href="string/aho_corasick.html" class="md-nav__link">
+      <a href="aho_corasick.html" class="md-nav__link">
         
   
   
@@ -3015,7 +2882,7 @@
   
   
     <li class="md-nav__item">
-      <a href="string/suffix-tree-ukkonen.html" class="md-nav__link">
+      <a href="suffix-tree-ukkonen.html" class="md-nav__link">
         
   
   
@@ -3043,7 +2910,7 @@
   
   
     <li class="md-nav__item">
-      <a href="string/suffix-automaton.html" class="md-nav__link">
+      <a href="suffix-automaton.html" class="md-nav__link">
         
   
   
@@ -3071,7 +2938,7 @@
   
   
     <li class="md-nav__item">
-      <a href="string/lyndon_factorization.html" class="md-nav__link">
+      <a href="lyndon_factorization.html" class="md-nav__link">
         
   
   
@@ -3104,18 +2971,20 @@
                 
   
   
+    
   
   
+  
     
     
     
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_3" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_3" checked>
         
           
           <label class="md-nav__link" for="__nav_5_3" id="__nav_5_3_label" tabindex="0">
@@ -3136,7 +3005,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_3_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_3_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_5_3">
             <span class="md-nav__icon md-icon"></span>
             
@@ -3151,10 +3020,37 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="string/expression_parsing.html" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Phân tích biểu thức
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="expression_parsing.html" class="md-nav__link md-nav__link--active">
         
   
   
@@ -3170,6 +3066,70 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#reverse-polish-notation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ký pháp Ba Lan ngược (Reverse Polish notation)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#parsing-of-simple-expressions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phân tích các biểu thức đơn giản (Parsing of simple expressions)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#unary-operators" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Toán tử một ngôi (Unary operators)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#right-associativity" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Kết hợp phải (Right-associativity)
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -3182,7 +3142,7 @@
   
   
     <li class="md-nav__item">
-      <a href="string/manacher.html" class="md-nav__link">
+      <a href="manacher.html" class="md-nav__link">
         
   
   
@@ -3210,7 +3170,7 @@
   
   
     <li class="md-nav__item">
-      <a href="string/main_lorentz.html" class="md-nav__link">
+      <a href="main_lorentz.html" class="md-nav__link">
         
   
   
@@ -3347,7 +3307,7 @@
   
   
     <li class="md-nav__item">
-      <a href="linear_algebra/linear-system-gauss.html" class="md-nav__link">
+      <a href="../linear_algebra/linear-system-gauss.html" class="md-nav__link">
         
   
   
@@ -3375,7 +3335,7 @@
   
   
     <li class="md-nav__item">
-      <a href="linear_algebra/determinant-gauss.html" class="md-nav__link">
+      <a href="../linear_algebra/determinant-gauss.html" class="md-nav__link">
         
   
   
@@ -3403,7 +3363,7 @@
   
   
     <li class="md-nav__item">
-      <a href="linear_algebra/determinant-kraut.html" class="md-nav__link">
+      <a href="../linear_algebra/determinant-kraut.html" class="md-nav__link">
         
   
   
@@ -3431,7 +3391,7 @@
   
   
     <li class="md-nav__item">
-      <a href="linear_algebra/rank-matrix.html" class="md-nav__link">
+      <a href="../linear_algebra/rank-matrix.html" class="md-nav__link">
         
   
   
@@ -3568,7 +3528,7 @@
   
   
     <li class="md-nav__item">
-      <a href="algebra/factorial-divisors.html" class="md-nav__link">
+      <a href="../algebra/factorial-divisors.html" class="md-nav__link">
         
   
   
@@ -3596,7 +3556,7 @@
   
   
     <li class="md-nav__item">
-      <a href="combinatorics/binomial-coefficients.html" class="md-nav__link">
+      <a href="../combinatorics/binomial-coefficients.html" class="md-nav__link">
         
   
   
@@ -3624,7 +3584,7 @@
   
   
     <li class="md-nav__item">
-      <a href="combinatorics/catalan-numbers.html" class="md-nav__link">
+      <a href="../combinatorics/catalan-numbers.html" class="md-nav__link">
         
   
   
@@ -3707,7 +3667,7 @@
   
   
     <li class="md-nav__item">
-      <a href="combinatorics/inclusion-exclusion.html" class="md-nav__link">
+      <a href="../combinatorics/inclusion-exclusion.html" class="md-nav__link">
         
   
   
@@ -3735,7 +3695,7 @@
   
   
     <li class="md-nav__item">
-      <a href="combinatorics/burnside.html" class="md-nav__link">
+      <a href="../combinatorics/burnside.html" class="md-nav__link">
         
   
   
@@ -3763,7 +3723,7 @@
   
   
     <li class="md-nav__item">
-      <a href="combinatorics/stars_and_bars.html" class="md-nav__link">
+      <a href="../combinatorics/stars_and_bars.html" class="md-nav__link">
         
   
   
@@ -3791,7 +3751,7 @@
   
   
     <li class="md-nav__item">
-      <a href="combinatorics/generating_combinations.html" class="md-nav__link">
+      <a href="../combinatorics/generating_combinations.html" class="md-nav__link">
         
   
   
@@ -3874,7 +3834,7 @@
   
   
     <li class="md-nav__item">
-      <a href="combinatorics/bishops-on-chessboard.html" class="md-nav__link">
+      <a href="../combinatorics/bishops-on-chessboard.html" class="md-nav__link">
         
   
   
@@ -3902,7 +3862,7 @@
   
   
     <li class="md-nav__item">
-      <a href="combinatorics/bracket_sequences.html" class="md-nav__link">
+      <a href="../combinatorics/bracket_sequences.html" class="md-nav__link">
         
   
   
@@ -3930,7 +3890,7 @@
   
   
     <li class="md-nav__item">
-      <a href="combinatorics/counting_labeled_graphs.html" class="md-nav__link">
+      <a href="../combinatorics/counting_labeled_graphs.html" class="md-nav__link">
         
   
   
@@ -4067,7 +4027,7 @@
   
   
     <li class="md-nav__item">
-      <a href="num_methods/binary_search.html" class="md-nav__link">
+      <a href="../num_methods/binary_search.html" class="md-nav__link">
         
   
   
@@ -4095,7 +4055,7 @@
   
   
     <li class="md-nav__item">
-      <a href="num_methods/ternary_search.html" class="md-nav__link">
+      <a href="../num_methods/ternary_search.html" class="md-nav__link">
         
   
   
@@ -4123,7 +4083,7 @@
   
   
     <li class="md-nav__item">
-      <a href="num_methods/roots_newton.html" class="md-nav__link">
+      <a href="../num_methods/roots_newton.html" class="md-nav__link">
         
   
   
@@ -4151,7 +4111,7 @@
   
   
     <li class="md-nav__item">
-      <a href="num_methods/simulated_annealing.html" class="md-nav__link">
+      <a href="../num_methods/simulated_annealing.html" class="md-nav__link">
         
   
   
@@ -4234,7 +4194,7 @@
   
   
     <li class="md-nav__item">
-      <a href="num_methods/simpson-integration.html" class="md-nav__link">
+      <a href="../num_methods/simpson-integration.html" class="md-nav__link">
         
   
   
@@ -4371,7 +4331,7 @@
   
   
     <li class="md-nav__item">
-      <a href="geometry/basic-geometry.html" class="md-nav__link">
+      <a href="../geometry/basic-geometry.html" class="md-nav__link">
         
   
   
@@ -4399,7 +4359,7 @@
   
   
     <li class="md-nav__item">
-      <a href="geometry/segment-to-line.html" class="md-nav__link">
+      <a href="../geometry/segment-to-line.html" class="md-nav__link">
         
   
   
@@ -4427,7 +4387,7 @@
   
   
     <li class="md-nav__item">
-      <a href="geometry/lines-intersection.html" class="md-nav__link">
+      <a href="../geometry/lines-intersection.html" class="md-nav__link">
         
   
   
@@ -4455,7 +4415,7 @@
   
   
     <li class="md-nav__item">
-      <a href="geometry/check-segments-intersection.html" class="md-nav__link">
+      <a href="../geometry/check-segments-intersection.html" class="md-nav__link">
         
   
   
@@ -4483,7 +4443,7 @@
   
   
     <li class="md-nav__item">
-      <a href="geometry/segments-intersection.html" class="md-nav__link">
+      <a href="../geometry/segments-intersection.html" class="md-nav__link">
         
   
   
@@ -4511,7 +4471,7 @@
   
   
     <li class="md-nav__item">
-      <a href="geometry/circle-line-intersection.html" class="md-nav__link">
+      <a href="../geometry/circle-line-intersection.html" class="md-nav__link">
         
   
   
@@ -4539,7 +4499,7 @@
   
   
     <li class="md-nav__item">
-      <a href="geometry/circle-circle-intersection.html" class="md-nav__link">
+      <a href="../geometry/circle-circle-intersection.html" class="md-nav__link">
         
   
   
@@ -4567,7 +4527,7 @@
   
   
     <li class="md-nav__item">
-      <a href="geometry/tangents-to-two-circles.html" class="md-nav__link">
+      <a href="../geometry/tangents-to-two-circles.html" class="md-nav__link">
         
   
   
@@ -4595,7 +4555,7 @@
   
   
     <li class="md-nav__item">
-      <a href="geometry/length-of-segments-union.html" class="md-nav__link">
+      <a href="../geometry/length-of-segments-union.html" class="md-nav__link">
         
   
   
@@ -4678,7 +4638,7 @@
   
   
     <li class="md-nav__item">
-      <a href="geometry/oriented-triangle-area.html" class="md-nav__link">
+      <a href="../geometry/oriented-triangle-area.html" class="md-nav__link">
         
   
   
@@ -4706,7 +4666,7 @@
   
   
     <li class="md-nav__item">
-      <a href="geometry/area-of-simple-polygon.html" class="md-nav__link">
+      <a href="../geometry/area-of-simple-polygon.html" class="md-nav__link">
         
   
   
@@ -4734,7 +4694,7 @@
   
   
     <li class="md-nav__item">
-      <a href="geometry/point-in-convex-polygon.html" class="md-nav__link">
+      <a href="../geometry/point-in-convex-polygon.html" class="md-nav__link">
         
   
   
@@ -4762,7 +4722,7 @@
   
   
     <li class="md-nav__item">
-      <a href="geometry/minkowski.html" class="md-nav__link">
+      <a href="../geometry/minkowski.html" class="md-nav__link">
         
   
   
@@ -4790,7 +4750,7 @@
   
   
     <li class="md-nav__item">
-      <a href="geometry/picks-theorem.html" class="md-nav__link">
+      <a href="../geometry/picks-theorem.html" class="md-nav__link">
         
   
   
@@ -4818,7 +4778,7 @@
   
   
     <li class="md-nav__item">
-      <a href="geometry/lattice-points.html" class="md-nav__link">
+      <a href="../geometry/lattice-points.html" class="md-nav__link">
         
   
   
@@ -4901,7 +4861,7 @@
   
   
     <li class="md-nav__item">
-      <a href="geometry/convex-hull.html" class="md-nav__link">
+      <a href="../geometry/convex-hull.html" class="md-nav__link">
         
   
   
@@ -4929,7 +4889,7 @@
   
   
     <li class="md-nav__item">
-      <a href="geometry/convex_hull_trick.html" class="md-nav__link">
+      <a href="../geometry/convex_hull_trick.html" class="md-nav__link">
         
   
   
@@ -5012,7 +4972,7 @@
   
   
     <li class="md-nav__item">
-      <a href="geometry/intersecting_segments.html" class="md-nav__link">
+      <a href="../geometry/intersecting_segments.html" class="md-nav__link">
         
   
   
@@ -5095,7 +5055,7 @@
   
   
     <li class="md-nav__item">
-      <a href="geometry/planar.html" class="md-nav__link">
+      <a href="../geometry/planar.html" class="md-nav__link">
         
   
   
@@ -5123,7 +5083,7 @@
   
   
     <li class="md-nav__item">
-      <a href="geometry/point-location.html" class="md-nav__link">
+      <a href="../geometry/point-location.html" class="md-nav__link">
         
   
   
@@ -5206,7 +5166,7 @@
   
   
     <li class="md-nav__item">
-      <a href="geometry/nearest_points.html" class="md-nav__link">
+      <a href="../geometry/nearest_points.html" class="md-nav__link">
         
   
   
@@ -5234,7 +5194,7 @@
   
   
     <li class="md-nav__item">
-      <a href="geometry/delaunay.html" class="md-nav__link">
+      <a href="../geometry/delaunay.html" class="md-nav__link">
         
   
   
@@ -5262,7 +5222,7 @@
   
   
     <li class="md-nav__item">
-      <a href="geometry/vertical_decomposition.html" class="md-nav__link">
+      <a href="../geometry/vertical_decomposition.html" class="md-nav__link">
         
   
   
@@ -5290,7 +5250,7 @@
   
   
     <li class="md-nav__item">
-      <a href="geometry/halfplane-intersection.html" class="md-nav__link">
+      <a href="../geometry/halfplane-intersection.html" class="md-nav__link">
         
   
   
@@ -5318,7 +5278,7 @@
   
   
     <li class="md-nav__item">
-      <a href="geometry/manhattan-distance.html" class="md-nav__link">
+      <a href="../geometry/manhattan-distance.html" class="md-nav__link">
         
   
   
@@ -5346,7 +5306,7 @@
   
   
     <li class="md-nav__item">
-      <a href="geometry/enclosing-circle.html" class="md-nav__link">
+      <a href="../geometry/enclosing-circle.html" class="md-nav__link">
         
   
   
@@ -5483,7 +5443,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/breadth-first-search.html" class="md-nav__link">
+      <a href="../graph/breadth-first-search.html" class="md-nav__link">
         
   
   
@@ -5511,7 +5471,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/depth-first-search.html" class="md-nav__link">
+      <a href="../graph/depth-first-search.html" class="md-nav__link">
         
   
   
@@ -5594,7 +5554,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/search-for-connected-components.html" class="md-nav__link">
+      <a href="../graph/search-for-connected-components.html" class="md-nav__link">
         
   
   
@@ -5622,7 +5582,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/bridge-searching.html" class="md-nav__link">
+      <a href="../graph/bridge-searching.html" class="md-nav__link">
         
   
   
@@ -5650,7 +5610,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/bridge-searching-online.html" class="md-nav__link">
+      <a href="../graph/bridge-searching-online.html" class="md-nav__link">
         
   
   
@@ -5678,7 +5638,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/cutpoints.html" class="md-nav__link">
+      <a href="../graph/cutpoints.html" class="md-nav__link">
         
   
   
@@ -5706,7 +5666,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/strongly-connected-components.html" class="md-nav__link">
+      <a href="../graph/strongly-connected-components.html" class="md-nav__link">
         
   
   
@@ -5734,7 +5694,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/strong-orientation.html" class="md-nav__link">
+      <a href="../graph/strong-orientation.html" class="md-nav__link">
         
   
   
@@ -5817,7 +5777,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/dijkstra.html" class="md-nav__link">
+      <a href="../graph/dijkstra.html" class="md-nav__link">
         
   
   
@@ -5845,7 +5805,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/dijkstra_sparse.html" class="md-nav__link">
+      <a href="../graph/dijkstra_sparse.html" class="md-nav__link">
         
   
   
@@ -5873,7 +5833,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/bellman_ford.html" class="md-nav__link">
+      <a href="../graph/bellman_ford.html" class="md-nav__link">
         
   
   
@@ -5901,7 +5861,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/01_bfs.html" class="md-nav__link">
+      <a href="../graph/01_bfs.html" class="md-nav__link">
         
   
   
@@ -5929,7 +5889,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/desopo_pape.html" class="md-nav__link">
+      <a href="../graph/desopo_pape.html" class="md-nav__link">
         
   
   
@@ -6012,7 +5972,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/all-pair-shortest-path-floyd-warshall.html" class="md-nav__link">
+      <a href="../graph/all-pair-shortest-path-floyd-warshall.html" class="md-nav__link">
         
   
   
@@ -6040,7 +6000,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/fixed_length_paths.html" class="md-nav__link">
+      <a href="../graph/fixed_length_paths.html" class="md-nav__link">
         
   
   
@@ -6123,7 +6083,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/mst_prim.html" class="md-nav__link">
+      <a href="../graph/mst_prim.html" class="md-nav__link">
         
   
   
@@ -6151,7 +6111,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/mst_kruskal.html" class="md-nav__link">
+      <a href="../graph/mst_kruskal.html" class="md-nav__link">
         
   
   
@@ -6179,7 +6139,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/mst_kruskal_with_dsu.html" class="md-nav__link">
+      <a href="../graph/mst_kruskal_with_dsu.html" class="md-nav__link">
         
   
   
@@ -6207,7 +6167,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/second_best_mst.html" class="md-nav__link">
+      <a href="../graph/second_best_mst.html" class="md-nav__link">
         
   
   
@@ -6235,7 +6195,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/kirchhoff-theorem.html" class="md-nav__link">
+      <a href="../graph/kirchhoff-theorem.html" class="md-nav__link">
         
   
   
@@ -6263,7 +6223,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/pruefer_code.html" class="md-nav__link">
+      <a href="../graph/pruefer_code.html" class="md-nav__link">
         
   
   
@@ -6346,7 +6306,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/finding-cycle.html" class="md-nav__link">
+      <a href="../graph/finding-cycle.html" class="md-nav__link">
         
   
   
@@ -6374,7 +6334,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/finding-negative-cycle-in-graph.html" class="md-nav__link">
+      <a href="../graph/finding-negative-cycle-in-graph.html" class="md-nav__link">
         
   
   
@@ -6402,7 +6362,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/euler_path.html" class="md-nav__link">
+      <a href="../graph/euler_path.html" class="md-nav__link">
         
   
   
@@ -6485,7 +6445,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/lca.html" class="md-nav__link">
+      <a href="../graph/lca.html" class="md-nav__link">
         
   
   
@@ -6513,7 +6473,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/lca_binary_lifting.html" class="md-nav__link">
+      <a href="../graph/lca_binary_lifting.html" class="md-nav__link">
         
   
   
@@ -6541,7 +6501,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/lca_farachcoltonbender.html" class="md-nav__link">
+      <a href="../graph/lca_farachcoltonbender.html" class="md-nav__link">
         
   
   
@@ -6569,7 +6529,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/rmq_linear.html" class="md-nav__link">
+      <a href="../graph/rmq_linear.html" class="md-nav__link">
         
   
   
@@ -6597,7 +6557,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/lca_tarjan.html" class="md-nav__link">
+      <a href="../graph/lca_tarjan.html" class="md-nav__link">
         
   
   
@@ -6680,7 +6640,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/edmonds_karp.html" class="md-nav__link">
+      <a href="../graph/edmonds_karp.html" class="md-nav__link">
         
   
   
@@ -6708,7 +6668,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/push-relabel.html" class="md-nav__link">
+      <a href="../graph/push-relabel.html" class="md-nav__link">
         
   
   
@@ -6736,7 +6696,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/push-relabel-faster.html" class="md-nav__link">
+      <a href="../graph/push-relabel-faster.html" class="md-nav__link">
         
   
   
@@ -6764,7 +6724,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/dinic.html" class="md-nav__link">
+      <a href="../graph/dinic.html" class="md-nav__link">
         
   
   
@@ -6792,7 +6752,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/mpm.html" class="md-nav__link">
+      <a href="../graph/mpm.html" class="md-nav__link">
         
   
   
@@ -6820,7 +6780,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/flow_with_demands.html" class="md-nav__link">
+      <a href="../graph/flow_with_demands.html" class="md-nav__link">
         
   
   
@@ -6848,7 +6808,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/min_cost_flow.html" class="md-nav__link">
+      <a href="../graph/min_cost_flow.html" class="md-nav__link">
         
   
   
@@ -6876,7 +6836,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/Assignment-problem-min-flow.html" class="md-nav__link">
+      <a href="../graph/Assignment-problem-min-flow.html" class="md-nav__link">
         
   
   
@@ -6959,7 +6919,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/bipartite-check.html" class="md-nav__link">
+      <a href="../graph/bipartite-check.html" class="md-nav__link">
         
   
   
@@ -6987,7 +6947,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/kuhn_maximum_bipartite_matching.html" class="md-nav__link">
+      <a href="../graph/kuhn_maximum_bipartite_matching.html" class="md-nav__link">
         
   
   
@@ -7015,7 +6975,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/hungarian-algorithm.html" class="md-nav__link">
+      <a href="../graph/hungarian-algorithm.html" class="md-nav__link">
         
   
   
@@ -7098,7 +7058,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/topological-sort.html" class="md-nav__link">
+      <a href="../graph/topological-sort.html" class="md-nav__link">
         
   
   
@@ -7126,7 +7086,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/edge_vertex_connectivity.html" class="md-nav__link">
+      <a href="../graph/edge_vertex_connectivity.html" class="md-nav__link">
         
   
   
@@ -7154,7 +7114,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/tree_painting.html" class="md-nav__link">
+      <a href="../graph/tree_painting.html" class="md-nav__link">
         
   
   
@@ -7182,7 +7142,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/2SAT.html" class="md-nav__link">
+      <a href="../graph/2SAT.html" class="md-nav__link">
         
   
   
@@ -7210,7 +7170,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/hld.html" class="md-nav__link">
+      <a href="../graph/hld.html" class="md-nav__link">
         
   
   
@@ -7347,7 +7307,7 @@
   
   
     <li class="md-nav__item">
-      <a href="sequences/rmq.html" class="md-nav__link">
+      <a href="../sequences/rmq.html" class="md-nav__link">
         
   
   
@@ -7375,7 +7335,7 @@
   
   
     <li class="md-nav__item">
-      <a href="others/maximum_average_segment.html" class="md-nav__link">
+      <a href="../others/maximum_average_segment.html" class="md-nav__link">
         
   
   
@@ -7403,7 +7363,7 @@
   
   
     <li class="md-nav__item">
-      <a href="sequences/k-th.html" class="md-nav__link">
+      <a href="../sequences/k-th.html" class="md-nav__link">
         
   
   
@@ -7431,7 +7391,7 @@
   
   
     <li class="md-nav__item">
-      <a href="sequences/mex.html" class="md-nav__link">
+      <a href="../sequences/mex.html" class="md-nav__link">
         
   
   
@@ -7514,7 +7474,7 @@
   
   
     <li class="md-nav__item">
-      <a href="game_theory/games_on_graphs.html" class="md-nav__link">
+      <a href="../game_theory/games_on_graphs.html" class="md-nav__link">
         
   
   
@@ -7542,7 +7502,7 @@
   
   
     <li class="md-nav__item">
-      <a href="game_theory/sprague-grundy-nim.html" class="md-nav__link">
+      <a href="../game_theory/sprague-grundy-nim.html" class="md-nav__link">
         
   
   
@@ -7625,7 +7585,7 @@
   
   
     <li class="md-nav__item">
-      <a href="schedules/schedule_one_machine.html" class="md-nav__link">
+      <a href="../schedules/schedule_one_machine.html" class="md-nav__link">
         
   
   
@@ -7653,7 +7613,7 @@
   
   
     <li class="md-nav__item">
-      <a href="schedules/schedule_two_machines.html" class="md-nav__link">
+      <a href="../schedules/schedule_two_machines.html" class="md-nav__link">
         
   
   
@@ -7681,7 +7641,7 @@
   
   
     <li class="md-nav__item">
-      <a href="schedules/schedule-with-completion-duration.html" class="md-nav__link">
+      <a href="../schedules/schedule-with-completion-duration.html" class="md-nav__link">
         
   
   
@@ -7764,7 +7724,7 @@
   
   
     <li class="md-nav__item">
-      <a href="others/tortoise_and_hare.html" class="md-nav__link">
+      <a href="../others/tortoise_and_hare.html" class="md-nav__link">
         
   
   
@@ -7792,7 +7752,7 @@
   
   
     <li class="md-nav__item">
-      <a href="others/josephus_problem.html" class="md-nav__link">
+      <a href="../others/josephus_problem.html" class="md-nav__link">
         
   
   
@@ -7820,7 +7780,7 @@
   
   
     <li class="md-nav__item">
-      <a href="others/15-puzzle.html" class="md-nav__link">
+      <a href="../others/15-puzzle.html" class="md-nav__link">
         
   
   
@@ -7848,7 +7808,7 @@
   
   
     <li class="md-nav__item">
-      <a href="others/stern_brocot_tree_farey_sequences.html" class="md-nav__link">
+      <a href="../others/stern_brocot_tree_farey_sequences.html" class="md-nav__link">
         
   
   
@@ -7900,9 +7860,9 @@
                   <script type="text/javascript">
   window.onload = function () {
     const newIssueURL = "https://github.com/cp-algorithms/cp-algorithms/issues/new";
-    const issueTitle = "Problem on article " + "Trang ch\u1ee7";
+    const issueTitle = "Problem on article " + "Ph\u00e2n t\u00edch bi\u1ec3u th\u1ee9c";
   const issueBody = `
-**Article:** [`+ "Trang ch\u1ee7" + `](${window.location.href})
+**Article:** [`+ "Ph\u00e2n t\u00edch bi\u1ec3u th\u1ee9c" + `](${window.location.href})
 
 **Problem:**
 `;
@@ -7914,7 +7874,7 @@
 </script>
 
 
-<a href="https://github.com/deanqkhanhcoder/cp-algorithms-vi/edit/main/src/index.md" title="Edit this page" class="md-content__button md-icon">
+<a href="https://github.com/deanqkhanhcoder/cp-algorithms-vi/edit/main/src/string/expression_parsing.md" title="Edit this page" class="md-content__button md-icon">
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75z"/></svg>
 </a>
 <a id="report_issue_a" href="" title="Report a problem" class="md-content__button md-icon">
@@ -7924,93 +7884,239 @@
 
 <ul class="metadata page-metadata" data-bi-name="page info" lang="en-us" dir="ltr">
   
+  
+  <a href="../tags.html#tag:translated" class="md-tag">
+    Translated
+  </a>
+  
+  
 
+  
+  
+  
+  
+  <a href="https://e-maxx.ru/algo/expressions_parsing" class="md-tag">From: e-maxx.ru</a>
+  
   
 </ul>
 
 
-<h1 id="cp-algorithms-vietnamese-translation">CP-Algorithms (Vietnamese Translation)<a class="headerlink" href="#cp-algorithms-vietnamese-translation" title="Permanent link">&para;</a></h1>
-<blockquote>
-<p>📘 Bản dịch tiếng Việt của <strong>cp-algorithms</strong> – tài nguyên thuật toán kinh điển cho Competitive Programming.</p>
-</blockquote>
-<hr />
-<h2 id="gioi-thieu">📌 Giới thiệu<a class="headerlink" href="#gioi-thieu" title="Permanent link">&para;</a></h2>
-<p>Repository này là <strong>bản dịch tiếng Việt</strong> của dự án mã nguồn mở nổi tiếng<br />
-👉 <strong>https://github.com/cp-algorithms/cp-algorithms</strong></p>
-<p>Dự án gốc cung cấp các bài viết chất lượng cao về:
-- Thuật toán (Algorithms)
-- Cấu trúc dữ liệu (Data Structures)
-- Quy hoạch động, đồ thị, hình học, số học, v.v.
-- Ứng dụng thực tế trong <strong>Competitive Programming</strong></p>
-<p>🎯 <strong>Mục tiêu của repo này</strong>:
-- Giúp người học Việt Nam tiếp cận kiến thức CP dễ dàng hơn
-- Giữ nguyên <strong>thuật ngữ tiếng Anh quan trọng</strong> (DP, BFS, Segment Tree, …)
-- Dịch sát nghĩa, ưu tiên <strong>tính chính xác học thuật</strong></p>
-<hr />
-<h2 id="noi-dung-a-dich">📚 Nội dung đã dịch<a class="headerlink" href="#noi-dung-a-dich" title="Permanent link">&para;</a></h2>
-<ul>
-<li>Đại số (Algebra)</li>
-<li>Cấu trúc dữ liệu (Data Structures)</li>
-<li>Quy hoạch động (Dynamic Programming)</li>
-<li>Đồ thị (Graph)</li>
-<li>Hình học (Geometry)</li>
-<li>Game Theory</li>
-<li>Tổ hợp (Combinatorics)</li>
-<li>…</li>
-</ul>
-<p>📈 <strong>Tiến độ</strong>: HOÀN THÀNH</p>
-<hr />
-<h2 id="quy-uoc-dich-thuat">🧠 Quy ước dịch thuật<a class="headerlink" href="#quy-uoc-dich-thuat" title="Permanent link">&para;</a></h2>
-<ul>
-<li>❗ <strong>KHÔNG dịch</strong> các thuật ngữ CP phổ biến:</li>
-<li>DP, BFS, DFS, Fenwick Tree, Segment Tree, Bitmask, v.v.</li>
-<li>Thuật ngữ tiếng Anh sẽ được:</li>
-<li>Giữ nguyên</li>
-<li>Hoặc chú thích tiếng Việt trong lần xuất hiện đầu tiên</li>
-<li>Công thức, code, độ phức tạp được <strong>giữ nguyên 100%</strong></li>
-</ul>
-<hr />
-<h2 id="nguon-goc-ban-quyen">🔗 Nguồn gốc &amp; Bản quyền<a class="headerlink" href="#nguon-goc-ban-quyen" title="Permanent link">&para;</a></h2>
-<ul>
-<li>📌 Dự án gốc: https://github.com/cp-algorithms/cp-algorithms</li>
-<li>📌 Nội dung ban đầu được dịch từ: https://e-maxx.ru/algo</li>
-<li>Repository này <strong>KHÔNG phải repo chính thức</strong></li>
-<li>Mọi công lao học thuật thuộc về <strong>đội ngũ cp-algorithms</strong></li>
-</ul>
-<p>📄 Việc dịch được thực hiện với mục đích <strong>giáo dục – phi thương mại</strong></p>
-<hr />
-<h2 id="ong-gop">🤝 Đóng góp<a class="headerlink" href="#ong-gop" title="Permanent link">&para;</a></h2>
-<p>Nếu bạn muốn:
-- Sửa lỗi dịch
-- Chuẩn hóa thuật ngữ
-- Dịch thêm bài mới</p>
-<p>👉 Hoàn toàn hoan nghênh!<br />
-Bạn có thể:
-- Tạo Issue
-- Hoặc Pull Request trực tiếp</p>
-<hr />
-<h2 id="tac-gia-ban-dich">👤 Tác giả bản dịch<a class="headerlink" href="#tac-gia-ban-dich" title="Permanent link">&para;</a></h2>
-<ul>
-<li>GitHub: https://github.com/deanqkhanhcoder</li>
-<li>Mục tiêu: học sâu Competitive Programming &amp; xây dựng tài nguyên tiếng Việt chất lượng</li>
-</ul>
-<hr />
-<h2 id="loi-cam-on">⭐ Lời cảm ơn<a class="headerlink" href="#loi-cam-on" title="Permanent link">&para;</a></h2>
-<p>Xin gửi lời cảm ơn chân thành tới đội ngũ <strong>cp-algorithms</strong><br />
-vì đã xây dựng một trong những tài nguyên CP tốt nhất thế giới 🌍</p>
-<hr />
-<h2 id="checklist">Checklist<a class="headerlink" href="#checklist" title="Permanent link">&para;</a></h2>
-<ul>
-<li>Original lines: 8</li>
-<li>Translated lines: 8</li>
-<li>Code blocks changed? No</li>
-<li>Inline code changed? No</li>
-<li>Technical terms kept in English? Yes</li>
-<li>Headings anchors preserved/added correctly? Yes</li>
-<li>I confirm no character was omitted: YES</li>
-</ul>
-<p>Notes:
-- Translated title 'Main Page' to 'Trang chủ'.</p>
+<h1 id="expression-parsing">Phân tích biểu thức (Expression parsing)<a class="headerlink" href="#expression-parsing" title="Permanent link">&para;</a></h1>
+<p>Một chuỗi chứa biểu thức toán học bao gồm các số và các toán tử khác nhau được đưa ra.
+Chúng ta phải tính giá trị của nó trong <span class="arithmatex">$O(n)$</span>, trong đó <span class="arithmatex">$n$</span> là độ dài của chuỗi.</p>
+<p>Thuật toán được thảo luận ở đây chuyển một biểu thức sang cái gọi là <strong>ký pháp Ba Lan ngược</strong> (<strong>reverse Polish notation</strong>) (một cách tường minh hoặc ngầm định), và tính toán giá trị biểu thức này.</p>
+<h2 id="reverse-polish-notation">Ký pháp Ba Lan ngược (Reverse Polish notation)<a class="headerlink" href="#reverse-polish-notation" title="Permanent link">&para;</a></h2>
+<p>Ký pháp Ba Lan ngược là một dạng viết các biểu thức toán học, trong đó các toán tử nằm sau các toán hạng của chúng.
+Ví dụ biểu thức sau</p>
+<div class="arithmatex">$$a + b * c * d + (e - f) * (g * h + i)$$</div>
+<p>có thể được viết bằng ký pháp Ba Lan ngược theo cách sau:</p>
+<div class="arithmatex">$$a b c * d * + e f - g h * i + * +$$</div>
+<p>Ký pháp Ba Lan ngược được phát triển bởi nhà triết học và chuyên gia khoa học máy tính người Úc Charles Hamblin vào giữa những năm 1950 trên cơ sở ký pháp Ba Lan, được đề xuất vào năm 1920 bởi nhà toán học người Ba Lan Jan Łukasiewicz.</p>
+<p>Sự tiện lợi của ký pháp Ba Lan ngược là các biểu thức ở dạng này rất <strong>dễ tính toán</strong> trong thời gian tuyến tính.
+Chúng ta sử dụng một ngăn xếp, ban đầu rỗng.
+Chúng ta sẽ duyệt qua các toán hạng và toán tử của biểu thức trong ký pháp Ba Lan ngược.
+Nếu phần tử hiện tại là một số, thì chúng ta đặt giá trị lên đỉnh ngăn xếp, nếu phần tử hiện tại là một toán tử, thì chúng ta lấy hai phần tử trên cùng từ ngăn xếp, thực hiện phép toán và đặt kết quả trở lại đỉnh ngăn xếp.
+Cuối cùng sẽ có chính xác một phần tử còn lại trong ngăn xếp, đó sẽ là giá trị của biểu thức.</p>
+<p>Rõ ràng việc tính toán đơn giản này chạy trong thời gian <span class="arithmatex">$O(n)$</span>.</p>
+<h2 id="parsing-of-simple-expressions">Phân tích các biểu thức đơn giản (Parsing of simple expressions)<a class="headerlink" href="#parsing-of-simple-expressions" title="Permanent link">&para;</a></h2>
+<p>Hiện tại chúng tôi chỉ xem xét một vấn đề đơn giản hóa:
+chúng tôi giả định rằng tất cả các toán tử là <strong>hai ngôi</strong> (<strong>binary</strong>) (tức là chúng lấy hai đối số), và tất cả đều <strong>kết hợp trái</strong> (<strong>left-associative</strong>) (nếu độ ưu tiên bằng nhau, chúng được thực hiện từ trái sang phải).
+Dấu ngoặc đơn được cho phép.</p>
+<p>Chúng ta sẽ thiết lập hai ngăn xếp: một cho số, và một cho toán tử và dấu ngoặc đơn.
+Ban đầu cả hai ngăn xếp đều rỗng.
+Đối với ngăn xếp thứ hai, chúng tôi sẽ duy trì điều kiện là tất cả các hoạt động được sắp xếp theo thứ tự ưu tiên giảm dần nghiêm ngặt.
+Nếu có dấu ngoặc đơn trên ngăn xếp, thì mỗi khối toán tử (tương ứng với một cặp dấu ngoặc đơn) được sắp xếp, và toàn bộ ngăn xếp không nhất thiết phải được sắp xếp.</p>
+<p>Chúng ta sẽ duyệt qua các ký tự của biểu thức từ trái sang phải.
+Nếu ký tự hiện tại là một chữ số, thì chúng ta đặt giá trị của số này lên ngăn xếp.
+Nếu ký tự hiện tại là dấu ngoặc đơn mở, thì chúng ta đặt nó lên ngăn xếp.
+Nếu ký tự hiện tại là dấu ngoặc đơn đóng, chúng ta thực hiện tất cả các toán tử trên ngăn xếp cho đến khi chúng ta đến dấu ngoặc mở (nói cách khác là chúng ta thực hiện tất cả các phép toán bên trong dấu ngoặc đơn).
+Cuối cùng, nếu ký tự hiện tại là một toán tử, thì trong khi đỉnh ngăn xếp có một toán tử có độ ưu tiên tương đương hoặc cao hơn, chúng ta sẽ thực hiện phép toán này và đặt phép toán mới lên ngăn xếp.</p>
+<p>Sau khi chúng ta xử lý toàn bộ chuỗi, một số toán tử vẫn có thể nằm trong ngăn xếp, vì vậy chúng ta thực hiện chúng.</p>
+<p>Đây là việc triển khai phương pháp này cho bốn toán tử <span class="arithmatex">$+$</span> <span class="arithmatex">$-$</span> <span class="arithmatex">$*$</span> <span class="arithmatex">$/$</span>:</p>
+<div class="highlight"><pre><span></span><code><span class="kt">bool</span><span class="w"> </span><span class="nf">delim</span><span class="p">(</span><span class="kt">char</span><span class="w"> </span><span class="n">c</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="sc">&#39; &#39;</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">bool</span><span class="w"> </span><span class="nf">is_op</span><span class="p">(</span><span class="kt">char</span><span class="w"> </span><span class="n">c</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="sc">&#39;+&#39;</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="sc">&#39;-&#39;</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="sc">&#39;*&#39;</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="sc">&#39;/&#39;</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">int</span><span class="w"> </span><span class="nf">priority</span><span class="w"> </span><span class="p">(</span><span class="kt">char</span><span class="w"> </span><span class="n">op</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">op</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="sc">&#39;+&#39;</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="n">op</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="sc">&#39;-&#39;</span><span class="p">)</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">op</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="sc">&#39;*&#39;</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="n">op</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="sc">&#39;/&#39;</span><span class="p">)</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="mi">2</span><span class="p">;</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">-1</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">void</span><span class="w"> </span><span class="nf">process_op</span><span class="p">(</span><span class="n">stack</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&amp;</span><span class="w"> </span><span class="n">st</span><span class="p">,</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="n">op</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">r</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">st</span><span class="p">.</span><span class="n">top</span><span class="p">();</span><span class="w"> </span><span class="n">st</span><span class="p">.</span><span class="n">pop</span><span class="p">();</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">l</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">st</span><span class="p">.</span><span class="n">top</span><span class="p">();</span><span class="w"> </span><span class="n">st</span><span class="p">.</span><span class="n">pop</span><span class="p">();</span>
+<span class="w">    </span><span class="k">switch</span><span class="w"> </span><span class="p">(</span><span class="n">op</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">case</span><span class="w"> </span><span class="sc">&#39;+&#39;</span><span class="p">:</span><span class="w"> </span><span class="n">st</span><span class="p">.</span><span class="n">push</span><span class="p">(</span><span class="n">l</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">r</span><span class="p">);</span><span class="w"> </span><span class="k">break</span><span class="p">;</span>
+<span class="w">        </span><span class="k">case</span><span class="w"> </span><span class="sc">&#39;-&#39;</span><span class="p">:</span><span class="w"> </span><span class="n">st</span><span class="p">.</span><span class="n">push</span><span class="p">(</span><span class="n">l</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">r</span><span class="p">);</span><span class="w"> </span><span class="k">break</span><span class="p">;</span>
+<span class="w">        </span><span class="k">case</span><span class="w"> </span><span class="sc">&#39;*&#39;</span><span class="p">:</span><span class="w"> </span><span class="n">st</span><span class="p">.</span><span class="n">push</span><span class="p">(</span><span class="n">l</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">r</span><span class="p">);</span><span class="w"> </span><span class="k">break</span><span class="p">;</span>
+<span class="w">        </span><span class="k">case</span><span class="w"> </span><span class="sc">&#39;/&#39;</span><span class="p">:</span><span class="w"> </span><span class="n">st</span><span class="p">.</span><span class="n">push</span><span class="p">(</span><span class="n">l</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">r</span><span class="p">);</span><span class="w"> </span><span class="k">break</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kt">int</span><span class="w"> </span><span class="nf">evaluate</span><span class="p">(</span><span class="n">string</span><span class="o">&amp;</span><span class="w"> </span><span class="n">s</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">stack</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="w"> </span><span class="n">st</span><span class="p">;</span>
+<span class="w">    </span><span class="n">stack</span><span class="o">&lt;</span><span class="kt">char</span><span class="o">&gt;</span><span class="w"> </span><span class="n">op</span><span class="p">;</span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="p">)</span><span class="n">s</span><span class="p">.</span><span class="n">size</span><span class="p">();</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">delim</span><span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span>
+<span class="w">            </span><span class="k">continue</span><span class="p">;</span>
+
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="sc">&#39;(&#39;</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="n">op</span><span class="p">.</span><span class="n">push</span><span class="p">(</span><span class="sc">&#39;(&#39;</span><span class="p">);</span>
+<span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="sc">&#39;)&#39;</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">op</span><span class="p">.</span><span class="n">top</span><span class="p">()</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="sc">&#39;(&#39;</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="n">process_op</span><span class="p">(</span><span class="n">st</span><span class="p">,</span><span class="w"> </span><span class="n">op</span><span class="p">.</span><span class="n">top</span><span class="p">());</span>
+<span class="w">                </span><span class="n">op</span><span class="p">.</span><span class="n">pop</span><span class="p">();</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">            </span><span class="n">op</span><span class="p">.</span><span class="n">pop</span><span class="p">();</span>
+<span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">is_op</span><span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="kt">char</span><span class="w"> </span><span class="n">cur_op</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+<span class="w">            </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">op</span><span class="p">.</span><span class="n">empty</span><span class="p">()</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">priority</span><span class="p">(</span><span class="n">op</span><span class="p">.</span><span class="n">top</span><span class="p">())</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="n">priority</span><span class="p">(</span><span class="n">cur_op</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="n">process_op</span><span class="p">(</span><span class="n">st</span><span class="p">,</span><span class="w"> </span><span class="n">op</span><span class="p">.</span><span class="n">top</span><span class="p">());</span>
+<span class="w">                </span><span class="n">op</span><span class="p">.</span><span class="n">pop</span><span class="p">();</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">            </span><span class="n">op</span><span class="p">.</span><span class="n">push</span><span class="p">(</span><span class="n">cur_op</span><span class="p">);</span>
+<span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="kt">int</span><span class="w"> </span><span class="n">number</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="w">            </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="p">)</span><span class="n">s</span><span class="p">.</span><span class="n">size</span><span class="p">()</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">isalnum</span><span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span>
+<span class="w">                </span><span class="n">number</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">number</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">10</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="o">++</span><span class="p">]</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="sc">&#39;0&#39;</span><span class="p">;</span>
+<span class="w">            </span><span class="o">--</span><span class="n">i</span><span class="p">;</span>
+<span class="w">            </span><span class="n">st</span><span class="p">.</span><span class="n">push</span><span class="p">(</span><span class="n">number</span><span class="p">);</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">op</span><span class="p">.</span><span class="n">empty</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">process_op</span><span class="p">(</span><span class="n">st</span><span class="p">,</span><span class="w"> </span><span class="n">op</span><span class="p">.</span><span class="n">top</span><span class="p">());</span>
+<span class="w">        </span><span class="n">op</span><span class="p">.</span><span class="n">pop</span><span class="p">();</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">st</span><span class="p">.</span><span class="n">top</span><span class="p">();</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>Như vậy chúng ta đã học cách tính giá trị của một biểu thức trong <span class="arithmatex">$O(n)$</span>, đồng thời chúng ta đã sử dụng ngầm định ký pháp Ba Lan ngược.
+Bằng cách sửa đổi một chút cách thực hiện ở trên, cũng có thể thu được biểu thức trong ký pháp Ba Lan ngược ở dạng tường minh.</p>
+<h2 id="unary-operators">Toán tử một ngôi (Unary operators)<a class="headerlink" href="#unary-operators" title="Permanent link">&para;</a></h2>
+<p>Bây giờ giả sử rằng biểu thức cũng chứa các toán tử <strong>một ngôi</strong> (<strong>unary</strong>) (các toán tử lấy một đối số).
+Cộng một ngôi và trừ một ngôi là những ví dụ phổ biến về các toán tử như vậy.</p>
+<p>Một trong những khác biệt trong trường hợp này, là chúng ta cần xác định xem toán tử hiện tại là một ngôi hay hai ngôi.</p>
+<p>Bạn có thể nhận thấy rằng trước một toán tử một ngôi, luôn có một toán tử khác hoặc dấu ngoặc đơn mở, hoặc không có gì cả (nếu nó nằm ở ngay đầu biểu thức).
+Ngược lại, trước một toán tử hai ngôi sẽ luôn có một toán hạng (số) hoặc dấu ngoặc đơn đóng.
+Do đó, thật dễ dàng để gắn cờ xem toán tử tiếp theo có thể là một ngôi hay không.</p>
+<p>Ngoài ra chúng ta cần thực hiện một toán tử một ngôi và một toán tử hai ngôi khác nhau.
+Và chúng ta cần chọn độ ưu tiên của toán tử một ngôi cao hơn tất cả các toán tử hai ngôi.</p>
+<p>Ngoài ra cần lưu ý rằng, một số toán tử một ngôi (ví dụ: cộng một ngôi và trừ một ngôi) thực sự là <strong>kết hợp phải</strong> (<strong>right-associative</strong>).</p>
+<h2 id="right-associativity">Kết hợp phải (Right-associativity)<a class="headerlink" href="#right-associativity" title="Permanent link">&para;</a></h2>
+<p>Kết hợp phải có nghĩa là, bất cứ khi nào các độ ưu tiên bằng nhau, các toán tử phải được đánh giá từ phải sang trái.</p>
+<p>Như đã lưu ý ở trên, các toán tử một ngôi thường kết hợp phải.
+Một ví dụ khác cho toán tử kết hợp phải là toán tử lũy thừa (<span class="arithmatex">$a \wedge b \wedge c$</span> thường được hiểu là <span class="arithmatex">$a^{b^c}$</span> và không phải là <span class="arithmatex">$(a^b)^c$</span>).</p>
+<p>Chúng ta cần tạo ra sự khác biệt nào để xử lý chính xác các toán tử kết hợp phải?
+Hóa ra những thay đổi là rất nhỏ.
+Sự khác biệt duy nhất sẽ là, nếu các độ ưu tiên bằng nhau, chúng ta sẽ hoãn việc thực hiện phép toán kết hợp phải.</p>
+<p>Dòng duy nhất cần được thay thế là
+<div class="highlight"><pre><span></span><code><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">op</span><span class="p">.</span><span class="n">empty</span><span class="p">()</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">priority</span><span class="p">(</span><span class="n">op</span><span class="p">.</span><span class="n">top</span><span class="p">())</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="n">priority</span><span class="p">(</span><span class="n">cur_op</span><span class="p">))</span>
+</code></pre></div>
+bằng
+<div class="highlight"><pre><span></span><code><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">op</span><span class="p">.</span><span class="n">empty</span><span class="p">()</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="p">(</span>
+<span class="w">        </span><span class="p">(</span><span class="n">left_assoc</span><span class="p">(</span><span class="n">cur_op</span><span class="p">)</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">priority</span><span class="p">(</span><span class="n">op</span><span class="p">.</span><span class="n">top</span><span class="p">())</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="n">priority</span><span class="p">(</span><span class="n">cur_op</span><span class="p">))</span><span class="w"> </span><span class="o">||</span>
+<span class="w">        </span><span class="p">(</span><span class="o">!</span><span class="n">left_assoc</span><span class="p">(</span><span class="n">cur_op</span><span class="p">)</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">priority</span><span class="p">(</span><span class="n">op</span><span class="p">.</span><span class="n">top</span><span class="p">())</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">priority</span><span class="p">(</span><span class="n">cur_op</span><span class="p">))</span>
+<span class="w">    </span><span class="p">))</span>
+</code></pre></div>
+trong đó <code>left_assoc</code> là một hàm quyết định xem một toán tử có phải là kết hợp trái hay không.</p>
+<p>Dưới đây là một triển khai cho các toán tử hai ngôi <span class="arithmatex">$+$</span> <span class="arithmatex">$-$</span> <span class="arithmatex">$*$</span> <span class="arithmatex">$/$</span> và các toán tử một ngôi <span class="arithmatex">$+$</span> và <span class="arithmatex">$-$</span>.</p>
+<div class="highlight"><pre><span></span><code><span class="kt">bool</span><span class="w"> </span><span class="nf">delim</span><span class="p">(</span><span class="kt">char</span><span class="w"> </span><span class="n">c</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="sc">&#39; &#39;</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">bool</span><span class="w"> </span><span class="nf">is_op</span><span class="p">(</span><span class="kt">char</span><span class="w"> </span><span class="n">c</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="sc">&#39;+&#39;</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="sc">&#39;-&#39;</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="sc">&#39;*&#39;</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="sc">&#39;/&#39;</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">bool</span><span class="w"> </span><span class="nf">is_unary</span><span class="p">(</span><span class="kt">char</span><span class="w"> </span><span class="n">c</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="sc">&#39;+&#39;</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="n">c</span><span class="o">==</span><span class="sc">&#39;-&#39;</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">int</span><span class="w"> </span><span class="nf">priority</span><span class="w"> </span><span class="p">(</span><span class="kt">char</span><span class="w"> </span><span class="n">op</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">op</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="c1">// unary operator</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="mi">3</span><span class="p">;</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">op</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="sc">&#39;+&#39;</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="n">op</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="sc">&#39;-&#39;</span><span class="p">)</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">op</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="sc">&#39;*&#39;</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="n">op</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="sc">&#39;/&#39;</span><span class="p">)</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="mi">2</span><span class="p">;</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">-1</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">void</span><span class="w"> </span><span class="nf">process_op</span><span class="p">(</span><span class="n">stack</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&amp;</span><span class="w"> </span><span class="n">st</span><span class="p">,</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="n">op</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">op</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="n">l</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">st</span><span class="p">.</span><span class="n">top</span><span class="p">();</span><span class="w"> </span><span class="n">st</span><span class="p">.</span><span class="n">pop</span><span class="p">();</span>
+<span class="w">        </span><span class="k">switch</span><span class="w"> </span><span class="p">(</span><span class="o">-</span><span class="n">op</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="k">case</span><span class="w"> </span><span class="sc">&#39;+&#39;</span><span class="p">:</span><span class="w"> </span><span class="n">st</span><span class="p">.</span><span class="n">push</span><span class="p">(</span><span class="n">l</span><span class="p">);</span><span class="w"> </span><span class="k">break</span><span class="p">;</span>
+<span class="w">            </span><span class="k">case</span><span class="w"> </span><span class="sc">&#39;-&#39;</span><span class="p">:</span><span class="w"> </span><span class="n">st</span><span class="p">.</span><span class="n">push</span><span class="p">(</span><span class="o">-</span><span class="n">l</span><span class="p">);</span><span class="w"> </span><span class="k">break</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="n">r</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">st</span><span class="p">.</span><span class="n">top</span><span class="p">();</span><span class="w"> </span><span class="n">st</span><span class="p">.</span><span class="n">pop</span><span class="p">();</span>
+<span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="n">l</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">st</span><span class="p">.</span><span class="n">top</span><span class="p">();</span><span class="w"> </span><span class="n">st</span><span class="p">.</span><span class="n">pop</span><span class="p">();</span>
+<span class="w">        </span><span class="k">switch</span><span class="w"> </span><span class="p">(</span><span class="n">op</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="k">case</span><span class="w"> </span><span class="sc">&#39;+&#39;</span><span class="p">:</span><span class="w"> </span><span class="n">st</span><span class="p">.</span><span class="n">push</span><span class="p">(</span><span class="n">l</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">r</span><span class="p">);</span><span class="w"> </span><span class="k">break</span><span class="p">;</span>
+<span class="w">            </span><span class="k">case</span><span class="w"> </span><span class="sc">&#39;-&#39;</span><span class="p">:</span><span class="w"> </span><span class="n">st</span><span class="p">.</span><span class="n">push</span><span class="p">(</span><span class="n">l</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">r</span><span class="p">);</span><span class="w"> </span><span class="k">break</span><span class="p">;</span>
+<span class="w">            </span><span class="k">case</span><span class="w"> </span><span class="sc">&#39;*&#39;</span><span class="p">:</span><span class="w"> </span><span class="n">st</span><span class="p">.</span><span class="n">push</span><span class="p">(</span><span class="n">l</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">r</span><span class="p">);</span><span class="w"> </span><span class="k">break</span><span class="p">;</span>
+<span class="w">            </span><span class="k">case</span><span class="w"> </span><span class="sc">&#39;/&#39;</span><span class="p">:</span><span class="w"> </span><span class="n">st</span><span class="p">.</span><span class="n">push</span><span class="p">(</span><span class="n">l</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">r</span><span class="p">);</span><span class="w"> </span><span class="k">break</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kt">int</span><span class="w"> </span><span class="nf">evaluate</span><span class="p">(</span><span class="n">string</span><span class="o">&amp;</span><span class="w"> </span><span class="n">s</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">stack</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="w"> </span><span class="n">st</span><span class="p">;</span>
+<span class="w">    </span><span class="n">stack</span><span class="o">&lt;</span><span class="kt">char</span><span class="o">&gt;</span><span class="w"> </span><span class="n">op</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">bool</span><span class="w"> </span><span class="n">may_be_unary</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">true</span><span class="p">;</span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="p">)</span><span class="n">s</span><span class="p">.</span><span class="n">size</span><span class="p">();</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">delim</span><span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span>
+<span class="w">            </span><span class="k">continue</span><span class="p">;</span>
+
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="sc">&#39;(&#39;</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="n">op</span><span class="p">.</span><span class="n">push</span><span class="p">(</span><span class="sc">&#39;(&#39;</span><span class="p">);</span>
+<span class="w">            </span><span class="n">may_be_unary</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">true</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="sc">&#39;)&#39;</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">op</span><span class="p">.</span><span class="n">top</span><span class="p">()</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="sc">&#39;(&#39;</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="n">process_op</span><span class="p">(</span><span class="n">st</span><span class="p">,</span><span class="w"> </span><span class="n">op</span><span class="p">.</span><span class="n">top</span><span class="p">());</span>
+<span class="w">                </span><span class="n">op</span><span class="p">.</span><span class="n">pop</span><span class="p">();</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">            </span><span class="n">op</span><span class="p">.</span><span class="n">pop</span><span class="p">();</span>
+<span class="w">            </span><span class="n">may_be_unary</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">false</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">is_op</span><span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="kt">char</span><span class="w"> </span><span class="n">cur_op</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">may_be_unary</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">is_unary</span><span class="p">(</span><span class="n">cur_op</span><span class="p">))</span>
+<span class="w">                </span><span class="n">cur_op</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="n">cur_op</span><span class="p">;</span>
+<span class="w">            </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">op</span><span class="p">.</span><span class="n">empty</span><span class="p">()</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="p">(</span>
+<span class="w">                    </span><span class="p">(</span><span class="n">cur_op</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">priority</span><span class="p">(</span><span class="n">op</span><span class="p">.</span><span class="n">top</span><span class="p">())</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="n">priority</span><span class="p">(</span><span class="n">cur_op</span><span class="p">))</span><span class="w"> </span><span class="o">||</span>
+<span class="w">                    </span><span class="p">(</span><span class="n">cur_op</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">priority</span><span class="p">(</span><span class="n">op</span><span class="p">.</span><span class="n">top</span><span class="p">())</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">priority</span><span class="p">(</span><span class="n">cur_op</span><span class="p">))</span>
+<span class="w">                </span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="n">process_op</span><span class="p">(</span><span class="n">st</span><span class="p">,</span><span class="w"> </span><span class="n">op</span><span class="p">.</span><span class="n">top</span><span class="p">());</span>
+<span class="w">                </span><span class="n">op</span><span class="p">.</span><span class="n">pop</span><span class="p">();</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">            </span><span class="n">op</span><span class="p">.</span><span class="n">push</span><span class="p">(</span><span class="n">cur_op</span><span class="p">);</span>
+<span class="w">            </span><span class="n">may_be_unary</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">true</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="kt">int</span><span class="w"> </span><span class="n">number</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="w">            </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="p">)</span><span class="n">s</span><span class="p">.</span><span class="n">size</span><span class="p">()</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">isalnum</span><span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span>
+<span class="w">                </span><span class="n">number</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">number</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">10</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="o">++</span><span class="p">]</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="sc">&#39;0&#39;</span><span class="p">;</span>
+<span class="w">            </span><span class="o">--</span><span class="n">i</span><span class="p">;</span>
+<span class="w">            </span><span class="n">st</span><span class="p">.</span><span class="n">push</span><span class="p">(</span><span class="n">number</span><span class="p">);</span>
+<span class="w">            </span><span class="n">may_be_unary</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">false</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">op</span><span class="p">.</span><span class="n">empty</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">process_op</span><span class="p">(</span><span class="n">st</span><span class="p">,</span><span class="w"> </span><span class="n">op</span><span class="p">.</span><span class="n">top</span><span class="p">());</span>
+<span class="w">        </span><span class="n">op</span><span class="p">.</span><span class="n">pop</span><span class="p">();</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">st</span><span class="p">.</span><span class="n">top</span><span class="p">();</span>
+<span class="p">}</span>
+</code></pre></div>
                 
               </article>
             </div>
@@ -8062,14 +8168,14 @@ vì đã xây dựng một trong những tài nguyên CP tốt nhất thế gi�
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": ".", "features": ["navigation.top", "navigation.tracking", "toc.follow", "toc.integrate", "search.suggest", "content.code.copy"], "search": "assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.top", "navigation.tracking", "toc.follow", "toc.integrate", "search.suggest", "content.code.copy"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="assets/javascripts/bundle.79ae519e.min.js"></script>
+      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
       
-        <script src="javascript/config.js"></script>
+        <script src="../javascript/config.js"></script>
       
-        <script src="javascript/donation-banner.js"></script>
+        <script src="../javascript/donation-banner.js"></script>
       
         <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
       

@@ -10,29 +10,31 @@
       
       
       
-        <link rel="canonical" href="https://deanqkhanhcoder.github.io/cp-algorithms-vi/index.html">
+        <link rel="canonical" href="https://deanqkhanhcoder.github.io/cp-algorithms-vi/num_methods/binary_search.html">
       
       
+        <link rel="prev" href="../combinatorics/counting_labeled_graphs.html">
       
-        <link rel="next" href="navigation.html">
+      
+        <link rel="next" href="ternary_search.html">
       
       
         
       
       
-      <link rel="icon" href="favicon.ico">
+      <link rel="icon" href="../favicon.ico">
       <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
     
     
       
-        <title>Trang chủ - Algorithms for Competitive Programming</title>
+        <title>Tìm kiếm nhị phân - Algorithms for Competitive Programming</title>
       
     
     
-      <link rel="stylesheet" href="assets/stylesheets/main.484c7ddc.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
       
         
-        <link rel="stylesheet" href="assets/stylesheets/palette.ab4e12ef.min.css">
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
       
       
 
@@ -51,15 +53,15 @@
       
     
     
-      <link rel="stylesheet" href="stylesheets/extra.css">
+      <link rel="stylesheet" href="../stylesheets/extra.css">
     
-    <script>__md_scope=new URL(".",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
     
     
-  <script src="assets/javascripts/toggle-sidebar.js"></script></head>
+  <script src="../assets/javascripts/toggle-sidebar.js"></script></head>
   
   
     
@@ -78,7 +80,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#cp-algorithms-vietnamese-translation" class="md-skip">
+        <a href="#binary-search" class="md-skip">
           Skip to content
         </a>
       
@@ -98,10 +100,10 @@
     }
   </script>
   <nav class="md-header__inner md-grid" aria-label="header.title">
-    <a href="." title="Algorithms for Competitive Programming"
+    <a href=".." title="Algorithms for Competitive Programming"
       class="md-header__button md-logo" aria-label="Algorithms for Competitive Programming" data-md-component="logo">
       
-  <img src="favicon.ico" alt="logo">
+  <img src="../favicon.ico" alt="logo">
 
     </a>
     <label class="md-header__button md-icon" for="__drawer">
@@ -111,7 +113,7 @@
       <div class="md-header__ellipsis">
         <div class="md-header__topic">
           <span class="md-ellipsis">
-            <a href="." title="Algorithms for Competitive Programming"
+            <a href=".." title="Algorithms for Competitive Programming"
               aria-label="Algorithms for Competitive Programming" data-md-component="logo">
               Algorithms for Competitive Programming
             </a>
@@ -121,7 +123,7 @@
           <span class="md-ellipsis">
             <a href="#" onclick="scrollToTop()">
               
-              Trang chủ
+              Tìm kiếm nhị phân
               
             </a>
           </span>
@@ -255,9 +257,9 @@
 
 <nav class="md-nav md-nav--primary md-nav--integrated" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="." title="Algorithms for Competitive Programming" class="md-nav__button md-logo" aria-label="Algorithms for Competitive Programming" data-md-component="logo">
+    <a href=".." title="Algorithms for Competitive Programming" class="md-nav__button md-logo" aria-label="Algorithms for Competitive Programming" data-md-component="logo">
       
-  <img src="favicon.ico" alt="logo">
+  <img src="../favicon.ico" alt="logo">
 
     </a>
     Algorithms for Competitive Programming
@@ -281,20 +283,18 @@
       
   
   
-    
   
   
-  
     
     
     
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1" >
         
           
           <label class="md-nav__link" for="__nav_1" id="__nav_1_label" tabindex="0">
@@ -315,7 +315,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_1_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_1_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_1">
             <span class="md-nav__icon md-icon"></span>
             
@@ -330,37 +330,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Trang chủ
-  
-
-    
-  </span>
-  
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="index.html" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../index.html" class="md-nav__link">
         
   
   
@@ -376,114 +349,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#gioi-thieu" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        📌 Giới thiệu
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#noi-dung-a-dich" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        📚 Nội dung đã dịch
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#quy-uoc-dich-thuat" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        🧠 Quy ước dịch thuật
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#nguon-goc-ban-quyen" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        🔗 Nguồn gốc &amp; Bản quyền
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#ong-gop" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        🤝 Đóng góp
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#tac-gia-ban-dich" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        👤 Tác giả bản dịch
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#loi-cam-on" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        ⭐ Lời cảm ơn
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#checklist" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Checklist
-      
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -496,7 +361,7 @@
   
   
     <li class="md-nav__item">
-      <a href="navigation.html" class="md-nav__link">
+      <a href="../navigation.html" class="md-nav__link">
         
   
   
@@ -524,7 +389,7 @@
   
   
     <li class="md-nav__item">
-      <a href="tags.html" class="md-nav__link">
+      <a href="../tags.html" class="md-nav__link">
         
   
   
@@ -552,7 +417,7 @@
   
   
     <li class="md-nav__item">
-      <a href="contrib.html" class="md-nav__link">
+      <a href="../contrib.html" class="md-nav__link">
         
   
   
@@ -580,7 +445,7 @@
   
   
     <li class="md-nav__item">
-      <a href="code_of_conduct.html" class="md-nav__link">
+      <a href="../code_of_conduct.html" class="md-nav__link">
         
   
   
@@ -608,7 +473,7 @@
   
   
     <li class="md-nav__item">
-      <a href="preview.html" class="md-nav__link">
+      <a href="../preview.html" class="md-nav__link">
         
   
   
@@ -737,7 +602,7 @@
   
   
     <li class="md-nav__item">
-      <a href="algebra/binary-exp.html" class="md-nav__link">
+      <a href="../algebra/binary-exp.html" class="md-nav__link">
         
   
   
@@ -765,7 +630,7 @@
   
   
     <li class="md-nav__item">
-      <a href="algebra/euclid-algorithm.html" class="md-nav__link">
+      <a href="../algebra/euclid-algorithm.html" class="md-nav__link">
         
   
   
@@ -793,7 +658,7 @@
   
   
     <li class="md-nav__item">
-      <a href="algebra/extended-euclid-algorithm.html" class="md-nav__link">
+      <a href="../algebra/extended-euclid-algorithm.html" class="md-nav__link">
         
   
   
@@ -821,7 +686,7 @@
   
   
     <li class="md-nav__item">
-      <a href="algebra/linear-diophantine-equation.html" class="md-nav__link">
+      <a href="../algebra/linear-diophantine-equation.html" class="md-nav__link">
         
   
   
@@ -849,7 +714,7 @@
   
   
     <li class="md-nav__item">
-      <a href="algebra/fibonacci-numbers.html" class="md-nav__link">
+      <a href="../algebra/fibonacci-numbers.html" class="md-nav__link">
         
   
   
@@ -932,7 +797,7 @@
   
   
     <li class="md-nav__item">
-      <a href="algebra/sieve-of-eratosthenes.html" class="md-nav__link">
+      <a href="../algebra/sieve-of-eratosthenes.html" class="md-nav__link">
         
   
   
@@ -960,7 +825,7 @@
   
   
     <li class="md-nav__item">
-      <a href="algebra/prime-sieve-linear.html" class="md-nav__link">
+      <a href="../algebra/prime-sieve-linear.html" class="md-nav__link">
         
   
   
@@ -988,7 +853,7 @@
   
   
     <li class="md-nav__item">
-      <a href="algebra/primality_tests.html" class="md-nav__link">
+      <a href="../algebra/primality_tests.html" class="md-nav__link">
         
   
   
@@ -1016,7 +881,7 @@
   
   
     <li class="md-nav__item">
-      <a href="algebra/factorization.html" class="md-nav__link">
+      <a href="../algebra/factorization.html" class="md-nav__link">
         
   
   
@@ -1099,7 +964,7 @@
   
   
     <li class="md-nav__item">
-      <a href="algebra/phi-function.html" class="md-nav__link">
+      <a href="../algebra/phi-function.html" class="md-nav__link">
         
   
   
@@ -1127,7 +992,7 @@
   
   
     <li class="md-nav__item">
-      <a href="algebra/divisors.html" class="md-nav__link">
+      <a href="../algebra/divisors.html" class="md-nav__link">
         
   
   
@@ -1210,7 +1075,7 @@
   
   
     <li class="md-nav__item">
-      <a href="algebra/module-inverse.html" class="md-nav__link">
+      <a href="../algebra/module-inverse.html" class="md-nav__link">
         
   
   
@@ -1238,7 +1103,7 @@
   
   
     <li class="md-nav__item">
-      <a href="algebra/linear_congruence_equation.html" class="md-nav__link">
+      <a href="../algebra/linear_congruence_equation.html" class="md-nav__link">
         
   
   
@@ -1266,7 +1131,7 @@
   
   
     <li class="md-nav__item">
-      <a href="algebra/chinese-remainder-theorem.html" class="md-nav__link">
+      <a href="../algebra/chinese-remainder-theorem.html" class="md-nav__link">
         
   
   
@@ -1294,7 +1159,7 @@
   
   
     <li class="md-nav__item">
-      <a href="algebra/garners-algorithm.html" class="md-nav__link">
+      <a href="../algebra/garners-algorithm.html" class="md-nav__link">
         
   
   
@@ -1322,7 +1187,7 @@
   
   
     <li class="md-nav__item">
-      <a href="algebra/factorial-modulo.html" class="md-nav__link">
+      <a href="../algebra/factorial-modulo.html" class="md-nav__link">
         
   
   
@@ -1350,7 +1215,7 @@
   
   
     <li class="md-nav__item">
-      <a href="algebra/discrete-log.html" class="md-nav__link">
+      <a href="../algebra/discrete-log.html" class="md-nav__link">
         
   
   
@@ -1378,7 +1243,7 @@
   
   
     <li class="md-nav__item">
-      <a href="algebra/primitive-root.html" class="md-nav__link">
+      <a href="../algebra/primitive-root.html" class="md-nav__link">
         
   
   
@@ -1406,7 +1271,7 @@
   
   
     <li class="md-nav__item">
-      <a href="algebra/discrete-root.html" class="md-nav__link">
+      <a href="../algebra/discrete-root.html" class="md-nav__link">
         
   
   
@@ -1434,7 +1299,7 @@
   
   
     <li class="md-nav__item">
-      <a href="algebra/montgomery_multiplication.html" class="md-nav__link">
+      <a href="../algebra/montgomery_multiplication.html" class="md-nav__link">
         
   
   
@@ -1517,7 +1382,7 @@
   
   
     <li class="md-nav__item">
-      <a href="algebra/balanced-ternary.html" class="md-nav__link">
+      <a href="../algebra/balanced-ternary.html" class="md-nav__link">
         
   
   
@@ -1545,7 +1410,7 @@
   
   
     <li class="md-nav__item">
-      <a href="algebra/gray-code.html" class="md-nav__link">
+      <a href="../algebra/gray-code.html" class="md-nav__link">
         
   
   
@@ -1628,7 +1493,7 @@
   
   
     <li class="md-nav__item">
-      <a href="algebra/bit-manipulation.html" class="md-nav__link">
+      <a href="../algebra/bit-manipulation.html" class="md-nav__link">
         
   
   
@@ -1656,7 +1521,7 @@
   
   
     <li class="md-nav__item">
-      <a href="algebra/all-submasks.html" class="md-nav__link">
+      <a href="../algebra/all-submasks.html" class="md-nav__link">
         
   
   
@@ -1684,7 +1549,7 @@
   
   
     <li class="md-nav__item">
-      <a href="algebra/big-integer.html" class="md-nav__link">
+      <a href="../algebra/big-integer.html" class="md-nav__link">
         
   
   
@@ -1712,7 +1577,7 @@
   
   
     <li class="md-nav__item">
-      <a href="algebra/fft.html" class="md-nav__link">
+      <a href="../algebra/fft.html" class="md-nav__link">
         
   
   
@@ -1740,7 +1605,7 @@
   
   
     <li class="md-nav__item">
-      <a href="algebra/polynomial.html" class="md-nav__link">
+      <a href="../algebra/polynomial.html" class="md-nav__link">
         
   
   
@@ -1768,7 +1633,7 @@
   
   
     <li class="md-nav__item">
-      <a href="algebra/continued-fractions.html" class="md-nav__link">
+      <a href="../algebra/continued-fractions.html" class="md-nav__link">
         
   
   
@@ -1796,7 +1661,7 @@
   
   
     <li class="md-nav__item">
-      <a href="algebra/factoring-exp.html" class="md-nav__link">
+      <a href="../algebra/factoring-exp.html" class="md-nav__link">
         
   
   
@@ -1933,7 +1798,7 @@
   
   
     <li class="md-nav__item">
-      <a href="data_structures/stack_queue_modification.html" class="md-nav__link">
+      <a href="../data_structures/stack_queue_modification.html" class="md-nav__link">
         
   
   
@@ -1961,7 +1826,7 @@
   
   
     <li class="md-nav__item">
-      <a href="data_structures/sparse-table.html" class="md-nav__link">
+      <a href="../data_structures/sparse-table.html" class="md-nav__link">
         
   
   
@@ -2044,7 +1909,7 @@
   
   
     <li class="md-nav__item">
-      <a href="data_structures/disjoint_set_union.html" class="md-nav__link">
+      <a href="../data_structures/disjoint_set_union.html" class="md-nav__link">
         
   
   
@@ -2072,7 +1937,7 @@
   
   
     <li class="md-nav__item">
-      <a href="data_structures/fenwick.html" class="md-nav__link">
+      <a href="../data_structures/fenwick.html" class="md-nav__link">
         
   
   
@@ -2100,7 +1965,7 @@
   
   
     <li class="md-nav__item">
-      <a href="data_structures/sqrt_decomposition.html" class="md-nav__link">
+      <a href="../data_structures/sqrt_decomposition.html" class="md-nav__link">
         
   
   
@@ -2128,7 +1993,7 @@
   
   
     <li class="md-nav__item">
-      <a href="data_structures/segment_tree.html" class="md-nav__link">
+      <a href="../data_structures/segment_tree.html" class="md-nav__link">
         
   
   
@@ -2156,7 +2021,7 @@
   
   
     <li class="md-nav__item">
-      <a href="data_structures/treap.html" class="md-nav__link">
+      <a href="../data_structures/treap.html" class="md-nav__link">
         
   
   
@@ -2184,7 +2049,7 @@
   
   
     <li class="md-nav__item">
-      <a href="data_structures/sqrt-tree.html" class="md-nav__link">
+      <a href="../data_structures/sqrt-tree.html" class="md-nav__link">
         
   
   
@@ -2212,7 +2077,7 @@
   
   
     <li class="md-nav__item">
-      <a href="data_structures/randomized_heap.html" class="md-nav__link">
+      <a href="../data_structures/randomized_heap.html" class="md-nav__link">
         
   
   
@@ -2295,7 +2160,7 @@
   
   
     <li class="md-nav__item">
-      <a href="data_structures/deleting_in_log_n.html" class="md-nav__link">
+      <a href="../data_structures/deleting_in_log_n.html" class="md-nav__link">
         
   
   
@@ -2385,7 +2250,7 @@
   
   
     <li class="md-nav__item">
-      <a href="dynamic_programming/intro-to-dp.html" class="md-nav__link">
+      <a href="../dynamic_programming/intro-to-dp.html" class="md-nav__link">
         
   
   
@@ -2413,7 +2278,7 @@
   
   
     <li class="md-nav__item">
-      <a href="dynamic_programming/knapsack.html" class="md-nav__link">
+      <a href="../dynamic_programming/knapsack.html" class="md-nav__link">
         
   
   
@@ -2441,7 +2306,7 @@
   
   
     <li class="md-nav__item">
-      <a href="dynamic_programming/longest_increasing_subsequence.html" class="md-nav__link">
+      <a href="../dynamic_programming/longest_increasing_subsequence.html" class="md-nav__link">
         
   
   
@@ -2516,7 +2381,7 @@
   
   
     <li class="md-nav__item">
-      <a href="dynamic_programming/divide-and-conquer-dp.html" class="md-nav__link">
+      <a href="../dynamic_programming/divide-and-conquer-dp.html" class="md-nav__link">
         
   
   
@@ -2544,7 +2409,7 @@
   
   
     <li class="md-nav__item">
-      <a href="dynamic_programming/knuth-optimization.html" class="md-nav__link">
+      <a href="../dynamic_programming/knuth-optimization.html" class="md-nav__link">
         
   
   
@@ -2627,7 +2492,7 @@
   
   
     <li class="md-nav__item">
-      <a href="dynamic_programming/profile-dynamics.html" class="md-nav__link">
+      <a href="../dynamic_programming/profile-dynamics.html" class="md-nav__link">
         
   
   
@@ -2655,7 +2520,7 @@
   
   
     <li class="md-nav__item">
-      <a href="dynamic_programming/zero_matrix.html" class="md-nav__link">
+      <a href="../dynamic_programming/zero_matrix.html" class="md-nav__link">
         
   
   
@@ -2792,7 +2657,7 @@
   
   
     <li class="md-nav__item">
-      <a href="string/string-hashing.html" class="md-nav__link">
+      <a href="../string/string-hashing.html" class="md-nav__link">
         
   
   
@@ -2820,7 +2685,7 @@
   
   
     <li class="md-nav__item">
-      <a href="string/rabin-karp.html" class="md-nav__link">
+      <a href="../string/rabin-karp.html" class="md-nav__link">
         
   
   
@@ -2848,7 +2713,7 @@
   
   
     <li class="md-nav__item">
-      <a href="string/prefix-function.html" class="md-nav__link">
+      <a href="../string/prefix-function.html" class="md-nav__link">
         
   
   
@@ -2876,7 +2741,7 @@
   
   
     <li class="md-nav__item">
-      <a href="string/z-function.html" class="md-nav__link">
+      <a href="../string/z-function.html" class="md-nav__link">
         
   
   
@@ -2904,7 +2769,7 @@
   
   
     <li class="md-nav__item">
-      <a href="string/suffix-array.html" class="md-nav__link">
+      <a href="../string/suffix-array.html" class="md-nav__link">
         
   
   
@@ -2932,7 +2797,7 @@
   
   
     <li class="md-nav__item">
-      <a href="string/aho_corasick.html" class="md-nav__link">
+      <a href="../string/aho_corasick.html" class="md-nav__link">
         
   
   
@@ -3015,7 +2880,7 @@
   
   
     <li class="md-nav__item">
-      <a href="string/suffix-tree-ukkonen.html" class="md-nav__link">
+      <a href="../string/suffix-tree-ukkonen.html" class="md-nav__link">
         
   
   
@@ -3043,7 +2908,7 @@
   
   
     <li class="md-nav__item">
-      <a href="string/suffix-automaton.html" class="md-nav__link">
+      <a href="../string/suffix-automaton.html" class="md-nav__link">
         
   
   
@@ -3071,7 +2936,7 @@
   
   
     <li class="md-nav__item">
-      <a href="string/lyndon_factorization.html" class="md-nav__link">
+      <a href="../string/lyndon_factorization.html" class="md-nav__link">
         
   
   
@@ -3154,7 +3019,7 @@
   
   
     <li class="md-nav__item">
-      <a href="string/expression_parsing.html" class="md-nav__link">
+      <a href="../string/expression_parsing.html" class="md-nav__link">
         
   
   
@@ -3182,7 +3047,7 @@
   
   
     <li class="md-nav__item">
-      <a href="string/manacher.html" class="md-nav__link">
+      <a href="../string/manacher.html" class="md-nav__link">
         
   
   
@@ -3210,7 +3075,7 @@
   
   
     <li class="md-nav__item">
-      <a href="string/main_lorentz.html" class="md-nav__link">
+      <a href="../string/main_lorentz.html" class="md-nav__link">
         
   
   
@@ -3347,7 +3212,7 @@
   
   
     <li class="md-nav__item">
-      <a href="linear_algebra/linear-system-gauss.html" class="md-nav__link">
+      <a href="../linear_algebra/linear-system-gauss.html" class="md-nav__link">
         
   
   
@@ -3375,7 +3240,7 @@
   
   
     <li class="md-nav__item">
-      <a href="linear_algebra/determinant-gauss.html" class="md-nav__link">
+      <a href="../linear_algebra/determinant-gauss.html" class="md-nav__link">
         
   
   
@@ -3403,7 +3268,7 @@
   
   
     <li class="md-nav__item">
-      <a href="linear_algebra/determinant-kraut.html" class="md-nav__link">
+      <a href="../linear_algebra/determinant-kraut.html" class="md-nav__link">
         
   
   
@@ -3431,7 +3296,7 @@
   
   
     <li class="md-nav__item">
-      <a href="linear_algebra/rank-matrix.html" class="md-nav__link">
+      <a href="../linear_algebra/rank-matrix.html" class="md-nav__link">
         
   
   
@@ -3568,7 +3433,7 @@
   
   
     <li class="md-nav__item">
-      <a href="algebra/factorial-divisors.html" class="md-nav__link">
+      <a href="../algebra/factorial-divisors.html" class="md-nav__link">
         
   
   
@@ -3596,7 +3461,7 @@
   
   
     <li class="md-nav__item">
-      <a href="combinatorics/binomial-coefficients.html" class="md-nav__link">
+      <a href="../combinatorics/binomial-coefficients.html" class="md-nav__link">
         
   
   
@@ -3624,7 +3489,7 @@
   
   
     <li class="md-nav__item">
-      <a href="combinatorics/catalan-numbers.html" class="md-nav__link">
+      <a href="../combinatorics/catalan-numbers.html" class="md-nav__link">
         
   
   
@@ -3707,7 +3572,7 @@
   
   
     <li class="md-nav__item">
-      <a href="combinatorics/inclusion-exclusion.html" class="md-nav__link">
+      <a href="../combinatorics/inclusion-exclusion.html" class="md-nav__link">
         
   
   
@@ -3735,7 +3600,7 @@
   
   
     <li class="md-nav__item">
-      <a href="combinatorics/burnside.html" class="md-nav__link">
+      <a href="../combinatorics/burnside.html" class="md-nav__link">
         
   
   
@@ -3763,7 +3628,7 @@
   
   
     <li class="md-nav__item">
-      <a href="combinatorics/stars_and_bars.html" class="md-nav__link">
+      <a href="../combinatorics/stars_and_bars.html" class="md-nav__link">
         
   
   
@@ -3791,7 +3656,7 @@
   
   
     <li class="md-nav__item">
-      <a href="combinatorics/generating_combinations.html" class="md-nav__link">
+      <a href="../combinatorics/generating_combinations.html" class="md-nav__link">
         
   
   
@@ -3874,7 +3739,7 @@
   
   
     <li class="md-nav__item">
-      <a href="combinatorics/bishops-on-chessboard.html" class="md-nav__link">
+      <a href="../combinatorics/bishops-on-chessboard.html" class="md-nav__link">
         
   
   
@@ -3902,7 +3767,7 @@
   
   
     <li class="md-nav__item">
-      <a href="combinatorics/bracket_sequences.html" class="md-nav__link">
+      <a href="../combinatorics/bracket_sequences.html" class="md-nav__link">
         
   
   
@@ -3930,7 +3795,7 @@
   
   
     <li class="md-nav__item">
-      <a href="combinatorics/counting_labeled_graphs.html" class="md-nav__link">
+      <a href="../combinatorics/counting_labeled_graphs.html" class="md-nav__link">
         
   
   
@@ -3970,18 +3835,20 @@
       
   
   
+    
   
   
+  
     
     
     
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" checked>
         
           
           <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="0">
@@ -4002,7 +3869,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_8">
             <span class="md-nav__icon md-icon"></span>
             
@@ -4017,18 +3884,20 @@
                 
   
   
+    
   
   
+  
     
     
     
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8_1" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8_1" checked>
         
           
           <label class="md-nav__link" for="__nav_8_1" id="__nav_8_1_label" tabindex="0">
@@ -4049,7 +3918,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_8_1_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_8_1_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_8_1">
             <span class="md-nav__icon md-icon"></span>
             
@@ -4064,10 +3933,37 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="num_methods/binary_search.html" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tìm kiếm nhị phân
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="binary_search.html" class="md-nav__link md-nav__link--active">
         
   
   
@@ -4083,6 +3979,126 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#search-in-sorted-arrays" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tìm kiếm trong mảng đã sắp xếp (Search in sorted arrays)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Tìm kiếm trong mảng đã sắp xếp (Search in sorted arrays)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#lower-bound-and-upper-bound" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cận dưới và cận trên (Lower bound and upper bound)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#implementation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cài đặt (Implementation)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#search-on-arbitrary-predicate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tìm kiếm trên vị từ tùy ý (Search on arbitrary predicate)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Tìm kiếm trên vị từ tùy ý (Search on arbitrary predicate)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#binary-search-on-the-answer" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tìm kiếm nhị phân trên câu trả lời (Binary search on the answer)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#continuous-search" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tìm kiếm liên tục (Continuous search)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#search-with-powers-of-2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tìm kiếm với lũy thừa của 2 (Search with powers of 2)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#practice-problems" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bài tập (Practice Problems)
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -4095,7 +4111,7 @@
   
   
     <li class="md-nav__item">
-      <a href="num_methods/ternary_search.html" class="md-nav__link">
+      <a href="ternary_search.html" class="md-nav__link">
         
   
   
@@ -4123,7 +4139,7 @@
   
   
     <li class="md-nav__item">
-      <a href="num_methods/roots_newton.html" class="md-nav__link">
+      <a href="roots_newton.html" class="md-nav__link">
         
   
   
@@ -4151,7 +4167,7 @@
   
   
     <li class="md-nav__item">
-      <a href="num_methods/simulated_annealing.html" class="md-nav__link">
+      <a href="simulated_annealing.html" class="md-nav__link">
         
   
   
@@ -4234,7 +4250,7 @@
   
   
     <li class="md-nav__item">
-      <a href="num_methods/simpson-integration.html" class="md-nav__link">
+      <a href="simpson-integration.html" class="md-nav__link">
         
   
   
@@ -4371,7 +4387,7 @@
   
   
     <li class="md-nav__item">
-      <a href="geometry/basic-geometry.html" class="md-nav__link">
+      <a href="../geometry/basic-geometry.html" class="md-nav__link">
         
   
   
@@ -4399,7 +4415,7 @@
   
   
     <li class="md-nav__item">
-      <a href="geometry/segment-to-line.html" class="md-nav__link">
+      <a href="../geometry/segment-to-line.html" class="md-nav__link">
         
   
   
@@ -4427,7 +4443,7 @@
   
   
     <li class="md-nav__item">
-      <a href="geometry/lines-intersection.html" class="md-nav__link">
+      <a href="../geometry/lines-intersection.html" class="md-nav__link">
         
   
   
@@ -4455,7 +4471,7 @@
   
   
     <li class="md-nav__item">
-      <a href="geometry/check-segments-intersection.html" class="md-nav__link">
+      <a href="../geometry/check-segments-intersection.html" class="md-nav__link">
         
   
   
@@ -4483,7 +4499,7 @@
   
   
     <li class="md-nav__item">
-      <a href="geometry/segments-intersection.html" class="md-nav__link">
+      <a href="../geometry/segments-intersection.html" class="md-nav__link">
         
   
   
@@ -4511,7 +4527,7 @@
   
   
     <li class="md-nav__item">
-      <a href="geometry/circle-line-intersection.html" class="md-nav__link">
+      <a href="../geometry/circle-line-intersection.html" class="md-nav__link">
         
   
   
@@ -4539,7 +4555,7 @@
   
   
     <li class="md-nav__item">
-      <a href="geometry/circle-circle-intersection.html" class="md-nav__link">
+      <a href="../geometry/circle-circle-intersection.html" class="md-nav__link">
         
   
   
@@ -4567,7 +4583,7 @@
   
   
     <li class="md-nav__item">
-      <a href="geometry/tangents-to-two-circles.html" class="md-nav__link">
+      <a href="../geometry/tangents-to-two-circles.html" class="md-nav__link">
         
   
   
@@ -4595,7 +4611,7 @@
   
   
     <li class="md-nav__item">
-      <a href="geometry/length-of-segments-union.html" class="md-nav__link">
+      <a href="../geometry/length-of-segments-union.html" class="md-nav__link">
         
   
   
@@ -4678,7 +4694,7 @@
   
   
     <li class="md-nav__item">
-      <a href="geometry/oriented-triangle-area.html" class="md-nav__link">
+      <a href="../geometry/oriented-triangle-area.html" class="md-nav__link">
         
   
   
@@ -4706,7 +4722,7 @@
   
   
     <li class="md-nav__item">
-      <a href="geometry/area-of-simple-polygon.html" class="md-nav__link">
+      <a href="../geometry/area-of-simple-polygon.html" class="md-nav__link">
         
   
   
@@ -4734,7 +4750,7 @@
   
   
     <li class="md-nav__item">
-      <a href="geometry/point-in-convex-polygon.html" class="md-nav__link">
+      <a href="../geometry/point-in-convex-polygon.html" class="md-nav__link">
         
   
   
@@ -4762,7 +4778,7 @@
   
   
     <li class="md-nav__item">
-      <a href="geometry/minkowski.html" class="md-nav__link">
+      <a href="../geometry/minkowski.html" class="md-nav__link">
         
   
   
@@ -4790,7 +4806,7 @@
   
   
     <li class="md-nav__item">
-      <a href="geometry/picks-theorem.html" class="md-nav__link">
+      <a href="../geometry/picks-theorem.html" class="md-nav__link">
         
   
   
@@ -4818,7 +4834,7 @@
   
   
     <li class="md-nav__item">
-      <a href="geometry/lattice-points.html" class="md-nav__link">
+      <a href="../geometry/lattice-points.html" class="md-nav__link">
         
   
   
@@ -4901,7 +4917,7 @@
   
   
     <li class="md-nav__item">
-      <a href="geometry/convex-hull.html" class="md-nav__link">
+      <a href="../geometry/convex-hull.html" class="md-nav__link">
         
   
   
@@ -4929,7 +4945,7 @@
   
   
     <li class="md-nav__item">
-      <a href="geometry/convex_hull_trick.html" class="md-nav__link">
+      <a href="../geometry/convex_hull_trick.html" class="md-nav__link">
         
   
   
@@ -5012,7 +5028,7 @@
   
   
     <li class="md-nav__item">
-      <a href="geometry/intersecting_segments.html" class="md-nav__link">
+      <a href="../geometry/intersecting_segments.html" class="md-nav__link">
         
   
   
@@ -5095,7 +5111,7 @@
   
   
     <li class="md-nav__item">
-      <a href="geometry/planar.html" class="md-nav__link">
+      <a href="../geometry/planar.html" class="md-nav__link">
         
   
   
@@ -5123,7 +5139,7 @@
   
   
     <li class="md-nav__item">
-      <a href="geometry/point-location.html" class="md-nav__link">
+      <a href="../geometry/point-location.html" class="md-nav__link">
         
   
   
@@ -5206,7 +5222,7 @@
   
   
     <li class="md-nav__item">
-      <a href="geometry/nearest_points.html" class="md-nav__link">
+      <a href="../geometry/nearest_points.html" class="md-nav__link">
         
   
   
@@ -5234,7 +5250,7 @@
   
   
     <li class="md-nav__item">
-      <a href="geometry/delaunay.html" class="md-nav__link">
+      <a href="../geometry/delaunay.html" class="md-nav__link">
         
   
   
@@ -5262,7 +5278,7 @@
   
   
     <li class="md-nav__item">
-      <a href="geometry/vertical_decomposition.html" class="md-nav__link">
+      <a href="../geometry/vertical_decomposition.html" class="md-nav__link">
         
   
   
@@ -5290,7 +5306,7 @@
   
   
     <li class="md-nav__item">
-      <a href="geometry/halfplane-intersection.html" class="md-nav__link">
+      <a href="../geometry/halfplane-intersection.html" class="md-nav__link">
         
   
   
@@ -5318,7 +5334,7 @@
   
   
     <li class="md-nav__item">
-      <a href="geometry/manhattan-distance.html" class="md-nav__link">
+      <a href="../geometry/manhattan-distance.html" class="md-nav__link">
         
   
   
@@ -5346,7 +5362,7 @@
   
   
     <li class="md-nav__item">
-      <a href="geometry/enclosing-circle.html" class="md-nav__link">
+      <a href="../geometry/enclosing-circle.html" class="md-nav__link">
         
   
   
@@ -5483,7 +5499,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/breadth-first-search.html" class="md-nav__link">
+      <a href="../graph/breadth-first-search.html" class="md-nav__link">
         
   
   
@@ -5511,7 +5527,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/depth-first-search.html" class="md-nav__link">
+      <a href="../graph/depth-first-search.html" class="md-nav__link">
         
   
   
@@ -5594,7 +5610,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/search-for-connected-components.html" class="md-nav__link">
+      <a href="../graph/search-for-connected-components.html" class="md-nav__link">
         
   
   
@@ -5622,7 +5638,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/bridge-searching.html" class="md-nav__link">
+      <a href="../graph/bridge-searching.html" class="md-nav__link">
         
   
   
@@ -5650,7 +5666,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/bridge-searching-online.html" class="md-nav__link">
+      <a href="../graph/bridge-searching-online.html" class="md-nav__link">
         
   
   
@@ -5678,7 +5694,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/cutpoints.html" class="md-nav__link">
+      <a href="../graph/cutpoints.html" class="md-nav__link">
         
   
   
@@ -5706,7 +5722,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/strongly-connected-components.html" class="md-nav__link">
+      <a href="../graph/strongly-connected-components.html" class="md-nav__link">
         
   
   
@@ -5734,7 +5750,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/strong-orientation.html" class="md-nav__link">
+      <a href="../graph/strong-orientation.html" class="md-nav__link">
         
   
   
@@ -5817,7 +5833,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/dijkstra.html" class="md-nav__link">
+      <a href="../graph/dijkstra.html" class="md-nav__link">
         
   
   
@@ -5845,7 +5861,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/dijkstra_sparse.html" class="md-nav__link">
+      <a href="../graph/dijkstra_sparse.html" class="md-nav__link">
         
   
   
@@ -5873,7 +5889,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/bellman_ford.html" class="md-nav__link">
+      <a href="../graph/bellman_ford.html" class="md-nav__link">
         
   
   
@@ -5901,7 +5917,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/01_bfs.html" class="md-nav__link">
+      <a href="../graph/01_bfs.html" class="md-nav__link">
         
   
   
@@ -5929,7 +5945,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/desopo_pape.html" class="md-nav__link">
+      <a href="../graph/desopo_pape.html" class="md-nav__link">
         
   
   
@@ -6012,7 +6028,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/all-pair-shortest-path-floyd-warshall.html" class="md-nav__link">
+      <a href="../graph/all-pair-shortest-path-floyd-warshall.html" class="md-nav__link">
         
   
   
@@ -6040,7 +6056,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/fixed_length_paths.html" class="md-nav__link">
+      <a href="../graph/fixed_length_paths.html" class="md-nav__link">
         
   
   
@@ -6123,7 +6139,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/mst_prim.html" class="md-nav__link">
+      <a href="../graph/mst_prim.html" class="md-nav__link">
         
   
   
@@ -6151,7 +6167,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/mst_kruskal.html" class="md-nav__link">
+      <a href="../graph/mst_kruskal.html" class="md-nav__link">
         
   
   
@@ -6179,7 +6195,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/mst_kruskal_with_dsu.html" class="md-nav__link">
+      <a href="../graph/mst_kruskal_with_dsu.html" class="md-nav__link">
         
   
   
@@ -6207,7 +6223,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/second_best_mst.html" class="md-nav__link">
+      <a href="../graph/second_best_mst.html" class="md-nav__link">
         
   
   
@@ -6235,7 +6251,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/kirchhoff-theorem.html" class="md-nav__link">
+      <a href="../graph/kirchhoff-theorem.html" class="md-nav__link">
         
   
   
@@ -6263,7 +6279,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/pruefer_code.html" class="md-nav__link">
+      <a href="../graph/pruefer_code.html" class="md-nav__link">
         
   
   
@@ -6346,7 +6362,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/finding-cycle.html" class="md-nav__link">
+      <a href="../graph/finding-cycle.html" class="md-nav__link">
         
   
   
@@ -6374,7 +6390,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/finding-negative-cycle-in-graph.html" class="md-nav__link">
+      <a href="../graph/finding-negative-cycle-in-graph.html" class="md-nav__link">
         
   
   
@@ -6402,7 +6418,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/euler_path.html" class="md-nav__link">
+      <a href="../graph/euler_path.html" class="md-nav__link">
         
   
   
@@ -6485,7 +6501,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/lca.html" class="md-nav__link">
+      <a href="../graph/lca.html" class="md-nav__link">
         
   
   
@@ -6513,7 +6529,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/lca_binary_lifting.html" class="md-nav__link">
+      <a href="../graph/lca_binary_lifting.html" class="md-nav__link">
         
   
   
@@ -6541,7 +6557,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/lca_farachcoltonbender.html" class="md-nav__link">
+      <a href="../graph/lca_farachcoltonbender.html" class="md-nav__link">
         
   
   
@@ -6569,7 +6585,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/rmq_linear.html" class="md-nav__link">
+      <a href="../graph/rmq_linear.html" class="md-nav__link">
         
   
   
@@ -6597,7 +6613,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/lca_tarjan.html" class="md-nav__link">
+      <a href="../graph/lca_tarjan.html" class="md-nav__link">
         
   
   
@@ -6680,7 +6696,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/edmonds_karp.html" class="md-nav__link">
+      <a href="../graph/edmonds_karp.html" class="md-nav__link">
         
   
   
@@ -6708,7 +6724,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/push-relabel.html" class="md-nav__link">
+      <a href="../graph/push-relabel.html" class="md-nav__link">
         
   
   
@@ -6736,7 +6752,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/push-relabel-faster.html" class="md-nav__link">
+      <a href="../graph/push-relabel-faster.html" class="md-nav__link">
         
   
   
@@ -6764,7 +6780,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/dinic.html" class="md-nav__link">
+      <a href="../graph/dinic.html" class="md-nav__link">
         
   
   
@@ -6792,7 +6808,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/mpm.html" class="md-nav__link">
+      <a href="../graph/mpm.html" class="md-nav__link">
         
   
   
@@ -6820,7 +6836,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/flow_with_demands.html" class="md-nav__link">
+      <a href="../graph/flow_with_demands.html" class="md-nav__link">
         
   
   
@@ -6848,7 +6864,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/min_cost_flow.html" class="md-nav__link">
+      <a href="../graph/min_cost_flow.html" class="md-nav__link">
         
   
   
@@ -6876,7 +6892,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/Assignment-problem-min-flow.html" class="md-nav__link">
+      <a href="../graph/Assignment-problem-min-flow.html" class="md-nav__link">
         
   
   
@@ -6959,7 +6975,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/bipartite-check.html" class="md-nav__link">
+      <a href="../graph/bipartite-check.html" class="md-nav__link">
         
   
   
@@ -6987,7 +7003,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/kuhn_maximum_bipartite_matching.html" class="md-nav__link">
+      <a href="../graph/kuhn_maximum_bipartite_matching.html" class="md-nav__link">
         
   
   
@@ -7015,7 +7031,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/hungarian-algorithm.html" class="md-nav__link">
+      <a href="../graph/hungarian-algorithm.html" class="md-nav__link">
         
   
   
@@ -7098,7 +7114,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/topological-sort.html" class="md-nav__link">
+      <a href="../graph/topological-sort.html" class="md-nav__link">
         
   
   
@@ -7126,7 +7142,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/edge_vertex_connectivity.html" class="md-nav__link">
+      <a href="../graph/edge_vertex_connectivity.html" class="md-nav__link">
         
   
   
@@ -7154,7 +7170,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/tree_painting.html" class="md-nav__link">
+      <a href="../graph/tree_painting.html" class="md-nav__link">
         
   
   
@@ -7182,7 +7198,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/2SAT.html" class="md-nav__link">
+      <a href="../graph/2SAT.html" class="md-nav__link">
         
   
   
@@ -7210,7 +7226,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/hld.html" class="md-nav__link">
+      <a href="../graph/hld.html" class="md-nav__link">
         
   
   
@@ -7347,7 +7363,7 @@
   
   
     <li class="md-nav__item">
-      <a href="sequences/rmq.html" class="md-nav__link">
+      <a href="../sequences/rmq.html" class="md-nav__link">
         
   
   
@@ -7375,7 +7391,7 @@
   
   
     <li class="md-nav__item">
-      <a href="others/maximum_average_segment.html" class="md-nav__link">
+      <a href="../others/maximum_average_segment.html" class="md-nav__link">
         
   
   
@@ -7403,7 +7419,7 @@
   
   
     <li class="md-nav__item">
-      <a href="sequences/k-th.html" class="md-nav__link">
+      <a href="../sequences/k-th.html" class="md-nav__link">
         
   
   
@@ -7431,7 +7447,7 @@
   
   
     <li class="md-nav__item">
-      <a href="sequences/mex.html" class="md-nav__link">
+      <a href="../sequences/mex.html" class="md-nav__link">
         
   
   
@@ -7514,7 +7530,7 @@
   
   
     <li class="md-nav__item">
-      <a href="game_theory/games_on_graphs.html" class="md-nav__link">
+      <a href="../game_theory/games_on_graphs.html" class="md-nav__link">
         
   
   
@@ -7542,7 +7558,7 @@
   
   
     <li class="md-nav__item">
-      <a href="game_theory/sprague-grundy-nim.html" class="md-nav__link">
+      <a href="../game_theory/sprague-grundy-nim.html" class="md-nav__link">
         
   
   
@@ -7625,7 +7641,7 @@
   
   
     <li class="md-nav__item">
-      <a href="schedules/schedule_one_machine.html" class="md-nav__link">
+      <a href="../schedules/schedule_one_machine.html" class="md-nav__link">
         
   
   
@@ -7653,7 +7669,7 @@
   
   
     <li class="md-nav__item">
-      <a href="schedules/schedule_two_machines.html" class="md-nav__link">
+      <a href="../schedules/schedule_two_machines.html" class="md-nav__link">
         
   
   
@@ -7681,7 +7697,7 @@
   
   
     <li class="md-nav__item">
-      <a href="schedules/schedule-with-completion-duration.html" class="md-nav__link">
+      <a href="../schedules/schedule-with-completion-duration.html" class="md-nav__link">
         
   
   
@@ -7764,7 +7780,7 @@
   
   
     <li class="md-nav__item">
-      <a href="others/tortoise_and_hare.html" class="md-nav__link">
+      <a href="../others/tortoise_and_hare.html" class="md-nav__link">
         
   
   
@@ -7792,7 +7808,7 @@
   
   
     <li class="md-nav__item">
-      <a href="others/josephus_problem.html" class="md-nav__link">
+      <a href="../others/josephus_problem.html" class="md-nav__link">
         
   
   
@@ -7820,7 +7836,7 @@
   
   
     <li class="md-nav__item">
-      <a href="others/15-puzzle.html" class="md-nav__link">
+      <a href="../others/15-puzzle.html" class="md-nav__link">
         
   
   
@@ -7848,7 +7864,7 @@
   
   
     <li class="md-nav__item">
-      <a href="others/stern_brocot_tree_farey_sequences.html" class="md-nav__link">
+      <a href="../others/stern_brocot_tree_farey_sequences.html" class="md-nav__link">
         
   
   
@@ -7900,9 +7916,9 @@
                   <script type="text/javascript">
   window.onload = function () {
     const newIssueURL = "https://github.com/cp-algorithms/cp-algorithms/issues/new";
-    const issueTitle = "Problem on article " + "Trang ch\u1ee7";
+    const issueTitle = "Problem on article " + "T\u00ecm ki\u1ebfm nh\u1ecb ph\u00e2n";
   const issueBody = `
-**Article:** [`+ "Trang ch\u1ee7" + `](${window.location.href})
+**Article:** [`+ "T\u00ecm ki\u1ebfm nh\u1ecb ph\u00e2n" + `](${window.location.href})
 
 **Problem:**
 `;
@@ -7914,7 +7930,7 @@
 </script>
 
 
-<a href="https://github.com/deanqkhanhcoder/cp-algorithms-vi/edit/main/src/index.md" title="Edit this page" class="md-content__button md-icon">
+<a href="https://github.com/deanqkhanhcoder/cp-algorithms-vi/edit/main/src/num_methods/binary_search.md" title="Edit this page" class="md-content__button md-icon">
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75z"/></svg>
 </a>
 <a id="report_issue_a" href="" title="Report a problem" class="md-content__button md-icon">
@@ -7924,93 +7940,129 @@
 
 <ul class="metadata page-metadata" data-bi-name="page info" lang="en-us" dir="ltr">
   
+  
+  <a href="../tags.html#tag:translated" class="md-tag">
+    Translated
+  </a>
+  
+  
 
+  
+  
+  
+  
+  <a href="https://e-maxx.ru/algo/binary_search" class="md-tag">From: e-maxx.ru</a>
+  
   
 </ul>
 
 
-<h1 id="cp-algorithms-vietnamese-translation">CP-Algorithms (Vietnamese Translation)<a class="headerlink" href="#cp-algorithms-vietnamese-translation" title="Permanent link">&para;</a></h1>
-<blockquote>
-<p>📘 Bản dịch tiếng Việt của <strong>cp-algorithms</strong> – tài nguyên thuật toán kinh điển cho Competitive Programming.</p>
-</blockquote>
-<hr />
-<h2 id="gioi-thieu">📌 Giới thiệu<a class="headerlink" href="#gioi-thieu" title="Permanent link">&para;</a></h2>
-<p>Repository này là <strong>bản dịch tiếng Việt</strong> của dự án mã nguồn mở nổi tiếng<br />
-👉 <strong>https://github.com/cp-algorithms/cp-algorithms</strong></p>
-<p>Dự án gốc cung cấp các bài viết chất lượng cao về:
-- Thuật toán (Algorithms)
-- Cấu trúc dữ liệu (Data Structures)
-- Quy hoạch động, đồ thị, hình học, số học, v.v.
-- Ứng dụng thực tế trong <strong>Competitive Programming</strong></p>
-<p>🎯 <strong>Mục tiêu của repo này</strong>:
-- Giúp người học Việt Nam tiếp cận kiến thức CP dễ dàng hơn
-- Giữ nguyên <strong>thuật ngữ tiếng Anh quan trọng</strong> (DP, BFS, Segment Tree, …)
-- Dịch sát nghĩa, ưu tiên <strong>tính chính xác học thuật</strong></p>
-<hr />
-<h2 id="noi-dung-a-dich">📚 Nội dung đã dịch<a class="headerlink" href="#noi-dung-a-dich" title="Permanent link">&para;</a></h2>
+<h1 id="binary-search">Tìm kiếm nhị phân (Binary search)<a class="headerlink" href="#binary-search" title="Permanent link">&para;</a></h1>
+<p><strong>Tìm kiếm nhị phân</strong> là một phương pháp cho phép tìm kiếm thứ gì đó nhanh hơn bằng cách chia khoảng tìm kiếm làm hai. Ứng dụng phổ biến nhất của nó là tìm kiếm các giá trị trong các mảng đã phân loại, tuy nhiên ý tưởng chia nhỏ rất quan trọng trong nhiều tác vụ điển hình khác.</p>
+<h2 id="search-in-sorted-arrays">Tìm kiếm trong mảng đã sắp xếp (Search in sorted arrays)<a class="headerlink" href="#search-in-sorted-arrays" title="Permanent link">&para;</a></h2>
+<p>Vấn đề điển hình nhất dẫn đến tìm kiếm nhị phân như sau. Bạn được cho một mảng đã sắp xếp <span class="arithmatex">$A_0 \leq A_1 \leq \dots \leq A_{n-1}$</span>, hãy kiểm tra xem <span class="arithmatex">$k$</span> có hiện diện trong chuỗi hay không. Giải pháp đơn giản nhất sẽ là kiểm tra từng phần tử một và so sánh nó với <span class="arithmatex">$k$</span> (cái gọi là tìm kiếm tuyến tính). Cách tiếp cận này hoạt động trong <span class="arithmatex">$O(n)$</span>, nhưng không tận dụng thực tế là mảng đã được sắp xếp.</p>
+<center>
+<img src="https://upload.wikimedia.org/wikipedia/commons/8/83/Binary_Search_Depiction.svg" width="800px">
+<br>
+<i>Tìm kiếm nhị phân giá trị $7$ trong một mảng</i>.
+<br>
+<i><a href="https://commons.wikimedia.org/wiki/File:Binary_Search_Depiction.svg">Hình ảnh</a> bởi <a href="https://commons.wikimedia.org/wiki/User:AlwaysAngry">AlwaysAngry</a> được phân phối dưới giấy phép <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.en">CC BY-SA 4.0</a></i>.
+</center>
+
+<p>Bây giờ giả sử rằng chúng ta biết hai chỉ số <span class="arithmatex">$L &lt; R$</span> sao cho <span class="arithmatex">$A_L \leq k \leq A_R$</span>. Bởi vì mảng được sắp xếp, chúng ta có thể suy luận rằng <span class="arithmatex">$k$</span> hoặc xảy ra giữa <span class="arithmatex">$A_L, A_{L+1}, \dots, A_R$</span> hoặc hoàn toàn không xảy ra trong mảng. Nếu chúng ta chọn một chỉ số <span class="arithmatex">$M$</span> tùy ý sao cho <span class="arithmatex">$L &lt; M &lt; R$</span> và kiểm tra xem <span class="arithmatex">$k$</span> nhỏ hơn hay lớn hơn <span class="arithmatex">$A_M$</span>. Chúng tôi có hai trường hợp có thể xảy ra:</p>
+<ol>
+<li><span class="arithmatex">$A_L \leq k \leq A_M$</span>. Trong trường hợp này, chúng tôi giảm bài toán từ <span class="arithmatex">$[L, R]$</span> xuống <span class="arithmatex">$[L, M]$</span>;</li>
+<li><span class="arithmatex">$A_M \leq k \leq A_R$</span>. Trong trường hợp này, chúng tôi giảm bài toán từ <span class="arithmatex">$[L, R]$</span> xuống <span class="arithmatex">$[M, R]$</span>.</li>
+</ol>
+<p>Khi không thể chọn <span class="arithmatex">$M$</span>, nghĩa là khi <span class="arithmatex">$R = L + 1$</span>, chúng ta so sánh trực tiếp <span class="arithmatex">$k$</span> với <span class="arithmatex">$A_L$</span> và <span class="arithmatex">$A_R$</span>. Mặt khác, chúng ta muốn chọn <span class="arithmatex">$M$</span> theo cách mà nó làm giảm đoạn hoạt động thành một phần tử duy nhất nhanh nhất có thể <em>trong trường hợp xấu nhất</em>.</p>
+<p>Vì trong trường hợp xấu nhất, chúng ta sẽ luôn giảm xuống đoạn lớn hơn của <span class="arithmatex">$[L, M]$</span> và <span class="arithmatex">$[M, R]$</span>. Do đó, trong kịch bản trường hợp xấu nhất, mức giảm sẽ là từ <span class="arithmatex">$R-L$</span> xuống <span class="arithmatex">$\max(M-L, R-M)$</span>. Để giảm thiểu giá trị này, chúng ta nên chọn <span class="arithmatex">$M \approx \frac{L+R}{2}$</span>, sau đó</p>
+<div class="arithmatex">$$
+M-L \approx \frac{R-L}{2} \approx R-M.
+$$</div>
+<p>Nói cách khác, từ góc độ kịch bản trường hợp xấu nhất, tối ưu nhất là luôn chọn <span class="arithmatex">$M$</span> ở giữa <span class="arithmatex">$[L, R]$</span> và chia đôi nó. Do đó, đoạn hoạt động giảm một nửa trên mỗi bước cho đến khi nó có kích thước <span class="arithmatex">$1$</span>. Vì vậy, nếu quá trình cần <span class="arithmatex">$h$</span> bước, cuối cùng nó sẽ giảm sự khác biệt giữa <span class="arithmatex">$R$</span> và <span class="arithmatex">$L$</span> từ <span class="arithmatex">$R-L$</span> xuống <span class="arithmatex">$\frac{R-L}{2^h} \approx 1$</span>, cho chúng ta phương trình <span class="arithmatex">$2^h \approx R-L$</span>.</p>
+<p>Lấy <span class="arithmatex">$\log_2$</span> ở cả hai vế, chúng ta nhận được <span class="arithmatex">$h \approx \log_2(R-L) \in O(\log n)$</span>.</p>
+<p>Số lượng các bước logarit tốt hơn nhiều so với tìm kiếm tuyến tính. Ví dụ, đối với <span class="arithmatex">$n \approx 2^{20} \approx 10^6$</span>, bạn sẽ cần thực hiện khoảng một triệu thao tác để tìm kiếm tuyến tính, nhưng chỉ khoảng <span class="arithmatex">$20$</span> thao tác với tìm kiếm nhị phân.</p>
+<h3 id="lower-bound-and-upper-bound">Cận dưới và cận trên (Lower bound and upper bound)<a class="headerlink" href="#lower-bound-and-upper-bound" title="Permanent link">&para;</a></h3>
+<p>Thường thuận tiện để tìm vị trí của phần tử đầu tiên lớn hơn hoặc bằng <span class="arithmatex">$k$</span> (gọi là cận dưới - <strong>lower bound</strong> của <span class="arithmatex">$k$</span> trong mảng) hoặc vị trí của phần tử đầu tiên lớn hơn <span class="arithmatex">$k$</span> (gọi là cận trên - <strong>upper bound</strong> của <span class="arithmatex">$k$</span>) thay vì vị trí chính xác của phần tử.</p>
+<p>Cùng với nhau, cận dưới và cận trên tạo ra một nửa khoảng có thể rỗng của các phần tử mảng bằng <span class="arithmatex">$k$</span>. Để kiểm tra xem <span class="arithmatex">$k$</span> có hiện diện trong mảng hay không, chỉ cần tìm cận dưới của nó và kiểm tra xem phần tử tương ứng có bằng <span class="arithmatex">$k$</span> hay không.</p>
+<h3 id="implementation">Cài đặt (Implementation)<a class="headerlink" href="#implementation" title="Permanent link">&para;</a></h3>
+<p>Lời giải thích ở trên cung cấp một mô tả sơ bộ về thuật toán. Đối với các chi tiết cài đặt, chúng ta cần phải chính xác hơn.</p>
+<p>Chúng tôi sẽ duy trì một cặp <span class="arithmatex">$L &lt; R$</span> sao cho <span class="arithmatex">$A_L \leq k &lt; A_R$</span>. Có nghĩa là khoảng tìm kiếm đang hoạt động là <span class="arithmatex">$[L, R)$</span>. Chúng tôi sử dụng nửa khoảng ở đây thay vì một đoạn <span class="arithmatex">$[L, R]$</span> vì hóa ra nó yêu cầu ít công việc với trường hợp biên hơn.</p>
+<p>Khi <span class="arithmatex">$R = L+1$</span>, chúng ta có thể suy ra từ các định nghĩa ở trên rằng <span class="arithmatex">$R$</span> là cận trên của <span class="arithmatex">$k$</span>. Sẽ thuận tiện khi khởi tạo <span class="arithmatex">$R$</span> với chỉ số ngay sau khi kết thúc, tức là <span class="arithmatex">$R=n$</span> và <span class="arithmatex">$L$</span> với chỉ số ngay trước khi bắt đầu, tức là <span class="arithmatex">$L=-1$</span>. Sẽ ổn miễn là chúng ta không bao giờ đánh giá <span class="arithmatex">$A_L$</span> và <span class="arithmatex">$A_R$</span> trong thuật toán của mình trực tiếp, về mặt hình thức coi nó là <span class="arithmatex">$A_L = -\infty$</span> và <span class="arithmatex">$A_R = +\infty$</span>.</p>
+<p>Cuối cùng, để cụ thể về giá trị của <span class="arithmatex">$M$</span> chúng ta chọn, chúng ta sẽ gắn bó với <span class="arithmatex">$M = \lfloor \frac{L+R}{2} \rfloor$</span>.</p>
+<p>Sau đó, việc triển khai có thể trông giống như thế này:</p>
+<div class="highlight"><pre><span></span><code><span class="c1">// mảng đã sắp xếp được lưu trữ dưới dạng a[0], a[1], ..., a[n-1]</span>
+<span class="kt">int</span><span class="w"> </span><span class="n">l</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">-1</span><span class="p">,</span><span class="w"> </span><span class="n">r</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">n</span><span class="p">;</span>
+<span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">r</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">l</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">m</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">l</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">r</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">2</span><span class="p">;</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">k</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">a</span><span class="p">[</span><span class="n">m</span><span class="p">])</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">r</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">m</span><span class="p">;</span><span class="w"> </span><span class="c1">// a[l] &lt;= k &lt; a[m] &lt;= a[r]</span>
+<span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">l</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">m</span><span class="p">;</span><span class="w"> </span><span class="c1">// a[l] &lt;= a[m] &lt;= k &lt; a[r]</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>Trong quá trình thực thi thuật toán, chúng ta không bao giờ đánh giá <span class="arithmatex">$A_L$</span> cũng như <span class="arithmatex">$A_R$</span>, vì <span class="arithmatex">$L &lt; M &lt; R$</span>. Cuối cùng, <span class="arithmatex">$L$</span> sẽ là chỉ số của phần tử cuối cùng không lớn hơn <span class="arithmatex">$k$</span> (hoặc <span class="arithmatex">$-1$</span> nếu không có phần tử nào như vậy) và <span class="arithmatex">$R$</span> sẽ là chỉ số của phần tử đầu tiên lớn hơn <span class="arithmatex">$k$</span> (hoặc <span class="arithmatex">$n$</span> nếu không có phần tử nào như vậy).</p>
+<p><strong>Lưu ý.</strong> Việc tính toán <code>m</code> là <code>m = (r + l) / 2</code> có thể dẫn đến tràn số nếu <code>l</code> và <code>r</code> là hai số nguyên dương, và lỗi này đã tồn tại khoảng 9 năm trong JDK như được mô tả trong <a href="https://ai.googleblog.com/2006/06/extra-extra-read-all-about-it-nearly.html">bài đăng trên blog</a>. Một số cách tiếp cận thay thế bao gồm ví dụ: viết <code>m = l + (r - l) / 2</code> luôn hoạt động đối với số nguyên dương <code>l</code> và <code>r</code>, nhưng vẫn có thể tràn nếu <code>l</code> là một số âm. Nếu bạn sử dụng C++20, nó cung cấp một giải pháp thay thế dưới dạng <code>m = std::midpoint(l, r)</code> luôn hoạt động chính xác.</p>
+<h2 id="search-on-arbitrary-predicate">Tìm kiếm trên vị từ tùy ý (Search on arbitrary predicate)<a class="headerlink" href="#search-on-arbitrary-predicate" title="Permanent link">&para;</a></h2>
+<p>Cho <span class="arithmatex">$f : \{0,1,\dots, n-1\} \to \{0, 1\}$</span> là một hàm boolean được xác định trên <span class="arithmatex">$0,1,\dots,n-1$</span> sao cho nó tăng đơn điệu, tức là</p>
+<div class="arithmatex">$$
+f(0) \leq f(1) \leq \dots \leq f(n-1).
+$$</div>
+<p>Tìm kiếm nhị phân, theo cách được mô tả ở trên, tìm phân hoạch của mảng theo vị từ <span class="arithmatex">$f(M)$</span>, giữ giá trị boolean của biểu thức <span class="arithmatex">$k &lt; A_M$</span>.
+Có thể sử dụng vị từ đơn điệu tùy ý thay vì <span class="arithmatex">$k &lt; A_M$</span>. Nó đặc biệt hữu ích khi việc tính toán <span class="arithmatex">$f(k)$</span> đòi hỏi quá nhiều thời gian để thực sự tính toán nó cho mọi giá trị có thể.
+Nói cách khác, tìm kiếm nhị phân tìm chỉ số duy nhất <span class="arithmatex">$L$</span> sao cho <span class="arithmatex">$f(L) = 0$</span> và <span class="arithmatex">$f(R)=f(L+1)=1$</span> nếu tồn tại một <em>điểm chuyển tiếp</em> như vậy, hoặc cho chúng ta <span class="arithmatex">$L = n-1$</span> nếu <span class="arithmatex">$f(0) = \dots = f(n-1) = 0$</span> hoặc <span class="arithmatex">$L = -1$</span> nếu <span class="arithmatex">$f(0) = \dots = f(n-1) = 1$</span>.</p>
+<p>Bằng chứng về tính chính xác giả sử có một điểm chuyển tiếp tồn tại, tức là <span class="arithmatex">$f(0)=0$</span> và <span class="arithmatex">$f(n-1)=1$</span>: Việc triển khai duy trì <em>Bất biến vòng lặp</em> (<em>loop invariant</em>) <span class="arithmatex">$f(l)=0, f(r)=1$</span>. Khi <span class="arithmatex">$r - l &gt; 1$</span>, việc chọn <span class="arithmatex">$m$</span> có nghĩa là <span class="arithmatex">$r-l$</span> sẽ luôn giảm. Vòng lặp kết thúc khi <span class="arithmatex">$r - l = 1$</span>, cho chúng ta điểm chuyển tiếp mong muốn của mình.</p>
+<div class="highlight"><pre><span></span><code><span class="c1">// f(i) là một hàm boolean sao cho f(0) &lt;= ... &lt;= f(n-1)</span>
+<span class="kt">int</span><span class="w"> </span><span class="n">l</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">-1</span><span class="p">,</span><span class="w"> </span><span class="n">r</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">n</span><span class="p">;</span>
+<span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">r</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">l</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">m</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">l</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">r</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">2</span><span class="p">;</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">f</span><span class="p">(</span><span class="n">m</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">r</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">m</span><span class="p">;</span><span class="w"> </span><span class="c1">// 0 = f(l) &lt; f(m) = 1</span>
+<span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">l</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">m</span><span class="p">;</span><span class="w"> </span><span class="c1">// 0 = f(m) &lt; f(r) = 1</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<h3 id="binary-search-on-the-answer">Tìm kiếm nhị phân trên câu trả lời (Binary search on the answer)<a class="headerlink" href="#binary-search-on-the-answer" title="Permanent link">&para;</a></h3>
+<p>Tình huống như vậy thường xảy ra khi chúng ta được yêu cầu tính toán một số giá trị, nhưng chúng ta chỉ có khả năng kiểm tra xem giá trị này có ít nhất là <span class="arithmatex">$i$</span> hay không. Ví dụ, bạn được cho một mảng <span class="arithmatex">$a_1,\dots,a_n$</span> và bạn được yêu cầu tìm tổng trung bình sàn lớn nhất</p>
+<div class="arithmatex">$$
+\left \lfloor \frac{a_l + a_{l+1} + \dots + a_r}{r-l+1} \right\rfloor
+$$</div>
+<p>trong số tất cả các cặp <span class="arithmatex">$l,r$</span> khả thi sao cho <span class="arithmatex">$r-l \geq x$</span>. Một trong những cách đơn giản để giải quyết vấn đề này là kiểm tra xem câu trả lời có ít nhất là <span class="arithmatex">$\lambda$</span> hay không, nghĩa là nếu có một cặp <span class="arithmatex">$l, r$</span> sao cho điều sau đây là đúng:</p>
+<div class="arithmatex">$$
+\frac{a_l + a_{l+1} + \dots + a_r}{r-l+1} \geq \lambda.
+$$</div>
+<p>Tương đương, nó viết lại thành</p>
+<div class="arithmatex">$$
+(a_l - \lambda) + (a_{l+1} - \lambda) + \dots + (a_r - \lambda) \geq 0,
+$$</div>
+<p>vì vậy bây giờ chúng ta cần kiểm tra xem có một mảng con của một mảng mới <span class="arithmatex">$a_i - \lambda$</span> có độ dài ít nhất <span class="arithmatex">$x+1$</span> với tổng không âm hay không, điều này có thể thực hiện được với một số tổng tiền tố.</p>
+<h2 id="continuous-search">Tìm kiếm liên tục (Continuous search)<a class="headerlink" href="#continuous-search" title="Permanent link">&para;</a></h2>
+<p>Cho <span class="arithmatex">$f : \mathbb R \to \mathbb R$</span> là một hàm giá trị thực liên tục trên một đoạn <span class="arithmatex">$[L, R]$</span>.</p>
+<p>Không mất tính tổng quát giả sử rằng <span class="arithmatex">$f(L) \leq f(R)$</span>. Từ <a href="https://en.wikipedia.org/wiki/Intermediate_value_theorem">định lý giá trị trung gian</a> suy ra rằng đối với bất kỳ <span class="arithmatex">$y \in [f(L), f(R)]$</span> đều có <span class="arithmatex">$x \in [L, R]$</span> sao cho <span class="arithmatex">$f(x) = y$</span>. Lưu ý rằng, không giống như các đoạn trước, hàm <em>không</em> bắt buộc phải đơn điệu.</p>
+<p>Giá trị <span class="arithmatex">$x$</span> có thể được xấp xỉ lên đến <span class="arithmatex">$\pm\delta$</span> trong thời gian <span class="arithmatex">$O\left(\log \frac{R-L}{\delta}\right)$</span> cho bất kỳ giá trị cụ thể nào của <span class="arithmatex">$\delta$</span>. Ý tưởng về cơ bản là giống nhau, nếu chúng ta lấy <span class="arithmatex">$M \in (L, R)$</span> thì chúng ta có thể giảm khoảng tìm kiếm xuống còn <span class="arithmatex">$[L, M]$</span> hoặc <span class="arithmatex">$[M, R]$</span> tùy thuộc vào việc <span class="arithmatex">$f(M)$</span> có lớn hơn <span class="arithmatex">$y$</span> hay không. Một ví dụ phổ biến ở đây là tìm nghiệm của đa thức bậc lẻ.</p>
+<p>Ví dụ, gọi <span class="arithmatex">$f(x)=x^3 + ax^2 + bx + c$</span>. Khi đó <span class="arithmatex">$f(L) \to -\infty$</span> và <span class="arithmatex">$f(R) \to +\infty$</span> với <span class="arithmatex">$L \to -\infty$</span> và <span class="arithmatex">$R \to +\infty$</span>. Có nghĩa là luôn luôn có thể tìm thấy <span class="arithmatex">$L$</span> đủ nhỏ và <span class="arithmatex">$R$</span> đủ lớn để <span class="arithmatex">$f(L) &lt; 0$</span> và <span class="arithmatex">$f(R) &gt; 0$</span>. Sau đó, có thể tìm thấy bằng tìm kiếm nhị phân khoảng thời gian nhỏ tùy ý chứa <span class="arithmatex">$x$</span> sao cho <span class="arithmatex">$f(x)=0$</span>.</p>
+<h2 id="search-with-powers-of-2">Tìm kiếm với lũy thừa của 2 (Search with powers of 2)<a class="headerlink" href="#search-with-powers-of-2" title="Permanent link">&para;</a></h2>
+<p>Một cách đáng chú ý khác để thực hiện tìm kiếm nhị phân là thay vì duy trì một phân đoạn hoạt động, hãy duy trì con trỏ hiện tại <span class="arithmatex">$i$</span> và lũy thừa hiện tại <span class="arithmatex">$k$</span>. Con trỏ bắt đầu tại <span class="arithmatex">$i=L$</span> và sau đó trên mỗi lần lặp, người ta kiểm tra vị từ tại điểm <span class="arithmatex">$i+2^k$</span>. Nếu vị từ vẫn là <span class="arithmatex">$0$</span>, con trỏ được nâng cao từ <span class="arithmatex">$i$</span> đến <span class="arithmatex">$i+2^k$</span>, nếu không nó vẫn giữ nguyên, thì lũy thừa <span class="arithmatex">$k$</span> giảm đi <span class="arithmatex">$1$</span>.</p>
+<p>Mô hình này được sử dụng rộng rãi trong các nhiệm vụ xung quanh cây, chẳng hạn như tìm tổ tiên chung thấp nhất của hai đỉnh hoặc tìm tổ tiên của một đỉnh cụ thể có chiều cao nhất định. Nó cũng có thể được điều chỉnh để ví dụ: tìm phần tử khác không thứ <span class="arithmatex">$k$</span> trong cây Fenwick.</p>
+<h2 id="practice-problems">Bài tập (Practice Problems)<a class="headerlink" href="#practice-problems" title="Permanent link">&para;</a></h2>
 <ul>
-<li>Đại số (Algebra)</li>
-<li>Cấu trúc dữ liệu (Data Structures)</li>
-<li>Quy hoạch động (Dynamic Programming)</li>
-<li>Đồ thị (Graph)</li>
-<li>Hình học (Geometry)</li>
-<li>Game Theory</li>
-<li>Tổ hợp (Combinatorics)</li>
-<li>…</li>
+<li><a href="https://leetcode.com/problems/find-first-and-last-position-of-element-in-sorted-array/">LeetCode -  Find First and Last Position of Element in Sorted Array</a></li>
+<li><a href="https://leetcode.com/problems/search-insert-position/">LeetCode -  Search Insert Position</a></li>
+<li><a href="https://leetcode.com/problems/first-bad-version/">LeetCode -  First Bad Version</a></li>
+<li><a href="https://leetcode.com/problems/valid-perfect-square/">LeetCode -  Valid Perfect Square</a></li>
+<li><a href="https://leetcode.com/problems/find-peak-element/">LeetCode -  Find Peak Element</a></li>
+<li><a href="https://leetcode.com/problems/search-in-rotated-sorted-array/">LeetCode -  Search in Rotated Sorted Array</a></li>
+<li><a href="https://leetcode.com/problems/find-right-interval/">LeetCode -  Find Right Interval</a></li>
+<li><a href="https://codeforces.com/problemset/problem/706/B/">Codeforces - Interesting Drink</a></li>
+<li><a href="https://codeforces.com/problemset/problem/670/D1">Codeforces - Magic Powder - 1</a></li>
+<li><a href="https://codeforces.com/problemset/problem/165/C">Codeforces - Another Problem on Strings</a></li>
+<li><a href="https://codeforces.com/problemset/problem/760/B">Codeforces - Frodo and pillows</a></li>
+<li><a href="https://codeforces.com/problemset/problem/551/C">Codeforces - GukiZ hates Boxes</a></li>
+<li><a href="https://codeforces.com/problemset/problem/645/C">Codeforces - Enduring Exodus</a></li>
+<li><a href="https://codeforces.com/problemset/problem/590/B">Codeforces - Chip 'n Dale Rescue Rangers</a></li>
 </ul>
-<p>📈 <strong>Tiến độ</strong>: HOÀN THÀNH</p>
-<hr />
-<h2 id="quy-uoc-dich-thuat">🧠 Quy ước dịch thuật<a class="headerlink" href="#quy-uoc-dich-thuat" title="Permanent link">&para;</a></h2>
-<ul>
-<li>❗ <strong>KHÔNG dịch</strong> các thuật ngữ CP phổ biến:</li>
-<li>DP, BFS, DFS, Fenwick Tree, Segment Tree, Bitmask, v.v.</li>
-<li>Thuật ngữ tiếng Anh sẽ được:</li>
-<li>Giữ nguyên</li>
-<li>Hoặc chú thích tiếng Việt trong lần xuất hiện đầu tiên</li>
-<li>Công thức, code, độ phức tạp được <strong>giữ nguyên 100%</strong></li>
-</ul>
-<hr />
-<h2 id="nguon-goc-ban-quyen">🔗 Nguồn gốc &amp; Bản quyền<a class="headerlink" href="#nguon-goc-ban-quyen" title="Permanent link">&para;</a></h2>
-<ul>
-<li>📌 Dự án gốc: https://github.com/cp-algorithms/cp-algorithms</li>
-<li>📌 Nội dung ban đầu được dịch từ: https://e-maxx.ru/algo</li>
-<li>Repository này <strong>KHÔNG phải repo chính thức</strong></li>
-<li>Mọi công lao học thuật thuộc về <strong>đội ngũ cp-algorithms</strong></li>
-</ul>
-<p>📄 Việc dịch được thực hiện với mục đích <strong>giáo dục – phi thương mại</strong></p>
-<hr />
-<h2 id="ong-gop">🤝 Đóng góp<a class="headerlink" href="#ong-gop" title="Permanent link">&para;</a></h2>
-<p>Nếu bạn muốn:
-- Sửa lỗi dịch
-- Chuẩn hóa thuật ngữ
-- Dịch thêm bài mới</p>
-<p>👉 Hoàn toàn hoan nghênh!<br />
-Bạn có thể:
-- Tạo Issue
-- Hoặc Pull Request trực tiếp</p>
-<hr />
-<h2 id="tac-gia-ban-dich">👤 Tác giả bản dịch<a class="headerlink" href="#tac-gia-ban-dich" title="Permanent link">&para;</a></h2>
-<ul>
-<li>GitHub: https://github.com/deanqkhanhcoder</li>
-<li>Mục tiêu: học sâu Competitive Programming &amp; xây dựng tài nguyên tiếng Việt chất lượng</li>
-</ul>
-<hr />
-<h2 id="loi-cam-on">⭐ Lời cảm ơn<a class="headerlink" href="#loi-cam-on" title="Permanent link">&para;</a></h2>
-<p>Xin gửi lời cảm ơn chân thành tới đội ngũ <strong>cp-algorithms</strong><br />
-vì đã xây dựng một trong những tài nguyên CP tốt nhất thế giới 🌍</p>
-<hr />
-<h2 id="checklist">Checklist<a class="headerlink" href="#checklist" title="Permanent link">&para;</a></h2>
-<ul>
-<li>Original lines: 8</li>
-<li>Translated lines: 8</li>
-<li>Code blocks changed? No</li>
-<li>Inline code changed? No</li>
-<li>Technical terms kept in English? Yes</li>
-<li>Headings anchors preserved/added correctly? Yes</li>
-<li>I confirm no character was omitted: YES</li>
-</ul>
-<p>Notes:
-- Translated title 'Main Page' to 'Trang chủ'.</p>
                 
               </article>
             </div>
@@ -8062,14 +8114,14 @@ vì đã xây dựng một trong những tài nguyên CP tốt nhất thế gi�
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": ".", "features": ["navigation.top", "navigation.tracking", "toc.follow", "toc.integrate", "search.suggest", "content.code.copy"], "search": "assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.top", "navigation.tracking", "toc.follow", "toc.integrate", "search.suggest", "content.code.copy"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="assets/javascripts/bundle.79ae519e.min.js"></script>
+      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
       
-        <script src="javascript/config.js"></script>
+        <script src="../javascript/config.js"></script>
       
-        <script src="javascript/donation-banner.js"></script>
+        <script src="../javascript/donation-banner.js"></script>
       
         <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
       

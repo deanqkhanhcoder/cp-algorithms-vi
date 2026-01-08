@@ -10,29 +10,31 @@
       
       
       
-        <link rel="canonical" href="https://deanqkhanhcoder.github.io/cp-algorithms-vi/index.html">
+        <link rel="canonical" href="https://deanqkhanhcoder.github.io/cp-algorithms-vi/geometry/halfplane-intersection.html">
       
       
+        <link rel="prev" href="vertical_decomposition.html">
       
-        <link rel="next" href="navigation.html">
+      
+        <link rel="next" href="manhattan-distance.html">
       
       
         
       
       
-      <link rel="icon" href="favicon.ico">
+      <link rel="icon" href="../favicon.ico">
       <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
     
     
       
-        <title>Trang chủ - Algorithms for Competitive Programming</title>
+        <title>Giao nửa mặt phẳng - Thuật toán S&I trong O(N log N) - Algorithms for Competitive Programming</title>
       
     
     
-      <link rel="stylesheet" href="assets/stylesheets/main.484c7ddc.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
       
         
-        <link rel="stylesheet" href="assets/stylesheets/palette.ab4e12ef.min.css">
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
       
       
 
@@ -51,15 +53,15 @@
       
     
     
-      <link rel="stylesheet" href="stylesheets/extra.css">
+      <link rel="stylesheet" href="../stylesheets/extra.css">
     
-    <script>__md_scope=new URL(".",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
     
     
-  <script src="assets/javascripts/toggle-sidebar.js"></script></head>
+  <script src="../assets/javascripts/toggle-sidebar.js"></script></head>
   
   
     
@@ -78,7 +80,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#cp-algorithms-vietnamese-translation" class="md-skip">
+        <a href="#half-plane-intersection" class="md-skip">
           Skip to content
         </a>
       
@@ -98,10 +100,10 @@
     }
   </script>
   <nav class="md-header__inner md-grid" aria-label="header.title">
-    <a href="." title="Algorithms for Competitive Programming"
+    <a href=".." title="Algorithms for Competitive Programming"
       class="md-header__button md-logo" aria-label="Algorithms for Competitive Programming" data-md-component="logo">
       
-  <img src="favicon.ico" alt="logo">
+  <img src="../favicon.ico" alt="logo">
 
     </a>
     <label class="md-header__button md-icon" for="__drawer">
@@ -111,7 +113,7 @@
       <div class="md-header__ellipsis">
         <div class="md-header__topic">
           <span class="md-ellipsis">
-            <a href="." title="Algorithms for Competitive Programming"
+            <a href=".." title="Algorithms for Competitive Programming"
               aria-label="Algorithms for Competitive Programming" data-md-component="logo">
               Algorithms for Competitive Programming
             </a>
@@ -121,7 +123,7 @@
           <span class="md-ellipsis">
             <a href="#" onclick="scrollToTop()">
               
-              Trang chủ
+              Giao nửa mặt phẳng - Thuật toán S&I trong O(N log N)
               
             </a>
           </span>
@@ -255,9 +257,9 @@
 
 <nav class="md-nav md-nav--primary md-nav--integrated" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="." title="Algorithms for Competitive Programming" class="md-nav__button md-logo" aria-label="Algorithms for Competitive Programming" data-md-component="logo">
+    <a href=".." title="Algorithms for Competitive Programming" class="md-nav__button md-logo" aria-label="Algorithms for Competitive Programming" data-md-component="logo">
       
-  <img src="favicon.ico" alt="logo">
+  <img src="../favicon.ico" alt="logo">
 
     </a>
     Algorithms for Competitive Programming
@@ -281,20 +283,18 @@
       
   
   
-    
   
   
-  
     
     
     
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1" >
         
           
           <label class="md-nav__link" for="__nav_1" id="__nav_1_label" tabindex="0">
@@ -315,7 +315,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_1_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_1_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_1">
             <span class="md-nav__icon md-icon"></span>
             
@@ -330,37 +330,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Trang chủ
-  
-
-    
-  </span>
-  
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="index.html" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../index.html" class="md-nav__link">
         
   
   
@@ -376,114 +349,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#gioi-thieu" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        📌 Giới thiệu
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#noi-dung-a-dich" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        📚 Nội dung đã dịch
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#quy-uoc-dich-thuat" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        🧠 Quy ước dịch thuật
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#nguon-goc-ban-quyen" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        🔗 Nguồn gốc &amp; Bản quyền
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#ong-gop" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        🤝 Đóng góp
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#tac-gia-ban-dich" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        👤 Tác giả bản dịch
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#loi-cam-on" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        ⭐ Lời cảm ơn
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#checklist" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Checklist
-      
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -496,7 +361,7 @@
   
   
     <li class="md-nav__item">
-      <a href="navigation.html" class="md-nav__link">
+      <a href="../navigation.html" class="md-nav__link">
         
   
   
@@ -524,7 +389,7 @@
   
   
     <li class="md-nav__item">
-      <a href="tags.html" class="md-nav__link">
+      <a href="../tags.html" class="md-nav__link">
         
   
   
@@ -552,7 +417,7 @@
   
   
     <li class="md-nav__item">
-      <a href="contrib.html" class="md-nav__link">
+      <a href="../contrib.html" class="md-nav__link">
         
   
   
@@ -580,7 +445,7 @@
   
   
     <li class="md-nav__item">
-      <a href="code_of_conduct.html" class="md-nav__link">
+      <a href="../code_of_conduct.html" class="md-nav__link">
         
   
   
@@ -608,7 +473,7 @@
   
   
     <li class="md-nav__item">
-      <a href="preview.html" class="md-nav__link">
+      <a href="../preview.html" class="md-nav__link">
         
   
   
@@ -737,7 +602,7 @@
   
   
     <li class="md-nav__item">
-      <a href="algebra/binary-exp.html" class="md-nav__link">
+      <a href="../algebra/binary-exp.html" class="md-nav__link">
         
   
   
@@ -765,7 +630,7 @@
   
   
     <li class="md-nav__item">
-      <a href="algebra/euclid-algorithm.html" class="md-nav__link">
+      <a href="../algebra/euclid-algorithm.html" class="md-nav__link">
         
   
   
@@ -793,7 +658,7 @@
   
   
     <li class="md-nav__item">
-      <a href="algebra/extended-euclid-algorithm.html" class="md-nav__link">
+      <a href="../algebra/extended-euclid-algorithm.html" class="md-nav__link">
         
   
   
@@ -821,7 +686,7 @@
   
   
     <li class="md-nav__item">
-      <a href="algebra/linear-diophantine-equation.html" class="md-nav__link">
+      <a href="../algebra/linear-diophantine-equation.html" class="md-nav__link">
         
   
   
@@ -849,7 +714,7 @@
   
   
     <li class="md-nav__item">
-      <a href="algebra/fibonacci-numbers.html" class="md-nav__link">
+      <a href="../algebra/fibonacci-numbers.html" class="md-nav__link">
         
   
   
@@ -932,7 +797,7 @@
   
   
     <li class="md-nav__item">
-      <a href="algebra/sieve-of-eratosthenes.html" class="md-nav__link">
+      <a href="../algebra/sieve-of-eratosthenes.html" class="md-nav__link">
         
   
   
@@ -960,7 +825,7 @@
   
   
     <li class="md-nav__item">
-      <a href="algebra/prime-sieve-linear.html" class="md-nav__link">
+      <a href="../algebra/prime-sieve-linear.html" class="md-nav__link">
         
   
   
@@ -988,7 +853,7 @@
   
   
     <li class="md-nav__item">
-      <a href="algebra/primality_tests.html" class="md-nav__link">
+      <a href="../algebra/primality_tests.html" class="md-nav__link">
         
   
   
@@ -1016,7 +881,7 @@
   
   
     <li class="md-nav__item">
-      <a href="algebra/factorization.html" class="md-nav__link">
+      <a href="../algebra/factorization.html" class="md-nav__link">
         
   
   
@@ -1099,7 +964,7 @@
   
   
     <li class="md-nav__item">
-      <a href="algebra/phi-function.html" class="md-nav__link">
+      <a href="../algebra/phi-function.html" class="md-nav__link">
         
   
   
@@ -1127,7 +992,7 @@
   
   
     <li class="md-nav__item">
-      <a href="algebra/divisors.html" class="md-nav__link">
+      <a href="../algebra/divisors.html" class="md-nav__link">
         
   
   
@@ -1210,7 +1075,7 @@
   
   
     <li class="md-nav__item">
-      <a href="algebra/module-inverse.html" class="md-nav__link">
+      <a href="../algebra/module-inverse.html" class="md-nav__link">
         
   
   
@@ -1238,7 +1103,7 @@
   
   
     <li class="md-nav__item">
-      <a href="algebra/linear_congruence_equation.html" class="md-nav__link">
+      <a href="../algebra/linear_congruence_equation.html" class="md-nav__link">
         
   
   
@@ -1266,7 +1131,7 @@
   
   
     <li class="md-nav__item">
-      <a href="algebra/chinese-remainder-theorem.html" class="md-nav__link">
+      <a href="../algebra/chinese-remainder-theorem.html" class="md-nav__link">
         
   
   
@@ -1294,7 +1159,7 @@
   
   
     <li class="md-nav__item">
-      <a href="algebra/garners-algorithm.html" class="md-nav__link">
+      <a href="../algebra/garners-algorithm.html" class="md-nav__link">
         
   
   
@@ -1322,7 +1187,7 @@
   
   
     <li class="md-nav__item">
-      <a href="algebra/factorial-modulo.html" class="md-nav__link">
+      <a href="../algebra/factorial-modulo.html" class="md-nav__link">
         
   
   
@@ -1350,7 +1215,7 @@
   
   
     <li class="md-nav__item">
-      <a href="algebra/discrete-log.html" class="md-nav__link">
+      <a href="../algebra/discrete-log.html" class="md-nav__link">
         
   
   
@@ -1378,7 +1243,7 @@
   
   
     <li class="md-nav__item">
-      <a href="algebra/primitive-root.html" class="md-nav__link">
+      <a href="../algebra/primitive-root.html" class="md-nav__link">
         
   
   
@@ -1406,7 +1271,7 @@
   
   
     <li class="md-nav__item">
-      <a href="algebra/discrete-root.html" class="md-nav__link">
+      <a href="../algebra/discrete-root.html" class="md-nav__link">
         
   
   
@@ -1434,7 +1299,7 @@
   
   
     <li class="md-nav__item">
-      <a href="algebra/montgomery_multiplication.html" class="md-nav__link">
+      <a href="../algebra/montgomery_multiplication.html" class="md-nav__link">
         
   
   
@@ -1517,7 +1382,7 @@
   
   
     <li class="md-nav__item">
-      <a href="algebra/balanced-ternary.html" class="md-nav__link">
+      <a href="../algebra/balanced-ternary.html" class="md-nav__link">
         
   
   
@@ -1545,7 +1410,7 @@
   
   
     <li class="md-nav__item">
-      <a href="algebra/gray-code.html" class="md-nav__link">
+      <a href="../algebra/gray-code.html" class="md-nav__link">
         
   
   
@@ -1628,7 +1493,7 @@
   
   
     <li class="md-nav__item">
-      <a href="algebra/bit-manipulation.html" class="md-nav__link">
+      <a href="../algebra/bit-manipulation.html" class="md-nav__link">
         
   
   
@@ -1656,7 +1521,7 @@
   
   
     <li class="md-nav__item">
-      <a href="algebra/all-submasks.html" class="md-nav__link">
+      <a href="../algebra/all-submasks.html" class="md-nav__link">
         
   
   
@@ -1684,7 +1549,7 @@
   
   
     <li class="md-nav__item">
-      <a href="algebra/big-integer.html" class="md-nav__link">
+      <a href="../algebra/big-integer.html" class="md-nav__link">
         
   
   
@@ -1712,7 +1577,7 @@
   
   
     <li class="md-nav__item">
-      <a href="algebra/fft.html" class="md-nav__link">
+      <a href="../algebra/fft.html" class="md-nav__link">
         
   
   
@@ -1740,7 +1605,7 @@
   
   
     <li class="md-nav__item">
-      <a href="algebra/polynomial.html" class="md-nav__link">
+      <a href="../algebra/polynomial.html" class="md-nav__link">
         
   
   
@@ -1768,7 +1633,7 @@
   
   
     <li class="md-nav__item">
-      <a href="algebra/continued-fractions.html" class="md-nav__link">
+      <a href="../algebra/continued-fractions.html" class="md-nav__link">
         
   
   
@@ -1796,7 +1661,7 @@
   
   
     <li class="md-nav__item">
-      <a href="algebra/factoring-exp.html" class="md-nav__link">
+      <a href="../algebra/factoring-exp.html" class="md-nav__link">
         
   
   
@@ -1933,7 +1798,7 @@
   
   
     <li class="md-nav__item">
-      <a href="data_structures/stack_queue_modification.html" class="md-nav__link">
+      <a href="../data_structures/stack_queue_modification.html" class="md-nav__link">
         
   
   
@@ -1961,7 +1826,7 @@
   
   
     <li class="md-nav__item">
-      <a href="data_structures/sparse-table.html" class="md-nav__link">
+      <a href="../data_structures/sparse-table.html" class="md-nav__link">
         
   
   
@@ -2044,7 +1909,7 @@
   
   
     <li class="md-nav__item">
-      <a href="data_structures/disjoint_set_union.html" class="md-nav__link">
+      <a href="../data_structures/disjoint_set_union.html" class="md-nav__link">
         
   
   
@@ -2072,7 +1937,7 @@
   
   
     <li class="md-nav__item">
-      <a href="data_structures/fenwick.html" class="md-nav__link">
+      <a href="../data_structures/fenwick.html" class="md-nav__link">
         
   
   
@@ -2100,7 +1965,7 @@
   
   
     <li class="md-nav__item">
-      <a href="data_structures/sqrt_decomposition.html" class="md-nav__link">
+      <a href="../data_structures/sqrt_decomposition.html" class="md-nav__link">
         
   
   
@@ -2128,7 +1993,7 @@
   
   
     <li class="md-nav__item">
-      <a href="data_structures/segment_tree.html" class="md-nav__link">
+      <a href="../data_structures/segment_tree.html" class="md-nav__link">
         
   
   
@@ -2156,7 +2021,7 @@
   
   
     <li class="md-nav__item">
-      <a href="data_structures/treap.html" class="md-nav__link">
+      <a href="../data_structures/treap.html" class="md-nav__link">
         
   
   
@@ -2184,7 +2049,7 @@
   
   
     <li class="md-nav__item">
-      <a href="data_structures/sqrt-tree.html" class="md-nav__link">
+      <a href="../data_structures/sqrt-tree.html" class="md-nav__link">
         
   
   
@@ -2212,7 +2077,7 @@
   
   
     <li class="md-nav__item">
-      <a href="data_structures/randomized_heap.html" class="md-nav__link">
+      <a href="../data_structures/randomized_heap.html" class="md-nav__link">
         
   
   
@@ -2295,7 +2160,7 @@
   
   
     <li class="md-nav__item">
-      <a href="data_structures/deleting_in_log_n.html" class="md-nav__link">
+      <a href="../data_structures/deleting_in_log_n.html" class="md-nav__link">
         
   
   
@@ -2385,7 +2250,7 @@
   
   
     <li class="md-nav__item">
-      <a href="dynamic_programming/intro-to-dp.html" class="md-nav__link">
+      <a href="../dynamic_programming/intro-to-dp.html" class="md-nav__link">
         
   
   
@@ -2413,7 +2278,7 @@
   
   
     <li class="md-nav__item">
-      <a href="dynamic_programming/knapsack.html" class="md-nav__link">
+      <a href="../dynamic_programming/knapsack.html" class="md-nav__link">
         
   
   
@@ -2441,7 +2306,7 @@
   
   
     <li class="md-nav__item">
-      <a href="dynamic_programming/longest_increasing_subsequence.html" class="md-nav__link">
+      <a href="../dynamic_programming/longest_increasing_subsequence.html" class="md-nav__link">
         
   
   
@@ -2516,7 +2381,7 @@
   
   
     <li class="md-nav__item">
-      <a href="dynamic_programming/divide-and-conquer-dp.html" class="md-nav__link">
+      <a href="../dynamic_programming/divide-and-conquer-dp.html" class="md-nav__link">
         
   
   
@@ -2544,7 +2409,7 @@
   
   
     <li class="md-nav__item">
-      <a href="dynamic_programming/knuth-optimization.html" class="md-nav__link">
+      <a href="../dynamic_programming/knuth-optimization.html" class="md-nav__link">
         
   
   
@@ -2627,7 +2492,7 @@
   
   
     <li class="md-nav__item">
-      <a href="dynamic_programming/profile-dynamics.html" class="md-nav__link">
+      <a href="../dynamic_programming/profile-dynamics.html" class="md-nav__link">
         
   
   
@@ -2655,7 +2520,7 @@
   
   
     <li class="md-nav__item">
-      <a href="dynamic_programming/zero_matrix.html" class="md-nav__link">
+      <a href="../dynamic_programming/zero_matrix.html" class="md-nav__link">
         
   
   
@@ -2792,7 +2657,7 @@
   
   
     <li class="md-nav__item">
-      <a href="string/string-hashing.html" class="md-nav__link">
+      <a href="../string/string-hashing.html" class="md-nav__link">
         
   
   
@@ -2820,7 +2685,7 @@
   
   
     <li class="md-nav__item">
-      <a href="string/rabin-karp.html" class="md-nav__link">
+      <a href="../string/rabin-karp.html" class="md-nav__link">
         
   
   
@@ -2848,7 +2713,7 @@
   
   
     <li class="md-nav__item">
-      <a href="string/prefix-function.html" class="md-nav__link">
+      <a href="../string/prefix-function.html" class="md-nav__link">
         
   
   
@@ -2876,7 +2741,7 @@
   
   
     <li class="md-nav__item">
-      <a href="string/z-function.html" class="md-nav__link">
+      <a href="../string/z-function.html" class="md-nav__link">
         
   
   
@@ -2904,7 +2769,7 @@
   
   
     <li class="md-nav__item">
-      <a href="string/suffix-array.html" class="md-nav__link">
+      <a href="../string/suffix-array.html" class="md-nav__link">
         
   
   
@@ -2932,7 +2797,7 @@
   
   
     <li class="md-nav__item">
-      <a href="string/aho_corasick.html" class="md-nav__link">
+      <a href="../string/aho_corasick.html" class="md-nav__link">
         
   
   
@@ -3015,7 +2880,7 @@
   
   
     <li class="md-nav__item">
-      <a href="string/suffix-tree-ukkonen.html" class="md-nav__link">
+      <a href="../string/suffix-tree-ukkonen.html" class="md-nav__link">
         
   
   
@@ -3043,7 +2908,7 @@
   
   
     <li class="md-nav__item">
-      <a href="string/suffix-automaton.html" class="md-nav__link">
+      <a href="../string/suffix-automaton.html" class="md-nav__link">
         
   
   
@@ -3071,7 +2936,7 @@
   
   
     <li class="md-nav__item">
-      <a href="string/lyndon_factorization.html" class="md-nav__link">
+      <a href="../string/lyndon_factorization.html" class="md-nav__link">
         
   
   
@@ -3154,7 +3019,7 @@
   
   
     <li class="md-nav__item">
-      <a href="string/expression_parsing.html" class="md-nav__link">
+      <a href="../string/expression_parsing.html" class="md-nav__link">
         
   
   
@@ -3182,7 +3047,7 @@
   
   
     <li class="md-nav__item">
-      <a href="string/manacher.html" class="md-nav__link">
+      <a href="../string/manacher.html" class="md-nav__link">
         
   
   
@@ -3210,7 +3075,7 @@
   
   
     <li class="md-nav__item">
-      <a href="string/main_lorentz.html" class="md-nav__link">
+      <a href="../string/main_lorentz.html" class="md-nav__link">
         
   
   
@@ -3347,7 +3212,7 @@
   
   
     <li class="md-nav__item">
-      <a href="linear_algebra/linear-system-gauss.html" class="md-nav__link">
+      <a href="../linear_algebra/linear-system-gauss.html" class="md-nav__link">
         
   
   
@@ -3375,7 +3240,7 @@
   
   
     <li class="md-nav__item">
-      <a href="linear_algebra/determinant-gauss.html" class="md-nav__link">
+      <a href="../linear_algebra/determinant-gauss.html" class="md-nav__link">
         
   
   
@@ -3403,7 +3268,7 @@
   
   
     <li class="md-nav__item">
-      <a href="linear_algebra/determinant-kraut.html" class="md-nav__link">
+      <a href="../linear_algebra/determinant-kraut.html" class="md-nav__link">
         
   
   
@@ -3431,7 +3296,7 @@
   
   
     <li class="md-nav__item">
-      <a href="linear_algebra/rank-matrix.html" class="md-nav__link">
+      <a href="../linear_algebra/rank-matrix.html" class="md-nav__link">
         
   
   
@@ -3568,7 +3433,7 @@
   
   
     <li class="md-nav__item">
-      <a href="algebra/factorial-divisors.html" class="md-nav__link">
+      <a href="../algebra/factorial-divisors.html" class="md-nav__link">
         
   
   
@@ -3596,7 +3461,7 @@
   
   
     <li class="md-nav__item">
-      <a href="combinatorics/binomial-coefficients.html" class="md-nav__link">
+      <a href="../combinatorics/binomial-coefficients.html" class="md-nav__link">
         
   
   
@@ -3624,7 +3489,7 @@
   
   
     <li class="md-nav__item">
-      <a href="combinatorics/catalan-numbers.html" class="md-nav__link">
+      <a href="../combinatorics/catalan-numbers.html" class="md-nav__link">
         
   
   
@@ -3707,7 +3572,7 @@
   
   
     <li class="md-nav__item">
-      <a href="combinatorics/inclusion-exclusion.html" class="md-nav__link">
+      <a href="../combinatorics/inclusion-exclusion.html" class="md-nav__link">
         
   
   
@@ -3735,7 +3600,7 @@
   
   
     <li class="md-nav__item">
-      <a href="combinatorics/burnside.html" class="md-nav__link">
+      <a href="../combinatorics/burnside.html" class="md-nav__link">
         
   
   
@@ -3763,7 +3628,7 @@
   
   
     <li class="md-nav__item">
-      <a href="combinatorics/stars_and_bars.html" class="md-nav__link">
+      <a href="../combinatorics/stars_and_bars.html" class="md-nav__link">
         
   
   
@@ -3791,7 +3656,7 @@
   
   
     <li class="md-nav__item">
-      <a href="combinatorics/generating_combinations.html" class="md-nav__link">
+      <a href="../combinatorics/generating_combinations.html" class="md-nav__link">
         
   
   
@@ -3874,7 +3739,7 @@
   
   
     <li class="md-nav__item">
-      <a href="combinatorics/bishops-on-chessboard.html" class="md-nav__link">
+      <a href="../combinatorics/bishops-on-chessboard.html" class="md-nav__link">
         
   
   
@@ -3902,7 +3767,7 @@
   
   
     <li class="md-nav__item">
-      <a href="combinatorics/bracket_sequences.html" class="md-nav__link">
+      <a href="../combinatorics/bracket_sequences.html" class="md-nav__link">
         
   
   
@@ -3930,7 +3795,7 @@
   
   
     <li class="md-nav__item">
-      <a href="combinatorics/counting_labeled_graphs.html" class="md-nav__link">
+      <a href="../combinatorics/counting_labeled_graphs.html" class="md-nav__link">
         
   
   
@@ -4067,7 +3932,7 @@
   
   
     <li class="md-nav__item">
-      <a href="num_methods/binary_search.html" class="md-nav__link">
+      <a href="../num_methods/binary_search.html" class="md-nav__link">
         
   
   
@@ -4095,7 +3960,7 @@
   
   
     <li class="md-nav__item">
-      <a href="num_methods/ternary_search.html" class="md-nav__link">
+      <a href="../num_methods/ternary_search.html" class="md-nav__link">
         
   
   
@@ -4123,7 +3988,7 @@
   
   
     <li class="md-nav__item">
-      <a href="num_methods/roots_newton.html" class="md-nav__link">
+      <a href="../num_methods/roots_newton.html" class="md-nav__link">
         
   
   
@@ -4151,7 +4016,7 @@
   
   
     <li class="md-nav__item">
-      <a href="num_methods/simulated_annealing.html" class="md-nav__link">
+      <a href="../num_methods/simulated_annealing.html" class="md-nav__link">
         
   
   
@@ -4234,7 +4099,7 @@
   
   
     <li class="md-nav__item">
-      <a href="num_methods/simpson-integration.html" class="md-nav__link">
+      <a href="../num_methods/simpson-integration.html" class="md-nav__link">
         
   
   
@@ -4274,18 +4139,20 @@
       
   
   
+    
   
   
+  
     
     
     
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_9" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_9" checked>
         
           
           <label class="md-nav__link" for="__nav_9" id="__nav_9_label" tabindex="0">
@@ -4306,7 +4173,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_9_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_9_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_9">
             <span class="md-nav__icon md-icon"></span>
             
@@ -4371,7 +4238,7 @@
   
   
     <li class="md-nav__item">
-      <a href="geometry/basic-geometry.html" class="md-nav__link">
+      <a href="basic-geometry.html" class="md-nav__link">
         
   
   
@@ -4399,7 +4266,7 @@
   
   
     <li class="md-nav__item">
-      <a href="geometry/segment-to-line.html" class="md-nav__link">
+      <a href="segment-to-line.html" class="md-nav__link">
         
   
   
@@ -4427,7 +4294,7 @@
   
   
     <li class="md-nav__item">
-      <a href="geometry/lines-intersection.html" class="md-nav__link">
+      <a href="lines-intersection.html" class="md-nav__link">
         
   
   
@@ -4455,7 +4322,7 @@
   
   
     <li class="md-nav__item">
-      <a href="geometry/check-segments-intersection.html" class="md-nav__link">
+      <a href="check-segments-intersection.html" class="md-nav__link">
         
   
   
@@ -4483,7 +4350,7 @@
   
   
     <li class="md-nav__item">
-      <a href="geometry/segments-intersection.html" class="md-nav__link">
+      <a href="segments-intersection.html" class="md-nav__link">
         
   
   
@@ -4511,7 +4378,7 @@
   
   
     <li class="md-nav__item">
-      <a href="geometry/circle-line-intersection.html" class="md-nav__link">
+      <a href="circle-line-intersection.html" class="md-nav__link">
         
   
   
@@ -4539,7 +4406,7 @@
   
   
     <li class="md-nav__item">
-      <a href="geometry/circle-circle-intersection.html" class="md-nav__link">
+      <a href="circle-circle-intersection.html" class="md-nav__link">
         
   
   
@@ -4567,7 +4434,7 @@
   
   
     <li class="md-nav__item">
-      <a href="geometry/tangents-to-two-circles.html" class="md-nav__link">
+      <a href="tangents-to-two-circles.html" class="md-nav__link">
         
   
   
@@ -4595,7 +4462,7 @@
   
   
     <li class="md-nav__item">
-      <a href="geometry/length-of-segments-union.html" class="md-nav__link">
+      <a href="length-of-segments-union.html" class="md-nav__link">
         
   
   
@@ -4678,7 +4545,7 @@
   
   
     <li class="md-nav__item">
-      <a href="geometry/oriented-triangle-area.html" class="md-nav__link">
+      <a href="oriented-triangle-area.html" class="md-nav__link">
         
   
   
@@ -4706,7 +4573,7 @@
   
   
     <li class="md-nav__item">
-      <a href="geometry/area-of-simple-polygon.html" class="md-nav__link">
+      <a href="area-of-simple-polygon.html" class="md-nav__link">
         
   
   
@@ -4734,7 +4601,7 @@
   
   
     <li class="md-nav__item">
-      <a href="geometry/point-in-convex-polygon.html" class="md-nav__link">
+      <a href="point-in-convex-polygon.html" class="md-nav__link">
         
   
   
@@ -4762,7 +4629,7 @@
   
   
     <li class="md-nav__item">
-      <a href="geometry/minkowski.html" class="md-nav__link">
+      <a href="minkowski.html" class="md-nav__link">
         
   
   
@@ -4790,7 +4657,7 @@
   
   
     <li class="md-nav__item">
-      <a href="geometry/picks-theorem.html" class="md-nav__link">
+      <a href="picks-theorem.html" class="md-nav__link">
         
   
   
@@ -4818,7 +4685,7 @@
   
   
     <li class="md-nav__item">
-      <a href="geometry/lattice-points.html" class="md-nav__link">
+      <a href="lattice-points.html" class="md-nav__link">
         
   
   
@@ -4901,7 +4768,7 @@
   
   
     <li class="md-nav__item">
-      <a href="geometry/convex-hull.html" class="md-nav__link">
+      <a href="convex-hull.html" class="md-nav__link">
         
   
   
@@ -4929,7 +4796,7 @@
   
   
     <li class="md-nav__item">
-      <a href="geometry/convex_hull_trick.html" class="md-nav__link">
+      <a href="convex_hull_trick.html" class="md-nav__link">
         
   
   
@@ -5012,7 +4879,7 @@
   
   
     <li class="md-nav__item">
-      <a href="geometry/intersecting_segments.html" class="md-nav__link">
+      <a href="intersecting_segments.html" class="md-nav__link">
         
   
   
@@ -5095,7 +4962,7 @@
   
   
     <li class="md-nav__item">
-      <a href="geometry/planar.html" class="md-nav__link">
+      <a href="planar.html" class="md-nav__link">
         
   
   
@@ -5123,7 +4990,7 @@
   
   
     <li class="md-nav__item">
-      <a href="geometry/point-location.html" class="md-nav__link">
+      <a href="point-location.html" class="md-nav__link">
         
   
   
@@ -5156,18 +5023,20 @@
                 
   
   
+    
   
   
+  
     
     
     
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_9_6" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_9_6" checked>
         
           
           <label class="md-nav__link" for="__nav_9_6" id="__nav_9_6_label" tabindex="0">
@@ -5188,7 +5057,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_9_6_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_9_6_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_9_6">
             <span class="md-nav__icon md-icon"></span>
             
@@ -5206,7 +5075,7 @@
   
   
     <li class="md-nav__item">
-      <a href="geometry/nearest_points.html" class="md-nav__link">
+      <a href="nearest_points.html" class="md-nav__link">
         
   
   
@@ -5234,7 +5103,7 @@
   
   
     <li class="md-nav__item">
-      <a href="geometry/delaunay.html" class="md-nav__link">
+      <a href="delaunay.html" class="md-nav__link">
         
   
   
@@ -5262,7 +5131,7 @@
   
   
     <li class="md-nav__item">
-      <a href="geometry/vertical_decomposition.html" class="md-nav__link">
+      <a href="vertical_decomposition.html" class="md-nav__link">
         
   
   
@@ -5287,10 +5156,37 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="geometry/halfplane-intersection.html" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Giao nửa mặt phẳng - Thuật toán S&I trong O(N log N)
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="halfplane-intersection.html" class="md-nav__link md-nav__link--active">
         
   
   
@@ -5306,6 +5202,259 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#initial-clarifications-and-definitions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Các làm rõ và định nghĩa ban đầu (Initial clarifications and definitions)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#brute-force-approach-on3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cách tiếp cận vết cạn - $O(N^3)$ (Brute force approach - $O(N^3)$)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#incremental-approach-on2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cách tiếp cận tăng dần - $O(N^2)$ (Incremental approach - $O(N^2)$)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sort-and-incremental-algorithm-on-log-n" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Thuật toán Sắp xếp và Tăng dần - $O(N \log N)$ (Sort-and-Incremental algorithm - $O(N \log N)$)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Thuật toán Sắp xếp và Tăng dần - $O(N \log N)$ (Sort-and-Incremental algorithm - $O(N \log N)$)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#direct-implementation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cài đặt trực tiếp (Direct implementation)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#implementation-discussion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Thảo luận về cài đặt (Implementation discussion)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#problems-tasks-and-applications" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bài toán, nhiệm vụ và ứng dụng (Problems, tasks and applications)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Bài toán, nhiệm vụ và ứng dụng (Problems, tasks and applications)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#convex-polygon-intersection" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Giao của đa giác lồi (Convex polygon intersection)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#visibility-in-the-plane" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Khả năng nhìn thấy trong mặt phẳng (Visibility in the plane)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#half-plane-intersection-with-binary-search" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Giao nửa mặt phẳng với tìm kiếm nhị phân (Half-plane intersection with binary search)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#two-dimensional-linear-programming" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quy hoạch tuyến tính hai chiều (Two-dimensional linear programming)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#practice-problems" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bài tập (Practice problems)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Bài tập (Practice problems)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#classic-problems-direct-application" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bài toán kinh điển, ứng dụng trực tiếp
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#harder-problems" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bài toán khó hơn
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#additional-problems" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bài toán bổ sung
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references-bibliography-and-other-sources" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tài liệu tham khảo, thư mục và các nguồn khác (References, bibliography and other sources)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Tài liệu tham khảo, thư mục và các nguồn khác (References, bibliography and other sources)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#main-sources" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Nguồn chính
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#good-blogs-chinese" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Blog hay (tiếng Trung)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#randomized-algorithm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Thuật toán ngẫu nhiên
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -5318,7 +5467,7 @@
   
   
     <li class="md-nav__item">
-      <a href="geometry/manhattan-distance.html" class="md-nav__link">
+      <a href="manhattan-distance.html" class="md-nav__link">
         
   
   
@@ -5346,7 +5495,7 @@
   
   
     <li class="md-nav__item">
-      <a href="geometry/enclosing-circle.html" class="md-nav__link">
+      <a href="enclosing-circle.html" class="md-nav__link">
         
   
   
@@ -5483,7 +5632,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/breadth-first-search.html" class="md-nav__link">
+      <a href="../graph/breadth-first-search.html" class="md-nav__link">
         
   
   
@@ -5511,7 +5660,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/depth-first-search.html" class="md-nav__link">
+      <a href="../graph/depth-first-search.html" class="md-nav__link">
         
   
   
@@ -5594,7 +5743,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/search-for-connected-components.html" class="md-nav__link">
+      <a href="../graph/search-for-connected-components.html" class="md-nav__link">
         
   
   
@@ -5622,7 +5771,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/bridge-searching.html" class="md-nav__link">
+      <a href="../graph/bridge-searching.html" class="md-nav__link">
         
   
   
@@ -5650,7 +5799,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/bridge-searching-online.html" class="md-nav__link">
+      <a href="../graph/bridge-searching-online.html" class="md-nav__link">
         
   
   
@@ -5678,7 +5827,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/cutpoints.html" class="md-nav__link">
+      <a href="../graph/cutpoints.html" class="md-nav__link">
         
   
   
@@ -5706,7 +5855,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/strongly-connected-components.html" class="md-nav__link">
+      <a href="../graph/strongly-connected-components.html" class="md-nav__link">
         
   
   
@@ -5734,7 +5883,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/strong-orientation.html" class="md-nav__link">
+      <a href="../graph/strong-orientation.html" class="md-nav__link">
         
   
   
@@ -5817,7 +5966,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/dijkstra.html" class="md-nav__link">
+      <a href="../graph/dijkstra.html" class="md-nav__link">
         
   
   
@@ -5845,7 +5994,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/dijkstra_sparse.html" class="md-nav__link">
+      <a href="../graph/dijkstra_sparse.html" class="md-nav__link">
         
   
   
@@ -5873,7 +6022,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/bellman_ford.html" class="md-nav__link">
+      <a href="../graph/bellman_ford.html" class="md-nav__link">
         
   
   
@@ -5901,7 +6050,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/01_bfs.html" class="md-nav__link">
+      <a href="../graph/01_bfs.html" class="md-nav__link">
         
   
   
@@ -5929,7 +6078,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/desopo_pape.html" class="md-nav__link">
+      <a href="../graph/desopo_pape.html" class="md-nav__link">
         
   
   
@@ -6012,7 +6161,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/all-pair-shortest-path-floyd-warshall.html" class="md-nav__link">
+      <a href="../graph/all-pair-shortest-path-floyd-warshall.html" class="md-nav__link">
         
   
   
@@ -6040,7 +6189,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/fixed_length_paths.html" class="md-nav__link">
+      <a href="../graph/fixed_length_paths.html" class="md-nav__link">
         
   
   
@@ -6123,7 +6272,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/mst_prim.html" class="md-nav__link">
+      <a href="../graph/mst_prim.html" class="md-nav__link">
         
   
   
@@ -6151,7 +6300,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/mst_kruskal.html" class="md-nav__link">
+      <a href="../graph/mst_kruskal.html" class="md-nav__link">
         
   
   
@@ -6179,7 +6328,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/mst_kruskal_with_dsu.html" class="md-nav__link">
+      <a href="../graph/mst_kruskal_with_dsu.html" class="md-nav__link">
         
   
   
@@ -6207,7 +6356,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/second_best_mst.html" class="md-nav__link">
+      <a href="../graph/second_best_mst.html" class="md-nav__link">
         
   
   
@@ -6235,7 +6384,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/kirchhoff-theorem.html" class="md-nav__link">
+      <a href="../graph/kirchhoff-theorem.html" class="md-nav__link">
         
   
   
@@ -6263,7 +6412,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/pruefer_code.html" class="md-nav__link">
+      <a href="../graph/pruefer_code.html" class="md-nav__link">
         
   
   
@@ -6346,7 +6495,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/finding-cycle.html" class="md-nav__link">
+      <a href="../graph/finding-cycle.html" class="md-nav__link">
         
   
   
@@ -6374,7 +6523,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/finding-negative-cycle-in-graph.html" class="md-nav__link">
+      <a href="../graph/finding-negative-cycle-in-graph.html" class="md-nav__link">
         
   
   
@@ -6402,7 +6551,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/euler_path.html" class="md-nav__link">
+      <a href="../graph/euler_path.html" class="md-nav__link">
         
   
   
@@ -6485,7 +6634,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/lca.html" class="md-nav__link">
+      <a href="../graph/lca.html" class="md-nav__link">
         
   
   
@@ -6513,7 +6662,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/lca_binary_lifting.html" class="md-nav__link">
+      <a href="../graph/lca_binary_lifting.html" class="md-nav__link">
         
   
   
@@ -6541,7 +6690,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/lca_farachcoltonbender.html" class="md-nav__link">
+      <a href="../graph/lca_farachcoltonbender.html" class="md-nav__link">
         
   
   
@@ -6569,7 +6718,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/rmq_linear.html" class="md-nav__link">
+      <a href="../graph/rmq_linear.html" class="md-nav__link">
         
   
   
@@ -6597,7 +6746,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/lca_tarjan.html" class="md-nav__link">
+      <a href="../graph/lca_tarjan.html" class="md-nav__link">
         
   
   
@@ -6680,7 +6829,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/edmonds_karp.html" class="md-nav__link">
+      <a href="../graph/edmonds_karp.html" class="md-nav__link">
         
   
   
@@ -6708,7 +6857,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/push-relabel.html" class="md-nav__link">
+      <a href="../graph/push-relabel.html" class="md-nav__link">
         
   
   
@@ -6736,7 +6885,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/push-relabel-faster.html" class="md-nav__link">
+      <a href="../graph/push-relabel-faster.html" class="md-nav__link">
         
   
   
@@ -6764,7 +6913,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/dinic.html" class="md-nav__link">
+      <a href="../graph/dinic.html" class="md-nav__link">
         
   
   
@@ -6792,7 +6941,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/mpm.html" class="md-nav__link">
+      <a href="../graph/mpm.html" class="md-nav__link">
         
   
   
@@ -6820,7 +6969,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/flow_with_demands.html" class="md-nav__link">
+      <a href="../graph/flow_with_demands.html" class="md-nav__link">
         
   
   
@@ -6848,7 +6997,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/min_cost_flow.html" class="md-nav__link">
+      <a href="../graph/min_cost_flow.html" class="md-nav__link">
         
   
   
@@ -6876,7 +7025,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/Assignment-problem-min-flow.html" class="md-nav__link">
+      <a href="../graph/Assignment-problem-min-flow.html" class="md-nav__link">
         
   
   
@@ -6959,7 +7108,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/bipartite-check.html" class="md-nav__link">
+      <a href="../graph/bipartite-check.html" class="md-nav__link">
         
   
   
@@ -6987,7 +7136,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/kuhn_maximum_bipartite_matching.html" class="md-nav__link">
+      <a href="../graph/kuhn_maximum_bipartite_matching.html" class="md-nav__link">
         
   
   
@@ -7015,7 +7164,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/hungarian-algorithm.html" class="md-nav__link">
+      <a href="../graph/hungarian-algorithm.html" class="md-nav__link">
         
   
   
@@ -7098,7 +7247,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/topological-sort.html" class="md-nav__link">
+      <a href="../graph/topological-sort.html" class="md-nav__link">
         
   
   
@@ -7126,7 +7275,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/edge_vertex_connectivity.html" class="md-nav__link">
+      <a href="../graph/edge_vertex_connectivity.html" class="md-nav__link">
         
   
   
@@ -7154,7 +7303,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/tree_painting.html" class="md-nav__link">
+      <a href="../graph/tree_painting.html" class="md-nav__link">
         
   
   
@@ -7182,7 +7331,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/2SAT.html" class="md-nav__link">
+      <a href="../graph/2SAT.html" class="md-nav__link">
         
   
   
@@ -7210,7 +7359,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/hld.html" class="md-nav__link">
+      <a href="../graph/hld.html" class="md-nav__link">
         
   
   
@@ -7347,7 +7496,7 @@
   
   
     <li class="md-nav__item">
-      <a href="sequences/rmq.html" class="md-nav__link">
+      <a href="../sequences/rmq.html" class="md-nav__link">
         
   
   
@@ -7375,7 +7524,7 @@
   
   
     <li class="md-nav__item">
-      <a href="others/maximum_average_segment.html" class="md-nav__link">
+      <a href="../others/maximum_average_segment.html" class="md-nav__link">
         
   
   
@@ -7403,7 +7552,7 @@
   
   
     <li class="md-nav__item">
-      <a href="sequences/k-th.html" class="md-nav__link">
+      <a href="../sequences/k-th.html" class="md-nav__link">
         
   
   
@@ -7431,7 +7580,7 @@
   
   
     <li class="md-nav__item">
-      <a href="sequences/mex.html" class="md-nav__link">
+      <a href="../sequences/mex.html" class="md-nav__link">
         
   
   
@@ -7514,7 +7663,7 @@
   
   
     <li class="md-nav__item">
-      <a href="game_theory/games_on_graphs.html" class="md-nav__link">
+      <a href="../game_theory/games_on_graphs.html" class="md-nav__link">
         
   
   
@@ -7542,7 +7691,7 @@
   
   
     <li class="md-nav__item">
-      <a href="game_theory/sprague-grundy-nim.html" class="md-nav__link">
+      <a href="../game_theory/sprague-grundy-nim.html" class="md-nav__link">
         
   
   
@@ -7625,7 +7774,7 @@
   
   
     <li class="md-nav__item">
-      <a href="schedules/schedule_one_machine.html" class="md-nav__link">
+      <a href="../schedules/schedule_one_machine.html" class="md-nav__link">
         
   
   
@@ -7653,7 +7802,7 @@
   
   
     <li class="md-nav__item">
-      <a href="schedules/schedule_two_machines.html" class="md-nav__link">
+      <a href="../schedules/schedule_two_machines.html" class="md-nav__link">
         
   
   
@@ -7681,7 +7830,7 @@
   
   
     <li class="md-nav__item">
-      <a href="schedules/schedule-with-completion-duration.html" class="md-nav__link">
+      <a href="../schedules/schedule-with-completion-duration.html" class="md-nav__link">
         
   
   
@@ -7764,7 +7913,7 @@
   
   
     <li class="md-nav__item">
-      <a href="others/tortoise_and_hare.html" class="md-nav__link">
+      <a href="../others/tortoise_and_hare.html" class="md-nav__link">
         
   
   
@@ -7792,7 +7941,7 @@
   
   
     <li class="md-nav__item">
-      <a href="others/josephus_problem.html" class="md-nav__link">
+      <a href="../others/josephus_problem.html" class="md-nav__link">
         
   
   
@@ -7820,7 +7969,7 @@
   
   
     <li class="md-nav__item">
-      <a href="others/15-puzzle.html" class="md-nav__link">
+      <a href="../others/15-puzzle.html" class="md-nav__link">
         
   
   
@@ -7848,7 +7997,7 @@
   
   
     <li class="md-nav__item">
-      <a href="others/stern_brocot_tree_farey_sequences.html" class="md-nav__link">
+      <a href="../others/stern_brocot_tree_farey_sequences.html" class="md-nav__link">
         
   
   
@@ -7900,9 +8049,9 @@
                   <script type="text/javascript">
   window.onload = function () {
     const newIssueURL = "https://github.com/cp-algorithms/cp-algorithms/issues/new";
-    const issueTitle = "Problem on article " + "Trang ch\u1ee7";
+    const issueTitle = "Problem on article " + "Giao n\u1eeda m\u1eb7t ph\u1eb3ng - Thu\u1eadt to\u00e1n S\u0026I trong O(N log N)";
   const issueBody = `
-**Article:** [`+ "Trang ch\u1ee7" + `](${window.location.href})
+**Article:** [`+ "Giao n\u1eeda m\u1eb7t ph\u1eb3ng - Thu\u1eadt to\u00e1n S\u0026I trong O(N log N)" + `](${window.location.href})
 
 **Problem:**
 `;
@@ -7914,7 +8063,7 @@
 </script>
 
 
-<a href="https://github.com/deanqkhanhcoder/cp-algorithms-vi/edit/main/src/index.md" title="Edit this page" class="md-content__button md-icon">
+<a href="https://github.com/deanqkhanhcoder/cp-algorithms-vi/edit/main/src/geometry/halfplane-intersection.md" title="Edit this page" class="md-content__button md-icon">
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75z"/></svg>
 </a>
 <a id="report_issue_a" href="" title="Report a problem" class="md-content__button md-icon">
@@ -7924,93 +8073,268 @@
 
 <ul class="metadata page-metadata" data-bi-name="page info" lang="en-us" dir="ltr">
   
+  
+  <a href="../tags.html#tag:original" class="md-tag">
+    Original
+  </a>
+  
+  
 
   
 </ul>
 
 
-<h1 id="cp-algorithms-vietnamese-translation">CP-Algorithms (Vietnamese Translation)<a class="headerlink" href="#cp-algorithms-vietnamese-translation" title="Permanent link">&para;</a></h1>
-<blockquote>
-<p>📘 Bản dịch tiếng Việt của <strong>cp-algorithms</strong> – tài nguyên thuật toán kinh điển cho Competitive Programming.</p>
-</blockquote>
-<hr />
-<h2 id="gioi-thieu">📌 Giới thiệu<a class="headerlink" href="#gioi-thieu" title="Permanent link">&para;</a></h2>
-<p>Repository này là <strong>bản dịch tiếng Việt</strong> của dự án mã nguồn mở nổi tiếng<br />
-👉 <strong>https://github.com/cp-algorithms/cp-algorithms</strong></p>
-<p>Dự án gốc cung cấp các bài viết chất lượng cao về:
-- Thuật toán (Algorithms)
-- Cấu trúc dữ liệu (Data Structures)
-- Quy hoạch động, đồ thị, hình học, số học, v.v.
-- Ứng dụng thực tế trong <strong>Competitive Programming</strong></p>
-<p>🎯 <strong>Mục tiêu của repo này</strong>:
-- Giúp người học Việt Nam tiếp cận kiến thức CP dễ dàng hơn
-- Giữ nguyên <strong>thuật ngữ tiếng Anh quan trọng</strong> (DP, BFS, Segment Tree, …)
-- Dịch sát nghĩa, ưu tiên <strong>tính chính xác học thuật</strong></p>
-<hr />
-<h2 id="noi-dung-a-dich">📚 Nội dung đã dịch<a class="headerlink" href="#noi-dung-a-dich" title="Permanent link">&para;</a></h2>
+<h1 id="half-plane-intersection">Giao của các nửa mặt phẳng (Half-plane intersection)<a class="headerlink" href="#half-plane-intersection" title="Permanent link">&para;</a></h1>
+<p>Trong bài viết này, chúng ta sẽ thảo luận về bài toán tính toán phần giao của một tập hợp các nửa mặt phẳng. Một phần giao như vậy có thể được biểu diễn thuận tiện dưới dạng một vùng/đa giác lồi, trong đó mọi điểm bên trong nó cũng nằm bên trong tất cả các nửa mặt phẳng, và chính đa giác này là thứ mà chúng ta đang cố gắng tìm hoặc xây dựng. Chúng tôi đưa ra một số trực giác ban đầu cho bài toán, mô tả một cách tiếp cận <span class="arithmatex">$O(N \log N)$</span> được gọi là thuật toán Sắp xếp và Tăng dần (Sort-and-Incremental algorithm) và đưa ra một số ứng dụng mẫu của kỹ thuật này.</p>
+<p>Chúng tôi thực sự khuyên bạn đọc nên làm quen với các nguyên thủy và phép toán hình học cơ bản (điểm, vector, giao điểm của các đường thẳng). Ngoài ra, kiến thức về <a href="convex-hull.html">Bao lồi (Convex Hulls)</a> hoặc <a href="convex_hull_trick.html">Thủ thuật Bao lồi (Convex Hull Trick)</a> có thể giúp hiểu rõ hơn các khái niệm trong bài viết này, nhưng chúng không phải là điều kiện tiên quyết bằng bất kỳ cách nào.</p>
+<h2 id="initial-clarifications-and-definitions">Các làm rõ và định nghĩa ban đầu (Initial clarifications and definitions)<a class="headerlink" href="#initial-clarifications-and-definitions" title="Permanent link">&para;</a></h2>
+<p>Đối với toàn bộ bài viết, chúng tôi sẽ đưa ra một số giả định (trừ khi được chỉ định khác):</p>
+<ol>
+<li>Chúng ta định nghĩa <span class="arithmatex">$N$</span> là số lượng nửa mặt phẳng trong tập hợp đã cho.</li>
+<li>Chúng ta sẽ biểu diễn các đường thẳng và nửa mặt phẳng bằng một điểm và một vector (bất kỳ điểm nào nằm trên đường thẳng đã cho, và vector chỉ phương của đường thẳng). Trong trường hợp các nửa mặt phẳng, chúng ta giả định rằng mọi nửa mặt phẳng đều cho phép vùng ở phía bên trái của vector chỉ phương của nó. Ngoài ra, chúng ta định nghĩa góc của một nửa mặt phẳng là góc cực (polar angle) của vector chỉ phương của nó. Xem hình ảnh bên dưới để ví dụ.</li>
+<li>Chúng ta sẽ giả định rằng phần giao kết quả luôn bị giới hạn hoặc rỗng. Nếu chúng ta cần xử lý trường hợp không bị giới hạn, chúng ta có thể chỉ cần thêm 4 nửa mặt phẳng định nghĩa một hộp bao (bounding box) đủ lớn.</li>
+<li>Để đơn giản, chúng ta sẽ giả định rằng không có nửa mặt phẳng song song nào trong tập hợp đã cho. Về phía cuối bài viết, chúng ta sẽ thảo luận về cách giải quyết những trường hợp như vậy.</li>
+</ol>
+<p><img alt="" src="https://cp-algorithms.com/geometry/halfplanes_rep.png" /></p>
+<p>Nửa mặt phẳng <span class="arithmatex">$y \geq 2x - 2$</span> có thể được biểu diễn dưới dạng điểm <span class="arithmatex">$P = (1, 0)$</span> với vector chỉ phương <span class="arithmatex">$PQ = Q - P = (1, 2)$</span></p>
+<h2 id="brute-force-approach-on3">Cách tiếp cận vết cạn - <span class="arithmatex">$O(N^3)$</span> (Brute force approach - <span class="arithmatex">$O(N^3)$</span>)<a class="headerlink" href="#brute-force-approach-on3" title="Permanent link">&para;</a></h2>
+<p>Một trong những giải pháp đơn giản và rõ ràng nhất là tính toán giao điểm của các đường thẳng của tất cả các cặp nửa mặt phẳng và, đối với mỗi điểm, kiểm tra xem nó có nằm trong tất cả các nửa mặt phẳng khác hay không. Vì có <span class="arithmatex">$O(N^2)$</span> giao điểm, và đối với mỗi giao điểm, chúng ta phải kiểm tra <span class="arithmatex">$O(N)$</span> nửa mặt phẳng, tổng độ phức tạp thời gian là <span class="arithmatex">$O(N^3)$</span>. Vùng thực tế của phần giao sau đó có thể được tái tạo bằng cách sử dụng, ví dụ, thuật toán Bao lồi trên tập hợp các giao điểm được bao gồm trong tất cả các nửa mặt phẳng.</p>
+<p>Khá dễ để thấy tại sao điều này lại hoạt động: các đỉnh của đa giác lồi kết quả là tất cả các giao điểm của các đường thẳng nửa mặt phẳng, và mỗi đỉnh đó rõ ràng là một phần của tất cả các nửa mặt phẳng. Ưu điểm chính của phương pháp này là dễ hiểu, dễ nhớ và dễ viết mã ngay lập tức nếu bạn chỉ cần kiểm tra xem phần giao có rỗng hay không. Tuy nhiên, nó cực kỳ chậm và không phù hợp với hầu hết các bài toán, vì vậy chúng ta cần một cái gì đó nhanh hơn.</p>
+<h2 id="incremental-approach-on2">Cách tiếp cận tăng dần - <span class="arithmatex">$O(N^2)$</span> (Incremental approach - <span class="arithmatex">$O(N^2)$</span>)<a class="headerlink" href="#incremental-approach-on2" title="Permanent link">&para;</a></h2>
+<p>Một cách tiếp cận khá đơn giản khác là xây dựng dần dần phần giao của các nửa mặt phẳng, từng cái một. Phương pháp này về cơ bản tương đương với việc cắt một đa giác lồi bằng một đường thẳng <span class="arithmatex">$N$</span> lần, và loại bỏ các nửa mặt phẳng dư thừa ở mỗi bước. Để làm điều này, chúng ta có thể biểu diễn đa giác lồi dưới dạng danh sách các đoạn thẳng, và để cắt nó bằng một nửa mặt phẳng, chúng ta chỉ cần tìm các giao điểm của các đoạn thẳng với đường thẳng nửa mặt phẳng (sẽ chỉ có hai giao điểm nếu đường thẳng thực sự cắt đa giác), và thay thế tất cả các đoạn thẳng ở giữa bằng đoạn mới tương ứng với nửa mặt phẳng. Vì quy trình như vậy có thể được cài đặt trong thời gian tuyến tính, chúng ta có thể chỉ cần bắt đầu với một hộp bao lớn và cắt nó xuống bằng từng nửa mặt phẳng một, thu được tổng độ phức tạp thời gian là <span class="arithmatex">$O(N^2)$</span>.</p>
+<p>Phương pháp này là một bước tiến lớn đúng hướng, nhưng cảm thấy lãng phí khi phải lặp qua <span class="arithmatex">$O(N)$</span> nửa mặt phẳng ở mỗi bước. Chúng ta sẽ thấy tiếp theo rằng, bằng cách thực hiện một số quan sát thông minh, các ý tưởng đằng sau cách tiếp cận tăng dần này có thể được tái chế để tạo ra thuật toán <span class="arithmatex">$O(N \log N)$</span>.</p>
+<h2 id="sort-and-incremental-algorithm-on-log-n">Thuật toán Sắp xếp và Tăng dần - <span class="arithmatex">$O(N \log N)$</span> (Sort-and-Incremental algorithm - <span class="arithmatex">$O(N \log N)$</span>)<a class="headerlink" href="#sort-and-incremental-algorithm-on-log-n" title="Permanent link">&para;</a></h2>
+<p>Nguồn đầu tiên được ghi chép đàng hoàng về thuật toán này mà chúng tôi có thể tìm thấy là luận án của Zeyuan Zhu cho Cuộc thi Chọn đội tuyển Trung Quốc có tiêu đề <a href="http://people.csail.mit.edu/zeyuan/publications.htm">Thuật toán mới cho Giao của các nửa mặt phẳng và Giá trị thực tiễn của nó</a>, từ năm 2006. Cách tiếp cận mà chúng tôi sẽ mô tả tiếp theo dựa trên cùng thuật toán này, nhưng thay vì tính toán hai giao điểm riêng biệt cho nửa dưới và nửa trên của các giao điểm, chúng tôi sẽ xây dựng tất cả cùng một lúc trong một lần chuyển qua với một deque (hàng đợi hai đầu).</p>
+<p>Bản thân thuật toán, như tên gọi có thể tiết lộ, tận dụng thực tế là vùng kết quả từ giao của các nửa mặt phẳng là lồi, và do đó nó sẽ bao gồm một số đoạn của các nửa mặt phẳng theo thứ tự được sắp xếp theo góc của chúng. Điều này dẫn đến một quan sát quan trọng: nếu chúng ta giao dần dần các nửa mặt phẳng theo thứ tự được sắp xếp theo góc của chúng (như chúng sẽ xuất hiện trong hình dạng cuối cùng, kết quả của phần giao) và lưu trữ chúng trong một hàng đợi hai đầu, thì chúng ta sẽ chỉ cần loại bỏ các nửa mặt phẳng khỏi đầu và cuối của deque.</p>
+<p>Để hình dung thực tế này tốt hơn, giả sử chúng ta đang thực hiện cách tiếp cận tăng dần được mô tả trước đây trên một tập hợp các nửa mặt phẳng được sắp xếp theo góc (trong trường hợp này, chúng ta sẽ giả sử chúng được sắp xếp từ <span class="arithmatex">$-\pi$</span> đến <span class="arithmatex">$\pi$</span>), và giả sử rằng chúng ta sắp bắt đầu một bước thứ <span class="arithmatex">$k$</span> bất kỳ nào đó. Điều này có nghĩa là chúng ta đã xây dựng phần giao của <span class="arithmatex">$k-1$</span> nửa mặt phẳng đầu tiên. Bây giờ, bởi vì các nửa mặt phẳng được sắp xếp theo góc, bất kể nửa mặt phẳng thứ <span class="arithmatex">$k$</span> là gì, chúng ta có thể chắc chắn rằng nó sẽ tạo thành một góc lồi với nửa mặt phẳng thứ <span class="arithmatex">$(K-1)$</span>. Vì lý do đó, một vài điều có thể xảy ra:</p>
+<ol>
+<li>Một số (có thể không có) nửa mặt phẳng ở phía sau của phần giao có thể trở nên <em>dư thừa</em>. Trong trường hợp này, chúng ta cần pop các nửa mặt phẳng vô dụng này khỏi phía sau của deque.</li>
+<li>Một số (có thể không có) nửa mặt phẳng ở phía trước có thể trở nên <em>dư thừa</em>. Tương tự như trường hợp 1, chúng ta chỉ cần pop chúng khỏi phía trước của deque.</li>
+<li>Phần giao có thể trở nên rỗng (sau khi xử lý các trường hợp 1 và/hoặc 2). Trong trường hợp này, chúng ta chỉ cần báo cáo phần giao là rỗng và kết thúc thuật toán.</li>
+</ol>
+<p><em>Chúng ta nói một nửa mặt phẳng là "dư thừa" nếu nó không đóng góp gì vào phần giao. Nửa mặt phẳng như vậy có thể bị loại bỏ và phần giao kết quả sẽ không thay đổi chút nào.</em></p>
+<p>Dưới đây là một ví dụ nhỏ với minh họa:</p>
+<p>Gọi <span class="arithmatex">$H = \{ A, B, C, D, E \}$</span> là tập hợp các nửa mặt phẳng hiện có trong phần giao. Ngoài ra, gọi <span class="arithmatex">$P = \{ p, q, r, s \}$</span> là tập hợp các giao điểm của các nửa mặt phẳng liền kề trong H. Bây giờ, giả sử chúng ta muốn giao nó với nửa mặt phẳng <span class="arithmatex">$F$</span>, như thấy trong hình minh họa bên dưới:</p>
+<p><img alt="" src="https://cp-algorithms.com/geometry/halfplanes_hp1.png" /></p>
+<p>Lưu ý rằng nửa mặt phẳng <span class="arithmatex">$F$</span> làm cho <span class="arithmatex">$A$</span> và <span class="arithmatex">$E$</span> trở nên dư thừa trong phần giao. Vì vậy, chúng ta loại bỏ cả <span class="arithmatex">$A$</span> và <span class="arithmatex">$E$</span> khỏi phía trước và phía sau của phần giao, tương ứng, và thêm <span class="arithmatex">$F$</span> vào cuối. Và cuối cùng chúng ta thu được phần giao mới <span class="arithmatex">$H = \{ B, C, D, F\}$</span> với <span class="arithmatex">$P = \{ q, r, t, u \}$</span>.</p>
+<p><img alt="" src="https://cp-algorithms.com/geometry/halfplanes_hp2.png" /></p>
+<p>Với tất cả những điều này trong tâm trí, chúng ta có hầu hết mọi thứ chúng ta cần để thực sự cài đặt thuật toán, nhưng chúng ta vẫn cần nói về một số trường hợp đặc biệt. Ở đầu bài viết, chúng ta đã nói rằng chúng ta sẽ thêm một hộp bao để xử lý các trường hợp phần giao có thể không bị giới hạn, vì vậy trường hợp khó khăn duy nhất chúng ta thực sự cần xử lý là các nửa mặt phẳng song song. Chúng ta có thể có hai trường hợp phụ: hai nửa mặt phẳng có thể song song với cùng hướng hoặc ngược hướng. Lý do trường hợp này cần được xử lý riêng là vì chúng ta sẽ cần tính toán giao điểm của các đường thẳng nửa mặt phẳng để có thể kiểm tra xem một nửa mặt phẳng có dư thừa hay không, và hai đường thẳng song song không có giao điểm, vì vậy chúng ta cần một cách đặc biệt để đối phó với chúng.</p>
+<p>Đối với trường hợp các nửa mặt phẳng song song có hướng ngược nhau: Lưu ý rằng, vì chúng ta đang thêm hộp bao để đối phó với trường hợp không bị giới hạn, điều này cũng giải quyết trường hợp chúng ta có hai nửa mặt phẳng song song liền kề với hướng ngược nhau sau khi sắp xếp, vì sẽ phải có ít nhất một trong các nửa mặt phẳng hộp bao ở giữa hai cái này (hãy nhớ chúng được sắp xếp theo góc).</p>
 <ul>
-<li>Đại số (Algebra)</li>
-<li>Cấu trúc dữ liệu (Data Structures)</li>
-<li>Quy hoạch động (Dynamic Programming)</li>
-<li>Đồ thị (Graph)</li>
-<li>Hình học (Geometry)</li>
-<li>Game Theory</li>
-<li>Tổ hợp (Combinatorics)</li>
-<li>…</li>
+<li>Tuy nhiên, có thể xảy ra trường hợp, sau khi loại bỏ một số nửa mặt phẳng khỏi phía sau của deque, hai nửa mặt phẳng song song có hướng ngược nhau lại nằm cùng nhau. Trường hợp này chỉ xảy ra, cụ thể, khi hai nửa mặt phẳng này tạo thành một phần giao rỗng, vì nửa mặt phẳng cuối cùng này sẽ khiến mọi thứ bị loại bỏ khỏi deque. Để tránh vấn đề này, chúng ta phải kiểm tra thủ công các nửa mặt phẳng song song, và nếu chúng có hướng ngược nhau, chúng ta chỉ cần dừng ngay thuật toán và trả về phần giao rỗng.</li>
 </ul>
-<p>📈 <strong>Tiến độ</strong>: HOÀN THÀNH</p>
-<hr />
-<h2 id="quy-uoc-dich-thuat">🧠 Quy ước dịch thuật<a class="headerlink" href="#quy-uoc-dich-thuat" title="Permanent link">&para;</a></h2>
+<p>Do đó, trường hợp duy nhất chúng ta thực sự cần xử lý là có nhiều nửa mặt phẳng với cùng một góc, và hóa ra trường hợp này khá dễ xử lý: chúng ta chỉ cần giữ nửa mặt phẳng nằm bên trái nhất và xóa phần còn lại, vì chúng sẽ hoàn toàn dư thừa dù sao đi nữa.
+Tóm lại, thuật toán đầy đủ sẽ trông đại khái như sau:</p>
+<ol>
+<li>Chúng ta bắt đầu bằng cách sắp xếp tập hợp các nửa mặt phẳng theo góc, mất thời gian <span class="arithmatex">$O(N \log N)$</span>.</li>
+<li>Chúng ta sẽ lặp qua tập hợp các nửa mặt phẳng, và đối với mỗi cái, chúng ta sẽ thực hiện quy trình tăng dần, đẩy ra khỏi đầu và cuối của hàng đợi hai đầu khi cần thiết. Quá trình này sẽ mất tổng thời gian tuyến tính, vì mỗi nửa mặt phẳng chỉ có thể được thêm hoặc xóa một lần.</li>
+<li>Cuối cùng, đa giác lồi kết quả từ phần giao có thể được lấy đơn giản bằng cách tính toán các giao điểm của các nửa mặt phẳng liền kề trong deque ở cuối quy trình. Quá trình này cũng sẽ mất thời gian tuyến tính. Cũng có thể lưu trữ các điểm như vậy trong bước 2 và bỏ qua bước này hoàn toàn, nhưng chúng tôi tin rằng nó dễ dàng hơn một chút (về mặt cài đặt) để tính toán chúng ngay lập tức (on-the-fly).</li>
+</ol>
+<p>Tổng cộng, chúng ta đã đạt được độ phức tạp thời gian là <span class="arithmatex">$O(N \log N)$</span>. Vì việc sắp xếp rõ ràng là nút thắt cổ chai, thuật toán có thể được thực hiện để chạy trong thời gian tuyến tính trong trường hợp đặc biệt mà chúng ta được cung cấp các nửa mặt phẳng đã được sắp xếp trước theo góc của chúng (một ví dụ về trường hợp như vậy là lấy các nửa mặt phẳng xác định một đa giác lồi).</p>
+<h3 id="direct-implementation">Cài đặt trực tiếp (Direct implementation)<a class="headerlink" href="#direct-implementation" title="Permanent link">&para;</a></h3>
+<p>Dưới đây là một mẫu, cài đặt trực tiếp của thuật toán, với các bình luận giải thích hầu hết các phần:</p>
+<p>Các struct điểm/vector và nửa mặt phẳng đơn giản:</p>
+<div class="highlight"><pre><span></span><code><span class="c1">// Redefine epsilon and infinity as necessary. Be mindful of precision errors.</span>
+<span class="k">const</span><span class="w"> </span><span class="kt">long</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="n">eps</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1e-9</span><span class="p">,</span><span class="w"> </span><span class="n">inf</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1e9</span><span class="p">;</span><span class="w"> </span>
+
+<span class="c1">// Basic point/vector struct.</span>
+<span class="k">struct</span><span class="w"> </span><span class="nc">Point</span><span class="w"> </span><span class="p">{</span><span class="w"> </span>
+
+<span class="w">    </span><span class="kt">long</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">;</span>
+<span class="w">    </span><span class="k">explicit</span><span class="w"> </span><span class="n">Point</span><span class="p">(</span><span class="kt">long</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="kt">long</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">x</span><span class="p">(</span><span class="n">x</span><span class="p">),</span><span class="w"> </span><span class="n">y</span><span class="p">(</span><span class="n">y</span><span class="p">)</span><span class="w"> </span><span class="p">{}</span>
+
+<span class="w">    </span><span class="c1">// Addition, substraction, multiply by constant, dot product, cross product.</span>
+
+<span class="w">    </span><span class="k">friend</span><span class="w"> </span><span class="n">Point</span><span class="w"> </span><span class="k">operator</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">Point</span><span class="o">&amp;</span><span class="w"> </span><span class="n">p</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">Point</span><span class="o">&amp;</span><span class="w"> </span><span class="n">q</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">Point</span><span class="p">(</span><span class="n">p</span><span class="p">.</span><span class="n">x</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">q</span><span class="p">.</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">p</span><span class="p">.</span><span class="n">y</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">q</span><span class="p">.</span><span class="n">y</span><span class="p">);</span><span class="w"> </span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">friend</span><span class="w"> </span><span class="n">Point</span><span class="w"> </span><span class="k">operator</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">Point</span><span class="o">&amp;</span><span class="w"> </span><span class="n">p</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">Point</span><span class="o">&amp;</span><span class="w"> </span><span class="n">q</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">Point</span><span class="p">(</span><span class="n">p</span><span class="p">.</span><span class="n">x</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">q</span><span class="p">.</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">p</span><span class="p">.</span><span class="n">y</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">q</span><span class="p">.</span><span class="n">y</span><span class="p">);</span><span class="w"> </span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">friend</span><span class="w"> </span><span class="n">Point</span><span class="w"> </span><span class="k">operator</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">Point</span><span class="o">&amp;</span><span class="w"> </span><span class="n">p</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">long</span><span class="w"> </span><span class="kt">double</span><span class="o">&amp;</span><span class="w"> </span><span class="n">k</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">Point</span><span class="p">(</span><span class="n">p</span><span class="p">.</span><span class="n">x</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">k</span><span class="p">,</span><span class="w"> </span><span class="n">p</span><span class="p">.</span><span class="n">y</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">k</span><span class="p">);</span><span class="w"> </span>
+<span class="w">    </span><span class="p">}</span><span class="w"> </span>
+
+<span class="w">    </span><span class="k">friend</span><span class="w"> </span><span class="kt">long</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="n">dot</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">Point</span><span class="o">&amp;</span><span class="w"> </span><span class="n">p</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">Point</span><span class="o">&amp;</span><span class="w"> </span><span class="n">q</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">p</span><span class="p">.</span><span class="n">x</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">q</span><span class="p">.</span><span class="n">x</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">p</span><span class="p">.</span><span class="n">y</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">q</span><span class="p">.</span><span class="n">y</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">friend</span><span class="w"> </span><span class="kt">long</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="n">cross</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">Point</span><span class="o">&amp;</span><span class="w"> </span><span class="n">p</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">Point</span><span class="o">&amp;</span><span class="w"> </span><span class="n">q</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">p</span><span class="p">.</span><span class="n">x</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">q</span><span class="p">.</span><span class="n">y</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">p</span><span class="p">.</span><span class="n">y</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">q</span><span class="p">.</span><span class="n">x</span><span class="p">;</span><span class="w"> </span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">};</span>
+
+<span class="c1">// Basic half-plane struct.</span>
+<span class="k">struct</span><span class="w"> </span><span class="nc">Halfplane</span><span class="w"> </span><span class="p">{</span><span class="w"> </span>
+
+<span class="w">    </span><span class="c1">// &#39;p&#39; is a passing point of the line and &#39;pq&#39; is the direction vector of the line.</span>
+<span class="w">    </span><span class="n">Point</span><span class="w"> </span><span class="n">p</span><span class="p">,</span><span class="w"> </span><span class="n">pq</span><span class="p">;</span><span class="w"> </span>
+<span class="w">    </span><span class="kt">long</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="n">angle</span><span class="p">;</span>
+
+<span class="w">    </span><span class="n">Halfplane</span><span class="p">()</span><span class="w"> </span><span class="p">{}</span>
+<span class="w">    </span><span class="n">Halfplane</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">Point</span><span class="o">&amp;</span><span class="w"> </span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">Point</span><span class="o">&amp;</span><span class="w"> </span><span class="n">b</span><span class="p">)</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">p</span><span class="p">(</span><span class="n">a</span><span class="p">),</span><span class="w"> </span><span class="n">pq</span><span class="p">(</span><span class="n">b</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">a</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">angle</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">atan2l</span><span class="p">(</span><span class="n">pq</span><span class="p">.</span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="n">pq</span><span class="p">.</span><span class="n">x</span><span class="p">);</span><span class="w">    </span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="c1">// Check if point &#39;r&#39; is outside this half-plane. </span>
+<span class="w">    </span><span class="c1">// Every half-plane allows the region to the LEFT of its line.</span>
+<span class="w">    </span><span class="kt">bool</span><span class="w"> </span><span class="n">out</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">Point</span><span class="o">&amp;</span><span class="w"> </span><span class="n">r</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">cross</span><span class="p">(</span><span class="n">pq</span><span class="p">,</span><span class="w"> </span><span class="n">r</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">p</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="o">-</span><span class="n">eps</span><span class="p">;</span><span class="w"> </span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="c1">// Comparator for sorting. </span>
+<span class="w">    </span><span class="kt">bool</span><span class="w"> </span><span class="k">operator</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">Halfplane</span><span class="o">&amp;</span><span class="w"> </span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="p">{</span><span class="w"> </span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">angle</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">e</span><span class="p">.</span><span class="n">angle</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span><span class="w"> </span>
+
+<span class="w">    </span><span class="c1">// Intersection point of the lines of two half-planes. It is assumed they&#39;re never parallel.</span>
+<span class="w">    </span><span class="k">friend</span><span class="w"> </span><span class="n">Point</span><span class="w"> </span><span class="n">inter</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">Halfplane</span><span class="o">&amp;</span><span class="w"> </span><span class="n">s</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">Halfplane</span><span class="o">&amp;</span><span class="w"> </span><span class="n">t</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="kt">long</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="n">alpha</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cross</span><span class="p">((</span><span class="n">t</span><span class="p">.</span><span class="n">p</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">s</span><span class="p">.</span><span class="n">p</span><span class="p">),</span><span class="w"> </span><span class="n">t</span><span class="p">.</span><span class="n">pq</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">cross</span><span class="p">(</span><span class="n">s</span><span class="p">.</span><span class="n">pq</span><span class="p">,</span><span class="w"> </span><span class="n">t</span><span class="p">.</span><span class="n">pq</span><span class="p">);</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">s</span><span class="p">.</span><span class="n">p</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="p">(</span><span class="n">s</span><span class="p">.</span><span class="n">pq</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">alpha</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">};</span>
+</code></pre></div>
+<p>Thuật toán:</p>
+<div class="highlight"><pre><span></span><code><span class="c1">// Actual algorithm</span>
+<span class="n">vector</span><span class="o">&lt;</span><span class="n">Point</span><span class="o">&gt;</span><span class="w"> </span><span class="n">hp_intersect</span><span class="p">(</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Halfplane</span><span class="o">&gt;&amp;</span><span class="w"> </span><span class="n">H</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span>
+
+<span class="w">    </span><span class="n">Point</span><span class="w"> </span><span class="n">box</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w">  </span><span class="c1">// Bounding box in CCW order</span>
+<span class="w">        </span><span class="n">Point</span><span class="p">(</span><span class="n">inf</span><span class="p">,</span><span class="w"> </span><span class="n">inf</span><span class="p">),</span><span class="w"> </span>
+<span class="w">        </span><span class="n">Point</span><span class="p">(</span><span class="o">-</span><span class="n">inf</span><span class="p">,</span><span class="w"> </span><span class="n">inf</span><span class="p">),</span><span class="w"> </span>
+<span class="w">        </span><span class="n">Point</span><span class="p">(</span><span class="o">-</span><span class="n">inf</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="n">inf</span><span class="p">),</span><span class="w"> </span>
+<span class="w">        </span><span class="n">Point</span><span class="p">(</span><span class="n">inf</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="n">inf</span><span class="p">)</span><span class="w"> </span>
+<span class="w">    </span><span class="p">};</span>
+
+<span class="w">    </span><span class="k">for</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">&lt;</span><span class="mi">4</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="c1">// Add bounding box half-planes.</span>
+<span class="w">        </span><span class="n">Halfplane</span><span class="w"> </span><span class="nf">aux</span><span class="p">(</span><span class="n">box</span><span class="p">[</span><span class="n">i</span><span class="p">],</span><span class="w"> </span><span class="n">box</span><span class="p">[(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="mi">4</span><span class="p">]);</span>
+<span class="w">        </span><span class="n">H</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">aux</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="c1">// Sort by angle and start algorithm</span>
+<span class="w">    </span><span class="n">sort</span><span class="p">(</span><span class="n">H</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span><span class="w"> </span><span class="n">H</span><span class="p">.</span><span class="n">end</span><span class="p">());</span>
+<span class="w">    </span><span class="n">deque</span><span class="o">&lt;</span><span class="n">Halfplane</span><span class="o">&gt;</span><span class="w"> </span><span class="n">dq</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">len</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="w">    </span><span class="k">for</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="kt">int</span><span class="p">(</span><span class="n">H</span><span class="p">.</span><span class="n">size</span><span class="p">());</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+
+<span class="w">        </span><span class="c1">// Remove from the back of the deque while last half-plane is redundant</span>
+<span class="w">        </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">len</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">H</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">out</span><span class="p">(</span><span class="n">inter</span><span class="p">(</span><span class="n">dq</span><span class="p">[</span><span class="n">len</span><span class="mi">-1</span><span class="p">],</span><span class="w"> </span><span class="n">dq</span><span class="p">[</span><span class="n">len</span><span class="mi">-2</span><span class="p">])))</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="n">dq</span><span class="p">.</span><span class="n">pop_back</span><span class="p">();</span>
+<span class="w">            </span><span class="o">--</span><span class="n">len</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span>
+
+<span class="w">        </span><span class="c1">// Remove from the front of the deque while first half-plane is redundant</span>
+<span class="w">        </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">len</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">H</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">out</span><span class="p">(</span><span class="n">inter</span><span class="p">(</span><span class="n">dq</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="w"> </span><span class="n">dq</span><span class="p">[</span><span class="mi">1</span><span class="p">])))</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="n">dq</span><span class="p">.</span><span class="n">pop_front</span><span class="p">();</span>
+<span class="w">            </span><span class="o">--</span><span class="n">len</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span>
+
+<span class="w">        </span><span class="c1">// Special case check: Parallel half-planes</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">len</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">fabsl</span><span class="p">(</span><span class="n">cross</span><span class="p">(</span><span class="n">H</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">pq</span><span class="p">,</span><span class="w"> </span><span class="n">dq</span><span class="p">[</span><span class="n">len</span><span class="mi">-1</span><span class="p">].</span><span class="n">pq</span><span class="p">))</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">eps</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="c1">// Opposite parallel half-planes that ended up checked against each other.</span>
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">dot</span><span class="p">(</span><span class="n">H</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">pq</span><span class="p">,</span><span class="w"> </span><span class="n">dq</span><span class="p">[</span><span class="n">len</span><span class="mi">-1</span><span class="p">].</span><span class="n">pq</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mf">0.0</span><span class="p">)</span>
+<span class="w">                </span><span class="k">return</span><span class="w"> </span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Point</span><span class="o">&gt;</span><span class="p">();</span>
+
+<span class="w">            </span><span class="c1">// Same direction half-plane: keep only the leftmost half-plane.</span>
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">H</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">out</span><span class="p">(</span><span class="n">dq</span><span class="p">[</span><span class="n">len</span><span class="mi">-1</span><span class="p">].</span><span class="n">p</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="n">dq</span><span class="p">.</span><span class="n">pop_back</span><span class="p">();</span>
+<span class="w">                </span><span class="o">--</span><span class="n">len</span><span class="p">;</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">            </span><span class="k">else</span><span class="w"> </span><span class="k">continue</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span>
+
+<span class="w">        </span><span class="c1">// Add new half-plane</span>
+<span class="w">        </span><span class="n">dq</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">H</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
+<span class="w">        </span><span class="o">++</span><span class="n">len</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="c1">// Final cleanup: Check half-planes at the front against the back and vice-versa</span>
+<span class="w">    </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">len</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">dq</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">out</span><span class="p">(</span><span class="n">inter</span><span class="p">(</span><span class="n">dq</span><span class="p">[</span><span class="n">len</span><span class="mi">-1</span><span class="p">],</span><span class="w"> </span><span class="n">dq</span><span class="p">[</span><span class="n">len</span><span class="mi">-2</span><span class="p">])))</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">dq</span><span class="p">.</span><span class="n">pop_back</span><span class="p">();</span>
+<span class="w">        </span><span class="o">--</span><span class="n">len</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">len</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">dq</span><span class="p">[</span><span class="n">len</span><span class="mi">-1</span><span class="p">].</span><span class="n">out</span><span class="p">(</span><span class="n">inter</span><span class="p">(</span><span class="n">dq</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="w"> </span><span class="n">dq</span><span class="p">[</span><span class="mi">1</span><span class="p">])))</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">dq</span><span class="p">.</span><span class="n">pop_front</span><span class="p">();</span>
+<span class="w">        </span><span class="o">--</span><span class="n">len</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="c1">// Report empty intersection if necessary</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">len</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">3</span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Point</span><span class="o">&gt;</span><span class="p">();</span>
+
+<span class="w">    </span><span class="c1">// Reconstruct the convex polygon from the remaining half-planes.</span>
+<span class="w">    </span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Point</span><span class="o">&gt;</span><span class="w"> </span><span class="n">ret</span><span class="p">(</span><span class="n">len</span><span class="p">);</span>
+<span class="w">    </span><span class="k">for</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">len</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">ret</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">inter</span><span class="p">(</span><span class="n">dq</span><span class="p">[</span><span class="n">i</span><span class="p">],</span><span class="w"> </span><span class="n">dq</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]);</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="n">ret</span><span class="p">.</span><span class="n">back</span><span class="p">()</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">inter</span><span class="p">(</span><span class="n">dq</span><span class="p">[</span><span class="n">len</span><span class="mi">-1</span><span class="p">],</span><span class="w"> </span><span class="n">dq</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">ret</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+<h3 id="implementation-discussion">Thảo luận về cài đặt (Implementation discussion)<a class="headerlink" href="#implementation-discussion" title="Permanent link">&para;</a></h3>
+<p>Một điều đặc biệt cần lưu ý là, trong trường hợp có nhiều nửa mặt phẳng giao nhau tại cùng một điểm, thì thuật toán này có thể trả về các điểm liền kề lặp lại trong đa giác cuối cùng. Tuy nhiên, điều này sẽ không có bất kỳ tác động nào đến việc đánh giá chính xác xem phần giao có rỗng hay không, và nó cũng không ảnh hưởng đến diện tích đa giác chút nào. Bạn có thể muốn xóa các bản sao này tùy thuộc vào nhiệm vụ bạn cần làm sau đó. Bạn có thể thực hiện việc này rất dễ dàng với <code>std::unique</code>. Chúng tôi muốn giữ các điểm lặp lại trong quá trình thực hiện thuật toán để các giao điểm có diện tích bằng không có thể được tính toán chính xác (ví dụ: các giao điểm bao gồm một điểm, đường thẳng hoặc đoạn thẳng duy nhất). Tôi khuyến khích người đọc kiểm tra một số trường hợp thủ công nhỏ trong đó kết quả giao nhau là một điểm hoặc đường thẳng duy nhất.</p>
+<p>Một điều nữa cần được nói đến là phải làm gì nếu chúng ta được cung cấp các nửa mặt phẳng dưới dạng ràng buộc tuyến tính (ví dụ: <span class="arithmatex">$ax + by + c \leq 0$</span>). Trong trường hợp như vậy, có hai lựa chọn. Bạn có thể cài đặt thuật toán với các sửa đổi tương ứng để làm việc với biểu diễn như vậy (về cơ bản là tạo struct nửa mặt phẳng của riêng bạn, sẽ khá đơn giản nếu bạn quen thuộc với thủ thuật bao lồi), hoặc bạn có thể chuyển đổi các đường thẳng thành biểu diễn mà chúng tôi đã sử dụng trong bài viết này bằng cách lấy bất kỳ 2 điểm nào của mỗi đường thẳng. Nói chung, nên làm việc với biểu diễn mà bạn được cung cấp trong bài toán để tránh các vấn đề chính xác bổ sung.</p>
+<h2 id="problems-tasks-and-applications">Bài toán, nhiệm vụ và ứng dụng (Problems, tasks and applications)<a class="headerlink" href="#problems-tasks-and-applications" title="Permanent link">&para;</a></h2>
+<p>Nhiều bài toán có thể giải được bằng giao điểm nửa mặt phẳng cũng có thể giải được mà không cần nó, nhưng với (thường là) các cách tiếp cận phức tạp hoặc không phổ biến hơn. Nhìn chung, giao điểm nửa mặt phẳng có thể xuất hiện khi xử lý các bài toán liên quan đến đa giác (chủ yếu là lồi), khả năng nhìn thấy trong mặt phẳng và quy hoạch tuyến tính hai chiều. Dưới đây là một số nhiệm vụ mẫu có thể được giải quyết bằng kỹ thuật này:</p>
+<h3 id="convex-polygon-intersection">Giao của đa giác lồi (Convex polygon intersection)<a class="headerlink" href="#convex-polygon-intersection" title="Permanent link">&para;</a></h3>
+<p>Một trong những ứng dụng cổ điển của giao điểm nửa mặt phẳng: Cho <span class="arithmatex">$N$</span> đa giác, tính toán vùng được bao gồm bên trong tất cả các đa giác.</p>
+<p>Vì giao của một tập hợp các nửa mặt phẳng là một đa giác lồi, chúng ta cũng có thể biểu diễn một đa giác lồi dưới dạng một tập hợp các nửa mặt phẳng (mọi cạnh của đa giác là một đoạn của một nửa mặt phẳng). Tạo các nửa mặt phẳng này cho mọi đa giác và tính toán giao của toàn bộ tập hợp. Tổng độ phức tạp thời gian là <span class="arithmatex">$O(S \log S)$</span>, trong đó S là tổng số cạnh của tất cả các đa giác. Bài toán về mặt lý thuyết cũng có thể được giải quyết trong <span class="arithmatex">$O(S \log N)$</span> bằng cách hợp nhất <span class="arithmatex">$N$</span> tập hợp các nửa mặt phẳng bằng cách sử dụng heap và sau đó chạy thuật toán mà không cần bước sắp xếp, nhưng giải pháp như vậy có hằng số tồi tệ hơn nhiều so với sắp xếp đơn giản và chỉ cung cấp mức tăng tốc độ nhỏ cho <span class="arithmatex">$N$</span> rất nhỏ.</p>
+<h3 id="visibility-in-the-plane">Khả năng nhìn thấy trong mặt phẳng (Visibility in the plane)<a class="headerlink" href="#visibility-in-the-plane" title="Permanent link">&para;</a></h3>
+<p>Các bài toán yêu cầu một cái gì đó trong các dòng "xác định xem một số đoạn thẳng có thể nhìn thấy được từ một số điểm trong mặt phẳng hay không" thường có thể được xây dựng dưới dạng các bài toán giao điểm nửa mặt phẳng. Ví dụ, hãy thực hiện nhiệm vụ sau: Cho một đa giác đơn giản (không nhất thiết là lồi), xác định xem có điểm nào bên trong đa giác sao cho toàn bộ biên của đa giác có thể được quan sát từ điểm đó hay không. Điều này còn được gọi là tìm <a href="https://en.wikipedia.org/wiki/Star-shaped_polygon">hạt nhân của đa giác (kernel of a polygon)</a> và có thể được giải quyết bằng giao điểm nửa mặt phẳng đơn giản, lấy mỗi cạnh của đa giác làm một nửa mặt phẳng và sau đó tính toán giao điểm của nó.</p>
+<p>Dưới đây là một bài toán liên quan, thú vị hơn đã được trình bày bởi Artem Vasilyev trong một trong những <a href="https://youtu.be/WKyZSitpm6M?t=6463">bài giảng tại Trường Hè ICPC Brazil</a> của anh ấy:
+Cho một tập hợp <span class="arithmatex">$p$</span> các điểm <span class="arithmatex">$p_1, p_2\ \dots \ p_n$</span> trong mặt phẳng, xác định xem có bất kỳ điểm <span class="arithmatex">$q$</span> nào bạn có thể đứng tại đó sao cho bạn có thể nhìn thấy tất cả các điểm của <span class="arithmatex">$p$</span> từ trái sang phải theo thứ tự tăng dần của chỉ số của chúng.</p>
+<p>Bài toán như vậy có thể giải được bằng cách nhận thấy rằng việc có thể nhìn thấy một điểm <span class="arithmatex">$p_i$</span> nào đó ở bên trái của <span class="arithmatex">$p_j$</span> giống như việc có thể nhìn thấy phía bên phải của đoạn thẳng từ <span class="arithmatex">$p_i$</span> đến <span class="arithmatex">$p_j$</span> (hoặc tương đương, có thể nhìn thấy phía bên trái của đoạn thẳng từ <span class="arithmatex">$p_j$</span> đến <span class="arithmatex">$p_i$</span>). Với ý nghĩ đó, chúng ta có thể chỉ cần tạo một nửa mặt phẳng cho mỗi đoạn thẳng <span class="arithmatex">$p_i p_{i+1}$</span> (hoặc <span class="arithmatex">$p_{i+1} p_i$</span> tùy thuộc vào hướng bạn chọn) và kiểm tra xem giao của toàn bộ tập hợp có rỗng hay không.</p>
+<h3 id="half-plane-intersection-with-binary-search">Giao nửa mặt phẳng với tìm kiếm nhị phân (Half-plane intersection with binary search)<a class="headerlink" href="#half-plane-intersection-with-binary-search" title="Permanent link">&para;</a></h3>
+<p>Một ứng dụng phổ biến khác là sử dụng giao điểm nửa mặt phẳng như một công cụ để xác thực vị ngữ (predicate) của một thủ tục tìm kiếm nhị phân. Dưới đây là một ví dụ về một bài toán như vậy, cũng được trình bày bởi Artem Vasilyev trong cùng bài giảng đã đề cập trước đó: Cho một đa giác <strong>lồi</strong> <span class="arithmatex">$P$</span>, tìm chu vi lớn nhất có thể nội tiếp bên trong nó.</p>
+<p>Thay vì tìm kiếm một loại giải pháp dạng đóng, các công thức khó chịu hoặc các giải pháp thuật toán tối nghĩa, thay vào đó hãy thử tìm kiếm nhị phân trên câu trả lời. Lưu ý rằng, đối với một <span class="arithmatex">$r$</span> cố định nào đó, một vòng tròn có bán kính <span class="arithmatex">$r$</span> có thể được nội tiếp bên trong <span class="arithmatex">$P$</span> chỉ khi tồn tại một điểm nào đó bên trong <span class="arithmatex">$P$</span> có khoảng cách lớn hơn hoặc bằng <span class="arithmatex">$r$</span> đến tất cả các điểm biên của <span class="arithmatex">$P$</span>. Điều kiện này có thể được xác thực bằng cách "thu nhỏ" đa giác vào trong một khoảng cách <span class="arithmatex">$r$</span> và kiểm tra xem đa giác có còn không suy biến hay không (hoặc bản thân nó là một điểm/đoạn). Quy trình như vậy có thể được mô phỏng bằng cách lấy các nửa mặt phẳng của các cạnh đa giác theo thứ tự ngược chiều kim đồng hồ, dịch chuyển từng cái một khoảng cách <span class="arithmatex">$r$</span> theo hướng của vùng mà chúng cho phép (nghĩa là, trực giao với vector chỉ phương của nửa mặt phẳng), và kiểm tra xem giao điểm có không rỗng hay không.</p>
+<p>Rõ ràng, nếu chúng ta có thể nội tiếp một đường tròn có bán kính <span class="arithmatex">$r$</span>, chúng ta cũng có thể nội tiếp bất kỳ đường tròn nào khác có bán kính nhỏ hơn <span class="arithmatex">$r$</span>. Vì vậy, chúng ta có thể thực hiện tìm kiếm nhị phân trên bán kính <span class="arithmatex">$r$</span> và xác thực từng bước bằng cách sử dụng giao điểm nửa mặt phẳng. Ngoài ra, lưu ý rằng các nửa mặt phẳng của một đa giác lồi đã được sắp xếp theo góc, vì vậy bước sắp xếp có thể được bỏ qua trong thuật toán. Do đó, chúng ta thu được tổng độ phức tạp thời gian là <span class="arithmatex">$O(NK)$</span>, trong đó <span class="arithmatex">$N$</span> là số đỉnh đa giác và <span class="arithmatex">$K$</span> là số lần lặp của tìm kiếm nhị phân (giá trị thực tế sẽ phụ thuộc vào phạm vi của các câu trả lời có thể và độ chính xác mong muốn).</p>
+<h3 id="two-dimensional-linear-programming">Quy hoạch tuyến tính hai chiều (Two-dimensional linear programming)<a class="headerlink" href="#two-dimensional-linear-programming" title="Permanent link">&para;</a></h3>
+<p>Một ứng dụng nữa của giao điểm nửa mặt phẳng là quy hoạch tuyến tính trong hai biến. Tất cả các ràng buộc tuyến tính cho hai biến có thể được biểu thị dưới dạng <span class="arithmatex">$Ax + By + C \leq 0$</span> (bộ so sánh bất đẳng thức có thể thay đổi). Rõ ràng, đây chỉ là các nửa mặt phẳng, vì vậy việc kiểm tra xem một giải pháp khả thi có tồn tại cho một tập hợp các ràng buộc tuyến tính hay không có thể được thực hiện bằng giao điểm nửa mặt phẳng. Ngoài ra, đối với một tập hợp các ràng buộc tuyến tính đã cho, có thể tính toán vùng của các giải pháp khả thi (tức là giao của các nửa mặt phẳng) và sau đó trả lời nhiều truy vấn về việc tối đa hóa/tối thiểu hóa một số hàm tuyến tính <span class="arithmatex">$f(x, y)$</span> tuân theo các ràng buộc trong <span class="arithmatex">$O(\log N)$</span> mỗi truy vấn bằng cách sử dụng tìm kiếm nhị phân (rất giống với thủ thuật bao lồi).</p>
+<p>Đáng nói đến là cũng tồn tại một thuật toán ngẫu nhiên khá đơn giản có thể kiểm tra xem một tập hợp các ràng buộc tuyến tính có giải pháp khả thi hay không, và tối đa hóa/tối thiểu hóa một số hàm tuyến tính tuân theo các ràng buộc đã cho. Thuật toán ngẫu nhiên này cũng được giải thích độc đáo bởi Artem Vasilyev trong bài giảng đã đề cập trước đó. Dưới đây là một số tài nguyên bổ sung về nó, nếu người đọc quan tâm: <a href="https://youtu.be/5dfc355t2y4">CG - Bài giảng 4, phần 4 và 5</a> và <a href="https://petr-mitrichev.blogspot.com/2016/07/a-half-plane-week.html">Blog của Petr Mitrichev (bao gồm giải pháp cho bài toán khó nhất trong danh sách bài tập thực hành bên dưới)</a>.</p>
+<h2 id="practice-problems">Bài tập (Practice problems)<a class="headerlink" href="#practice-problems" title="Permanent link">&para;</a></h2>
+<h3 id="classic-problems-direct-application">Bài toán kinh điển, ứng dụng trực tiếp<a class="headerlink" href="#classic-problems-direct-application" title="Permanent link">&para;</a></h3>
 <ul>
-<li>❗ <strong>KHÔNG dịch</strong> các thuật ngữ CP phổ biến:</li>
-<li>DP, BFS, DFS, Fenwick Tree, Segment Tree, Bitmask, v.v.</li>
-<li>Thuật ngữ tiếng Anh sẽ được:</li>
-<li>Giữ nguyên</li>
-<li>Hoặc chú thích tiếng Việt trong lần xuất hiện đầu tiên</li>
-<li>Công thức, code, độ phức tạp được <strong>giữ nguyên 100%</strong></li>
+<li><a href="https://www.codechef.com/problems/CHN02">Codechef - Animesh decides to settle down</a></li>
+<li><a href="http://poj.org/problem?id=3130">POJ - How I mathematician Wonder What You Are!</a></li>
+<li><a href="http://poj.org/problem?id=3335">POJ - Rotating Scoreboard</a></li>
+<li><a href="http://poj.org/problem?id=1474">POJ - Video Surveillance</a></li>
+<li><a href="http://poj.org/problem?id=1279">POJ - Art Gallery</a></li>
+<li><a href="http://poj.org/problem?id=2451">POJ - Uyuw's Concert</a></li>
 </ul>
-<hr />
-<h2 id="nguon-goc-ban-quyen">🔗 Nguồn gốc &amp; Bản quyền<a class="headerlink" href="#nguon-goc-ban-quyen" title="Permanent link">&para;</a></h2>
+<h3 id="harder-problems">Bài toán khó hơn<a class="headerlink" href="#harder-problems" title="Permanent link">&para;</a></h3>
 <ul>
-<li>📌 Dự án gốc: https://github.com/cp-algorithms/cp-algorithms</li>
-<li>📌 Nội dung ban đầu được dịch từ: https://e-maxx.ru/algo</li>
-<li>Repository này <strong>KHÔNG phải repo chính thức</strong></li>
-<li>Mọi công lao học thuật thuộc về <strong>đội ngũ cp-algorithms</strong></li>
+<li><a href="http://poj.org/problem?id=3525">POJ - Most Distant Point from the Sea - Medium</a></li>
+<li><a href="https://www.acmicpc.net/problem/3903">Baekjoon - Jeju's Island - Same as above but seemingly stronger test cases</a></li>
+<li><a href="http://poj.org/problem?id=3384">POJ - Feng Shui - Medium</a></li>
+<li><a href="http://poj.org/problem?id=1755">POJ - Triathlon - Medium/hard</a></li>
+<li><a href="https://dmoj.ca/problem/ccoprep3p3">DMOJ - Arrow - Medium/hard</a></li>
+<li><a href="http://poj.org/problem?id=3968">POJ - Jungle Outpost - Hard</a></li>
+<li><a href="https://codeforces.com/gym/101309/attachments?mobile=false">Codeforces - Jungle Outpost (alternative link, problem J) - Hard</a> </li>
+<li><a href="https://contest.yandex.com/contest/2540/enter/">Yandex - Asymmetry Value (need virtual contest to see, problem F) - Very Hard</a></li>
 </ul>
-<p>📄 Việc dịch được thực hiện với mục đích <strong>giáo dục – phi thương mại</strong></p>
-<hr />
-<h2 id="ong-gop">🤝 Đóng góp<a class="headerlink" href="#ong-gop" title="Permanent link">&para;</a></h2>
-<p>Nếu bạn muốn:
-- Sửa lỗi dịch
-- Chuẩn hóa thuật ngữ
-- Dịch thêm bài mới</p>
-<p>👉 Hoàn toàn hoan nghênh!<br />
-Bạn có thể:
-- Tạo Issue
-- Hoặc Pull Request trực tiếp</p>
-<hr />
-<h2 id="tac-gia-ban-dich">👤 Tác giả bản dịch<a class="headerlink" href="#tac-gia-ban-dich" title="Permanent link">&para;</a></h2>
+<h3 id="additional-problems">Bài toán bổ sung<a class="headerlink" href="#additional-problems" title="Permanent link">&para;</a></h3>
 <ul>
-<li>GitHub: https://github.com/deanqkhanhcoder</li>
-<li>Mục tiêu: học sâu Competitive Programming &amp; xây dựng tài nguyên tiếng Việt chất lượng</li>
+<li>40th Petrozavodsk Programming Camp, Winter 2021 - Day 1: Jagiellonian U Contest, Grand Prix of Krakow - Problem B: (Almost) Fair Cake-Cutting. Tại thời điểm viết bài, bài toán này là riêng tư và chỉ có thể truy cập bởi những người tham gia Trại Lập trình.</li>
 </ul>
-<hr />
-<h2 id="loi-cam-on">⭐ Lời cảm ơn<a class="headerlink" href="#loi-cam-on" title="Permanent link">&para;</a></h2>
-<p>Xin gửi lời cảm ơn chân thành tới đội ngũ <strong>cp-algorithms</strong><br />
-vì đã xây dựng một trong những tài nguyên CP tốt nhất thế giới 🌍</p>
-<hr />
-<h2 id="checklist">Checklist<a class="headerlink" href="#checklist" title="Permanent link">&para;</a></h2>
+<h2 id="references-bibliography-and-other-sources">Tài liệu tham khảo, thư mục và các nguồn khác (References, bibliography and other sources)<a class="headerlink" href="#references-bibliography-and-other-sources" title="Permanent link">&para;</a></h2>
+<h3 id="main-sources">Nguồn chính<a class="headerlink" href="#main-sources" title="Permanent link">&para;</a></h3>
 <ul>
-<li>Original lines: 8</li>
-<li>Translated lines: 8</li>
-<li>Code blocks changed? No</li>
-<li>Inline code changed? No</li>
-<li>Technical terms kept in English? Yes</li>
-<li>Headings anchors preserved/added correctly? Yes</li>
-<li>I confirm no character was omitted: YES</li>
+<li><a href="http://people.csail.mit.edu/zeyuan/publications.htm">New Algorithm for Half-plane Intersection and its Practical Value.</a> Bài báo gốc của thuật toán.</li>
+<li><a href="https://youtu.be/WKyZSitpm6M?t=6463">Artem Vasilyev's Brazilian ICPC Summer School 2020 lecture.</a> Bài giảng tuyệt vời về giao điểm nửa mặt phẳng. Cũng bao gồm các chủ đề hình học khác.</li>
 </ul>
-<p>Notes:
-- Translated title 'Main Page' to 'Trang chủ'.</p>
+<h3 id="good-blogs-chinese">Blog hay (tiếng Trung)<a class="headerlink" href="#good-blogs-chinese" title="Permanent link">&para;</a></h3>
+<ul>
+<li><a href="https://zhuanlan.zhihu.com/p/83499723">Fundamentals of Computational Geometry - Intersection of Half-planes.</a></li>
+<li><a href="https://blog.csdn.net/qq_40861916/article/details/83541403">Detailed introduction to the half-plane intersection algorithm.</a></li>
+<li><a href="https://blog.csdn.net/qq_40482358/article/details/87921815">Summary of Half-plane intersection problems.</a></li>
+<li><a href="https://blog.csdn.net/u012061345/article/details/23872929">Sorting incremental method of half-plane intersection.</a></li>
+</ul>
+<h3 id="randomized-algorithm">Thuật toán ngẫu nhiên<a class="headerlink" href="#randomized-algorithm" title="Permanent link">&para;</a></h3>
+<ul>
+<li><a href="https://youtu.be/5dfc355t2y4">Linear Programming and Half-Plane intersection - Parts 4 and 5.</a></li>
+<li><a href="https://petr-mitrichev.blogspot.com/2016/07/a-half-plane-week.html">Petr Mitrichev's Blog: A half-plane week.</a></li>
+</ul>
                 
               </article>
             </div>
@@ -8062,14 +8386,14 @@ vì đã xây dựng một trong những tài nguyên CP tốt nhất thế gi�
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": ".", "features": ["navigation.top", "navigation.tracking", "toc.follow", "toc.integrate", "search.suggest", "content.code.copy"], "search": "assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.top", "navigation.tracking", "toc.follow", "toc.integrate", "search.suggest", "content.code.copy"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="assets/javascripts/bundle.79ae519e.min.js"></script>
+      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
       
-        <script src="javascript/config.js"></script>
+        <script src="../javascript/config.js"></script>
       
-        <script src="javascript/donation-banner.js"></script>
+        <script src="../javascript/donation-banner.js"></script>
       
         <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
       

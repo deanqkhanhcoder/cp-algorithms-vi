@@ -10,29 +10,31 @@
       
       
       
-        <link rel="canonical" href="https://deanqkhanhcoder.github.io/cp-algorithms-vi/index.html">
+        <link rel="canonical" href="https://deanqkhanhcoder.github.io/cp-algorithms-vi/algebra/montgomery_multiplication.html">
       
       
+        <link rel="prev" href="discrete-root.html">
       
-        <link rel="next" href="navigation.html">
+      
+        <link rel="next" href="balanced-ternary.html">
       
       
         
       
       
-      <link rel="icon" href="favicon.ico">
+      <link rel="icon" href="../favicon.ico">
       <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
     
     
       
-        <title>Trang chủ - Algorithms for Competitive Programming</title>
+        <title>Nhân Montgomery - Algorithms for Competitive Programming</title>
       
     
     
-      <link rel="stylesheet" href="assets/stylesheets/main.484c7ddc.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
       
         
-        <link rel="stylesheet" href="assets/stylesheets/palette.ab4e12ef.min.css">
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
       
       
 
@@ -51,15 +53,15 @@
       
     
     
-      <link rel="stylesheet" href="stylesheets/extra.css">
+      <link rel="stylesheet" href="../stylesheets/extra.css">
     
-    <script>__md_scope=new URL(".",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
     
     
-  <script src="assets/javascripts/toggle-sidebar.js"></script></head>
+  <script src="../assets/javascripts/toggle-sidebar.js"></script></head>
   
   
     
@@ -78,7 +80,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#cp-algorithms-vietnamese-translation" class="md-skip">
+        <a href="#montgomery-multiplication" class="md-skip">
           Skip to content
         </a>
       
@@ -98,10 +100,10 @@
     }
   </script>
   <nav class="md-header__inner md-grid" aria-label="header.title">
-    <a href="." title="Algorithms for Competitive Programming"
+    <a href=".." title="Algorithms for Competitive Programming"
       class="md-header__button md-logo" aria-label="Algorithms for Competitive Programming" data-md-component="logo">
       
-  <img src="favicon.ico" alt="logo">
+  <img src="../favicon.ico" alt="logo">
 
     </a>
     <label class="md-header__button md-icon" for="__drawer">
@@ -111,7 +113,7 @@
       <div class="md-header__ellipsis">
         <div class="md-header__topic">
           <span class="md-ellipsis">
-            <a href="." title="Algorithms for Competitive Programming"
+            <a href=".." title="Algorithms for Competitive Programming"
               aria-label="Algorithms for Competitive Programming" data-md-component="logo">
               Algorithms for Competitive Programming
             </a>
@@ -121,7 +123,7 @@
           <span class="md-ellipsis">
             <a href="#" onclick="scrollToTop()">
               
-              Trang chủ
+              Nhân Montgomery
               
             </a>
           </span>
@@ -255,9 +257,9 @@
 
 <nav class="md-nav md-nav--primary md-nav--integrated" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="." title="Algorithms for Competitive Programming" class="md-nav__button md-logo" aria-label="Algorithms for Competitive Programming" data-md-component="logo">
+    <a href=".." title="Algorithms for Competitive Programming" class="md-nav__button md-logo" aria-label="Algorithms for Competitive Programming" data-md-component="logo">
       
-  <img src="favicon.ico" alt="logo">
+  <img src="../favicon.ico" alt="logo">
 
     </a>
     Algorithms for Competitive Programming
@@ -281,20 +283,18 @@
       
   
   
-    
   
   
-  
     
     
     
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1" >
         
           
           <label class="md-nav__link" for="__nav_1" id="__nav_1_label" tabindex="0">
@@ -315,7 +315,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_1_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_1_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_1">
             <span class="md-nav__icon md-icon"></span>
             
@@ -330,37 +330,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Trang chủ
-  
-
-    
-  </span>
-  
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="index.html" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../index.html" class="md-nav__link">
         
   
   
@@ -376,114 +349,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#gioi-thieu" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        📌 Giới thiệu
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#noi-dung-a-dich" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        📚 Nội dung đã dịch
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#quy-uoc-dich-thuat" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        🧠 Quy ước dịch thuật
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#nguon-goc-ban-quyen" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        🔗 Nguồn gốc &amp; Bản quyền
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#ong-gop" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        🤝 Đóng góp
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#tac-gia-ban-dich" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        👤 Tác giả bản dịch
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#loi-cam-on" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        ⭐ Lời cảm ơn
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#checklist" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Checklist
-      
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -496,7 +361,7 @@
   
   
     <li class="md-nav__item">
-      <a href="navigation.html" class="md-nav__link">
+      <a href="../navigation.html" class="md-nav__link">
         
   
   
@@ -524,7 +389,7 @@
   
   
     <li class="md-nav__item">
-      <a href="tags.html" class="md-nav__link">
+      <a href="../tags.html" class="md-nav__link">
         
   
   
@@ -552,7 +417,7 @@
   
   
     <li class="md-nav__item">
-      <a href="contrib.html" class="md-nav__link">
+      <a href="../contrib.html" class="md-nav__link">
         
   
   
@@ -580,7 +445,7 @@
   
   
     <li class="md-nav__item">
-      <a href="code_of_conduct.html" class="md-nav__link">
+      <a href="../code_of_conduct.html" class="md-nav__link">
         
   
   
@@ -608,7 +473,7 @@
   
   
     <li class="md-nav__item">
-      <a href="preview.html" class="md-nav__link">
+      <a href="../preview.html" class="md-nav__link">
         
   
   
@@ -640,18 +505,20 @@
       
   
   
+    
   
   
+  
     
     
     
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
         
           
           <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
@@ -672,7 +539,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_2">
             <span class="md-nav__icon md-icon"></span>
             
@@ -737,7 +604,7 @@
   
   
     <li class="md-nav__item">
-      <a href="algebra/binary-exp.html" class="md-nav__link">
+      <a href="binary-exp.html" class="md-nav__link">
         
   
   
@@ -765,7 +632,7 @@
   
   
     <li class="md-nav__item">
-      <a href="algebra/euclid-algorithm.html" class="md-nav__link">
+      <a href="euclid-algorithm.html" class="md-nav__link">
         
   
   
@@ -793,7 +660,7 @@
   
   
     <li class="md-nav__item">
-      <a href="algebra/extended-euclid-algorithm.html" class="md-nav__link">
+      <a href="extended-euclid-algorithm.html" class="md-nav__link">
         
   
   
@@ -821,7 +688,7 @@
   
   
     <li class="md-nav__item">
-      <a href="algebra/linear-diophantine-equation.html" class="md-nav__link">
+      <a href="linear-diophantine-equation.html" class="md-nav__link">
         
   
   
@@ -849,7 +716,7 @@
   
   
     <li class="md-nav__item">
-      <a href="algebra/fibonacci-numbers.html" class="md-nav__link">
+      <a href="fibonacci-numbers.html" class="md-nav__link">
         
   
   
@@ -932,7 +799,7 @@
   
   
     <li class="md-nav__item">
-      <a href="algebra/sieve-of-eratosthenes.html" class="md-nav__link">
+      <a href="sieve-of-eratosthenes.html" class="md-nav__link">
         
   
   
@@ -960,7 +827,7 @@
   
   
     <li class="md-nav__item">
-      <a href="algebra/prime-sieve-linear.html" class="md-nav__link">
+      <a href="prime-sieve-linear.html" class="md-nav__link">
         
   
   
@@ -988,7 +855,7 @@
   
   
     <li class="md-nav__item">
-      <a href="algebra/primality_tests.html" class="md-nav__link">
+      <a href="primality_tests.html" class="md-nav__link">
         
   
   
@@ -1016,7 +883,7 @@
   
   
     <li class="md-nav__item">
-      <a href="algebra/factorization.html" class="md-nav__link">
+      <a href="factorization.html" class="md-nav__link">
         
   
   
@@ -1099,7 +966,7 @@
   
   
     <li class="md-nav__item">
-      <a href="algebra/phi-function.html" class="md-nav__link">
+      <a href="phi-function.html" class="md-nav__link">
         
   
   
@@ -1127,7 +994,7 @@
   
   
     <li class="md-nav__item">
-      <a href="algebra/divisors.html" class="md-nav__link">
+      <a href="divisors.html" class="md-nav__link">
         
   
   
@@ -1160,18 +1027,20 @@
                 
   
   
+    
   
   
+  
     
     
     
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_4" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_4" checked>
         
           
           <label class="md-nav__link" for="__nav_2_4" id="__nav_2_4_label" tabindex="0">
@@ -1192,7 +1061,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_4_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_4_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_2_4">
             <span class="md-nav__icon md-icon"></span>
             
@@ -1210,7 +1079,7 @@
   
   
     <li class="md-nav__item">
-      <a href="algebra/module-inverse.html" class="md-nav__link">
+      <a href="module-inverse.html" class="md-nav__link">
         
   
   
@@ -1238,7 +1107,7 @@
   
   
     <li class="md-nav__item">
-      <a href="algebra/linear_congruence_equation.html" class="md-nav__link">
+      <a href="linear_congruence_equation.html" class="md-nav__link">
         
   
   
@@ -1266,7 +1135,7 @@
   
   
     <li class="md-nav__item">
-      <a href="algebra/chinese-remainder-theorem.html" class="md-nav__link">
+      <a href="chinese-remainder-theorem.html" class="md-nav__link">
         
   
   
@@ -1294,7 +1163,7 @@
   
   
     <li class="md-nav__item">
-      <a href="algebra/garners-algorithm.html" class="md-nav__link">
+      <a href="garners-algorithm.html" class="md-nav__link">
         
   
   
@@ -1322,7 +1191,7 @@
   
   
     <li class="md-nav__item">
-      <a href="algebra/factorial-modulo.html" class="md-nav__link">
+      <a href="factorial-modulo.html" class="md-nav__link">
         
   
   
@@ -1350,7 +1219,7 @@
   
   
     <li class="md-nav__item">
-      <a href="algebra/discrete-log.html" class="md-nav__link">
+      <a href="discrete-log.html" class="md-nav__link">
         
   
   
@@ -1378,7 +1247,7 @@
   
   
     <li class="md-nav__item">
-      <a href="algebra/primitive-root.html" class="md-nav__link">
+      <a href="primitive-root.html" class="md-nav__link">
         
   
   
@@ -1406,7 +1275,7 @@
   
   
     <li class="md-nav__item">
-      <a href="algebra/discrete-root.html" class="md-nav__link">
+      <a href="discrete-root.html" class="md-nav__link">
         
   
   
@@ -1431,10 +1300,37 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="algebra/montgomery_multiplication.html" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Nhân Montgomery
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="montgomery_multiplication.html" class="md-nav__link md-nav__link--active">
         
   
   
@@ -1450,6 +1346,92 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#montgomery-representation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Biểu diễn Montgomery (Montgomery representation)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#montgomery-reduction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Rút gọn Montgomery (Montgomery reduction)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#fast-inverse-trick" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Mẹo nghịch đảo nhanh (Fast inverse trick)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#implementation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cài đặt (Implementation)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#fast-transformation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Biến đổi nhanh (Fast transformation)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#checklist" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Checklist
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -1517,7 +1499,7 @@
   
   
     <li class="md-nav__item">
-      <a href="algebra/balanced-ternary.html" class="md-nav__link">
+      <a href="balanced-ternary.html" class="md-nav__link">
         
   
   
@@ -1545,7 +1527,7 @@
   
   
     <li class="md-nav__item">
-      <a href="algebra/gray-code.html" class="md-nav__link">
+      <a href="gray-code.html" class="md-nav__link">
         
   
   
@@ -1628,7 +1610,7 @@
   
   
     <li class="md-nav__item">
-      <a href="algebra/bit-manipulation.html" class="md-nav__link">
+      <a href="bit-manipulation.html" class="md-nav__link">
         
   
   
@@ -1656,7 +1638,7 @@
   
   
     <li class="md-nav__item">
-      <a href="algebra/all-submasks.html" class="md-nav__link">
+      <a href="all-submasks.html" class="md-nav__link">
         
   
   
@@ -1684,7 +1666,7 @@
   
   
     <li class="md-nav__item">
-      <a href="algebra/big-integer.html" class="md-nav__link">
+      <a href="big-integer.html" class="md-nav__link">
         
   
   
@@ -1712,7 +1694,7 @@
   
   
     <li class="md-nav__item">
-      <a href="algebra/fft.html" class="md-nav__link">
+      <a href="fft.html" class="md-nav__link">
         
   
   
@@ -1740,7 +1722,7 @@
   
   
     <li class="md-nav__item">
-      <a href="algebra/polynomial.html" class="md-nav__link">
+      <a href="polynomial.html" class="md-nav__link">
         
   
   
@@ -1768,7 +1750,7 @@
   
   
     <li class="md-nav__item">
-      <a href="algebra/continued-fractions.html" class="md-nav__link">
+      <a href="continued-fractions.html" class="md-nav__link">
         
   
   
@@ -1796,7 +1778,7 @@
   
   
     <li class="md-nav__item">
-      <a href="algebra/factoring-exp.html" class="md-nav__link">
+      <a href="factoring-exp.html" class="md-nav__link">
         
   
   
@@ -1933,7 +1915,7 @@
   
   
     <li class="md-nav__item">
-      <a href="data_structures/stack_queue_modification.html" class="md-nav__link">
+      <a href="../data_structures/stack_queue_modification.html" class="md-nav__link">
         
   
   
@@ -1961,7 +1943,7 @@
   
   
     <li class="md-nav__item">
-      <a href="data_structures/sparse-table.html" class="md-nav__link">
+      <a href="../data_structures/sparse-table.html" class="md-nav__link">
         
   
   
@@ -2044,7 +2026,7 @@
   
   
     <li class="md-nav__item">
-      <a href="data_structures/disjoint_set_union.html" class="md-nav__link">
+      <a href="../data_structures/disjoint_set_union.html" class="md-nav__link">
         
   
   
@@ -2072,7 +2054,7 @@
   
   
     <li class="md-nav__item">
-      <a href="data_structures/fenwick.html" class="md-nav__link">
+      <a href="../data_structures/fenwick.html" class="md-nav__link">
         
   
   
@@ -2100,7 +2082,7 @@
   
   
     <li class="md-nav__item">
-      <a href="data_structures/sqrt_decomposition.html" class="md-nav__link">
+      <a href="../data_structures/sqrt_decomposition.html" class="md-nav__link">
         
   
   
@@ -2128,7 +2110,7 @@
   
   
     <li class="md-nav__item">
-      <a href="data_structures/segment_tree.html" class="md-nav__link">
+      <a href="../data_structures/segment_tree.html" class="md-nav__link">
         
   
   
@@ -2156,7 +2138,7 @@
   
   
     <li class="md-nav__item">
-      <a href="data_structures/treap.html" class="md-nav__link">
+      <a href="../data_structures/treap.html" class="md-nav__link">
         
   
   
@@ -2184,7 +2166,7 @@
   
   
     <li class="md-nav__item">
-      <a href="data_structures/sqrt-tree.html" class="md-nav__link">
+      <a href="../data_structures/sqrt-tree.html" class="md-nav__link">
         
   
   
@@ -2212,7 +2194,7 @@
   
   
     <li class="md-nav__item">
-      <a href="data_structures/randomized_heap.html" class="md-nav__link">
+      <a href="../data_structures/randomized_heap.html" class="md-nav__link">
         
   
   
@@ -2295,7 +2277,7 @@
   
   
     <li class="md-nav__item">
-      <a href="data_structures/deleting_in_log_n.html" class="md-nav__link">
+      <a href="../data_structures/deleting_in_log_n.html" class="md-nav__link">
         
   
   
@@ -2385,7 +2367,7 @@
   
   
     <li class="md-nav__item">
-      <a href="dynamic_programming/intro-to-dp.html" class="md-nav__link">
+      <a href="../dynamic_programming/intro-to-dp.html" class="md-nav__link">
         
   
   
@@ -2413,7 +2395,7 @@
   
   
     <li class="md-nav__item">
-      <a href="dynamic_programming/knapsack.html" class="md-nav__link">
+      <a href="../dynamic_programming/knapsack.html" class="md-nav__link">
         
   
   
@@ -2441,7 +2423,7 @@
   
   
     <li class="md-nav__item">
-      <a href="dynamic_programming/longest_increasing_subsequence.html" class="md-nav__link">
+      <a href="../dynamic_programming/longest_increasing_subsequence.html" class="md-nav__link">
         
   
   
@@ -2516,7 +2498,7 @@
   
   
     <li class="md-nav__item">
-      <a href="dynamic_programming/divide-and-conquer-dp.html" class="md-nav__link">
+      <a href="../dynamic_programming/divide-and-conquer-dp.html" class="md-nav__link">
         
   
   
@@ -2544,7 +2526,7 @@
   
   
     <li class="md-nav__item">
-      <a href="dynamic_programming/knuth-optimization.html" class="md-nav__link">
+      <a href="../dynamic_programming/knuth-optimization.html" class="md-nav__link">
         
   
   
@@ -2627,7 +2609,7 @@
   
   
     <li class="md-nav__item">
-      <a href="dynamic_programming/profile-dynamics.html" class="md-nav__link">
+      <a href="../dynamic_programming/profile-dynamics.html" class="md-nav__link">
         
   
   
@@ -2655,7 +2637,7 @@
   
   
     <li class="md-nav__item">
-      <a href="dynamic_programming/zero_matrix.html" class="md-nav__link">
+      <a href="../dynamic_programming/zero_matrix.html" class="md-nav__link">
         
   
   
@@ -2792,7 +2774,7 @@
   
   
     <li class="md-nav__item">
-      <a href="string/string-hashing.html" class="md-nav__link">
+      <a href="../string/string-hashing.html" class="md-nav__link">
         
   
   
@@ -2820,7 +2802,7 @@
   
   
     <li class="md-nav__item">
-      <a href="string/rabin-karp.html" class="md-nav__link">
+      <a href="../string/rabin-karp.html" class="md-nav__link">
         
   
   
@@ -2848,7 +2830,7 @@
   
   
     <li class="md-nav__item">
-      <a href="string/prefix-function.html" class="md-nav__link">
+      <a href="../string/prefix-function.html" class="md-nav__link">
         
   
   
@@ -2876,7 +2858,7 @@
   
   
     <li class="md-nav__item">
-      <a href="string/z-function.html" class="md-nav__link">
+      <a href="../string/z-function.html" class="md-nav__link">
         
   
   
@@ -2904,7 +2886,7 @@
   
   
     <li class="md-nav__item">
-      <a href="string/suffix-array.html" class="md-nav__link">
+      <a href="../string/suffix-array.html" class="md-nav__link">
         
   
   
@@ -2932,7 +2914,7 @@
   
   
     <li class="md-nav__item">
-      <a href="string/aho_corasick.html" class="md-nav__link">
+      <a href="../string/aho_corasick.html" class="md-nav__link">
         
   
   
@@ -3015,7 +2997,7 @@
   
   
     <li class="md-nav__item">
-      <a href="string/suffix-tree-ukkonen.html" class="md-nav__link">
+      <a href="../string/suffix-tree-ukkonen.html" class="md-nav__link">
         
   
   
@@ -3043,7 +3025,7 @@
   
   
     <li class="md-nav__item">
-      <a href="string/suffix-automaton.html" class="md-nav__link">
+      <a href="../string/suffix-automaton.html" class="md-nav__link">
         
   
   
@@ -3071,7 +3053,7 @@
   
   
     <li class="md-nav__item">
-      <a href="string/lyndon_factorization.html" class="md-nav__link">
+      <a href="../string/lyndon_factorization.html" class="md-nav__link">
         
   
   
@@ -3154,7 +3136,7 @@
   
   
     <li class="md-nav__item">
-      <a href="string/expression_parsing.html" class="md-nav__link">
+      <a href="../string/expression_parsing.html" class="md-nav__link">
         
   
   
@@ -3182,7 +3164,7 @@
   
   
     <li class="md-nav__item">
-      <a href="string/manacher.html" class="md-nav__link">
+      <a href="../string/manacher.html" class="md-nav__link">
         
   
   
@@ -3210,7 +3192,7 @@
   
   
     <li class="md-nav__item">
-      <a href="string/main_lorentz.html" class="md-nav__link">
+      <a href="../string/main_lorentz.html" class="md-nav__link">
         
   
   
@@ -3347,7 +3329,7 @@
   
   
     <li class="md-nav__item">
-      <a href="linear_algebra/linear-system-gauss.html" class="md-nav__link">
+      <a href="../linear_algebra/linear-system-gauss.html" class="md-nav__link">
         
   
   
@@ -3375,7 +3357,7 @@
   
   
     <li class="md-nav__item">
-      <a href="linear_algebra/determinant-gauss.html" class="md-nav__link">
+      <a href="../linear_algebra/determinant-gauss.html" class="md-nav__link">
         
   
   
@@ -3403,7 +3385,7 @@
   
   
     <li class="md-nav__item">
-      <a href="linear_algebra/determinant-kraut.html" class="md-nav__link">
+      <a href="../linear_algebra/determinant-kraut.html" class="md-nav__link">
         
   
   
@@ -3431,7 +3413,7 @@
   
   
     <li class="md-nav__item">
-      <a href="linear_algebra/rank-matrix.html" class="md-nav__link">
+      <a href="../linear_algebra/rank-matrix.html" class="md-nav__link">
         
   
   
@@ -3568,7 +3550,7 @@
   
   
     <li class="md-nav__item">
-      <a href="algebra/factorial-divisors.html" class="md-nav__link">
+      <a href="factorial-divisors.html" class="md-nav__link">
         
   
   
@@ -3596,7 +3578,7 @@
   
   
     <li class="md-nav__item">
-      <a href="combinatorics/binomial-coefficients.html" class="md-nav__link">
+      <a href="../combinatorics/binomial-coefficients.html" class="md-nav__link">
         
   
   
@@ -3624,7 +3606,7 @@
   
   
     <li class="md-nav__item">
-      <a href="combinatorics/catalan-numbers.html" class="md-nav__link">
+      <a href="../combinatorics/catalan-numbers.html" class="md-nav__link">
         
   
   
@@ -3707,7 +3689,7 @@
   
   
     <li class="md-nav__item">
-      <a href="combinatorics/inclusion-exclusion.html" class="md-nav__link">
+      <a href="../combinatorics/inclusion-exclusion.html" class="md-nav__link">
         
   
   
@@ -3735,7 +3717,7 @@
   
   
     <li class="md-nav__item">
-      <a href="combinatorics/burnside.html" class="md-nav__link">
+      <a href="../combinatorics/burnside.html" class="md-nav__link">
         
   
   
@@ -3763,7 +3745,7 @@
   
   
     <li class="md-nav__item">
-      <a href="combinatorics/stars_and_bars.html" class="md-nav__link">
+      <a href="../combinatorics/stars_and_bars.html" class="md-nav__link">
         
   
   
@@ -3791,7 +3773,7 @@
   
   
     <li class="md-nav__item">
-      <a href="combinatorics/generating_combinations.html" class="md-nav__link">
+      <a href="../combinatorics/generating_combinations.html" class="md-nav__link">
         
   
   
@@ -3874,7 +3856,7 @@
   
   
     <li class="md-nav__item">
-      <a href="combinatorics/bishops-on-chessboard.html" class="md-nav__link">
+      <a href="../combinatorics/bishops-on-chessboard.html" class="md-nav__link">
         
   
   
@@ -3902,7 +3884,7 @@
   
   
     <li class="md-nav__item">
-      <a href="combinatorics/bracket_sequences.html" class="md-nav__link">
+      <a href="../combinatorics/bracket_sequences.html" class="md-nav__link">
         
   
   
@@ -3930,7 +3912,7 @@
   
   
     <li class="md-nav__item">
-      <a href="combinatorics/counting_labeled_graphs.html" class="md-nav__link">
+      <a href="../combinatorics/counting_labeled_graphs.html" class="md-nav__link">
         
   
   
@@ -4067,7 +4049,7 @@
   
   
     <li class="md-nav__item">
-      <a href="num_methods/binary_search.html" class="md-nav__link">
+      <a href="../num_methods/binary_search.html" class="md-nav__link">
         
   
   
@@ -4095,7 +4077,7 @@
   
   
     <li class="md-nav__item">
-      <a href="num_methods/ternary_search.html" class="md-nav__link">
+      <a href="../num_methods/ternary_search.html" class="md-nav__link">
         
   
   
@@ -4123,7 +4105,7 @@
   
   
     <li class="md-nav__item">
-      <a href="num_methods/roots_newton.html" class="md-nav__link">
+      <a href="../num_methods/roots_newton.html" class="md-nav__link">
         
   
   
@@ -4151,7 +4133,7 @@
   
   
     <li class="md-nav__item">
-      <a href="num_methods/simulated_annealing.html" class="md-nav__link">
+      <a href="../num_methods/simulated_annealing.html" class="md-nav__link">
         
   
   
@@ -4234,7 +4216,7 @@
   
   
     <li class="md-nav__item">
-      <a href="num_methods/simpson-integration.html" class="md-nav__link">
+      <a href="../num_methods/simpson-integration.html" class="md-nav__link">
         
   
   
@@ -4371,7 +4353,7 @@
   
   
     <li class="md-nav__item">
-      <a href="geometry/basic-geometry.html" class="md-nav__link">
+      <a href="../geometry/basic-geometry.html" class="md-nav__link">
         
   
   
@@ -4399,7 +4381,7 @@
   
   
     <li class="md-nav__item">
-      <a href="geometry/segment-to-line.html" class="md-nav__link">
+      <a href="../geometry/segment-to-line.html" class="md-nav__link">
         
   
   
@@ -4427,7 +4409,7 @@
   
   
     <li class="md-nav__item">
-      <a href="geometry/lines-intersection.html" class="md-nav__link">
+      <a href="../geometry/lines-intersection.html" class="md-nav__link">
         
   
   
@@ -4455,7 +4437,7 @@
   
   
     <li class="md-nav__item">
-      <a href="geometry/check-segments-intersection.html" class="md-nav__link">
+      <a href="../geometry/check-segments-intersection.html" class="md-nav__link">
         
   
   
@@ -4483,7 +4465,7 @@
   
   
     <li class="md-nav__item">
-      <a href="geometry/segments-intersection.html" class="md-nav__link">
+      <a href="../geometry/segments-intersection.html" class="md-nav__link">
         
   
   
@@ -4511,7 +4493,7 @@
   
   
     <li class="md-nav__item">
-      <a href="geometry/circle-line-intersection.html" class="md-nav__link">
+      <a href="../geometry/circle-line-intersection.html" class="md-nav__link">
         
   
   
@@ -4539,7 +4521,7 @@
   
   
     <li class="md-nav__item">
-      <a href="geometry/circle-circle-intersection.html" class="md-nav__link">
+      <a href="../geometry/circle-circle-intersection.html" class="md-nav__link">
         
   
   
@@ -4567,7 +4549,7 @@
   
   
     <li class="md-nav__item">
-      <a href="geometry/tangents-to-two-circles.html" class="md-nav__link">
+      <a href="../geometry/tangents-to-two-circles.html" class="md-nav__link">
         
   
   
@@ -4595,7 +4577,7 @@
   
   
     <li class="md-nav__item">
-      <a href="geometry/length-of-segments-union.html" class="md-nav__link">
+      <a href="../geometry/length-of-segments-union.html" class="md-nav__link">
         
   
   
@@ -4678,7 +4660,7 @@
   
   
     <li class="md-nav__item">
-      <a href="geometry/oriented-triangle-area.html" class="md-nav__link">
+      <a href="../geometry/oriented-triangle-area.html" class="md-nav__link">
         
   
   
@@ -4706,7 +4688,7 @@
   
   
     <li class="md-nav__item">
-      <a href="geometry/area-of-simple-polygon.html" class="md-nav__link">
+      <a href="../geometry/area-of-simple-polygon.html" class="md-nav__link">
         
   
   
@@ -4734,7 +4716,7 @@
   
   
     <li class="md-nav__item">
-      <a href="geometry/point-in-convex-polygon.html" class="md-nav__link">
+      <a href="../geometry/point-in-convex-polygon.html" class="md-nav__link">
         
   
   
@@ -4762,7 +4744,7 @@
   
   
     <li class="md-nav__item">
-      <a href="geometry/minkowski.html" class="md-nav__link">
+      <a href="../geometry/minkowski.html" class="md-nav__link">
         
   
   
@@ -4790,7 +4772,7 @@
   
   
     <li class="md-nav__item">
-      <a href="geometry/picks-theorem.html" class="md-nav__link">
+      <a href="../geometry/picks-theorem.html" class="md-nav__link">
         
   
   
@@ -4818,7 +4800,7 @@
   
   
     <li class="md-nav__item">
-      <a href="geometry/lattice-points.html" class="md-nav__link">
+      <a href="../geometry/lattice-points.html" class="md-nav__link">
         
   
   
@@ -4901,7 +4883,7 @@
   
   
     <li class="md-nav__item">
-      <a href="geometry/convex-hull.html" class="md-nav__link">
+      <a href="../geometry/convex-hull.html" class="md-nav__link">
         
   
   
@@ -4929,7 +4911,7 @@
   
   
     <li class="md-nav__item">
-      <a href="geometry/convex_hull_trick.html" class="md-nav__link">
+      <a href="../geometry/convex_hull_trick.html" class="md-nav__link">
         
   
   
@@ -5012,7 +4994,7 @@
   
   
     <li class="md-nav__item">
-      <a href="geometry/intersecting_segments.html" class="md-nav__link">
+      <a href="../geometry/intersecting_segments.html" class="md-nav__link">
         
   
   
@@ -5095,7 +5077,7 @@
   
   
     <li class="md-nav__item">
-      <a href="geometry/planar.html" class="md-nav__link">
+      <a href="../geometry/planar.html" class="md-nav__link">
         
   
   
@@ -5123,7 +5105,7 @@
   
   
     <li class="md-nav__item">
-      <a href="geometry/point-location.html" class="md-nav__link">
+      <a href="../geometry/point-location.html" class="md-nav__link">
         
   
   
@@ -5206,7 +5188,7 @@
   
   
     <li class="md-nav__item">
-      <a href="geometry/nearest_points.html" class="md-nav__link">
+      <a href="../geometry/nearest_points.html" class="md-nav__link">
         
   
   
@@ -5234,7 +5216,7 @@
   
   
     <li class="md-nav__item">
-      <a href="geometry/delaunay.html" class="md-nav__link">
+      <a href="../geometry/delaunay.html" class="md-nav__link">
         
   
   
@@ -5262,7 +5244,7 @@
   
   
     <li class="md-nav__item">
-      <a href="geometry/vertical_decomposition.html" class="md-nav__link">
+      <a href="../geometry/vertical_decomposition.html" class="md-nav__link">
         
   
   
@@ -5290,7 +5272,7 @@
   
   
     <li class="md-nav__item">
-      <a href="geometry/halfplane-intersection.html" class="md-nav__link">
+      <a href="../geometry/halfplane-intersection.html" class="md-nav__link">
         
   
   
@@ -5318,7 +5300,7 @@
   
   
     <li class="md-nav__item">
-      <a href="geometry/manhattan-distance.html" class="md-nav__link">
+      <a href="../geometry/manhattan-distance.html" class="md-nav__link">
         
   
   
@@ -5346,7 +5328,7 @@
   
   
     <li class="md-nav__item">
-      <a href="geometry/enclosing-circle.html" class="md-nav__link">
+      <a href="../geometry/enclosing-circle.html" class="md-nav__link">
         
   
   
@@ -5483,7 +5465,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/breadth-first-search.html" class="md-nav__link">
+      <a href="../graph/breadth-first-search.html" class="md-nav__link">
         
   
   
@@ -5511,7 +5493,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/depth-first-search.html" class="md-nav__link">
+      <a href="../graph/depth-first-search.html" class="md-nav__link">
         
   
   
@@ -5594,7 +5576,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/search-for-connected-components.html" class="md-nav__link">
+      <a href="../graph/search-for-connected-components.html" class="md-nav__link">
         
   
   
@@ -5622,7 +5604,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/bridge-searching.html" class="md-nav__link">
+      <a href="../graph/bridge-searching.html" class="md-nav__link">
         
   
   
@@ -5650,7 +5632,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/bridge-searching-online.html" class="md-nav__link">
+      <a href="../graph/bridge-searching-online.html" class="md-nav__link">
         
   
   
@@ -5678,7 +5660,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/cutpoints.html" class="md-nav__link">
+      <a href="../graph/cutpoints.html" class="md-nav__link">
         
   
   
@@ -5706,7 +5688,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/strongly-connected-components.html" class="md-nav__link">
+      <a href="../graph/strongly-connected-components.html" class="md-nav__link">
         
   
   
@@ -5734,7 +5716,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/strong-orientation.html" class="md-nav__link">
+      <a href="../graph/strong-orientation.html" class="md-nav__link">
         
   
   
@@ -5817,7 +5799,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/dijkstra.html" class="md-nav__link">
+      <a href="../graph/dijkstra.html" class="md-nav__link">
         
   
   
@@ -5845,7 +5827,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/dijkstra_sparse.html" class="md-nav__link">
+      <a href="../graph/dijkstra_sparse.html" class="md-nav__link">
         
   
   
@@ -5873,7 +5855,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/bellman_ford.html" class="md-nav__link">
+      <a href="../graph/bellman_ford.html" class="md-nav__link">
         
   
   
@@ -5901,7 +5883,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/01_bfs.html" class="md-nav__link">
+      <a href="../graph/01_bfs.html" class="md-nav__link">
         
   
   
@@ -5929,7 +5911,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/desopo_pape.html" class="md-nav__link">
+      <a href="../graph/desopo_pape.html" class="md-nav__link">
         
   
   
@@ -6012,7 +5994,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/all-pair-shortest-path-floyd-warshall.html" class="md-nav__link">
+      <a href="../graph/all-pair-shortest-path-floyd-warshall.html" class="md-nav__link">
         
   
   
@@ -6040,7 +6022,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/fixed_length_paths.html" class="md-nav__link">
+      <a href="../graph/fixed_length_paths.html" class="md-nav__link">
         
   
   
@@ -6123,7 +6105,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/mst_prim.html" class="md-nav__link">
+      <a href="../graph/mst_prim.html" class="md-nav__link">
         
   
   
@@ -6151,7 +6133,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/mst_kruskal.html" class="md-nav__link">
+      <a href="../graph/mst_kruskal.html" class="md-nav__link">
         
   
   
@@ -6179,7 +6161,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/mst_kruskal_with_dsu.html" class="md-nav__link">
+      <a href="../graph/mst_kruskal_with_dsu.html" class="md-nav__link">
         
   
   
@@ -6207,7 +6189,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/second_best_mst.html" class="md-nav__link">
+      <a href="../graph/second_best_mst.html" class="md-nav__link">
         
   
   
@@ -6235,7 +6217,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/kirchhoff-theorem.html" class="md-nav__link">
+      <a href="../graph/kirchhoff-theorem.html" class="md-nav__link">
         
   
   
@@ -6263,7 +6245,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/pruefer_code.html" class="md-nav__link">
+      <a href="../graph/pruefer_code.html" class="md-nav__link">
         
   
   
@@ -6346,7 +6328,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/finding-cycle.html" class="md-nav__link">
+      <a href="../graph/finding-cycle.html" class="md-nav__link">
         
   
   
@@ -6374,7 +6356,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/finding-negative-cycle-in-graph.html" class="md-nav__link">
+      <a href="../graph/finding-negative-cycle-in-graph.html" class="md-nav__link">
         
   
   
@@ -6402,7 +6384,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/euler_path.html" class="md-nav__link">
+      <a href="../graph/euler_path.html" class="md-nav__link">
         
   
   
@@ -6485,7 +6467,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/lca.html" class="md-nav__link">
+      <a href="../graph/lca.html" class="md-nav__link">
         
   
   
@@ -6513,7 +6495,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/lca_binary_lifting.html" class="md-nav__link">
+      <a href="../graph/lca_binary_lifting.html" class="md-nav__link">
         
   
   
@@ -6541,7 +6523,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/lca_farachcoltonbender.html" class="md-nav__link">
+      <a href="../graph/lca_farachcoltonbender.html" class="md-nav__link">
         
   
   
@@ -6569,7 +6551,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/rmq_linear.html" class="md-nav__link">
+      <a href="../graph/rmq_linear.html" class="md-nav__link">
         
   
   
@@ -6597,7 +6579,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/lca_tarjan.html" class="md-nav__link">
+      <a href="../graph/lca_tarjan.html" class="md-nav__link">
         
   
   
@@ -6680,7 +6662,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/edmonds_karp.html" class="md-nav__link">
+      <a href="../graph/edmonds_karp.html" class="md-nav__link">
         
   
   
@@ -6708,7 +6690,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/push-relabel.html" class="md-nav__link">
+      <a href="../graph/push-relabel.html" class="md-nav__link">
         
   
   
@@ -6736,7 +6718,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/push-relabel-faster.html" class="md-nav__link">
+      <a href="../graph/push-relabel-faster.html" class="md-nav__link">
         
   
   
@@ -6764,7 +6746,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/dinic.html" class="md-nav__link">
+      <a href="../graph/dinic.html" class="md-nav__link">
         
   
   
@@ -6792,7 +6774,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/mpm.html" class="md-nav__link">
+      <a href="../graph/mpm.html" class="md-nav__link">
         
   
   
@@ -6820,7 +6802,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/flow_with_demands.html" class="md-nav__link">
+      <a href="../graph/flow_with_demands.html" class="md-nav__link">
         
   
   
@@ -6848,7 +6830,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/min_cost_flow.html" class="md-nav__link">
+      <a href="../graph/min_cost_flow.html" class="md-nav__link">
         
   
   
@@ -6876,7 +6858,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/Assignment-problem-min-flow.html" class="md-nav__link">
+      <a href="../graph/Assignment-problem-min-flow.html" class="md-nav__link">
         
   
   
@@ -6959,7 +6941,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/bipartite-check.html" class="md-nav__link">
+      <a href="../graph/bipartite-check.html" class="md-nav__link">
         
   
   
@@ -6987,7 +6969,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/kuhn_maximum_bipartite_matching.html" class="md-nav__link">
+      <a href="../graph/kuhn_maximum_bipartite_matching.html" class="md-nav__link">
         
   
   
@@ -7015,7 +6997,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/hungarian-algorithm.html" class="md-nav__link">
+      <a href="../graph/hungarian-algorithm.html" class="md-nav__link">
         
   
   
@@ -7098,7 +7080,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/topological-sort.html" class="md-nav__link">
+      <a href="../graph/topological-sort.html" class="md-nav__link">
         
   
   
@@ -7126,7 +7108,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/edge_vertex_connectivity.html" class="md-nav__link">
+      <a href="../graph/edge_vertex_connectivity.html" class="md-nav__link">
         
   
   
@@ -7154,7 +7136,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/tree_painting.html" class="md-nav__link">
+      <a href="../graph/tree_painting.html" class="md-nav__link">
         
   
   
@@ -7182,7 +7164,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/2SAT.html" class="md-nav__link">
+      <a href="../graph/2SAT.html" class="md-nav__link">
         
   
   
@@ -7210,7 +7192,7 @@
   
   
     <li class="md-nav__item">
-      <a href="graph/hld.html" class="md-nav__link">
+      <a href="../graph/hld.html" class="md-nav__link">
         
   
   
@@ -7347,7 +7329,7 @@
   
   
     <li class="md-nav__item">
-      <a href="sequences/rmq.html" class="md-nav__link">
+      <a href="../sequences/rmq.html" class="md-nav__link">
         
   
   
@@ -7375,7 +7357,7 @@
   
   
     <li class="md-nav__item">
-      <a href="others/maximum_average_segment.html" class="md-nav__link">
+      <a href="../others/maximum_average_segment.html" class="md-nav__link">
         
   
   
@@ -7403,7 +7385,7 @@
   
   
     <li class="md-nav__item">
-      <a href="sequences/k-th.html" class="md-nav__link">
+      <a href="../sequences/k-th.html" class="md-nav__link">
         
   
   
@@ -7431,7 +7413,7 @@
   
   
     <li class="md-nav__item">
-      <a href="sequences/mex.html" class="md-nav__link">
+      <a href="../sequences/mex.html" class="md-nav__link">
         
   
   
@@ -7514,7 +7496,7 @@
   
   
     <li class="md-nav__item">
-      <a href="game_theory/games_on_graphs.html" class="md-nav__link">
+      <a href="../game_theory/games_on_graphs.html" class="md-nav__link">
         
   
   
@@ -7542,7 +7524,7 @@
   
   
     <li class="md-nav__item">
-      <a href="game_theory/sprague-grundy-nim.html" class="md-nav__link">
+      <a href="../game_theory/sprague-grundy-nim.html" class="md-nav__link">
         
   
   
@@ -7625,7 +7607,7 @@
   
   
     <li class="md-nav__item">
-      <a href="schedules/schedule_one_machine.html" class="md-nav__link">
+      <a href="../schedules/schedule_one_machine.html" class="md-nav__link">
         
   
   
@@ -7653,7 +7635,7 @@
   
   
     <li class="md-nav__item">
-      <a href="schedules/schedule_two_machines.html" class="md-nav__link">
+      <a href="../schedules/schedule_two_machines.html" class="md-nav__link">
         
   
   
@@ -7681,7 +7663,7 @@
   
   
     <li class="md-nav__item">
-      <a href="schedules/schedule-with-completion-duration.html" class="md-nav__link">
+      <a href="../schedules/schedule-with-completion-duration.html" class="md-nav__link">
         
   
   
@@ -7764,7 +7746,7 @@
   
   
     <li class="md-nav__item">
-      <a href="others/tortoise_and_hare.html" class="md-nav__link">
+      <a href="../others/tortoise_and_hare.html" class="md-nav__link">
         
   
   
@@ -7792,7 +7774,7 @@
   
   
     <li class="md-nav__item">
-      <a href="others/josephus_problem.html" class="md-nav__link">
+      <a href="../others/josephus_problem.html" class="md-nav__link">
         
   
   
@@ -7820,7 +7802,7 @@
   
   
     <li class="md-nav__item">
-      <a href="others/15-puzzle.html" class="md-nav__link">
+      <a href="../others/15-puzzle.html" class="md-nav__link">
         
   
   
@@ -7848,7 +7830,7 @@
   
   
     <li class="md-nav__item">
-      <a href="others/stern_brocot_tree_farey_sequences.html" class="md-nav__link">
+      <a href="../others/stern_brocot_tree_farey_sequences.html" class="md-nav__link">
         
   
   
@@ -7900,9 +7882,9 @@
                   <script type="text/javascript">
   window.onload = function () {
     const newIssueURL = "https://github.com/cp-algorithms/cp-algorithms/issues/new";
-    const issueTitle = "Problem on article " + "Trang ch\u1ee7";
+    const issueTitle = "Problem on article " + "Nh\u00e2n Montgomery";
   const issueBody = `
-**Article:** [`+ "Trang ch\u1ee7" + `](${window.location.href})
+**Article:** [`+ "Nh\u00e2n Montgomery" + `](${window.location.href})
 
 **Problem:**
 `;
@@ -7914,7 +7896,7 @@
 </script>
 
 
-<a href="https://github.com/deanqkhanhcoder/cp-algorithms-vi/edit/main/src/index.md" title="Edit this page" class="md-content__button md-icon">
+<a href="https://github.com/deanqkhanhcoder/cp-algorithms-vi/edit/main/src/algebra/montgomery_multiplication.md" title="Edit this page" class="md-content__button md-icon">
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75z"/></svg>
 </a>
 <a id="report_issue_a" href="" title="Report a problem" class="md-content__button md-icon">
@@ -7924,93 +7906,191 @@
 
 <ul class="metadata page-metadata" data-bi-name="page info" lang="en-us" dir="ltr">
   
+  
+  <a href="../tags.html#tag:original" class="md-tag">
+    Original
+  </a>
+  
+  
 
   
 </ul>
 
 
-<h1 id="cp-algorithms-vietnamese-translation">CP-Algorithms (Vietnamese Translation)<a class="headerlink" href="#cp-algorithms-vietnamese-translation" title="Permanent link">&para;</a></h1>
-<blockquote>
-<p>📘 Bản dịch tiếng Việt của <strong>cp-algorithms</strong> – tài nguyên thuật toán kinh điển cho Competitive Programming.</p>
-</blockquote>
-<hr />
-<h2 id="gioi-thieu">📌 Giới thiệu<a class="headerlink" href="#gioi-thieu" title="Permanent link">&para;</a></h2>
-<p>Repository này là <strong>bản dịch tiếng Việt</strong> của dự án mã nguồn mở nổi tiếng<br />
-👉 <strong>https://github.com/cp-algorithms/cp-algorithms</strong></p>
-<p>Dự án gốc cung cấp các bài viết chất lượng cao về:
-- Thuật toán (Algorithms)
-- Cấu trúc dữ liệu (Data Structures)
-- Quy hoạch động, đồ thị, hình học, số học, v.v.
-- Ứng dụng thực tế trong <strong>Competitive Programming</strong></p>
-<p>🎯 <strong>Mục tiêu của repo này</strong>:
-- Giúp người học Việt Nam tiếp cận kiến thức CP dễ dàng hơn
-- Giữ nguyên <strong>thuật ngữ tiếng Anh quan trọng</strong> (DP, BFS, Segment Tree, …)
-- Dịch sát nghĩa, ưu tiên <strong>tính chính xác học thuật</strong></p>
-<hr />
-<h2 id="noi-dung-a-dich">📚 Nội dung đã dịch<a class="headerlink" href="#noi-dung-a-dich" title="Permanent link">&para;</a></h2>
-<ul>
-<li>Đại số (Algebra)</li>
-<li>Cấu trúc dữ liệu (Data Structures)</li>
-<li>Quy hoạch động (Dynamic Programming)</li>
-<li>Đồ thị (Graph)</li>
-<li>Hình học (Geometry)</li>
-<li>Game Theory</li>
-<li>Tổ hợp (Combinatorics)</li>
-<li>…</li>
-</ul>
-<p>📈 <strong>Tiến độ</strong>: HOÀN THÀNH</p>
-<hr />
-<h2 id="quy-uoc-dich-thuat">🧠 Quy ước dịch thuật<a class="headerlink" href="#quy-uoc-dich-thuat" title="Permanent link">&para;</a></h2>
-<ul>
-<li>❗ <strong>KHÔNG dịch</strong> các thuật ngữ CP phổ biến:</li>
-<li>DP, BFS, DFS, Fenwick Tree, Segment Tree, Bitmask, v.v.</li>
-<li>Thuật ngữ tiếng Anh sẽ được:</li>
-<li>Giữ nguyên</li>
-<li>Hoặc chú thích tiếng Việt trong lần xuất hiện đầu tiên</li>
-<li>Công thức, code, độ phức tạp được <strong>giữ nguyên 100%</strong></li>
-</ul>
-<hr />
-<h2 id="nguon-goc-ban-quyen">🔗 Nguồn gốc &amp; Bản quyền<a class="headerlink" href="#nguon-goc-ban-quyen" title="Permanent link">&para;</a></h2>
-<ul>
-<li>📌 Dự án gốc: https://github.com/cp-algorithms/cp-algorithms</li>
-<li>📌 Nội dung ban đầu được dịch từ: https://e-maxx.ru/algo</li>
-<li>Repository này <strong>KHÔNG phải repo chính thức</strong></li>
-<li>Mọi công lao học thuật thuộc về <strong>đội ngũ cp-algorithms</strong></li>
-</ul>
-<p>📄 Việc dịch được thực hiện với mục đích <strong>giáo dục – phi thương mại</strong></p>
-<hr />
-<h2 id="ong-gop">🤝 Đóng góp<a class="headerlink" href="#ong-gop" title="Permanent link">&para;</a></h2>
-<p>Nếu bạn muốn:
-- Sửa lỗi dịch
-- Chuẩn hóa thuật ngữ
-- Dịch thêm bài mới</p>
-<p>👉 Hoàn toàn hoan nghênh!<br />
-Bạn có thể:
-- Tạo Issue
-- Hoặc Pull Request trực tiếp</p>
-<hr />
-<h2 id="tac-gia-ban-dich">👤 Tác giả bản dịch<a class="headerlink" href="#tac-gia-ban-dich" title="Permanent link">&para;</a></h2>
-<ul>
-<li>GitHub: https://github.com/deanqkhanhcoder</li>
-<li>Mục tiêu: học sâu Competitive Programming &amp; xây dựng tài nguyên tiếng Việt chất lượng</li>
-</ul>
-<hr />
-<h2 id="loi-cam-on">⭐ Lời cảm ơn<a class="headerlink" href="#loi-cam-on" title="Permanent link">&para;</a></h2>
-<p>Xin gửi lời cảm ơn chân thành tới đội ngũ <strong>cp-algorithms</strong><br />
-vì đã xây dựng một trong những tài nguyên CP tốt nhất thế giới 🌍</p>
+<h1 id="montgomery-multiplication">Phép nhân Montgomery (Montgomery Multiplication)<a class="headerlink" href="#montgomery-multiplication" title="Permanent link">&para;</a></h1>
+<p>Nhiều thuật toán trong lý thuyết số, như <a href="primality_tests.html">kiểm tra số nguyên tố</a> hoặc <a href="factorization.html">phân tích thừa số nguyên</a>, và trong mật mã, như RSA, yêu cầu rất nhiều phép toán modulo với một số lớn.
+Một phép nhân như <span class="arithmatex">$x y \bmod{n}$</span> khá chậm để tính toán với các thuật toán điển hình, vì nó yêu cầu một phép chia để biết <span class="arithmatex">$n$</span> phải được trừ bao nhiêu lần từ tích.
+Và phép chia là một phép toán thực sự đắt đỏ, đặc biệt là với các số lớn.</p>
+<p><strong>Phép nhân Montgomery (modular)</strong> là một phương pháp cho phép tính toán các phép nhân như vậy nhanh hơn.
+Thay vì chia tích và trừ <span class="arithmatex">$n$</span> nhiều lần, nó cộng các bội số của <span class="arithmatex">$n$</span> để triệt tiêu các bit thấp hơn và sau đó chỉ loại bỏ các bit thấp hơn.</p>
+<h2 id="montgomery-representation">Biểu diễn Montgomery (Montgomery representation)<a class="headerlink" href="#montgomery-representation" title="Permanent link">&para;</a></h2>
+<p>Tuy nhiên, phép nhân Montgomery không miễn phí.
+Thuật toán chỉ hoạt động trong <strong>không gian Montgomery</strong>.
+Và chúng ta cần chuyển đổi các số của mình vào không gian đó, trước khi chúng ta có thể bắt đầu nhân.</p>
+<p>Đối với không gian, chúng ta cần một số nguyên dương <span class="arithmatex">$r \ge n$</span> nguyên tố cùng nhau với <span class="arithmatex">$n$</span>, tức là <span class="arithmatex">$\gcd(n, r) = 1$</span>.
+Trong thực tế, chúng ta luôn chọn <span class="arithmatex">$r$</span> là <span class="arithmatex">$2^m$</span> cho một số nguyên dương <span class="arithmatex">$m$</span>, vì các phép nhân, phép chia và phép toán modulo <span class="arithmatex">$r$</span> sau đó có thể được cài đặt hiệu quả bằng cách sử dụng phép dịch và các phép toán bit khác.
+<span class="arithmatex">$n$</span> sẽ là một số lẻ trong hầu hết các ứng dụng, vì không khó để phân tích thừa số một số chẵn.
+Vì vậy, mỗi lũy thừa của <span class="arithmatex">$2$</span> sẽ là nguyên tố cùng nhau với <span class="arithmatex">$n$</span>.</p>
+<p>Đại diện <span class="arithmatex">$\bar{x}$</span> của một số <span class="arithmatex">$x$</span> trong không gian Montgomery được định nghĩa là: </p>
+<div class="arithmatex">$$\bar{x} := x \cdot r \bmod n$$</div>
+<p>Lưu ý, phép chuyển đổi thực sự là một phép nhân như vậy mà chúng ta muốn tối ưu hóa.
+Vì vậy, đây vẫn là một hoạt động đắt đỏ.
+Tuy nhiên, bạn chỉ cần chuyển đổi một số một lần vào không gian.
+Ngay khi bạn ở trong không gian Montgomery, bạn có thể thực hiện bao nhiêu phép toán tùy ý một cách hiệu quả.
+Và cuối cùng bạn chuyển đổi kết quả cuối cùng trở lại.
+Vì vậy, miễn là bạn đang thực hiện nhiều phép toán modulo <span class="arithmatex">$n$</span>, điều này sẽ không thành vấn đề.</p>
+<p>Bên trong không gian Montgomery, bạn vẫn có thể thực hiện hầu hết các phép toán như bình thường.
+Bạn có thể cộng hai phần tử (<span class="arithmatex">$x \cdot r + y \cdot r \equiv (x + y) \cdot r \bmod n$</span>), trừ, kiểm tra sự bằng nhau, và thậm chí tính ước chung lớn nhất của một số với <span class="arithmatex">$n$</span> (vì <span class="arithmatex">$\gcd(n, r) = 1$</span>).
+Tất cả với các thuật toán thông thường.</p>
+<p>Tuy nhiên điều này không đúng đối với phép nhân.</p>
+<p>Chúng ta mong đợi kết quả là:</p>
+<div class="arithmatex">$$\bar{x} * \bar{y} = \overline{x \cdot y} = (x \cdot y) \cdot r \bmod n.$$</div>
+<p>Nhưng phép nhân thông thường sẽ cho chúng ta:</p>
+<div class="arithmatex">$$\bar{x} \cdot \bar{y} = (x \cdot y) \cdot r \cdot r \bmod n.$$</div>
+<p>Do đó phép nhân trong không gian Montgomery được định nghĩa là:</p>
+<div class="arithmatex">$$\bar{x} * \bar{y} := \bar{x} \cdot \bar{y} \cdot r^{-1} \bmod n.$$</div>
+<h2 id="montgomery-reduction">Rút gọn Montgomery (Montgomery reduction)<a class="headerlink" href="#montgomery-reduction" title="Permanent link">&para;</a></h2>
+<p>Phép nhân của hai số trong không gian Montgomery yêu cầu tính toán hiệu quả <span class="arithmatex">$x \cdot r^{-1} \bmod n$</span>.
+Phép toán này được gọi là <strong>Rút gọn Montgomery</strong>, và còn được gọi là thuật toán <strong>REDC</strong>.</p>
+<p>Bởi vì <span class="arithmatex">$\gcd(n, r) = 1$</span>, chúng ta biết rằng có hai số <span class="arithmatex">$r^{-1}$</span> và <span class="arithmatex">$n^{\prime}$</span> với <span class="arithmatex">$0 &lt; r^{-1}, n^{\prime} &lt; n$</span> với</p>
+<div class="arithmatex">$$r \cdot r^{-1} + n \cdot n^{\prime} = 1.$$</div>
+<p>Cả <span class="arithmatex">$r^{-1}$</span> và <span class="arithmatex">$n^{\prime}$</span> đều có thể được tính bằng cách sử dụng <a href="extended-euclid-algorithm.html">Thuật toán Euclid mở rộng</a>.</p>
+<p>Sử dụng đồng nhất thức này, chúng ta có thể viết <span class="arithmatex">$x \cdot r^{-1}$</span> dưới dạng:</p>
+<div class="arithmatex">$$\begin{aligned}
+x \cdot r^{-1} &amp;= x \cdot r \cdot r^{-1} / r = x \cdot (-n \cdot n^{\prime} + 1) / r \\
+&amp;= (-x \cdot n \cdot n^{\prime} + x) / r \equiv (-x \cdot n \cdot n^{\prime} + l \cdot r \cdot n + x) / r \bmod n\\
+&amp;\equiv ((-x \cdot n^{\prime} + l \cdot r) \cdot n + x) / r \bmod n
+\end{aligned}$$</div>
+<p>Sự tương đương giữ cho bất kỳ số nguyên tùy ý <span class="arithmatex">$l$</span>.
+Điều này có nghĩa là, chúng ta có thể cộng hoặc trừ một bội số tùy ý của <span class="arithmatex">$r$</span> vào <span class="arithmatex">$x \cdot n^{\prime}$</span>, hoặc nói cách khác, chúng ta có thể tính <span class="arithmatex">$q := x \cdot n^{\prime}$</span> modulo <span class="arithmatex">$r$</span>.</p>
+<p>Điều này cho chúng ta thuật toán sau để tính <span class="arithmatex">$x \cdot r^{-1} \bmod n$</span>:</p>
+<div class="highlight"><pre><span></span><code>function reduce(x):
+    q = (x mod r) * n&#39; mod r
+    a = (x - q * n) / r
+    if a &lt; 0:
+        a += n
+    return a
+</code></pre></div>
+<p>Vì <span class="arithmatex">$x &lt; n \cdot n &lt; r \cdot n$</span> (ngay cả khi <span class="arithmatex">$x$</span> là tích của một phép nhân) và <span class="arithmatex">$q \cdot n &lt; r \cdot n$</span> chúng ta biết rằng <span class="arithmatex">$-n &lt; (x - q \cdot n) / r &lt; n$</span>.
+Do đó phép toán modulo cuối cùng được cài đặt bằng cách sử dụng một lần kiểm tra và một phép cộng.</p>
+<p>Như chúng ta thấy, chúng ta có thể thực hiện rút gọn Montgomery mà không cần bất kỳ phép toán modulo nặng nề nào.
+Nếu chúng ta chọn <span class="arithmatex">$r$</span> là lũy thừa của <span class="arithmatex">$2$</span>, các phép toán modulo và chia trong thuật toán có thể được tính toán bằng cách sử dụng bitmask và dịch.</p>
+<p>Một ứng dụng thứ hai của rút gọn Montgomery là chuyển một số trở lại từ không gian Montgomery vào không gian bình thường.</p>
+<h2 id="fast-inverse-trick">Mẹo nghịch đảo nhanh (Fast inverse trick)<a class="headerlink" href="#fast-inverse-trick" title="Permanent link">&para;</a></h2>
+<p>Để tính toán nghịch đảo <span class="arithmatex">$n^{\prime} := n^{-1} \bmod r$</span> một cách hiệu quả, chúng ta có thể sử dụng mẹo sau (được lấy cảm hứng từ phương pháp Newton):</p>
+<div class="arithmatex">$$a \cdot x \equiv 1 \bmod 2^k \Longrightarrow a \cdot x \cdot (2 - a \cdot x) \equiv 1 \bmod 2^{2k}$$</div>
+<p>Điều này có thể dễ dàng được chứng minh.
+Nếu chúng ta có <span class="arithmatex">$a \cdot x = 1 + m \cdot 2^k$</span>, thì chúng ta có:</p>
+<div class="arithmatex">$$\begin{aligned}
+a \cdot x \cdot (2 - a \cdot x) &amp;= 2 \cdot a \cdot x - (a \cdot x)^2 \\
+&amp;= 2 \cdot (1 + m \cdot 2^k) - (1 + m \cdot 2^k)^2 \\
+&amp;= 2 + 2 \cdot m \cdot 2^k - 1 - 2 \cdot m \cdot 2^k - m^2 \cdot 2^{2k} \\
+&amp;= 1 - m^2 \cdot 2^{2k} \\
+&amp;\equiv 1 \bmod 2^{2k}.
+\end{aligned}$$</div>
+<p>Điều này có nghĩa là chúng ta có thể bắt đầu với <span class="arithmatex">$x = 1$</span> là nghịch đảo của <span class="arithmatex">$a$</span> modulo <span class="arithmatex">$2^1$</span>, áp dụng mẹo một vài lần và trong mỗi lần lặp, chúng ta nhân đôi số bit chính xác của <span class="arithmatex">$x$</span>.</p>
+<h2 id="implementation">Cài đặt (Implementation)<a class="headerlink" href="#implementation" title="Permanent link">&para;</a></h2>
+<p>Sử dụng trình biên dịch GCC, chúng ta vẫn có thể tính <span class="arithmatex">$x \cdot y \bmod n$</span> một cách hiệu quả, khi cả ba số đều là số nguyên 64 bit, vì trình biên dịch hỗ trợ số nguyên 128 bit với các kiểu <code>__int128</code> và <code>__uint128</code>.</p>
+<div class="highlight"><pre><span></span><code><span class="kt">long</span><span class="w"> </span><span class="kt">long</span><span class="w"> </span><span class="n">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="kt">__int128</span><span class="p">)</span><span class="n">x</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="n">n</span><span class="p">;</span>
+</code></pre></div>
+<p>Tuy nhiên không có kiểu nào cho số nguyên 256 bit.
+Do đó, ở đây chúng tôi sẽ trình bày một cài đặt cho phép nhân 128 bit.</p>
+<div class="highlight"><pre><span></span><code><span class="k">using</span><span class="w"> </span><span class="n">u64</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">uint64_t</span><span class="p">;</span>
+<span class="k">using</span><span class="w"> </span><span class="n">u128</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">__uint128_t</span><span class="p">;</span>
+<span class="k">using</span><span class="w"> </span><span class="n">i128</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">__int128_t</span><span class="p">;</span>
+
+<span class="k">struct</span><span class="w"> </span><span class="nc">u256</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">u128</span><span class="w"> </span><span class="n">high</span><span class="p">,</span><span class="w"> </span><span class="n">low</span><span class="p">;</span>
+
+<span class="w">    </span><span class="k">static</span><span class="w"> </span><span class="n">u256</span><span class="w"> </span><span class="nf">mult</span><span class="p">(</span><span class="n">u128</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">u128</span><span class="w"> </span><span class="n">y</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">u64</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="mi">64</span><span class="p">,</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">x</span><span class="p">;</span>
+<span class="w">        </span><span class="n">u64</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="mi">64</span><span class="p">,</span><span class="w"> </span><span class="n">d</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">y</span><span class="p">;</span>
+<span class="w">        </span><span class="c1">// (a*2^64 + b) * (c*2^64 + d) =</span>
+<span class="w">        </span><span class="c1">// (a*c) * 2^128 + (a*d + b*c)*2^64 + (b*d)</span>
+<span class="w">        </span><span class="n">u128</span><span class="w"> </span><span class="n">ac</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">u128</span><span class="p">)</span><span class="n">a</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">c</span><span class="p">;</span>
+<span class="w">        </span><span class="n">u128</span><span class="w"> </span><span class="n">ad</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">u128</span><span class="p">)</span><span class="n">a</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">d</span><span class="p">;</span>
+<span class="w">        </span><span class="n">u128</span><span class="w"> </span><span class="n">bc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">u128</span><span class="p">)</span><span class="n">b</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">c</span><span class="p">;</span>
+<span class="w">        </span><span class="n">u128</span><span class="w"> </span><span class="n">bd</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">u128</span><span class="p">)</span><span class="n">b</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">d</span><span class="p">;</span>
+<span class="w">        </span><span class="n">u128</span><span class="w"> </span><span class="n">carry</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">u128</span><span class="p">)(</span><span class="n">u64</span><span class="p">)</span><span class="n">ad</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="p">(</span><span class="n">u128</span><span class="p">)(</span><span class="n">u64</span><span class="p">)</span><span class="n">bc</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="p">(</span><span class="n">bd</span><span class="w"> </span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="mi">64u</span><span class="p">);</span>
+<span class="w">        </span><span class="n">u128</span><span class="w"> </span><span class="n">high</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ac</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="p">(</span><span class="n">ad</span><span class="w"> </span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="mi">64u</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="p">(</span><span class="n">bc</span><span class="w"> </span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="mi">64u</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="p">(</span><span class="n">carry</span><span class="w"> </span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="mi">64u</span><span class="p">);</span>
+<span class="w">        </span><span class="n">u128</span><span class="w"> </span><span class="n">low</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">ad</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="mi">64u</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="p">(</span><span class="n">bc</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="mi">64u</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">bd</span><span class="p">;</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="p">{</span><span class="n">high</span><span class="p">,</span><span class="w"> </span><span class="n">low</span><span class="p">};</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">};</span>
+
+<span class="k">struct</span><span class="w"> </span><span class="nc">Montgomery</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">Montgomery</span><span class="p">(</span><span class="n">u128</span><span class="w"> </span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">mod</span><span class="p">(</span><span class="n">n</span><span class="p">),</span><span class="w"> </span><span class="n">inv</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">7</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span>
+<span class="w">            </span><span class="n">inv</span><span class="w"> </span><span class="o">*=</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">inv</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="n">u128</span><span class="w"> </span><span class="n">init</span><span class="p">(</span><span class="n">u128</span><span class="w"> </span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">x</span><span class="w"> </span><span class="o">%=</span><span class="w"> </span><span class="n">mod</span><span class="p">;</span>
+<span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">128</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="n">x</span><span class="w"> </span><span class="o">&lt;&lt;=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="n">mod</span><span class="p">)</span>
+<span class="w">                </span><span class="n">x</span><span class="w"> </span><span class="o">-=</span><span class="w"> </span><span class="n">mod</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">x</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="n">u128</span><span class="w"> </span><span class="n">reduce</span><span class="p">(</span><span class="n">u256</span><span class="w"> </span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">u128</span><span class="w"> </span><span class="n">q</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">x</span><span class="p">.</span><span class="n">low</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">inv</span><span class="p">;</span>
+<span class="w">        </span><span class="n">i128</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">x</span><span class="p">.</span><span class="n">high</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">u256</span><span class="o">::</span><span class="n">mult</span><span class="p">(</span><span class="n">q</span><span class="p">,</span><span class="w"> </span><span class="n">mod</span><span class="p">).</span><span class="n">high</span><span class="p">;</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">a</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span>
+<span class="w">            </span><span class="n">a</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">mod</span><span class="p">;</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">a</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="n">u128</span><span class="w"> </span><span class="n">mult</span><span class="p">(</span><span class="n">u128</span><span class="w"> </span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="n">u128</span><span class="w"> </span><span class="n">b</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">reduce</span><span class="p">(</span><span class="n">u256</span><span class="o">::</span><span class="n">mult</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="n">b</span><span class="p">));</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="n">u128</span><span class="w"> </span><span class="n">mod</span><span class="p">,</span><span class="w"> </span><span class="n">inv</span><span class="p">;</span>
+<span class="p">};</span>
+</code></pre></div>
+<h2 id="fast-transformation">Biến đổi nhanh (Fast transformation)<a class="headerlink" href="#fast-transformation" title="Permanent link">&para;</a></h2>
+<p>Phương pháp hiện tại để chuyển đổi một số vào không gian Montgomery khá chậm.
+Có những cách nhanh hơn.</p>
+<p>Bạn có thể nhận thấy mối quan hệ sau:</p>
+<div class="arithmatex">$$\bar{x} := x \cdot r \bmod n = x \cdot r^2 / r = x * r^2$$</div>
+<p>Chuyển đổi một số vào không gian chỉ là một phép nhân bên trong không gian của số đó với <span class="arithmatex">$r^2$</span>.
+Do đó, chúng ta có thể tính trước <span class="arithmatex">$r^2 \bmod n$</span> và chỉ cần thực hiện phép nhân thay vì dịch số 128 lần.</p>
+<p>Trong mã sau, chúng ta khởi tạo <code>r2</code> với <code>-n % n</code>, tương đương với <span class="arithmatex">$r - n \equiv r \bmod n$</span>, dịch nó 4 lần để nhận được <span class="arithmatex">$r \cdot 2^4 \bmod n$</span>.
+Số này có thể được hiểu là <span class="arithmatex">$2^4$</span> trong không gian Montgomery.
+Nếu chúng ta bình phương nó <span class="arithmatex">$5$</span> lần, chúng ta nhận được <span class="arithmatex">$(2^4)^{2^5} = (2^4)^{32} = 2^{128} = r$</span> trong không gian Montgomery, chính xác là <span class="arithmatex">$r^2 \bmod n$</span>.</p>
+<div class="highlight"><pre><span></span><code>struct Montgomery {
+    Montgomery(u128 n) : mod(n), inv(1), r2(-n % n) {
+        for (int i = 0; i &lt; 7; i++)
+            inv *= 2 - n * inv;
+
+        for (int i = 0; i &lt; 4; i++) {
+            r2 &lt;&lt;= 1;
+            if (r2 &gt;= mod)
+                r2 -= mod;
+        }
+        for (int i = 0; i &lt; 5; i++)
+            r2 = mul(r2, r2);
+    }
+
+    u128 init(u128 x) {
+        return mult(x, r2);
+    }
+
+    u128 mod, inv, r2;
+};
+</code></pre></div>
 <hr />
 <h2 id="checklist">Checklist<a class="headerlink" href="#checklist" title="Permanent link">&para;</a></h2>
 <ul>
-<li>Original lines: 8</li>
-<li>Translated lines: 8</li>
+<li>Original lines: 220</li>
+<li>Translated lines: 220</li>
 <li>Code blocks changed? No</li>
 <li>Inline code changed? No</li>
 <li>Technical terms kept in English? Yes</li>
 <li>Headings anchors preserved/added correctly? Yes</li>
 <li>I confirm no character was omitted: YES</li>
 </ul>
-<p>Notes:
-- Translated title 'Main Page' to 'Trang chủ'.</p>
                 
               </article>
             </div>
@@ -8062,14 +8142,14 @@ vì đã xây dựng một trong những tài nguyên CP tốt nhất thế gi�
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": ".", "features": ["navigation.top", "navigation.tracking", "toc.follow", "toc.integrate", "search.suggest", "content.code.copy"], "search": "assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.top", "navigation.tracking", "toc.follow", "toc.integrate", "search.suggest", "content.code.copy"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="assets/javascripts/bundle.79ae519e.min.js"></script>
+      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
       
-        <script src="javascript/config.js"></script>
+        <script src="../javascript/config.js"></script>
       
-        <script src="javascript/donation-banner.js"></script>
+        <script src="../javascript/donation-banner.js"></script>
       
         <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
       
