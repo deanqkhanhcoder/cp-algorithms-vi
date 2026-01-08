@@ -1,58 +1,54 @@
 ---
 tags:
-  - Original
+  - Translated
+e_maxx_link: strong_orientation
 ---
 
-# Strong Orientation
+# Định hướng mạnh (Strong Orientation) {: #strong-orientation}
 
-A **strong orientation** of an undirected graph is an assignment of a direction to each edge that makes it a [strongly connected graph](strongly-connected-components.md).
-That is, after the *orientation* we should be able to visit any vertex from any vertex by following the directed edges.
+Một **định hướng mạnh** của một đồ thị vô hướng là một phép gán hướng cho mỗi cạnh sao cho nó trở thành một [đồ thị liên thông mạnh](strongly-connected-components.md).
+Nghĩa là, sau khi *định hướng* chúng ta có thể thăm bất kỳ đỉnh nào từ bất kỳ đỉnh nào bằng cách đi theo các cạnh có hướng.
 
-## Solution
+## Giải pháp (Solution) {: #solution}
 
-Of course, this cannot be done to *every* graph.
-Consider a [bridge](bridge-searching.md) in a graph.
-We have to assign a direction to it and by doing so we make this bridge "crossable" in only one direction. That means we can't go from one of the bridge's ends to the other, so we can't make the graph strongly connected.
+Tất nhiên, điều này không thể thực hiện được với *mọi* đồ thị.
+Hãy xem xét một [cầu (bridge)](bridge-searching.md) trong một đồ thị.
+Chúng ta phải gán một hướng cho nó và bằng cách làm như vậy, chúng ta làm cho cầu này chỉ có thể "đi qua" theo một hướng. Điều đó có nghĩa là chúng ta không thể đi từ một đầu của cầu đến đầu kia, vì vậy chúng ta không thể làm cho đồ thị liên thông mạnh.
 
-Now consider a [DFS](depth-first-search.md) through a bridgeless connected graph.
-Clearly, we will visit each vertex.
-And since there are no bridges, we can remove any DFS tree edge and still be able to go
-from below the edge to above the edge by using a path that contains at least one back edge.
-From this follows that from any vertex we can go to the root of the DFS tree.
-Also, from the root of the DFS tree we can visit any vertex we choose.
-We found a strong orientation!
+Bây giờ hãy xem xét một [DFS](depth-first-search.md) qua một đồ thị liên thông không có cầu.
+Rõ ràng, chúng ta sẽ thăm mỗi đỉnh.
+Và vì không có cầu, chúng ta có thể loại bỏ bất kỳ cạnh cây DFS nào và vẫn có thể đi từ bên dưới cạnh đến bên trên cạnh bằng cách sử dụng một đường đi chứa ít nhất một cạnh ngược.
+Từ đó suy ra rằng từ bất kỳ đỉnh nào chúng ta có thể đi đến gốc của cây DFS.
+Ngoài ra, từ gốc của cây DFS chúng ta có thể thăm bất kỳ đỉnh nào chúng ta chọn.
+Chúng ta đã tìm thấy một định hướng mạnh!
 
-In other words, to strongly orient a bridgeless connected graph,
-run a DFS on it and let the DFS tree edges point away from the DFS root and
-all other edges from the descendant to the ancestor in the DFS tree.
+Nói cách khác, để định hướng mạnh một đồ thị liên thông không có cầu, hãy chạy một DFS trên nó và để các cạnh cây DFS hướng ra xa khỏi gốc DFS và tất cả các cạnh khác từ hậu duệ đến tổ tiên trong cây DFS.
 
-The result that bridgeless connected graphs are exactly the graphs that have strong orientations is called **Robbins' theorem**.
+Kết quả cho thấy rằng các đồ thị liên thông không có cầu chính xác là các đồ thị có định hướng mạnh được gọi là **định lý Robbins**.
 
-## Problem extension
+## Mở rộng bài toán (Problem extension) {: #problem-extension}
 
-Let's consider the problem of finding a graph orientation so that the number of SCCs is minimal.
+Hãy xem xét bài toán tìm định hướng đồ thị sao cho số lượng SCC là tối thiểu.
 
-Of course, each graph component can be considered separately.
-Now, since only bridgeless graphs are strongly orientable, let's remove all bridges temporarily.
-We end up with some number of bridgeless components
-(exactly *how many components there were at the beginning* + *how many bridges there were*)
- and we know that we can strongly orient each of them.
+Tất nhiên, mỗi thành phần đồ thị có thể được xem xét riêng biệt.
+Bây giờ, vì chỉ các đồ thị không có cầu mới có thể định hướng mạnh, hãy tạm thời loại bỏ tất cả các cầu.
+Chúng ta kết thúc với một số lượng các thành phần không có cầu
+(chính xác là *có bao nhiêu thành phần lúc đầu* + *có bao nhiêu cầu*)
+ và chúng ta biết rằng chúng ta có thể định hướng mạnh mỗi thành phần đó.
 
-We were only allowed to orient edges, not remove them, but it turns out we can orient the bridges arbitrarily.
-Of course, the easiest way to orient them is to run the algorithm described above without modifications on each original connected component.
+Chúng ta chỉ được phép định hướng các cạnh, không được loại bỏ chúng, nhưng hóa ra chúng ta có thể định hướng các cầu một cách tùy ý.
+Tất nhiên, cách dễ nhất để định hướng chúng là chạy thuật toán được mô tả ở trên mà không sửa đổi trên mỗi thành phần liên thông ban đầu.
 
-### Implementation
+### Cài đặt (Implementation) {: #implementation}
 
-Here, the input is *n* — the number of vertices, *m* — the number of edges, then *m* lines describing the edges.
+Ở đây, đầu vào là *n* — số lượng đỉnh, *m* — số lượng cạnh, sau đó *m* dòng mô tả các cạnh.
 
-The output is the minimal number of SCCs on the first line and on the second line
-a string of *m* characters,
-either `>` — telling us that the corresponding edge from the input
-is oriented from the left to the right vertex (as in the input),
-or `<` — the opposite.
+Đầu ra là số lượng tối thiểu các SCC trên dòng đầu tiên và trên dòng thứ hai là một chuỗi gồm *m* ký tự,
+hoặc `>` — cho chúng ta biết rằng cạnh tương ứng từ đầu vào được định hướng từ đỉnh bên trái sang đỉnh bên phải (như trong đầu vào),
+hoặc `<` — ngược lại.
 
-This is a bridge search algorithm modified to also orient the edges,
-you can as well orient the edges as a first step and count the SCCs on the oriented graph as a second.
+Đây là một thuật toán tìm kiếm cầu được sửa đổi để cũng định hướng các cạnh,
+bạn cũng có thể định hướng các cạnh như một bước đầu tiên và đếm các SCC trên đồ thị có hướng như một bước thứ hai.
 
 ```cpp
 vector<vector<pair<int, int>>> adj; // adjacency list - vertex and edge pairs
@@ -111,6 +107,6 @@ int main() {
 }
 ```
 
-## Practice Problems
+## Bài tập (Practice Problems) {: #practice-problems}
 
 * [26th Polish OI - Osiedla](https://szkopul.edu.pl/problemset/problem/nldsb4EW1YuZykBlf4lcZL1Y/site/)

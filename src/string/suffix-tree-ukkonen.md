@@ -4,22 +4,22 @@ tags:
 e_maxx_link: ukkonen
 ---
 
-# Suffix Tree. Ukkonen's Algorithm
+# Cây hậu tố. Thuật toán Ukkonen (Suffix Tree. Ukkonen's Algorithm) {: #suffix-tree-ukkonens-algorithm}
 
-*This article is a stub and doesn't contain any descriptions. For a description of the algorithm, refer to other sources, such as [Algorithms on Strings, Trees, and Sequences](https://www.cs.cmu.edu/afs/cs/project/pscico-guyb/realworld/www/slidesF06/cmuonly/gusfield.pdf) by Dan Gusfield.*
+*Bài viết này là một bài sơ khai và không chứa bất kỳ mô tả nào. Để biết mô tả về thuật toán, hãy tham khảo các nguồn khác, chẳng hạn như [Algorithms on Strings, Trees, and Sequences](https://www.cs.cmu.edu/afs/cs/project/pscico-guyb/realworld/www/slidesF06/cmuonly/gusfield.pdf) của Dan Gusfield.*
 
-This algorithm builds a suffix tree for a given string $s$ of length $n$ in $O(n\log(k))$) time, where $k$ is the size of the alphabet (if $k$ is considered to be a constant, the asymptotic behavior is linear).
+Thuật toán này xây dựng một cây hậu tố cho một chuỗi $s$ có độ dài $n$ trong thời gian $O(n\log(k))$), trong đó $k$ là kích thước của bảng chữ cái (nếu $k$ được coi là hằng số, hành vi tiệm cận là tuyến tính).
 
-The input to the algorithm are the string $s$ and its length $n$, which are passed as global variables.
+Đầu vào cho thuật toán là chuỗi $s$ và độ dài $n$ của nó, được chuyển qua dưới dạng các biến toàn cục.
 
-The main function `build_tree` builds a suffix tree. It is stored as an array of structures `node`, where `node[0]` is the root of the tree.
+Hàm chính `build_tree` xây dựng một cây hậu tố. Nó được lưu trữ dưới dạng một mảng các cấu trúc `node`, trong đó `node[0]` là gốc của cây.
 
-In order to simplify the code, the edges are stored in the same structures: for each vertex its structure `node` stores the information about the edge between it and its parent. Overall each `node` stores the following information: 
+Để đơn giản hóa mã, các cạnh được lưu trữ trong cùng một cấu trúc: đối với mỗi đỉnh, cấu trúc `node` lưu trữ thông tin về cạnh giữa nó và cha của nó. Nhìn chung mỗi `node` lưu trữ các thông tin sau:
 
-* `(l, r)` - left and right boundaries of the substring `s[l..r-1]` which correspond to the edge to this node,
-* `par` - the parent node,
-* `link` - the suffix link,
-* `next` - the list of edges going out from this node.
+* `(l, r)` - ranh giới bên trái và bên phải của chuỗi con `s[l..r-1]` tương ứng với cạnh đến nút này,
+* `par` - nút cha,
+* `link` - liên kết hậu tố,
+* `next` - danh sách các cạnh đi ra từ nút này.
 
 ```cpp
 string s;
@@ -111,9 +111,9 @@ void build_tree() {
 }
 ```
 
-## Compressed Implementation
+## Cài đặt nén (Compressed Implementation) {: #compressed-implementation}
 
-This compressed implementation was proposed by [freopen](http://codeforces.com/profile/freopen).
+Việc cài đặt nén này được đề xuất bởi [freopen](http://codeforces.com/profile/freopen).
 
 ```cpp
 const int N=1000000,INF=1000000000;
@@ -155,7 +155,7 @@ void build() {
 }
 ```
 
-Same code with comments:
+Mã tương tự với các bình luận:
 
 ```cpp
 const int N=1000000,    // maximum possible number of nodes in suffix tree
@@ -219,6 +219,6 @@ void build() {
 }
 ```
 
-## Practice Problems
+## Bài tập (Practice Problems) {: #practice-problems}
 
 * [UVA 10679 - I Love Strings!!!](http://uva.onlinejudge.org/index.php?option=onlinejudge&page=show_problem&problem=1620)

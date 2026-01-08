@@ -4,38 +4,35 @@ tags:
 e_maxx_link: circle_tangents
 ---
 
-# Finding common tangents to two circles
+# Tìm tiếp tuyến chung của hai đường tròn (Finding common tangents to two circles) {: #finding-common-tangents-to-two-circles}
 
-Given two circles. It is required to find all their common tangents, i.e. all such lines that touch both circles simultaneously.
+Cho hai đường tròn. Yêu cầu tìm tất cả các tiếp tuyến chung của chúng, tức là tất cả các đường thẳng tiếp xúc với cả hai đường tròn cùng một lúc.
 
-The described algorithm will also work in the case when one (or both) circles degenerate into points. Thus, this algorithm can also be used to find tangents to a circle passing through a given point.
+Thuật toán được mô tả cũng sẽ hoạt động trong trường hợp một (hoặc cả hai) đường tròn suy biến thành điểm. Do đó, thuật toán này cũng có thể được sử dụng để tìm tiếp tuyến của một đường tròn đi qua một điểm đã cho.
 
-
-## The number of common tangents
-The number of common tangents to two circles can be **0,1,2,3,4** and **infinite**.
-Look at the images for different cases.
+## Số lượng tiếp tuyến chung (The number of common tangents) {: #the-number-of-common-tangents}
+Số lượng tiếp tuyến chung của hai đường tròn có thể là **0, 1, 2, 3, 4** và **vô hạn**.
+Nhìn vào các hình ảnh cho các trường hợp khác nhau.
 <div style="text-align: center;">
-  <img src="tangents-to-two-circles.png" alt=""Different cases of tangents common to two circles"">
+  <img src="https://cp-algorithms.com/geometry/tangents-to-two-circles.png" alt="Different cases of tangents common to two circles">
 </div>
 
-Here, we won't be considering **degenerate** cases, i.e *when the circles coincide (in this case they have infinitely many common tangents), or one circle lies inside the other (in this case they have no common tangents, or if the circles are tangent, there is one common tangent).*
+Ở đây, chúng ta sẽ không xem xét các trường hợp **suy biến**, tức là *khi các đường tròn trùng nhau (trong trường hợp này chúng có vô số tiếp tuyến chung), hoặc một đường tròn nằm bên trong đường tròn kia (trong trường hợp này chúng không có tiếp tuyến chung, hoặc nếu các đường tròn tiếp xúc trong, có một tiếp tuyến chung).*
 
-In most cases, two circles have **four** common tangents.
+Trong hầu hết các trường hợp, hai đường tròn có **bốn** tiếp tuyến chung.
 
-If the circles **are tangent** , then they will have three common tangents, but this can be understood as a degenerate case: as if the two tangents coincided.
+Jika các đường tròn **tiếp xúc**, thì chúng sẽ có ba tiếp tuyến chung, nhưng điều này có thể được hiểu là một trường hợp suy biến: như thể hai tiếp tuyến trùng nhau.
 
-Moreover, the algorithm described below will work in the case when one or both circles have zero radius: in this case there will be, respectively, two or one common tangent.
+Hơn nữa, thuật toán được mô tả dưới đây sẽ hoạt động trong trường hợp một hoặc cả hai đường tròn có bán kính bằng không: trong trường hợp này sẽ có tương ứng hai hoặc một tiếp tuyến chung.
 
-Summing up, we will always look for **four tangents** for all cases except infinite tangents case (The infinite tangents case needs to be handled separately and it is not discussed here). In degenerate cases, some of tangents will coincide, but nevertheless, these cases will also fit into the big picture.
+Tóm lại, chúng ta sẽ luôn tìm kiếm **bốn tiếp tuyến** cho tất cả các trường hợp ngoại trừ trường hợp vô số tiếp tuyến (Trường hợp vô số tiếp tuyến cần được xử lý riêng và không được thảo luận ở đây). Trong các trường hợp suy biến, một số tiếp tuyến sẽ trùng nhau, nhưng tuy nhiên, các trường hợp này cũng sẽ phù hợp với bức tranh lớn.
 
+## Thuật toán (Algorithm) {: #algorithm}
+Để đơn giản hóa thuật toán, chúng ta sẽ giả sử, không mất tính tổng quát, rằng tâm của đường tròn thứ nhất có tọa độ $(0, 0)$. (Nếu không phải như vậy, thì điều này có thể đạt được bằng cách đơn giản là dịch chuyển toàn bộ bức tranh, và sau khi tìm thấy giải pháp, bằng cách dịch chuyển các đường thẳng thu được trở lại.)
 
+Ký hiệu $r_1$ và $r_2$ là bán kính của đường tròn thứ nhất và thứ hai, và $(v_x,v_y)$ là tọa độ của tâm của đường tròn thứ hai và điểm $v$ khác với gốc tọa độ. (Lưu ý: chúng ta không xem xét trường hợp hai đường tròn giống nhau).
 
-## Algorithm
-For the sake of simplicity of the algorithm, we will assume, without losing generality, that the center of the first circle has coordinates $(0, 0)$. (If this is not the case, then this can be achieved by simply shifting the whole picture, and after finding a solution, by shifting the obtained straight lines back.)
-
-Denote $r_1$ and $r_2$ the radii of the first and second circles, and by $(v_x,v_y)$ the coordinates of the center of the second circle and point $v$ different from origin. (Note: we are not considering the case in which both the circles are same).
-
-To solve the problem, we approach it purely **algebraically** . We need to find all the lines of the form $ax + by + c = 0$ that lie at a distance $r_1$ from the origin of coordinates, and at a distance $r_2$ from a point $v$. In addition, we impose the condition of normalization of the straight line: the sum of the squares of the coefficients and must be equal to one (this is necessary, otherwise the same straight line will correspond to infinitely many representations of the form $ax + by + c = 0$). Total we get such a system of equations for the desired $a, b, c$:
+Để giải quyết bài toán, chúng ta tiếp cận nó hoàn toàn **bằng đại số**. Chúng ta cần tìm tất cả các đường thẳng có dạng $ax + by + c = 0$ nằm ở khoảng cách $r_1$ từ gốc tọa độ, và ở khoảng cách $r_2$ từ một điểm $v$. Ngoài ra, chúng ta áp đặt điều kiện chuẩn hóa của đường thẳng: tổng bình phương của các hệ số $a$ và $b$ phải bằng một (điều này là cần thiết, nếu không cùng một đường thẳng sẽ tương ứng với vô số biểu diễn có dạng $ax + by + c = 0$). Tổng cộng chúng ta nhận được một hệ phương trình như vậy cho $a, b, c$ mong muốn:
 
 $$\begin{align}
 a^2 + b^2 &= 1 \\
@@ -43,7 +40,7 @@ a^2 + b^2 &= 1 \\
 \mid a \cdot v_x + b \cdot v_y + c \mid &= r_2
 \end{align}$$
 
-To get rid of the modulus, note that there are only four ways to open the modulus in this system. All these methods can be considered by the general case, if we understand the opening of the modulus as the fact that the coefficient on the right-hand side may be multiplied by -1. In other words, we turn to this system:
+Để loại bỏ giá trị tuyệt đối, lưu ý rằng chỉ có bốn cách để phá dấu giá trị tuyệt đối trong hệ phương trình này. Tất cả các phương pháp này có thể được xem xét bởi trường hợp tổng quát, nếu chúng ta hiểu việc phá dấu giá trị tuyệt đối như là thực tế rằng hệ số ở vế phải có thể được nhân với -1. Nói cách khác, chúng ta chuyển sang hệ phương trình này:
 
 $$\begin{align}
 a^2 + b^2 &= 1 \\
@@ -51,8 +48,7 @@ c &= \pm r_1 \\
 a \cdot v_x + b \cdot v_y + c &= \pm r_2
 \end{align}$$
 
-
-Entering the notation $d_1 = \pm r_1$ and $d_2 = \pm r_2$ , we come to the conclusion that the system must have four solutions:
+Đặt ký hiệu $d_1 = \pm r_1$ và $d_2 = \pm r_2$, chúng ta đi đến kết luận rằng hệ phương trình phải có bốn nghiệm:
 
 $$\begin{align}
 a^2 + b^2 &= 1 \\
@@ -60,7 +56,7 @@ c &= d_1 \\
 a \cdot v_x + b \cdot v_y + c &= d_2
 \end{align}$$
 
-The solution of this system is reduced to solving a quadratic equation. We will omit all the cumbersome calculations, and immediately give a ready answer:
+Việc giải hệ phương trình này được quy về việc giải một phương trình bậc hai. Chúng ta sẽ bỏ qua tất cả các tính toán cồng kềnh, và ngay lập tức đưa ra câu trả lời sẵn có:
 
 $$\begin{align}
 a &= {( d_2 - d_1 ) v_x \pm v_y \sqrt{v_x^2 + v_y^2-(d_2-d_1)^2} \over {v_x^2 + v_y^2} } \\
@@ -68,14 +64,14 @@ b &= {( d_2 - d_1 ) v_y \pm v_x \sqrt{v_x^2 + v_y^2-(d_2-d_1)^2} \over {v_x^2 + 
 c &= d_1
 \end{align}$$
 
-Total we got eight solutions instead four. However, it is easy to understand where superfluous decisions arise: in fact, in the latter system, it is enough to take only one solution (for example, the first). In fact, the geometric meaning of what we take $\pm r_1$ and $\pm r_2$ is clear: we are actually sorting out which side of each circle there is a straight line. Therefore, the two methods that arise when solving the latter system are redundant: it is enough to choose one of the two solutions (only, of course, in all four cases, you must choose the same family of solutions).
+Tổng cộng chúng ta có tám nghiệm thay vì bốn. Tuy nhiên, thật dễ hiểu những quyết định thừa nảy sinh ở đâu: thực tế, trong hệ phương trình sau, chỉ cần lấy một nghiệm (ví dụ, nghiệm đầu tiên). Thực tế, ý nghĩa hình học của việc chúng ta lấy $\pm r_1$ và $\pm r_2$ là rõ ràng: chúng ta thực sự đang phân loại phía nào của mỗi đường tròn có một đường thẳng. Do đó, hai phương pháp nảy sinh khi giải hệ phương trình sau là dư thừa: chỉ cần chọn một trong hai nghiệm (tất nhiên, chỉ cần trong tất cả bốn trường hợp, bạn phải chọn cùng một họ nghiệm).
 
-The last thing that we have not yet considered is **how to shift the straight lines** in the case when the first circle was not originally located at the origin. However, everything is simple here: it follows from the linearity of the equation of a straight line that the value $a \cdot x_0 + b \cdot y_0$ (where $x_0$ and $y_0$ are the coordinates of the original center of the first circle) must be subtracted from the coefficient $c$.
+Điều cuối cùng mà chúng ta chưa xem xét là **cách dịch chuyển các đường thẳng** trong trường hợp đường tròn thứ nhất ban đầu không nằm ở gốc tọa độ. Tuy nhiên, mọi thứ ở đây đều đơn giản: từ tính tuyến tính của phương trình đường thẳng, suy ra rằng giá trị $a \cdot x_0 + b \cdot y_0$ (trong đó $x_0$ và $y_0$ là tọa độ của tâm ban đầu của đường tròn thứ nhất) phải được trừ khỏi hệ số $c$.
 
-##Implementation
-We first describe all the necessary data structures and other auxiliary definitions:
+## Cài đặt (Implementation) {: #implementation}
+Đầu tiên chúng ta mô tả tất cả các cấu trúc dữ liệu cần thiết và các định nghĩa phụ trợ khác:
 
-```point-line-circle-struct
+```cpp
 struct pt {
     double x, y;
 
@@ -99,9 +95,10 @@ double sqr (double a) {
     return a * a;
 }
 ```
-Then the solution itself can be written this way (where the main function for the call is the second; and the first function is an auxiliary):
 
-```find-tangents-to-two-circles
+Sau đó, giải pháp chính nó có thể được viết theo cách này (trong đó hàm chính cho cuộc gọi là hàm thứ hai; và hàm đầu tiên là một hàm phụ trợ):
+
+```cpp
 void tangents (pt c, double r1, double r2, vector<line> & ans) {
     double r = r2 - r1;
     double z = sqr(c.x) + sqr(c.y);
@@ -126,6 +123,6 @@ vector<line> tangents (circle a, circle b) {
 }
 ```
 
-## Problems
+## Bài tập (Problems) {: #problems}
 
 [TIMUS 1163 Chapaev](https://acm.timus.ru/problem.aspx?space=1&num=1163)

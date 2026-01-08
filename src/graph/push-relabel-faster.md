@@ -4,25 +4,25 @@ tags:
 e_maxx_link: preflow_push_faster
 ---
 
-# Maximum flow - Push-relabel method improved
+# Luồng cực đại - Phương pháp Push-relabel cải tiến (Maximum flow - Push-relabel method improved) {: #maximum-flow-push-relabel-method-improved}
 
-We will modify the [push-relabel method](push-relabel.md) to achieve a better runtime.
+Chúng ta sẽ sửa đổi [phương pháp push-relabel](push-relabel.md) để đạt được thời gian chạy tốt hơn.
 
-## Description
+## Mô tả (Description) {: #description}
 
-The modification is extremely simple:
-In the previous article we chosen a vertex with excess without any particular rule.
-But it turns out, that if we always choose the vertices with the **greatest height**, and apply push and relabel operations on them, then the complexity will become better.
-Moreover, to select the vertices with the greatest height we actually don't need any data structures, we simply store the vertices with the greatest height in a list, and recalculate the list once all of them are processed (then vertices with already lower height will be added to the list), or whenever a new vertex with excess and a greater height appears (after relabeling a vertex).
+Sửa đổi cực kỳ đơn giản:
+Trong bài viết trước chúng ta đã chọn một đỉnh có dư thừa mà không có bất kỳ quy tắc cụ thể nào.
+Nhưng hóa ra, nếu chúng ta luôn chọn các đỉnh có **độ cao lớn nhất**, và áp dụng các thao tác push và relabel trên chúng, thì độ phức tạp sẽ trở nên tốt hơn.
+Hơn nữa, để chọn các đỉnh có độ cao lớn nhất, chúng ta thực sự không cần bất kỳ cấu trúc dữ liệu nào, chúng ta chỉ cần lưu trữ các đỉnh có độ cao lớn nhất trong một danh sách, và tính toán lại danh sách sau khi tất cả chúng đã được xử lý (sau đó các đỉnh có độ cao thấp hơn sẽ được thêm vào danh sách), hoặc bất cứ khi nào xuất hiện một đỉnh mới có dư thừa và độ cao lớn hơn (sau khi gán lại nhãn cho một đỉnh).
 
-Despite the simplicity, this modification reduces the complexity by a lot.
-To be precise, the complexity of the resulting algorithm is $O(V E + V^2 \sqrt{E})$, which in the worst case is $O(V^3)$.
+Bất chấp sự đơn giản, sửa đổi này làm giảm độ phức tạp đi rất nhiều.
+Chính xác hơn, độ phức tạp của thuật toán thu được là $O(V E + V^2 \sqrt{E})$, trong trường hợp xấu nhất là $O(V^3)$.
 
-This modification was proposed by Cheriyan and Maheshwari in 1989.
+Sửa đổi này được đề xuất bởi Cheriyan và Maheshwari vào năm 1989.
 
-## Implementation
+## Cài đặt (Implementation) {: #implementation}
 
-```{.cpp file=push_relabel_faster}
+```cpp
 const int inf = 1000000000;
 
 int n;

@@ -4,58 +4,59 @@ tags:
 e_maxx_link: triangles_union
 ---
 
-# Vertical decomposition
+# Phân rã dọc (Vertical decomposition) {: #vertical-decomposition}
 
-## Overview
-Vertical decomposition is a powerful technique used in various geometry problems. The general idea is to cut the plane into several vertical stripes
-with some "good" properties and solve the problem for these stripes independently. We will illustrate the idea on some examples.
+## Tổng quan (Overview) {: #overview}
+Phân rã nhanh dọc là một kỹ thuật mạnh mẽ được sử dụng trong các bài toán hình học khác nhau. Ý tưởng chung là cắt mặt phẳng thành một vài dải dọc (vertical stripes)
+với một số tính chất "tốt" và giải quyết bài toán cho các dải này một cách độc lập. Chúng ta sẽ minh họa ý tưởng trên một số ví dụ.
 
-## Area of the union of triangles
-Suppose that there are $n$ triangles on a plane and we are to find the area of their union. The problem would be easy if the triangles didn't intersect, so
-let's get rid of these intersections by dividing the plane into vertical stripes by drawing vertical lines through all vertices and all points of intersection of
-sides of different triangles. There may be $O(n^2)$ such lines so we obtained $O(n^2)$ stripes. Now consider some vertical stripe. Each non-vertical segment either crosses it from left to right or doesn't cross at all.
-Also, no two segments intersect strictly inside the stripe. It means that the part of the union of triangles that lies inside this stripe is composed of disjoint trapezoids with bases lying on the sides of the stripe.
-This property allows us to compute the area inside each stripe with a following scanline algorithm. Each segment crossing the stripe is either upper or lower, depending on whether the interior of the corresponding triangle
-is above or below the segment. We can visualize each upper segment as an opening bracket and each lower segment as a closing bracket and decompose the stripe into trapezoids by decomposing the bracket sequence into smaller correct bracket sequences. This algorithm requires $O(n^3\log n)$ time and $O(n^2)$ memory.
-### Optimization 1
-Firstly we will reduce the runtime to $O(n^2\log n)$. Instead of generating trapezoids for each stripe let's fix some triangle side (segment $s = (s_0, s_1)$) and find the set of stripes where this segment is a side of some trapezoid. Note that in this case we only have to find the stripes where the balance of brackets below (or above, in case of a lower segment) $s$ is zero. It means that instead of running vertical scanline for each stripe we can run a horizontal scanline for all parts of other segments which affect the balance of brackets with respect to $s$.
-For simplicity we will show how to do this for an upper segment, the algorithm for lower segments is similar. Consider some other non-vertical segment $t = (t_0, t_1)$ and find the intersection $[x_1, x_2]$ of projections of $s$ and $t$ on $Ox$. If this intersection is empty or consists of one point, $t$ can be discarded since $s$ and $t$ do not intersect the interior of the same stripe. Otherwise consider the intersection $I$ of $s$ and $t$. There are three cases.
+## Diện tích hợp của các tam giác (Area of the union of triangles) {: #area-of-the-union-of-triangles}
+Giả sử có $n$ tam giác trên một mặt phẳng và chúng ta phải tìm diện tích hợp của chúng. Bài toán sẽ dễ dàng nếu các tam giác không cắt nhau, vì vậy
+hãy loại bỏ các giao điểm này bằng cách chia mặt phẳng thành các dải dọc bằng cách vẽ các đường thẳng đứng qua tất cả các đỉnh và tất cả các giao điểm của
+các cạnh của các tam giác khác nhau. Có thể có $O(n^2)$ đường như vậy nên chúng ta thu được $O(n^2)$ dải. Bây giờ hãy xem xét một dải dọc nào đó. Mỗi đoạn thẳng không dọc hoặc cắt nó từ trái sang phải hoặc không cắt chút nào.
+Hơn nữa, không có hai đoạn thẳng nào cắt nhau hoàn toàn bên trong dải. Điều này có nghĩa là phần của hợp các tam giác nằm bên trong dải này bao gồm các hình thang rời rạc với các đáy nằm trên các cạnh của dải.
+Tính chất này cho phép chúng ta tính diện tích bên trong mỗi dải bằng thuật toán quét đường (scanline) sau đây. Mỗi đoạn thẳng cắt dải là đoạn trên (upper) hoặc đoạn dưới (lower), tùy thuộc vào việc phần trong của tam giác tương ứng
+nằm trên hay nằm dưới đoạn thẳng. Chúng ta có thể hình dung mỗi đoạn trên như một dấu ngoặc mở và mỗi đoạn dưới như một dấu ngoặc đóng và phân rã dải thành các hình thang bằng cách phân rã dãy ngoặc thành các dãy ngoặc đúng nhỏ hơn. Thuật toán này yêu cầu thời gian $O(n^3\log n)$ và bộ nhớ $O(n^2)$.
+
+### Tối ưu hóa 1 (Optimization 1) {: #optimization-1}
+Trước tiên, chúng ta sẽ giảm thời gian chạy xuống $O(n^2\log n)$. Thay vì tạo các hình thang cho mỗi dải, hãy cố định một cạnh tam giác nào đó (đoạn $s = (s_0, s_1)$) và tìm tập hợp các dải nơi đoạn này là một cạnh của một hình thang nào đó. Lưu ý rằng trong trường hợp này, chúng ta chỉ phải tìm các dải nơi cân bằng của các dấu ngoặc bên dưới (hoặc bên trên, trong trường hợp đoạn dưới) $s$ là bằng không. Điều này có nghĩa là thay vì chạy quét đường dọc cho mỗi dải, chúng ta có thể chạy quét đường ngang cho tất cả các phần của các đoạn khác ảnh hưởng đến cân bằng của các dấu ngoặc đối với $s$.
+Để đơn giản, chúng ta sẽ chỉ ra cách thực hiện điều này cho một đoạn trên, thuật toán cho các đoạn dưới là tương tự. Xem xét một số đoạn không dọc khác $t = (t_0, t_1)$ và tìm giao điểm $[x_1, x_2]$ của các hình chiếu của $s$ và $t$ trên $Ox$. Nếu giao điểm này rỗng hoặc chỉ bao gồm một điểm, $t$ có thể bị loại bỏ vì $s$ và $t$ không cắt phần trong của cùng một dải. Ngược lại, hãy xem xét giao điểm $I$ của $s$ và $t$. Có ba trường hợp.
 
 1.  $I = \varnothing$
 
-    In this case $t$ is either above or below $s$ on $[x_1, x_2]$. If $t$ is above, it doesn't affect whether $s$ is a side of some trapezoid or not.
-    If $t$ is below $s$, we should add $1$ or $-1$ to the balance of bracket sequences for all stripes in $[x_1, x_2]$, depending on whether $t$ is upper or lower.
+    Trong trường hợp này $t$ hoặc nằm trên hoặc nằm dưới $s$ trên $[x_1, x_2]$. Nếu $t$ nằm trên, nó không ảnh hưởng đến việc liệu $s$ có phải là một cạnh của một hình thang nào đó hay không.
+    Nếu $t$ nằm dưới $s$, chúng ta nên thêm $1$ hoặc $-1$ vào cân bằng của các dãy ngoặc cho tất cả các dải trong $[x_1, x_2]$, tùy thuộc vào việc $t$ là đoạn trên hay đoạn dưới.
 
-2.  $I$ consists of a single point $p$
+2.  $I$ bao gồm một điểm duy nhất $p$
 
-    This case can be reduced to the previous one by splitting $[x_1, x_2]$ into $[x_1, p_x]$ and $[p_x, x_2]$.
+    Trường hợp này có thể được quy về trường hợp trước bằng cách chia $[x_1, x_2]$ thành $[x_1, p_x]$ và $[p_x, x_2]$.
 
-3.  $I$ is some segment $l$
+3.  $I$ là một đoạn $l$ nào đó
 
-    This case means that the parts of $s$ and $t$ for $x\in[x_1, x_2]$ coincide. If $t$ is lower, $s$ is clearly not a side of a trapezoid.
-    Otherwise, it could happen that both $s$ and $t$ can be considered as a side of some trapezoid. In order to resolve this ambiguity, we can
-    decide that only the segment with the lowest index should be considered as a side (here we suppose that triangle sides are enumerated in some way). So, if $index(s) < index(t)$, we should ignore this case,
-    otherwise we should mark that $s$ can never be a side on $[x_1, x_2]$ (for example, by adding a corresponding event with balance $-2$).
+    Trường hợp này có nghĩa là các phần của $s$ và $t$ cho $x\in[x_1, x_2]$ trùng nhau. Nếu $t$ là đoạn dưới, $s$ rõ ràng không phải là một cạnh của hình thang.
+    Ngược lại, có thể xảy ra trường hợp cả $s$ và $t$ đều có thể được coi là một cạnh của một hình thang nào đó. Để giải quyết sự mơ hồ này, chúng ta có thể
+    quyết định rằng chỉ đoạn có chỉ số thấp nhất mới được coi là một cạnh (ở đây chúng ta giả sử rằng các cạnh tam giác được đánh số theo một cách nào đó). Vì vậy, nếu $index(s) < index(t)$, chúng ta nên bỏ qua trường hợp này,
+    ngược lại chúng ta nên đánh dấu rằng $s$ không bao giờ có thể là một cạnh trên $[x_1, x_2]$ (ví dụ, bằng cách thêm một sự kiện tương ứng với cân bằng $-2$).
 
-Here is a graphic representation of the three cases.
+Dưới đây là biểu diễn đồ họa của ba trường hợp.
 
 <div style="text-align: center;">
-  <img src="triangle_union.png" alt="Visual">
+  <img src="https://cp-algorithms.com/geometry/triangle_union.png" alt="Visual">
 </div>
 
-Finally we should remark on processing all the additions of $1$ or $-1$ on all stripes in $[x_1, x_2]$. For each addition of $w$ on $[x_1, x_2]$ we can create events $(x_1, w),\ (x_2, -w)$
-and process all these events with a sweep line.
+Cuối cùng, chúng ta nên nhận xét về việc xử lý tất cả các phép cộng $1$ hoặc $-1$ trên tất cả các dải trong $[x_1, x_2]$. Đối với mỗi phép cộng $w$ trên $[x_1, x_2]$ chúng ta có thể tạo các sự kiện $(x_1, w),\ (x_2, -w)$
+và xử lý tất cả các sự kiện này bằng một đường quét.
 
-### Optimization 2
-Note that if we apply the previous optimization, we no longer have to find all stripes explicitly. This reduces the memory consumption to $O(n)$.
+### Tối ưu hóa 2 (Optimization 2) {: #optimization-2}
+Lưu ý rằng nếu chúng ta áp dụng tối ưu hóa trước đó, chúng ta không còn phải tìm tất cả các dải một cách rõ ràng nữa. Điều này làm giảm mức tiêu thụ bộ nhớ xuống $O(n)$.
 
-## Intersection of convex polygons
-Another usage of vertical decomposition is to compute the intersection of two convex polygons in linear time. Suppose the plane is split into vertical stripes by vertical lines passing through each
-vertex of each polygon. Then if we consider one of the input polygons and some stripe, their intersection is either a trapezoid, a triangle or a point. Therefore we can simply intersect these shapes for each vertical stripe and merge these intersections into a single polygon.
+## Giao của các đa giác lồi (Intersection of convex polygons) {: #intersection-of-convex-polygons}
+Một cách sử dụng khác của phân rã dọc là tính toán giao của hai đa giác lồi trong thời gian tuyến tính. Giả sử mặt phẳng được chia thành các dải dọc bởi các đường thẳng đứng đi qua mỗi
+đỉnh của mỗi đa giác. Khi đó nếu chúng ta xem xét một trong các đa giác đầu vào và một dải nào đó, giao điểm của chúng là một hình thang, một tam giác hoặc một điểm. Do đó, chúng ta có thể chỉ cần cắt các hình này cho mỗi dải dọc và hợp nhất các giao điểm này thành một đa giác duy nhất.
 
-## Implementation
+## Cài đặt (Implementation) {: #implementation}
 
-Below is the code that calculates area of the union of a set of triangles in $O(n^2\log n)$ time and $O(n)$ memory.
+Dưới đây là mã tính toán diện tích hợp của một tập hợp các tam giác trong thời gian $O(n^2\log n)$ và bộ nhớ $O(n)$.
 
 ```{.cpp file=triangle_union}
 typedef double dbl;
@@ -239,6 +240,6 @@ dbl union_area(vector<tuple<pt, pt, pt> > triangles){
 
 ```
 
-## Problems
+## Bài tập (Problems) {: #problems}
  * [Codeforces 62C Inquisition](https://codeforces.com/contest/62/problem/C)
  * [Codeforces 107E Darts](https://codeforces.com/contest/107/problem/E)

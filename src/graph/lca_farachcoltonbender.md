@@ -4,23 +4,23 @@ tags:
 e_maxx_link: lca_linear
 ---
 
-# Lowest Common Ancestor - Farach-Colton and Bender Algorithm
+# Tổ tiên chung thấp nhất - Thuật toán Farach-Colton và Bender (Lowest Common Ancestor - Farach-Colton and Bender Algorithm) {: #lowest-common-ancestor-farach-colton-and-bender-algorithm}
 
-Let $G$ be a tree.
-For every query of the form $(u, v)$ we want to find the lowest common ancestor of the nodes $u$ and $v$, i.e. we want to find a node $w$ that lies on the path from $u$ to the root node, that lies on the path from $v$ to the root node, and if there are multiple nodes we pick the one that is farthest away from the root node.
-In other words the desired node $w$ is the lowest ancestor of $u$ and $v$.
-In particular if $u$ is an ancestor of $v$, then $u$ is their lowest common ancestor.
+Cho $G$ là một cây.
+Đối với mỗi truy vấn có dạng $(u, v)$ chúng ta muốn tìm tổ tiên chung thấp nhất của các nút $u$ và $v$, tức là chúng ta muốn tìm một nút $w$ nằm trên đường đi từ $u$ đến nút gốc, nằm trên đường đi từ $v$ đến nút gốc, và nếu có nhiều nút như vậy, chúng ta chọn nút xa nút gốc nhất.
+Nói cách khác, nút $w$ mong muốn là tổ tiên thấp nhất của $u$ và $v$.
+Đặc biệt nếu $u$ là tổ tiên của $v$, thì $u$ là tổ tiên chung thấp nhất của chúng.
 
-The algorithm which will be described in this article was developed by Farach-Colton and Bender.
-It is asymptotically optimal.
+Thuật toán sẽ được mô tả trong bài viết này được phát triển bởi Farach-Colton và Bender.
+Nó là tối ưu tiệm cận.
 
-## Algorithm
+## Thuật toán (Algorithm) {: #algorithm}
 
-We use the classical reduction of the LCA problem to the RMQ problem.
-We traverse all nodes of the tree with [DFS](depth-first-search.md) and keep an array with all visited nodes and the heights of these nodes. 
-The LCA of two nodes $u$ and $v$ is the node between the occurrences of $u$ and $v$ in the tour, that has the smallest height.
+Chúng ta sử dụng phép quy giản cổ điển của bài toán LCA về bài toán RMQ.
+Chúng ta duyệt tất cả các nút của cây bằng [DFS](depth-first-search.md) và giữ một mảng với tất cả các nút đã thăm và độ cao của các nút này.
+LCA của hai nút $u$ và $v$ là nút nằm giữa các lần xuất hiện của $u$ và $v$ trong hành trình (tour), có độ cao nhỏ nhất.
 
-In the following picture you can see a possible Euler-Tour of a graph and in the list below you can see the visited nodes and their heights.
+Trong hình dưới đây, bạn có thể thấy một Euler-Tour có thể có của một đồ thị và trong danh sách bên dưới, bạn có thể thấy các nút đã thăm và độ cao của chúng.
 
 <div style="text-align: center;">
   <img src="LCA_Euler.png" alt="LCA_Euler_Tour">
@@ -32,62 +32,62 @@ $$\begin{array}{|l|c|c|c|c|c|c|c|c|c|c|c|c|c|}
 \text{Heights:} & 1 & 2 & 3 & 2 & 3 & 2 & 1 & 2 & 1 & 2 & 3 & 2 & 1 \\ \hline
 \end{array}$$
 
-You can read more about this reduction in the article [Lowest Common Ancestor](lca.md).
-In that article the minimum of a range was either found by sqrt-decomposition in $O(\sqrt{N})$ or in $O(\log N)$ using a Segment tree.
-In this article we look at how we can solve the given range minimum queries in $O(1)$ time, while still only taking $O(N)$ time for preprocessing.
+Bạn có thể đọc thêm về sự quy giản này trong bài viết [Tổ tiên chung thấp nhất](lca.md).
+Trong bài viết đó, giá trị nhỏ nhất của một phạm vi được tìm thấy bằng phân rã căn bậc hai trong $O(\sqrt{N})$ hoặc trong $O(\log N)$ sử dụng Segment tree.
+Trong bài viết này, chúng ta xem xét cách chúng ta có thể giải quyết các truy vấn giá trị nhỏ nhất trong phạm vi đã cho trong thời gian $O(1)$, trong khi vẫn chỉ mất thời gian $O(N)$ để tiền xử lý.
 
-Note that the reduced RMQ problem is very specific:
-any two adjacent elements in the array differ exactly by one (since the elements of the array are nothing more than the heights of the nodes visited in order of traversal, and we either go to a descendant, in which case the next element is one bigger, or go back to the ancestor, in which case the next element is one lower).
-The Farach-Colton and Bender algorithm describes a solution for exactly this specialized RMQ problem.
+Lưu ý rằng bài toán RMQ được quy giản rất cụ thể:
+bất kỳ hai phần tử liền kề nào trong mảng đều khác nhau chính xác một đơn vị (vì các phần tử của mảng không gì khác hơn là độ cao của các nút được thăm theo thứ tự duyệt, và chúng ta hoặc đi đến một hậu duệ, trong trường hợp đó phần tử tiếp theo lớn hơn một, hoặc quay lại tổ tiên, trong trường hợp đó phần tử tiếp theo nhỏ hơn một).
+Thuật toán Farach-Colton và Bender mô tả một giải pháp cho chính xác bài toán RMQ chuyên biệt này.
 
-Let's denote with $A$ the array on which we want to perform the range minimum queries.
-And $N$ will be the size of $A$.
+Gọi $A$ là mảng mà chúng ta muốn thực hiện các truy vấn giá trị nhỏ nhất trong phạm vi.
+Và $N$ sẽ là kích thước của $A$.
 
-There is an easy data structure that we can use for solving the RMQ problem with $O(N \log N)$ preprocessing and $O(1)$ for each query: the [Sparse Table](../data_structures/sparse-table.md).
-We create a table $T$ where each element $T[i][j]$ is equal to the minimum of $A$ in the interval $[i, i + 2^j - 1]$.
-Obviously $0 \leq j \leq \lceil \log N \rceil$, and therefore the size of the Sparse Table will be $O(N \log N)$.
-You can build the table easily in $O(N \log N)$ by noting that $T[i][j] = \min(T[i][j-1], T[i+2^{j-1}][j-1])$.
+Có một cấu trúc dữ liệu dễ dàng mà chúng ta có thể sử dụng để giải quyết bài toán RMQ với tiền xử lý $O(N \log N)$ và $O(1)$ cho mỗi truy vấn: [Bảng thưa (Sparse Table)](../data_structures/sparse-table.md).
+Chúng ta tạo một bảng $T$ trong đó mỗi phần tử $T[i][j]$ bằng giá trị nhỏ nhất của $A$ trong khoảng $[i, i + 2^j - 1]$.
+Rõ ràng $0 \leq j \leq \lceil \log N \rceil$, và do đó kích thước của Bảng thưa sẽ là $O(N \log N)$.
+Bạn có thể xây dựng bảng dễ dàng trong $O(N \log N)$ bằng cách lưu ý rằng $T[i][j] = \min(T[i][j-1], T[i+2^{j-1}][j-1])$.
 
-How can we answer a query RMQ in $O(1)$ using this data structure?
-Let the received query be $[l, r]$, then the answer is $\min(T[l][\text{sz}], T[r-2^{\text{sz}}+1][\text{sz}])$, where $\text{sz}$ is the biggest exponent such that $2^{\text{sz}}$ is not bigger than the range length $r-l+1$. 
-Indeed we can take the range $[l, r]$ and cover it two segments of length $2^{\text{sz}}$ - one starting in $l$ and the other ending in $r$.
-These segments overlap, but this doesn't interfere with our computation.
-To really achieve the time complexity of $O(1)$ per query, we need to know the values of $\text{sz}$ for all possible lengths from $1$ to $N$.
-But this can be easily precomputed.
+Làm thế nào chúng ta có thể trả lời một truy vấn RMQ trong $O(1)$ sử dụng cấu trúc dữ liệu này?
+Giả sử truy vấn nhận được là $[l, r]$, thì câu trả lời là $\min(T[l][\text{sz}], T[r-2^{\text{sz}}+1][\text{sz}])$, trong đó $\text{sz}$ là số mũ lớn nhất sao cho $2^{\text{sz}}$ không lớn hơn độ dài phạm vi $r-l+1$.
+Thật vậy, chúng ta có thể lấy phạm vi $[l, r]$ và phủ nó bằng hai đoạn có độ dài $2^{\text{sz}}$ - một đoạn bắt đầu từ $l$ và đoạn kia kết thúc tại $r$.
+Các đoạn này chồng chéo lên nhau, nhưng điều này không ảnh hưởng đến việc tính toán của chúng ta.
+Để thực sự đạt được độ phức tạp thời gian là $O(1)$ cho mỗi truy vấn, chúng ta cần biết các giá trị của $\text{sz}$ cho tất cả các độ dài có thể từ $1$ đến $N$.
+Nhưng điều này có thể dễ dàng được tính toán trước.
 
-Now we want to improve the complexity of the preprocessing down to $O(N)$.
+Bây giờ chúng ta muốn cải thiện độ phức tạp của quá trình tiền xử lý xuống còn $O(N)$.
 
-We divide the array $A$ into blocks of size $K = 0.5 \log N$ with $\log$ being the logarithm to base 2.
-For each block we calculate the minimum element and store them in an array $B$.
-$B$ has the size $\frac{N}{K}$.
-We construct a sparse table from the array $B$.
-The size and the time complexity of it will be:
+Chúng ta chia mảng $A$ thành các khối có kích thước $K = 0.5 \log N$ với $\log$ là logarit cơ số 2.
+Đối với mỗi khối, chúng ta tính toán phần tử nhỏ nhất và lưu trữ chúng trong một mảng $B$.
+$B$ có kích thước $\frac{N}{K}$.
+Chúng ta xây dựng một bảng thưa từ mảng $B$.
+Kích thước và độ phức tạp thời gian của nó sẽ là:
 
 $$\frac{N}{K}\log\left(\frac{N}{K}\right) = \frac{2N}{\log(N)} \log\left(\frac{2N}{\log(N)}\right) =$$
 
 $$= \frac{2N}{\log(N)} \left(1 + \log\left(\frac{N}{\log(N)}\right)\right) \leq \frac{2N}{\log(N)} + 2N = O(N)$$
 
-Now we only have to learn how to quickly answer range minimum queries within each block.
-In fact if the received range minimum query is $[l, r]$ and $l$ and $r$ are in different blocks then the answer is the minimum of the following three values:
-the minimum of the suffix of block of $l$ starting at $l$, the minimum of the prefix of block of $r$ ending at $r$, and the minimum of the blocks between those.
-The minimum of the blocks in between can be answered in $O(1)$ using the Sparse Table.
-So this leaves us only the range minimum queries inside blocks.
+Bây giờ chúng ta chỉ phải học cách trả lời nhanh các truy vấn giá trị nhỏ nhất trong phạm vi bên trong mỗi khối.
+Trên thực tế, nếu truy vấn giá trị nhỏ nhất trong phạm vi nhận được là $[l, r]$ và $l$ và $r$ nằm trong các khối khác nhau thì câu trả lời là giá trị nhỏ nhất của ba giá trị sau:
+giá trị nhỏ nhất của phần hậu tố của khối của $l$ bắt đầu tại $l$, giá trị nhỏ nhất của phần tiền tố của khối của $r$ kết thúc tại $r$, và giá trị nhỏ nhất của các khối nằm giữa chúng.
+Giá trị nhỏ nhất của các khối ở giữa có thể được trả lời trong $O(1)$ bằng cách sử dụng Bảng thưa.
+Vì vậy, điều này chỉ để lại cho chúng ta các truy vấn giá trị nhỏ nhất trong phạm vi bên trong các khối.
 
-Here we will exploit the property of the array.
-Remember that the values in the array - which are just height values in the tree - will always differ by one.
-If we remove the first element of a block, and subtract it from every other item in the block, every block can be identified by a sequence of length $K - 1$ consisting of the number $+1$ and $-1$.
-Because these blocks are so small, there are only a few different sequences that can occur.
-The number of possible sequences is:
+Ở đây chúng ta sẽ khai thác tính chất của mảng.
+Hãy nhớ rằng các giá trị trong mảng - vốn chỉ là các giá trị độ cao trong cây - sẽ luôn khác nhau một đơn vị.
+Nếu chúng ta loại bỏ phần tử đầu tiên của một khối, và trừ nó khỏi mọi phần tử khác trong khối, mỗi khối có thể được xác định bởi một chuỗi có độ dài $K - 1$ bao gồm số $+1$ và $-1$.
+Bởi vì các khối này quá nhỏ, chỉ có một vài chuỗi khác nhau có thể xảy ra.
+Số lượng chuỗi có thể là:
 
 $$2^{K-1} = 2^{0.5 \log(N) - 1} = 0.5 \left(2^{\log(N)}\right)^{0.5} = 0.5 \sqrt{N}$$
 
-Thus the number of different blocks is $O(\sqrt{N})$, and therefore we can precompute the results of range minimum queries inside all different blocks in $O(\sqrt{N} K^2) = O(\sqrt{N} \log^2(N)) = O(N)$ time.
-For the implementation we can characterize a block by a bitmask of length $K-1$ (which will fit in a standard int) and store the index of the minimum in an array $\text{block}[\text{mask}][l][r]$ of size $O(\sqrt{N} \log^2(N))$.
+Do đó số lượng các khối khác nhau là $O(\sqrt{N})$, và do đó chúng ta có thể tính toán trước kết quả của các truy vấn giá trị nhỏ nhất trong phạm vi bên trong tất cả các khối khác nhau trong thời gian $O(\sqrt{N} K^2) = O(\sqrt{N} \log^2(N)) = O(N)$.
+Để cài đặt, chúng ta có thể đặc trưng hóa một khối bằng một bitmask có độ dài $K-1$ (sẽ vừa trong một int tiêu chuẩn) và lưu trữ chỉ số của giá trị nhỏ nhất trong một mảng $\text{block}[\text{mask}][l][r]$ có kích thước $O(\sqrt{N} \log^2(N))$.
 
-So we learned how to precompute range minimum queries within each block, as well as range minimum queries over a range of blocks, all in $O(N)$.
-With these precomputations we can answer each query in $O(1)$, by using at most four precomputed values: the minimum of the block containing `l`, the minimum of the block containing `r`, and the two minima of the overlapping segments of the blocks between them.
+Vì vậy, chúng ta đã học cách tính toán trước các truy vấn giá trị nhỏ nhất trong phạm vi bên trong mỗi khối, cũng như các truy vấn giá trị nhỏ nhất trong phạm vi trên một phạm vi các khối, tất cả trong $O(N)$.
+Với các tính toán trước này, chúng ta có thể trả lời mỗi truy vấn trong $O(1)$, bằng cách sử dụng tối đa bốn giá trị được tính toán trước: giá trị nhỏ nhất của khối chứa `l`, giá trị nhỏ nhất của khối chứa `r`, và hai giá trị nhỏ nhất của các đoạn chồng chéo của các khối giữa chúng.
 
-## Implementation
+## Cài đặt (Implementation) {: #implementation}
 
 ```cpp
 int n;
@@ -120,13 +120,13 @@ int min_by_h(int i, int j) {
 }
 
 void precompute_lca(int root) {
-    // get euler tour & indices of first occurrences
+    // lấy euler tour & chỉ số của lần xuất hiện đầu tiên
     first_visit.assign(n, -1);
     height.assign(n, 0);
     euler_tour.reserve(2 * n);
     dfs(root, -1, 0);
 
-    // precompute all log values
+    // tính toán trước tất cả các giá trị log
     int m = euler_tour.size();
     log_2.reserve(m + 1);
     log_2.push_back(-1);
@@ -136,7 +136,7 @@ void precompute_lca(int root) {
     block_size = max(1, log_2[m] / 2);
     block_cnt = (m + block_size - 1) / block_size;
 
-    // precompute minimum of each block and build sparse table
+    // tính toán trước giá trị nhỏ nhất của mỗi khối và xây dựng bảng thưa
     st.assign(block_cnt, vector<int>(log_2[block_cnt] + 1));
     for (int i = 0, j = 0, b = 0; i < m; i++, j++) {
         if (j == block_size)
@@ -154,7 +154,7 @@ void precompute_lca(int root) {
         }
     }
 
-    // precompute mask for each block
+    // tính toán trước mask cho mỗi khối
     block_mask.assign(block_cnt, 0);
     for (int i = 0, j = 0, b = 0; i < m; i++, j++) {
         if (j == block_size)
@@ -163,7 +163,7 @@ void precompute_lca(int root) {
             block_mask[b] += 1 << (j - 1);
     }
 
-    // precompute RMQ for each unique block
+    // tính toán trước RMQ cho mỗi khối duy nhất
     int possibilities = 1 << (block_size - 1);
     blocks.resize(possibilities);
     for (int b = 0; b < block_cnt; b++) {

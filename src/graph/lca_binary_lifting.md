@@ -4,44 +4,44 @@ tags:
 e_maxx_link: lca_simpler
 ---
 
-# Lowest Common Ancestor - Binary Lifting
+# Tổ tiên chung thấp nhất - Nâng nhị phân (Lowest Common Ancestor - Binary Lifting) {: #lowest-common-ancestor-binary-lifting}
 
-Let $G$ be a tree.
-For every query of the form `(u, v)` we want to find the lowest common ancestor of the nodes `u` and `v`, i.e. we want to find a node `w` that lies on the path from `u` to the root node, that lies on the path from `v` to the root node, and if there are multiple nodes we pick the one that is farthest away from the root node.
-In other words the desired node `w` is the lowest ancestor of `u` and `v`.
-In particular if `u` is an ancestor of `v`, then `u` is their lowest common ancestor.
+Cho $G$ là một cây.
+Đối với mỗi truy vấn có dạng `(u, v)`, chúng ta muốn tìm tổ tiên chung thấp nhất của các nút `u` và `v`, tức là chúng ta muốn tìm một nút `w` nằm trên đường đi từ `u` đến nút gốc, nằm trên đường đi từ `v` đến nút gốc, và nếu có nhiều nút như vậy, chúng ta chọn nút xa nút gốc nhất.
+Nói cách khác, nút `w` mong muốn là tổ tiên thấp nhất của `u` và `v`.
+Đặc biệt nếu `u` là tổ tiên của `v`, thì `u` là tổ tiên chung thấp nhất của chúng.
 
-The algorithm described in this article will need $O(N \log N)$ for preprocessing the tree, and then $O(\log N)$ for each LCA query.
+Thuật toán được mô tả trong bài viết này sẽ cần $O(N \log N)$ để tiền xử lý cây, và sau đó $O(\log N)$ cho mỗi truy vấn LCA.
 
-## Algorithm
+## Thuật toán (Algorithm) {: #algorithm}
 
-For each node we will precompute its ancestor above him, its ancestor two nodes above, its ancestor four above, etc.
-Let's store them in the array `up`, i.e. `up[i][j]` is the `2^j`-th ancestor above the node `i` with `i=1...N`, `j=0...ceil(log(N))`.
-These information allow us to jump from any node to any ancestor above it in $O(\log N)$ time.
-We can compute this array using a [DFS](depth-first-search.md) traversal of the tree.
+Đối với mỗi nút, chúng ta sẽ tính toán trước tổ tiên bên trên nó, tổ tiên hai nút bên trên, tổ tiên bốn nút bên trên, v.v.
+Hãy lưu trữ chúng trong mảng `up`, tức là `up[i][j]` là tổ tiên thứ `2^j` bên trên nút `i` với `i=1...N`, `j=0...ceil(log(N))`.
+Thông tin này cho phép chúng ta nhảy từ bất kỳ nút nào đến bất kỳ tổ tiên nào bên trên nó trong thời gian $O(\log N)$.
+Chúng ta có thể tính toán mảng này bằng cách sử dụng duyệt [DFS](depth-first-search.md) trên cây.
 
-For each node we will also remember the time of the first visit of this node (i.e. the time when the DFS discovers the node), and the time when we left it (i.e. after we visited all children and exit the DFS function).
-We can use this information to determine in constant time if a node is an ancestor of another node.
+Đối với mỗi nút, chúng ta cũng sẽ ghi nhớ thời gian thăm đầu tiên của nút này (tức là thời gian DFS khám phá nút), và thời gian khi chúng ta rời khỏi nó (tức là sau khi chúng ta thăm tất cả các con và thoát khỏi hàm DFS).
+Chúng ta có thể sử dụng thông tin này để xác định trong thời gian hằng số nếu một nút là tổ tiên của một nút khác.
 
-Suppose now we received a query `(u, v)`.
-We can immediately check whether one node is the ancestor of the other.
-In this case this node is already the LCA.
-If `u` is not the ancestor of `v`, and `v` not the ancestor of `u`, we climb the ancestors of `u` until we find the highest (i.e. closest to the root) node, which is not an ancestor of `v` (i.e. a node `x`, such that `x` is not an ancestor of `v`, but `up[x][0]` is).
-We can find this node `x` in $O(\log N)$ time using the array `up`.
+Giả sử bây giờ chúng ta nhận được một truy vấn `(u, v)`.
+Chúng ta có thể kiểm tra ngay lập tức xem một nút có phải là tổ tiên của nút kia hay không.
+Trong trường hợp này, nút này đã là LCA.
+Nếu `u` không phải là tổ tiên của `v`, và `v` không phải là tổ tiên của `u`, chúng ta leo lên các tổ tiên của `u` cho đến khi chúng ta tìm thấy nút cao nhất (tức là gần gốc nhất), mà không phải là tổ tiên của `v` (tức là một nút `x`, sao cho `x` không phải là tổ tiên của `v`, nhưng `up[x][0]` thì phải).
+Chúng ta có thể tìm thấy nút `x` này trong thời gian $O(\log N)$ bằng cách sử dụng mảng `up`.
 
-We will describe this process in more detail.
-Let `L = ceil(log(N))`.
-Suppose first that `i = L`.
-If `up[u][i]` is not an ancestor of `v`, then we can assign `u = up[u][i]` and decrement `i`.
-If `up[u][i]` is an ancestor, then we just decrement `i`.
-Clearly after doing this for all non-negative `i` the node `u` will be the desired node - i.e. `u` is still not an ancestor of `v`, but `up[u][0]` is.
+Chúng tôi sẽ mô tả quá trình này chi tiết hơn.
+Gọi `L = ceil(log(N))`.
+Giả sử trước tiên rằng `i = L`.
+Nếu `up[u][i]` không phải là tổ tiên của `v`, thì chúng ta có thể gán `u = up[u][i]` và giảm `i`.
+Nếu `up[u][i]` là một tổ tiên, thì chúng ta chỉ cần giảm `i`.
+Rõ ràng sau khi thực hiện việc này cho tất cả các `i` không âm, nút `u` sẽ là nút mong muốn - tức là `u` vẫn không phải là tổ tiên của `v`, nhưng `up[u][0]` thì phải.
 
-Now, obviously, the answer to LCA will be `up[u][0]` - i.e., the smallest node among the ancestors of the node `u`, which is also an ancestor of `v`.
+Bây giờ, rõ ràng, câu trả lời cho LCA sẽ là `up[u][0]` - tức là, nút nhỏ nhất trong số các tổ tiên của nút `u`, mà cũng là một tổ tiên của `v`.
 
-So answering a LCA query will iterate `i` from `ceil(log(N))` to `0` and checks in each iteration if one node is the ancestor of the other.
-Consequently each query can be answered in $O(\log N)$.
+Vì vậy, việc trả lời một truy vấn LCA sẽ lặp `i` từ `ceil(log(N))` đến `0` và kiểm tra trong mỗi lần lặp xem một nút có phải là tổ tiên của nút kia hay không.
+Do đó, mỗi truy vấn có thể được trả lời trong $O(\log N)$.
 
-## Implementation
+## Cài đặt (Implementation) {: #implementation}
 
 ```cpp
 int n, l;
@@ -93,7 +93,7 @@ void preprocess(int root) {
     dfs(root, root);
 }
 ```
-## Practice Problems
+## Bài tập (Practice Problems) {: #practice-problems}
 
 * [LeetCode -  Kth Ancestor of a Tree Node](https://leetcode.com/problems/kth-ancestor-of-a-tree-node)
 * [Codechef - Longest Good Segment](https://www.codechef.com/problems/LGSEG)

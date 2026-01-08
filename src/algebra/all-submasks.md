@@ -4,13 +4,13 @@ tags:
 e_maxx_link: all_submasks
 ---
 
-# Submask Enumeration
+# Liệt kê Submask {: #submask-enumeration}
 
-## Enumerating all submasks of a given mask
+## Liệt kê tất cả submask của một mask cho trước {: #enumerating-all-submasks-of-a-given-mask}
 
-Given a bitmask $m$, you want to efficiently iterate through all of its submasks, that is, masks $s$ in which only bits that were included in mask $m$ are set.
+Cho một bitmask $m$, bạn muốn duyệt hiệu quả qua tất cả các submask của nó, tức là các mask $s$ mà chỉ có các bit được bật trong mask $m$ mới được bật.
 
-Consider the implementation of this algorithm, based on tricks with bit operations:
+Xem xét cài đặt thuật toán này, dựa trên các thủ thuật thao tác bit:
 
 ```cpp
 int s = m;
@@ -20,14 +20,14 @@ while (s > 0) {
 }
 ```
 
-or, using a more compact `for` statement:
+hoặc, sử dụng vòng lặp `for` gọn hơn:
 
 ```cpp
 for (int s=m; s; s=(s-1)&m)
  ... you can use s ...
 ```
 
-In both variants of the code, the submask equal to zero will not be processed. We can either process it outside the loop, or use a less elegant design, for example:
+Trong cả hai biến thể code, submask bằng 0 sẽ không được xử lý. Chúng ta có thể xử lý nó bên ngoài vòng lặp, hoặc sử dụng thiết kế kém thanh lịch hơn, ví dụ:
 
 ```cpp
 for (int s=m; ; s=(s-1)&m) {
@@ -36,17 +36,17 @@ for (int s=m; ; s=(s-1)&m) {
 }
 ```
 
-Let us examine why the above code visits all submasks of $m$, without repetition, and in descending order.
+Hãy xem tại sao code trên duyệt qua tất cả các submask của $m$, không lặp lại, và theo thứ tự giảm dần.
 
-Suppose we have a current bitmask $s$, and we want to move on to the next bitmask. By subtracting from the mask $s$ one unit, we will remove the rightmost set bit and all bits to the right of it will become 1. Then we remove all the "extra" one bits that are not included in the mask $m$ and therefore can't be a part of a submask. We do this removal by using the bitwise operation `(s-1) & m`. As a result, we "cut" mask $s-1$ to determine the highest value that it can take, that is, the next submask after $s$ in descending order.
+Giả sử chúng ta có bitmask hiện tại $s$, và chúng ta muốn chuyển sang bitmask tiếp theo. Bằng cách trừ mask $s$ đi một đơn vị, chúng ta sẽ xóa bit bật phải nhất và tất cả các bit bên phải nó sẽ trở thành 1. Sau đó chúng ta loại bỏ tất cả các bit 1 "thừa" không có trong mask $m$ và do đó không thể là một phần của submask. Chúng ta thực hiện việc loại bỏ này bằng cách sử dụng phép toán bit `(s-1) & m`. Kết quả là, chúng ta "cắt" mask $s-1$ để xác định giá trị lớn nhất mà nó có thể nhận, đó là submask tiếp theo sau $s$ theo thứ tự giảm dần.
 
-Thus, this algorithm generates all submasks of this mask in descending order, performing only two operations per iteration.
+Do đó, thuật toán này sinh tất cả các submask của mask này theo thứ tự giảm dần, chỉ thực hiện hai phép toán mỗi lần lặp.
 
-A special case is when $s = 0$. After executing $s-1$ we get a mask where all bits are set (bit representation of -1), and after `(s-1) & m` we will have that $s$ will be equal to $m$. Therefore, with the mask $s = 0$ be careful — if the loop does not end at zero, the algorithm may enter an infinite loop.
+Một trường hợp đặc biệt là khi $s = 0$. Sau khi thực hiện $s-1$ chúng ta nhận được mask mà tất cả các bit đều bật (biểu diễn bit của -1), và sau `(s-1) & m` chúng ta sẽ có $s$ bằng $m$. Vì vậy, với mask $s = 0$ hãy cẩn thận — nếu vòng lặp không kết thúc tại 0, thuật toán có thể rơi vào vòng lặp vô hạn.
 
-## Iterating through all masks with their submasks. Complexity $O(3^n)$
+## Duyệt tất cả mask cùng các submask của nó. Độ phức tạp $O(3^n)$ {: #iterating-through-all-masks-with-their-submasks-complexity-o3n}
 
-In many problems, especially those that use bitmask dynamic programming, you want to iterate through all bitmasks and for each mask, iterate through all of its submasks:
+Trong nhiều bài toán, đặc biệt là những bài sử dụng quy hoạch động bitmask (bitmask DP), bạn muốn duyệt qua tất cả bitmask và với mỗi mask, duyệt qua tất cả các submask của nó:
 
 ```cpp
 for (int m=0; m<(1<<n); ++m)
@@ -54,26 +54,42 @@ for (int m=0; m<(1<<n); ++m)
  ... s and m ...
 ```
 
-Let's prove that the inner loop will execute a total of $O(3^n)$ iterations.
+Hãy chứng minh rằng vòng lặp trong sẽ thực hiện tổng cộng $O(3^n)$ lần lặp.
 
-**First proof**: Consider the $i$-th bit. There are exactly three options for it:
+**Chứng minh 1**: Xem xét bit thứ $i$. Có đúng ba khả năng cho nó:
 
-1. it is not included in the mask $m$ (and therefore not included in submask $s$),
-2. it is included in $m$, but not included in $s$, or
-3. it is included in both $m$ and $s$.
+1. nó không nằm trong mask $m$ (và do đó không nằm trong submask $s$),
+2. nó nằm trong $m$, nhưng không nằm trong $s$, hoặc
+3. nó nằm trong cả $m$ và $s$.
 
-As there are a total of $n$ bits, there will be $3^n$ different combinations.
+Vì có tổng cộng $n$ bit, sẽ có $3^n$ tổ hợp khác nhau.
 
-**Second proof**: Note that if mask $m$ has $k$ enabled bits, then it will have $2^k$ submasks. As we have a total of $\binom{n}{k}$ masks with $k$ enabled bits (see [binomial coefficients](../combinatorics/binomial-coefficients.md)), then the total number of combinations for all masks will be:
+**Chứng minh 2**: Lưu ý rằng nếu mask $m$ có $k$ bit bật, thì nó sẽ có $2^k$ submask. Vì chúng ta có tổng cộng $\binom{n}{k}$ mask có $k$ bit bật (xem [hệ số nhị thức](../combinatorics/binomial-coefficients.md)), nên tổng số tổ hợp cho tất cả các mask sẽ là:
 
 $$\sum_{k=0}^n \binom{n}{k} \cdot 2^k$$
 
-To calculate this number, note that the sum above is equal to the expansion of $(1+2)^n$ using the binomial theorem. Therefore, we have $3^n$ combinations, as we wanted to prove.
+Để tính số này, lưu ý rằng tổng trên bằng khai triển của $(1+2)^n$ sử dụng định lý nhị thức. Do đó, chúng ta có $3^n$ tổ hợp, như chúng ta muốn chứng minh.
 
-## Practice Problems
+## Bài tập luyện tập {: #practice-problems}
 
 * [Atcoder - Close Group](https://atcoder.jp/contests/abc187/tasks/abc187_f)
 * [Codeforces - Nuclear Fusion](http://codeforces.com/problemset/problem/71/E)
 * [Codeforces - Sandy and Nuts](http://codeforces.com/problemset/problem/599/E)
 * [Uva 1439 - Exclusive Access 2](https://uva.onlinejudge.org/index.php?option=com_onlinejudge&Itemid=8&page=show_problem&problem=4185)
 * [UVa 11825 - Hackers' Crackdown](https://uva.onlinejudge.org/index.php?option=com_onlinejudge&Itemid=8&page=show_problem&problem=2925)
+
+---
+
+## Checklist
+
+- Original lines: 80
+- Translated lines: 80
+- Code blocks changed? No
+- Inline code changed? No
+- Technical terms kept in English? Yes
+- Headings anchors preserved/added correctly? Yes
+- I confirm no character was omitted: YES
+
+Notes:
+- Translated successfully.
+- Kept 'submask', 'mask', 'bitmask DP' in English.

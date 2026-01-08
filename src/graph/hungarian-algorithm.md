@@ -4,193 +4,193 @@ tags:
 e_maxx_link: assignment_hungary
 ---
 
-# Hungarian algorithm for solving the assignment problem
+# Thuật toán Hungary giải bài toán phân công (Hungarian algorithm for solving the assignment problem) {: #hungarian-algorithm-for-solving-the-assignment-problem}
 
-## Statement of the assignment problem
+## Phát biểu bài toán phân công (Statement of the assignment problem) {: #statement-of-the-assignment-problem}
 
-There are several standard formulations of the assignment problem (all of which are essentially equivalent). Here are some of them:
+Có một số cách phát biểu tiêu chuẩn cho bài toán phân công (tất cả về cơ bản đều tương đương). Dưới đây là một số trong số đó:
 
-- There are $n$ jobs and $n$ workers. Each worker specifies the amount of money they expect for a particular job. Each worker can be assigned to only one job. The objective is to assign jobs to workers in a way that minimizes the total cost.
+- Có $n$ công việc và $n$ công nhân. Mỗi công nhân chỉ định số tiền họ mong đợi cho một công việc cụ thể. Mỗi công nhân chỉ có thể được giao một công việc. Mục tiêu là phân công công việc cho công nhân theo cách giảm thiểu tổng chi phí.
 
-- Given an $n \times n$ matrix $A$, the task is to select one number from each row such that exactly one number is chosen from each column, and the sum of the selected numbers is minimized.
+- Cho một ma trận $A$ kích thước $n \times n$, nhiệm vụ là chọn một số từ mỗi hàng sao cho mỗi cột có chính xác một số được chọn, và tổng của các số được chọn là nhỏ nhất.
 
-- Given an $n \times n$ matrix $A$, the task is to find a permutation $p$ of length $n$ such that the value $\sum A[i]\left[p[i]\right]$ is minimized.
+- Cho một ma trận $A$ kích thước $n \times n$, nhiệm vụ là tìm một hoán vị $p$ có độ dài $n$ sao cho giá trị $\sum A[i]\left[p[i]\right]$ là nhỏ nhất.
 
-- Consider a complete bipartite graph with $n$ vertices per part, where each edge is assigned a weight. The objective is to find a perfect matching with the minimum total weight.
+- Xem xét một đồ thị hai phía đầy đủ với $n$ đỉnh mỗi phần, trong đó mỗi cạnh được gán một trọng số. Mục tiêu là tìm một cặp ghép hoàn hảo có tổng trọng số nhỏ nhất.
 
-It is important to note that all the above scenarios are "**square**" problems, meaning both dimensions are always equal to $n$. In practice, similar "**rectangular**" formulations are often encountered, where $n$ is not equal to $m$, and the task is to select $\min(n,m)$ elements. However, it can be observed that a "rectangular" problem can always be transformed into a "square" problem by adding rows or columns with zero or infinite values, respectively.
+Điều quan trọng cần lưu ý là tất cả các tình huống trên đều là các bài toán "**vuông**", nghĩa là cả hai kích thước luôn bằng $n$. Trong thực tế, các công thức "**chữ nhật**" tương tự thường gặp, trong đó $n$ không bằng $m$, và nhiệm vụ là chọn $\min(n,m)$ phần tử. Tuy nhiên, có thể thấy rằng một bài toán "chữ nhật" luôn có thể được chuyển đổi thành bài toán "vuông" bằng cách thêm các hàng hoặc cột có giá trị 0 hoặc vô cùng tương ứng.
 
-We also note that by analogy with the search for a **minimum** solution, one can also pose the problem of finding a **maximum** solution. However, these two problems are equivalent to each other: it is enough to multiply all the weights by $-1$.
+Chúng tôi cũng lưu ý rằng bằng cách tương tự với việc tìm kiếm giải pháp **nhỏ nhất**, người ta cũng có thể đặt ra bài toán tìm giải pháp **lớn nhất**. Tuy nhiên, hai bài toán này tương đương với nhau: chỉ cần nhân tất cả các trọng số với $-1$.
 
-## Hungarian algorithm
+## Thuật toán Hungary (Hungarian algorithm) {: #hungarian-algorithm}
 
-### Historical reference
+### Tham khảo lịch sử (Historical reference) {: #historical-reference}
 
-The algorithm was developed and published by Harold **Kuhn** in 1955. Kuhn himself gave it the name "Hungarian" because it was based on the earlier work by Hungarian mathematicians Dénes Kőnig and Jenő Egerváry.<br>
-In 1957, James **Munkres** showed that this algorithm runs in (strictly) polynomial time, independently from the cost.<br>
-Therefore, in literature, this algorithm is known not only as the "Hungarian", but also as the "Kuhn-Mankres algorithm" or "Mankres algorithm".<br>
-However, it was recently discovered in 2006 that the same algorithm was invented **a century before Kuhn** by the German mathematician Carl Gustav **Jacobi**. His work, _About the research of the order of a system of arbitrary ordinary differential equations_, which was published posthumously in 1890, contained, among other findings, a polynomial algorithm for solving the assignment problem. Unfortunately, since the publication was in Latin, it went unnoticed among mathematicians.
+Thuật toán được phát triển và xuất bản bởi Harold **Kuhn** vào năm 1955. Bản thân Kuhn đã đặt tên cho nó là "Hungary" vì nó dựa trên công trình trước đó của các nhà toán học người Hungary Dénes Kőnig và Jenő Egerváry.
+Năm 1957, James **Munkres** đã chỉ ra rằng thuật toán này chạy trong thời gian đa thức (nghiêm ngặt), độc lập với chi phí.
+Do đó, trong văn học, thuật toán này được biết đến không chỉ là "Hungary", mà còn là "thuật toán Kuhn-Mankres" hoặc "thuật toán Mankres".
+Tuy nhiên, gần đây người ta phát hiện ra vào năm 2006 rằng cùng một thuật toán này đã được phát minh ra **một thế kỷ trước Kuhn** bởi nhà toán học người Đức Carl Gustav **Jacobi**. Công trình của ông, _Về nghiên cứu thứ tự của một hệ phương trình vi phân thường tùy ý_, được xuất bản sau khi ông qua đời vào năm 1890, có chứa, trong số các phát hiện khác, một thuật toán đa thức để giải quyết bài toán phân công. Thật không may, vì ấn phẩm bằng tiếng Latinh, nên nó đã không được các nhà toán học chú ý.
 
-It is also worth noting that Kuhn's original algorithm had an asymptotic complexity of $\mathcal{O}(n^4)$, and only later Jack **Edmonds** and Richard **Karp** (and independently **Tomizawa**) showed how to improve it to an asymptotic complexity of $\mathcal{O}(n^3)$.
+Cũng cần lưu ý rằng thuật toán ban đầu của Kuhn có độ phức tạp tiệm cận là $\mathcal{O}(n^4)$, và chỉ sau đó Jack **Edmonds** và Richard **Karp** (và một cách độc lập **Tomizawa**) đã chỉ ra cách cải thiện nó thành độ phức tạp tiệm cận là $\mathcal{O}(n^3)$.
 
-### The $\mathcal{O}(n^4)$ algorithm
+### Thuật toán $\mathcal{O}(n^4)$ (The $\mathcal{O}(n^4)$ algorithm) {: #the-o-n-4-algorithm}
 
-To avoid ambiguity, we note right away that we are mainly concerned with the assignment problem in a matrix formulation (i.e., given a matrix $A$, you need to select $n$ cells from it that are in different rows and columns). We index arrays starting with $1$, i.e., for example, a matrix $A$ has indices $A[1 \dots n][1 \dots n]$.
+Để tránh sự mơ hồ, chúng tôi lưu ý ngay rằng chúng tôi chủ yếu quan tâm đến bài toán phân công trong một công thức ma trận (tức là, cho một ma trận $A$, bạn cần chọn $n$ ô từ nó nằm trong các hàng và cột khác nhau). Chúng tôi lập chỉ mục mảng bắt đầu bằng $1$, nghĩa là, ví dụ, ma trận $A$ có các chỉ số $A[1 \dots n][1 \dots n]$.
 
-We will also assume that all numbers in matrix A are **non-negative** (if this is not the case, you can always make the matrix non-negative by adding some constant to all numbers).
+Chúng ta cũng sẽ giả sử rằng tất cả các số trong ma trận A đều **không âm** (nếu không phải vậy, bạn luôn có thể làm cho ma trận không âm bằng cách thêm một hằng số vào tất cả các số).
 
-Let's call a **potential** two arbitrary arrays of numbers $u[1 \ldots n]$ and $v[1 \ldots n]$, such that the following condition is satisfied:
+Hãy gọi một **thế năng** (potential) là hai mảng số tùy ý $u[1 \ldots n]$ và $v[1 \ldots n]$, sao cho điều kiện sau được thỏa mãn:
 
 $$u[i]+v[j]\leq A[i][j],\quad i=1\dots n,\ j=1\dots n$$
 
-(As you can see, $u[i]$ corresponds to the $i$-th row, and $v[j]$ corresponds to the $j$-th column of the matrix).
+(Như bạn có thể thấy, $u[i]$ tương ứng với hàng thứ $i$, và $v[j]$ tương ứng với cột thứ $j$ của ma trận).
 
-Let's call **the value $f$ of the potential** the sum of its elements:
+Hãy gọi **giá trị $f$ của thế năng** là tổng các phần tử của nó:
 
 $$f=\sum_{i=1}^{n} u[i] + \sum_{j=1}^{n} v[j].$$
 
-On one hand, it is easy to see that the cost of the desired solution $sol$ **is not less than** the value of any potential.
+Một mặt, dễ thấy rằng chi phí của giải pháp mong muốn $sol$ **không nhỏ hơn** giá trị của bất kỳ thế năng nào.
 
 !!! info ""
 
-    **Lemma.** $sol\geq f.$
+    **Bổ đề.** $sol\geq f.$
 
-??? info "Proof"
+??? info "Chứng minh"
 
-    The desired solution of the problem consists of $n$ cells of the matrix $A$, so $u[i]+v[j]\leq A[i][j]$ for each of them. Since all the elements in $sol$ are in different rows and columns, summing these inequalities over all the selected $A[i][j]$, you get $f$ on the left side of the inequality, and $sol$ on the right side.
+    Giải pháp mong muốn của bài toán bao gồm $n$ ô của ma trận $A$, vì vậy $u[i]+v[j]\leq A[i][j]$ cho mỗi ô trong số đó. Vì tất cả các phần tử trong $sol$ nằm trong các hàng và cột khác nhau, cộng các bất đẳng thức này trên tất cả các $A[i][j]$ đã chọn, bạn nhận được $f$ ở phía bên trái của bất đẳng thức, và $sol$ ở phía bên phải.
 
-On the other hand, it turns out that there is always a solution and a potential that turns this inequality into **equality**. The Hungarian algorithm described below will be a constructive proof of this fact. For now, let's just pay attention to the fact that if any solution has a cost equal to any potential, then this solution is **optimal**.
+Mặt khác, hóa ra luôn có một giải pháp và một thế năng biến bất đẳng thức này thành **đẳng thức**. Thuật toán Hungary được mô tả dưới đây sẽ là một bằng chứng xây dựng cho thực tế này. Bây giờ, hãy chỉ chú ý đến thực tế là nếu bất kỳ giải pháp nào có chi phí bằng với bất kỳ thế năng nào, thì giải pháp này là **tối ưu**.
 
-Let's fix some potential. Let's call an edge $(i,j)$ **rigid** if $u[i]+v[j]=A[i][j].$
+Hãy cố định một thế năng nào đó. Hãy gọi một cạnh $(i,j)$ là **cứng** (rigid) nếu $u[i]+v[j]=A[i][j].$
 
-Recall an alternative formulation of the assignment problem, using a bipartite graph. Denote with $H$ a bipartite graph composed only of rigid edges. The Hungarian algorithm will maintain, for the current potential, **the maximum-number-of-edges matching** $M$ of the graph $H$. As soon as $M$ contains $n$ edges, then the solution to the problem will be just $M$ (after all, it will be a solution whose cost coincides with the value of a potential).
+Nhớ lại một công thức thay thế của bài toán phân công, sử dụng đồ thị hai phía. Ký hiệu $H$ là một đồ thị hai phía chỉ bao gồm các cạnh cứng. Thuật toán Hungary sẽ duy trì, cho thế năng hiện tại, **cặp ghép có số lượng cạnh tối đa** $M$ của đồ thị $H$. Ngay khi $M$ chứa $n$ cạnh, thì giải pháp cho bài toán sẽ chỉ là $M$ (rốt cuộc, nó sẽ là một giải pháp có chi phí trùng với giá trị của một thế năng).
 
-Let's proceed directly to **the description of the algorithm**.
+Hãy tiến hành trực tiếp đến **mô tả thuật toán**.
 
-**Step 1.** At the beginning, the potential is assumed to be zero ($u[i]=v[i]=0$ for all $i$), and the matching $M$ is assumed to be empty.
+**Bước 1.** Ban đầu, thế năng được giả định là bằng 0 ($u[i]=v[i]=0$ cho tất cả $i$), và cặp ghép $M$ được giả định là rỗng.
 
-**Step 2.** Further, at each step of the algorithm, we try, without changing the potential, to increase the cardinality of the current matching $M$ by one (recall that the matching is searched in the graph of rigid edges $H$). To do this, the usual [Kuhn Algorithm for finding the maximum matching in bipartite graphs](kuhn_maximum_bipartite_matching.md) is used. Let us recall the algorithm here.
-All edges of the matching $M$ are oriented in the direction from the right part to the left one, and all other edges of the graph $H$ are oriented in the opposite direction.
+**Bước 2.** Hơn nữa, tại mỗi bước của thuật toán, chúng ta cố gắng, mà không thay đổi thế năng, để tăng lực lượng của cặp ghép hiện tại $M$ lên một (nhớ lại rằng cặp ghép được tìm kiếm trong đồ thị các cạnh cứng $H$). Để làm điều này, [Thuật toán Kuhn thông thường để tìm cặp ghép cực đại trong đồ thị hai phía](kuhn_maximum_bipartite_matching.md) được sử dụng. Hãy nhớ lại thuật toán ở đây.
+Tất cả các cạnh của cặp ghép $M$ được định hướng theo hướng từ phần bên phải sang phần bên trái, và tất cả các cạnh khác của đồ thị $H$ được định hướng theo hướng ngược lại.
 
-Recall (from the terminology of searching for matchings) that a vertex is called saturated if an edge of the current matching is adjacent to it. A vertex that is not adjacent to any edge of the current matching is called unsaturated. A path of odd length, in which the first edge does not belong to the matching, and for all subsequent edges there is an alternating belonging to the matching (belongs/does not belong) - is called an augmenting path.
-From all unsaturated vertices in the left part, a [depth-first](depth-first-search.md) or [breadth-first](breadth-first-search.md) traversal is started. If, as a result of the search, it was possible to reach an unsaturated vertex of the right part, we have found an augmenting path from the left part to the right one. If we include odd edges of the path and remove the even ones in the matching (i.e. include the first edge in the matching, exclude the second, include the third, etc.), then we will increase the matching cardinality by one.
+Nhớ lại (từ thuật ngữ tìm kiếm cặp ghép) rằng một đỉnh được gọi là bão hòa nếu một cạnh của cặp ghép hiện tại kề với nó. Một đỉnh không kề với bất kỳ cạnh nào của cặp ghép hiện tại được gọi là chưa bão hòa. Một đường đi có độ dài lẻ, trong đó cạnh đầu tiên không thuộc về cặp ghép, và đối với tất cả các cạnh tiếp theo có sự thay thế thuộc về cặp ghép (thuộc / không thuộc) - được gọi là đường tăng.
+Từ tất cả các đỉnh chưa bão hòa trong phần bên trái, một duyệt [theo chiều sâu](depth-first-search.md) hoặc [theo chiều rộng](breadth-first-search.md) được bắt đầu. Nếu, kết quả của việc tìm kiếm, có thể đến được một đỉnh chưa bão hòa của phần bên phải, chúng ta đã tìm thấy một đường tăng từ phần bên trái sang phần bên phải. Nếu chúng ta bao gồm các cạnh lẻ của đường đi và loại bỏ các cạnh chẵn trong cặp ghép (tức là bao gồm cạnh đầu tiên trong cặp ghép, loại trừ cạnh thứ hai, bao gồm cạnh thứ ba, v.v.), thì chúng ta sẽ tăng lực lượng cặp ghép lên một.
 
-If there was no augmenting path, then the current matching $M$ is maximal in the graph $H$.
+Nếu không có đường tăng, thì cặp ghép hiện tại $M$ là cực đại trong đồ thị $H$.
 
-**Step 3.** If at the current step, it is not possible to increase the cardinality of the current matching, then a recalculation of the potential is performed in such a way that, at the next steps, there will be more opportunities to increase the matching.
+**Bước 3.** Nếu ở bước hiện tại, không thể tăng lực lượng của cặp ghép hiện tại, thì việc tính toán lại thế năng được thực hiện theo cách sao cho, ở các bước tiếp theo, sẽ có nhiều cơ hội hơn để tăng cặp ghép.
 
-Denote by $Z_1$ the set of vertices of the left part that were visited during the last traversal of Kuhn's algorithm, and through $Z_2$ the set of visited vertices of the right part.
+Ký hiệu $Z_1$ là tập hợp các đỉnh của phần bên trái đã được thăm trong lần duyệt cuối cùng của thuật toán Kuhn, và qua $Z_2$ tập hợp các đỉnh đã được thăm của phần bên phải.
 
-Let's calculate the value $\Delta$:
+Hãy tính giá trị $\Delta$:
 
 $$\Delta = \min_{i\in Z_1,\ j\notin Z_2} A[i][j]-u[i]-v[j].$$
 
 !!! info ""
 
-     **Lemma.** $\Delta > 0.$
+     **Bổ đề.** $\Delta > 0.$
 
-??? info "Proof"
+??? info "Chứng minh"
 
-    Suppose $\Delta=0$. Then there exists a rigid edge $(i,j)$ with $i\in Z_1$ and $j\notin Z_2$. It follows that the edge $(i,j)$ must be oriented from the right part to the left one, i.e. $(i,j)$ must be included in the matching $M$. However, this is impossible, because we could not get to the saturated vertex $i$ except by going along the edge from j to i. So $\Delta > 0$.
+    Giả sử $\Delta=0$. Khi đó tồn tại một cạnh cứng $(i,j)$ với $i\in Z_1$ và $j\notin Z_2$. Suy ra rằng cạnh $(i,j)$ phải được định hướng từ phần bên phải sang phần bên trái, tức là $(i,j)$ phải được bao gồm trong cặp ghép $M$. Tuy nhiên, điều này là không thể, bởi vì chúng ta không thể đến được đỉnh bão hòa $i$ ngoại trừ bằng cách đi dọc theo cạnh từ j đến i. Vì vậy $\Delta > 0$.
 
-Now let's **recalculate the potential** in this way:
+Bây giờ hãy **tính toán lại thế năng** theo cách này:
 
-- for all vertices $i\in Z_1$, do $u[i] \gets u[i]+\Delta$,
+- cho tất cả các đỉnh $i\in Z_1$, thực hiện $u[i] \gets u[i]+\Delta$,
 
-- for all vertices $j\in Z_2$, do $v[j] \gets v[j]-\Delta$.
-
-!!! info ""
-
-    **Lemma.** The resulting potential is still a correct potential.
-
-??? info "Proof"
-
-    We will show that, after recalculation, $u[i]+v[j]\leq A[i][j]$ for all $i,j$. For all the elements of $A$ with $i\in Z_1$ and $j\in Z_2$, the sum $u[i]+v[j]$ does not change, so the inequality remains true. For all the elements with $i\notin Z_1$ and $j\in Z_2$, the sum $u[i]+v[j]$ decreases by $\Delta$, so the inequality is still true. For the other elements whose $i\in Z_1$ and $j\notin Z_2$, the sum increases, but the inequality is still preserved, since the value $\Delta$ is, by definition, the maximum increase that does not change the inequality.
+- cho tất cả các đỉnh $j\in Z_2$, thực hiện $v[j] \gets v[j]-\Delta$.
 
 !!! info ""
 
-    **Lemma.** The old matching $M$ of rigid edges is valid, i.e. all edges of the matching will remain rigid.
+    **Bổ đề.** Thế năng kết quả vẫn là một thế năng chính xác.
 
-??? info "Proof"
+??? info "Chứng minh"
 
-    For some rigid edge $(i,j)$ to stop being rigid as a result of a change in potential, it is necessary that equality $u[i] + v[j] = A[i][j]$ turns into inequality $u[i] + v[j] < A[i][j]$. However, this can happen only when $i \notin Z_1$ and $j \in Z_2$. But $i \notin Z_1$ implies that the edge $(i,j)$ could not be a matching edge.
+    Chúng ta sẽ chỉ ra rằng, sau khi tính toán lại, $u[i]+v[j]\leq A[i][j]$ cho tất cả $i,j$. Đối với tất cả các phần tử của $A$ với $i\in Z_1$ và $j\in Z_2$, tổng $u[i]+v[j]$ không thay đổi, vì vậy bất đẳng thức vẫn đúng. Đối với tất cả các phần tử với $i\notin Z_1$ và $j\in Z_2$, tổng $u[i]+v[j]$ giảm đi $\Delta$, vì vậy bất đẳng thức vẫn đúng. Đối với các phần tử khác có $i\in Z_1$ và $j\notin Z_2$, tổng tăng lên, nhưng bất đẳng thức vẫn được bảo tồn, vì giá trị $\Delta$, theo định nghĩa, là mức tăng tối đa không làm thay đổi bất đẳng thức.
 
 !!! info ""
 
-    **Lemma.** After each recalculation of the potential, the number of vertices reachable by the traversal, i.e. $|Z_1|+|Z_2|$, strictly increases.
+    **Bổ đề.** Cặp ghép cũ $M$ của các cạnh cứng là hợp lệ, tức là tất cả các cạnh của cặp ghép sẽ vẫn cứng.
 
-??? info "Proof"
+??? info "Chứng minh"
 
-    First, note that any vertex that was reachable before recalculation, is still reachable. Indeed, if some vertex is reachable, then there is some path from reachable vertices to it, starting from the unsaturated vertex of the left part; since for edges of the form $(i,j),\ i\in Z_1,\ j\in Z_2$ the sum $u[i]+v[j]$ does not change, this entire path will be preserved after changing the potential.
-    Secondly, we show that after a recalculation, at least one new vertex will be reachable. This follows from the definition of $\Delta$: the edge $(i,j)$ which $\Delta$ refers to will become rigid, so vertex $j$ will be reachable from vertex $i$.
+    Để một số cạnh cứng $(i,j)$ ngừng cứng do thay đổi thế năng, cần phải có đẳng thức $u[i] + v[j] = A[i][j]$ chuyển thành bất đẳng thức $u[i] + v[j] < A[i][j]$. Tuy nhiên, điều này chỉ có thể xảy ra khi $i \notin Z_1$ và $j \in Z_2$. Nhưng $i \notin Z_1$ ngụ ý rằng cạnh $(i,j)$ không thể là một cạnh cặp ghép.
 
-Due to the last lemma, **no more than $n$ potential recalculations can occur** before an augmenting path is found and the matching cardinality of $M$ is increased.
-Thus, sooner or later, a potential that corresponds to a perfect matching $M^*$ will be found, and $M^*$ will be the answer to the problem.
-If we talk about the complexity of the algorithm, then it is $\mathcal{O}(n^4)$: in total there should be at most $n$ increases in matching, before each of which there are no more than $n$ potential recalculations, each of which is performed in time $\mathcal{O}(n^2)$.
+!!! info ""
 
-We will not give the implementation for the $\mathcal{O}(n^4)$ algorithm here, since it will turn out to be no shorter than the implementation for the $\mathcal{O}(n^3)$ one, described below.
+    **Bổ đề.** Sau mỗi lần tính toán lại thế năng, số lượng đỉnh có thể đến được bằng cách duyệt, tức là $|Z_1|+|Z_2|$, tăng nghiêm ngặt.
 
-### The $\mathcal{O}(n^3)$ algorithm
+??? info "Chứng minh"
 
-Now let's learn how to implement the same algorithm in $\mathcal{O}(n^3)$ (for rectangular problems $n \times m$, $\mathcal{O}(n^2m)$).
+    Trước tiên, lưu ý rằng bất kỳ đỉnh nào có thể đến được trước khi tính toán lại, vẫn có thể đến được. Thật vậy, nếu một số đỉnh có thể đến được, thì có một số đường đi từ các đỉnh có thể đến được đến nó, bắt đầu từ đỉnh chưa bão hòa của phần bên trái; vì đối với các cạnh có dạng $(i,j),\ i\in Z_1,\ j\in Z_2$ tổng $u[i]+v[j]$ không thay đổi, toàn bộ đường đi này sẽ được bảo tồn sau khi thay đổi thế năng.
+    Thứ hai, chúng ta chỉ ra rằng sau một lần tính toán lại, ít nhất một đỉnh mới sẽ có thể đến được. Điều này tuân theo định nghĩa của $\Delta$: cạnh $(i,j)$ mà $\Delta$ đề cập đến sẽ trở nên cứng, vì vậy đỉnh $j$ sẽ có thể đến được từ đỉnh $i$.
 
-The key idea is to **consider matrix rows one by one**, and not all at once. Thus, the algorithm described above will take the following form:
+Do bổ đề cuối cùng, **không quá $n$ lần tính toán lại thế năng có thể xảy ra** trước khi tìm thấy một đường tăng và lực lượng cặp ghép của $M$ được tăng lên.
+Do đó, sớm hay muộn, một thế năng tương ứng với một cặp ghép hoàn hảo $M^*$ sẽ được tìm thấy, và $M^*$ sẽ là câu trả lời cho bài toán.
+Nếu chúng ta nói về độ phức tạp của thuật toán, thì đó là $\mathcal{O}(n^4)$: tổng cộng sẽ có tối đa $n$ lần tăng cặp ghép, trước mỗi lần đó không quá $n$ lần tính toán lại thế năng, mỗi lần được thực hiện trong thời gian $\mathcal{O}(n^2)$.
 
-1.  Consider the next row of the matrix $A$.
+Chúng tôi sẽ không đưa ra cài đặt cho thuật toán $\mathcal{O}(n^4)$ ở đây, vì nó sẽ không ngắn hơn cài đặt cho $\mathcal{O}(n^3)$, được mô tả bên dưới.
 
-2.  While there is no increasing path starting in this row, recalculate the potential.
+### Thuật toán $\mathcal{O}(n^3)$ (The $\mathcal{O}(n^3)$ algorithm) {: #the-o-n-3-algorithm}
 
-3.  As soon as an augmenting path is found, propagate the matching along it (thus including the last edge in the matching), and restart from step 1 (to consider the next line).
+Bây giờ hãy tìm hiểu cách cài đặt thuật toán tương tự trong $\mathcal{O}(n^3)$ (đối với các bài toán hình chữ nhật $n \times m$, $\mathcal{O}(n^2m)$).
 
-To achieve the required complexity, it is necessary to implement steps 2-3, which are performed for each row of the matrix, in time $\mathcal{O}(n^2)$ (for rectangular problems in $\mathcal{O}(nm)$).
+Ý tưởng chính là **xem xét các hàng ma trận từng hàng một**, và không phải tất cả cùng một lúc. Do đó, thuật toán được mô tả ở trên sẽ có dạng sau:
 
-To do this, recall two facts proved above:
+1.  Xem xét hàng tiếp theo của ma trận $A$.
 
-- With a change in the potential, the vertices that were reachable by Kuhn's traversal will remain reachable.
+2.  Trong khi không có đường tăng bắt đầu trong hàng này, hãy tính toán lại thế năng.
 
-- In total, only $\mathcal{O}(n)$ recalculations of the potential could occur before an augmenting path was found.
+3.  Ngay khi tìm thấy một đường tăng, hãy lan truyền cặp ghép dọc theo nó (do đó bao gồm cạnh cuối cùng trong cặp ghép), và khởi động lại từ bước 1 (để xem xét dòng tiếp theo).
 
-From this follow these **key ideas** that allow us to achieve the required complexity:
+Để đạt được độ phức tạp cần thiết, cần phải cài đặt các bước 2-3, được thực hiện cho mỗi hàng của ma trận, trong thời gian $\mathcal{O}(n^2)$ (đối với các bài toán hình chữ nhật trong $\mathcal{O}(nm)$).
 
-- To check for the presence of an augmenting path, there is no need to start the Kuhn traversal again after each potential recalculation. Instead, you can make the Kuhn traversal in an **iterative form**: after each recalculation of the potential, look at the added rigid edges and, if their left ends were reachable, mark their right ends reachable as well and continue the traversal from them.
+Để làm điều này, hãy nhớ lại hai sự kiện đã được chứng minh ở trên:
 
-- Developing this idea further, we can present the algorithm as follows: at each step of the loop, the potential is recalculated. Subsequently, a column that has become reachable is identified (which will always exist as new reachable vertices emerge after every potential recalculation). If the column is unsaturated, an augmenting chain is discovered. Conversely, if the column is saturated, the matching row also becomes reachable.
+- Với sự thay đổi về thế năng, các đỉnh có thể đến được bằng cách duyệt Kuhn sẽ vẫn có thể đến được.
 
-- To quickly recalculate the potential (faster than the $\mathcal{O}(n^2)$ naive version), you need to maintain auxiliary minima for each of the columns:
+- Tổng cộng, chỉ có $\mathcal{O}(n)$ lần tính toán lại thế năng có thể xảy ra trước khi tìm thấy một đường tăng.
+
+Từ đây suy ra những **ý tưởng chính** này cho phép chúng ta đạt được độ phức tạp cần thiết:
+
+- Để kiểm tra sự hiện diện của một đường tăng, không cần phải bắt đầu lại duyệt Kuhn sau mỗi lần tính toán lại thế năng. Thay vào đó, bạn có thể thực hiện duyệt Kuhn ở dạng **lặp**: sau mỗi lần tính toán lại thế năng, nhìn vào các cạnh cứng được thêm vào và, nếu đầu bên trái của chúng có thể đến được, hãy đánh dấu đầu bên phải của chúng cũng có thể đến được và tiếp tục duyệt từ chúng.
+
+- Phát triển ý tưởng này hơn nữa, chúng ta có thể trình bày thuật toán như sau: ở mỗi bước của vòng lặp, thế năng được tính toán lại. Sau đó, một cột đã trở nên có thể đến được được xác định (cột này sẽ luôn tồn tại khi các đỉnh có thể đến được mới xuất hiện sau mỗi lần tính toán lại thế năng). Nếu cột chưa bão hòa, một chuỗi tăng được phát hiện. Ngược lại, nếu cột bão hòa, hàng ghép đôi cũng trở nên có thể đến được.
+
+- Để tính toán lại nhanh thế năng (nhanh hơn phiên bản ngây thơ $\mathcal{O}(n^2)$), bạn cần duy trì các cực tiểu phụ trợ cho mỗi cột:
 
     <br><div style="text-align:center">$minv[j]=\min_{i\in Z_1} A[i][j]-u[i]-v[j].$</div><br>
 
-    It's easy to see that the desired value $\Delta$ is expressed in terms of them as follows:
+    Dễ thấy rằng giá trị mong muốn $\Delta$ được biểu thị qua chúng như sau:
 
     <br><div style="text-align:center">$\Delta=\min_{j\notin Z_2} minv[j].$</div><br>
 
-    Thus, finding $\Delta$ can now be done in $\mathcal{O}(n)$.
+    Do đó, việc tìm $\Delta$ bây giờ có thể được thực hiện trong $\mathcal{O}(n)$.
 
-    It is necessary to update the array $minv$ when new visited rows appear. This can be done in $\mathcal{O}(n)$ for the added row (which adds up over all rows to $\mathcal{O}(n^2)$). It is also necessary to update the array $minv$ when recalculating the potential, which is also done in time $\mathcal{O}(n)$ ($minv$ changes only for columns that have not yet been reached: namely, it decreases by $\Delta$).
+    Cần cập nhật mảng $minv$ khi các hàng đã thăm mới xuất hiện. Điều này có thể được thực hiện trong $\mathcal{O}(n)$ cho hàng đã thêm (cộng dồn trên tất cả các hàng thành $\mathcal{O}(n^2)$). Cũng cần cập nhật mảng $minv$ khi tính toán lại thế năng, điều này cũng được thực hiện trong thời gian $\mathcal{O}(n)$ ($minv$ chỉ thay đổi đối với các cột chưa đến được: cụ thể, nó giảm đi $\Delta$).
 
-Thus, the algorithm takes the following form: in the outer loop, we consider matrix rows one by one. Each row is processed in time $\mathcal{O}(n^2)$, since only $\mathcal{O}(n)$ potential recalculations could occur (each in time $\mathcal{O}(n)$), and the array $minv$ is maintained in time $\mathcal{O}(n^2)$; Kuhn's algorithm will work in time $\mathcal{O}(n^2)$ (since it is presented in the form of $\mathcal{O}(n)$ iterations, each of which visits a new column).
+Do đó, thuật toán có dạng sau: trong vòng lặp ngoài, chúng ta xem xét các hàng ma trận từng hàng một. Mỗi hàng được xử lý trong thời gian $\mathcal{O}(n^2)$, vì chỉ có $\mathcal{O}(n)$ lần tính toán lại thế năng có thể xảy ra (mỗi lần trong thời gian $\mathcal{O}(n)$), và mảng $minv$ được duy trì trong thời gian $\mathcal{O}(n^2)$; Thuật toán Kuhn sẽ hoạt động trong thời gian $\mathcal{O}(n^2)$ (vì nó được trình bày dưới dạng $\mathcal{O}(n)$ lần lặp, mỗi lần lặp thăm một cột mới).
 
-The resulting complexity is $\mathcal{O}(n^3)$ or, if the problem is rectangular, $\mathcal{O}(n^2m)$.
+Độ phức tạp kết quả là $\mathcal{O}(n^3)$ hoặc, nếu bài toán là hình chữ nhật, $\mathcal{O}(n^2m)$.
 
-## Implementation of the Hungarian algorithm
+## Cài đặt thuật toán Hungary (Implementation of the Hungarian algorithm) {: #implementation-of-the-hungarian-algorithm}
 
-The implementation below was developed by **Andrey Lopatin** several years ago. It is distinguished by amazing conciseness: the entire algorithm consists of **30 lines of code**.
+Cài đặt dưới đây được phát triển bởi **Andrey Lopatin** vài năm trước. Nó được phân biệt bởi sự ngắn gọn đáng kinh ngạc: toàn bộ thuật toán bao gồm **30 dòng mã**.
 
-The implementation finds a solution for the rectangular matrix $A[1\dots n][1\dots m]$, where $n\leq m$. The matrix is ​1-based for convenience and code brevity: this implementation introduces a dummy zero row and zero column, which allows us to write many cycles in a general form, without additional checks.
+Cài đặt tìm giải pháp cho ma trận chữ nhật $A[1\dots n][1\dots m]$, trong đó $n\leq m$. Ma trận dựa trên 1 thuận tiện và ngắn gọn mã: cài đặt này giới thiệu một hàng không giả và cột không giả, cho phép chúng ta viết nhiều chu trình ở dạng tổng quát, mà không cần kiểm tra thêm.
 
-Arrays $u[0 \ldots n]$ and $v[0 \ldots m]$ store potential. Initially, they are set to zero, which is consistent with a matrix of zero rows (Note that it is unimportant for this implementation whether or not the matrix $A$ contains negative numbers).
+Các mảng $u[0 \ldots n]$ và $v[0 \ldots m]$ lưu trữ thế năng. Ban đầu, chúng được đặt bằng 0, điều này phù hợp với ma trận các hàng 0 (Lưu ý rằng đối với việc cài đặt này, việc ma trận $A$ có chứa số âm hay không là không quan trọng).
 
-The array $p[0 \ldots m]$ contains a matching: for each column $j = 1 \ldots m$, it stores the number $p[j]$ of the selected row (or $0$ if nothing has been selected yet). For the convenience of implementation, $p[0]$ is assumed to be equal to the number of the current row.
+Mảng $p[0 \ldots m]$ chứa một cặp ghép: đối với mỗi cột $j = 1 \ldots m$, nó lưu trữ số $p[j]$ của hàng được chọn (hoặc $0$ nếu chưa có gì được chọn). Để thuận tiện cho việc cài đặt, $p[0]$ được giả định là bằng số của hàng hiện tại.
 
-The array $minv[1 \ldots m]$ contains, for each column $j$, the auxiliary minima necessary for a quick recalculation of the potential, as described above.
+Mảng $minv[1 \ldots m]$ chứa, đối với mỗi cột $j$, các cực tiểu phụ trợ cần thiết để tính toán lại nhanh thế năng, như được mô tả ở trên.
 
-The array $way[1 \ldots m]$ contains information about where these minimums are reached so that we can later reconstruct the augmenting path. Note that, to reconstruct the path, it is sufficient to store only column values, since the row numbers can be taken from the matching (i.e., from the array $p$). Thus, $way[j]$, for each column $j$, contains the number of the previous column in the path (or $0$ if there is none).
+Mảng $way[1 \ldots m]$ chứa thông tin về nơi các cực tiểu này đạt được để sau này chúng ta có thể khôi phục đường tăng. Lưu ý rằng, để khôi phục đường đi, chỉ cần lưu trữ các giá trị cột là đủ, vì số hàng có thể được lấy từ cặp ghép (tức là từ mảng $p$). Do đó, $way[j]$, đối với mỗi cột $j$, chứa số của cột trước đó trong đường đi (hoặc $0$ nếu không có).
 
-The algorithm itself is an outer **loop through the rows of the matrix**, inside which the $i$-th row of the matrix is ​​considered. The first _do-while_ loop runs until a free column $j0$ is found. Each iteration of the loop marks visited a new column with the number $j0$ (calculated at the last iteration; and initially equal to zero - i.e. we start from a dummy column), as well as a new row $i0$ - adjacent to it in the matching (i.e. $p[j0]$; and initially when $j0=0$ the $i$-th row is taken). Due to the appearance of a new visited row $i0$, you need to recalculate the array $minv$ and $\Delta$ accordingly. If $\Delta$ is updated, then the column $j1$ becomes the minimum that has been reached (note that with such an implementation $\Delta$ could turn out to be equal to zero, which means that the potential cannot be changed at the current step: there is already a new reachable column). After that, the potential and the $minv$ array are recalculated. At the end of the "do-while" loop, we found an augmenting path ending in a column $j0$ that can be "unrolled" using the ancestor array $way$.
+Bản thân thuật toán là một **vòng lặp ngoài qua các hàng của ma trận**, bên trong đó hàng thứ $i$ của ma trận được xem xét. Vòng lặp _do-while_ đầu tiên chạy cho đến khi tìm thấy một cột tự do $j0$. Mỗi lần lặp của vòng lặp đánh dấu đã thăm một cột mới với số $j0$ (được tính toán ở lần lặp cuối cùng; và ban đầu bằng 0 - tức là chúng ta bắt đầu từ một cột giả), cũng như một hàng mới $i0$ - kề với nó trong cặp ghép (tức là $p[j0]$; và ban đầu khi $j0=0$ hàng thứ $i$ được lấy). Do sự xuất hiện của một hàng đã thăm mới $i0$, bạn cần tính toán lại mảng $minv$ và $\Delta$ tương ứng. Nếu $\Delta$ được cập nhật, thì cột $j1$ trở thành cực tiểu đã đạt được (lưu ý rằng với cài đặt như vậy $\Delta$ có thể bằng 0, điều đó có nghĩa là thế năng không thể thay đổi ở bước hiện tại: đã có một cột có thể đến được mới). Sau đó, thế năng và mảng $minv$ được tính toán lại. Ở cuối vòng lặp "do-while", chúng ta đã tìm thấy một đường tăng kết thúc bằng một cột $j0$ có thể được "mở ra" bằng cách sử dụng mảng tổ tiên $way$.
 
-The constant <tt>INF</tt> is "infinity", i.e. some number, obviously greater than all possible numbers in the input matrix $A$.
+Hằng số <tt>INF</tt> là "vô cùng", tức là một số nào đó, rõ ràng lớn hơn tất cả các số có thể có trong ma trận đầu vào $A$.
 
-```{.cpp file=hungarian}
+```cpp
 vector<int> u (n+1), v (m+1), p (m+1), way (m+1);
 for (int i=1; i<=n; ++i) {
     p[0] = i;
@@ -223,7 +223,7 @@ for (int i=1; i<=n; ++i) {
 }
 ```
 
-To restore the answer in a more familiar form, i.e. finding for each row $i = 1 \ldots n$ the number $ans[i]$ of the column selected in it, can be done as follows:
+Để khôi phục câu trả lời ở dạng quen thuộc hơn, tức là tìm cho mỗi hàng $i = 1 \ldots n$ số $ans[i]$ của cột được chọn trong đó, có thể được thực hiện như sau:
 
 ```cpp
 vector<int> ans (n+1);
@@ -231,83 +231,28 @@ for (int j=1; j<=m; ++j)
     ans[p[j]] = j;
 ```
 
-The cost of the matching can simply be taken as the potential of the zero column (taken with the opposite sign). Indeed, as you can see from the code, $-v[0]$ contains the sum of all the values of $\Delta$​​, i.e. total change in potential. Although several values ​​​​of $u[i]$ and $v[j]$ could change at once, the total change in the potential is exactly equal to $\Delta$, since until there is an augmenting path, the number of reachable rows is exactly one more than the number of the reachable columns (only the current row $i$ does not have a "pair" in the form of a visited column):
+Chi phí của cặp ghép có thể đơn giản được lấy làm thế năng của cột 0 (lấy với dấu ngược lại). Thật vậy, như bạn có thể thấy từ mã, $-v[0]$ chứa tổng của tất cả các giá trị của $\Delta$, tức là tổng thay đổi trong thế năng. Mặc dù một số giá trị của $u[i]$ và $v[j]$ có thể thay đổi cùng một lúc, tổng thay đổi trong thế năng chính xác bằng $\Delta$, vì cho đến khi có một đường tăng, số lượng hàng có thể đến được nhiều hơn chính xác một so với số lượng cột có thể đến được (chỉ có hàng hiện tại $i$ không có một "cặp" dưới dạng một cột đã thăm):
 
 ```cpp
 int cost = -v[0];
 ```
 
-## Connection to the Successive Shortest Path Algorithm
+## Kết nối với Thuật toán đường đi ngắn nhất liên tiếp (Connection to the Successive Shortest Path Algorithm) {: #connection-to-the-successive-shortest-path-algorithm}
 
-The Hungarian algorithm can be seen as the [Successive Shortest Path Algorithm](min_cost_flow.md), adapted for the assignment problem. Without going into the details, let's provide an intuition regarding the connection between them.
+Thuật toán Hungary có thể được coi là [Thuật toán đường đi ngắn nhất liên tiếp](min_cost_flow.md), được điều chỉnh cho bài toán phân công. Không đi sâu vào chi tiết, hãy cung cấp một trực giác về mối liên hệ giữa chúng.
 
-The Successive Path algorithm uses a modified version of Johnson's algorithm as reweighting technique. This one is divided into four steps:
+Thuật toán đường đi liên tiếp sử dụng phiên bản sửa đổi của thuật toán Johnson làm kỹ thuật đánh trọng số lại. Điều này được chia thành bốn bước:
 
-- Use the [Bellman-Ford](bellman_ford.md) algorithm, starting from the sink $s$ and, for each node, find the minimum weight $h(v)$ of a path from $s$ to $v$.
+- Sử dụng thuật toán [Bellman-Ford](bellman_ford.md), bắt đầu từ đích $s$ và, đối với mỗi nút, tìm trọng số tối thiểu $h(v)$ của một đường đi từ $s$ đến $v$.
 
-For every step of the main algorithm:
+Cho mỗi bước của thuật toán chính:
 
-- Reweight the edges of the original graph in this way: $w(u,v) \gets w(u,v)+h(u)-h(v)$.
-- Use [Dijkstra](dijkstra.md)'s algorithm to find the shortest-paths subgraph of the original network.
-- Update potentials for the next iteration.
+- Đánh trọng số lại các cạnh của đồ thị ban đầu theo cách này: $w(u,v) \gets w(u,v)+h(u)-h(v)$.
+- Sử dụng thuật toán [Dijkstra](dijkstra.md) để tìm đồ thị con đường đi ngắn nhất của mạng ban đầu.
+- Cập nhật thế năng cho lần lặp tiếp theo.
 
-Given this description, we can observe that there is a strong analogy between $h(v)$ and potentials: it can be checked that they are equal up to a constant offset. In addition, it can be shown that, after reweighting, the set of all zero-weight edges represents the shortest-path subgraph where the main algorithm tries to increase the flow. This also happens in the Hungarian algorithm: we create a subgraph made of rigid edges (the ones for which the quantity $A[i][j]-u[i]-v[j]$ is zero), and we try to increase the size of the matching.
+Với mô tả này, chúng ta có thể quan sát thấy rằng có một sự tương tự mạnh mẽ giữa $h(v)$ và thế năng: có thể kiểm tra xem chúng có bằng nhau hay không cho đến một hằng số bù. Ngoài ra, có thể chỉ ra rằng, sau khi đánh trọng số lại, tập hợp tất cả các cạnh có trọng số bằng 0 đại diện cho đồ thị con đường đi ngắn nhất nơi thuật toán chính cố gắng tăng luồng. Điều này cũng xảy ra trong thuật toán Hungary: chúng ta tạo một đồ thị con được làm bằng các cạnh cứng (những cạnh mà lượng $A[i][j]-u[i]-v[j]$ bằng 0), và chúng ta cố gắng tăng kích thước của cặp ghép.
 
-In step 4, all the $h(v)$ are updated: every time we modify the flow network, we should guarantee that the distances from the source are correct (otherwise, in the next iteration, Dijkstra's algorithm might fail). This sounds like the update performed on the potentials, but in this case, they are not equally incremented.
+Trong bước 4, tất cả $h(v)$ được cập nhật: mỗi lần chúng ta sửa đổi mạng luồng, chúng ta nên đảm bảo rằng khoảng cách từ nguồn là chính xác (ngược lại, trong lần lặp tiếp theo, thuật toán Dijkstra có thể thất bại). Điều này nghe giống như bản cập nhật được thực hiện trên các thế năng, nhưng trong trường hợp này, chúng không được tăng đều.
 
-To deepen the understanding of potentials, refer to this [article](https://codeforces.com/blog/entry/105658).
-
-## Task examples
-
-Here are a few examples related to the assignment problem, from very trivial to less obvious tasks:
-
-- Given a bipartite graph, it is required to find in it **the maximum matching with the minimum weight** (i.e., first of all, the size of the matching is maximized, and secondly, its cost is minimized).<br>
-  To solve it, we simply build an assignment problem, putting the number "infinity" in place of the missing edges. After that, we solve the problem with the Hungarian algorithm, and remove edges of infinite weight from the answer (they could enter the answer if the problem does not have a solution in the form of a perfect matching).
-
-- Given a bipartite graph, it is required to find in it **the maximum matching with the maximum weight**.<br>
-  The solution is again obvious, all weights must be multiplied by minus one.
-
-- The task of **detecting moving objects in images**: two images were taken, as a result of which two sets of coordinates were obtained. It is required to correlate the objects in the first and second images, i.e. determine for each point of the second image, which point of the first image it corresponded to. In this case, it is required to minimize the sum of distances between the compared points (i.e., we are looking for a solution in which the objects have taken the shortest path in total).<br>
-  To solve, we simply build and solve an assignment problem, where the weights of the edges are the Euclidean distances between points.
-
-- The task of **detecting moving objects by locators**: there are two locators that can't determine the position of an object in space, but only its direction. Both locators (located at different points) received information in the form of $n$ such directions. It is required to determine the position of objects, i.e. determine the expected positions of objects and their corresponding pairs of directions in such a way that the sum of distances from objects to direction rays is minimized.<br>
-  Solution: again, we simply build and solve the assignment problem, where the vertices of the left part are the $n$ directions from the first locator, the vertices of the right part are the $n$ directions from the second locator, and the weights of the edges are the distances between the corresponding rays.
-
-- Covering a **directed acyclic graph with paths**: given a directed acyclic graph, it is required to find the smallest number of paths (if equal, with the smallest total weight) so that each vertex of the graph lies in exactly one path.<br>
-  The solution is to build the corresponding bipartite graph from the given graph and find the maximum matching of the minimum weight in it. See separate article for more details.
-
-- **Tree coloring book**. Given a tree in which each vertex, except for leaves, has exactly $k-1$ children. It is required to choose for each vertex one of the $k$ colors available so that no two adjacent vertices have the same color. In addition, for each vertex and each color, the cost of painting this vertex with this color is known, and it is required to minimize the total cost.<br>
-  To solve this problem, we use dynamic programming. Namely, let's learn how to calculate the value $d[v][c]$, where $v$ is the vertex number, $c$ is the color number, and the value $d[v][c]$ itself is the minimum cost needed to color all the vertices in the subtree rooted at $v$, and the vertex $v$ itself with color $c$. To calculate such a value $d[v][c]$, it is necessary to distribute the remaining $k-1$ colors among the children of the vertex $v$, and for this, it is necessary to build and solve the assignment problem (in which the vertices of the left part are colors, the vertices of the right part are children, and the weights of the edges are the corresponding values of $d$).<br>
-  Thus, each value $d[v][c]$ is calculated using the solution of the assignment problem, which ultimately gives the asymptotic $\mathcal{O}(nk^4)$.
-
-- If, in the assignment problem, the weights are not on the edges, but on the vertices, and only **on the vertices of the same part**, then it's not necessary to use the Hungarian algorithm: just sort the vertices by weight and run the usual [Kuhn algorithm](kuhn_maximum_bipartite_matching.md) (for more details, see a [separate article](http://e-maxx.ru/algo/vertex_weighted_matching)).
-
-- Consider the following **special case**. Let each vertex of the left part be assigned some number $\alpha[i]$, and each vertex of the right part $\beta[j]$. Let the weight of any edge $(i,j)$ be equal to $\alpha[i]\cdot \beta[j]$ (the numbers $\alpha[i]$ and $\beta[j]$ are known). Solve the assignment problem.<br>
-  To solve it without the Hungarian algorithm, we first consider the case when both parts have two vertices. In this case, as you can easily see, it is better to connect the vertices in the reverse order: connect the vertex with the smaller $\alpha[i]$ to the vertex with the larger $\beta[j]$. This rule can be easily generalized to an arbitrary number of vertices: you need to sort the vertices of the first part in increasing order of $\alpha[i]$ values, the second part in decreasing order of $\beta[j]$ values, and connect the vertices in pairs in that order. Thus, we obtain a solution with complexity of $\mathcal{O}(n\log n)$.
-
-- **The Problem of Potentials**. Given a matrix $A[1 \ldots n][1 \ldots m]$, it is required to find two arrays $u[1 \ldots n]$ and $v[1 \ldots m]$ such that, for any $i$ and $j$, $u[i] + v[j] \leq a[i][j]$ and the sum of elements of arrays $u$ and $v$ is maximum.<br>
-  Knowing the Hungarian algorithm, the solution to this problem will not be difficult: the Hungarian algorithm just finds such a potential $u, v$ that satisfies the condition of the problem. On the other hand, without knowledge of the Hungarian algorithm, it seems almost impossible to solve such a problem.
-
-    !!! info "Remark"
-
-        This task is also called the **dual problem** of the assignment problem: minimizing the total cost of the assignment is equivalent to maximizing the sum of the potentials.
-
-## Literature
-
-- [Ravindra Ahuja, Thomas Magnanti, James Orlin. Network Flows [1993]](https://books.google.it/books/about/Network_Flows.html?id=rFuLngEACAAJ&redir_esc=y)
-
-- [Harold Kuhn. The Hungarian Method for the Assignment Problem [1955]](https://link.springer.com/chapter/10.1007/978-3-540-68279-0_2)
-
-- [James Munkres. Algorithms for Assignment and Transportation Problems [1957]](https://www.jstor.org/stable/2098689)
-
-## Practice Problems
-
-- [UVA - Crime Wave - The Sequel](http://uva.onlinejudge.org/index.php?option=com_onlinejudge&Itemid=8&page=show_problem&problem=1687)
-
-- [UVA - Warehouse](http://uva.onlinejudge.org/index.php?option=com_onlinejudge&Itemid=8&page=show_problem&problem=1829)
-
-- [SGU - Beloved Sons](http://acm.sgu.ru/problem.php?contest=0&problem=210)
-
-- [UVA - The Great Wall Game](http://livearchive.onlinejudge.org/index.php?option=com_onlinejudge&Itemid=8&page=show_problem&problem=1277)
-
-- [UVA - Jogging Trails](http://uva.onlinejudge.org/index.php?option=com_onlinejudge&Itemid=8&page=show_problem&problem=1237)
+Để hiểu sâu hơn về thế năng, hãy tham khảo [bài viết này](https://codeforces.com/blog/entry/105658).

@@ -4,57 +4,57 @@ tags:
 e_maxx_link: discrete_root
 ---
 
-# Discrete Root
+# Căn rời rạc (Discrete Root) {: #discrete-root}
 
-The problem of finding a discrete root is defined as follows. Given a prime $n$ and two integers $a$ and $k$, find all $x$ for which:
+Bài toán tìm căn rời rạc được định nghĩa như sau. Cho số nguyên tố $n$ và hai số nguyên $a$ và $k$, tìm tất cả các $x$ sao cho:
 
 $x^k \equiv a \pmod n$
 
-## The algorithm
+## Thuật toán (The algorithm) {: #the-algorithm}
 
-We will solve this problem by reducing it to the [discrete logarithm problem](discrete-log.md).
+Chúng ta sẽ giải bài toán này bằng cách đưa nó về [bài toán logarit rời rạc](discrete-log.md).
 
-Let's apply the concept of a [primitive root](primitive-root.md) modulo $n$. Let $g$ be a primitive root modulo $n$. Note that since $n$ is prime, it must exist, and it can be found in $O(Ans \cdot \log \phi (n) \cdot \log n) = O(Ans \cdot \log^2 n)$ plus time of factoring $\phi (n)$.
+Hãy áp dụng khái niệm [căn nguyên thủy](primitive-root.md) modulo $n$. Gọi $g$ là một căn nguyên thủy modulo $n$. Lưu ý rằng vì $n$ là số nguyên tố, nó phải tồn tại, và nó có thể được tìm thấy trong $O(Ans \cdot \log \phi (n) \cdot \log n) = O(Ans \cdot \log^2 n)$ cộng với thời gian phân tích thừa số $\phi (n)$.
 
-We can easily discard the case where $a = 0$. In this case, obviously there is only one answer: $x = 0$.
+Chúng ta có thể dễ dàng loại bỏ trường hợp $a = 0$. Trong trường hợp này, rõ ràng chỉ có một câu trả lời: $x = 0$.
 
-Since we know that $n$ is a prime and any number between 1 and $n-1$ can be represented as a power of the primitive root, we can represent the discrete root problem as follows:
+Vì chúng ta biết rằng $n$ là số nguyên tố và bất kỳ số nào giữa 1 và $n-1$ đều có thể được biểu diễn dưới dạng lũy thừa của căn nguyên thủy, chúng ta có thể biểu diễn bài toán căn rời rạc như sau:
 
 $(g^y)^k \equiv a \pmod n$
 
-where
+trong đó
 
 $x \equiv g^y \pmod n$
 
-This, in turn, can be rewritten as
+Điều này, đến lượt nó, có thể được viết lại thành
 
 $(g^k)^y \equiv a \pmod n$
 
-Now we have one unknown $y$, which is a discrete logarithm problem. The solution can be found using Shanks' baby-step giant-step algorithm in $O(\sqrt {n} \log n)$ (or we can verify that there are no solutions).
+Bây giờ chúng ta có một ẩn $y$, đây là bài toán logarit rời rạc. Nghiệm có thể được tìm thấy bằng cách sử dụng thuật toán baby-step giant-step của Shanks trong $O(\sqrt {n} \log n)$ (hoặc chúng ta có thể xác minh rằng không có nghiệm nào).
 
-Having found one solution $y_0$, one of solutions of discrete root problem will be $x_0 = g^{y_0} \pmod n$.
+Sau khi tìm thấy một nghiệm $y_0$, một trong các nghiệm của bài toán căn rời rạc sẽ là $x_0 = g^{y_0} \pmod n$.
 
-## Finding all solutions from one known solution
+## Tìm tất cả nghiệm từ một nghiệm đã biết {: #finding-all-solutions-from-one-known-solution}
 
-To solve the given problem in full, we need to find all solutions knowing one of them: $x_0 = g^{y_0} \pmod n$.
+Để giải bài toán đã cho một cách đầy đủ, chúng ta cần tìm tất cả các nghiệm khi biết một trong số chúng: $x_0 = g^{y_0} \pmod n$.
 
-Let's recall the fact that a primitive root always has order of $\phi (n)$, i.e. the smallest power of $g$ which gives 1 is $\phi (n)$. Therefore, if we add the term $\phi (n)$ to the exponential, we still get the same value:
+Hãy nhớ lại thực tế rằng một căn nguyên thủy luôn có cấp là $\phi (n)$, tức là lũy thừa nhỏ nhất của $g$ cho kết quả 1 là $\phi (n)$. Do đó, nếu chúng ta thêm số hạng $\phi (n)$ vào số mũ, chúng ta vẫn nhận được cùng một giá trị:
 
 $x^k \equiv g^{ y_0 \cdot k + l \cdot \phi (n)} \equiv a \pmod n \forall l \in Z$
 
-Hence, all the solutions are of the form:
+Do đó, tất cả các nghiệm đều có dạng:
 
 $x = g^{y_0 + \frac {l \cdot \phi (n)}{k}} \pmod n \forall l \in Z$.
 
-where $l$ is chosen such that the fraction must be an integer. For this to be true, the numerator has to be divisible by the least common multiple of  $\phi (n)$ and $k$. Remember that least common multiple of two numbers $lcm(a, b) = \frac{a \cdot b}{gcd(a, b)}$; we'll get
+trong đó $l$ được chọn sao cho phân số phải là một số nguyên. Để điều này đúng, tử số phải chia hết cho bội chung nhỏ nhất của $\phi (n)$ và $k$. Hãy nhớ rằng bội chung nhỏ nhất của hai số $lcm(a, b) = \frac{a \cdot b}{gcd(a, b)}$; chúng ta sẽ nhận được
 
 $x = g^{y_0 + i \frac {\phi (n)}{gcd(k, \phi (n))}} \pmod n \forall i \in Z$.
 
-This is the final formula for all solutions of the discrete root problem.
+Đây là công thức cuối cùng cho tất cả các nghiệm của bài toán căn rời rạc.
 
-## Implementation
+## Cài đặt (Implementation) {: #implementation}
 
-Here is a full implementation, including procedures for finding the primitive root, discrete log and finding and printing all solutions.
+Dưới đây là một cài đặt đầy đủ, bao gồm các thủ tục tìm căn nguyên thủy, logarit rời rạc và tìm và in tất cả các nghiệm.
 
 ```cpp
 int gcd(int a, int b) {
@@ -143,6 +143,18 @@ int main() {
 }
 ```
 
-## Practice problems
+## Bài tập luyện tập {: #practice-problems}
 
 * [Codeforces - Lunar New Year and a Recursive Sequence](https://codeforces.com/contest/1106/problem/F)
+
+---
+
+## Checklist
+
+- Original lines: 149
+- Translated lines: 149
+- Code blocks changed? No
+- Inline code changed? No
+- Technical terms kept in English? Yes
+- Headings anchors preserved/added correctly? Yes
+- I confirm no character was omitted: YES

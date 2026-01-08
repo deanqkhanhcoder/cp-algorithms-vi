@@ -4,77 +4,77 @@ tags:
 e_maxx_link: nearest_points
 ---
 
-# Finding the nearest pair of points
+# Tìm cặp điểm gần nhất (Finding the nearest pair of points) {: #finding-the-nearest-pair-of-points}
 
-## Problem statement
+## Phát biểu bài toán (Problem statement) {: #problem-statement}
 
-Given $n$ points on the plane. Each point $p_i$ is defined by its coordinates $(x_i,y_i)$. It is required to find among them two such points, such that the distance between them is minimal:
+Cho $n$ điểm trên mặt phẳng. Mỗi điểm $p_i$ được xác định bởi tọa độ $(x_i,y_i)$ của nó. Yêu cầu tìm trong số chúng hai điểm sao cho khoảng cách giữa chúng là nhỏ nhất:
 
 $$ \min_{\scriptstyle i, j=0 \ldots n-1,\atop \scriptstyle i \neq j } \rho (p_i, p_j). $$
 
-We take the usual Euclidean distances:
+Chúng ta lấy khoảng cách Euclide thông thường:
 
 $$ \rho (p_i,p_j) = \sqrt{(x_i-x_j)^2 + (y_i-y_j)^2} .$$
 
-The trivial algorithm - iterating over all pairs and calculating the distance for each — works in $O(n^2)$. 
+Thuật toán tầm thường - lặp qua tất cả các cặp và tính toán khoảng cách cho mỗi cặp — hoạt động trong $O(n^2)$.
 
-The algorithm running in time $O(n \log n)$ is described below. This algorithm was proposed by Shamos and Hoey in 1975. (Source: Ch. 5 Notes of _Algorithm Design_ by Kleinberg & Tardos, also see [here](https://ieeexplore.ieee.org/abstract/document/4567872)) Preparata and Shamos also showed that this algorithm is optimal in the decision tree model.
+Thuật toán chạy trong thời gian $O(n \log n)$ được mô tả dưới đây. Thuật toán này được đề xuất bởi Shamos và Hoey vào năm 1975. (Nguồn: Chương 5 Ghi chú của _Algorithm Design_ bởi Kleinberg & Tardos, xem thêm [tại đây](https://ieeexplore.ieee.org/abstract/document/4567872)) Preparata và Shamos cũng đã chỉ ra rằng thuật toán này là tối ưu trong mô hình cây quyết định (decision tree model).
 
-## Algorithm
-We construct an algorithm according to the general scheme of **divide-and-conquer** algorithms: the algorithm is designed as a recursive function, to which we pass a set of points; this recursive function splits this set in half, calls itself recursively on each half, and then performs some operations to combine the answers. The operation of combining consist of  detecting the cases when one point of the optimal solution fell into one half, and the other point into the other (in this case, recursive calls from each of the halves cannot detect this pair separately). The main difficulty, as always in case of divide and conquer algorithms, lies in the effective implementation of the merging stage. If a set of $n$ points is passed to the recursive function, then the merge stage should work no more than $O(n)$, then the asymptotics of the whole algorithm $T(n)$ will be found from the equation:
+## Thuật toán (Algorithm) {: #algorithm}
+Chúng ta xây dựng một thuật toán theo lược đồ chung của các thuật toán **chia để trị** (**divide-and-conquer**): thuật toán được thiết kế như một hàm đệ quy, mà chúng ta truyền vào một tập hợp các điểm; hàm đệ quy này chia tập hợp này làm đôi, gọi chính nó một cách đệ quy trên mỗi nửa, và sau đó thực hiện một số thao tác để kết hợp các câu trả lời. Thao tác kết hợp bao gồm việc phát hiện các trường hợp khi một điểm của giải pháp tối ưu rơi vào một nửa, và điểm kia vào nửa kia (trong trường hợp này, các lệnh gọi đệ quy từ mỗi nửa không thể phát hiện cặp này một cách riêng biệt). Khó khăn chính, như mọi khi trong trường hợp các thuật toán chia để trị, nằm ở việc cài đặt hiệu quả giai đoạn hợp nhất (merging stage). Nếu một tập hợp $n$ điểm được truyền cho hàm đệ quy, thì giai đoạn hợp nhất sẽ hoạt động không quá $O(n)$, thì tiệm cận của toàn bộ thuật toán $T(n)$ sẽ được tìm thấy từ phương trình:
 
 $$T(n) = 2T(n/2) + O(n).$$ 
 
-The solution to this equation, as is known, is $T(n) = O(n \log n).$
+Nghiệm của phương trình này, như đã biết, là $T(n) = O(n \log n).$
 
-So, we proceed on to the construction of the algorithm. In order to come to an effective implementation of the merge stage in the future, we will divide the set of points into two subsets, according to their $x$-coordinates: In fact, we draw some vertical line dividing the set of points into two subsets of approximately the same size. It is convenient to make such a partition as follows: We sort the points in the standard way as pairs of numbers, ie.:
+Vì vậy, chúng ta tiến hành xây dựng thuật toán. Để đi đến việc cài đặt hiệu quả giai đoạn hợp nhất trong tương lai, chúng ta sẽ chia tập hợp các điểm thành hai tập hợp con, theo tọa độ $x$ của chúng: Trên thực tế, chúng ta vẽ một đường thẳng đứng chia tập hợp các điểm thành hai tập hợp con có kích thước xấp xỉ nhau. Thuận tiện để thực hiện phân vùng như vậy như sau: Chúng ta sắp xếp các điểm theo cách tiêu chuẩn như các cặp số, tức là:
 
 $$p_i < p_j \Longleftrightarrow (x_i < x_j) \lor \Big(\left(x_i = x_j\right) \wedge \left(y_i < y_j \right) \Big) $$
 
-Then take the middle point after sorting $p_m (m = \lfloor n/2 \rfloor)$, and all the points before it and the $p_m$ itself are assigned to the first half, and all the points after it - to the second half:
+Sau đó lấy điểm giữa sau khi sắp xếp $p_m (m = \lfloor n/2 \rfloor)$, và tất cả các điểm trước nó và chính $p_m$ được gán cho nửa đầu tiên, và tất cả các điểm sau nó - cho nửa thứ hai:
 
 $$A_1 = \{p_i \ | \ i = 0 \ldots m \}$$
 
 $$A_2 = \{p_i \ | \ i = m + 1 \ldots n-1 \}.$$ 
 
-Now, calling recursively on each of the sets $A_1$ and $A_2$, we will find the answers $h_1$ and $h_2$ for each of the halves. And take the best of them: $h = \min(h_1, h_2)$.
+Bây giờ, gọi đệ quy trên mỗi tập hợp $A_1$ và $A_2$, chúng ta sẽ tìm thấy các câu trả lời $h_1$ và $h_2$ cho mỗi nửa. Và lấy cái tốt nhất trong số chúng: $h = \min(h_1, h_2)$.
 
-Now we need to make a **merge stage**, i.e. we try to find such pairs of points, for which the distance between which is less than $h$ and one point is lying in $A_1$ and the other in $A_2$.
-It is obvious that it is sufficient to consider only those points that are separated from the vertical line by a distance less than $h$, i.e. the set $B$ of the points considered at this stage is equal to:
+Bây giờ chúng ta cần thực hiện một **giai đoạn hợp nhất**, tức là chúng ta cố gắng tìm các cặp điểm như vậy, mà khoảng cách giữa chúng nhỏ hơn $h$ và một điểm nằm trong $A_1$ và điểm kia nằm trong $A_2$.
+Rõ ràng là chỉ cần xem xét những điểm tách biệt khỏi đường thẳng đứng một khoảng cách nhỏ hơn $h$, tức là tập hợp $B$ của các điểm được xem xét ở giai đoạn này bằng:
 
 $$B = \{ p_i\ | \ | x_i - x_m\ | < h \}.$$ 
 
-For each point in the set $B$, we try to find the points that are closer to it than $h$. For example, it is sufficient to consider only those points whose $y$-coordinate differs by no more than $h$. Moreover, it makes no sense to consider those points whose $y$-coordinate is greater than the $y$-coordinate of the current point. Thus, for each point $p_i$ we define the set of considered points $C(p_i)$ as follows:
+Đối với mỗi điểm trong tập hợp $B$, chúng ta cố gắng tìm các điểm gần nó hơn $h$. Ví dụ, chỉ cần xem xét những điểm có tọa độ $y$ khác biệt không quá $h$. Hơn nữa, không có ý nghĩa gì khi xem xét những điểm có tọa độ $y$ lớn hơn tọa độ $y$ của điểm hiện tại. Do đó, đối với mỗi điểm $p_i$, chúng ta định nghĩa tập hợp các điểm được xem xét $C(p_i)$ như sau:
 
 $$C(p_i) = \{ p_j\ |\ p_j \in B,\ \ y_i - h < y_j \le y_i \}.$$
 
-If we sort the points of the set $B$ by $y$-coordinate, it will be very easy to find $C(p_i)$: these are several points in a row ahead to the point $p_i$.
+Nếu chúng ta sắp xếp các điểm của tập hợp $B$ theo tọa độ $y$, sẽ rất dễ dàng để tìm $C(p_i)$: đây là một vài điểm liên tiếp phía trước điểm $p_i$.
 
-So, in the new notation, the **merging stage** looks like this: build a set $B$, sort the points in it by $y$-coordinate, then for each point $p_i \in B$ consider all points $p_j \in C(p_i)$, and for each pair $(p_i,p_j)$ calculate the distance and compare with the current best distance.
+Vì vậy, trong ký hiệu mới, **giai đoạn hợp nhất** trông giống như sau: xây dựng một tập hợp $B$, sắp xếp các điểm trong đó theo tọa độ $y$, sau đó đối với mỗi điểm $p_i \in B$ xem xét tất cả các điểm $p_j \in C(p_i)$, và đối với mỗi cặp $(p_i,p_j)$ tính toán khoảng cách và so sánh với khoảng cách tốt nhất hiện tại.
 
-At first glance, this is still a non-optimal algorithm: it seems that the sizes of sets $C(p_i)$ will be of order $n$, and the required asymptotics will not work. However, surprisingly, it can be proved that the size of each of the sets $C(p_i)$ is a quantity $O(1)$, i.e. it does not exceed some small constant regardless of the points themselves. Proof of this fact is given in the next section.
+Thoạt nhìn, đây vẫn là một thuật toán không tối ưu: có vẻ như kích thước của các tập hợp $C(p_i)$ sẽ có bậc $n$, và tiệm cận cần thiết sẽ không hoạt động. Tuy nhiên, đáng ngạc nhiên, có thể chứng minh rằng kích thước của mỗi tập hợp $C(p_i)$ là một lượng $O(1)$, tức là nó không vượt quá một hằng số nhỏ bất kể chính các điểm đó. Bằng chứng về thực tế này được đưa ra trong phần tiếp theo.
 
-Finally, we pay attention to the sorting, which the above algorithm contains: first,sorting by pairs $(x, y)$, and then second, sorting the elements of the set $B$ by $y$. In fact, both of these sorts inside the recursive function can be eliminated (otherwise we would not reach the $O(n)$ estimate for the **merging stage**, and the general asymptotics of the algorithm would be $O(n \log^2 n)$). It is easy to get rid of the first sort — it is enough to perform this sort before starting the recursion: after all, the elements themselves do not change inside the recursion, so there is no need to sort again. With the second sorting a little more difficult to perform, performing it previously will not work. But, remembering the merge sort, which also works on the principle of divide-and-conquer, we can simply embed this sort in our recursion. Let recursion, taking some set of points (as we remember,ordered by pairs $(x, y)$), return the same set, but sorted by the $y$-coordinate. To do this, simply merge (in $O(n)$) the two results returned by recursive calls. This will result in a set sorted by $y$-coordinate.
+Cuối cùng, chúng ta chú ý đến việc sắp xếp, mà thuật toán trên chứa: đầu tiên, sắp xếp theo các cặp $(x, y)$, và sau đó thứ hai, sắp xếp các phần tử của tập hợp $B$ theo $y$. Trên thực tế, cả hai loại sắp xếp này bên trong hàm đệ quy có thể được loại bỏ (nếu không chúng ta sẽ không đạt được ước tính $O(n)$ cho **giai đoạn hợp nhất**, và tiệm cận chung của thuật toán sẽ là $O(n \log^2 n)$). Dễ dàng loại bỏ việc sắp xếp đầu tiên — chỉ cần thực hiện việc sắp xếp này trước khi bắt đầu đệ quy: rốt cuộc, các phần tử không thay đổi bên trong đệ quy, vì vậy không cần phải sắp xếp lại. Với việc sắp xếp thứ hai khó thực hiện hơn một chút, thực hiện nó trước đó sẽ không hoạt động. Nhưng, nhớ lại sắp xếp hợp nhất (merge sort), cũng hoạt động dựa trên nguyên tắc chia để trị, chúng ta có thể đơn giản nhúng việc sắp xếp này vào đệ quy của mình. Hãy để đệ quy, lấy một tập hợp các điểm (như chúng ta nhớ, được sắp xếp theo các cặp $(x, y)$), trả về cùng một tập hợp, nhưng được sắp xếp theo tọa độ $y$. Để làm điều này, chỉ cần hợp nhất (trong $O(n)$) hai kết quả được trả về bởi các lệnh gọi đệ quy. Điều này sẽ dẫn đến một tập hợp được sắp xếp theo tọa độ $y$.
 
-## Evaluation of the asymptotics
+## Đánh giá tiệm cận (Evaluation of the asymptotics) {: #evaluation-of-the-asymptotics}
 
-To show that the above algorithm is actually executed in $O(n \log n)$, we need to prove the following fact: $|C(p_i)| = O(1)$.
+Để chỉ ra rằng thuật toán trên thực sự được thực thi trong $O(n \log n)$, chúng ta cần chứng minh thực tế sau: $|C(p_i)| = O(1)$.
 
-So, let us consider some point $p_i$; recall that the set $C(p_i)$ is a set of points whose $y$-coordinate lies in the segment $[y_i-h; y_i]$, and, moreover, along the $x$ coordinate, the point $p_i$ itself, and all the points of the set $C(p_i)$ lie in the band width $2h$. In other words, the points we are considering $p_i$ and $C(p_i)$ lie in a rectangle of size $2h \times h$.
+Vì vậy, hãy xem xét một điểm $p_i$ nào đó; nhớ lại rằng tập hợp $C(p_i)$ là một tập hợp các điểm có tọa độ $y$ nằm trong đoạn $[y_i-h; y_i]$, và, hơn nữa, dọc theo tọa độ $x$, chính điểm $p_i$ và tất cả các điểm của tập hợp $C(p_i)$ nằm trong dải rộng $2h$. Nói cách khác, các điểm chúng ta đang xem xét $p_i$ và $C(p_i)$ nằm trong một hình chữ nhật kích thước $2h \times h$.
 
-Our task is to estimate the maximum number of points that can lie in this rectangle $2h \times h$; thus, we estimate the maximum size of the set $C(p_i)$. At the same time, when evaluating, we must not forget that there may be repeated points.
+Nhiệm vụ của chúng ta là ước tính số lượng điểm tối đa có thể nằm trong hình chữ nhật này $2h \times h$; do đó, chúng ta ước tính kích thước tối đa của tập hợp $C(p_i)$. Đồng thời, khi đánh giá, chúng ta không được quên rằng có thể có các điểm lặp lại.
 
-Remember that $h$ was obtained from the results of two recursive calls — on sets $A_1$ and $A_2$, and $A_1$ contains points to the left of the partition line and partially on it, $A_2$ contains the remaining points of the partition line and points to the right of it. For any pair of points from $A_1$, as well as from $A_2$, the distance can not be less than $h$ — otherwise it would mean incorrect operation of the recursive function.
+Hãy nhớ rằng $h$ thu được từ kết quả của hai lệnh gọi đệ quy — trên các tập hợp $A_1$ và $A_2$, và $A_1$ chứa các điểm bên trái đường phân chia và một phần trên đó, $A_2$ chứa các điểm còn lại của đường phân chia và các điểm bên phải nó. Đối với bất kỳ cặp điểm nào từ $A_1$, cũng như từ $A_2$, khoảng cách không thể nhỏ hơn $h$ — nếu không nó sẽ có nghĩa là hoạt động không chính xác của hàm đệ quy.
 
-To estimate the maximum number of points in the rectangle $2h \times h$ we divide it into two squares $h \times h$, the first square include all points $C(p_i) \cap A_1$, and the second contains all the others, i.e. $C(p_i) \cap A_2$. It follows from the above considerations that in each of these squares the distance between any two points is at least $h$.
+Để ước tính số lượng điểm tối đa trong hình chữ nhật $2h \times h$, chúng ta chia nó thành hai hình vuông $h \times h$, hình vuông thứ nhất bao gồm tất cả các điểm $C(p_i) \cap A_1$, và hình vuông thứ hai chứa tất cả các điểm khác, tức là $C(p_i) \cap A_2$. Từ các cân nhắc trên, suy ra rằng trong mỗi hình vuông này, khoảng cách giữa bất kỳ hai điểm nào ít nhất là $h$.
 
-We show that there are at most four points in each square. For example, this can be done as follows: divide the square into $4$ sub-squares with sides $h/2$. Then there can be no more than one point in each of these sub-squares (since even the diagonal is equal to $h / \sqrt{2}$, which is less than $h$). Therefore, there can be no more than $4$ points in the whole square.
+Chúng ta chỉ ra rằng có tối đa bốn điểm trong mỗi hình vuông. Ví dụ, điều này có thể được thực hiện như sau: chia hình vuông thành $4$ hình vuông con với các cạnh $h/2$. Khi đó không thể có nhiều hơn một điểm trong mỗi hình vuông con này (vì ngay cả đường chéo cũng bằng $h / \sqrt{2}$, nhỏ hơn $h$). Do đó, không thể có nhiều hơn $4$ điểm trong toàn bộ hình vuông.
 
-So, we have proved that in a rectangle $2h \times h$ can not be more than $4 \cdot 2 = 8$ points, and, therefore, the size of the set $C(p_i)$ cannot exceed $7$, as required.
+Vì vậy, chúng ta đã chứng minh rằng trong một hình chữ nhật $2h \times h$ không thể có nhiều hơn $4 \cdot 2 = 8$ điểm, và do đó, kích thước của tập hợp $C(p_i)$ không thể vượt quá $7$, như yêu cầu.
 
-## Implementation
+## Cài đặt (Implementation) {: #implementation}
 
-We introduce a data structure to store a point (its coordinates and a number) and comparison operators required for two types of sorting:
+Chúng ta giới thiệu một cấu trúc dữ liệu để lưu trữ một điểm (tọa độ và một số của nó) và các toán tử so sánh cần thiết cho hai loại sắp xếp:
 
 ```{.cpp file=nearest_pair_def}
 struct pt {
@@ -97,7 +97,7 @@ int n;
 vector<pt> a;
 ```
 
-For a convenient implementation of recursion, we introduce an auxiliary function upd_ans(), which will calculate the distance between two points and check whether it is better than the current answer:
+Để cài đặt thuận tiện đệ quy, chúng ta giới thiệu một hàm phụ trợ `upd_ans()`, sẽ tính toán khoảng cách giữa hai điểm và kiểm tra xem nó có tốt hơn câu trả lời hiện tại hay không:
 
 ```{.cpp file=nearest_pair_update}
 double mindist;
@@ -112,11 +112,11 @@ void upd_ans(const pt & a, const pt & b) {
 }
 ```
 
-Finally, the implementation of the recursion itself. It is assumed that before calling it, the array $a[]$ is already sorted by $x$-coordinate. In recursion we pass just two pointers $l, r$, which indicate that it should look for the answer for $a[l \ldots r)$. If the distance between $r$ and $l$ is too small, the recursion must be stopped, and perform a trivial algorithm to find the nearest pair and then sort the subarray by $y$-coordinate.
+Cuối cùng, việc cài đặt đệ quy chính nó. Giả sử rằng trước khi gọi nó, mảng $a[]$ đã được sắp xếp theo tọa độ $x$. Trong đệ quy, chúng ta chỉ truyền hai con trỏ $l, r$, cho biết rằng nó nên tìm câu trả lời cho $a[l \ldots r)$. Nếu khoảng cách giữa $r$ và $l$ quá nhỏ, đệ quy phải dừng lại, và thực hiện một thuật toán tầm thường để tìm cặp gần nhất và sau đó sắp xếp mảng con theo tọa độ $y$.
 
-To merge two sets of points received from recursive calls into one (ordered by $y$-coordinate), we use the standard STL $merge()$ function, and create an auxiliary buffer $t[]$(one for all recursive calls). (Using inplace_merge () is impractical because it generally does not work in linear time.)
+Để hợp nhất hai tập hợp điểm nhận được từ các lệnh gọi đệ quy thành một (được sắp xếp theo tọa độ $y$), chúng ta sử dụng hàm `merge()` tiêu chuẩn của STL, và tạo một bộ đệm phụ trợ $t[]$ (một cho tất cả các lệnh gọi đệ quy). (Sử dụng `inplace_merge()` là không thực tế vì nó thường không hoạt động trong thời gian tuyến tính.)
 
-Finally, the set $B$ is stored in the same array $t$.
+Cuối cùng, tập hợp $B$ được lưu trữ trong cùng mảng $t$.
 
 ```{.cpp file=nearest_pair_rec}
 vector<pt> t;
@@ -151,9 +151,9 @@ void rec(int l, int r) {
 }
 ```
 
-By the way, if all the coordinates are integer, then at the time of the recursion you can not move to fractional values, and store in $mindist$ the square of the minimum distance.
+Nhân tiện, nếu tất cả các tọa độ là số nguyên, thì tại thời điểm đệ quy bạn không thể chuyển sang các giá trị phân số, và lưu trữ trong $mindist$ bình phương của khoảng cách tối thiểu.
 
-In the main program, recursion should be called as follows:
+Trong chương trình chính, đệ quy nên được gọi như sau:
 
 ```{.cpp file=nearest_pair_main}
 t.resize(n);
@@ -162,53 +162,53 @@ mindist = 1E20;
 rec(0, n);
 ```
 
-## Linear time randomized algorithms
+## Các thuật toán ngẫu nhiên thời gian tuyến tính (Linear time randomized algorithms) {: #linear-time-randomized-algorithms}
 
-### A randomized algorithm with linear expected time
+### Một thuật toán ngẫu nhiên với thời gian kỳ vọng tuyến tính (A randomized algorithm with linear expected time) {: #a-randomized-algorithm-with-linear-expected-time}
 
-An alternative method, originally proposed by Rabin in 1976, arises from a very simple idea to heuristically improve the runtime: We can divide the plane into a grid of $d \times d$ squares, then it is only required to test distances between same-block or adjacent-block points (unless all squares are disconnected from each other, but we will avoid this by design), since any other pair has a larger distance than the two points in the same square.
+Một phương pháp thay thế, ban đầu được đề xuất bởi Rabin vào năm 1976, nảy sinh từ một ý tưởng rất đơn giản để cải thiện thời gian chạy theo kinh nghiệm: Chúng ta có thể chia mặt phẳng thành một lưới các hình vuông $d \times d$, sau đó chỉ cần kiểm tra khoảng cách giữa các điểm cùng khối hoặc khối liền kề (trừ khi tất cả các hình vuông đều bị ngắt kết nối với nhau, nhưng chúng ta sẽ tránh điều này bằng thiết kế), vì bất kỳ cặp nào khác đều có khoảng cách lớn hơn hai điểm trong cùng một hình vuông.
 
 <div style="text-align: center;">
-    <img src="nearest_points_blocks_example.png" alt="Example of the squares strategy" width="350px">
+    <img src="https://cp-algorithms.com/geometry/nearest_points_blocks_example.png" alt="Example of the squares strategy" width="350px">
 </div>
 
 
-We will consider only the squares containing at least one point. Denote by $n_1, n_2, \dots, n_k$ the number of points in each of the $k$ remaining squares. Assuming at least two points are in the same or in adjacent squares, and that there are no duplicated points, the time complexity is $\Theta\!\left(\sum\limits_{i=1}^k n_i^2\right)$. We can look for duplicated points in expected linear time using a hash table, and in the affirmative case, the answer is this pair.
+Chúng ta sẽ chỉ xem xét các hình vuông chứa ít nhất một điểm. Ký hiệu $n_1, n_2, \dots, n_k$ là số lượng điểm trong mỗi hình vuông trong số $k$ hình vuông còn lại. Giả sử có ít nhất hai điểm nằm trong cùng một hình vuông hoặc trong các hình vuông liền kề, và không có điểm trùng lặp, độ phức tạp thời gian là $\Theta\!\left(\sum\limits_{i=1}^k n_i^2\right)$. Chúng ta có thể tìm các điểm trùng lặp trong thời gian kỳ vọng tuyến tính bằng cách sử dụng bảng băm, và trong trường hợp khẳng định, câu trả lời là cặp này.
 
-??? info "Proof"
-	For the $i$-th square containing $n_i$ points, the number of pairs inside is $\Theta(n_i^2)$. If the $i$-th square is adjacent to the $j$-th square, then we also perform $n_i n_j \le \max(n_i, n_j)^2 \le n_i^2 + n_j^2$ distance comparisons. Notice that each square has at most $8$ adjacent squares, so we can bound the sum of all comparisons by $\Theta(\sum_{i=1}^{k} n_i^2)$. $\quad \blacksquare$
+??? info "Minh chứng (Proof)"
+	Đối với hình vuông thứ $i$ chứa $n_i$ điểm, số lượng cặp bên trong là $\Theta(n_i^2)$. Nếu hình vuông thứ $i$ liền kề với hình vuông thứ $j$, thì chúng ta cũng thực hiện $n_i n_j \le \max(n_i, n_j)^2 \le n_i^2 + n_j^2$ phép so sánh khoảng cách. Lưu ý rằng mỗi hình vuông có tối đa $8$ hình vuông liền kề, vì vậy chúng ta có thể giới hạn tổng của tất cả các phép so sánh bằng $\Theta(\sum_{i=1}^{k} n_i^2)$. $\quad \blacksquare$
 
-Now we need to decide on how to set $d$ so that it minimizes $\Theta\!\left(\sum\limits_{i=1}^k n_i^2\right)$.
+Bây giờ chúng ta cần quyết định cách đặt $d$ sao cho nó giảm thiểu $\Theta\!\left(\sum\limits_{i=1}^k n_i^2\right)$.
 
-####  Choosing d
+#### Chọn d (Choosing d) {: #choosing-d}
 
-We need $d$ to be an approximation of the minimum distance $d$. Richard Lipton proposed to sample $n$ distances randomly and choose $d$ to be the smallest of these distances as an approximation for $d$. We now prove that the expected running time of the algorithm is linear.
+Chúng ta cần $d$ là một xấp xỉ của khoảng cách tối thiểu $d$. Richard Lipton đã đề xuất lấy mẫu $n$ khoảng cách ngẫu nhiên và chọn $d$ là khoảng cách nhỏ nhất trong số các khoảng cách này làm xấp xỉ cho $d$. Bây giờ chúng ta chứng minh rằng thời gian chạy kỳ vọng của thuật toán là tuyến tính.
 
-??? info "Proof"
-	Imagine the disposition of points in squares with a particular choice of $d$, say $x$. Consider $d$ a random variable, resulting from our sampling of distances. Let's define $C(x) := \sum_{i=1}^{k(x)} n_i(x)^2$ as the cost estimation for a particular disposition when we choose $d=x$. Now, let's define $\lambda(x)$ such that $C(x) = \lambda(x) \, n$. What is the probability that such choice $x$ survives the sampling of $n$ independent distances? If a single pair among the sampled ones has distance smaller than $x$, this arrangement will be replaced by the smaller $d$. Inside a square, about $1/16$ of the pairs would raise a smaller distance (imagine four subsquares in every square; using the pigeonhole principle, at least one subsquare has $n_i/4$ points), so we have about $\sum_{i=1}^{k} {n_i/4 \choose 2} \approx \sum_{i=1}^{k} \frac{1}{16} {n_i \choose 2}$ pairs which yield a smaller final $d$. This is, approximately, $\frac{1}{32} \sum_{i=1}^{k} n_i^2 = \frac{1}{32} \lambda(x) n$. On the other hand, there are about $\frac{1}{2} n^2$ pairs that can be sampled. We have that the probability of sampling a pair with distance smaller than $x$ is at least (approximately) 
+??? info "Minh chứng (Proof)"
+	Hãy tưởng tượng sự sắp xếp của các điểm trong các hình vuông với một lựa chọn cụ thể của $d$, giả sử $x$. Coi $d$ là một biến ngẫu nhiên, kết quả từ việc lấy mẫu khoảng cách của chúng ta. Hãy định nghĩa $C(x) := \sum_{i=1}^{k(x)} n_i(x)^2$ là ước tính chi phí cho một sự sắp xếp cụ thể khi chúng ta chọn $d=x$. Bây giờ, hãy định nghĩa $\lambda(x)$ sao cho $C(x) = \lambda(x) \, n$. Xác suất để một lựa chọn $x$ như vậy tồn tại sau khi lấy mẫu $n$ khoảng cách độc lập là bao nhiêu? Nếu một cặp duy nhất trong số các cặp được lấy mẫu có khoảng cách nhỏ hơn $x$, sự sắp xếp này sẽ được thay thế bằng $d$ nhỏ hơn. Bên trong một hình vuông, khoảng $1/16$ các cặp sẽ tạo ra một khoảng cách nhỏ hơn (hãy tưởng tượng bốn hình vuông con trong mỗi hình vuông; sử dụng nguyên lý chuồng bồ câu, ít nhất một hình vuông con có $n_i/4$ điểm), vì vậy chúng ta có khoảng $\sum_{i=1}^{k} {n_i/4 \choose 2} \approx \sum_{i=1}^{k} \frac{1}{16} {n_i \choose 2}$ cặp tạo ra $d$ cuối cùng nhỏ hơn. Điều này là, xấp xỉ, $\frac{1}{32} \sum_{i=1}^{k} n_i^2 = \frac{1}{32} \lambda(x) n$. Mặt khác, có khoảng $\frac{1}{2} n^2$ cặp có thể được lấy mẫu. Chúng ta có xác suất lấy mẫu một cặp có khoảng cách nhỏ hơn $x$ ít nhất là (xấp xỉ)
 	
 	$$\frac{\lambda(x) \, n / 32}{n^2 / 2} = \frac{\lambda(x)/16}{n}$$
 	
-	so the probability of at least one such pair being chosen during the $n$ rounds (and therefore finding a smaller $d$) is 
+	vì vậy xác suất có ít nhất một cặp như vậy được chọn trong $n$ vòng (và do đó tìm thấy $d$ nhỏ hơn) là
 	
 	$$1 - \left(1 - \frac{\lambda(x)/16}{n}\right)^n \ge 1 - e^{-\lambda(x)/16}$$
 	
-	(we have used that $(1 + x)^n \le e^{xn}$ for any real number $x$, check [Bernoulli inequalities](https://en.wikipedia.org/wiki/Bernoulli%27s_inequality#Related_inequalities)). <br> Notice this goes to $1$ exponentially as $\lambda(x)$ increases. This hints that $\lambda$ will be small for a poorly chosen $d$.
+	(chúng ta đã sử dụng $(1 + x)^n \le e^{xn}$ cho bất kỳ số thực $x$ nào, hãy kiểm tra [bất đẳng thức Bernoulli](https://en.wikipedia.org/wiki/Bernoulli%27s_inequality#Related_inequalities)). <br> Lưu ý điều này tiến tới $1$ theo cấp số nhân khi $\lambda(x)$ tăng. Điều này gợi ý rằng $\lambda$ sẽ nhỏ đối với $d$ được chọn kém.
 	
 	
-	We have shown that $\Pr(d \le x) \ge 1 - e^{-\lambda(x)/16}$, or equivalently, $\Pr(d \ge x) \le e^{-\lambda(x)/16}$. We need to know $\Pr(\lambda(d) \ge \text{something})$ to be able to estimate its expected value. We notice that $\lambda(d) \ge \lambda(x) \iff d \ge x$. This is because making the squares smaller only reduces the number of points in each square (splits the points into other squares), and this keeps reducing the sum of squares. Therefore,
+	Chúng ta đã chỉ ra rằng $\Pr(d \le x) \ge 1 - e^{-\lambda(x)/16}$, hoặc tương đương, $\Pr(d \ge x) \le e^{-\lambda(x)/16}$. Chúng ta cần biết $\Pr(\lambda(d) \ge \text{something})$ để có thể ước tính giá trị kỳ vọng của nó. Chúng ta nhận thấy rằng $\lambda(d) \ge \lambda(x) \iff d \ge x$. Điều này là do việc làm cho các hình vuông nhỏ hơn chỉ làm giảm số lượng điểm trong mỗi hình vuông (chia các điểm vào các hình vuông khác), và điều này tiếp tục làm giảm tổng bình phương. Do đó,
 	
 	$$\Pr(\lambda(d) \ge \lambda(x)) = \Pr(d \ge x) \le e^{-\lambda(x)/16} \implies \Pr(\lambda(d) \ge t) \le e^{-t/16} \implies \mathbb{E}[\lambda(d)] \le \int_{0}^{+\infty} e^{-t/16} \, \mathrm{d}t = 16$$
 	
-	(we have used that $E[X] = \int_0^{+\infty} \Pr(X \ge x) \, \mathrm{d}x$, check [Stackexchange proof](https://math.stackexchange.com/a/1690829)).
+	(chúng ta đã sử dụng $E[X] = \int_0^{+\infty} \Pr(X \ge x) \, \mathrm{d}x$, hãy kiểm tra [Stackexchange proof](https://math.stackexchange.com/a/1690829)).
 	
-	Finally, $\mathbb{E}[C(d)] = \mathbb{E}[\lambda(d) \, n] \le 16n$, and the expected running time is $O(n)$, with a reasonable constant factor. $\quad \blacksquare$
+	Cuối cùng, $\mathbb{E}[C(d)] = \mathbb{E}[\lambda(d) \, n] \le 16n$, và thời gian chạy kỳ vọng là $O(n)$, với một hệ số hằng số hợp lý. $\quad \blacksquare$
 
-#### Implementation of the algorithm
+#### Cài đặt thuật toán (Implementation of the algorithm) {: #implementation-of-the-algorithm}
 
-The advantage of this algorithm is that it is straightforward to implement, but still has good performance in practise. We first sample $n$ distances and set $d$ as the minimum of the distances. Then we insert points into the "blocks" by using a hash table from 2D coordinates to a vector of points. Finally, just compute distances between same-block pairs and adjacent-block pairs. Hash table operations have $O(1)$ expected time cost, and therefore our algorithm retains the $O(n)$ expected time cost with an increased constant.
+Ưu điểm của thuật toán này là nó đơn giản để thực hiện, nhưng vẫn có hiệu suất tốt trong thực tế. Đầu tiên chúng ta lấy mẫu $n$ khoảng cách và đặt $d$ là giá trị tối thiểu của các khoảng cách. Sau đó chúng ta chèn các điểm vào các "khối" bằng cách sử dụng bảng băm từ tọa độ 2D đến một vector các điểm. Cuối cùng, chỉ cần tính khoảng cách giữa các cặp cùng khối và các cặp khối liền kề. Các thao tác bảng băm có chi phí thời gian kỳ vọng $O(1)$, và do đó thuật toán của chúng ta giữ chi phí thời gian kỳ vọng $O(n)$ với một hằng số tăng lên.
 
-Check out [this submission](https://judge.yosupo.jp/submission/309605) to Library Checker.
+Kiểm tra [bài nộp này](https://judge.yosupo.jp/submission/309605) lên Library Checker.
 
 ```{.cpp file=nearest_pair_randomized}
 #include <bits/stdc++.h>
@@ -327,41 +327,41 @@ pair<int,int> closest_pair_of_points(vector<pt> P) {
 ```
 
 
-### An alternative randomized linear expected time algorithm
+### Một thuật toán thời gian kỳ vọng tuyến tính ngẫu nhiên thay thế (An alternative randomized linear expected time algorithm) {: #an-alternative-randomized-linear-expected-time-algorithm}
 
-Now we introduce a different randomized algorithm which is less practical but very easy to show that it runs in expected linear time.
+Bây giờ chúng tôi giới thiệu một thuật toán ngẫu nhiên khác ít thực tế hơn nhưng rất dễ chứng minh rằng nó chạy trong thời gian kỳ vọng tuyến tính.
 
-- Permute the $n$ points randomly
-- Take $\delta := \operatorname{dist}(p_1, p_2)$
-- Partition the plane in squares of side $\delta/2$
-- For $i = 1,2,\dots,n$:
-	- Take the square corresponding to $p_i$
-	- Iterate over the $25$ squares within two steps to our square in the grid of squares partitioning the plane
-	- If some $p_j$ in those squares has $\operatorname{dist}(p_j, p_i) < \delta$, then
-		- Recompute the partition and squares with $\delta := \operatorname{dist}(p_j, p_i)$
-		- Store points $p_1, \dots, p_i$ in the corresponding squares
-	- else, store $p_i$ in the corresponding square
-- output $\delta$
+- Hoán vị $n$ điểm một cách ngẫu nhiên
+- Lấy $\delta := \operatorname{dist}(p_1, p_2)$
+- Phân chia mặt phẳng thành các hình vuông có cạnh $\delta/2$
+- Vỡi $i = 1,2,\dots,n$:
+	- Lấy hình vuông tương ứng với $p_i$
+	- Lặp qua $25$ hình vuông trong vòng hai bước đến hình vuông của chúng ta trong lưới các hình vuông phân chia mặt phẳng
+	- Nếu một số $p_j$ trong các hình vuông đó có $\operatorname{dist}(p_j, p_i) < \delta$, thì
+		- Tính toán lại phân vùng và các hình vuông với $\delta := \operatorname{dist}(p_j, p_i)$
+		- Lưu trữ các điểm $p_1, \dots, p_i$ trong các hình vuông tương ứng
+	- ngược lại, lưu trữ $p_i$ trong hình vuông tương ứng
+- đầu ra $\delta$
 
-The correctness follows from the fact that at any moment we already have some pair with distance $\delta$, so we try to find only new pairs with distance smaller than $\delta$. Since each square has side $\delta/2$, a candidate pair can be at most at a distance of $2$ squares, so for a given point we check candidates in the surrounding $25$ squares. Any point in a square further away will always give a distace larger than $\delta$.
+Tính đúng đắn tuân theo thực tế là tại bất kỳ thời điểm nào chúng ta đã có một cặp nào đó với khoảng cách $\delta$, vì vậy chúng ta cố gắng tìm chỉ các cặp mới với khoảng cách nhỏ hơn $\delta$. Vì mỗi hình vuông có cạnh $\delta/2$, một cặp ứng viên có thể ở tối đa một khoảng cách của $2$ hình vuông, vì vậy đối với một điểm nhất định, chúng ta kiểm tra các ứng viên trong $25$ hình vuông xung quanh. Bất kỳ điểm nào trong một hình vuông xa hơn sẽ luôn cho khoảng cách lớn hơn $\delta$.
 
-While this algorithm may look slow, because of recomputing everything multiple times, we can show the total expected cost is linear. 
+Mặc dù thuật toán này có thể trông chậm, vì phải tính toán lại mọi thứ nhiều lần, chúng ta có thể chỉ ra rằng tổng chi phí kỳ vọng là tuyến tính.
 
-??? info "Proof"
-	Let $X_i$ the random variable that is $1$ when point $p_i$ causes a change of $\delta$ and a recomputation of the data structures, and $0$ if not. It is easy to show that the cost is $O(n + \sum_{i=1}^{n} i X_i)$, since on the $i$-th step we are considering only the first $i$ points. However, turns out that $\Pr(X_i = 1) \le \frac{2}{i}$. This is because on the $i$-th step, $\delta$ is the distance of the closest pair in $\{p_1,\dots,p_i\}$, and $\Pr(X_i = 1)$ is the probability of $p_i$ belonging to the closest pair, which only happens in $2(i-1)$ pairs out of the $i(i-1)$ possible pairs (assuming all distances are different), so the probability is at most $\frac{2(i-1)}{i(i-1)} = \frac{2}{i}$, since we previously shuffled the points uniformly.
+??? info "Minh chứng (Proof)"
+	Gọi $X_i$ là biến ngẫu nhiên bằng $1$ khi điểm $p_i$ gây ra sự thay đổi của $\delta$ và tính toán lại các cấu trúc dữ liệu, và $0$ nếu không. Dễ dàng chỉ ra rằng chi phí là $O(n + \sum_{i=1}^{n} i X_i)$, vì ở bước thứ $i$ chúng ta chỉ xem xét $i$ điểm đầu tiên. Tuy nhiên, hóa ra $\Pr(X_i = 1) \le \frac{2}{i}$. Điều này là do ở bước thứ $i$, $\delta$ là khoảng cách của cặp gần nhất trong $\{p_1,\dots,p_i\}$, và $\Pr(X_i = 1)$ là xác suất của $p_i$ thuộc về cặp gần nhất, điều này chỉ xảy ra trong $2(i-1)$ cặp trong số $i(i-1)$ cặp có thể (giả sử tất cả các khoảng cách là khác nhau), vì vậy xác suất tối đa là $\frac{2(i-1)}{i(i-1)} = \frac{2}{i}$, vì chúng ta đã xáo trộn các điểm một cách đồng đều trước đó.
 	
-	We can therefore see that the expected cost is 
+	Do đó, chúng ta có thể thấy rằng chi phí kỳ vọng là
 	
 	$$O\!\left(n + \sum_{i=1}^{n} i \Pr(X_i = 1)\right) \le O\!\left(n + \sum_{i=1}^{n} i \frac{2}{i}\right) = O(3n) = O(n) \quad \quad \blacksquare$$ 
 
 
-## Generalization: finding a triangle with minimal perimeter
+## Tổng quát hóa: tìm một tam giác có chu vi tối thiểu (Generalization: finding a triangle with minimal perimeter) {: #generalization-finding-a-triangle-with-minimal-perimeter}
 
-The algorithm described above is interestingly generalized to this problem: among a given set of points, choose three different points so that the sum of pairwise distances between them is the smallest.
+Thuật toán được mô tả ở trên được tổng quát hóa một cách thú vị cho bài toán này: trong số một tập hợp các điểm đã cho, chọn ba điểm khác nhau sao cho tổng khoảng cách từng đôi giữa chúng là nhỏ nhất.
 
-In fact, to solve this problem, the algorithm remains the same: we divide the field into two halves of the vertical line, call the solution recursively on both halves, choose the minimum $minper$ from the found perimeters, build a strip with the thickness of $minper / 2$, and iterate through all triangles that can improve the answer. (Note that the triangle with perimeter $\le minper$ has the longest side $\le minper / 2$.)
+Trên thực tế, để giải quyết bài toán này, thuật toán vẫn giữ nguyên: chúng ta chia trường thành hai nửa của đường thẳng đứng, gọi giải pháp một cách đệ quy trên cả hai nửa, chọn $minper$ tối thiểu từ các chu vi được tìm thấy, xây dựng một dải có độ dày $minper / 2$, và lặp qua tất cả các tam giác có thể cải thiện câu trả lời. (Lưu ý rằng tam giác có chu vi $\le minper$ có cạnh dài nhất $\le minper / 2$.)
 
-## Practice problems
+## Bài tập (Practice problems) {: #practice-problems}
 
 * [UVA 10245 "The Closest Pair Problem" [difficulty: low]](https://uva.onlinejudge.org/index.php?option=onlinejudge&page=show_problem&problem=1186)
 * [SPOJ #8725 CLOPPAIR "Closest Point Pair" [difficulty: low]](https://www.spoj.com/problems/CLOPPAIR/)

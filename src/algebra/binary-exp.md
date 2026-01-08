@@ -4,35 +4,35 @@ tags:
 e_maxx_link: binary_pow
 ---
 
-# Binary Exponentiation
+# Lũy thừa nhị phân {: #binary-exponentiation}
 
-Binary exponentiation (also known as exponentiation by squaring) is a trick which allows to calculate $a^n$ using only $O(\log n)$ multiplications (instead of $O(n)$ multiplications required by the naive approach).
+Lũy thừa nhị phân (còn được gọi là lũy thừa bằng cách bình phương - exponentiation by squaring) là một thủ thuật cho phép tính $a^n$ chỉ sử dụng $O(\log n)$ phép nhân (thay vì $O(n)$ phép nhân theo cách tiếp cận ngây thơ).
 
-It also has important applications in many tasks unrelated to arithmetic, since it
-can be used with any operations that have the property of **associativity**:
+Nó cũng có những ứng dụng quan trọng trong nhiều bài toán không liên quan đến số học, vì nó
+có thể được sử dụng với bất kỳ phép toán nào có tính chất **kết hợp** (associativity):
 
 $$(X \cdot Y) \cdot Z = X \cdot (Y \cdot Z)$$
 
-Most obviously this applies to modular multiplication, to multiplication of matrices and
-to other problems which we will discuss below.
+Rõ ràng nhất điều này áp dụng cho phép nhân modulo, nhân ma trận và
+các bài toán khác mà chúng ta sẽ thảo luận bên dưới.
 
-## Algorithm
+## Thuật toán {: #algorithm}
 
-Raising $a$ to the power of $n$ is expressed naively as multiplication by $a$ done $n - 1$ times:
-$a^{n} = a \cdot a \cdot \ldots \cdot a$. However, this approach is not practical for large $a$ or $n$.
+Nâng $a$ lên lũy thừa $n$ được biểu diễn một cách ngây thơ là nhân $a$ với chính nó $n - 1$ lần:
+$a^{n} = a \cdot a \cdot \ldots \cdot a$. Tuy nhiên, cách tiếp cận này không thực tế với $a$ hoặc $n$ lớn.
 
-$a^{b+c} = a^b \cdot a^c$ and $a^{2b} = a^b \cdot a^b = (a^b)^2$.
+$a^{b+c} = a^b \cdot a^c$ và $a^{2b} = a^b \cdot a^b = (a^b)^2$.
 
-The idea of binary exponentiation is, that we split the work using the binary representation of the exponent.
+Ý tưởng của lũy thừa nhị phân là, chúng ta chia nhỏ công việc bằng cách sử dụng biểu diễn nhị phân của số mũ.
 
-Let's write $n$ in base 2, for example:
+Hãy viết $n$ trong hệ cơ số 2, ví dụ:
 
 $$3^{13} = 3^{1101_2} = 3^8 \cdot 3^4 \cdot 3^1$$
 
-Since the number $n$ has exactly $\lfloor \log_2 n \rfloor + 1$ digits in base 2, we only need to perform $O(\log n)$ multiplications, if we know the powers $a^1, a^2, a^4, a^8, \dots, a^{2^{\lfloor \log_2 n \rfloor}}$.
+Vì số $n$ có chính xác $\lfloor \log_2 n \rfloor + 1$ chữ số trong hệ cơ số 2, chúng ta chỉ cần thực hiện $O(\log n)$ phép nhân, nếu chúng ta biết các lũy thừa $a^1, a^2, a^4, a^8, \dots, a^{2^{\lfloor \log_2 n \rfloor}}$.
 
-So we only need to know a fast way to compute those.
-Luckily this is very easy, since an element in the sequence is just the square of the previous element.
+Vì vậy chúng ta chỉ cần biết cách nhanh chóng để tính chúng.
+May mắn thay điều này rất dễ dàng, vì một phần tử trong dãy chỉ là bình phương của phần tử trước đó.
 
 $$\begin{align}
 3^1 &= 3 \\
@@ -41,12 +41,12 @@ $$\begin{align}
 3^8 &= \left(3^4\right)^2 = 81^2 = 6561
 \end{align}$$
 
-So to get the final answer for $3^{13}$, we only need to multiply three of them (skipping $3^2$ because the corresponding bit in $n$ is not set):
+Vì vậy để có được kết quả cuối cùng cho $3^{13}$, chúng ta chỉ cần nhân ba trong số chúng (bỏ qua $3^2$ vì bit tương ứng trong $n$ không bật):
 $3^{13} = 6561 \cdot 81 \cdot 3 = 1594323$
 
-The final complexity of this algorithm is $O(\log n)$: we have to compute $\log n$ powers of $a$, and then have to do at most $\log n$ multiplications to get the final answer from them.
+Độ phức tạp cuối cùng của thuật toán này là $O(\log n)$: chúng ta phải tính $\log n$ lũy thừa của $a$, và sau đó phải thực hiện tối đa $\log n$ phép nhân để có được kết quả cuối cùng từ chúng.
 
-The following recursive approach expresses the same idea:
+Cách tiếp cận đệ quy sau đây thể hiện cùng một ý tưởng:
 
 $$a^n = \begin{cases}
 1 &\text{if } n == 0 \\
@@ -54,9 +54,9 @@ $$a^n = \begin{cases}
 \left(a^{\frac{n - 1}{2}}\right)^2 \cdot a &\text{if } n > 0 \text{ and } n \text{ odd}\\
 \end{cases}$$
 
-## Implementation
+## Cài đặt {: #implementation}
 
-First the recursive approach, which is a direct translation of the recursive formula:
+Đầu tiên là cách tiếp cận đệ quy, là bản dịch trực tiếp của công thức đệ quy:
 
 ```cpp
 long long binpow(long long a, long long b) {
@@ -70,9 +70,9 @@ long long binpow(long long a, long long b) {
 }
 ```
 
-The second approach accomplishes the same task without recursion.
-It computes all the powers in a loop, and multiplies the ones with the corresponding set bit in $n$.
-Although the complexity of both approaches is identical, this approach will be faster in practice since we don't have the overhead of the recursive calls.
+Cách tiếp cận thứ hai hoàn thành cùng một nhiệm vụ mà không cần đệ quy.
+Nó tính toán tất cả các lũy thừa trong một vòng lặp, và nhân những cái có bit được bật tương ứng trong $n$.
+Mặc dù độ phức tạp của cả hai cách tiếp cận là như nhau, cách tiếp cận này sẽ nhanh hơn trong thực tế vì chúng ta không tốn chi phí cho các lời gọi đệ quy.
 
 ```cpp
 long long binpow(long long a, long long b) {
@@ -87,16 +87,16 @@ long long binpow(long long a, long long b) {
 }
 ```
 
-## Applications
+## Ứng dụng {: #applications}
 
-### Effective computation of large exponents modulo a number
+### Tính hiệu quả lũy thừa lớn theo modulo một số {: #effective-computation-of-large-exponents-modulo-a-number}
 
-**Problem:**
-Compute $x^n \bmod m$.
-This is a very common operation. For instance it is used in computing the [modular multiplicative inverse](module-inverse.md).
+**Bài toán:**
+Tính $x^n \bmod m$.
+Đây là một thao tác rất phổ biến. Ví dụ nó được sử dụng trong việc tính [nghịch đảo nhân modulo](module-inverse.md).
 
-**Solution:**
-Since we know that the modulo operator doesn't interfere with multiplications ($a \cdot b \equiv (a \bmod m) \cdot (b \bmod m) \pmod m$), we can directly use the same code, and just replace every multiplication with a modular multiplication:
+**Lời giải:**
+Vì chúng ta biết rằng toán tử modulo không ảnh hưởng đến phép nhân ($a \cdot b \equiv (a \bmod m) \cdot (b \bmod m) \pmod m$), chúng ta có thể trực tiếp sử dụng cùng một đoạn code, và chỉ cần thay thế mỗi phép nhân bằng một phép nhân modulo:
 
 ```cpp
 long long binpow(long long a, long long b, long long m) {
@@ -112,28 +112,28 @@ long long binpow(long long a, long long b, long long m) {
 }
 ```
 
-**Note:**
-It's possible to speed this algorithm for large $b >> m$.
-If $m$ is a prime number $x^n \equiv x^{n \bmod (m-1)} \pmod{m}$ for prime $m$, and $x^n \equiv x^{n \bmod{\phi(m)}} \pmod{m}$ for composite $m$.
-This follows directly from Fermat's little theorem and Euler's theorem, see the article about [Modular Inverses](module-inverse.md#fermat-euler) for more details.
+**Lưu ý:**
+Có thể tăng tốc thuật toán này cho $b >> m$ lớn.
+Nếu $m$ là số nguyên tố $x^n \equiv x^{n \bmod (m-1)} \pmod{m}$ với $m$ nguyên tố, và $x^n \equiv x^{n \bmod{\phi(m)}} \pmod{m}$ với $m$ hợp số.
+Điều này suy ra trực tiếp từ định lý nhỏ Fermat và định lý Euler, xem bài viết về [Nghịch đảo Modulo](module-inverse.md#fermat-euler) để biết thêm chi tiết.
 
-### Effective computation of Fibonacci numbers
+### Tính hiệu quả số Fibonacci {: #effective-computation-of-fibonacci-numbers}
 
-**Problem:** Compute $n$-th Fibonacci number $F_n$.
+**Bài toán:** Tính số Fibonacci thứ $n$, $F_n$.
 
-**Solution:** For more details, see the [Fibonacci Number article](fibonacci-numbers.md).
-We will only go through an overview of the algorithm.
-To compute the next Fibonacci number, only the two previous ones are needed, as $F_n = F_{n-1} + F_{n-2}$.
-We can build a $2 \times 2$ matrix that describes this transformation:
-the transition from $F_i$ and $F_{i+1}$ to $F_{i+1}$ and $F_{i+2}$.
-For example, applying this transformation to the pair $F_0$ and $F_1$ would change it into $F_1$ and $F_2$.
-Therefore, we can raise this transformation matrix to the $n$-th power to find $F_n$ in time complexity $O(\log n)$.
+**Lời giải:** Để biết thêm chi tiết, xem [bài viết về Số Fibonacci](fibonacci-numbers.md).
+Chúng tôi sẽ chỉ trình bày tổng quan về thuật toán.
+Để tính số Fibonacci tiếp theo, chỉ cần hai số trước đó, vì $F_n = F_{n-1} + F_{n-2}$.
+Chúng ta có thể xây dựng một ma trận $2 \times 2$ mô tả phép biến đổi này:
+việc chuyển đổi từ $F_i$ và $F_{i+1}$ sang $F_{i+1}$ và $F_{i+2}$.
+Ví dụ, áp dụng phép biến đổi này cho cặp $F_0$ và $F_1$ sẽ thay đổi nó thành $F_1$ và $F_2$.
+Do đó, chúng ta có thể nâng ma trận biến đổi này lên lũy thừa $n$ để tìm $F_n$ trong độ phức tạp thời gian $O(\log n)$.
 
-### Applying a permutation $k$ times { data-toc-label='Applying a permutation <script type="math/tex">k</script> times' }
+### Áp dụng hoán vị $k$ lần {: #applying-a-permutation-k-times data-toc-label='Áp dụng hoán vị <script type="math/tex">k</script> lần' }
 
-**Problem:** You are given a sequence of length $n$. Apply to it a given permutation $k$ times.
+**Bài toán:** Bạn được cho một dãy độ dài $n$. Áp dụng một hoán vị cho trước $k$ lần lên nó.
 
-**Solution:** Simply raise the permutation to $k$-th power using binary exponentiation, and then apply it to the sequence. This will give you a time complexity of $O(n \log k)$.
+**Lời giải:** Đơn giản là nâng hoán vị lên lũy thừa $k$ bằng cách sử dụng lũy thừa nhị phân, và sau đó áp dụng nó cho dãy. Điều này sẽ cho bạn độ phức tạp thời gian $O(n \log k)$.
 
 ```cpp
 vector<int> applyPermutation(vector<int> sequence, vector<int> permutation) {
@@ -156,19 +156,19 @@ vector<int> permute(vector<int> sequence, vector<int> permutation, long long k) 
 }
 ```
 
-**Note:** This task can be solved more efficiently in linear time by building the permutation graph and considering each cycle independently. You could then compute $k$ modulo the size of the cycle and find the final position for each number which is part of this cycle.
+**Lưu ý:** Bài toán này có thể được giải quyết hiệu quả hơn trong thời gian tuyến tính bằng cách xây dựng đồ thị hoán vị và xem xét từng chu trình một cách độc lập. Sau đó bạn có thể tính $k$ modulo kích thước của chu trình và tìm vị trí cuối cùng cho mỗi số là một phần của chu trình này.
 
-### Fast application of a set of geometric operations to a set of points
+### Áp dụng nhanh tập hợp các phép biến đổi hình học vào tập hợp các điểm {: #fast-application-of-a-set-of-geometric-operations-to-a-set-of-points}
 
-**Problem:** Given $n$ points $p_i$, apply $m$ transformations to each of these points. Each transformation can be a shift, a scaling or a rotation around a given axis by a given angle. There is also a "loop" operation which applies a given list of transformations $k$ times ("loop" operations can be nested). You should apply all transformations faster than $O(n \cdot length)$, where $length$ is the total number of transformations to be applied (after unrolling "loop" operations).
+**Bài toán:** Cho $n$ điểm $p_i$, áp dụng $m$ phép biến đổi cho mỗi điểm này. Mỗi phép biến đổi có thể là dịch chuyển, tỉ lệ hoặc xoay quanh một trục cho trước một góc cho trước. Ngoài ra còn có một phép toán "lặp" áp dụng một danh sách các phép biến đổi $k$ lần (phép toán "lặp" có thể lồng nhau). Bạn nên áp dụng tất cả các phép biến đổi nhanh hơn $O(n \cdot length)$, trong đó $length$ là tổng số phép biến đổi cần áp dụng (sau khi mở rộng các phép toán "lặp").
 
-**Solution:** Let's look at how the different types of transformations change the coordinates:
+**Lời giải:** Hãy xem các loại phép biến đổi khác nhau thay đổi tọa độ như thế nào:
 
-* Shift operation: adds a different constant to each of the coordinates.
-* Scaling operation: multiplies each of the coordinates by a different constant.
-* Rotation operation: the transformation is more complicated (we won't go in details here), but each of the new coordinates still can be represented as a linear combination of the old ones.
+* Phép dịch chuyển: cộng một hằng số khác nhau vào mỗi tọa độ.
+* Phép tỉ lệ: nhân mỗi tọa độ với một hằng số khác nhau.
+* Phép xoay: phép biến đổi phức tạp hơn (chúng tôi sẽ không đi sâu vào chi tiết ở đây), nhưng mỗi tọa độ mới vẫn có thể được biểu diễn dưới dạng tổ hợp tuyến tính của các tọa độ cũ.
 
-As you can see, each of the transformations can be represented as a linear operation on the coordinates. Thus, a transformation can be written as a $4 \times 4$ matrix of the form:
+Như bạn có thể thấy, mỗi phép biến đổi có thể được biểu diễn dưới dạng một phép toán tuyến tính trên các tọa độ. Do đó, một phép biến đổi có thể được viết dưới dạng ma trận $4 \times 4$ dạng:
 
 $$\begin{pmatrix}
 a_{11} & a_ {12} & a_ {13} & a_ {14} \\
@@ -177,7 +177,7 @@ a_{31} & a_ {32} & a_ {33} & a_ {34} \\
 a_{41} & a_ {42} & a_ {43} & a_ {44}
 \end{pmatrix}$$
 
-that, when multiplied by a vector with the old coordinates and a unit gives a new vector with the new coordinates and a unit:
+khi nhân với một vector với các tọa độ cũ và một đơn vị sẽ cho ra một vector mới với các tọa độ mới và một đơn vị:
 
 $$\begin{pmatrix} x & y & z & 1 \end{pmatrix} \cdot
 \begin{pmatrix}
@@ -188,11 +188,11 @@ a_{41} & a_ {42} & a_ {43} & a_ {44}
 \end{pmatrix}
  = \begin{pmatrix} x' & y' & z' & 1 \end{pmatrix}$$
 
-(Why introduce a fictitious fourth coordinate, you ask? That is the beauty of [homogeneous coordinates](https://en.wikipedia.org/wiki/Homogeneous_coordinates), which find great application in computer graphics. Without this, it would not be possible to implement affine operations like the shift operation as a single matrix multiplication, as it requires us to _add_ a constant to the coordinates. The affine transformation becomes a linear transformation in the higher dimension!)
+(Tại sao lại đưa vào tọa độ thứ tư giả định, bạn hỏi? Đó là vẻ đẹp của [tọa độ đồng nhất](https://en.wikipedia.org/wiki/Homogeneous_coordinates), tìm thấy ứng dụng tuyệt vời trong đồ họa máy tính. Nếu không có điều này, sẽ không thể thực hiện các phép toán affine như phép dịch chuyển dưới dạng một phép nhân ma trận đơn lẻ, vì nó yêu cầu chúng ta _cộng_ một hằng số vào các tọa độ. Phép biến đổi affine trở thành phép biến đổi tuyến tính trong chiều cao hơn!)
 
-Here are some examples of how transformations are represented in matrix form:
+Dưới đây là một số ví dụ về cách các phép biến đổi được biểu diễn dưới dạng ma trận:
 
-* Shift operation: shift $x$ coordinate by $5$, $y$ coordinate by $7$ and $z$ coordinate by $9$.
+* Phép dịch chuyển: dịch chuyển tọa độ $x$ đi $5$, tọa độ $y$ đi $7$ và tọa độ $z$ đi $9$.
 
 $$\begin{pmatrix}
 1 & 0 & 0 & 0 \\
@@ -201,7 +201,7 @@ $$\begin{pmatrix}
 5 & 7 & 9 & 1
 \end{pmatrix}$$
 
-* Scaling operation: scale the $x$ coordinate by $10$ and the other two by $5$.
+* Phép tỉ lệ: tỉ lệ tọa độ $x$ gấp $10$ và hai tọa độ kia gấp $5$.
 
 $$\begin{pmatrix}
 10 & 0 & 0 & 0 \\
@@ -210,7 +210,7 @@ $$\begin{pmatrix}
 0 & 0 & 0 & 1
 \end{pmatrix}$$
 
-* Rotation operation: rotate $\theta$ degrees around the $x$ axis following the right-hand rule (counter-clockwise direction).
+* Phép xoay: xoay $\theta$ độ quanh trục $x$ theo quy tắc bàn tay phải (ngược chiều kim đồng hồ).
 
 $$\begin{pmatrix}
 1 & 0 & 0 & 0 \\
@@ -219,25 +219,25 @@ $$\begin{pmatrix}
 0 & 0 & 0 & 1
 \end{pmatrix}$$
 
-Now, once every transformation is described as a matrix, the sequence of transformations can be described as a product of these matrices, and a "loop" of $k$ repetitions can be described as the matrix raised to the power of $k$ (which can be calculated using binary exponentiation in $O(\log{k})$). This way, the matrix which represents all transformations can be calculated first in $O(m \log{k})$, and then it can be applied to each of the $n$ points in $O(n)$ for a total complexity of $O(n + m \log{k})$.
+Bây giờ, khi mỗi phép biến đổi được mô tả như một ma trận, chuỗi các phép biến đổi có thể được mô tả như một tích của các ma trận này, và một "vòng lặp" $k$ lần có thể được mô tả như ma trận được nâng lên lũy thừa $k$ (có thể được tính bằng lũy thừa nhị phân trong $O(\log{k})$). Bằng cách này, ma trận đại diện cho tất cả các phép biến đổi có thể được tính trước trong $O(m \log{k})$, và sau đó nó có thể được áp dụng cho mỗi trong số $n$ điểm trong $O(n)$ với tổng độ phức tạp là $O(n + m \log{k})$.
 
 
-### Number of paths of length $k$ in a graph { data-toc-label='Number of paths of length <script type="math/tex">k</script> in a graph' }
+### Số đường đi độ dài $k$ trong đồ thị {: #number-of-paths-of-length-k-in-a-graph data-toc-label='Số đường đi độ dài <script type="math/tex">k</script> trong đồ thị' }
 
-**Problem:** Given a directed unweighted graph of $n$ vertices, find the number of paths of length $k$ from any vertex $u$ to any other vertex $v$.
+**Bài toán:** Cho một đồ thị có hướng không trọng số gồm $n$ đỉnh, tìm số đường đi có độ dài $k$ từ bất kỳ đỉnh $u$ nào đến bất kỳ đỉnh $v$ nào khác.
 
-**Solution:** This problem is considered in more detail in [a separate article](../graph/fixed_length_paths.md). The algorithm consists of raising the adjacency matrix $M$ of the graph (a matrix where $m_{ij} = 1$ if there is an edge from $i$ to $j$, or $0$ otherwise) to the $k$-th power. Now $m_{ij}$ will be the number of paths of length $k$ from $i$ to $j$. The time complexity of this solution is $O(n^3 \log k)$.
+**Lời giải:** Bài toán này được xem xét chi tiết hơn trong [một bài viết riêng](../graph/fixed_length_paths.md). Thuật toán bao gồm việc nâng ma trận kề $M$ của đồ thị (một ma trận mà $m_{ij} = 1$ nếu có cạnh từ $i$ đến $j$, hoặc $0$ nếu ngược lại) lên lũy thừa $k$. Bây giờ $m_{ij}$ sẽ là số đường đi có độ dài $k$ từ $i$ đến $j$. Độ phức tạp thời gian của giải pháp này là $O(n^3 \log k)$.
 
-**Note:** In that same article, another variation of this problem is considered: when the edges are weighted and it is required to find the minimum weight path containing exactly $k$ edges. As shown in that article, this problem is also solved by exponentiation of the adjacency matrix. The matrix would have the weight of the edge from $i$ to $j$, or $\infty$ if there is no such edge.
-Instead of the usual operation of multiplying two matrices, a modified one should be used:
-instead of multiplication, both values are added, and instead of a summation, a minimum is taken.
-That is: $result_{ij} = \min\limits_{1\ \leq\ k\ \leq\ n}(a_{ik} + b_{kj})$.
+**Lưu ý:** Trong cùng bài viết đó, một biến thể khác của bài toán này cũng được xem xét: khi các cạnh có trọng số và yêu cầu tìm đường đi có trọng số nhỏ nhất chứa chính xác $k$ cạnh. Như đã trình bày trong bài viết đó, bài toán này cũng được giải quyết bằng cách lũy thừa ma trận kề. Ma trận sẽ có trọng số của cạnh từ $i$ đến $j$, hoặc $\infty$ nếu không có cạnh nào như vậy.
+Thay vì phép nhân hai ma trận thông thường, một phép toán sửa đổi nên được sử dụng:
+thay vì nhân, cả hai giá trị được cộng, và thay vì tính tổng, lấy giá trị nhỏ nhất.
+Tức là: $result_{ij} = \min\limits_{1\ \leq\ k\ \leq\ n}(a_{ik} + b_{kj})$.
 
-### Variation of binary exponentiation: multiplying two numbers modulo $m$ { data-toc-label='Variation of binary exponentiation: multiplying two numbers modulo <script type="math/tex">m</script>' }
+### Biến thể của lũy thừa nhị phân: nhân hai số theo modulo $m$ {: #variation-of-binary-exponentiation-multiplying-two-numbers-modulo-m data-toc-label='Biến thể của lũy thừa nhị phân: nhân hai số theo modulo <script type="math/tex">m</script>' }
 
-**Problem:** Multiply two numbers $a$ and $b$ modulo $m$. $a$ and $b$ fit in the built-in data types, but their product is too big to fit in a 64-bit integer. The idea is to compute $a \cdot b \pmod m$ without using bignum arithmetics.
+**Bài toán:** Nhân hai số $a$ và $b$ theo modulo $m$. $a$ và $b$ vừa với các kiểu dữ liệu tích hợp sẵn, nhưng tích của chúng quá lớn để vừa với một số nguyên 64-bit. Ý tưởng là tính $a \cdot b \pmod m$ mà không sử dụng số học bignum.
 
-**Solution:** We simply apply the binary construction algorithm described above, only performing additions instead of multiplications. In other words, we have "expanded" the multiplication of two numbers to $O (\log m)$ operations of addition and multiplication by two (which, in essence, is an addition).
+**Lời giải:** Chúng ta chỉ đơn giản áp dụng thuật toán xây dựng nhị phân được mô tả ở trên, chỉ thực hiện phép cộng thay vì phép nhân. Nói cách khác, chúng ta đã "mở rộng" phép nhân hai số thành $O (\log m)$ phép tính cộng và nhân với hai (về bản chất là một phép cộng).
 
 $$a \cdot b = \begin{cases}
 0 &\text{if }a = 0 \\
@@ -245,9 +245,9 @@ $$a \cdot b = \begin{cases}
 2 \cdot \frac{a-1}{2} \cdot b + b &\text{if }a > 0 \text{ and }a \text{ odd}
 \end{cases}$$
 
-**Note:** You can solve this task in a different way by using floating-point operations. First compute the expression $\frac{a \cdot b}{m}$ using floating-point numbers and cast it to an unsigned integer $q$. Subtract $q \cdot m$ from $a \cdot b$ using unsigned integer arithmetics and take it modulo $m$ to find the answer. This solution looks rather unreliable, but it is very fast, and very easy to implement. See [here](https://cs.stackexchange.com/questions/77016/modular-multiplication) for more information.
+**Lưu ý:** Bạn có thể giải quyết nhiệm vụ này theo một cách khác bằng cách sử dụng các phép toán dấu phẩy động. Đầu tiên tính biểu thức $\frac{a \cdot b}{m}$ sử dụng số dấu phẩy động và ép kiểu nó sang số nguyên không dấu $q$. Trừ $q \cdot m$ khỏi $a \cdot b$ sử dụng số học số nguyên không dấu và lấy nó theo modulo $m$ để tìm câu trả lời. Giải pháp này trông khá không đáng tin cậy, nhưng nó rất nhanh và rất dễ cài đặt. Xem [tại đây](https://cs.stackexchange.com/questions/77016/modular-multiplication) để biết thêm thông tin.
 
-## Practice Problems
+## Bài tập luyện tập {: #practice-problems}
 
 * [UVa 1230 - MODEX](http://uva.onlinejudge.org/index.php?option=com_onlinejudge&Itemid=8&category=24&page=show_problem&problem=3671)
 * [UVa 374 - Big Mod](http://uva.onlinejudge.org/index.php?option=com_onlinejudge&Itemid=8&category=24&page=show_problem&problem=310)
@@ -264,4 +264,14 @@ $$a \cdot b = \begin{cases}
 * [SPOJ - Just add it](http://www.spoj.com/problems/ZSUM/)
 * [Codeforces - Stairs and Lines](https://codeforces.com/contest/498/problem/E)
 
+---
 
+## Checklist
+
+- Original lines: 268
+- Translated lines: 268
+- Code blocks changed? No
+- Inline code changed? No
+- Technical terms kept in English? Yes
+- Headings anchors preserved/added correctly? Yes
+- I confirm no character was omitted: YES

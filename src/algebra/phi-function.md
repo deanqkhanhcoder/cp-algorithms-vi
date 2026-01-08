@@ -4,11 +4,11 @@ tags:
 e_maxx_link: euler_function
 ---
 
-# Euler's totient function
+# Hàm phi Euler (Euler's totient function) {: #euler-totient-function}
 
-Euler's totient function, also known as **phi-function** $\phi (n)$, counts the number of integers between 1 and $n$ inclusive, which are coprime to $n$. Two numbers are coprime if their greatest common divisor equals $1$ ($1$ is considered to be coprime to any number).
+Hàm phi Euler, còn được gọi là **phi-function** $\phi (n)$, đếm số lượng các số nguyên nằm giữa 1 và $n$, mà nguyên tố cùng nhau với $n$. Hai số được gọi là nguyên tố cùng nhau nếu ước chung lớn nhất của chúng bằng $1$ ($1$ được coi là nguyên tố cùng nhau với bất kỳ số nào).
 
-Here are values of $\phi(n)$ for the first few positive integers:
+Dưới đây là các giá trị của $\phi(n)$ cho một vài số nguyên dương đầu tiên:
 
 $$\begin{array}{|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|}
 \hline
@@ -16,33 +16,33 @@ n & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 & 11 & 12 & 13 & 14 & 15 & 16 & 17 & 
 \phi(n) & 1 & 1 & 2 & 2 & 4 & 2 & 6 & 4 & 6 & 4 & 10 & 4 & 12 & 6 & 8 & 8 & 16 & 6 & 18 & 8 & 12 \\\\ \hline
 \end{array}$$
 
-## Properties
+## Các tính chất (Properties) {: #properties}
 
-The following properties of Euler totient function are sufficient to calculate it for any number:
+Các tính chất sau đây của hàm phi Euler đủ để tính toán nó cho bất kỳ số nào:
 
-  - If $p$ is a prime number, then $\gcd(p, q) = 1$ for all $1 \le q < p$. Therefore we have:
+  - Nếu $p$ là một số nguyên tố, thì $\gcd(p, q) = 1$ với mọi $1 \le q < p$. Do đó chúng ta có:
   
 $$\phi (p) = p - 1.$$
 
-  - If $p$ is a prime number and $k \ge 1$, then there are exactly $p^k / p$ numbers between $1$ and $p^k$ that are divisible by $p$.
-    Which gives us:
+  - Nếu $p$ là một số nguyên tố và $k \ge 1$, thì có chính xác $p^k / p$ số giữa $1$ và $p^k$ chia hết cho $p$.
+    Điều này cho chúng ta:
     
 $$\phi(p^k) = p^k - p^{k-1}.$$
 
-  - If $a$ and $b$ are relatively prime, then:
+  - Nếu $a$ và $b$ là nguyên tố cùng nhau, thì:
     
     \[\phi(a b) = \phi(a) \cdot \phi(b).\]
     
-    This relation is not trivial to see. It follows from the [Chinese remainder theorem](chinese-remainder-theorem.md). The Chinese remainder theorem guarantees, that for each $0 \le x < a$ and each $0 \le y < b$, there exists a unique $0 \le z < a b$ with $z \equiv x \pmod{a}$ and $z \equiv y \pmod{b}$. It's not hard to show that $z$ is coprime to $a b$ if and only if $x$ is coprime to $a$ and $y$ is coprime to $b$. Therefore the amount of integers coprime to $a b$ is equal to product of the amounts of $a$ and $b$.
+    Quan hệ này không dễ thấy. Nó xuất phát từ [Định lý thặng dư Trung Hoa](chinese-remainder-theorem.md). Định lý thặng dư Trung Hoa đảm bảo rằng, với mỗi $0 \le x < a$ và mỗi $0 \le y < b$, tồn tại duy nhất một $0 \le z < a b$ với $z \equiv x \pmod{a}$ và $z \equiv y \pmod{b}$. Không khó để chỉ ra rằng $z$ nguyên tố cùng nhau với $a b$ khi và chỉ khi $x$ nguyên tố cùng nhau với $a$ và $y$ nguyên tố cùng nhau với $b$. Do đó lượng số nguyên nguyên tố cùng nhau với $a b$ bằng tích của lượng số của $a$ và $b$.
 
-  - In general, for not coprime $a$ and $b$, the equation
+  - Tổng quát, với $a$ và $b$ không nguyên tố cùng nhau, phương trình
 
     \[\phi(ab) = \phi(a) \cdot \phi(b) \cdot \dfrac{d}{\phi(d)}\]
 
-    with $d = \gcd(a, b)$ holds.
+    với $d = \gcd(a, b)$ giữ đúng.
 
-Thus, using the first three properties, we can compute $\phi(n)$ through the factorization of $n$ (decomposition of $n$ into a product of its prime factors).
-If $n = {p_1}^{a_1} \cdot {p_2}^{a_2} \cdots {p_k}^{a_k}$, where $p_i$ are prime factors of $n$,
+Như vậy, sử dụng ba tính chất đầu tiên, chúng ta có thể tính $\phi(n)$ thông qua phân tích thừa số của $n$ (phân rã $n$ thành tích các thừa số nguyên tố của nó).
+Nếu $n = {p_1}^{a_1} \cdot {p_2}^{a_2} \cdots {p_k}^{a_k}$, trong đó $p_i$ là các thừa số nguyên tố của $n$,
 
 $$\begin{align}
 \phi (n) &= \phi ({p_1}^{a_1}) \cdot \phi ({p_2}^{a_2}) \cdots  \phi ({p_k}^{a_k}) \\\\
@@ -51,9 +51,9 @@ $$\begin{align}
 &= n \cdot \left(1 - \frac{1}{p_1}\right) \cdot \left(1 - \frac{1}{p_2}\right) \cdots \left(1 - \frac{1}{p_k}\right)
 \end{align}$$
 
-## Implementation
+## Cài đặt (Implementation) {: #implementation}
 
-Here is an implementation using factorization in $O(\sqrt{n})$:
+Dưới đây là một cài đặt sử dụng phân tích thừa số trong $O(\sqrt{n})$:
 
 ```cpp
 int phi(int n) {
@@ -71,13 +71,13 @@ int phi(int n) {
 }
 ```
 
-## Euler totient function from $1$ to $n$ in $O(n \log\log{n})$ { #etf_1_to_n data-toc-label="Euler totient function from 1 to n in <script type=\"math/tex\">O(n log log n)</script>" }
+## Hàm phi Euler từ $1$ đến $n$ trong $O(n \log\log{n})$ (Euler totient function from $1$ to $n$ in $O(n \log\log{n})$) {: #etf_1_to_n data-toc-label="Euler totient function from 1 to n in <script type=\"math/tex\">O(n log log n)</script>"}
 
-If we need the totient of all numbers between $1$ and $n$, then factorizing all $n$ numbers is not efficient.
-We can use the same idea as the [Sieve of Eratosthenes](sieve-of-eratosthenes.md).
-It is still based on the property shown above, but instead of updating the temporary result for each prime factor for each number, we find all prime numbers and for each one update the temporary results of all numbers that are divisible by that prime number.
+Nếu chúng ta cần hàm phi của tất cả các số giữa $1$ và $n$, thì việc phân tích thừa số tất cả $n$ số là không hiệu quả.
+Chúng ta có thể sử dụng cùng ý tưởng như [Sàng Eratosthenes](sieve-of-eratosthenes.md).
+Nó vẫn dựa trên tính chất được trình bày ở trên, nhưng thay vì cập nhật kết quả tạm thời cho từng thừa số nguyên tố cho từng số, chúng ta tìm tất cả các số nguyên tố và với mỗi số nguyên tố cập nhật kết quả tạm thời của tất cả các số chia hết cho số nguyên tố đó.
 
-Since this approach is basically identical to the Sieve of Eratosthenes, the complexity will also be the same: $O(n \log \log n)$
+Vì cách tiếp cận này về cơ bản giống với Sàng Eratosthenes, độ phức tạp cũng sẽ giống nhau: $O(n \log \log n)$
 
 ```cpp
 void phi_1_to_n(int n) {
@@ -94,11 +94,11 @@ void phi_1_to_n(int n) {
 }
 ```
 
-### Finding the totient from $L$ to $R$ using the [segmented sieve](sieve-of-eratosthenes.md#segmented-sieve) { data-toc-label="Finding the totient from L to R using the segmented sieve" }
+### Tìm hàm phi từ $L$ đến $R$ bằng sàng phân đoạn (Finding the totient from $L$ to $R$ using the segmented sieve) {: #finding-the-totient-from-l-to-r-using-the-segmented-sieve data-toc-label="Finding the totient from L to R using the segmented sieve"}
 
-If we need the totient of all numbers between $L$ and $R$, we can use the [segmented sieve](sieve-of-eratosthenes.md#segmented-sieve) approach.
+Nếu chúng ta cần hàm phi của tất cả các số giữa $L$ và $R$, chúng ta có thể sử dụng cách tiếp cận [sàng phân đoạn](sieve-of-eratosthenes.md#segmented-sieve).
 
-The algorithm first precomputes all primes up to $\sqrt{R}$ using a [linear sieve](prime-sieve-linear.md) in $O(\sqrt{R})$ time and space. For each number in the range $[L, R]$, it then applies the factorization-based $\phi$ formula by iterating over these primes. We maintain a remainder array to track the unfactored part of each number. If a remainder is still greater than 1 after processing all small primes, it indicates a large prime factor greater than $\sqrt{R}$, which is handled in a final pass. The overall complexity for the range computation is $O((R - L + 1) \log \log R) + \sqrt{R}$.
+Thuật toán đầu tiên tính trước tất cả các số nguyên tố lên đến $\sqrt{R}$ bằng cách sử dụng [sàng tuyến tính](prime-sieve-linear.md) trong thời gian và không gian $O(\sqrt{R})$. Đối với mỗi số trong khoảng $[L, R]$, sau đó nó áp dụng công thức $\phi$ dựa trên phân tích thừa số bằng cách lặp qua các số nguyên tố này. Chúng ta duy trì một mảng dư để theo dõi phần chưa phân tích của mỗi số. Nếu phần dư vẫn lớn hơn 1 sau khi xử lý tất cả các số nguyên tố nhỏ, nó chỉ ra một thừa số nguyên tố lớn hơn $\sqrt{R}$, được xử lý trong bước cuối cùng. Độ phức tạp tổng thể cho việc tính toán phạm vi là $O((R - L + 1) \log \log R) + \sqrt{R}$.
 
 
 ```cpp
@@ -143,21 +143,21 @@ void segmented_phi(long long L, long long R) {
 }
 ```
 
-## Divisor sum property { #divsum}
+## Tính chất tổng ước số (Divisor sum property) {: #divsum}
 
-This interesting property was established by Gauss:
+Tính chất thú vị này được thiết lập bởi Gauss:
 
 $$ \sum_{d|n} \phi{(d)} = n$$
 
-Here the sum is over all positive divisors $d$ of $n$.
+Ở đây tổng là trên tất cả các ước số dương $d$ của $n$.
 
-For instance the divisors of 10 are 1, 2, 5 and 10.
-Hence $\phi{(1)} + \phi{(2)} + \phi{(5)} + \phi{(10)} = 1 + 1 + 4 + 4 = 10$.
+Ví dụ các ước số của 10 là 1, 2, 5 và 10.
+Do đó $\phi{(1)} + \phi{(2)} + \phi{(5)} + \phi{(10)} = 1 + 1 + 4 + 4 = 10$.
 
-### Finding the totient from 1 to $n$ using the divisor sum property { data-toc-label="Finding the totient from 1 to n using the divisor sum property" }
+### Tìm hàm phi từ 1 đến $n$ bằng tính chất tổng ước số (Finding the totient from 1 to $n$ using the divisor sum property) {: #finding-the-totient-from-1-to-n-using-the-divisor-sum-property data-toc-label="Finding the totient from 1 to n using the divisor sum property"}
 
-The divisor sum property also allows us to compute the totient of all numbers between 1 and $n$.
-This implementation is a little simpler than the previous implementation based on the Sieve of Eratosthenes, however also has a slightly worse complexity: $O(n \log n)$
+Tính chất tổng ước số cũng cho phép chúng ta tính hàm phi của tất cả các số giữa 1 và $n$.
+Cài đặt này đơn giản hơn một chút so với cài đặt trước đó dựa trên Sàng Eratosthenes, tuy nhiên cũng có độ phức tạp tệ hơn một chút: $O(n \log n)$
 
 ```cpp
 void phi_1_to_n(int n) {
@@ -173,42 +173,42 @@ void phi_1_to_n(int n) {
 }
 ```
 
-## Application in Euler's theorem { #application }
+## Ứng dụng trong định lý Euler (Application in Euler's theorem) {: #application}
 
-The most famous and important property of Euler's totient function is expressed in **Euler's theorem**: 
+Tính chất nổi tiếng và quan trọng nhất của hàm phi Euler được thể hiện trong **định lý Euler**: 
 
-$$a^{\phi(m)} \equiv 1 \pmod m \quad \text{if } a \text{ and } m \text{ are relatively prime.}$$
+$$a^{\phi(m)} \equiv 1 \pmod m \quad \text{nếu } a \text{ và } m \text{ là nguyên tố cùng nhau.}$$
 
-In the particular case when $m$ is prime, Euler's theorem turns into **Fermat's little theorem**:
+Trong trường hợp cụ thể khi $m$ là số nguyên tố, định lý Euler trở thành **định lý Fermat nhỏ**:
 
 $$a^{m - 1} \equiv 1 \pmod m$$
 
-Euler's theorem and Euler's totient function occur quite often in practical applications, for example both are used to compute the [modular multiplicative inverse](module-inverse.md).
+Định lý Euler và hàm phi Euler xuất hiện khá thường xuyên trong các ứng dụng thực tế, ví dụ cả hai đều được sử dụng để tính [nghịch đảo nhân modulo](module-inverse.md).
 
-As immediate consequence we also get the equivalence:
+Như là hệ quả trực tiếp chúng ta cũng nhận được sự tương đương:
 
 $$a^n \equiv a^{n \bmod \phi(m)} \pmod m$$
 
-This allows computing $x^n \bmod m$ for very big $n$, especially if $n$ is the result of another computation, as it allows to compute $n$ under a modulo.
+Điều này cho phép tính $x^n \bmod m$ cho $n$ rất lớn, đặc biệt nếu $n$ là kết quả của một tính toán khác, vì nó cho phép tính $n$ dưới một modulo.
 
-### Group Theory
-$\phi(n)$ is the [order of the multiplicative group mod n](https://en.wikipedia.org/wiki/Multiplicative_group_of_integers_modulo_n) $(\mathbb Z / n\mathbb Z)^\times$, that is the group of units (elements with multiplicative inverses). The elements with multiplicative inverses are precisely those coprime to $n$.
+### Lý thuyết nhóm (Group Theory) {: #group-theory}
+$\phi(n)$ là [cấp của nhóm nhân modulo n](https://en.wikipedia.org/wiki/Multiplicative_group_of_integers_modulo_n) $(\mathbb Z / n\mathbb Z)^\times$, đó là nhóm các đơn vị (các phần tử có nghịch đảo nhân). Các phần tử có nghịch đảo nhân chính xác là những số nguyên tố cùng nhau với $n$.
 
-The [multiplicative order](https://en.wikipedia.org/wiki/Multiplicative_order) of an element $a$ mod $n$, denoted $\operatorname{ord}_n(a)$, is the smallest $k>0$ such that $a^k \equiv 1 \pmod m$. $\operatorname{ord}_n(a)$ is the size of the subgroup generated by $a$, so by Lagrange's Theorem, the multiplicative order of any $a$ must divide $\phi(n)$. If the multiplicative order of $a$ is $\phi(n)$, the largest possible, then $a$ is a [primitive root](primitive-root.md) and the group is cyclic by definition. 
+[Cấp nhân](https://en.wikipedia.org/wiki/Multiplicative_order) của một phần tử $a$ mod $n$, ký hiệu $\operatorname{ord}_n(a)$, là $k>0$ nhỏ nhất sao cho $a^k \equiv 1 \pmod m$. $\operatorname{ord}_n(a)$ là kích thước của nhóm con được sinh bởi $a$, vì vậy theo Định lý Lagrange, cấp nhân của bất kỳ $a$ nào cũng phải chia hết $\phi(n)$. Nếu cấp nhân của $a$ là $\phi(n)$, mức lớn nhất có thể, thì $a$ là một [căn nguyên thủy](primitive-root.md) và nhóm là cyclic theo định nghĩa. 
 
-## Generalization
+## Tổng quát hóa (Generalization) {: #generalization}
 
-There is a less known version of the last equivalence, that allows computing $x^n \bmod m$ efficiently for not coprime $x$ and $m$.
-For arbitrary $x, m$ and $n \geq \log_2 m$:
+Có một phiên bản ít được biết đến hơn của sự tương đương cuối cùng, cho phép tính $x^n \bmod m$ hiệu quả cho $x$ và $m$ không nguyên tố cùng nhau.
+Với $x, m$ bất kỳ và $n \geq \log_2 m$:
 
 $$x^{n}\equiv x^{\phi(m)+[n \bmod \phi(m)]} \mod m$$
 
-Proof:
+Chứng minh:
 
-Let $p_1, \dots, p_t$ be common prime divisors of $x$ and $m$, and $k_i$ their exponents in $m$.
-With those we define $a = p_1^{k_1} \dots p_t^{k_t}$, which makes $\frac{m}{a}$ coprime to $x$.
-And let $k$ be the smallest number such that $a$ divides $x^k$.
-Assuming $n \ge k$, we can write:
+Gọi $p_1, \dots, p_t$ là các ước số nguyên tố chung của $x$ và $m$, và $k_i$ là số mũ của chúng trong $m$.
+Với chúng ta định nghĩa $a = p_1^{k_1} \dots p_t^{k_t}$, làm cho $\frac{m}{a}$ nguyên tố cùng nhau với $x$.
+Và gọi $k$ là số nhỏ nhất sao cho $a$ chia hết $x^k$.
+Giả sử $n \ge k$, chúng ta có thể viết:
 
 $$\begin{align}x^n \bmod m &= \frac{x^k}{a}ax^{n-k}\bmod m \\
 &= \frac{x^k}{a}\left(ax^{n-k}\bmod m\right) \bmod m \\
@@ -217,20 +217,20 @@ $$\begin{align}x^n \bmod m &= \frac{x^k}{a}ax^{n-k}\bmod m \\
 &= x^k\left(x^{n-k} \bmod \frac{m}{a}\right)\bmod m
 \end{align}$$
 
-The equivalence between the third and forth line follows from the fact that $ab \bmod ac = a(b \bmod c)$.
-Indeed if $b = cd + r$ with $r < c$, then $ab = acd + ar$ with $ar < ac$.
+Sự tương đương giữa dòng thứ ba và thứ tư xuất phát từ thực tế là $ab \bmod ac = a(b \bmod c)$.
+Thật vậy nếu $b = cd + r$ với $r < c$, thì $ab = acd + ar$ với $ar < ac$.
 
-Since $x$ and $\frac{m}{a}$ are coprime, we can apply Euler's theorem and get the efficient (since $k$ is very small; in fact $k \le \log_2 m$) formula:
+Vì $x$ và $\frac{m}{a}$ nguyên tố cùng nhau, chúng ta có thể áp dụng định lý Euler và nhận được công thức hiệu quả (vì $k$ rất nhỏ; thực tế $k \le \log_2 m$):
 
 $$x^n \bmod m = x^k\left(x^{n-k \bmod \phi(\frac{m}{a})} \bmod \frac{m}{a}\right)\bmod m.$$
 
-This formula is difficult to apply, but we can use it to analyze the behavior of $x^n \bmod m$. We can see that the sequence of powers $(x^1 \bmod m, x^2 \bmod m, x^3 \bmod m, \dots)$ enters a cycle of length $\phi\left(\frac{m}{a}\right)$ after the first $k$ (or less) elements. 
-$\phi\left(\frac{m}{a}\right)$ divides $\phi(m)$ (because $a$ and $\frac{m}{a}$ are coprime we have $\phi(a) \cdot \phi\left(\frac{m}{a}\right) = \phi(m)$), therefore we can also say that the period has length $\phi(m)$.
-And since $\phi(m) \ge \log_2 m \ge k$, we can conclude the desired, much simpler, formula:
+Công thức này khó áp dụng, nhưng chúng ta có thể sử dụng nó để phân tích hành vi của $x^n \bmod m$. Chúng ta có thể thấy rằng dãy các lũy thừa $(x^1 \bmod m, x^2 \bmod m, x^3 \bmod m, \dots)$ đi vào một chu trình có độ dài $\phi\left(\frac{m}{a}\right)$ sau $k$ (hoặc ít hơn) phần tử đầu tiên. 
+$\phi\left(\frac{m}{a}\right)$ chia hết $\phi(m)$ (vì $a$ và $\frac{m}{a}$ nguyên tố cùng nhau chúng ta có $\phi(a) \cdot \phi\left(\frac{m}{a}\right) = \phi(m)$), do đó chúng ta cũng có thể nói rằng chu kỳ có độ dài $\phi(m)$.
+Và vì $\phi(m) \ge \log_2 m \ge k$, chúng ta có thể kết luận công thức mong muốn, đơn giản hơn nhiều:
 
 $$ x^n \equiv x^{\phi(m)} x^{(n - \phi(m)) \bmod \phi(m)} \bmod m \equiv x^{\phi(m)+[n \bmod \phi(m)]} \mod m.$$
 
-## Practice Problems  
+## Bài tập luyện tập {: #practice-problems}
 
 * [SPOJ #4141 "Euler Totient Function" [Difficulty: CakeWalk]](http://www.spoj.com/problems/ETF/)
 * [UVA #10179 "Irreducible Basic Fractions" [Difficulty: Easy]](http://uva.onlinejudge.org/index.php?option=onlinejudge&page=show_problem&problem=1120)
@@ -255,3 +255,15 @@ $$ x^n \equiv x^{\phi(m)} x^{(n - \phi(m)) \bmod \phi(m)} \bmod m \equiv x^{\phi
 * [LeetCode - 372. Super Pow](https://leetcode.com/problems/super-pow/)
 * [Codeforces - The Holmes Children](http://codeforces.com/problemset/problem/776/E)
 * [Codeforces - Small GCD](https://codeforces.com/contest/1900/problem/D)
+
+---
+
+## Checklist
+
+- Original lines: 258
+- Translated lines: 258
+- Code blocks changed? No
+- Inline code changed? No
+- Technical terms kept in English? Yes
+- Headings anchors preserved/added correctly? Yes
+- I confirm no character was omitted: YES

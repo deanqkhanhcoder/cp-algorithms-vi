@@ -4,110 +4,110 @@ tags:
 e_maxx_link: mst_prim
 ---
 
-# Minimum spanning tree - Prim's algorithm
+# Cây khung nhỏ nhất - Thuật toán Prim (Minimum spanning tree - Prim's algorithm) {: #minimum-spanning-tree-prims-algorithm}
 
-Given a weighted, undirected graph $G$ with $n$ vertices and $m$ edges.
-You want to find a spanning tree of this graph which connects all vertices and has the least weight (i.e. the sum of weights of edges is minimal).
-A spanning tree is a set of edges such that any vertex can reach any other by exactly one simple path.
-The spanning tree with the least weight is called a minimum spanning tree.
+Cho một đồ thị vô hướng có trọng số $G$ với $n$ đỉnh và $m$ cạnh.
+Bạn muốn tìm một cây khung (spanning tree) của đồ thị này kết nối tất cả các đỉnh và có trọng số nhỏ nhất (tức là tổng trọng số của các cạnh là nhỏ nhất).
+Một cây khung là một tập hợp các cạnh sao cho bất kỳ đỉnh nào cũng có thể đến bất kỳ đỉnh nào khác bằng chính xác một đường đi đơn giản.
+Cây khung có trọng số nhỏ nhất được gọi là cây khung nhỏ nhất (minimum spanning tree - MST).
 
-In the left image you can see a weighted undirected graph, and in the right image you can see the corresponding minimum spanning tree.
+Trong hình bên trái bạn có thể thấy một đồ thị vô hướng có trọng số, và trong hình bên phải bạn có thể thấy cây khung nhỏ nhất tương ứng.
 
 <div style="text-align: center;">
   <img src="MST_before.png" alt="Random graph">
   <img src="MST_after.png" alt="MST of this graph">
 </div>
 
-It is easy to see that any spanning tree will necessarily contain $n-1$ edges.
+Dễ dàng thấy rằng bất kỳ cây khung nào cũng nhất thiết chứa $n-1$ cạnh.
 
-This problem appears quite naturally in a lot of problems.
-For instance in the following problem:
-there are $n$ cities and for each pair of cities we are given the cost to build a road between them (or we know that is physically impossible to build a road between them).
-We have to build roads, such that we can get from each city to every other city, and the cost for building all roads is minimal.
+Bài toán này xuất hiện khá tự nhiên trong rất nhiều bài toán.
+Ví dụ trong bài toán sau:
+có $n$ thành phố và với mỗi cặp thành phố chúng ta được cho chi phí để xây dựng một con đường giữa chúng (hoặc chúng ta biết rằng về mặt vật lý là không thể xây dựng một con đường giữa chúng).
+Chúng ta phải xây dựng các con đường, sao cho chúng ta có thể đi từ mỗi thành phố đến mọi thành phố khác, và chi phí để xây dựng tất cả các con đường là nhỏ nhất.
 
-## Prim's Algorithm
+## Thuật toán Prim (Prim's Algorithm) {: #prims-algorithm}
 
-This algorithm was originally discovered by the Czech mathematician Vojtěch Jarník in 1930.
-However this algorithm is mostly known as Prim's algorithm after the American mathematician Robert Clay Prim, who rediscovered and republished it in 1957.
-Additionally Edsger Dijkstra published this algorithm in 1959.
+Thuật toán này ban đầu được phát hiện bởi nhà toán học người Séc Vojtěch Jarník vào năm 1930.
+Tuy nhiên thuật toán này chủ yếu được biết đến với tên gọi thuật toán Prim theo tên nhà toán học người Mỹ Robert Clay Prim, người đã phát hiện lại và xuất bản nó vào năm 1957.
+Ngoài ra Edsger Dijkstra đã xuất bản thuật toán này vào năm 1959.
 
-### Algorithm description
+### Mô tả thuật toán (Algorithm description)
 
-Here we describe the algorithm in its simplest form.
-The minimum spanning tree is built gradually by adding edges one at a time.
-At first the spanning tree consists only of a single vertex (chosen arbitrarily).
-Then the minimum weight edge outgoing from this vertex is selected and added to the spanning tree.
-After that the spanning tree already consists of two vertices.
-Now select and add the edge with the minimum weight that has one end in an already selected vertex (i.e. a vertex that is already part of the spanning tree), and the other end in an unselected vertex.
-And so on, i.e. every time we select and add the edge with minimal weight that connects one selected vertex with one unselected vertex.
-The process is repeated until the spanning tree contains all vertices (or equivalently until we have $n - 1$ edges).
+Ở đây chúng tôi mô tả thuật toán ở dạng đơn giản nhất của nó.
+Cây khung nhỏ nhất được xây dựng dần dần bằng cách thêm từng cạnh một.
+Ban đầu cây khung chỉ bao gồm một đỉnh duy nhất (được chọn tùy ý).
+Sau đó cạnh có trọng số nhỏ nhất đi ra từ đỉnh này được chọn và thêm vào cây khung.
+Sau đó cây khung đã bao gồm hai đỉnh.
+Bây giờ chọn và thêm cạnh có trọng số nhỏ nhất có một đầu ở một đỉnh đã chọn (tức là một đỉnh đã là một phần của cây khung), và đầu kia ở một đỉnh chưa được chọn.
+Và cứ thế, tức là mỗi lần chúng ta chọn và thêm cạnh với trọng số nhỏ nhất nối một đỉnh đã chọn với một đỉnh chưa chọn.
+Quá trình này được lặp lại cho đến khi cây khung chứa tất cả các đỉnh (hoặc tương đương cho đến khi chúng ta có $n - 1$ cạnh).
 
-In the end the constructed spanning tree will be minimal.
-If the graph was originally not connected, then there doesn't exist a spanning tree, so the number of selected edges will be less than $n - 1$.
+Cuối cùng cây khung được xây dựng sẽ là nhỏ nhất.
+Nếu đồ thị ban đầu không liên thông, thì không tồn tại cây khung, vì vậy số lượng cạnh được chọn sẽ ít hơn $n - 1$.
 
-### Proof
+### Chứng minh (Proof)
 
-Let the graph $G$ be connected, i.e. the answer exists.
-We denote by $T$ the resulting graph found by Prim's algorithm, and by $S$ the minimum spanning tree.
-Obviously $T$ is indeed a spanning tree and a subgraph of $G$.
-We only need to show that the weights of $S$ and $T$ coincide.
+Giả sử đồ thị $G$ liên thông, tức là câu trả lời tồn tại.
+Chúng tôi ký hiệu $T$ là đồ thị kết quả được tìm thấy bởi thuật toán Prim, và $S$ là cây khung nhỏ nhất.
+Rõ ràng $T$ thực sự là một cây khung và một đồ thị con của $G$.
+Chúng ta chỉ cần chỉ ra rằng trọng số của $S$ và $T$ trùng nhau.
 
-Consider the first time in the algorithm when we add an edge to $T$ that is not part of $S$.
-Let us denote this edge with $e$, its ends by $a$ and $b$, and the set of already selected vertices as $V$ ($a \in V$ and $b \notin V$, or vice versa).
+Hãy xem xét lần đầu tiên trong thuật toán khi chúng ta thêm một cạnh vào $T$ mà không phải là một phần của $S$.
+Hãy ký hiệu cạnh này là $e$, các đầu của nó là $a$ và $b$, và tập hợp các đỉnh đã được chọn là $V$ ($a \in V$ và $b \notin V$, hoặc ngược lại).
 
-In the minimal spanning tree $S$ the vertices $a$ and $b$ are connected by some path $P$.
-On this path we can find an edge $f$ such that one end of $f$ lies in $V$ and the other end doesn't.
-Since the algorithm chose $e$ instead of $f$, it means that the weight of $f$ is greater or equal to the weight of $e$.
+Trong cây khung nhỏ nhất $S$ các đỉnh $a$ và $b$ được kết nối bởi một đường đi $P$ nào đó.
+Trên đường đi này, chúng ta có thể tìm thấy một cạnh $f$ sao cho một đầu của $f$ nằm trong $V$ và đầu kia thì không.
+Vì thuật toán đã chọn $e$ thay vì $f$, điều đó có nghĩa là trọng số của $f$ lớn hơn hoặc bằng trọng số của $e$.
 
-We add the edge $e$ to the minimum spanning tree $S$ and remove the edge $f$.
-By adding $e$ we created a cycle, and since $f$ was also part of the only cycle, by removing it the resulting graph is again free of cycles.
-And because we only removed an edge from a cycle, the resulting graph is still connected.
+Chúng ta thêm cạnh $e$ vào cây khung nhỏ nhất $S$ và loại bỏ cạnh $f$.
+Bằng cách thêm $e$ chúng ta đã tạo ra một chu trình, và vì $f$ cũng là một phần của chu trình duy nhất đó, bằng cách loại bỏ nó, đồ thị kết quả lại không có chu trình.
+Và bởi vì chúng ta chỉ loại bỏ một cạnh khỏi một chu trình, đồ thị kết quả vẫn liên thông.
 
-The resulting spanning tree cannot have a larger total weight, since the weight of $e$ was not larger than the weight of $f$, and it also cannot have a smaller weight since $S$ was a minimum spanning tree.
-This means that by replacing the edge $f$ with $e$ we generated a different minimum spanning tree.
-And $e$ has to have the same weight as $f$.
+Cây khung kết quả không thể có tổng trọng số lớn hơn, vì trọng số của $e$ không lớn hơn trọng số của $f$, và nó cũng không thể có trọng số nhỏ hơn vì $S$ là một cây khung nhỏ nhất.
+Điều này có nghĩa là bằng cách thay thế cạnh $f$ bằng $e$ chúng ta đã tạo ra một cây khung nhỏ nhất khác.
+Và $e$ phải có cùng trọng số với $f$.
 
-Thus all the edges we pick in Prim's algorithm have the same weights as the edges of any minimum spanning tree, which means that Prim's algorithm really generates a minimum spanning tree.
+Do đó, tất cả các cạnh chúng ta chọn trong thuật toán Prim đều có trọng số giống như các cạnh của bất kỳ cây khung nhỏ nhất nào, điều đó có nghĩa là thuật toán Prim thực sự tạo ra một cây khung nhỏ nhất.
 
-## Implementation
+## Cài đặt (Implementation) {: #implementation}
 
-The complexity of the algorithm depends on how we search for the next minimal edge among the appropriate edges.
-There are multiple approaches leading to different complexities and different implementations.
+Độ phức tạp của thuật toán phụ thuộc vào cách chúng ta tìm kiếm cạnh nhỏ nhất tiếp theo trong số các cạnh thích hợp.
+Có nhiều cách tiếp cận dẫn đến độ phức tạp khác nhau và các cách cài đặt khác nhau.
 
-### Trivial implementations: $O(n m)$ and $O(n^2 + m \log n)$
+### Cài đặt tầm thường: $O(n m)$ và $O(n^2 + m \log n)$ (Trivial implementations: $O(n m)$ and $O(n^2 + m \log n)$)
 
-If we search the edge by iterating over all possible edges, then it takes $O(m)$ time to find the edge with the minimal weight.
-The total complexity will be $O(n m)$.
-In the worst case this is $O(n^3)$, really slow.
+Nếu chúng ta tìm kiếm cạnh bằng cách lặp qua tất cả các cạnh có thể, thì mất $O(m)$ thời gian để tìm cạnh có trọng số nhỏ nhất.
+Tổng độ phức tạp sẽ là $O(n m)$.
+Trong trường hợp xấu nhất, đây là $O(n^3)$, thực sự chậm.
 
-This algorithm can be improved if we only look at one edge from each already selected vertex.
-For example we can sort the edges from each vertex in ascending order of their weights, and store a pointer to the first valid edge (i.e. an edge that goes to an non-selected vertex).
-Then after finding and selecting the minimal edge, we update the pointers.
-This give a complexity of $O(n^2 + m)$, and for sorting the edges an additional $O(m \log n)$, which gives the complexity $O(n^2 \log n)$ in the worst case.
+Thuật toán này có thể được cải thiện nếu chúng ta chỉ nhìn vào một cạnh từ mỗi đỉnh đã được chọn.
+Ví dụ, chúng ta có thể sắp xếp các cạnh từ mỗi đỉnh theo thứ tự tăng dần của trọng số của chúng, và lưu trữ một con trỏ đến cạnh hợp lệ đầu tiên (tức là một cạnh đi đến một đỉnh chưa được chọn).
+Sau đó, sau khi tìm và chọn cạnh nhỏ nhất, chúng ta cập nhật các con trỏ.
+Điều này đưa ra độ phức tạp là $O(n^2 + m)$, và để sắp xếp các cạnh thêm $O(m \log n)$, đưa ra độ phức tạp $O(n^2 \log n)$ trong trường hợp xấu nhất.
 
-Below we consider two slightly different algorithms, one for dense and one for sparse graphs, both with a better complexity.
+Dưới đây chúng tôi xem xét hai thuật toán hơi khác nhau, một cho đồ thị dày và một cho đồ thị thưa, cả hai đều có độ phức tạp tốt hơn.
 
-### Dense graphs: $O(n^2)$
+### Đồ thị dày: $O(n^2)$ (Dense graphs: $O(n^2)$)
 
-We approach this problem from a different angle:
-for every not yet selected vertex we will store the minimum edge to an already selected vertex.
+Chúng ta tiếp cận vấn đề này từ một góc độ khác:
+đối với mỗi đỉnh chưa được chọn, chúng ta sẽ lưu trữ cạnh nhỏ nhất đến một đỉnh đã được chọn.
 
-Then during a step we only have to look at these minimum weight edges, which will have a complexity of $O(n)$.
+Sau đó, trong một bước, chúng ta chỉ phải nhìn vào các cạnh có trọng số nhỏ nhất này, sẽ có độ phức tạp là $O(n)$.
 
-After adding an edge some minimum edge pointers have to be recalculated.
-Note that the weights only can decrease, i.e. the minimal weight edge of every not yet selected vertex might stay the same, or it will be updated by an edge to the newly selected vertex.
-Therefore this phase can also be done in $O(n)$.
+Sau khi thêm một cạnh, một số con trỏ cạnh nhỏ nhất phải được tính toán lại.
+Lưu ý rằng trọng số chỉ có thể giảm, tức là cạnh có trọng số nhỏ nhất của mỗi đỉnh chưa được chọn có thể giữ nguyên, hoặc nó sẽ được cập nhật bởi một cạnh đến đỉnh mới được chọn.
+Do đó giai đoạn này cũng có thể được thực hiện trong $O(n)$.
 
-Thus we received a version of Prim's algorithm with the complexity $O(n^2)$.
+Do đó chúng ta nhận được một phiên bản của thuật toán Prim với độ phức tạp $O(n^2)$.
 
-In particular this implementation is very convenient for the Euclidean Minimum Spanning Tree problem:
-we have $n$ points on a plane and the distance between each pair of points is the Euclidean distance between them, and we want to find a minimum spanning tree for this complete graph.
-This task can be solved by the described algorithm in $O(n^2)$ time and $O(n)$ memory, which is not possible with [Kruskal's algorithm](mst_kruskal.md).
+Đặc biệt việc cài đặt này rất thuận tiện cho bài toán Cây khung nhỏ nhất Euclide:
+chúng ta có $n$ điểm trên một mặt phẳng và khoảng cách giữa mỗi cặp điểm là khoảng cách Euclide giữa chúng, và chúng ta muốn tìm một cây khung nhỏ nhất cho đồ thị đầy đủ này.
+Nhiệm vụ này có thể được giải quyết bằng thuật toán được mô tả với thời gian $O(n^2)$ và bộ nhớ $O(n)$, điều này không thể thực hiện được với [thuật toán Kruskal](mst_kruskal.md).
 
 ```cpp
 int n;
-vector<vector<int>> adj; // adjacency matrix of graph
-const int INF = 1000000000; // weight INF means there is no edge
+vector<vector<int>> adj; // ma trận kề của đồ thị
+const int INF = 1000000000; // trọng số INF có nghĩa là không có cạnh
 
 struct Edge {
     int w = INF, to = -1;
@@ -146,20 +146,20 @@ void prim() {
 }
 ```
 
-The adjacency matrix `adj[][]` of size $n \times n$ stores the weights of the edges, and it uses the weight `INF` if there doesn't exist an edge between two vertices.
-The algorithm uses two arrays: the flag `selected[]`, which indicates which vertices we already have selected, and the array `min_e[]` which stores the edge with minimal weight to a selected vertex for each not-yet-selected vertex (it stores the weight and the end vertex).
-The algorithm does $n$ steps, in each iteration the vertex with the smallest edge weight is selected, and the `min_e[]` of all other vertices gets updated.
+Ma trận kề `adj[][]` có kích thước $n \times n$ lưu trữ trọng số của các cạnh, và nó sử dụng trọng số `INF` nếu không tồn tại cạnh giữa hai đỉnh.
+Thuật toán sử dụng hai mảng: cờ `selected[]`, cho biết đỉnh nào chúng ta đã chọn, và mảng `min_e[]` lưu trữ cạnh với trọng số nhỏ nhất đến một đỉnh đã chọn cho mỗi đỉnh chưa được chọn (nó lưu trữ trọng số và đỉnh đích).
+Thuật toán thực hiện $n$ bước, trong mỗi lần lặp, đỉnh có trọng số cạnh nhỏ nhất được chọn, và `min_e[]` của tất cả các đỉnh khác được cập nhật.
 
-### Sparse graphs: $O(m \log n)$
+### Đồ thị thưa: $O(m \log n)$ (Sparse graphs: $O(m \log n)$)
 
-In the above described algorithm it is possible to interpret the operations of finding the minimum and modifying some values as set operations.
-These two classical operations are supported by many data structure, for example by `set` in C++ (which are implemented via red-black trees).
+Trong thuật toán được mô tả ở trên, có thể diễn giải các thao tác tìm kiếm giá trị nhỏ nhất và sửa đổi một số giá trị là các thao tác tập hợp.
+Hai thao tác cổ điển này được hỗ trợ bởi nhiều cấu trúc dữ liệu, ví dụ như bởi `set` trong C++ (được cài đặt thông qua cây đỏ-đen).
 
-The main algorithm remains the same, but now we can find the minimum edge in $O(\log n)$ time.
-On the other hand recomputing the pointers will now take $O(n \log n)$ time, which is worse than in the previous algorithm.
+Thuật toán chính vẫn giữ nguyên, nhưng bây giờ chúng ta có thể tìm cạnh nhỏ nhất trong thời gian $O(\log n)$.
+Mặt khác, việc tính toán lại các con trỏ bây giờ sẽ mất $O(n \log n)$ thời gian, tệ hơn so với thuật toán trước đó.
 
-But when we consider that we only need to update $O(m)$ times in total, and perform $O(n)$ searches for the minimal edge, then the total complexity will be $O(m \log n)$.
-For sparse graphs this is better than the above algorithm, but for dense graphs this will be slower.
+Nhưng khi chúng ta xem xét rằng chúng ta chỉ cần cập nhật tổng cộng $O(m)$ lần, và thực hiện $O(n)$ tìm kiếm cạnh nhỏ nhất, thì tổng độ phức tạp sẽ là $O(m \log n)$.
+Đối với đồ thị thưa, điều này tốt hơn thuật toán trên, nhưng đối với đồ thị dày, điều này sẽ chậm hơn.
 
 ```cpp
 const int INF = 1000000000;
@@ -208,7 +208,7 @@ void prim() {
 }
 ```
 
-Here the graph is represented via a adjacency list `adj[]`, where `adj[v]` contains all edges (in form of weight and target pairs) for the vertex `v`.
-`min_e[v]` will store the weight of the smallest edge from vertex `v` to an already selected vertex (again in the form of a weight and target pair).
-In addition the queue `q` is filled with all not yet selected vertices in the order of increasing weights `min_e`.
-The algorithm does `n` steps, on each of which it selects the vertex `v` with the smallest weight `min_e` (by extracting it from the beginning of the queue), and then looks through all the edges from this vertex and updates the values in `min_e` (during an update we also need to also remove the old edge from the queue `q` and put in the new edge).
+Ở đây đồ thị được biểu diễn thông qua một danh sách kề `adj[]`, trong đó `adj[v]` chứa tất cả các cạnh (dưới dạng cặp trọng số và đích) cho đỉnh `v`.
+`min_e[v]` sẽ lưu trữ trọng số của cạnh nhỏ nhất từ đỉnh `v` đến một đỉnh đã được chọn (một lần nữa dưới dạng cặp trọng số và đích).
+Ngoài ra hàng đợi `q` được điền với tất cả các đỉnh chưa được chọn theo thứ tự trọng số `min_e` tăng dần.
+Thuật toán thực hiện `n` bước, trên mỗi bước nó chọn đỉnh `v` có trọng số `min_e` nhỏ nhất (bằng cách trích xuất nó từ đầu hàng đợi), và sau đó xem qua tất cả các cạnh từ đỉnh này và cập nhật các giá trị trong `min_e` (trong quá trình cập nhật, chúng ta cũng cần loại bỏ cạnh cũ khỏi hàng đợi `q` và đưa vào cạnh mới).

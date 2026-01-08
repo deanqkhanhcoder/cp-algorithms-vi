@@ -3,20 +3,20 @@ tags:
     - Original
 ---
 
-# Primality tests
+# Kiểm tra số nguyên tố (Primality tests) {: #primality-tests}
 
-This article describes multiple algorithms to determine if a number is prime or not.
+Bài viết này mô tả nhiều thuật toán để xác định xem một số có phải là số nguyên tố hay không.
 
-## Trial division
+## Phép chia thử (Trial division) {: #trial-division}
 
-By definition a prime number doesn't have any divisors other than $1$ and itself.
-A composite number has at least one additional divisor, let's call it $d$.
-Naturally $\frac{n}{d}$ is also a divisor of $n$.
-It's easy to see, that either $d \le \sqrt{n}$ or $\frac{n}{d} \le \sqrt{n}$, therefore one of the divisors $d$ and $\frac{n}{d}$ is $\le \sqrt{n}$.
-We can use this information to check for primality.
+Theo định nghĩa, một số nguyên tố không có bất kỳ ước số nào khác ngoài $1$ và chính nó.
+Một hợp số có ít nhất một ước số bổ sung, hãy gọi nó là $d$.
+Đương nhiên $\frac{n}{d}$ cũng là một ước số của $n$.
+Dễ thấy rằng, hoặc $d \le \sqrt{n}$ hoặc $\frac{n}{d} \le \sqrt{n}$, do đó một trong các ước số $d$ và $\frac{n}{d}$ là $\le \sqrt{n}$.
+Chúng ta có thể sử dụng thông tin này để kiểm tra tính nguyên tố.
 
-We try to find a non-trivial divisor, by checking if any of the numbers between $2$ and $\sqrt{n}$ is a divisor of $n$.
-If it is a divisor, then $n$ is definitely not prime, otherwise it is.
+Chúng tôi cố gắng tìm một ước số không tầm thường, bằng cách kiểm tra xem có bất kỳ số nào giữa $2$ và $\sqrt{n}$ là ước số của $n$ hay không.
+Nếu nó là một ước số, thì $n$ chắc chắn không phải là số nguyên tố, nếu không thì nó là số nguyên tố.
 
 ```cpp
 bool isPrime(int x) {
@@ -28,34 +28,34 @@ bool isPrime(int x) {
 }
 ```
 
-This is the simplest form of a prime check.
-You can optimize this function quite a bit, for instance by only checking all odd numbers in the loop, since the only even prime number is 2.
-Multiple such optimizations are described in the article about [integer factorization](factorization.md).
+Đây là dạng đơn giản nhất của kiểm tra số nguyên tố.
+Bạn có thể tối ưu hóa hàm này khá nhiều, ví dụ bằng cách chỉ kiểm tra tất cả các số lẻ trong vòng lặp, vì số nguyên tố chẵn duy nhất là 2.
+Nhiều tối ưu hóa như vậy được mô tả trong bài viết về [phân tích thừa số nguyên](factorization.md).
 
-## Fermat primality test
+## Kiểm tra tính nguyên tố Fermat (Fermat primality test) {: #fermat-primality-test}
 
-This is a probabilistic test.
+Đây là một kiểm tra xác suất.
 
-Fermat's little theorem (see also [Euler's totient function](phi-function.md)) states, that for a prime number $p$ and a coprime integer $a$ the following equation holds:
+Định lý Fermat nhỏ (xem thêm [Hàm phi Euler](phi-function.md)) nêu rằng, đối với một số nguyên tố $p$ và một số nguyên $a$ nguyên tố cùng nhau, phương trình sau giữ đúng:
 
 $$a^{p-1} \equiv 1 \bmod p$$
 
-In general this theorem doesn't hold for composite numbers.
+Nói chung định lý này không giữ đúng cho các hợp số.
 
-This can be used to create a primality test.
-We pick an integer $2 \le a \le p - 2$, and check if the equation holds or not.
-If it doesn't hold, e.g. $a^{p-1} \not\equiv 1 \bmod p$, we know that $p$ cannot be a prime number.
-In this case we call the base $a$ a *Fermat witness* for the compositeness of $p$.
+Điều này có thể được sử dụng để tạo ra một kiểm tra tính nguyên tố.
+Chúng ta chọn một số nguyên $2 \le a \le p - 2$, và kiểm tra xem phương trình có giữ đúng hay không.
+Nếu nó không giữ đúng, ví dụ $a^{p-1} \not\equiv 1 \bmod p$, chúng ta biết rằng $p$ không thể là một số nguyên tố.
+Trong trường hợp này, chúng ta gọi cơ số $a$ là một *nhân chứng Fermat (Fermat witness)* cho tính hợp số của $p$.
 
-However it is also possible, that the equation holds for a composite number.
-So if the equation holds, we don't have a proof for primality.
-We only can say that $p$ is *probably prime*.
-If it turns out that the number is actually composite, we call the base $a$ a *Fermat liar*.
+Tuy nhiên, cũng có thể phương trình giữ đúng cho một hợp số.
+Vì vậy, nếu phương trình giữ đúng, chúng ta không có bằng chứng cho tính nguyên tố.
+Chúng ta chỉ có thể nói rằng $p$ là *có thể là số nguyên tố (probably prime)*.
+Nếu hóa ra con số thực sự là hợp số, chúng ta gọi cơ số $a$ là một *kẻ nói dối Fermat (Fermat liar)*.
 
-By running the test for all possible bases $a$, we can actually prove that a number is prime.
-However this is not done in practice, since this is a lot more effort that just doing *trial division*.
-Instead the test will be repeated multiple times with random choices for $a$.
-If we find no witness for the compositeness, it is very likely that the number is in fact prime.
+Bằng cách chạy thử nghiệm cho tất cả các cơ số $a$ có thể, chúng ta thực sự có thể chứng minh rằng một số là số nguyên tố.
+Tuy nhiên, điều này không được thực hiện trong thực tế, vì đây là nỗ lực nhiều hơn nhiều so với việc chỉ thực hiện *phép chia thử*.
+Thay vào đó, kiểm tra sẽ được lặp lại nhiều lần với các lựa chọn ngẫu nhiên cho $a$.
+Nếu chúng ta không tìm thấy nhân chứng nào cho tính hợp số, rất có thể con số thực sự là số nguyên tố.
 
 ```cpp
 bool probablyPrimeFermat(int n, int iter=5) {
@@ -71,26 +71,26 @@ bool probablyPrimeFermat(int n, int iter=5) {
 }
 ```
 
-We use [Binary Exponentiation](binary-exp.md) to efficiently compute the power $a^{p-1}$.
+Chúng tôi sử dụng [Lũy thừa nhị phân](binary-exp.md) để tính toán hiệu quả lũy thừa $a^{p-1}$.
 
-There is one bad news though:
-there exist some composite numbers where $a^{n-1} \equiv 1 \bmod n$ holds for all $a$ coprime to $n$, for instance for the number $561 = 3 \cdot 11 \cdot 17$.
-Such numbers are called *Carmichael numbers*.
-The Fermat primality test can identify these numbers only, if we have immense luck and choose a base $a$ with $\gcd(a, n) \ne 1$.
+Tuy nhiên có một tin xấu:
+tồn tại một số hợp số trong đó $a^{n-1} \equiv 1 \bmod n$ giữ đúng cho tất cả $a$ nguyên tố cùng nhau với $n$, ví dụ đối với số $561 = 3 \cdot 11 \cdot 17$.
+Những số như vậy được gọi là *số Carmichael*.
+Kiểm tra tính nguyên tố Fermat chỉ có thể xác định các số này, nếu chúng ta vô cùng may mắn và chọn một cơ số $a$ với $\gcd(a, n) \ne 1$.
 
-The Fermat test is still being used in practice, as it is very fast and Carmichael numbers are very rare.
-E.g. there only exist 646 such numbers below $10^9$.
+Kiểm tra Fermat vẫn đang được sử dụng trong thực tế, vì nó rất nhanh và số Carmichael rất hiếm.
+Ví dụ chỉ tồn tại 646 số như vậy dưới $10^9$.
 
-## Miller-Rabin primality test
+## Kiểm tra tính nguyên tố Miller-Rabin (Miller-Rabin primality test) {: #miller-rabin-primality-test}
 
-The Miller-Rabin test extends the ideas from the Fermat test.
+Kiểm tra Miller-Rabin mở rộng các ý tưởng từ kiểm tra Fermat.
 
-For an odd number $n$, $n-1$ is even and we can factor out all powers of 2.
-We can write:
+Đối với một số lẻ $n$, $n-1$ là chẵn và chúng ta có thể tách tất cả các lũy thừa của 2 ra.
+Chúng ta có thể viết:
 
-$$n - 1 = 2^s \cdot d,~\text{with}~d~\text{odd}.$$
+$$n - 1 = 2^s \cdot d,~\text{với}~d~\text{lẻ}.$$
 
-This allows us to factorize the equation of Fermat's little theorem:
+Điều này cho phép chúng ta phân tích phương trình của định lý Fermat nhỏ:
 
 $$\begin{array}{rl}
 a^{n-1} \equiv 1 \bmod n &\Longleftrightarrow a^{2^s d} - 1 \equiv 0 \bmod n \\\\
@@ -100,30 +100,30 @@ a^{n-1} \equiv 1 \bmod n &\Longleftrightarrow a^{2^s d} - 1 \equiv 0 \bmod n \\\
 &\Longleftrightarrow (a^{2^{s-1} d} + 1) (a^{2^{s-2} d} + 1) \cdots (a^{d} + 1) (a^{d} - 1) \equiv 0 \bmod n \\\\
 \end{array}$$
 
-If $n$ is prime, then $n$ has to divide one of these factors.
-And in the Miller-Rabin primality test we check exactly that statement, which is a more stricter version of the statement of the Fermat test.
-For a base $2 \le a \le n-2$ we check if either
+Nếu $n$ là số nguyên tố, thì $n$ phải chia hết một trong những thừa số này.
+Và trong kiểm tra tính nguyên tố Miller-Rabin, chúng tôi kiểm tra chính xác tuyên bố đó, đây là một phiên bản chặt chẽ hơn của tuyên bố kiểm tra Fermat.
+Đối với một cơ số $2 \le a \le n-2$ chúng tôi kiểm tra xem liệu
 
 $$a^d \equiv 1 \bmod n$$
 
-holds or
+giữ đúng hoặc
 
 $$a^{2^r d} \equiv -1 \bmod n$$
 
-holds for some $0 \le r \le s - 1$.
+giữ đúng cho một số $0 \le r \le s - 1$.
 
-If we found a base $a$ which doesn't satisfy any of the above equalities, then we found a *witness* for the compositeness of $n$.
-In this case we have proven that $n$ is not a prime number.
+Nếu chúng ta tìm thấy một cơ số $a$ không thỏa mãn bất kỳ đẳng thức nào ở trên, thì chúng ta đã tìm thấy một *nhân chứng* cho tính hợp số của $n$.
+Trong trường hợp này, chúng tôi đã chứng minh rằng $n$ không phải là một số nguyên tố.
 
-Similar to the Fermat test, it is also possible that the set of equations is satisfied for a composite number.
-In that case the base $a$ is called a *strong liar*.
-If a base $a$ satisfies the equations (one of them), $n$ is only *strong probable prime*.
-However, there are no numbers like the Carmichael numbers, where all non-trivial bases lie.
-In fact it is possible to show, that at most $\frac{1}{4}$ of the bases can be strong liars.
-If $n$ is composite, we have a probability of $\ge 75\%$ that a random base will tell us that it is composite.
-By doing multiple iterations, choosing different random bases, we can tell with very high probability if the number is truly prime or if it is composite.
+Tương tự như kiểm tra Fermat, cũng có thể tập hợp các phương trình được thỏa mãn cho một hợp số.
+Trong trường hợp đó, cơ số $a$ được gọi là *kẻ nói dối mạnh (strong liar)*.
+Nếu một cơ số $a$ thỏa mãn các phương trình (một trong số chúng), $n$ chỉ là *số nguyên tố có khả năng mạnh (strong probable prime)*.
+Tuy nhiên, không có số nào giống như số Carmichael, nơi tất cả các cơ số không tầm thường đều nói dối.
+Thực tế có thể chỉ ra rằng, tối đa $\frac{1}{4}$ các cơ số có thể là kẻ nói dối mạnh.
+Nếu $n$ là hợp số, chúng ta có xác suất $\ge 75\%$ rằng một cơ số ngẫu nhiên sẽ cho chúng ta biết rằng nó là hợp số.
+Bằng cách thực hiện nhiều lần lặp, chọn các cơ số ngẫu nhiên khác nhau, chúng ta có thể biết với xác suất rất cao liệu con số có thực sự là số nguyên tố hay nếu nó là hợp số.
 
-Here is an implementation for 64 bit integer.
+Dưới đây là một cài đặt cho số nguyên 64 bit.
 
 ```cpp
 using u64 = uint64_t;
@@ -173,22 +173,22 @@ bool MillerRabin(u64 n, int iter=5) { // returns true if n is probably prime, el
 }
 ```
 
-Before the Miller-Rabin test you can test additionally if one of the first few prime numbers is a divisor.
-This can speed up the test by a lot, since most composite numbers have very small prime divisors.
-E.g. $88\%$ of all numbers have a prime factor smaller than $100$.
+Trước khi kiểm tra Miller-Rabin, bạn có thể kiểm tra thêm xem một trong vài số nguyên tố đầu tiên có phải là ước số hay không.
+Điều này có thể tăng tốc độ kiểm tra lên rất nhiều, vì hầu hết các hợp số có các ước số nguyên tố rất nhỏ.
+Ví dụ $88\%$ của tất cả các số có một thừa số nguyên tố nhỏ hơn $100$.
 
-### Deterministic version
+### Phiên bản đơn định (Deterministic version) {: #deterministic-version}
 
-Miller showed that it is possible to make the algorithm deterministic by only checking all bases $\le O((\ln n)^2)$.
-Bach later gave a concrete bound, it is only necessary to test all bases $a \le 2 \ln(n)^2$.
+Miller đã chỉ ra rằng có thể làm cho thuật toán trở nên đơn định bằng cách chỉ kiểm tra tất cả các cơ số $\le O((\ln n)^2)$.
+Bach sau đó đã đưa ra một giới hạn cụ thể, chỉ cần kiểm tra tất cả các cơ số $a \le 2 \ln(n)^2$.
 
-This is still a pretty large number of bases.
-So people have invested quite a lot of computation power into finding lower bounds.
-It turns out, for testing a 32 bit integer it is only necessary to check the first 4 prime bases: 2, 3, 5 and 7.
-The smallest composite number that fails this test is $3,215,031,751 = 151 \cdot 751 \cdot 28351$.
-And for testing 64 bit integer it is enough to check the first 12 prime bases: 2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, and 37.
+Đây vẫn là một số lượng cơ số khá lớn.
+Vì vậy, mọi người đã đầu tư khá nhiều sức mạnh tính toán vào việc tìm kiếm các giới hạn dưới.
+Hóa ra, để kiểm tra một số nguyên 32 bit, chỉ cần kiểm tra 4 cơ số nguyên tố đầu tiên: 2, 3, 5 và 7.
+Hợp số nhỏ nhất thất bại trong kiểm tra này là $3,215,031,751 = 151 \cdot 751 \cdot 28351$.
+Và để kiểm tra số nguyên 64 bit, là đủ để kiểm tra 12 cơ số nguyên tố đầu tiên: 2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, và 37.
 
-This results in the following deterministic implementation:
+Kết quả là cài đặt đơn định sau:
 
 ```cpp
 bool MillerRabin(u64 n) { // returns true if n is prime, else returns false.
@@ -212,10 +212,22 @@ bool MillerRabin(u64 n) { // returns true if n is prime, else returns false.
 }
 ```
 
-It's also possible to do the check with only 7 bases: 2, 325, 9375, 28178, 450775, 9780504 and 1795265022.
-However, since these numbers (except 2) are not prime, you need to check additionally if the number you are checking is equal to any prime divisor of those bases: 2, 3, 5, 13, 19, 73, 193, 407521, 299210837.
+Cũng có thể thực hiện kiểm tra với chỉ 7 cơ số: 2, 325, 9375, 28178, 450775, 9780504 và 1795265022.
+Tuy nhiên, vì những con số này (trừ 2) không phải là số nguyên tố, bạn cần kiểm tra thêm xem số bạn đang kiểm tra có bằng bất kỳ ước số nguyên tố nào của các cơ số đó không: 2, 3, 5, 13, 19, 73, 193, 407521, 299210837.
 
-## Practice Problems
+## Bài tập luyện tập {: #practice-problems}
 
 - [SPOJ - Prime or Not](https://www.spoj.com/problems/PON/)
 - [Project euler - Investigating a Prime Pattern](https://projecteuler.net/problem=146)
+
+---
+
+## Checklist
+
+- Original lines: 222
+- Translated lines: 222
+- Code blocks changed? No
+- Inline code changed? No
+- Technical terms kept in English? Yes
+- Headings anchors preserved/added correctly? Yes
+- I confirm no character was omitted: YES

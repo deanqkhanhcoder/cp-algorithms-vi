@@ -4,48 +4,48 @@ tags:
 e_maxx_link: dijkstra_sparse
 ---
 
-# Dijkstra on sparse graphs
+# Dijkstra trên đồ thị thưa (Dijkstra on sparse graphs) {: #dijkstra-on-sparse-graphs}
 
-For the statement of the problem, the algorithm with implementation and proof can be found on the article [Dijkstra's algorithm](dijkstra.md).
+Đối với phát biểu của bài toán, thuật toán với cài đặt và chứng minh có thể được tìm thấy trong bài viết [Thuật toán Dijkstra](dijkstra.md).
 
-## Algorithm
+## Thuật toán (Algorithm) {: #algorithm}
 
-We recall in the derivation of the complexity of Dijkstra's algorithm we used two factors:
-the time of finding the unmarked vertex with the smallest distance $d[v]$, and the time of the relaxation, i.e. the time of changing the values $d[\text{to}]$.
+Chúng ta nhớ lại trong việc tính toán độ phức tạp của thuật toán Dijkstra, chúng ta đã sử dụng hai yếu tố:
+thời gian tìm đỉnh chưa được đánh dấu có khoảng cách nhỏ nhất $d[v]$, và thời gian nới lỏng, tức là thời gian thay đổi các giá trị $d[\text{to}]$.
 
-In the simplest implementation these operations require $O(n)$ and $O(1)$ time.
-Therefore, since we perform the first operation $O(n)$ times, and the second one $O(m)$ times, we obtained the complexity $O(n^2 + m)$.
+Trong cài đặt đơn giản nhất, các thao tác này yêu cầu thời gian $O(n)$ và $O(1)$.
+Do đó, vì chúng ta thực hiện thao tác đầu tiên $O(n)$ lần, và thao tác thứ hai $O(m)$ lần, chúng ta thu được độ phức tạp $O(n^2 + m)$.
 
-It is clear, that this complexity is optimal for a dense graph, i.e. when $m \approx n^2$.
-However in sparse graphs, when $m$ is much smaller than the maximal number of edges $n^2$, the complexity gets less optimal because of the first term.
-Thus it is necessary to improve the execution time of the first operation (and of course without greatly affecting the second operation by much).
+Rõ ràng, độ phức tạp này là tối ưu cho một đồ thị dày, tức là khi $m \approx n^2$.
+Tuy nhiên, trong các đồ thị thưa, khi $m$ nhỏ hơn nhiều so với số lượng cạnh tối đa $n^2$, độ phức tạp trở nên kém tối ưu hơn vì số hạng đầu tiên.
+Vì vậy, cần phải cải thiện thời gian thực hiện của thao tác đầu tiên (và tất nhiên là không ảnh hưởng nhiều đến thao tác thứ hai).
 
-To accomplish that we can use a variation of multiple auxiliary data structures.
-The most efficient is the **Fibonacci heap**, which allows the first operation to run in $O(\log n)$, and the second operation in $O(1)$.
-Therefore we will get the complexity $O(n \log n + m)$ for Dijkstra's algorithm, which is also the theoretical minimum for the shortest path search problem.
-Therefore this algorithm works optimal, and Fibonacci heaps are the optimal data structure.
-There doesn't exist any data structure, that can perform both operations in $O(1)$, because this would also allow to sort a list of random numbers in linear time, which is impossible.
-Interestingly there exists an algorithm by Thorup that finds the shortest path in $O(m)$ time, however only works for integer weights, and uses a completely different idea.
-So this doesn't lead to any contradictions.
-Fibonacci heaps provide the optimal complexity for this task.
-However they are quite complex to implement, and also have a quite large hidden constant.
+Để thực hiện điều đó, chúng ta có thể sử dụng một biến thể của nhiều cấu trúc dữ liệu bổ trợ.
+Hiệu quả nhất là **Heap Fibonacci** (**Fibonacci heap**), cho phép thao tác đầu tiên chạy trong $O(\log n)$, và thao tác thứ hai trong $O(1)$.
+Do đó, chúng ta sẽ nhận được độ phức tạp $O(n \log n + m)$ cho thuật toán Dijkstra, đây cũng là mức tối thiểu lý thuyết cho bài toán tìm kiếm đường đi ngắn nhất.
+Do đó thuật toán này hoạt động tối ưu, và Heap Fibonacci là cấu trúc dữ liệu tối ưu.
+Không tồn tại bất kỳ cấu trúc dữ liệu nào có thể thực hiện cả hai thao tác trong $O(1)$, vì điều này cũng sẽ cho phép sắp xếp một danh sách các số ngẫu nhiên trong thời gian tuyến tính, điều này là không thể.
+Thật thú vị, có một thuật toán của Thorup tìm đường đi ngắn nhất trong thời gian $O(m)$, tuy nhiên chỉ hoạt động với trọng số nguyên, và sử dụng một ý tưởng hoàn toàn khác.
+Vì vậy, điều này không dẫn đến bất kỳ mâu thuẫn nào.
+Heap Fibonacci cung cấp độ phức tạp tối ưu cho tác vụ này.
+Tuy nhiên, chúng khá phức tạp để cài đặt, và cũng có hằng số ẩn khá lớn.
 
-As a compromise you can use data structures, that perform both types of operations (extracting a minimum and updating an item) in $O(\log n)$.
-Then the complexity of Dijkstra's algorithm is $O(n \log n + m \log n) = O(m \log n)$.
+Như một sự thỏa hiệp, bạn có thể sử dụng các cấu trúc dữ liệu thực hiện cả hai loại thao tác (trích xuất giá trị nhỏ nhất và cập nhật một phần tử) trong $O(\log n)$.
+Khi đó độ phức tạp của thuật toán Dijkstra là $O(n \log n + m \log n) = O(m \log n)$.
 
-C++ provides two such data structures: `set` and `priority_queue`.
-The first is based on red-black trees, and the second one on heaps.
-Therefore `priority_queue` has a smaller hidden constant, but also has a drawback:
-it doesn't support the operation of removing an element.
-Because of this we need to do a "workaround", that actually leads to a slightly worse factor $\log m$ instead of $\log n$ (although in terms of complexity they are identical).
+C++ cung cấp hai cấu trúc dữ liệu như vậy: `set` và `priority_queue`.
+Cái đầu tiên dựa trên cây đỏ-đen, và cái thứ hai dựa trên heap (vun đống).
+Do đó `priority_queue` có hằng số ẩn nhỏ hơn, nhưng cũng có một nhược điểm:
+nó không hỗ trợ thao tác xóa một phần tử.
+Bởi vì điều này, chúng ta cần thực hiện một "giải pháp thay thế", thực tế dẫn đến hệ số tệ hơn một chút $\log m$ thay vì $\log n$ (mặc dù về mặt độ phức tạp chúng là giống hệt nhau).
 
-## Implementation
+## Cài đặt (Implementation) {: #implementation}
 
 ### set
 
-Let us start with the container `set`.
-Since we need to store vertices ordered by their values $d[]$, it is convenient to store actual pairs: the distance and the index of the vertex.
-As a result in a `set` pairs are automatically sorted by their distances.
+Hãy bắt đầu với container `set`.
+Vì chúng ta cần lưu trữ các đỉnh được sắp xếp theo giá trị $d[]$ của chúng, nên thuận tiện để lưu trữ các cặp thực tế: khoảng cách và chỉ số của đỉnh.
+Kết quả là trong một `set`, các cặp được tự động sắp xếp theo khoảng cách của chúng.
 
 ```{.cpp file=dijkstra_sparse_set}
 const int INF = 1000000000;
@@ -78,26 +78,26 @@ void dijkstra(int s, vector<int> & d, vector<int> & p) {
 }
 ```
 
-We don't need the array $u[]$ from the normal Dijkstra's algorithm implementation any more.
-We will use the `set` to store that information, and also find the vertex with the shortest distance with it.
-It kinda acts like a queue.
-The main loops executes until there are no more vertices in the set/queue.
-A vertex with the smallest distance gets extracted, and for each successful relaxation we first remove the old pair, and then after the relaxation add the new pair into the queue.
+Chúng ta không cần mảng $u[]$ từ cài đặt thuật toán Dijkstra thông thường nữa.
+Chúng ta sẽ sử dụng `set` để lưu trữ thông tin đó, và cũng tìm đỉnh có khoảng cách ngắn nhất với nó.
+Nó hoạt động giống như một hàng đợi.
+Các vòng lặp chính thực hiện cho đến khi không còn đỉnh nào trong set/hàng đợi.
+Một đỉnh có khoảng cách nhỏ nhất được trích xuất, và đối với mỗi lần nới lỏng thành công, trước tiên chúng ta xóa cặp cũ, và sau đó sau khi nới lỏng thêm cặp mới vào hàng đợi.
 
 ### priority_queue
 
-The main difference to the implementation with `set` is that in many languages, including C++, we cannot remove elements from the `priority_queue` (although heaps can support that operation in theory).
-Therefore we have to use a workaround:
-We simply don't delete the old pair from the queue.
-As a result a vertex can appear multiple times with different distance in the queue at the same time.
-Among these pairs we are only interested in the pairs where the first element is equal to the corresponding value in $d[]$, all the other pairs are old.
-Therefore we need to make a small modification:
-at the beginning of each iteration, after extracting the next pair, we check if it is an important pair or if it is already an old and handled pair.
-This check is important, otherwise the complexity can increase up to $O(n m)$.
+Sự khác biệt chính đối với việc cài đặt bằng `set` là trong nhiều ngôn ngữ, bao gồm C++, chúng ta không thể xóa các phần tử khỏi `priority_queue` (mặc dù heap có thể hỗ trợ thao tác đó về mặt lý thuyết).
+Do đó chúng ta phải sử dụng một giải pháp thay thế:
+Chúng ta đơn giản là không xóa cặp cũ khỏi hàng đợi.
+Kết quả là một đỉnh có thể xuất hiện nhiều lần với khoảng cách khác nhau trong hàng đợi cùng một lúc.
+Trong số các cặp này, chúng ta chỉ quan tâm đến các cặp mà phần tử đầu tiên bằng với giá trị tương ứng trong $d[]$, tất cả các cặp khác đều là cũ.
+Do đó, chúng ta cần thực hiện một sửa đổi nhỏ:
+khi bắt đầu mỗi lần lặp, sau khi trích xuất cặp tiếp theo, chúng ta kiểm tra xem nó có phải là cặp quan trọng hay không hoặc nếu nó đã là một cặp cũ và đã được xử lý.
+Việc kiểm tra này rất quan trọng, nếu không độ phức tạp có thể tăng lên tới $O(n m)$.
 
-By default a `priority_queue` sorts elements in descending order.
-To make it sort the elements in ascending order, we can either store the negated distances in it, or pass it a different sorting function.
-We will do the second option.
+Theo mặc định, một `priority_queue` sắp xếp các phần tử theo thứ tự giảm dần.
+Để làm cho nó sắp xếp các phần tử theo thứ tự tăng dần, chúng ta có thể lưu trữ khoảng cách phủ định trong đó, hoặc chuyển cho nó một hàm sắp xếp khác.
+Chúng ta sẽ thực hiện tùy chọn thứ hai.
 
 ```{.cpp file=dijkstra_sparse_pq}
 const int INF = 1000000000;
@@ -133,20 +133,20 @@ void dijkstra(int s, vector<int> & d, vector<int> & p) {
 }
 ```
 
-In practice the `priority_queue` version is a little bit faster than the version with `set`.
+Trong thực tế, phiên bản `priority_queue` nhanh hơn một chút so với phiên bản dùng `set`.
 
-Interestingly, a [2007 technical report](https://www3.cs.stonybrook.edu/~rezaul/papers/TR-07-54.pdf) concluded the variant of the algorithm not using decrease-key operations ran faster than the decrease-key variant, with a greater performance gap for sparse graphs.
+Thật thú vị, một [báo cáo kỹ thuật năm 2007](https://www3.cs.stonybrook.edu/~rezaul/papers/TR-07-54.pdf) đã kết luận rằng biến thể của thuật toán không sử dụng các phép toán giảm khóa (decrease-key) chạy nhanh hơn biến thể giảm khóa, với khoảng cách hiệu suất lớn hơn đối với các đồ thị thưa.
 
-### Getting rid of pairs
+### Loại bỏ các cặp (Getting rid of pairs) {: #getting-rid-of-pairs}
 
-You can improve the performance a little bit more if you don't store pairs in the containers, but only the vertex indices.
-In this case we must overload the comparison operator:
-it must compare two vertices using the distances stored in $d[]$.
+Bạn có thể cải thiện hiệu suất thêm một chút nếu bạn không lưu trữ các cặp trong các container, mà chỉ lưu trữ các chỉ số của đỉnh.
+Trong trường hợp này, chúng ta phải nạp chồng toán tử so sánh:
+nó phải so sánh hai đỉnh bằng cách sử dụng khoảng cách được lưu trữ trong $d[]$.
 
-As a result of the relaxation, the distance of some vertices will change.
-However the data structure will not resort itself automatically.
-In fact changing distances of vertices in the queue, might destroy the data structure.
-As before, we need to remove the vertex before we relax it, and then insert it again afterwards.
+Kết quả của việc nới lỏng, khoảng cách của một số đỉnh sẽ thay đổi.
+Tuy nhiên, cấu trúc dữ liệu sẽ không tự sắp xếp lại chính nó.
+Trên thực tế, việc thay đổi khoảng cách của các đỉnh trong hàng đợi có thể phá hủy cấu trúc dữ liệu.
+Như trước đây, chúng ta cần xóa đỉnh trước khi nới lỏng nó, và sau đó chèn lại nó sau đó.
 
-Since we only can remove from `set`, this optimization is only applicable for the `set` method, and doesn't work with `priority_queue` implementation.
-In practice this significantly increases the performance, especially when larger data types are used to store distances, like `long long` or `double`.
+Vì chúng ta chỉ có thể xóa khỏi `set`, tối ưu hóa này chỉ áp dụng cho phương pháp `set`, và không hoạt động với cài đặt `priority_queue`.
+Trong thực tế, điều này làm tăng đáng kể hiệu suất, đặc biệt là khi các kiểu dữ liệu lớn hơn được sử dụng để lưu trữ khoảng cách, như `long long` hoặc `double`.

@@ -4,19 +4,19 @@ tags:
 e_maxx_link: connected_components
 ---
 
-# Search for connected components in a graph
+# Tìm các thành phần liên thông trong đồ thị (Search for connected components in a graph) {: #search-for-connected-components-in-a-graph}
 
-Given an undirected graph $G$ with $n$ nodes and $m$ edges. We are required to find in it all the connected components, i.e, several groups of vertices such that within a group each vertex can be reached from another and no path exists between different groups.
+Cho một đồ thị vô hướng $G$ với $n$ nút và $m$ cạnh. Chúng ta được yêu cầu tìm trong đó tất cả các thành phần liên thông, tức là, một vài nhóm đỉnh sao cho trong một nhóm mỗi đỉnh có thể đến được từ đỉnh khác và không có đường đi nào tồn tại giữa các nhóm khác nhau.
 
-## An algorithm for solving the problem
+## Một thuật toán giải quyết bài toán (An algorithm for solving the problem) {: #an-algorithm-for-solving-the-problem}
 
-* To solve the problem, we can use Depth First Search or Breadth First Search.
+* Để giải quyết bài toán, chúng ta có thể sử dụng Tìm kiếm theo chiều sâu (Depth First Search) hoặc Tìm kiếm theo chiều rộng (Breadth First Search).
 
-* In fact, we will be doing a series of rounds of DFS: The first round will start from first node and all the nodes in the first connected component will be traversed (found). Then we find the first unvisited node of the remaining nodes, and run Depth First Search on it, thus finding a second connected component. And so on, until all the nodes are visited.
+* Trên thực tế, chúng ta sẽ thực hiện một loạt các vòng DFS: Vòng đầu tiên sẽ bắt đầu từ nút đầu tiên và tất cả các nút trong thành phần liên thông đầu tiên sẽ được duyệt (tìm thấy). Sau đó, chúng ta tìm nút chưa được thăm đầu tiên trong các nút còn lại, và chạy Tìm kiếm theo chiều sâu trên nó, do đó tìm thấy một thành phần liên thông thứ hai. Và cứ thế, cho đến khi tất cả các nút đều được thăm.
 
-* The total asymptotic running time of this algorithm is $O(n + m)$ : In fact, this algorithm will not run on the same vertex twice, which means that each edge will be seen exactly two times (at one end and at the other end).
+* Tổng thời gian chạy tiệm cận của thuật toán này là $O(n + m)$: Sự thật là, thuật toán này sẽ không chạy trên cùng một đỉnh hai lần, điều đó có nghĩa là mỗi cạnh sẽ được nhìn thấy chính xác hai lần (ở đầu này và đầu kia).
 
-## Implementation
+## Cài đặt (Implementation) {: #implementation}
 
 ``` cpp
 int n;
@@ -48,20 +48,20 @@ void find_comps() {
 }
 ```
 
-* The most important function that is used is `find_comps()` which finds and displays connected components of the graph.
+* Hàm quan trọng nhất được sử dụng là `find_comps()` tìm và hiển thị các thành phần liên thông của đồ thị.
 
-* The graph is stored in adjacency list representation, i.e `adj[v]` contains a list of vertices that have edges from the vertex `v`.
+* Đồ thị được lưu trữ trong biểu diễn danh sách kề, tức là `adj[v]` chứa danh sách các đỉnh có cạnh từ đỉnh `v`.
 
-* Vector `comp` contains a list of nodes in the current connected component.
+* Vector `comp` chứa danh sách các nút trong thành phần liên thông hiện tại.
 
-## Iterative implementation of the code 
+## Cài đặt lặp của mã (Iterative implementation of the code) {: #iterative-implementation-of-the-code}
 
-Deeply recursive functions are in general bad.
-Every single recursive call will require a little bit of memory in the stack, and per default programs only have a limited amount of stack space.
-So when you do a recursive DFS over a connected graph with millions of nodes, you might run into stack overflows.
+Các hàm đệ quy sâu nói chung là tệ.
+Mỗi cuộc gọi đệ quy sẽ yêu cầu một chút bộ nhớ trong stack, và theo mặc định các chương trình chỉ có một lượng không gian stack hạn chế.
+Vì vậy, khi bạn thực hiện DFS đệ quy trên một đồ thị liên thông với hàng triệu nút, bạn có thể gặp phải lỗi tràn stack (stack overflows).
 
-It is always possible to translate a recursive program into an iterative program, by manually maintaining a stack data structure.
-Since this data structure is allocated on the heap, no stack overflow will occur.
+Luôn có thể chuyển đổi một chương trình đệ quy thành một chương trình lặp, bằng cách duy trì thủ công một cấu trúc dữ liệu stack.
+Vì cấu trúc dữ liệu này được cấp phát trên heap, sẽ không xảy ra tràn stack.
 
 ```cpp
 int n;
@@ -101,7 +101,7 @@ void find_comps() {
 }
 ```
 
-## Practice Problems
+## Bài tập (Practice Problems) {: #practice-problems}
  - [SPOJ: CT23E](http://www.spoj.com/problems/CT23E/)
  - [CODECHEF: GERALD07](https://www.codechef.com/MARCH14/problems/GERALD07)
  - [CSES : Building Roads](https://cses.fi/problemset/task/1666)

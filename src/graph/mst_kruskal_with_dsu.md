@@ -4,23 +4,23 @@ tags:
 e_maxx_link: mst_kruskal_with_dsu
 ---
 
-# Minimum spanning tree - Kruskal with Disjoint Set Union
+# Cây khung nhỏ nhất - Kruskal với Disjoint Set Union (Minimum spanning tree - Kruskal with Disjoint Set Union) {: #minimum-spanning-tree-kruskal-with-disjoint-set-union}
 
-For an explanation of the MST problem and the Kruskal algorithm, first see the [main article on Kruskal's algorithm](mst_kruskal.md).
+Để giải thích về bài toán MST và thuật toán Kruskal, trước tiên hãy xem [bài viết chính về thuật toán Kruskal](mst_kruskal.md).
 
-In this article we will consider the data structure ["Disjoint Set Union"](../data_structures/disjoint_set_union.md) for implementing Kruskal's algorithm, which will allow the algorithm to achieve the time complexity of $O(M \log N)$.
+Trong bài viết này, chúng ta sẽ xem xét cấu trúc dữ liệu ["Disjoint Set Union"](../data_structures/disjoint_set_union.md) để cài đặt thuật toán Kruskal, cho phép thuật toán đạt được độ phức tạp thời gian là $O(M \log N)$.
 
-## Description
+## Mô tả (Description) {: #description}
 
-Just as in the simple version of the Kruskal algorithm, we sort all the edges of the graph in non-decreasing order of weights.
-Then put each vertex in its own tree (i.e. its set) via calls to the `make_set` function - it will take a total of $O(N)$.
-We iterate through all the edges (in sorted order) and for each edge determine whether the ends belong to different trees (with two `find_set` calls in $O(1)$ each).
-Finally, we need to perform the union of the two trees (sets), for which the DSU `union_sets` function will be called - also in $O(1)$.
-So we get the total time complexity of $O(M \log N + N + M)$ = $O(M \log N)$.
+Cũng giống như trong phiên bản đơn giản của thuật toán Kruskal, chúng ta sắp xếp tất cả các cạnh của đồ thị theo thứ tự trọng số không giảm.
+Sau đó đặt mỗi đỉnh vào cây riêng của nó (tức là tập hợp của nó) thông qua các lệnh gọi đến hàm `make_set` - tổng cộng sẽ mất $O(N)$.
+Chúng ta lặp qua tất cả các cạnh (theo thứ tự đã sắp xếp) và đối với mỗi cạnh xác định xem các đầu mút có thuộc về các cây khác nhau hay không (với hai lệnh gọi `find_set` trong $O(1)$ mỗi lệnh).
+Cuối cùng, chúng ta cần thực hiện hợp nhất hai cây (tập hợp), mà hàm DSU `union_sets` sẽ được gọi - cũng trong $O(1)$.
+Vì vậy, chúng ta nhận được tổng độ phức tạp thời gian là $O(M \log N + N + M)$ = $O(M \log N)$.
 
-## Implementation
+## Cài đặt (Implementation) {: #implementation}
 
-Here is an implementation of Kruskal's algorithm with Union by Rank.
+Dưới đây là cài đặt thuật toán Kruskal với Union by Rank.
 
 ```cpp
 vector<int> parent, rank;
@@ -76,8 +76,8 @@ for (Edge e : edges) {
 }
 ```
 
-Notice: since the MST will contain exactly $N-1$ edges, we can stop the for loop once we found that many.
+Lưu ý: vì MST sẽ chứa chính xác $N-1$ cạnh, chúng ta có thể dừng vòng lặp for khi chúng ta tìm thấy đủ số lượng đó.
 
-## Practice Problems
+## Bài tập (Practice Problems) {: #practice-problems}
 
-See [main article on Kruskal's algorithm](mst_kruskal.md) for the list of practice problems on this topic.
+Xem [bài viết chính về thuật toán Kruskal](mst_kruskal.md) để biết danh sách các bài tập về chủ đề này.

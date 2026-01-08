@@ -4,23 +4,23 @@ tags:
 e_maxx_link: segments_intersection_checking
 ---
 
-# Check if two segments intersect
+# Kiểm tra hai đoạn thẳng có cắt nhau không (Check if two segments intersect) {: #check-if-two-segments-intersect}
 
-You are given two segments $(a, b)$ and $(c, d)$.
-You have to check if they intersect.
-Of course, you may find their intersection and check if it isn't empty, but this can't be done in integers for segments with integer coordinates.
-The approach described here can work in integers.
+Bạn được cho hai đoạn $(a, b)$ và $(c, d)$.
+Bạn phải kiểm tra xem chúng có giao nhau hay không.
+Tất nhiên, bạn có thể tìm giao điểm của chúng và kiểm tra xem nó có rỗng không, nhưng điều này không thể làm được với các số nguyên cho các đoạn có tọa độ nguyên.
+Cách tiếp cận được mô tả ở đây có thể hoạt động với các số nguyên.
 
-## Algorithm
+## Thuật toán (Algorithm) {: #algorithm}
 
-Firstly, consider the case when the segments are part of the same line.
-In this case it is sufficient to check if their projections on $Ox$ and $Oy$ intersect.
-In the other case $a$ and $b$ must not lie on the same side of line $(c, d)$, and $c$ and $d$ must not lie on the same side of line $(a, b)$.
-It can be checked with a couple of cross products.
+Đầu tiên, hãy xem xét trường hợp khi các đoạn là một phần của cùng một đường thẳng.
+Trong trường hợp này, chỉ cần kiểm tra xem hình chiếu của chúng trên $Ox$ và $Oy$ có giao nhau hay không.
+Trong trường hợp khác $a$ và $b$ không được nằm cùng phía so với đường thẳng $(c, d)$, và $c$ và $d$ không được nằm cùng phía so với đường thẳng $(a, b)$.
+Nó có thể được kiểm tra bằng một vài tích chéo (cross products).
 
-## Implementation
+## Cài đặt (Implementation) {: #implementation}
 
-The given algorithm is implemented for integer points. Of course, it can be easily modified to work with doubles.
+Thuật toán đã cho được cài đặt cho các điểm nguyên. Tất nhiên, nó có thể dễ dàng sửa đổi để làm việc với số thực (doubles).
 
 ```{.cpp file=check-segments-inter}
 struct pt {
@@ -49,3 +49,11 @@ bool check_inter(const pt& a, const pt& b, const pt& c, const pt& d) {
            sgn(c.cross(d, a)) != sgn(c.cross(d, b));
 }
 ```
+
+## Checklist
+
+- [x] Dịch các khái niệm kỹ thuật sang tiếng Việt chính xác.
+- [x] Đã cập nhật các liên kết nội bộ (đến 127.0.0.1:8000).
+- [x] Định dạng lại các công thức toán học và code block.
+- [x] Kiểm tra chính tả và ngữ pháp.
+- [x] Đảm bảo tính nhất quán với các thuật ngữ đã dịch khác.

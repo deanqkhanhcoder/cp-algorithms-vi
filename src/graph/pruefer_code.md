@@ -4,34 +4,34 @@ tags:
 e_maxx_link: prufer_code_cayley_formula
 ---
 
-# Prüfer code
+# Mã Prüfer (Prüfer code) {: #prufer-code}
 
-In this article we will look at the so-called **Prüfer code** (or Prüfer sequence), which is a way of encoding a labeled tree into a sequence of numbers in a unique way.
+Trong bài viết này, chúng ta sẽ tìm hiểu về cái gọi là **mã Prüfer** (hoặc chuỗi Prüfer), một cách mã hóa một cây có nhãn thành một dãy số theo một cách duy nhất.
 
-With the help of the Prüfer code we will prove **Cayley's formula** (which specified the number of spanning trees in a complete graph).
-Also we show the solution to the problem of counting the number of ways of adding edges to a graph to make it connected.
+Với sự trợ giúp của mã Prüfer, chúng ta sẽ chứng minh **Công thức Cayley** (xác định số lượng cây khung trong một đồ thị đầy đủ).
+Chúng tôi cũng chỉ ra giải pháp cho bài toán đếm số cách thêm các cạnh vào một đồ thị để làm cho nó liên thông.
 
-**Note**, we will not consider trees consisting of a single vertex - this is a special case in which multiple statements clash.
+**Lưu ý**, chúng tôi sẽ không xem xét các cây bao gồm một đỉnh duy nhất - đây là một trường hợp đặc biệt mà nhiều phát biểu bị xung đột.
 
-## Prüfer code
+## Mã Prüfer (Prüfer code) {: #pruefer-code}
 
-The Prüfer code is a way of encoding a labeled tree with $n$ vertices using a sequence of $n - 2$ integers in the interval $[0; n-1]$.
-This encoding also acts as a **bijection** between all spanning trees of a complete graph and the numerical sequences.
+Mã Prüfer là một cách mã hóa một cây có nhãn với $n$ đỉnh bằng cách sử dụng một dãy gồm $n - 2$ số nguyên trong khoảng $[0; n-1]$.
+Cách mã hóa này cũng hoạt động như một **song ánh** (bijection) giữa tất cả các cây khung của một đồ thị đầy đủ và các dãy số.
 
-Although using the Prüfer code for storing and operating on tree is impractical due the specification of the representation, the Prüfer codes are used frequently: mostly in solving combinatorial problems.
+Mặc dù sử dụng mã Prüfer để lưu trữ và thao tác trên cây là không thực tế do đặc điểm kỹ thuật của biểu diễn, mã Prüfer được sử dụng thường xuyên: chủ yếu trong việc giải quyết các bài toán tổ hợp.
 
-The inventor - Heinz Prüfer - proposed this code in 1918 as a proof for Cayley's formula.
+Người phát minh - Heinz Prüfer - đã đề xuất mã này vào năm 1918 như một chứng minh cho công thức Cayley.
 
-### Building the Prüfer code for a given tree
+### Xây dựng mã Prüfer cho một cây đã cho (Building the Prüfer code for a given tree)
 
-The Prüfer code is constructed as follows.
-We will repeat the following procedure $n - 2$ times:
-we select the leaf of the tree with the smallest number, remove it from the tree, and write down the number of the vertex that was connected to it.
-After $n - 2$ iterations there will only remain $2$ vertices, and the algorithm ends.
+Mã Prüfer được xây dựng như sau.
+Chúng ta sẽ lặp lại quy trình sau $n - 2$ lần:
+chúng ta chọn lá của cây có số nhỏ nhất, loại bỏ nó khỏi cây và ghi lại số của đỉnh đã được kết nối với nó.
+Sau $n - 2$ lần lặp sẽ chỉ còn lại $2$ đỉnh, và thuật toán kết thúc.
 
-Thus the Prüfer code for a given tree is a sequence of $n - 2$ numbers, where each number is the number of the connected vertex, i.e. this number is in the interval $[0, n-1]$.
+Do đó, mã Prüfer cho một cây đã cho là một dãy gồm $n - 2$ số, trong đó mỗi số là số của đỉnh được kết nối, tức là số này nằm trong khoảng $[0, n-1]$.
 
-The algorithm for computing the Prüfer code can be implemented easily with $O(n \log n)$ time complexity, simply by using a data structure to extract the minimum (for instance `set` or `priority_queue` in C++), which contains a list of all the current leafs.
+Thuật toán tính toán mã Prüfer có thể được cài đặt dễ dàng với độ phức tạp thời gian $O(n \log n)$, đơn giản bằng cách sử dụng cấu trúc dữ liệu để trích xuất giá trị nhỏ nhất (ví dụ: `set` hoặc `priority_queue` trong C++), chứa danh sách tất cả các lá hiện tại.
 
 ```{.cpp file=pruefer_code_slow}
 vector<vector<int>> adj;
@@ -68,32 +68,32 @@ vector<int> pruefer_code() {
 }
 ```
 
-However the construction can also be implemented in linear time.
-Such an approach is described in the next section.
+Tuy nhiên, việc xây dựng cũng có thể được thực hiện trong thời gian tuyến tính.
+Cách tiếp cận như vậy được mô tả trong phần tiếp theo.
 
-### Building the Prüfer code for a given tree in linear time
+### Xây dựng mã Prüfer cho một cây đã cho trong thời gian tuyến tính (Building the Prüfer code for a given tree in linear time)
 
-The essence of the algorithm is to use a **moving pointer**, which will always point to the current leaf vertex that we want to remove.
+Bản chất của thuật toán là sử dụng một **con trỏ di chuyển**, con trỏ này sẽ luôn trỏ đến đỉnh lá hiện tại mà chúng ta muốn loại bỏ.
 
-At first glance this seems impossible, because during the process of constructing the Prüfer code the leaf number can increase and decrease.
-However after a closer look, this is actually not true.
-The number of leafs will not increase. Either the number decreases by one (we remove one leaf vertex and don't gain a new one), or it stay the same (we remove one leaf vertex and gain another one).
-In the first case there is no other way than searching for the next smallest leaf vertex.
-In the second case, however, we can decide in $O(1)$ time, if we can continue using the vertex that became a new leaf vertex, or if we have to search for the next smallest leaf vertex.
-And in quite a lot of times we can continue with the new leaf vertex.
+Thoạt nhìn điều này có vẻ không thể, bởi vì trong quá trình xây dựng mã Prüfer, số lá có thể tăng và giảm.
+Tuy nhiên, sau khi xem xét kỹ hơn, điều này thực sự không đúng.
+Số lượng lá sẽ không tăng. Số lượng giảm đi một (chúng ta loại bỏ một đỉnh lá và không nhận được đỉnh mới nào), hoặc giữ nguyên (chúng ta loại bỏ một đỉnh lá và nhận được một đỉnh khác).
+Trong trường hợp đầu tiên, không có cách nào khác ngoài việc tìm kiếm đỉnh lá nhỏ nhất tiếp theo.
+Tuy nhiên, trong trường hợp thứ hai, chúng ta có thể quyết định trong thời gian $O(1)$, liệu chúng ta có thể tiếp tục sử dụng đỉnh đã trở thành đỉnh lá mới hay không, hay chúng ta phải tìm kiếm đỉnh lá nhỏ nhất tiếp theo.
+Và trong khá nhiều lần chúng ta có thể tiếp tục với đỉnh lá mới.
 
-To do this we will use a variable $\text{ptr}$, which will indicate that in the set of vertices between $0$ and $\text{ptr}$ is at most one leaf vertex, namely the current one.
-All other vertices in that range are either already removed from the tree, or have still more than one adjacent vertices.
-At the same time we say, that we haven't removed any leaf vertices bigger than $\text{ptr}$ yet.
+Để làm điều này, chúng ta sẽ sử dụng một biến $\text{ptr}$, biến này sẽ chỉ ra rằng trong tập hợp các đỉnh giữa $0$ và $\text{ptr}$ tối đa có một đỉnh lá, cụ thể là đỉnh hiện tại.
+Tất cả các đỉnh khác trong phạm vi đó hoặc đã bị loại bỏ khỏi cây, hoặc vẫn có nhiều hơn một đỉnh kề.
+Đồng thời chúng ta cũng nói rằng, chúng ta chưa loại bỏ bất kỳ đỉnh lá nào lớn hơn $\text{ptr}$.
 
-This variable is already very helpful in the first case.
-After removing the current leaf node, we know that there cannot be a leaf node between $0$ and $\text{ptr}$, therefore we can start the search for the next one directly at $\text{ptr} + 1$, and we don't have to start the search back at vertex $0$.
-And in the second case, we can further distinguish two cases:
-Either the newly gained leaf vertex is smaller than $\text{ptr}$, then this must be the next leaf vertex, since we know that there are no other vertices smaller than $\text{ptr}$.
-Or the newly gained leaf vertex is bigger.
-But then we also know that it has to be bigger than $\text{ptr}$, and can start the search again at $\text{ptr} + 1$.
+Biến này đã rất hữu ích trong trường hợp đầu tiên.
+Sau khi loại bỏ nút lá hiện tại, chúng ta biết rằng không thể có một nút lá giữa $0$ và $\text{ptr}$, do đó chúng ta có thể bắt đầu tìm kiếm nút tiếp theo trực tiếp tại $\text{ptr} + 1$, và chúng ta không phải bắt đầu tìm kiếm lại tại đỉnh $0$.
+Và trong trường hợp thứ hai, chúng ta có thể phân biệt thêm hai trường hợp:
+Hoặc đỉnh lá mới nhận được nhỏ hơn $\text{ptr}$, thì đây phải là đỉnh lá tiếp theo, vì chúng ta biết rằng không có đỉnh nào khác nhỏ hơn $\text{ptr}$.
+Hoặc đỉnh lá mới nhận được lớn hơn.
+Nhưng sau đó chúng ta cũng biết rằng nó phải lớn hơn $\text{ptr}$, và có thể bắt đầu tìm kiếm lại tại $\text{ptr} + 1$.
 
-Even though we might have to perform multiple linear searches for the next leaf vertex, the pointer $\text{ptr}$ only increases and therefore the time complexity in total is $O(n)$.
+Mặc dù chúng ta có thể phải thực hiện nhiều tìm kiếm tuyến tính cho đỉnh lá tiếp theo, con trỏ $\text{ptr}$ chỉ tăng lên và do đó tổng độ phức tạp thời gian là $O(n)$.
 
 ```{.cpp file=pruefer_code_fast}
 vector<vector<int>> adj;
@@ -141,44 +141,44 @@ vector<int> pruefer_code() {
 }
 ```
 
-In the code we first find for each its ancestor `parent[i]`, i.e. the ancestor that this vertex will have once we remove it from the tree.
-We can find this ancestor by rooting the tree at the vertex $n-1$.
-This is possible because the vertex $n-1$ will never be removed from the tree.
-We also compute the degree for each vertex.
-`ptr` is the pointer that indicates the minimum size of the remaining leaf vertices (except the current one `leaf`).
-We will either assign the current leaf vertex with `next`, if this one is also a leaf vertex and it is smaller than `ptr`, or we start a linear search for the smallest leaf vertex by increasing the pointer.
+Trong mã, trước tiên chúng ta tìm tổ tiên `parent[i]` cho mỗi đỉnh, tức là tổ tiên mà đỉnh này sẽ có khi chúng ta loại bỏ nó khỏi cây.
+Chúng ta có thể tìm thấy tổ tiên này bằng cách chọn gốc cây tại đỉnh $n-1$.
+Điều này là có thể vì đỉnh $n-1$ sẽ không bao giờ bị xóa khỏi cây.
+Chúng ta cũng tính toán bậc cho mỗi đỉnh.
+`ptr` là con trỏ chỉ ra kích thước tối thiểu của các đỉnh lá còn lại (ngoại trừ đỉnh hiện tại `leaf`).
+Chúng ta sẽ gán đỉnh lá hiện tại bằng `next`, nếu đỉnh này cũng là đỉnh lá và nó nhỏ hơn `ptr`, hoặc chúng ta bắt đầu tìm kiếm tuyến tính cho đỉnh lá nhỏ nhất bằng cách tăng con trỏ.
 
-It can be easily seen, that this code has the complexity $O(n)$.
+Có thể dễ dàng thấy rằng, mã này có độ phức tạp $O(n)$.
 
-### Some properties of the Prüfer code
+### Một số tính chất của mã Prüfer (Some properties of the Prüfer code) {: #some-properties-of-the-pruefer-code}
 
-- After constructing the Prüfer code two vertices will remain.
-  One of them is the highest vertex $n-1$, but nothing else can be said about the other one.
-- Each vertex appears in the Prüfer code exactly a fixed number of times - its degree minus one.
-  This can be easily checked, since the degree will get smaller every time we record its label in the code, and we remove it once the degree is $1$.
-  For the two remaining vertices this fact is also true.
+- Sau khi xây dựng mã Prüfer, hai đỉnh sẽ còn lại.
+  Một trong số chúng là đỉnh cao nhất $n-1$, nhưng không thể nói gì khác về đỉnh còn lại.
+- Mỗi đỉnh xuất hiện trong mã Prüfer chính xác một số lần cố định - bậc của nó trừ đi một.
+  Điều này có thể được kiểm tra dễ dàng, vì bậc sẽ nhỏ hơn mỗi lần chúng ta ghi lại nhãn của nó trong mã, và chúng ta loại bỏ nó khi bậc là $1$.
+  Đối với hai đỉnh còn lại, thực tế này cũng đúng.
 
-### Restoring the tree using the Prüfer code
+### Khôi phục cây bằng mã Prüfer (Restoring the tree using the Prüfer code) {: #restoring-the-tree-using-the-pruefer-code}
 
-To restore the tree it suffice to only focus on the property discussed in the last section.
-We already know the degree of all the vertices in the desired tree.
-Therefore we can find all leaf vertices, and also the first leaf that was removed in the first step (it has to be the smallest leaf).
-This leaf vertex was connected to the vertex corresponding to the number in the first cell of the Prüfer code.
+Để khôi phục cây, chỉ cần tập trung vào thuộc tính được thảo luận trong phần trước.
+Chúng ta đã biết bậc của tất cả các đỉnh trong cây mong muốn.
+Do đó, chúng ta có thể tìm thấy tất cả các đỉnh lá, và cả lá đầu tiên bị loại bỏ trong bước đầu tiên (nó phải là lá nhỏ nhất).
+Đỉnh lá này được kết nối với đỉnh tương ứng với số trong ô đầu tiên của mã Prüfer.
 
-Thus we found the first edge removed by when then the Prüfer code was generated.
-We can add this edge to the answer and reduce the degrees at both ends of the edge.
+Do đó, chúng ta đã tìm thấy cạnh đầu tiên bị loại bỏ bởi khi đó mã Prüfer được tạo ra.
+Chúng ta có thể thêm cạnh này vào câu trả lời và giảm bậc ở cả hai đầu của cạnh.
 
-We will repeat this operation until we have used all numbers of the Prüfer code:
-we look for the minimum vertex with degree equal to $1$, connect it with the next vertex from the Prüfer code, and reduce the degree.
+Chúng ta sẽ lặp lại thao tác này cho đến khi chúng ta sử dụng hết tất cả các số của mã Prüfer:
+chúng ta tìm đỉnh nhỏ nhất có bậc bằng $1$, kết nối nó với đỉnh tiếp theo từ mã Prüfer, và giảm bậc.
 
-In the end we only have two vertices left with degree equal to $1$.
-These are the vertices that didn't got removed by the Prüfer code process.
-We connect them to get the last edge of the tree.
-One of them will always be the vertex $n-1$.
+Cuối cùng chúng ta chỉ còn lại hai đỉnh có bậc bằng $1$.
+Đây là những đỉnh không bị loại bỏ bởi quy trình mã Prüfer.
+Chúng ta kết nối chúng để có được cạnh cuối cùng của cây.
+Một trong số chúng sẽ luôn là đỉnh $n-1$.
 
-This algorithm can be **implemented** easily in $O(n \log n)$: we use a data structure that supports extracting the minimum (for example `set<>` or `priority_queue<>` in C++) to store all the leaf vertices.
+Thuật toán này có thể được **cài đặt** dễ dàng trong $O(n \log n)$: chúng ta sử dụng cấu trúc dữ liệu hỗ trợ trích xuất giá trị nhỏ nhất (ví dụ: `set<>` hoặc `priority_queue<>` trong C++) để lưu trữ tất cả các đỉnh lá.
 
-The following implementation returns the list of edges corresponding to the tree.
+Cài đặt sau đây trả về danh sách các cạnh tương ứng với cây.
 
 ```{.cpp file=pruefer_decode_slow}
 vector<pair<int, int>> pruefer_decode(vector<int> const& code) {
@@ -207,13 +207,13 @@ vector<pair<int, int>> pruefer_decode(vector<int> const& code) {
 }
 ```
 
-### Restoring the tree using the Prüfer code in linear time
+### Khôi phục cây bằng mã Prüfer trong thời gian tuyến tính (Restoring the tree using the Prüfer code in linear time) {: #restoring-the-tree-using-the-pruefer-code-in-linear-time}
 
-To obtain the tree in linear time we can apply the same technique used to obtain the Prüfer code in linear time.
+Để có được cây trong thời gian tuyến tính, chúng ta có thể áp dụng kỹ thuật tương tự được sử dụng để lấy mã Prüfer trong thời gian tuyến tính.
 
-We don't need a data structure to extract the minimum.
-Instead we can notice that, after processing the current edge, only one vertex becomes a leaf.
-Therefore we can either continue with this vertex, or we find a smaller one with a linear search by moving a pointer.
+Chúng ta không cần cấu trúc dữ liệu để trích xuất giá trị nhỏ nhất.
+Thay vào đó, chúng ta có thể nhận thấy rằng, sau khi xử lý cạnh hiện tại, chỉ có một đỉnh trở thành lá.
+Do đó, chúng ta có thể tiếp tục với đỉnh này, hoặc chúng ta tìm một đỉnh nhỏ hơn bằng tìm kiếm tuyến tính bằng cách di chuyển một con trỏ.
 
 ```{.cpp file=pruefer_decode_fast}
 vector<pair<int, int>> pruefer_decode(vector<int> const& code) {
@@ -244,82 +244,82 @@ vector<pair<int, int>> pruefer_decode(vector<int> const& code) {
 }
 ```
 
-### Bijection between trees and Prüfer codes
+### Song ánh giữa cây và mã Prüfer (Bijection between trees and Prüfer codes) {: #bijection-between-trees-and-pruefer-codes}
 
-For each tree there exists a Prüfer code corresponding to it.
-And for each Prüfer code we can restore the original tree.
+Đối với mỗi cây, tồn tại một mã Prüfer tương ứng với nó.
+Và đối với mỗi mã Prüfer, chúng ta có thể khôi phục cây ban đầu.
 
-It follows that also every Prüfer code (i.e. a sequence of $n-2$ numbers in the range $[0; n - 1]$) corresponds to a tree.
+Điều đó đi theo việc mỗi mã Prüfer (tức là một dãy gồm $n-2$ số trong khoảng $[0; n - 1]$) cũng tương ứng với một cây.
 
-Therefore all trees and all Prüfer codes form a bijection (a **one-to-one correspondence**).
+Do đó tất cả các cây và tất cả các mã Prüfer tạo thành một song ánh (một **sự tương ứng 1-1**).
 
-## Cayley's formula
+## Công thức Cayley (Cayley's formula) {: #cayleys-formula}
 
-Cayley's formula states that the **number of spanning trees in a complete labeled graph** with $n$ vertices is equal to:
+Công thức Cayley nói rằng **số lượng cây khung trong một đồ thị đầy đủ có nhãn** với $n$ đỉnh bằng:
 
 $$n^{n-2}$$
 
-There are multiple proofs for this formula.
-Using the Prüfer code concept this statement comes without any surprise.
+Có nhiều chứng minh cho công thức này.
+Sử dụng khái niệm mã Prüfer, phát biểu này đến mà không có bất kỳ sự ngạc nhiên nào.
 
-In fact any Prüfer code with $n-2$ numbers from the interval $[0; n-1]$ corresponds to some tree with $n$ vertices.
-So we have $n^{n-2}$ different such Prüfer codes.
-Since each such tree is a spanning tree of a complete graph with $n$ vertices, the number of such spanning trees is also $n^{n-2}$.
+Trên thực tế, bất kỳ mã Prüfer nào với $n-2$ số từ khoảng $[0; n-1]$ tương ứng với một cây nào đó với $n$ đỉnh.
+Vì vậy, chúng ta có $n^{n-2}$ mã Prüfer khác nhau như vậy.
+Vì mỗi cây như vậy là một cây khung của một đồ thị đầy đủ với $n$ đỉnh, số lượng cây khung như vậy cũng là $n^{n-2}$.
 
-## Number of ways to make a graph connected
+## Số cách để làm cho đồ thị liên thông (Number of ways to make a graph connected) {: #number-of-ways-to-make-a-graph-connected}
 
-The concept of Prüfer codes are even more powerful.
-It allows to create a lot more general formulas than Cayley's formula.
+Khái niệm về mã Prüfer thậm chí còn mạnh mẽ hơn.
+Nó cho phép tạo ra nhiều công thức tổng quát hơn so với công thức Cayley.
 
-In this problem we are given a graph with $n$ vertices and $m$ edges.
-The graph currently has $k$ components.
-We want to compute the number of ways of adding $k-1$ edges so that the graph becomes connected (obviously $k-1$ is the minimum number necessary to make the graph connected).
+Trong bài toán này, chúng ta được cho một đồ thị với $n$ đỉnh và $m$ cạnh.
+Đồ thị hiện có $k$ thành phần.
+Chúng ta muốn tính số cách thêm $k-1$ cạnh sao cho đồ thị trở nên liên thông (rõ ràng $k-1$ là số lượng tối thiểu cần thiết để làm cho đồ thị liên thông).
 
-Let us derive a formula for solving this problem.
+Hãy để chúng tôi tìm ra một công thức để giải quyết bài toán này.
 
-We use $s_1, \dots, s_k$ for the sizes of the connected components in the graph.
-We cannot add edges within a connected component.
-Therefore it turns out that this problem is very similar to the search for the number of spanning trees of a complete graph with $k$ vertices.
-The only difference is that each vertex has actually the size $s_i$: each edge connecting the vertex $i$, actually multiplies the answer by $s_i$.
+Chúng ta sử dụng $s_1, \dots, s_k$ cho kích thước của các thành phần liên thông trong đồ thị.
+Chúng ta không thể thêm các cạnh trong một thành phần liên thông.
+Do đó, hóa ra bài toán này rất giống với việc tìm kiếm số lượng cây khung của một đồ thị đầy đủ với $k$ đỉnh.
+Sự khác biệt duy nhất là mỗi đỉnh thực sự có kích thước $s_i$: mỗi cạnh kết nối đỉnh $i$, thực sự nhân câu trả lời với $s_i$.
 
-Thus in order to calculate the number of possible ways it is important to count how often each of the $k$ vertices is used in the connecting tree.
-To obtain a formula for the problem it is necessary to sum the answer over all possible degrees.
+Do đó, để tính số cách có thể, điều quan trọng là phải đếm tần suất mỗi đỉnh trong số $k$ đỉnh được sử dụng trong cây kết nối.
+Để có được một công thức cho bài toán, cần phải tính tổng câu trả lời trên tất cả các bậc có thể.
 
-Let $d_1, \dots, d_k$ be the degrees of the vertices in the tree after connecting the vertices.
-The sum of the degrees is twice the number of edges:
+Gọi $d_1, \dots, d_k$ là bậc của các đỉnh trong cây sau khi kết nối các đỉnh.
+Tổng của các bậc gấp đôi số cạnh:
 
 $$\sum_{i=1}^k d_i = 2k - 2$$
 
-If the vertex $i$ has degree $d_i$, then it appears $d_i - 1$ times in the Prüfer code.
-The Prüfer code for a tree with $k$ vertices has length $k-2$.
-So the number of ways to choose a code with $k-2$ numbers where the number $i$ appears exactly $d_i - 1$ times is equal to the **multinomial coefficient**
+Nếu đỉnh $i$ có bậc $d_i$, thì nó xuất hiện $d_i - 1$ lần trong mã Prüfer.
+Mã Prüfer cho một cây có $k$ đỉnh có độ dài $k-2$.
+Vì vậy, số cách chọn một mã có $k-2$ số trong đó số $i$ xuất hiện chính xác $d_i - 1$ lần bằng với **hệ số đa thức**
 
 $$\binom{k-2}{d_1-1, d_2-1, \dots, d_k-1} = \frac{(k-2)!}{(d_1-1)! (d_2-1)! \cdots (d_k-1)!}.$$
 
-The fact that each edge adjacent to the vertex $i$ multiplies the answer by $s_i$ we receive the answer, assuming that the degrees of the vertices are $d_1, \dots, d_k$:
+Thực tế là mỗi cạnh kề với đỉnh $i$ nhân câu trả lời với $s_i$, chúng ta nhận được câu trả lời, giả sử rằng bậc của các đỉnh là $d_1, \dots, d_k$:
 
 $$s_1^{d_1} \cdot s_2^{d_2} \cdots s_k^{d_k} \cdot \binom{k-2}{d_1-1, d_2-1, \dots, d_k-1}$$
 
-To get the final answer we need to sum this for all possible ways to choose the degrees:
+Để có được câu trả lời cuối cùng, chúng ta cần tính tổng số này cho tất cả các cách chọn bậc có thể:
 
 $$\sum_{\substack{d_i \ge 1 \\\\ \sum_{i=1}^k d_i = 2k -2}} s_1^{d_1} \cdot s_2^{d_2} \cdots s_k^{d_k} \cdot \binom{k-2}{d_1-1, d_2-1, \dots, d_k-1}$$
 
-Currently this looks like a really horrible answer, however we can use the **multinomial theorem**, which says:
+Hiện tại điều này trông giống như một câu trả lời thực sự kinh khủng, tuy nhiên chúng ta có thể sử dụng **định lý đa thức**, trong đó nói rằng:
 
 $$(x_1 + \dots + x_m)^p = \sum_{\substack{c_i \ge 0 \\\\ \sum_{i=1}^m c_i = p}} x_1^{c_1} \cdot x_2^{c_2} \cdots x_m^{c_m} \cdot \binom{p}{c_1, c_2, \dots c_m}$$
 
-This look already pretty similar.
-To use it we only need to substitute with $e_i = d_i - 1$:
+Điều này trông khá giống nhau.
+Để sử dụng nó, chúng ta chỉ cần thay thế với $e_i = d_i - 1$:
 
 $$\sum_{\substack{e_i \ge 0 \\\\ \sum_{i=1}^k e_i = k - 2}} s_1^{e_1+1} \cdot s_2^{e_2+1} \cdots s_k^{e_k+1} \cdot \binom{k-2}{e_1, e_2, \dots, e_k}$$
 
-After applying the multinomial theorem we get the **answer to the problem**:
+Sau khi áp dụng định lý đa thức, chúng ta nhận được **câu trả lời cho bài toán**:
 
 $$s_1 \cdot s_2 \cdots s_k \cdot (s_1 + s_2 + \dots + s_k)^{k-2} = s_1 \cdot s_2 \cdots s_k \cdot n^{k-2}$$
 
-By accident this formula also holds for $k = 1$.
+Thật tình cờ, công thức này cũng đúng với $k = 1$.
 
-## Practice problems
+## Bài tập (Practice problems) {: #practice-problems}
 
 - [UVA #10843 - Anne's game](https://uva.onlinejudge.org/index.php?option=com_onlinejudge&Itemid=8&category=20&page=show_problem&problem=1784)
 - [Timus #1069 - Prufer Code](http://acm.timus.ru/problem.aspx?space=1&num=1069)

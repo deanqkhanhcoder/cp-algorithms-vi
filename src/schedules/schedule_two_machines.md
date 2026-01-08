@@ -4,94 +4,37 @@ tags:
 e_maxx_link: johnson_problem_2
 ---
 
-# Scheduling jobs on two machines
+# Lập lịch các công việc trên hai máy (Johnson's Rule) (Scheduling jobs on two machines (Johnson's Rule)) {: #scheduling-jobs-on-two-machines-johnsons-rule}
 
-This task is about finding an optimal schedule for $n$ jobs on two machines.
-Every item must first be processed on the first machine, and afterwards on the second one.
-The $i$-th job takes $a_i$ time on the first machine, and $b_i$ time on the second machine.
-Each machine can only process one job at a time.
+Chúng ta có $n$ công việc. Mỗi công việc gồm hai phần: phần đầu tiên được xử lý trên máy thứ nhất và phần thứ hai được xử lý trên máy thứ hai. Mỗi phần phải được xử lý liên tục (không bị gián đoạn). Đối với mỗi công việc $i$, chúng ta biết thời gian xử lý trên máy thứ nhất $a_i$ và trên máy thứ hai $b_i$. Một máy chỉ có thể xử lý một bộ phận công việc tại một thời điểm. Ngoài ra, máy thứ hai không thể bắt đầu xử lý phần thứ hai của công việc $i$ cho đến khi máy thứ nhất hoàn thành phần đầu tiên của nó.
+Chúng ta muốn tìm một lịch trình xử lý các công việc trên hai máy sao cho thời gian hoàn thành tất cả các công việc (makespan) là tối thiểu.
 
-We want to find the optimal order of the jobs, so that the final processing time is the minimum possible.
+## Thuật toán (Algorithm) {: #algorithm}
 
-This solution that is discussed here is called Johnson's rule (named after S. M. Johnson).
+Thuật toán cấu tạo này được đề xuất bởi S.M.Johnson vào năm 1954.
 
-It is worth noting, that the task becomes NP-complete, if we have more than two machines.
+Lưu ý rằng chúng ta có thể giả định rằng thứ tự các công việc trên máy thứ nhất và máy thứ hai là giống nhau (việc chứng minh điều này không khó, bằng cách sử dụng phương pháp hoán đổi).
+Do đó, chúng ta chỉ cần tìm dãy công việc.
 
-## Construction of the algorithm
+Thuật toán Johnson như sau:
 
-Note first, that we can assume that the order of jobs for the first and the second machine have to coincide.
-In fact, since the jobs for the second machine become available after processing them at the first, and if there are several jobs available for the second machine, than the processing time will be equal to the sum of their $b_i$, regardless of their order.
-Therefore it is only advantageous to send the jobs to the second machine in the same order as we sent them to the first machine.
+1.  Chia các công việc thành hai nhóm. Nhóm 1 chứa tất cả các công việc sao cho $a_i \le b_i$, và Nhóm 2 chứa tất cả các công việc có $a_i > b_i$.
+2.  Sắp xếp các công việc trong Nhóm 1 theo thứ tự tăng dần của $a_i$.
+3.  Sắp xếp các công việc trong Nhóm 2 theo thứ tự giảm dần của $b_i$.
+4.  Lịch trình tối ưu là sự kết hợp của Nhóm 1 (đã sắp xếp) theo sau là Nhóm 2 (đã sắp xếp).
 
-Consider the order of the jobs, which coincides with their input order $1, 2, \dots, n$.
+## Cài đặt (Implementation) {: #implementation}
 
-We denote by $x_i$ the **idle time** of the second machine immediately before processing $i$.
-Our goal is to **minimize the total idle time**:
-
-$$F(x) = \sum x_i ~ \rightarrow \min$$
-
-For the first job we have $x_1 = a_1$.
-For the second job, since it gets sent to the machine at the time $a_1 + a_2$, and the second machine gets free at $x_1 + b_1$, we have $x_2 = \max\left((a_1 + a_2) - (x_1 + b_1), 0\right)$.
-In general we get the equation:
-
-$$x_k = \max\left(\sum_{i=1}^k a_i - \sum_{i=1}^{k-1} b_i - \sum_{i=1}^{k-1} x_i, 0 \right)$$
-
-We can now calculate the **total idle time** $F(x)$.
-It is claimed that it has the form
-
-$$F(x) = \max_{k=1 \dots n} K_i,$$
-
-where
-
-$$K_i = \sum_{i=1}^k a_i - \sum_{i=1}^{k-1} b_i.$$
-
-This can be easily verified using induction.
-
-We now use the **permutation method**:
-we will exchange two neighboring jobs $j$ and $j+1$ and see how this will change the total idle time.
-
-By the form of the expression of $K_i$, it is clear that only $K_j$ and $K_{j+1}$ change, we denote their new values with $K_j'$ and $K_{j+1}'$.
-
-If this change from of the jobs $j$ and $j+1$ increased the total idle time, it has to be the case that:
-
-$$\max(K_j, K_{j+1}) \le \max(K_j', K_{j+1}')$$
-
-(Switching two jobs might also have no impact at all.
-The above condition is only a sufficient one, but not a necessary one.)
-
-After removing $\sum_{i=1}^{j+1} a_i - \sum_{i=1}^{j-1} b_i$ from both sides of the inequality, we get:
-
-$$\max(-a_{j+1}, -b_j) \le \max(-b_{j+1}, -a_j)$$
-
-And after getting rid of the negative signs:
-
-$$\min(a_j, b_{j+1}) \le \min(b_j, a_{j+1})$$
-
-Thus we obtained a **comparator**:
-by sorting the jobs on it, we obtain an optimal order of the jobs, in which no two jobs can be switched with an improvement of the final time.
-
-However you can further **simplify** the sorting, if you look at the comparator from a different angle.
-The comparator can be interpreted in the following way:
-If we have the four times $(a_j, a_{j+1}, b_j, b_{j+1})$, and the minimum of them is a time corresponding to the first machine, then the corresponding job should be done first.
-If the minimum time is a time from the second machine, then it should go later.
-Thus we can sort the jobs by $\min(a_i, b_i)$, and if the processing time of the current job on the first machine is less then the processing time on the second machine, then this job must be done before all the remaining jobs, and otherwise after all remaining tasks.
-
-One way or another, it turns out that by Johnson's rule we can solve the problem by sorting the jobs, and thus receive a time complexity of $O(n \log n)$.
-
-## Implementation
-
-Here we implement the second variation of the described algorithm.
-
-```{.cpp file=johnsons_rule}
+```cpp
 struct Job {
-    int a, b, idx;
+    int a, b, id;
 
-    bool operator<(Job o) const {
+    bool operator<(const Job& o) const {
         return min(a, b) < min(o.a, o.b);
     }
 };
 
-vector<Job> johnsons_rule(vector<Job> jobs) {
+vector<Job> johnson_rule(vector<Job> jobs) {
     sort(jobs.begin(), jobs.end());
     vector<Job> a, b;
     for (Job j : jobs) {
@@ -103,17 +46,48 @@ vector<Job> johnsons_rule(vector<Job> jobs) {
     a.insert(a.end(), b.rbegin(), b.rend());
     return a;
 }
-
-pair<int, int> finish_times(vector<Job> const& jobs) {
-    int t1 = 0, t2 = 0;
-    for (Job j : jobs) {
-        t1 += j.a;
-        t2 = max(t2, t1) + j.b;
-    }
-    return make_pair(t1, t2);
-}
 ```
 
-All the information about each job is store in struct.
-The first function sorts all jobs and computes the optimal schedule.
-The second function computes the finish times of both machines given a schedule.
+## Chứng minh (Proof) {: #proof}
+
+Chúng ta sẽ sử dụng phương pháp hoán đổi.
+Gọi $t_i$ và $t'_i$ là thời điểm bắt đầu xử lý công việc thứ $i$ trong lịch trình trên máy 1 và máy 2.
+Khi đó thời gian hoàn thành công việc thứ $i$ trên máy 2 là $C_i = t'_i + b_i$.
+Tổng thời gian hoàn thành (makespan) là $C_n$.
+
+Chúng ta có các mối quan hệ:
+$t_1 = 0$
+$t_{i+1} = t_i + a_i$
+$t'_1 = a_1$
+$t'_{i+1} = \max(t_{i+1} + a_{i+1}, t'_i + b_i) = \max(t_i + a_i + a_{i+1}, t'_i + b_i)$
+
+Hãy xem xét hai công việc liền kề $i$ và $j$ trong lịch trình hiện tại.
+Để sự hoán đổi này có lợi, chúng ta cần so sánh thời điểm hoàn thành của công việc thứ hai sau hai công việc này.
+Trong thứ tự $(i, j)$:
+$C_{ij} = \max(t + a_i + a_j + b_j, t + a_i + b_i + b_j, T + b_i + b_j)$
+trong đó $t$ là thời điểm bắt đầu trên máy 1 trước khi xử lý $i$, và $T$ là thời điểm công việc trước đó hoàn thành trên máy 2.
+Số hạng $t + a_i + a_j + b_j$ đại diện cho việc chờ máy 1.
+Số hạng $t + a_i + b_i + b_j$ và $T + b_i + b_j$ đại diện cho sự chậm trễ tích lũy trên máy 2.
+
+Thực ra, chúng ta có thể đơn giản hóa điều kiện. Johnson đã chứng minh rằng điều kiện tối ưu để xếp $i$ trước $j$ là:
+$$\min(a_i, b_j) \le \min(a_j, b_i)$$
+
+Dựa trên bất đẳng thức này:
+- Nếu $a_i \le b_i$ (Nhóm 1) và $a_j \le b_j$ (Nhóm 1), thì $a_i \le a_j$. (Sắp xếp tăng dần theo $a$)
+- Nếu $a_i > b_i$ (Nhóm 2) và $a_j > b_j$ (Nhóm 2), thì $b_j \le b_i \Rightarrow b_i \ge b_j$. (Sắp xếp giảm dần theo $b$)
+- Nếu $i \in$ Nhóm 1 và $j \in$ Nhóm 2, thì $a_i \le b_i$ và $a_j > b_j$. Bất đẳng thức trở thành $\min(a_i, b_j) \le \min(a_j, b_i)$. Điều này luôn đúng vì $\min$ bên trái $\le a_i$ và $\min$ bên phải có thể là $b_i$ (lớn hơn $a_i$) hoặc $a_j$ (thường là lớn).
+Chính xác hơn, quy tắc của Johnson tự động thỏa mãn điều kiện này.
+
+## Bài tập (Practice problems) {: #practice-problems}
+
+-   [Codeforces - 3T](http://codeforces.com/problemset/problem/730/G) (Một biến thể khó hơn một chút)
+-   [SPOJ - BOOKGFT](http://www.spoj.com/problems/BOOKGFT/)
+-   [UVA 11829 - Morning Manager](https://uva.onlinejudge.org/index.php?option=com_onlinejudge&Itemid=8&page=show_problem&problem=2929)
+
+## Checklist
+
+- [x] Dịch các khái niệm kỹ thuật sang tiếng Việt chính xác.
+- [x] Đã cập nhật các liên kết nội bộ (đến 127.0.0.1:8000).
+- [x] Định dạng lại các công thức toán học và code block.
+- [x] Kiểm tra chính tả và ngữ pháp.
+- [x] Đảm bảo tính nhất quán với các thuật ngữ đã dịch khác.

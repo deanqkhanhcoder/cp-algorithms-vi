@@ -1,53 +1,39 @@
 ---
 tags:
-  - Original
+  - Translated
 ---
 
-# Divide and Conquer DP
+# Quy hoạch động Chia để trị (Divide and Conquer DP) {: #divide-and-conquer-dp}
 
-Divide and Conquer is a dynamic programming optimization.
+Chia để trị là một kỹ thuật tối ưu hóa quy hoạch động.
 
-### Preconditions
-Some dynamic programming problems have a recurrence of this form: 
+### Điều kiện tiên quyết (Preconditions) {: #preconditions}
+
+Một số bài toán quy hoạch động có công thức truy hồi dạng sau:
 
 $$
 dp(i, j) = \min_{0 \leq k \leq j} \\{ dp(i - 1, k - 1) + C(k, j) \\}
 $$
 
-where $C(k, j)$ is a cost function and $dp(i, j) = 0$ when $j \lt 0$. 
+trong đó $C(k, j)$ là một hàm chi phí và $dp(i, j) = 0$ khi $j \lt 0$.
 
-Say $0 \leq i \lt m$ and $0 \leq j \lt n$, and evaluating $C$ takes $O(1)$
-time. Then the straightforward evaluation of the above recurrence is $O(m n^2)$. There
-are $m \times n$ states, and $n$ transitions for each state.
+Giả sử $0 \leq i \lt m$ và $0 \leq j \lt n$, và việc tính toán $C$ mất thời gian $O(1)$. Khi đó việc đánh giá trực tiếp công thức truy hồi trên là $O(m n^2)$. Có $m \times n$ trạng thái, và $n$ chuyển đổi cho mỗi trạng thái.
 
-Let $opt(i, j)$ be the value of $k$ that minimizes the above expression. Assuming that the 
-cost function satisfies the quadrangle inequality, we can show that 
-$opt(i, j) \leq opt(i, j + 1)$ for all $i, j$. This is known as the _monotonicity condition_. 
-Then, we can apply divide and conquer DP. The optimal
-"splitting point" for a fixed $i$ increases as $j$ increases.
+Gọi $opt(i, j)$ là giá trị của $k$ làm giảm thiểu biểu thức trên. Giả sử rằng hàm chi phí thỏa mãn bất đẳng thức tứ giác, chúng ta có thể chỉ ra rằng $opt(i, j) \leq opt(i, j + 1)$ với mọi $i, j$. Đây được gọi là _điều kiện đơn điệu_ (monotonicity condition).
+Sau đó, chúng ta có thể áp dụng DP chia để trị. "Điểm chia" tối ưu cho một $i$ cố định tăng khi $j$ tăng.
 
-This lets us solve for all states more efficiently. Say we compute $opt(i, j)$
-for some fixed $i$ and $j$. Then for any $j' < j$ we know that $opt(i, j') \leq opt(i, j)$.
-This means when computing $opt(i, j')$, we don't have to consider as many
-splitting points!
+Điều này cho phép chúng ta giải quyết tất cả các trạng thái hiệu quả hơn. Giả sử chúng ta tính $opt(i, j)$ cho một số cố định $i$ và $j$. Sau đó với bất kỳ $j' < j$ nào chúng ta biết rằng $opt(i, j') \leq opt(i, j)$.
+Điều này có nghĩa là khi tính toán $opt(i, j')$, chúng ta không phải xem xét nhiều điểm chia!
 
-To minimize the runtime, we apply the idea behind divide and conquer. First,
-compute $opt(i, n / 2)$. Then, compute $opt(i, n / 4)$, knowing that it is less
-than or equal to $opt(i, n / 2)$ and $opt(i, 3 n / 4)$ knowing that it is
-greater than or equal to $opt(i, n / 2)$. By recursively keeping track of the
-lower and upper bounds on $opt$, we reach a $O(m n \log n)$ runtime. Each
-possible value of $opt(i, j)$ only appears in $\log n$ different nodes.
+Để giảm thiểu thời gian chạy, chúng ta áp dụng ý tưởng đằng sau chia để trị. Đầu tiên, tính $opt(i, n / 2)$. Sau đó, tính $opt(i, n / 4)$, biết rằng nó nhỏ hơn hoặc bằng $opt(i, n / 2)$ và $opt(i, 3 n / 4)$ biết rằng nó lớn hơn hoặc bằng $opt(i, n / 2)$. Bằng cách theo dõi đệ quy các giới hạn dưới và trên trên $opt$, chúng ta đạt được thời gian chạy $O(m n \log n)$. Mỗi giá trị có thể có của $opt(i, j)$ chỉ xuất hiện trong $\log n$ nút khác nhau.
 
-Note that it doesn't matter how "balanced" $opt(i, j)$ is. Across a fixed
-level, each value of $k$ is used at most twice, and there are at most $\log n$
-levels.
+Lưu ý rằng không quan trọng $opt(i, j)$ "cân bằng" như thế nào. Qua một cấp độ cố định, mỗi giá trị của $k$ được sử dụng tối đa hai lần, và có tối đa $\log n$ cấp độ.
 
-## Generic implementation
+## Cài đặt chung (Generic implementation) {: #generic-implementation}
 
-Even though implementation varies based on problem, here's a fairly generic
-template.
-The function `compute` computes one row $i$ of states `dp_cur`, given the previous row $i-1$ of states `dp_before`.
-It has to be called with `compute(0, n-1, 0, n-1)`. The function `solve` computes `m` rows and returns the result.
+Mặc dù việc cài đặt thay đổi tùy theo bài toán, đây là một mẫu khá chung.
+Hàm `compute` tính toán một hàng $i$ của các trạng thái `dp_cur`, với hàng trước $i-1$ của các trạng thái `dp_before`.
+Nó phải được gọi với `compute(0, n-1, 0, n-1)`. Hàm `solve` tính toán `m` hàng và trả về kết quả.
 
 ```{.cpp file=divide_and_conquer_dp}
 int m, n;
@@ -90,14 +76,13 @@ long long solve() {
 }
 ```
 
-### Things to look out for
+### Những điều cần lưu ý (Things to look out for) {: #things-to-look-out-for}
 
-The greatest difficulty with Divide and Conquer DP problems is proving the
-monotonicity of $opt$. One special case where this is true is when the cost function satisfies the quadrangle inequality, i.e., $C(a, c) + C(b, d) \leq C(a, d) + C(b, c)$ for all $a \leq b \leq c \leq d$. 
-Many Divide and Conquer DP problems can also be solved with the Convex Hull trick or vice-versa. It is useful to know and understand
-both! 
+Khó khăn lớn nhất với các bài toán DP Chia để trị là chứng minh tính đơn điệu của $opt$. Một trường hợp đặc biệt mà điều này đúng là khi hàm chi phí thỏa mãn bất đẳng thức tứ giác, tức là, $C(a, c) + C(b, d) \leq C(a, d) + C(b, c)$ với mọi $a \leq b \leq c \leq d$.
+Nhiều bài toán DP Chia để trị cũng có thể được giải quyết bằng thủ thuật Bao lồi (Convex Hull trick) hoặc ngược lại. Việc biết và hiểu cả hai là rất hữu ích!
 
-## Practice Problems
+## Bài tập (Practice Problems) {: #practice-problems}
+
 - [AtCoder - Yakiniku Restaurants](https://atcoder.jp/contests/arc067/tasks/arc067_d)
 - [CodeForces - Ciel and Gondolas](https://codeforces.com/contest/321/problem/E) (Be careful with I/O!)
 - [CodeForces - Levels And Regions](https://codeforces.com/problemset/problem/673/E)
@@ -105,7 +90,7 @@ both!
 - [CodeForces - The Bakery](https://codeforces.com/problemset/problem/834/D)
 - [CodeForces - Yet Another Minimization Problem](https://codeforces.com/contest/868/problem/F)
 - [Codechef - CHEFAOR](https://www.codechef.com/problems/CHEFAOR)
-- [CodeForces - GUARDS](https://codeforces.com/gym/103536/problem/A) (This is the exact problem in this article.)
+- [CodeForces - GUARDS](https://codeforces.com/gym/103536/problem/A) (Đây chính xác là bài toán trong bài viết này.)
 - [Hackerrank - Guardians of the Lunatics](https://www.hackerrank.com/contests/ioi-2014-practice-contest-2/challenges/guardians-lunatics-ioi14)
 - [Hackerrank - Mining](https://www.hackerrank.com/contests/world-codesprint-5/challenges/mining)
 - [Kattis - Money (ACM ICPC World Finals 2017)](https://open.kattis.com/problems/money)
@@ -117,8 +102,7 @@ both!
 - [UVA - Arranging Heaps](https://onlinejudge.org/external/125/12524.pdf)
 - [UVA - Naming Babies](https://onlinejudge.org/external/125/12594.pdf)
 
+## Tài liệu tham khảo (References) {: #references}
 
-
-## References
 - [Quora Answer by Michael Levin](https://www.quora.com/What-is-divide-and-conquer-optimization-in-dynamic-programming)
 - [Video Tutorial by "Sothe" the Algorithm Wolf](https://www.youtube.com/watch?v=wLXEWuDWnzI)

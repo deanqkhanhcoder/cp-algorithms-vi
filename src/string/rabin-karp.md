@@ -4,21 +4,22 @@ tags:
 e_maxx_link: rabin_karp
 ---
 
-# Rabin-Karp Algorithm for string matching
+# Thuật toán Rabin-Karp cho việc so khớp chuỗi (Rabin-Karp Algorithm for string matching) {: #rabin-karp-algorithm-for-string-matching}
 
-This algorithm is based on the concept of hashing, so if you are not familiar with string hashing, refer to the [string hashing](string-hashing.md) article.
+Thuật toán này dựa trên khái niệm băm, vì vậy nếu bạn không quen thuộc với băm chuỗi, hãy tham khảo bài viết [băm chuỗi](string-hashing.md).
  
-This algorithm was authored by Rabin and Karp in 1987.
+Thuật toán này được tác giả bởi Rabin và Karp vào năm 1987.
 
-Problem: Given two strings - a pattern $s$ and a text $t$, determine if the pattern appears in the text and if it does, enumerate all its occurrences in $O(|s| + |t|)$ time.
+Bài toán: Cho hai chuỗi - một mẫu $s$ và một văn bản $t$, xác định xem mẫu có xuất hiện trong văn bản hay không và nếu có, liệt kê tất cả các lần xuất hiện của nó trong thời gian $O(|s| + |t|)$.
 
-Algorithm: Calculate the hash for the pattern $s$.
-Calculate hash values for all the prefixes of the text $t$.
-Now, we can compare a substring of length $|s|$ with $s$ in constant time using the calculated hashes.
-So, compare each substring of length $|s|$ with the pattern. This will take a total of $O(|t|)$ time.
-Hence the final complexity of the algorithm is $O(|t| + |s|)$: $O(|s|)$ is required for calculating the hash of the pattern and $O(|t|)$ for comparing each substring of length $|s|$ with the pattern.
+Thuật toán: Tính toán băm cho mẫu $s$.
+Tính toán các giá trị băm cho tất cả các tiền tố của văn bản $t$.
+Bây giờ, chúng ta có thể so sánh một chuỗi con có độ dài $|s|$ với $s$ trong thời gian hằng số bằng cách sử dụng các giá trị băm đã tính toán.
+Vì vậy, hãy so sánh từng chuỗi con có độ dài $|s|$ với mẫu. Điều này sẽ mất tổng thời gian là $O(|t|)$.
+Do đó, độ phức tạp cuối cùng của thuật toán là $O(|t| + |s|)$: $O(|s|)$ được yêu cầu để tính toán băm của mẫu và $O(|t|)$ để so sánh mỗi chuỗi con có độ dài $|s|$ với mẫu.
 
-## Implementation
+## Cài đặt (Implementation) {: #implementation}
+
 ```{.cpp file=rabin_karp}
 vector<int> rabin_karp(string const& s, string const& t) {
     const int p = 31; 
@@ -47,10 +48,9 @@ vector<int> rabin_karp(string const& s, string const& t) {
 }
 ```
 
-## Practice Problems
+## Bài tập (Practice Problems) {: #practice-problems}
 
 * [SPOJ - Pattern Find](http://www.spoj.com/problems/NAJPF/)
 * [Codeforces - Good Substrings](http://codeforces.com/problemset/problem/271/D)
 * [Codeforces - Palindromic characteristics](https://codeforces.com/problemset/problem/835/D)
 * [Leetcode - Longest Duplicate Substring](https://leetcode.com/problems/longest-duplicate-substring/)
-

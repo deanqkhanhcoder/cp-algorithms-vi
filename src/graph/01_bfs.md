@@ -1,21 +1,20 @@
 ---
 tags:
-  - Original
+  - Translated
 ---
+# BFS 0-1 (0-1 BFS) {: #0-1-bfs}
 
-# 0-1 BFS
+Việc tìm đường đi ngắn nhất giữa một nguồn đơn và tất cả các đỉnh khác trong $O(|E|)$ bằng cách sử dụng [Tìm kiếm theo chiều rộng](breadth-first-search.md) trong **đồ thị không trọng số** đã rất nổi tiếng, tức là khoảng cách là số lượng cạnh tối thiểu bạn cần để đi từ nguồn đến đỉnh khác.
+Chúng ta cũng có thể hiểu đồ thị như vậy là đồ thị có trọng số, trong đó mỗi cạnh có trọng số là $1$.
+Nếu không phải tất cả các cạnh trong đồ thị đều có cùng trọng số, thì chúng ta cần một thuật toán tổng quát hơn, như [Dijkstra](dijkstra.md) chạy trong thời gian $O(|V|^2 + |E|)$ hoặc $O(|E| \log |V|)$.
 
-It is well-known, that you can find the shortest paths between a single source and all other vertices in $O(|E|)$ using [Breadth First Search](breadth-first-search.md) in an **unweighted graph**, i.e. the distance is the minimal number of edges that you need to traverse from the source to another vertex.
-We can interpret such a graph also as a weighted graph, where every edge has the weight $1$.
-If not all edges in graph have the same weight, then we need a more general algorithm, like [Dijkstra](dijkstra.md) which runs in $O(|V|^2 + |E|)$ or $O(|E| \log |V|)$ time.
+Tuy nhiên, nếu trọng số bị hạn chế hơn, chúng ta thường có thể làm tốt hơn.
+Trong bài viết này, chúng tôi trình bày cách chúng ta có thể sử dụng BFS để giải quyết bài toán SSSP (đường đi ngắn nhất từ một nguồn đơn) trong $O(|E|)$, nếu trọng số của mỗi cạnh là $0$ hoặc $1$.
 
-However if the weights are more constrained, we can often do better.
-In this article we demonstrate how we can use BFS to solve the SSSP (single-source shortest path) problem in $O(|E|)$, if the weight of each edge is either $0$ or $1$.
+## Thuật toán (Algorithm) {: #algorithm}
 
-## Algorithm
-
-We can develop the algorithm by closely studying Dijkstra's algorithm and thinking about the consequences that our special graph implies.
-The general form of Dijkstra's algorithm is (here a `set` is used for the priority queue):
+Chúng ta có thể phát triển thuật toán bằng cách nghiên cứu kỹ thuật toán Dijkstra và suy nghĩ về những hậu quả mà đồ thị đặc biệt của chúng ta mang lại.
+Dạng chung của thuật toán Dijkstra là (ở đây `set` được sử dụng cho hàng đợi ưu tiên):
 
 ```cpp
 d.assign(n, INF);
@@ -39,19 +38,19 @@ while (!q.empty()) {
 }
 ```
 
-We can notice that the difference between the distances between the source `s` and two other vertices in the queue differs by at most one.
-Especially, we know that $d[v] \le d[u] \le d[v] + 1$ for each $u \in Q$.
-The reason for this is, that we only add vertices with equal distance or with distance plus one to the queue during each iteration.
-Assuming there exists a $u$ in the queue with $d[u] - d[v] > 1$, then $u$ must have been inserted into the queue via a different vertex $t$ with $d[t] \ge d[u] - 1 > d[v]$.
-However this is impossible, since Dijkstra's algorithm iterates over the vertices in increasing order.
+Chúng ta có thể nhận thấy rằng sự khác biệt về khoảng cách giữa nguồn `s` và hai đỉnh khác trong hàng đợi sai khác nhau nhiều nhất là một.
+Đặc biệt, chúng ta biết rằng $d[v] \le d[u] \le d[v] + 1$ cho mỗi $u \in Q$.
+Lý do cho điều này là, chúng ta chỉ thêm các đỉnh có khoảng cách bằng nhau hoặc khoảng cách cộng một vào hàng đợi trong mỗi lần lặp.
+Giả sử tồn tại một $u$ trong hàng đợi với $d[u] - d[v] > 1$, thì $u$ phải được chèn vào hàng đợi thông qua một đỉnh khác $t$ với $d[t] \ge d[u] - 1 > d[v]$.
+Tuy nhiên điều này là không thể, vì thuật toán Dijkstra lặp qua các đỉnh theo thứ tự tăng dần.
 
-This means, that the order of the queue looks like this:
+Điều này có nghĩa là, thứ tự của hàng đợi trông như sau:
 
 $$Q = \underbrace{v}_{d[v]}, \dots, \underbrace{u}_{d[v]}, \underbrace{m}_{d[v]+1} \dots \underbrace{n}_{d[v]+1}$$
 
-This structure is so simple, that we don't need an actual priority queue, i.e. using a balanced binary tree would be an overkill.
-We can simply use a normal queue, and append new vertices at the beginning if the corresponding edge has weight $0$, i.e. if $d[u] = d[v]$, or at the end if the edge has weight $1$, i.e. if $d[u] = d[v] + 1$.
-This way the queue still remains sorted at all time.
+Cấu trúc này đơn giản đến mức chúng ta không cần một hàng đợi ưu tiên thực sự, tức là sử dụng cây nhị phân cân bằng sẽ là quá mức cần thiết.
+Chúng ta có thể chỉ cần sử dụng một hàng đợi bình thường, và thêm các đỉnh mới vào đầu nếu cạnh tương ứng có trọng số $0$, tức là nếu $d[u] = d[v]$, hoặc vào cuối nếu cạnh có trọng số $1$, tức là nếu $d[u] = d[v] + 1$.
+Bằng cách này, hàng đợi vẫn được sắp xếp mọi lúc.
 
 ```cpp
 vector<int> d(n, INF);
@@ -75,14 +74,14 @@ while (!q.empty()) {
 }
 ```
 
-## Dial's algorithm
+## Thuật toán Dial (Dial's algorithm) {: #dials-algorithm}
 
-We can extend this even further if we allow the weights of the edges to be even bigger.
-If every edge in the graph has a weight $\le k$, then the distances of vertices in the queue will differ by at most $k$ from the distance of $v$ to the source.
-So we can keep $k + 1$ buckets for the vertices in the queue, and whenever the bucket corresponding to the smallest distance gets empty, we make a cyclic shift to get the bucket with the next higher distance.
-This extension is called **Dial's algorithm**.
+Chúng ta có thể mở rộng điều này hơn nữa nếu chúng ta cho phép trọng số của các cạnh lớn hơn.
+Nếu mọi cạnh trong đồ thị có trọng số $\le k$, thì khoảng cách của các đỉnh trong hàng đợi sẽ khác biệt nhiều nhất là $k$ so với khoảng cách từ $v$ đến nguồn.
+Vì vậy, chúng ta có thể giữ $k + 1$ bucket cho các đỉnh trong hàng đợi, và bất cứ khi nào bucket tương ứng với khoảng cách nhỏ nhất trống, chúng ta thực hiện một dịch chuyển vòng để lấy bucket có khoảng cách cao hơn tiếp theo.
+Mở rộng này được gọi là **thuật toán Dial**.
 
-## Practice problems
+## Bài tập (Practice problems) {: #practice-problems}
 
 - [CodeChef - Chef and Reversing](https://www.codechef.com/problems/REVERSE)
 - [Labyrinth](https://codeforces.com/contest/1063/problem/B)

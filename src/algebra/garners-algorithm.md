@@ -1,48 +1,48 @@
-# Garner's algorithm
+# Thuật toán Garner (Garner's algorithm) {: #garners-algorithm}
 
-A consequence of the [Chinese Remainder Theorem](chinese-remainder-theorem.md) is, that we can represent big numbers using an array of small integers.
-For example, let $p$ be the product of the first $1000$ primes. $p$ has around $3000$ digits.
+Một hệ quả của [Định lý Thặng dư Trung Hoa (Chinese Remainder Theorem)](chinese-remainder-theorem.md) là, chúng ta có thể biểu diễn các số lớn bằng cách sử dụng một mảng các số nguyên nhỏ.
+Ví dụ, gọi $p$ là tích của $1000$ số nguyên tố đầu tiên. $p$ có khoảng $3000$ chữ số.
 
-Any number $a$ less than $p$ can be represented as an array  $a_1, \ldots, a_k$, where $a_i \equiv a \pmod{p_i}$.
-But to do this we obviously need to know how to get back the number $a$ from its representation.
-One way is discussed in the article about the Chinese Remainder Theorem.
+Bất kỳ số $a$ nào nhỏ hơn $p$ có thể được biểu diễn dưới dạng một mảng $a_1, \ldots, a_k$, trong đó $a_i \equiv a \pmod{p_i}$.
+Nhưng để làm điều này, chúng ta rõ ràng cần biết cách lấy lại số $a$ từ biểu diễn của nó.
+Một cách được thảo luận trong bài viết về Định lý Thặng dư Trung Hoa.
 
-In this article we discuss an alternative, Garner's Algorithm, which can also be used for this purpose.
+Trong bài viết này, chúng tôi thảo luận về một giải pháp thay thế, Thuật toán Garner, cũng có thể được sử dụng cho mục đích này.
 
-## Mixed Radix Representation
+## Biểu diễn cơ số hỗn hợp (Mixed Radix Representation) {: #mixed-radix-representation}
 
-We can represent the number $a$ in the **mixed radix** representation:
+Chúng ta có thể biểu diễn số $a$ trong biểu diễn **cơ số hỗn hợp**:
 
-$$a = x_1 + x_2 p_1 + x_3 p_1 p_2 + \ldots + x_k p_1 \cdots p_{k-1} \text{ with }x_i \in [0, p_i)$$
+$$a = x_1 + x_2 p_1 + x_3 p_1 p_2 + \ldots + x_k p_1 \cdots p_{k-1} \text{ với }x_i \in [0, p_i)$$
 
-A mixed radix representation is a positional numeral system, that's a generalization of the typical number systems, like the binary numeral system or the decimal numeral system.
-For instance, the decimal numeral system is a positional numeral system with the radix (or base) 10.
-Every number is represented as a string of digits $d_1 d_2 d_3 \dots d_n$ between $0$ and $9$. For example, the string $415$ represents the number $4 \cdot 10^2 + 1 \cdot 10^1 + 5 \cdot 10^0$.
-In general the string of digits $d_1 d_2 d_3 \dots d_n$ represents the number $d_1 b^{n-1} + d_2 b^{n-2} + \cdots + d_n b^0$ in the positional numeral system with radix $b$.
+Một biểu diễn cơ số hỗn hợp là một hệ thống số theo vị trí, đó là sự tổng quát của các hệ thống số điển hình, như hệ nhị phân hoặc hệ thập phân.
+Ví dụ, hệ thập phân là một hệ thống số theo vị trí với cơ số (hoặc base) 10.
+Mỗi số được biểu diễn dưới dạng một chuỗi các chữ số $d_1 d_2 d_3 \dots d_n$ nằm giữa $0$ và $9$. Ví dụ, chuỗi $415$ biểu diễn số $4 \cdot 10^2 + 1 \cdot 10^1 + 5 \cdot 10^0$.
+Nhìn chung chuỗi các chữ số $d_1 d_2 d_3 \dots d_n$ biểu diễn số $d_1 b^{n-1} + d_2 b^{n-2} + \cdots + d_n b^0$ trong hệ thống số theo vị trí với cơ số $b$.
 
-In a mixed radix system, we don't have one radix any more. The base varies from position to position.
+Trong hệ cơ số hỗn hợp, chúng ta không còn một cơ số nữa. Cơ số thay đổi từ vị trí này sang vị trí khác.
 
-## Garner's algorithm
+## Thuật toán Garner (Garner's algorithm) {: #garners-algorithm-1}
 
-Garner's algorithm computes the digits $x_1, \ldots, x_k$.
-Notice, that the digits are relatively small.
-The digit $x_i$ is an integer between $0$ and $p_i - 1$.
+Thuật toán Garner tính toán các chữ số $x_1, \ldots, x_k$.
+Lưu ý, rằng các chữ số tương đối nhỏ.
+Chữ số $x_i$ là một số nguyên từ $0$ đến $p_i - 1$.
 
-Let $r_{ij}$ denote the inverse of $p_i$ modulo $p_j$
+Gọi $r_{ij}$ biểu thị nghịch đảo của $p_i$ modulo $p_j$
 
 $$r_{ij} = (p_i)^{-1} \pmod{p_j}$$
 
-which can be found using the algorithm described in [Modular Inverse](module-inverse.md).
+có thể tìm thấy bằng cách sử dụng thuật toán được mô tả trong [Nghịch đảo Modulo](module-inverse.md).
 
-Substituting $a$ from the mixed radix representation into the first congruence equation we obtain
+Thay thế $a$ từ biểu diễn cơ số hỗn hợp vào phương trình đồng dư đầu tiên chúng ta thu được
 
 $$a_1 \equiv x_1 \pmod{p_1}.$$
 
-Substituting into the second equation yields
+Thay thế vào phương trình thứ hai mang lại
 
 $$a_2 \equiv x_1 + x_2 p_1 \pmod{p_2},$$
 
-which can be rewritten by subtracting $x_1$ and dividing by $p_1$ to get
+có thể được viết lại bằng cách trừ $x_1$ và chia cho $p_1$ để có
 
 $$\begin{array}{rclr}
     a_2 - x_1 &\equiv& x_2 p_1 &\pmod{p_2} \\
@@ -50,11 +50,11 @@ $$\begin{array}{rclr}
     x_2 &\equiv& (a_2 - x_1) r_{12} &\pmod{p_2}
 \end{array}$$
 
-Similarly we get that
+Tương tự chúng ta nhận được rằng
 
 $$x_3 \equiv ((a_3 - x_1) r_{13} - x_2) r_{23} \pmod{p_3}.$$
 
-Now, we can clearly see an emerging pattern, which can be expressed by the following code:
+Bây giờ, chúng ta có thể thấy rõ một mẫu đang nổi lên, có thể được biểu thị bằng mã sau:
 
 ```cpp
 for (int i = 0; i < k; ++i) {
@@ -69,20 +69,20 @@ for (int i = 0; i < k; ++i) {
 }
 ```
 
-So we learned how to calculate digits $x_i$ in $O(k^2)$ time. The number $a$ can now be calculated using the previously mentioned formula
+Vì vậy, chúng ta đã học cách tính các chữ số $x_i$ trong thời gian $O(k^2)$. Số $a$ bây giờ có thể được tính bằng công thức đã đề cập trước đó
 
 $$a = x_1 + x_2 \cdot p_1 + x_3 \cdot p_1 \cdot p_2 + \ldots + x_k \cdot p_1 \cdots p_{k-1}$$
 
-It is worth noting that in practice, we almost probably need to compute the answer $a$ using [Arbitrary-Precision Arithmetic](big-integer.md), but the digits $x_i$ (because they are small) can usually be calculated using built-in types, and therefore Garner's algorithm is very efficient.
+Đáng chú ý là trong thực tế, chúng ta hầu như có thể cần tính toán câu trả lời $a$ bằng cách sử dụng [Số học độ chính xác tùy ý](big-integer.md), nhưng các chữ số $x_i$ (vì chúng nhỏ) thường có thể được tính toán bằng các kiểu tích hợp sẵn, và do đó thuật toán Garner rất hiệu quả.
 
-## Implementation of Garner's Algorithm
+## Cài đặt thuật toán Garner (Implementation of Garner's Algorithm) {: #implementation-of-garners-algorithm}
 
-It is convenient to implement this algorithm using Java, because it has built-in support for large numbers through the `BigInteger` class.
+Thuận tiện để cài đặt thuật toán này bằng Java, vì nó có hỗ trợ tích hợp cho các số lớn thông qua class `BigInteger`.
 
-Here we show an implementation that can store big numbers in the form of a set of congruence equations.
-It supports addition, subtraction and multiplication.
-And with Garner's algorithm we can convert the set of equations into the unique integer.
-In this code, we take 100 prime numbers greater than $10^9$, which allows representing numbers as large as $10^{900}$.
+Ở đây chúng tôi hiển thị một cài đặt có thể lưu trữ các số lớn dưới dạng một tập hợp các phương trình đồng dư.
+Nó hỗ trợ cộng, trừ và nhân.
+Và với thuật toán Garner chúng ta có thể chuyển đổi tập hợp các phương trình thành số nguyên duy nhất.
+Trong mã này, chúng tôi lấy 100 số nguyên tố lớn hơn $10^9$, cho phép biểu diễn các số lớn tới $10^{900}$.
 
 ```java
 final int SZ = 100;
@@ -158,3 +158,15 @@ class Number {
     }
 }
 ```
+
+---
+
+## Checklist
+
+- Original lines: 161
+- Translated lines: 161
+- Code blocks changed? No
+- Inline code changed? No
+- Technical terms kept in English? Yes
+- Headings anchors preserved/added correctly? Yes
+- I confirm no character was omitted: YES

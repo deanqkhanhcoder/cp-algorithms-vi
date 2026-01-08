@@ -4,29 +4,29 @@ tags:
 e_maxx_link: z_function
 ---
 
-# Z-function and its calculation
+# Hàm Z và cách tính toán (Z-function and its calculation) {: #z-function-and-its-calculation}
 
-Suppose we are given a string $s$ of length $n$. The **Z-function** for this string is an array of length $n$ where the $i$-th element is equal to the greatest number of characters starting from the position $i$ that coincide with the first characters of $s$.
+Giả sử chúng ta được cho một chuỗi $s$ có độ dài $n$. **Hàm Z (Z-function)** cho chuỗi này là một mảng có độ dài $n$ trong đó phần tử thứ $i$ bằng số lượng ký tự lớn nhất bắt đầu từ vị trí $i$ trùng khớp với các ký tự đầu tiên của $s$.
 
-In other words, $z[i]$ is the length of the longest string that is, at the same time, a prefix of $s$ and a prefix of the suffix of $s$ starting at $i$.
+Nói cách khác, $z[i]$ là độ dài của chuỗi dài nhất đồng thời là tiền tố của $s$ và là tiền tố của hậu tố của $s$ bắt đầu tại $i$.
 
-**Note.** In this article, to avoid ambiguity, we assume $0$-based indexes; that is: the first character of $s$ has index $0$ and the last one has index $n-1$.
+**Lưu ý.** Trong bài viết này, để tránh mơ hồ, chúng tôi giả sử chỉ số bắt đầu từ $0$; tức là: ký tự đầu tiên của $s$ có chỉ số $0$ và ký tự cuối cùng có chỉ số $n-1$.
 
-The first element of Z-function, $z[0]$, is generally not well defined. In this article we will assume it is zero (although it doesn't change anything in the algorithm implementation).
+Phần tử đầu tiên của hàm Z, $z[0]$, thường không được định nghĩa rõ ràng. Trong bài viết này, chúng tôi sẽ giả sử nó bằng không (mặc dù nó không thay đổi bất cứ điều gì trong việc cài đặt thuật toán).
 
-This article presents an algorithm for calculating the Z-function in $O(n)$ time, as well as various of its applications.
+Bài viết này trình bày một thuật toán để tính toán hàm Z trong thời gian $O(n)$, cũng như các ứng dụng khác nhau của nó.
 
-## Examples
+## Ví dụ (Examples) {: #examples}
 
-For example, here are the values of the Z-function computed for different strings:
+Ví dụ, đây là các giá trị của hàm Z được tính toán cho các chuỗi khác nhau:
 
 * "aaaaa" - $[0, 4, 3, 2, 1]$
 * "aaabaab" - $[0, 2, 1, 0, 2, 1, 0]$
 * "abacaba" - $[0, 0, 1, 0, 3, 0, 1]$
 
-## Trivial algorithm
+## Thuật toán tầm thường (Trivial algorithm) {: #trivial-algorithm}
 
-Formal definition can be represented in the following elementary $O(n^2)$ implementation.
+Định nghĩa chính thức có thể được biểu diễn trong cài đặt sơ cấp $O(n^2)$ sau đây.
 
 ```cpp
 vector<int> z_function_trivial(string s) {
@@ -41,51 +41,51 @@ vector<int> z_function_trivial(string s) {
 }
 ```
 
-We just iterate through every position $i$ and update $z[i]$ for each one of them, starting from $z[i] = 0$ and incrementing it as long as we don't find a mismatch (and as long as we don't reach the end of the line).
+Chúng ta chỉ cần lặp qua mọi vị trí $i$ và cập nhật $z[i]$ cho mỗi vị trí đó, bắt đầu từ $z[i] = 0$ và tăng dần miễn là chúng ta không tìm thấy sự không khớp (và miễn là chúng ta không đến cuối dòng).
 
-Of course, this is not an efficient implementation. We will now show the construction of an efficient implementation.
+Tất nhiên, đây không phải là một cài đặt hiệu quả. Bây giờ chúng tôi sẽ hiển thị việc xây dựng một cài đặt hiệu quả.
 
-## Efficient algorithm to compute the Z-function
+## Thuật toán hiệu quả để tính hàm Z (Efficient algorithm to compute the Z-function) {: #efficient-algorithm-to-compute-the-z-function}
 
-To obtain an efficient algorithm we will compute the values of $z[i]$ in turn from $i = 1$ to $n - 1$ but at the same time, when computing a new value, we'll try to make the best use possible of the previously computed values.
+Để có được một thuật toán hiệu quả, chúng ta sẽ tính toán các giá trị của $z[i]$ lần lượt từ $i = 1$ đến $n - 1$ nhưng đồng thời, khi tính toán một giá trị mới, chúng ta sẽ cố gắng tận dụng tốt nhất có thể các giá trị đã được tính toán trước đó.
 
-For the sake of brevity, let's call **segment matches** those substrings that coincide with a prefix of $s$. For example, the value of the desired Z-function $z[i]$ is the length of the segment match starting at position $i$ (and that ends at position $i + z[i] - 1$).
+Để ngắn gọn, hãy gọi **đoạn khớp (segment matches)** là những chuỗi con trùng khớp với tiền tố của $s$. Ví dụ: giá trị của hàm Z mong muốn $z[i]$ là độ dài của đoạn khớp bắt đầu tại vị trí $i$ (và kết thúc tại vị trí $i + z[i] - 1$).
 
-To do this, we will keep **the $[l, r)$ indices of the rightmost segment match**. That is, among all detected segments we will keep the one that ends rightmost. In a way, the index $r$ can be seen as the "boundary" to which our string $s$ has been scanned by the algorithm; everything beyond that point is not yet known.
+Để làm điều này, chúng ta sẽ giữ **các chỉ số $[l, r)$ của đoạn khớp ngoài cùng bên phải**. Tức là, trong số tất cả các đoạn được phát hiện, chúng ta sẽ giữ đoạn kết thúc xa nhất về bên phải. Theo một cách nào đó, chỉ số $r$ có thể được coi là "biên giới" mà chuỗi $s$ của chúng ta đã được quét bởi thuật toán; mọi thứ nằm ngoài điểm đó vẫn chưa được biết.
 
-Then, if the current index (for which we have to compute the next value of the Z-function) is $i$, we have one of two options:
+Sau đó, nếu chỉ số hiện tại (mà chúng ta phải tính toán giá trị tiếp theo của hàm Z) là $i$, chúng ta có một trong hai tùy chọn:
 
-*   $i \geq r$ -- the current position is **outside** of what we have already processed.
+*   $i \geq r$ -- vị trí hiện tại nằm **bên ngoài** những gì chúng ta đã xử lý.
 
-    We will then compute $z[i]$ with the **trivial algorithm** (that is, just comparing values one by one). Note that in the end, if $z[i] > 0$, we'll have to update the indices of the rightmost segment, because it's guaranteed that the new $r = i + z[i]$ is better than the previous $r$.
+    Sau đó, chúng ta sẽ tính toán $z[i]$ với **thuật toán tầm thường** (tức là chỉ so sánh từng giá trị một). Lưu ý rằng cuối cùng, nếu $z[i] > 0$, chúng ta sẽ phải cập nhật các chỉ số của đoạn ngoài cùng bên phải, bởi vì đảm bảo rằng $r = i + z[i]$ mới tốt hơn $r$ trước đó.
 
-*   $i < r$ -- the current position is inside the current segment match $[l, r)$.
+*   $i < r$ -- vị trí hiện tại nằm bên trong đoạn khớp hiện tại $[l, r)$.
 
-    Then we can use the already calculated Z-values to "initialize" the value of $z[i]$ to something (it sure is better than "starting from zero"), maybe even some big number.
+    Sau đó, chúng ta có thể sử dụng các giá trị Z đã tính toán để "khởi tạo" giá trị của $z[i]$ thành một cái gì đó (chắc chắn tốt hơn là "bắt đầu từ không"), thậm chí có thể là một số lớn.
 
-    For this, we observe that the substrings $s[l \dots r)$ and $s[0 \dots r-l)$ **match**. This means that as an initial approximation for $z[i]$ we can take the value already computed for the corresponding segment $s[0 \dots r-l)$, and that is $z[i-l]$.
+    Để làm điều này, chúng ta quan sát thấy rằng các chuỗi con $s[l \dots r)$ và $s[0 \dots r-l)$ **khớp nhau**. Điều này có nghĩa là như một xấp xỉ ban đầu cho $z[i]$, chúng ta có thể lấy giá trị đã được tính toán cho đoạn tương ứng $s[0 \dots r-l)$, và đó là $z[i-l]$.
 
-    However, the value $z[i-l]$ could be too large: when applied to position $i$ it could exceed the index $r$. This is not allowed because we know nothing about the characters to the right of $r$: they may differ from those required.
+    Tuy nhiên, giá trị $z[i-l]$ có thể quá lớn: khi áp dụng cho vị trí $i$ nó có thể vượt quá chỉ số $r$. Điều này không được phép vì chúng ta không biết gì về các ký tự bên phải của $r$: chúng có thể khác với những ký tự được yêu cầu.
 
-    Here is **an example** of a similar scenario:
+    Dưới đây là **một ví dụ** về một kịch bản tương tự:
 
     $$ s = "aaaabaa" $$
 
-    When we get to the last position ($i = 6$), the current match segment will be $[5, 7)$. Position $6$ will then match position $6 - 5 = 1$, for which the value of the Z-function is $z[1] = 3$. Obviously, we cannot initialize $z[6]$ to $3$, it would be completely incorrect. The maximum value we could initialize it to is $1$ -- because it's the largest value that doesn't bring us beyond the index $r$ of the match segment $[l, r)$.
+    Khi chúng ta đến vị trí cuối cùng ($i = 6$), đoạn khớp hiện tại sẽ là $[5, 7)$. Vị trí $6$ sau đó sẽ khớp với vị trí $6 - 5 = 1$, mà giá trị của hàm Z là $z[1] = 3$. Rõ ràng, chúng ta không thể khởi tạo $z[6]$ thành $3$, nó sẽ hoàn toàn không chính xác. Giá trị lớn nhất mà chúng ta có thể khởi tạo nó là $1$ -- bởi vì đó là giá trị lớn nhất không đưa chúng ta vượt quá chỉ số $r$ của đoạn khớp $[l, r)$.
 
-    Thus, as an **initial approximation** for $z[i]$ we can safely take:
+    Do đó, như một **xấp xỉ ban đầu** cho $z[i]$, chúng ta có thể lấy một cách an toàn:
 
     $$ z_0[i] = \min(r - i,\; z[i-l]) $$
 
-    After having $z[i]$ initialized to $z_0[i]$, we try to increment $z[i]$ by running the **trivial algorithm** -- because in general, after the border $r$, we cannot know if the segment will continue to match or not.
+    Sau khi có $z[i]$ được khởi tạo thành $z_0[i]$, chúng ta cố gắng tăng $z[i]$ bằng cách chạy **thuật toán tầm thường** -- bởi vì nói chung, sau biên giới $r$, chúng ta không thể biết liệu đoạn đó có tiếp tục khớp hay không.
 
-Thus, the whole algorithm is split in two cases, which differ only in **the initial value** of $z[i]$: in the first case it's assumed to be zero, in the second case it is determined by the previously computed values (using the above formula). After that, both branches of this algorithm can be reduced to the implementation of **the trivial algorithm**, which starts immediately after we specify the initial value.
+Do đó, toàn bộ thuật toán được chia thành hai trường hợp, chỉ khác nhau ở **giá trị ban đầu** của $z[i]$: trong trường hợp đầu tiên nó được giả định là không, trong trường hợp thứ hai nó được xác định bởi các giá trị đã được tính toán trước đó (sử dụng công thức trên). Sau đó, cả hai nhánh của thuật toán này có thể được rút gọn thành việc thực hiện **thuật toán tầm thường**, bắt đầu ngay sau khi chúng ta chỉ định giá trị ban đầu.
 
-The algorithm turns out to be very simple. Despite the fact that on each iteration the trivial algorithm is run, we have made significant progress, having an algorithm that runs in linear time. Later on we will prove that the running time is linear.
+Thuật toán hóa ra rất đơn giản. Mặc dù thực tế là trên mỗi lần lặp, thuật toán tầm thường được chạy, chúng ta đã đạt được tiến bộ đáng kể, có một thuật toán chạy trong thời gian tuyến tính. Sau này chúng ta sẽ chứng minh rằng thời gian chạy là tuyến tính.
 
-## Implementation
+## Cài đặt (Implementation) {: #implementation}
 
-Implementation turns out to be rather concise:
+Việc cài đặt hóa ra khá ngắn gọn:
 
 ```cpp
 vector<int> z_function(string s) {
@@ -108,101 +108,101 @@ vector<int> z_function(string s) {
 }
 ```
 
-### Comments on this implementation
+### Nhận xét về việc cài đặt (Comments on this implementation) {: #comments-on-this-implementation}
 
-The whole solution is given as a function which returns an array of length $n$ -- the Z-function of $s$.
+Toàn bộ giải pháp được đưa ra dưới dạng một hàm trả về một mảng có độ dài $n$ -- hàm Z của $s$.
 
-Array $z$ is initially filled with zeros. The current rightmost match segment is assumed to be $[0; 0)$ (that is, a deliberately small segment which doesn't contain any $i$).
+Mảng $z$ ban đầu được điền bằng các số không. Đoạn khớp ngoài cùng bên phải hiện tại được giả định là $[0; 0)$ (tức là một đoạn nhỏ một cách cố ý không chứa bất kỳ $i$ nào).
 
-Inside the loop for $i = 1 \dots n - 1$ we first determine the initial value $z[i]$ -- it will either remain zero or be computed using the above formula.
+Bên trong vòng lặp cho $i = 1 \dots n - 1$, trước tiên chúng ta xác định giá trị ban đầu $z[i]$ -- nó sẽ vẫn bằng không hoặc được tính toán bằng công thức trên.
 
-Thereafter, the trivial algorithm attempts to increase the value of $z[i]$ as much as possible.
+Sau đó, thuật toán tầm thường cố gắng tăng giá trị của $z[i]$ càng nhiều càng tốt.
 
-In the end, if it's required (that is, if $i + z[i] > r$), we update the rightmost match segment $[l, r)$.
+Cuối cùng, nếu được yêu cầu (tức là nếu $i + z[i] > r$), chúng ta cập nhật đoạn khớp ngoài cùng bên phải $[l, r)$.
 
-## Asymptotic behavior of the algorithm
+## Hành vi tiệm cận của thuật toán (Asymptotic behavior of the algorithm) {: #asymptotic-behavior-of-the-algorithm}
 
-We will prove that the above algorithm has a running time that is linear in the length of the string -- thus, it's $O(n)$.
+Chúng ta sẽ chứng minh rằng thuật toán trên có thời gian chạy tuyến tính theo độ dài của chuỗi -- do đó, nó là $O(n)$.
 
-The proof is very simple.
+Bằng chứng rất đơn giản.
 
-We are interested in the nested `while` loop, since everything else is just a bunch of constant operations which sums up to $O(n)$.
+Chúng ta quan tâm đến vòng lặp `while` lồng nhau, vì mọi thứ khác chỉ là một loạt các hoạt động hằng số cộng lại thành $O(n)$.
 
-We will show that **each iteration** of the `while` loop will increase the right border $r$ of the match segment.
+Chúng taseẽ chỉ ra rằng **mỗi lần lặp** của vòng lặp `while` sẽ tăng biên giới bên phải $r$ của đoạn khớp.
 
-To do that, we will consider both branches of the algorithm:
+Để làm điều đó, chúng ta sẽ xem xét cả hai nhánh của thuật toán:
 
 *   $i \geq r$
 
-    In this case, either the `while` loop won't make any iteration (if $s[0] \ne s[i]$), or it will take a few iterations, starting at position $i$, each time moving one character to the right. After that, the right border $r$ will necessarily be updated.
+    Trong trường hợp này, vòng lặp `while` sẽ không thực hiện bất kỳ lần lặp nào (nếu $s[0] \ne s[i]$), hoặc nó sẽ mất một vài lần lặp, bắt đầu tại vị trí $i$, mỗi lần di chuyển một ký tự sang phải. Sau đó, biên giới bên phải $r$ nhất thiết sẽ được cập nhật.
 
-    So we have found that, when $i \geq r$, each iteration of the `while` loop increases the value of the new $r$ index.
+    Vì vậy, chúng ta đã thấy rằng, khi $i \geq r$, mỗi lần lặp của vòng lặp `while` làm tăng giá trị của chỉ số $r$ mới.
 
 *   $i < r$
 
-    In this case, we initialize $z[i]$ to a certain value $z_0$ given by the above formula. Let's compare this initial value $z_0$ to the value $r - i$. We will have three cases:
+    Trong trường hợp này, chúng ta khởi tạo $z[i]$ thành một giá trị nhất định $z_0$ được đưa ra bởi công thức trên. Hãy so sánh giá trị ban đầu $z_0$ này với giá trị $r - i$. Chúng ta sẽ có ba trường hợp:
 
       *   $z_0 < r - i$
 
-          We prove that in this case no iteration of the `while` loop will take place.
+          Chúng ta chứng minh rằng trong trường hợp này không có lần lặp nào của vòng lặp `while` sẽ diễn ra.
 
-          It's easy to prove, for example, by contradiction: if the `while` loop made at least one iteration, it would mean that initial approximation $z[i] = z_0$ was inaccurate (less than the match's actual length). But since $s[l \dots r)$ and $s[0 \dots r-l)$ are the same, this would imply that $z[i-l]$ holds the wrong value (less than it should be).
+          Rất dễ để chứng minh, ví dụ, bằng mâu thuẫn: nếu vòng lặp `while` thực hiện ít nhất một lần lặp, điều đó có nghĩa là xấp xỉ ban đầu $z[i] = z_0$ là không chính xác (nhỏ hơn độ dài thực tế của khớp). Nhưng vì $s[l \dots r)$ và $s[0 \dots r-l)$ giống nhau, điều này ngụ ý rằng $z[i-l]$ giữ giá trị sai (nhỏ hơn mức cần thiết).
 
-          Thus, since $z[i-l]$ is correct and it is less than $r - i$, it follows that this value coincides with the required value $z[i]$.
+          Do đó, vì $z[i-l]$ là chính xác và nó nhỏ hơn $r - i$, suy ra giá trị này trùng với giá trị bắt buộc $z[i]$.
 
       *   $z_0 = r - i$
 
-          In this case, the `while` loop can make a few iterations, but each of them will lead to an increase in the value of the $r$ index because we will start comparing from $s[r]$, which will climb beyond the $[l, r)$ interval.
+          Trong trường hợp này, vòng lặp `while` có thể thực hiện một vài lần lặp, nhưng mỗi lần trong số đó sẽ dẫn đến sự gia tăng giá trị của chỉ số $r$ bởi vì chúng ta sẽ bắt đầu so sánh từ $s[r]$, sẽ leo ra ngoài khoảng $[l, r)$.
 
       *   $z_0 > r - i$
 
-          This option is impossible, by definition of $z_0$.
+          Tùy chọn này là không thể, theo định nghĩa của $z_0$.
 
-So, we have proved that each iteration of the inner loop make the $r$ pointer advance to the right. Since $r$ can't be more than $n-1$, this means that the inner loop won't make more than $n-1$ iterations.
+Vì vậy, chúng ta đã chứng minh rằng mỗi lần lặp của vòng lặp bên trong làm cho con trỏ $r$ tiến sang phải. Vì $r$ không thể lớn hơn $n-1$, điều này có nghĩa là vòng lặp bên trong sẽ không thực hiện quá $n-1$ lần lặp.
 
-As the rest of the algorithm obviously works in $O(n)$, we have proved that the whole algorithm for computing Z-functions runs in linear time.
+Vì phần còn lại của thuật toán hoạt động rõ ràng trong $O(n)$, chúng ta đã chứng minh rằng toàn bộ thuật toán để tính toán hàm Z chạy trong thời gian tuyến tính.
 
-## Applications
+## Ứng dụng (Applications) {: #applications}
 
-We will now consider some uses of Z-functions for specific tasks.
+Bây giờ chúng ta sẽ xem xét một số cách sử dụng hàm Z cho các nhiệm vụ cụ thể.
 
-These applications will be largely similar to applications of [prefix function](prefix-function.md).
+Các ứng dụng này sẽ phần lớn tương tự như các ứng dụng của [hàm tiền tố](prefix-function.md).
 
-### Search the substring
+### Tìm kiếm chuỗi con (Search the substring) {: #search-the-substring}
 
-To avoid confusion, we call $t$ the **string of text**, and $p$ the **pattern**. The problem is: find all occurrences of the pattern $p$ inside the text $t$.
+Để tránh nhầm lẫn, chúng ta gọi $t$ là **chuỗi văn bản**, và $p$ là **mẫu**. Bài toán là: tìm tất cả các lần xuất hiện của mẫu $p$ bên trong văn bản $t$.
 
-To solve this problem, we create a new string $s = p + \diamond + t$, that is, we apply string concatenation to $p$ and $t$ but we also put a separator character $\diamond$ in the middle (we'll choose $\diamond$ so that it will certainly not be present anywhere in the strings $p$ or $t$).
+Để giải quyết vấn đề này, chúng ta tạo ra một chuỗi mới $s = p + \diamond + t$, tức là, chúng ta áp dụng nối chuỗi cho $p$ và $t$ nhưng chúng ta cũng đặt một ký tự phân cách $\diamond$ ở giữa (chúng ta sẽ chọn $\diamond$ để nó chắc chắn sẽ không hiện diện ở bất cứ đâu trong các chuỗi $p$ hoặc $t$).
 
-Compute the Z-function for $s$. Then, for any $i$ in the interval $[0; \; \operatorname{length}(t) - 1]$, we will consider the corresponding value $k = z[i + \operatorname{length}(p) + 1]$. If $k$ is equal to $\operatorname{length}(p)$ then we know there is one occurrence of $p$ in the $i$-th position of $t$, otherwise there is no occurrence of $p$ in the $i$-th position of $t$.
+Tính hàm Z cho $s$. Sau đó, đối với bất kỳ $i$ nào trong khoảng $[0; \; \operatorname{length}(t) - 1]$, chúng ta sẽ xem xét giá trị tương ứng $k = z[i + \operatorname{length}(p) + 1]$. Nếu $k$ bằng $\operatorname{length}(p)$ thì chúng ta biết có một lần xuất hiện của $p$ ở vị trí thứ $i$ của $t$, ngược lại không có sự xuất hiện nào của $p$ ở vị trí thứ $i$ của $t$.
 
-The running time (and memory consumption) is $O(\operatorname{length}(t) + \operatorname{length}(p))$.
+Thời gian chạy (và mức tiêu thụ bộ nhớ) là $O(\operatorname{length}(t) + \operatorname{length}(p))$.
 
-### Number of distinct substrings in a string
+### Số lượng chuỗi con riêng biệt trong một chuỗi (Number of distinct substrings in a string) {: #number-of-distinct-substrings-in-a-string}
 
-Given a string $s$ of length $n$, count the number of distinct substrings of $s$.
+Cho một chuỗi $s$ có độ dài $n$, hãy đếm số lượng chuỗi con riêng biệt của $s$.
 
-We'll solve this problem iteratively. That is: knowing the current number of different substrings, recalculate this amount after adding to the end of $s$ one character.
+Chúng ta sẽ giải quyết vấn đề này một cách lặp đi lặp lại. Tức là: biết số lượng chuỗi con khác nhau hiện tại, tính toán lại lượng này sau khi thêm vào cuối $s$ một ký tự.
 
-So, let $k$ be the current number of distinct substrings of $s$. We append a new character $c$ to $s$. Obviously, there can be some new substrings ending in this new character $c$ (namely, all those strings that end with this symbol and that we haven't encountered yet).
+Vì vậy, hãy để $k$ là số lượng chuỗi con riêng biệt hiện tại của $s$. Chúng ta thêm một ký tự mới $c$ vào $s$. Rõ ràng, có thể có một số chuỗi con mới kết thúc bằng ký tự mới $c$ này (cụ thể là tất cả các chuỗi kết thúc bằng ký hiệu này và chúng ta chưa gặp).
 
-Take a string $t = s + c$ and invert it (write its characters in reverse order). Our task is now to count how many prefixes of $t$ are not found anywhere else in $t$. Let's compute the Z-function of $t$ and find its maximum value $z_{max}$. Obviously, $t$'s prefix of length $z_{max}$ occurs also somewhere in the middle of $t$. Clearly, shorter prefixes also occur.
+Lấy một chuỗi $t = s + c$ và đảo ngược nó (viết các ký tự của nó theo thứ tự ngược lại). Nhiệm vụ của chúng ta bây giờ là đếm có bao nhiêu tiền tố của $t$ không được tìm thấy ở bất kỳ nơi nào khác trong $t$. Hãy tính hàm Z của $t$ và tìm giá trị tối đa $z_{max}$ của nó. Rõ ràng, tiền tố của $t$ có độ dài $z_{max}$ cũng xuất hiện ở đâu đó ở giữa $t$. Rõ ràng, các tiền tố ngắn hơn cũng xuất hiện.
 
-So, we have found that the number of new substrings that appear when symbol $c$ is appended to $s$ is equal to $\operatorname{length}(t) - z_{max}$.
+Vì vậy, chúng ta đã thấy rằng số lượng chuỗi con mới xuất hiện khi ký hiệu $c$ được thêm vào $s$ bằng $\operatorname{length}(t) - z_{max}$.
 
-Consequently, the running time of this solution is $O(n^2)$ for a string of length $n$.
+Do đó, thời gian chạy của giải pháp này là $O(n^2)$ cho một chuỗi có độ dài $n$.
 
-It's worth noting that in exactly the same way we can recalculate, still in $O(n)$ time, the number of distinct substrings when appending a character in the beginning of the string, as well as when removing it (from the end or the beginning).
+Điều đáng chú ý là theo cách giống hệt nhau, chúng ta có thể tính toán lại, vẫn trong thời gian $O(n)$, số lượng chuỗi con riêng biệt khi thêm một ký tự vào đầu chuỗi, cũng như khi xóa nó (từ cuối hoặc đầu).
 
-### String compression
+### Nén chuỗi (String compression) {: #string-compression}
 
-Given a string $s$ of length $n$. Find its shortest "compressed" representation, that is: find a string $t$ of shortest length such that $s$ can be represented as a concatenation of one or more copies of $t$.
+Cho một chuỗi $s$ có độ dài $n$. Tìm biểu diễn "nén" ngắn nhất của nó, tức là: tìm một chuỗi $t$ có độ dài ngắn nhất sao cho $s$ có thể được biểu diễn dưới dạng nối của một hoặc nhiều bản sao của $t$.
 
-A solution is: compute the Z-function of $s$, loop through all $i$ such that $i$ divides $n$. Stop at the first $i$ such that $i + z[i] = n$. Then, the string $s$ can be compressed to the length $i$.
+Một giải pháp là: tính hàm Z của $s$, lặp qua tất cả $i$ sao cho $i$ chia hết cho $n$. Dừng lại ở $i$ đầu tiên sao cho $i + z[i] = n$. Sau đó, chuỗi $s$ có thể được nén thành độ dài $i$.
 
-The proof for this fact is the same as the solution which uses the [prefix function](prefix-function.md).
+Bằng chứng cho thực tế này giống như giải pháp sử dụng [hàm tiền tố](prefix-function.md).
 
-## Practice Problems
+## Bài tập (Practice Problems) {: #practice-problems}
 
 * [CSES - Finding Borders](https://cses.fi/problemset/task/1732)
 * [eolymp - Blocks of string](https://www.eolymp.com/en/problems/1309)

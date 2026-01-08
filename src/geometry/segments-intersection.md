@@ -4,39 +4,36 @@ tags:
 e_maxx_link: segments_intersection
 ---
 
-# Finding intersection of two segments
+# Tìm giao của hai đoạn thẳng (Finding intersection of two segments) {: #finding-intersection-of-two-segments}
 
-You are given two segments AB and CD, described as pairs of their endpoints. Each segment can be a single point if its endpoints are the same. 
-You have to find the intersection of these segments, which can be empty (if the segments don't intersect), a single point or a segment (if the given segments overlap).
+Bạn được cho hai đoạn thẳng AB và CD, được mô tả dưới dạng các cặp điểm đầu mút của chúng. Mỗi đoạn thẳng có thể là một điểm duy nhất nếu các điểm đầu mút của nó giống nhau.
+Bạn phải tìm giao của các đoạn thẳng này, có thể là rỗng (nếu các đoạn thẳng không cắt nhau), một điểm duy nhất hoặc một đoạn thẳng (nếu các đoạn thẳng đã cho chồng lấn lên nhau).
 
-## Solution
+## Giải pháp (Solution) {: #solution}
 
-We can find the intersection point of segments in the same way as [the intersection of lines](lines-intersection.md): 
-reconstruct line equations from the segments' endpoints and check whether they are parallel. 
+Chúng ta có thể tìm điểm giao nhau của các đoạn thẳng theo cách tương tự như [giao điểm của các đường thẳng](lines-intersection.md):
+xây dựng lại phương trình đường thẳng từ các điểm đầu mút của đoạn thẳng và kiểm tra xem chúng có song song hay không.
 
-If the lines are not parallel, we need to find their point of intersection and check whether it belongs to both segments
-(to do this it's sufficient to verify that the intersection point belongs to each segment projected on X and Y axes). 
-In this case the answer will be either "no intersection" or the single point of lines' intersection.
+Nếu các đường thẳng không song song, chúng ta cần tìm điểm giao nhau của chúng và kiểm tra xem nó có thuộc về cả hai đoạn thẳng hay không
+(để làm điều này, đủ để xác minh rằng điểm giao nhau thuộc về từng đoạn thẳng được chiếu trên các trục X và Y).
+Trong trường hợp này, câu trả lời sẽ là "không giao nhau" hoặc điểm giao nhau duy nhất của các đường thẳng.
 
-The case of parallel lines is slightly more complicated (the case of one or more segments being a single point also belongs here).
-In this case we need to check that both segments belong to the same line.
-If they don't, the answer is "no intersection".
-If they do, the answer is the intersection of the segments belonging to the same line, which is obtained by 
-ordering the endpoints of both segments in the increasing order of certain coordinate and taking the rightmost of left endpoints and the leftmost of right endpoints.
+Trường hợp các đường thẳng song song phức tạp hơn một chút (trường hợp một hoặc nhiều đoạn thẳng là một điểm duy nhất cũng thuộc về đây).
+Trong trường hợp này, chúng ta cần kiểm tra xem cả hai đoạn thẳng có thuộc cùng một đường thẳng hay không.
+Nếu không, câu trả lời là "không giao nhau".
+Nếu có, câu trả lời là giao của các đoạn thẳng thuộc cùng một đường thẳng, thu được bằng cách sắp xếp các điểm đầu mút của cả hai đoạn thẳng theo thứ tự tăng dần của một tọa độ nhất định và lấy điểm cực phải của các điểm đầu mút trái và điểm cực trái của các điểm đầu mút phải.
 
-If both segments are single points, these points have to be identical, and it makes sense to perform this check separately.
+Nếu cả hai đoạn thẳng là các điểm đơn lẻ, các điểm này phải giống hệt nhau, và việc thực hiện kiểm tra này riêng biệt là hợp lý.
 
-In the beginning of the algorithm let's add a bounding box check - it is necessary for the case when the segments belong to the same line, 
-and (being a lightweight check) it allows the algorithm to work faster on average on random tests.
+Ở đầu thuật toán, hãy thêm một kiểm tra hộp bao (bounding box) - điều này cần thiết cho trường hợp khi các đoạn thẳng thuộc cùng một đường thẳng, và (là một kiểm tra nhẹ) nó cho phép thuật toán hoạt động nhanh hơn trung bình trên các thử nghiệm ngẫu nhiên.
 
+## Cài đặt (Implementation) {: #implementation}
 
-## Implementation
+Dưới đây là cài đặt, bao gồm tất cả các hàm trợ giúp cho việc xử lý đường thẳng và đoạn thẳng.
 
-Here is the implementation, including all helper functions for lines and segments processing.
-
-The main function `intersect` returns true if the segments have a non-empty intersection, 
-and stores endpoints of the intersection segment in arguments `left` and `right`. 
-If the answer is a single point, the values written to `left` and `right` will be the same.
+Hàm chính `intersect` trả về true nếu các đoạn thẳng có giao điểm khác rỗng,
+và lưu trữ các điểm đầu mút của đoạn thẳng giao nhau trong các đối số `left` và `right`.
+Nếu câu trả lời là một điểm duy nhất, các giá trị được ghi vào `left` và `right` sẽ giống nhau.
 
 ```{.cpp file=segment_intersection}
 const double EPS = 1E-9;

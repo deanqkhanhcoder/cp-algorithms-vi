@@ -4,85 +4,85 @@ tags:
 e_maxx_link: bracket_sequences
 ---
 
-# Balanced bracket sequences
+# Dãy ngoặc cân bằng (Balanced bracket sequences) {: #balanced-bracket-sequences}
 
-A **balanced bracket sequence** is a string consisting of only brackets, such that this sequence, when inserted certain numbers and mathematical operations, gives a valid mathematical expression.
-Formally you can define balanced bracket sequence with:
+Một **dãy ngoặc cân bằng** là một chuỗi chỉ bao gồm các dấu ngoặc, sao cho chuỗi này, khi chèn một số số và phép toán toán học nhất định, tạo ra một biểu thức toán học hợp lệ.
+Về mặt hình thức, bạn có thể định nghĩa dãy ngoặc cân bằng với:
 
-- $e$ (the empty string) is a balanced bracket sequence.
-- if $s$ is a balanced bracket sequence, then so is $(s)$.
-- if $s$ and $t$ are balanced bracket sequences, then so is $s t$.
+- $e$ (chuỗi rỗng) là một dãy ngoặc cân bằng.
+- nếu $s$ là một dãy ngoặc cân bằng, thì $(s)$ cũng vậy.
+- nếu $s$ và $t$ là các dãy ngoặc cân bằng, thì $s t$ cũng vậy.
 
-For instance $(())()$ is a balanced bracket sequence, but $())($ is not.
+Ví dụ $(())()$ là một dãy ngoặc cân bằng, nhưng $())($ thì không.
 
-Of course you can define other bracket sequences also with multiple bracket types in a similar fashion.
+Tất nhiên bạn cũng có thể định nghĩa các dãy ngoặc khác với nhiều loại dấu ngoặc theo cách tương tự.
 
-In this article we discuss some classic problems involving balanced bracket sequences (for simplicity we will only call them sequences): validation, number of sequences, finding the lexicographical next sequence, generating all sequences of a certain size, finding the index of sequence, and generating the $k$-th sequences.
-We will also discuss two variations for the problems, the simpler version when only one type of brackets is allowed, and the harder case when there are multiple types.
+Trong bài viết này, chúng ta thảo luận về một số bài toán cổ điển liên quan đến dãy ngoặc cân bằng (để đơn giản chúng ta sẽ chỉ gọi chúng là dãy): xác thực, số lượng dãy, tìm dãy tiếp theo theo thứ tự từ điển, tạo tất cả các dãy có kích thước nhất định, tìm chỉ số của dãy, và tạo dãy thứ $k$.
+Chúng ta cũng sẽ thảo luận về hai biến thể cho các bài toán, phiên bản đơn giản hơn khi chỉ cho phép một loại dấu ngoặc, và trường hợp khó hơn khi có nhiều loại.
 
-## Balance validation
+## Kiểm tra tính cân bằng (Balance validation) {: #balance-validation}
 
-We want to check if a given string is balanced or not.
+Chúng tôi muốn kiểm tra xem một chuỗi đã cho có cân bằng hay không.
 
-At first suppose there is only one type of bracket.
-For this case there exists a very simple algorithm.
-Let $\text{depth}$ be the current number of open brackets.
-Initially $\text{depth} = 0$.
-We iterate over all character of the string, if the current bracket character is an opening bracket, then we increment $\text{depth}$, otherwise we decrement it.
-If at any time the variable $\text{depth}$ gets negative, or at the end it is different from $0$, then the string is not a balanced sequence.
-Otherwise it is.
+Đầu tiên giả sử chỉ có một loại dấu ngoặc.
+Đối với trường hợp này tồn tại một thuật toán rất đơn giản.
+Gọi $\text{depth}$ là số lượng dấu ngoặc mở hiện tại.
+Ban đầu $\text{depth} = 0$.
+Chúng ta lặp qua tất cả các ký tự của chuỗi, nếu ký tự dấu ngoặc hiện tại là dấu ngoặc mở, thì chúng ta tăng $\text{depth}$, nếu không chúng ta giảm nó.
+Nếu bất cứ lúc nào biến $\text{depth}$ trở nên âm, hoặc cuối cùng nó khác $0$, thì chuỗi không phải là một dãy cân bằng.
+Ngược lại thì đúng.
 
-If there are several bracket types involved, then the algorithm needs to be changed.
-Instead of a counter $\text{depth}$ we create a stack, in which we will store all opening brackets that we meet.
-If the current bracket character is an opening one, we put it onto the stack.
-If it is a closing one, then we check if the stack is non-empty, and if the top element of the stack is of the same type as the current closing bracket.
-If both conditions are fulfilled, then we remove the opening bracket from the stack.
-If at any time one of the conditions is not fulfilled, or at the end the stack is not empty, then the string is not balanced.
-Otherwise it is.
+Nếu có nhiều loại dấu ngoặc tham gia, thì thuật toán cần phải thay đổi.
+Thay vì một bộ đếm $\text{depth}$ chúng ta tạo một ngăn xếp (stack), trong đó chúng ta sẽ lưu trữ tất cả các dấu ngoặc mở mà chúng ta gặp.
+Nếu ký tự dấu ngoặc hiện tại là một dấu ngoặc mở, chúng ta đặt nó vào ngăn xếp.
+Nếu nó là một dấu ngoặc đóng, thì chúng ta kiểm tra xem ngăn xếp có không rỗng hay không, và phần tử trên cùng của ngăn xếp có cùng loại với dấu ngoặc đóng hiện tại hay không.
+Nếu cả hai điều kiện được đáp ứng, thì chúng ta loại bỏ dấu ngoặc mở khỏi ngăn xếp.
+Nếu bất cứ lúc nào một trong các điều kiện không được đáp ứng, hoặc cuối cùng ngăn xếp không rỗng, thì chuỗi không cân bằng.
+Ngược lại thì đúng.
 
-## Number of balanced sequences
+## Số lượng dãy cân bằng (Number of balanced sequences) {: #number-of-balanced-sequences}
 
-### Formula
+### Công thức (Formula) {: #formula}
 
-The number of balanced bracket sequences with only one bracket type can be calculated using the [Catalan numbers](catalan-numbers.md).
-The number of balanced bracket sequences of length $2n$ ($n$ pairs of brackets) is:
+Số lượng dãy ngoặc cân bằng với chỉ một loại dấu ngoặc có thể được tính bằng cách sử dụng [số Catalan](catalan-numbers.md).
+Số lượng dãy ngoặc cân bằng có độ dài $2n$ ($n$ cặp dấu ngoặc) là:
 
 $$\frac{1}{n+1} \binom{2n}{n}$$
 
-If we allow $k$ types of brackets, then each pair can be of any of the $k$ types (independently of the others), thus the number of balanced bracket sequences is:
+Nếu chúng ta cho phép $k$ loại dấu ngoặc, thì mỗi cặp có thể thuộc bất kỳ loại nào trong số $k$ loại (độc lập với các loại khác), do đó số lượng dãy ngoặc cân bằng là:
 
 $$\frac{1}{n+1} \binom{2n}{n} k^n$$
 
-### Dynamic programming
+### Quy hoạch động (Dynamic programming) {: #dynamic-programming}
 
-On the other hand these numbers can be computed using **dynamic programming**.
-Let $d[n]$ be the number of regular bracket sequences with $n$ pairs of bracket.
-Note that in the first position there is always an opening bracket.
-And somewhere later is the corresponding closing bracket of the pair.
-It is clear that inside this pair there is a balanced bracket sequence, and similarly after this pair there is a balanced bracket sequence.
-So to compute $d[n]$, we will look at how many balanced sequences of $i$ pairs of brackets are inside this first bracket pair, and how many balanced sequences with $n-1-i$ pairs are after this pair.
-Consequently the formula has the form:
+Mặt khác, những con số này có thể được tính toán bằng cách sử dụng **quy hoạch động**.
+Gọi $d[n]$ là số lượng dãy ngoặc thông thường với $n$ cặp dấu ngoặc.
+Lưu ý rằng ở vị trí đầu tiên luôn có một dấu ngoặc mở.
+Và đâu đó sau đó là dấu ngoặc đóng tương ứng của cặp.
+Rõ ràng là bên trong cặp này có một dãy ngoặc cân bằng, và tương tự sau cặp này có một dãy ngoặc cân bằng.
+Vì vậy, để tính $d[n]$, chúng ta sẽ xem xét có bao nhiêu dãy cân bằng của $i$ cặp dấu ngoặc bên trong cặp dấu ngoặc đầu tiên này, và có bao nhiêu dãy cân bằng với $n-1-i$ cặp sau cặp này.
+Do đó công thức có dạng:
 
 $$d[n] = \sum_{i=0}^{n-1} d[i] \cdot d[n-1-i]$$
 
-The initial value for this recurrence is $d[0] = 1$.
+Giá trị ban đầu cho truy hồi này là $d[0] = 1$.
 
-## Finding the lexicographical next balanced sequence
+## Tìm dãy cân bằng tiếp theo theo thứ tự từ điển (Finding the lexicographical next balanced sequence) {: #finding-the-lexicographical-next-balanced-sequence}
 
-Here we only consider the case with one valid bracket type.
+Ở đây chúng ta chỉ xem xét trường hợp với một loại dấu ngoặc hợp lệ.
 
-Given a balanced sequence, we have to find the next (in lexicographical order) balanced sequence.
+Cho một dãy cân bằng, chúng ta phải tìm dãy cân bằng tiếp theo (theo thứ tự từ điển).
 
-It should be obvious, that we have to find the rightmost opening bracket, which we can replace by a closing bracket without violation the condition, that there are more closing brackets than opening brackets up to this position.
-After replacing this position, we can fill the remaining part of the string with the lexicographically minimal one: i.e. first with as much opening brackets as possible, and then fill up the remaining positions with closing brackets.
-In other words we try to leave a long as possible prefix unchanged, and the suffix gets replaced by the lexicographically minimal one.
+Rõ ràng là, chúng ta phải tìm dấu ngoặc mở ngoài cùng bên phải, mà chúng ta có thể thay thế bằng một dấu ngoặc đóng mà không vi phạm điều kiện, rằng có nhiều dấu ngoặc đóng hơn dấu ngoặc mở cho đến vị trí này.
+Sau khi thay thế vị trí này, chúng ta có thể điền phần còn lại của chuỗi bằng phần nhỏ nhất theo thứ tự từ điển: tức là đầu tiên với càng nhiều dấu ngoặc mở càng tốt, và sau đó điền vào các vị trí còn lại bằng các dấu ngoặc đóng.
+Nói cách khác, chúng tôi cố gắng để lại một tiền tố dài nhất có thể không thay đổi, và hậu tố được thay thế bằng cái nhỏ nhất theo thứ tự từ điển.
 
-To find this position, we can iterate over the character from right to left, and maintain the balance $\text{depth}$ of open and closing brackets.
-When we meet an opening brackets, we will decrement $\text{depth}$, and when we meet a closing bracket, we increase it.
-If we are at some point meet an opening bracket, and the balance after processing this symbol is positive, then we have found the rightmost position that we can change.
-We change the symbol, compute the number of opening and closing brackets that we have to add to the right side, and arrange them in the lexicographically minimal way.
+Để tìm vị trí này, chúng ta có thể lặp qua ký tự từ phải sang trái, và duy trì độ cân bằng $\text{depth}$ của các dấu ngoặc mở và đóng.
+Khi chúng ta gặp một dấu ngoặc mở, chúng ta sẽ giảm $\text{depth}$, và khi chúng ta gặp một dấu ngoặc đóng, chúng ta tăng nó.
+Nếu tại một thời điểm nào đó chúng ta gặp một dấu ngoặc mở, và độ cân bằng sau khi xử lý ký hiệu này là dương, thì chúng ta đã tìm thấy vị trí ngoài cùng bên phải mà chúng ta có thể thay đổi.
+Chúng ta thay đổi ký hiệu, tính số lượng dấu ngoặc mở và đóng mà chúng ta phải thêm vào phía bên phải, và sắp xếp chúng theo cách nhỏ nhất theo thứ tự từ điển.
 
-If we don't find a suitable position, then this sequence is already the maximal possible one, and there is no answer.
+Nếu chúng ta không tìm thấy một vị trí phù hợp, thì dãy này đã là dãy lớn nhất có thể, và không có câu trả lời.
 
 ```{.cpp file=next_balanced_brackets_sequence}
 bool next_balanced_sequence(string & s) {
@@ -107,71 +107,71 @@ bool next_balanced_sequence(string & s) {
 }
 ```
 
-This function computes in $O(n)$ time the next balanced bracket sequence, and returns false if there is no next one.
+Hàm này tính toán trong thời gian $O(n)$ dãy ngoặc cân bằng tiếp theo, và trả về false nếu không có dãy tiếp theo.
 
-## Finding all balanced sequences
+## Tìm tất cả các dãy cân bằng (Finding all balanced sequences) {: #finding-all-balanced-sequences}
 
-Sometimes it is required to find and output all balanced bracket sequences of a specific length $n$.
+Đôi khi được yêu cầu tìm và xuất tất cả các dãy ngoặc cân bằng có độ dài cụ thể $n$.
 
-To generate then, we can start with the lexicographically smallest sequence $((\dots(())\dots))$, and then continue to find the next lexicographically sequences with the algorithm described in the previous section.
+Để tạo sau đó, chúng ta có thể bắt đầu với dãy nhỏ nhất theo thứ tự từ điển $((\dots(())\dots))$, và sau đó tiếp tục tìm các dãy tiếp theo theo thứ tự từ điển với thuật toán được mô tả trong phần trước.
 
-However, if the length of the sequence is not very long (e.g. $n$ smaller than $12$), then we can also generate all permutations conveniently with the C++ STL function `next_permutation`, and check each one for balanceness.
+Tuy nhiên, nếu độ dài của chuỗi không quá dài (ví dụ $n$ nhỏ hơn $12$), thì chúng ta cũng có thể tạo tất cả các hoán vị một cách thuận tiện với hàm C++ STL `next_permutation`, và kiểm tra từng cái một cho tính cân bằng.
 
-Also they can be generated using the ideas we used for counting all sequences with dynamic programming.
-We will discuss the ideas in the next two sections.
+Ngoài ra chúng có thể được tạo bằng cách sử dụng các ý tưởng chúng ta đã sử dụng để đếm tất cả các dãy với quy hoạch động.
+Chúng ta sẽ thảo luận về các ý tưởng trong hai phần tiếp theo.
 
-## Sequence index
+## Chỉ số của dãy (Sequence index) {: #sequence-index}
 
-Given a balanced bracket sequence with $n$ pairs of brackets.
-We have to find its index in the lexicographically ordered list of all balanced sequences with $n$ bracket pairs.
+Cho một dãy ngoặc cân bằng với $n$ cặp dấu ngoặc.
+Chúng ta phải tìm chỉ số của nó trong danh sách được sắp xếp theo thứ tự từ điển của tất cả các dãy cân bằng với $n$ cặp dấu ngoặc.
 
-Let's define an auxiliary array $d[i][j]$, where $i$ is the length of the bracket sequence (semi-balanced, each closing bracket has a corresponding opening bracket, but not every opening bracket has necessarily a corresponding closing one), and $j$ is the current balance (difference between opening and closing brackets).
-$d[i][j]$ is the number of such sequences that fit the parameters.
-We will calculate these numbers with only one bracket type.
+Hãy xác định một mảng phụ trợ $d[i][j]$, trong đó $i$ là độ dài của dãy ngoặc (bán bân bằng, mỗi dấu ngoặc đóng có một dấu ngoặc mở tương ứng, nhưng không phải mọi dấu ngoặc mở nhất thiết phải có một dấu ngoặc đóng tương ứng), và $j$ là độ cân bằng hiện tại (hiệu giữa dấu ngoặc mở và đóng).
+$d[i][j]$ là số lượng các dãy như vậy phù hợp với các tham số.
+Chúng ta sẽ tính toán các số này chỉ với một loại dấu ngoặc.
 
-For the start value $i = 0$ the answer is obvious: $d[0][0] = 1$, and $d[0][j] = 0$ for $j > 0$.
-Now let $i > 0$, and we look at the last character in the sequence.
-If the last character was an opening bracket $($, then the state before was $(i-1, j-1)$, if it was a closing bracket $)$, then the previous state was $(i-1, j+1)$.
-Thus we obtain the recursion formula:
+Đối với giá trị bắt đầu $i = 0$ câu trả lời là rõ ràng: $d[0][0] = 1$, và $d[0][j] = 0$ cho $j > 0$.
+Bây giờ gọi $i > 0$, và chúng ta nhìn vào ký tự cuối cùng trong dãy.
+Nếu ký tự cuối cùng là một dấu ngoặc mở $($, thì trạng thái trước đó là $(i-1, j-1)$, nếu nó là một dấu ngoặc đóng $)$, thì trạng thái trước đó là $(i-1, j+1)$.
+Do đó chúng ta thu được công thức đệ quy:
 
 $$d[i][j] = d[i-1][j-1] + d[i-1][j+1]$$
 
-$d[i][j] = 0$ holds obviously for negative $j$.
-Thus we can compute this array in $O(n^2)$.
+$d[i][j] = 0$ giữ đúng rõ ràng cho $j$ âm.
+Do đó chúng ta có thể tính mảng này trong $O(n^2)$.
 
-Now let us generate the index for a given sequence.
+Bây giờ chúng ta hãy tạo chỉ số cho một dãy đã cho.
 
-First let there be only one type of brackets.
-We will use the counter $\text{depth}$ which tells us how nested we currently are, and iterate over the characters of the sequence.
-If the current character $s[i]$ is equal to $($, then we increment $\text{depth}$.
-If the current character $s[i]$ is equal to $)$, then we must add $d[2n-i-1][\text{depth}+1]$ to the answer, taking all possible endings starting with a $($ into account (which are lexicographically smaller sequences), and then decrement $\text{depth}$.
+Đầu tiên gọi chỉ có một loại dấu ngoặc.
+Chúng ta sẽ sử dụng bộ đếm $\text{depth}$ cho biết mức độ lồng nhau hiện tại của chúng ta, và lặp qua các ký tự của dãy.
+Nếu ký tự hiện tại $s[i]$ bằng $($, thì chúng ta tăng $\text{depth}$.
+Nếu ký tự hiện tại $s[i]$ bằng $)$, thì chúng ta phải thêm $d[2n-i-1][\text{depth}+1]$ vào câu trả lời, tính đến tất cả các kết thúc có thể bắt đầu bằng một $($ (là các dãy nhỏ hơn theo thứ tự từ điển), và sau đó giảm $\text{depth}$.
 
-New let there be $k$ different bracket types.
+Mới gọi có $k$ loại dấu ngoặc khác nhau.
 
-Thus, when we look at the current character $s[i]$ before recomputing $\text{depth}$, we have to go through all bracket types that are smaller than the current character, and try to place this bracket into the current position (obtaining a new balance $\text{ndepth} = \text{depth} \pm 1$), and add the number of ways to finish the sequence (length $2n-i-1$, balance $ndepth$) to the answer:
+Do đó, khi chúng ta nhìn vào ký tự hiện tại $s[i]$ trước khi tính toán lại $\text{depth}$, chúng ta phải đi qua tất cả các loại dấu ngoặc nhỏ hơn ký tự hiện tại, và cố gắng đặt dấu ngoặc này vào vị trí hiện tại (thu được độ cân bằng mới $\text{ndepth} = \text{depth} \pm 1$), và thêm số cách để hoàn thành dãy (độ dài $2n-i-1$, cân bằng $ndepth$) vào câu trả lời:
 
 $$d[2n - i - 1][\text{ndepth}] \cdot k^{\frac{2n - i - 1 - ndepth}{2}}$$
 
-This formula can be derived as follows:
-First we "forget" that there are multiple bracket types, and just take the answer $d[2n - i - 1][\text{ndepth}]$.
-Now we consider how the answer will change if we have $k$ types of brackets.
-We have $2n - i - 1$ undefined positions, of which $\text{ndepth}$ are already predetermined because of the opening brackets.
-But all the other brackets ($(2n - i - 1 - \text{ndepth})/2$ pairs) can be of any type, therefore we multiply the number by such a power of $k$.
+Công thức này có thể được suy ra như sau:
+Đầu tiên chúng ta "quên" rằng có nhiều loại dấu ngoặc, và chỉ lấy câu trả lời $d[2n - i - 1][\text{ndepth}]$.
+Bây giờ chúng ta xem xét câu trả lời sẽ thay đổi như thế nào nếu chúng ta có $k$ loại dấu ngoặc.
+Chúng ta có $2n - i - 1$ vị trí chưa xác định, trong đó $\text{ndepth}$ đã được xác định trước vì các dấu ngoặc mở.
+Nhưng tất cả các dấu ngoặc khác ($(2n - i - 1 - \text{ndepth})/2$ cặp) có thể thuộc bất kỳ loại nào, do đó chúng ta nhân số đó với một lũy thừa như vậy của $k$.
 
-## Finding the $k$-th sequence {data-toc-label="Finding the k-th sequence"}
+## Tìm dãy thứ $k$ (Finding the $k$-th sequence) {: #finding-the-k-th-sequence data-toc-label="Finding the k-th sequence"}
 
-Let $n$ be the number of bracket pairs in the sequence.
-We have to find the $k$-th balanced sequence in lexicographically sorted list of all balanced sequences for a given $k$.
+Gọi $n$ là số lượng cặp dấu ngoặc trong dãy.
+Chúng ta phải tìm dãy cân bằng thứ $k$ trong danh sách được sắp xếp theo thứ tự từ điển của tất cả các dãy cân bằng cho một $k$ đã cho.
 
-As in the previous section we compute the auxiliary array $d[i][j]$, the number of semi-balanced bracket sequences of length $i$ with balance $j$.
+Như trong phần trước, chúng ta tính mảng phụ $d[i][j]$, số lượng các dãy ngoặc bán cân bằng có độ dài $i$ với độ cân bằng $j$.
 
-First, we start with only one bracket type.
+Đầu tiên, chúng ta bắt đầu với chỉ một loại dấu ngoặc.
 
-We will iterate over the characters in the string we want to generate.
-As in the previous problem we store a counter $\text{depth}$, the current nesting depth.
-At each position, we have to decide whether to place an opening or a closing bracket. To place an opening bracket, $d[2n - i - 1][\text{depth}+1] \ge k$ must be true.
-If so, we increment the counter $\text{depth}$, and move on to the next character.
-Otherwise, we decrement $k$ by $d[2n - i - 1][\text{depth}+1]$, place a closing bracket, and move on.
+Chúng ta sẽ lặp qua các ký tự trong chuỗi chúng ta muốn tạo.
+Như trong bài toán trước, chúng ta lưu trữ một bộ đếm $\text{depth}$, độ sâu lồng nhau hiện tại.
+Tại mỗi vị trí, chúng ta phải quyết định xem nên đặt một dấu ngoặc mở hay dấu ngoặc đóng. Để đặt một dấu ngoặc mở, $d[2n - i - 1][\text{depth}+1] \ge k$ phải đúng.
+Nếu vậy, chúng ta tăng bộ đếm $\text{depth}$, và chuyển sang ký tự tiếp theo.
+Nếu không, chúng ta giảm $k$ đi $d[2n - i - 1][\text{depth}+1]$, đặt một dấu ngoặc đóng, và tiếp tục.
 
 ```{.cpp file=kth_balances_bracket}
 string kth_balanced(int n, int k) {
@@ -201,10 +201,10 @@ string kth_balanced(int n, int k) {
 }
 ```
 
-Now let there be $k$ types of brackets.
-The solution will only differ slightly in that we have to multiply the value $d[2n-i-1][\text{ndepth}]$ by $k^{(2n-i-1-\text{ndepth})/2}$ and take into account that there can be different bracket types for the next character.
+Bây giờ gọi có $k$ loại dấu ngoặc.
+Giải pháp sẽ chỉ khác một chút ở chỗ chúng ta phải nhân giá trị $d[2n-i-1][\text{ndepth}]$ với $k^{(2n-i-1-\text{ndepth})/2}$ và tính đến việc có thể có các loại dấu ngoặc khác nhau cho ký tự tiếp theo.
 
-Here is an implementation using two types of brackets: round and square:
+Dưới đây là một cài đặt sử dụng hai loại dấu ngoặc: tròn và vuông:
 
 ```{.cpp file=kth_balances_bracket_multiple}
 string kth_balanced2(int n, int k) {
@@ -270,3 +270,15 @@ string kth_balanced2(int n, int k) {
     return ans;
 }
 ```
+
+---
+
+## Checklist
+
+- Original lines: 273
+- Translated lines: 273
+- Code blocks changed? No
+- Inline code changed? No
+- Technical terms kept in English? Yes
+- Headings anchors preserved/added correctly? Yes
+- I confirm no character was omitted: YES

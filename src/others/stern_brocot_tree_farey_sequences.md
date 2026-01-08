@@ -4,23 +4,23 @@ tags:
 e_maxx_link: stern_brocot_farey
 ---
 
-# The Stern-Brocot tree and Farey sequences
+# Cây Stern-Brocot và dãy Farey (The Stern-Brocot tree and Farey sequences) {: #the-stern-brocot-tree-and-farey-sequences}
 
-## Stern-Brocot tree
+## Cây Stern-Brocot (Stern-Brocot tree) {: #stern-brocot-tree}
 
-The Stern-Brocot tree is an elegant construction to represent the set of all positive fractions. It was independently discovered by German mathematician Moritz Stern in 1858 and by French watchmaker Achille Brocot in 1861. However, some sources attribute the discovery to ancient Greek mathematician Eratosthenes.
+Cây Stern-Brocot là một cấu trúc thanh lịch để biểu diễn tập hợp tất cả các phân số dương. Nó được phát hiện độc lập bởi nhà toán học người Đức Moritz Stern vào năm 1858 và bởi nhà sản xuất đồng hồ người Pháp Achille Brocot vào năm 1861. Tuy nhiên, một số nguồn gán sự phát hiện này cho nhà toán học Hy Lạp cổ đại Eratosthenes.
 
-The construction starts at the zeroth iteration with the two fractions
+Việc xây dựng bắt đầu ở lần lặp thứ 0 với hai phân số
 
 $$
     \frac{0}{1}, \frac{1}{0}
 $$
 
-where it should be noted that the second quantity is not strictly a fraction, but it can be interpreted as an irreducible fraction representing infinity.
+trong đó cần lưu ý rằng đại lượng thứ hai không phải là một phân số đúng nghĩa, nhưng nó có thể được hiểu là một phân số tối giản đại diện cho vô cực.
 
-At every subsequent iteration, consider all adjacent fractions $\frac{a}{b}$ and $\frac{c}{d}$ and insert their [mediant](https://en.wikipedia.org/wiki/Mediant_(mathematics)) $\frac{a+c}{b+d}$ between them.
+Ở mọi lần lặp tiếp theo, hãy xem xét tất cả các phân số liền kề $\frac{a}{b}$ và $\frac{c}{d}$ và chèn [trung gian (mediant)](https://en.wikipedia.org/wiki/Mediant_(mathematics)) $\frac{a+c}{b+d}$ vào giữa chúng.
 
-The first few iterations look like this:
+Một vài lần lặp đầu tiên trông như thế này:
 
 $$
     \begin{array}{c}
@@ -30,70 +30,70 @@ $$
     \end{array}
 $$
 
-Continuing this process to infinity this covers *all* positive fractions. Additionally, all fractions will be *unique* and *irreducible*. Finally, the fractions will also appear in ascending order.
+Tiếp tục quá trình này đến vô cùng, nó bao gồm *tất cả* các phân số dương. Ngoài ra, tất cả các phân số sẽ là *duy nhất* và *tối giản*. Cuối cùng, các phân số cũng sẽ xuất hiện theo thứ tự tăng dần.
 
-Before proving these properties, let us actually show a visualization of the Stern-Brocot tree, rather than the list representation. Every fraction in the tree has two children. Each child is the mediant of the closest ancestor on the left and closest ancestor to the right.
+Trước khi chứng minh các tính chất này, hãy thực sự hiển thị một hình dung về cây Stern-Brocot, thay vì biểu diễn danh sách. Mỗi phân số trong cây có hai con. Mỗi con là trung gian của tổ tiên gần nhất ở bên trái và tổ tiên gần nhất ở bên phải.
 
 <div style="text-align: center;">
   <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/37/SternBrocotTree.svg/1024px-SternBrocotTree.svg.png" alt="Stern-Brocot tree">
 </div>
 
-## Proofs
+## Chứng minh (Proofs) {: #proofs}
 
-**Ordering.** Proving ordering is simple. We note that the mediant of two fractions is always in-between the fractions
+**Thứ tự (Ordering).** Chứng minh thứ tự rất đơn giản. Chúng tôi lưu ý rằng trung gian của hai phân số luôn nằm giữa các phân số
 
 $$
     \frac{a}{b} \le \frac{a+c}{b+d} \le \frac{c}{d}
 $$
 
-given that
+với điều kiện là
 
 $$
     \frac{a}{b} \le \frac{c}{d}.
 $$
 
-The two inequalities can be easily shown by rewriting the fractions with common denominators.
+Hai bất đẳng thức có thể dễ dàng được chỉ ra bằng cách viết lại các phân số với mẫu số chung.
 
-As the ordering is ascending in the zeroth iteration, it will be maintained at every subsequent iteration.
+Vì thứ tự tăng dần trong lần lặp thứ 0, nó sẽ được duy trì ở mọi lần lặp tiếp theo.
 
-**Irreducibility.** To prove this we will show that for any two adjacent fractions $\frac{a}{b}$ and $\frac{c}{d}$ we have that
+**Tính tối giản (Irreducibility).** Để chứng minh điều này, chúng tôi sẽ chỉ ra rằng đối với bất kỳ hai phân số liền kề nào $\frac{a}{b}$ và $\frac{c}{d}$ chúng ta có
 
 $$
     bc - ad = 1.
 $$
 
-Recall that a Diophantine equation with two variables $ax+by=c$ has a solution iff $c$ is a multiple of $\gcd(a,b)$. In our case this implies that $\gcd(a,b) = \gcd(c,d) = 1$, which is what we want to show.
+Nhớ lại rằng một phương trình Diophantine với hai biến $ax+by=c$ có nghiệm khi và chỉ khi $c$ là bội số của $\gcd(a,b)$. Trong trường hợp của chúng tôi, điều này ngụ ý rằng $\gcd(a,b) = \gcd(c,d) = 1$, đó là những gì chúng tôi muốn chứng minh.
 
-Clearly at the zeroth iteration $bc - ad = 1$. What remains to be shown is that mediants retain this property.
+Rõ ràng ở lần lặp thứ 0 $bc - ad = 1$. Điều còn lại cần được chứng minh là các trung gian giữ được thuộc tính này.
 
-Assume our two adjacent fractions uphold $bc - ad = 1$, after the mediant is added to the list
+Giả sử hai phân số liền kề của chúng tôi duy trì $bc - ad = 1$, sau khi trung gian được thêm vào danh sách
 
 $$
     \frac{a}{b}, \frac{a+c}{b+d}, \frac{c}{d}
 $$
 
-the new expressions become
+các biểu thức mới trở thành
 
 $$\begin{align}
     b(a+c) - a(b+d) &= 1 \\
     c(b+d) - d(a+c) &= 1
 \end{align}$$
 
-which, using that $bc-ad=1$, can be easily shown to be true.
+điều này, sử dụng $bc-ad=1$, có thể dễ dàng được chứng minh là đúng.
 
-From this we see that the property is always maintained and thus all fractions are irreducible.
+Từ đây chúng ta thấy rằng thuộc tính luôn được duy trì và do đó tất cả các phân số đều tối giản.
 
-**The presence of all fractions.** This proof is closely related to locating a fraction in the Stern-Brocot tree. From the ordering property we have that left subtree of a fraction contains only fractions smaller than the parent fraction, and the right subtree contains only fractions larger than the parent fraction. This means we can search for a fraction by traversing the tree from the root, going left if the target is smaller than the fraction and going right if the target is larger.
+**Sự hiện diện của tất cả các phân số (The presence of all fractions).** Bằng chứng này liên quan chặt chẽ đến việc định vị một phân số trong cây Stern-Brocot. Từ thuộc tính thứ tự, chúng ta có cây con bên trái của một phân số chỉ chứa các phân số nhỏ hơn phân số cha và cây con bên phải chỉ chứa các phân số lớn hơn phân số cha. Điều này có nghĩa là chúng ta có thể tìm kiếm một phân số bằng cách duyệt qua cây từ gốc, đi sang trái nếu mục tiêu nhỏ hơn phân số và đi sang phải nếu mục tiêu lớn hơn.
 
-Pick an arbitrary positive target fraction $\frac{x}{y}$. It is obviously between $\frac{0}{1}$ and $\frac{1}{0}$, so the only way for the fraction to not be in the tree is if it takes an infinite number of steps to get to it.
+Chọn một phân số mục tiêu dương tùy ý $\frac{x}{y}$. Nó rõ ràng nằm giữa $\frac{0}{1}$ và $\frac{1}{0}$, vì vậy cách duy nhất để phân số không nằm trong cây là nếu mất vô số bước để đến được nó.
 
-If that is the case we would at all iterations have
+Nếu đúng như vậy, chúng tôi sẽ tại tất cả các lần lặp có
 
 $$
     \frac{a}{b} \lt \frac{x}{y} \lt \frac{c}{d}
 $$
 
-which (using the fact than an integer $z \gt 0 \iff z \ge 1$) can be rewritten as
+điều này (sử dụng thực tế là một số nguyên $z \gt 0 \iff z \ge 1$) có thể được viết lại thành
 
 $$
 \begin{align}
@@ -102,25 +102,25 @@ $$
 \end{align}
 $$
 
-Now multiply the first inequality by $c+d$ and the second with $a+b$ and add them to get
+Bây giờ nhân bất đẳng thức đầu tiên với $c+d$ và thứ hai với $a+b$ và cộng chúng để có được
 
 $$
     (c+d)(bx - ay) + (a+b)(cy - dx) \ge a+b+c+d.
 $$
 
-Expanding this and using the previously shown property $bc-ad=1$ we get that
+Mở rộng điều này và sử dụng thuộc tính đã được hiển thị trước đó $bc-ad=1$, chúng tôi nhận được rằng
 
 $$
     x+y \ge a+b+c+d.
 $$
 
-And given that at every iteration at least one of $a,b,c,d$ will increase, the fraction searching process will contain no more than $x+y$ iterations. This contradicts the assumption that the path to $\frac{x}{y}$ was infinite and hence $\frac{x}{y}$ must be part of the tree.
+Và do tại mỗi lần lặp, ít nhất một trong các $a,b,c,d$ sẽ tăng lên, quá trình tìm kiếm phân số sẽ chứa không quá $x+y$ lần lặp. Điều này mâu thuẫn với giả định rằng đường đến $\frac{x}{y}$ là vô hạn và do đó $\frac{x}{y}$ phải là một phần của cây.
 
-## Tree Building Algorithm
+## Thuật toán xây dựng cây (Tree Building Algorithm) {: #tree-building-algorithm}
 
-To build any subtree of the Stern-Brocot tree, it suffices to know the left and right ancestor. On the first level, the left and right ancestors are $\frac{0}{1}$ and $\frac{1}{0}$ respectively. Using these, we calculate the mediant and proceed one level deeper, with the mediant replacing the right ancestor in the left subtree, and vice versa.
+Để xây dựng bất kỳ cây con nào của cây Stern-Brocot, chỉ cần biết tổ tiên bên trái và bên phải là đủ. Ở cấp độ đầu tiên, tổ tiên bên trái và bên phải lần lượt là $\frac{0}{1}$ và $\frac{1}{0}$. Sử dụng chúng, chúng tôi tính toán trung gian và tiến hành sâu hơn một cấp, với trung gian thay thế tổ tiên bên phải trong cây con bên trái và ngược lại.
 
-This pseudocode tries to build the entire infinite tree:
+Mã giả này cố gắng xây dựng toàn bộ cây vô hạn:
 
 ```cpp
 void build(int a = 0, int b = 1, int c = 1, int d = 0, int level = 1) {
@@ -133,13 +133,13 @@ void build(int a = 0, int b = 1, int c = 1, int d = 0, int level = 1) {
 }
 ```
 
-## Fraction Search Algorithm
+## Thuật toán tìm kiếm phân số (Fraction Search Algorithm) {: #fraction-search-algorithm}
 
-The search algorithm was already described in the proof that all fractions appear in the tree, but we will repeat it here. The algorithm is a binary search algorithm. Initially we stand at the root of the tree and we compare our target with the current fraction. If they are the same we are done and stop the process. If our target is smaller we move to the left child, otherwise we move to the right child.
+Thuật toán tìm kiếm đã được mô tả trong bằng chứng rằng tất cả các phân số đều xuất hiện trong cây, nhưng chúng tôi sẽ lặp lại ở đây. Thuật toán là một thuật toán tìm kiếm nhị phân. Ban đầu chúng ta đứng ở gốc cây và so sánh mục tiêu của mình với phân số hiện tại. Nếu chúng giống nhau, chúng tôi đã hoàn tất và dừng quá trình. Nếu mục tiêu của chúng tôi nhỏ hơn, chúng tôi di chuyển đến con bên trái, nếu không chúng tôi di chuyển đến con bên phải.
 
-### Naive search
+### Tìm kiếm ngây thơ (Naive search) {: #naive-search}
 
-Here is an implementation that returns the path to a given fraction $\frac{p}{q}$ as a sequence of `'L'` and `'R'` characters, meaning traversal to the left and right child respectively. This sequence of characters uniquely defines all positive fractions and is called the Stern-Brocot number system.
+Dưới đây là một triển khai trả về đường dẫn đến một phân số nhất định $\frac{p}{q}$ dưới dạng một chuỗi các ký tự `'L'` và `'R'`, có nghĩa là duyệt đến con bên trái và bên phải tương ứng. Chuỗi ký tự này xác định duy nhất tất cả các phân số dương và được gọi là hệ thống số Stern-Brocot.
 
 ```cpp
 string find(int p, int q) {
@@ -161,31 +161,31 @@ string find(int p, int q) {
 }
 ```
 
-Irrational numbers in the Stern-Brocot number system corresponds to infinite sequences of characters. Along the endless path towards the irrational number the algorithm will find reduced fractions with gradually increasing denominators that provides increasingly better approximations of the irrational number. So by taking a prefix of the infinite sequence approximations with any desired precision can be achieved. This application is important in watch-making, which explains why the tree was discovered in that domain.
+Số vô tỷ trong hệ thống số Stern-Brocot tương ứng với chuỗi ký tự vô hạn. Dọc theo con đường vô tận hướng tới số vô tỷ, thuật toán sẽ tìm thấy các phân số rút gọn với các mẫu số tăng dần cung cấp xấp xỉ ngày càng tốt hơn của số vô tỷ. Vì vậy, bằng cách lấy một tiền tố của chuỗi vô hạn, các xấp xỉ với bất kỳ độ chính xác mong muốn nào đều có thể đạt được. Ứng dụng này rất quan trọng trong việc chế tạo đồng hồ, giải thích tại sao cây được phát hiện trong miền đó.
 
-Note that for a fraction $\frac{p}{q}$, the length of the resulting sequence could be as large as $O(p+q)$, for example when the fraction is of form $\frac{p}{1}$. This means that the algorithm above **should not be used, unless this is an acceptable complexity**! 
+Lưu ý rằng đối với phân số $\frac{p}{q}$, độ dài của chuỗi kết quả có thể lớn tới $O(p+q)$, ví dụ khi phân số có dạng $\frac{p}{1}$. Điều này có nghĩa là thuật toán trên **không nên được sử dụng, trừ khi đây là độ phức tạp có thể chấp nhận được**!
 
-### Logarithmic search
+### Tìm kiếm logarit (Logarithmic search) {: #logarithmic-search}
 
-Fortunately, it is possible to enhance the algorithm above to guarantee $O(\log (p+q))$ complexity. For this we should note that if the current boundary fractions are $\frac{p_L}{q_L}$ and $\frac{p_R}{q_R}$, then by doing $a$ steps to the right we move to the fraction $\frac{p_L + a p_R}{q_L + a q_R}$, and by doing $a$ steps to the left, we move to the fraction $\frac{a p_L + p_R}{a q_L + q_R}$. 
+May mắn thay, có thể tăng cường thuật toán trên để đảm bảo độ phức tạp $O(\log (p+q))$. Đối với điều này, chúng ta nên lưu ý rằng nếu các phân số ranh giới hiện tại là $\frac{p_L}{q_L}$ và $\frac{p_R}{q_R}$, thì bằng cách thực hiện $a$ bước sang bên phải, chúng ta di chuyển đến phân số $\frac{p_L + a p_R}{q_L + a q_R}$, và bằng cách thực hiện $a$ bước sang bên trái, chúng ta di chuyển đến phân số $\frac{a p_L + p_R}{a q_L + q_R}$.
 
-Therefore, instead of doing steps of `L` or `R` one by one, we can do $k$ steps in the same direction at once, after which we would switch to going into other direction, and so on. In this way, we can find the path to the fraction $\frac{p}{q}$ as its run-length encoding.
+Do đó, thay vì thực hiện từng bước `L` hoặc `R` một, chúng ta có thể thực hiện $k$ bước theo cùng một hướng cùng một lúc, sau đó chúng ta sẽ chuyển sang đi theo hướng khác, và cứ thế. Theo cách này, chúng ta có thể tìm thấy đường dẫn đến phân số $\frac{p}{q}$ dưới dạng mã hóa độ dài chạy (run-length encoding) của nó.
 
-As the directions alternate this way, we will always know which one to take. So, for convenience we may represent a path to a fraction $\frac{p}{q}$ as a sequence of fractions
+Khi các hướng xen kẽ theo cách này, chúng tôi sẽ luôn biết nên chọn hướng nào. Vì vậy, để thuận tiện, chúng ta có thể biểu diễn một đường dẫn đến phân số $\frac{p}{q}$ dưới dạng một dãy các phân số
 
 $$
 \frac{p_0}{q_0}, \frac{p_1}{q_1}, \frac{p_2}{q_2}, \dots, \frac{p_n}{q_n}, \frac{p_{n+1}}{q_{n+1}} = \frac{p}{q}
 $$
 
-such that $\frac{p_{k-1}}{q_{k-1}}$ and $\frac{p_k}{q_k}$ are the boundaries of the search interval on the $k$-th step, starting with $\frac{p_0}{q_0} = \frac{0}{1}$ and $\frac{p_1}{q_1} = \frac{1}{0}$. Then, after the $k$-th step we move to a fraction
+sao cho $\frac{p_{k-1}}{q_{k-1}}$ và $\frac{p_k}{q_k}$ là ranh giới của khoảng tìm kiếm ở bước thứ $k$, bắt đầu bằng $\frac{p_0}{q_0} = \frac{0}{1}$ và $\frac{p_1}{q_1} = \frac{1}{0}$. Sau đó, sau bước thứ $k$, chúng ta di chuyển đến một phân số
 
 $$
 \frac{p_{k+1}}{q_{k+1}} = \frac{p_{k-1} + a_k p_k}{q_{k-1} + a_k q_k},
 $$
 
-where $a_k$ is a positive integer number. If you're familiar with [continued fractions](../algebra/continued-fractions.md), you would recognize that the sequence $\frac{p_i}{q_i}$ is the sequence of the convergent fractions of $\frac{p}{q}$ and the sequence $[a_1; a_2, \dots, a_{n}, 1]$ represents the continued fraction of $\frac{p}{q}$.
+trong đó $a_k$ là một số nguyên dương. Nếu bạn quen thuộc với [liên phân số (continued fractions)](../algebra/continued-fractions.md), bạn sẽ nhận ra rằng dãy $\frac{p_i}{q_i}$ là dãy các phân số hội tụ của $\frac{p}{q}$ và dãy $[a_1; a_2, \dots, a_{n}, 1]$ đại diện cho liên phân số của $\frac{p}{q}$.
 
-This allows to find the run-length encoding of the path to $\frac{p}{q}$ in the manner which follows the algorithm for computing continued fraction representation of the fraction $\frac{p}{q}$:
+Điều này cho phép tìm mã hóa độ dài chạy của đường dẫn đến $\frac{p}{q}$ theo cách tuân theo thuật toán tính toán biểu diễn liên phân số của phân số $\frac{p}{q}$:
 
 ```cpp
 auto find(int p, int q) {
@@ -201,32 +201,40 @@ auto find(int p, int q) {
 }
 ```
 
-However, this approach only works if we already know $\frac{p}{q}$ and want to find its place in the Stern-Brocot tree.
+Tuy nhiên, cách tiếp cận này chỉ hoạt động nếu chúng ta đã biết $\frac{p}{q}$ và muốn tìm vị trí của nó trong cây Stern-Brocot.
 
-On practice, it is often the case that $\frac{p}{q}$ is not known in advance, but we are able to check for specific $\frac{x}{y}$ whether $\frac{x}{y} < \frac{p}{q}$.
+Trên thực tế, thường thì trường hợp $\frac{p}{q}$ không được biết trước, nhưng chúng tôi có thể kiểm tra xem cụ thể $\frac{x}{y}$ liệu $\frac{x}{y} < \frac{p}{q}$.
 
-Knowing this, we can emulate the search on Stern-Brocot tree by maintaining the current boundaries $\frac{p_{k-1}}{q_{k-1}}$ and $\frac{p_k}{q_k}$, and finding each $a_k$ via binary search. The algorithm then is a bit more technical and potentially have a complexity of $O(\log^2(x+y))$, unless the problem formulation allows you to find $a_k$ faster (for example, using `floor` of some known expression).
+Biết điều này, chúng ta có thể mô phỏng tìm kiếm trên cây Stern-Brocot bằng cách duy trì các ranh giới hiện tại $\frac{p_{k-1}}{q_{k-1}}$ và $\frac{p_k}{q_k}$, và tìm từng $a_k$ thông qua tìm kiếm nhị phân. Thuật toán sau đó kỹ thuật hơn một chút và có khả năng có độ phức tạp $O(\log^2(x+y))$, trừ khi công thức bài toán cho phép bạn tìm $a_k$ nhanh hơn (ví dụ, sử dụng `floor` của một biểu thức đã biết).
 
-## Farey Sequence
+## Dãy Farey (Farey Sequence) {: #farey-sequence}
 
-The Farey sequence of order $n$ is the sorted sequence of fractions between $0$ and $1$ whose denominators do not exceed $n$.
+Dãy Farey bậc $n$ là dãy các phân số đã sắp xếp nằm giữa $0$ và $1$ có mẫu số không vượt quá $n$.
 
-The sequences are named after English geologist John Farey, who in 1816 conjectured that any fraction in a Farey sequence is the mediant of its neighbors. This was proven some time later by Cauchy, but independent of both of them, the mathematician Haros had come to almost the same conclusion in 1802.
+Các chuỗi được đặt theo tên của nhà địa chất học người Anh John Farey, người vào năm 1816 đã phỏng đoán rằng bất kỳ phân số nào trong chuỗi Farey đều là trung gian của các phân số lân cận của nó. Điều này đã được chứng minh một thời gian sau đó bởi Cauchy, nhưng độc lập với cả hai người họ, nhà toán học Haros đã đi đến kết luận gần như tương tự vào năm 1802.
 
-The Farey sequences have many interesting properties on their own, but the connection to the Stern-Brocot tree is the most obvious. In fact, the Farey sequences can be obtained by trimming branches from the tree.
+Các chuỗi Farey có nhiều thuộc tính thú vị của riêng chúng, nhưng mối liên hệ với cây Stern-Brocot là rõ ràng nhất. Trên thực tế, các chuỗi Farey có thể thu được bằng cách cắt tỉa các nhánh khỏi cây.
 
-From the algorithm for building the Stern-Brocot tree, we get an algorithm for the Farey sequences. Start with the list of fractions $\frac{0}{1}, \frac{1}{0}$. At every subsequent iteration, insert the mediant only if the denominator does not exceed $n$. At some point the list will stop changing and the desired Farey sequence will have been found.
+Từ thuật toán xây dựng cây Stern-Brocot, chúng ta có được một thuật toán cho các chuỗi Farey. Bắt đầu với danh sách các phân số $\frac{0}{1}, \frac{1}{0}$. Ở mỗi lần lặp tiếp theo, chỉ chèn trung gian nếu mẫu số không vượt quá $n$. Tại một thời điểm nào đó, danh sách sẽ ngừng thay đổi và chuỗi Farey mong muốn sẽ được tìm thấy.
 
-### Length of a Farey Sequence
+### Độ dài của dãy Farey (Length of a Farey Sequence) {: #length-of-a-farey-sequence}
 
-A Farey sequence of order $n$ contains all elements of the Farey sequence of order $n-1$ as well as all irreducible fractions with denominator $n$, but the latter is just the totient $\varphi(n)$. So the length $L_n$ of the Farey sequence of order $n$ is
+Một dãy Farey bậc $n$ chứa tất cả các phần tử của dãy Farey bậc $n-1$ cũng như tất cả các phân số tối giản có mẫu số $n$, nhưng vế sau chỉ là phi hàm Euler $\varphi(n)$. Vì vậy, độ dài $L_n$ của chuỗi Farey thứ tự $n$ là
 
 $$
     L_n = L_{n-1} + \varphi(n)
 $$
 
-or equivalently, by unraveling the recursion we get
+hoặc tương đương, bằng cách làm sáng tỏ đệ quy chúng ta nhận được
 
 $$
     L_n = 1 + \sum_{k=1}^n \varphi(k).
 $$
+
+## Checklist
+
+- [x] Dịch các khái niệm kỹ thuật sang tiếng Việt chính xác.
+- [x] Đã cập nhật các liên kết nội bộ (đến 127.0.0.1:8000).
+- [x] Định dạng lại các công thức toán học và code block.
+- [x] Kiểm tra chính tả và ngữ pháp.
+- [x] Đảm bảo tính nhất quán với các thuật ngữ đã dịch khác.

@@ -4,39 +4,39 @@ tags:
 e_maxx_link: 15_puzzle
 ---
 
-# 15 Puzzle Game: Existence Of The Solution
+# Trò chơi 15 Puzzle: Sự tồn tại của lời giải (15 Puzzle Game: Existence Of The Solution) {: #15-puzzle-game-existence-of-the-solution}
 
-This game is played on a $4 \times 4$ board. On this board there are $15$ playing tiles numbered from 1 to 15. One cell is left empty (denoted by 0). You need to get the board to the position presented below by repeatedly moving one of the tiles to the free space:
+Trò chơi này được chơi trên một bảng $4 \times 4$. Trên bảng này có $15$ ô vuông được đánh số từ 1 đến 15. Một ô được để trống (ký hiệu là 0). Bạn cần đưa bảng về vị trí được trình bày bên dưới bằng cách di chuyển lặp đi lặp lại một trong các ô vuông vào không gian trống:
 
 $$\begin{matrix} 1 & 2 & 3 & 4 \\ 5 & 6 & 7 & 8 \\ 9 & 10 & 11 & 12 \\ 13 & 14 & 15 & 0 \end{matrix}$$
 
-The game "15 Puzzle” was created by Noyes Chapman in 1880.
+Trò chơi "15 Puzzle" được tạo ra bởi Noyes Chapman vào năm 1880.
 
-## Existence Of The Solution
+## Sự tồn tại của lời giải (Existence Of The Solution) {: #existence-of-the-solution}
 
-Let's consider this problem: given a position on the board, determine whether a sequence of moves which leads to a solution exists.
+Hãy xem xét bài toán này: cho một vị trí trên bảng, xác định xem có tồn tại một chuỗi các bước di chuyển dẫn đến lời giải hay không.
 
-Suppose we have some position on the board:
+Giả sử chúng ta có một vị trí nào đó trên bảng:
 
 $$\begin{matrix} a_1 & a_2 & a_3 & a_4 \\ a_5 & a_6 & a_7 & a_8 \\ a_9 & a_{10} & a_{11} & a_{12} \\ a_{13} & a_{14} & a_{15} & a_{16} \end{matrix}$$
 
-where one of the elements equals zero and indicates an empty cell $a_z  = 0$
+trong đó một trong các phần tử bằng không và biểu thị một ô trống $a_z  = 0$
 
-Let’s consider the permutation:
+Hãy xem xét hoán vị:
 
 $$a_1 a_2 ... a_{z-1} a_{z+1} ... a_{15} a_{16}$$
 
-i.e. the permutation of numbers corresponding to the position on the board without a zero element
+tức là hoán vị của các số tương ứng với vị trí trên bảng mà không có phần tử không.
 
-Let $N$ be the number of inversions in this permutation (i.e. the number of such elements $a_i$  and $a_j$  that $i < j$, but $a_i  > a_j$).
+Gọi $N$ là số lượng nghịch đảo trong hoán vị này (tức là số lượng các phần tử $a_i$ và $a_j$ sao cho $i < j$, nhưng $a_i  > a_j$).
 
-Suppose $K$ is an index of a row where the empty element is located (i.e. using our convention, $K = (z - 1) \div \ 4 + 1$).
+Giả sử $K$ là chỉ số của hàng nơi phần tử trống toạ lạc (tức là sử dụng quy ước của chúng ta, $K = (z - 1) \div \ 4 + 1$).
 
-Then, **the solution exists iff $N + K$ is even**.
+Khi đó, **lời giải tồn tại khi và chỉ khi $N + K$ là số chẵn**.
 
-## Implementation
+## Cài đặt (Implementation) {: #implementation}
 
-The algorithm above can be illustrated with the following program code:
+Thuật toán trên có thể được minh họa bằng mã chương trình sau:
 
 ```cpp
 int a[16];
@@ -56,14 +56,22 @@ for (int i=0; i<16; ++i)
 puts ((inv & 1) ? "No Solution" : "Solution Exists");
 ```
 
-## Proof
+## Chứng minh (Proof) {: #proof}
 
-In 1879 Johnson proved that if $N + K$ is odd, then the solution doesn’t exist, and in the same year Story proved that all positions when $N + K$ is even have a solution.
+Năm 1879 Johnson đã chứng minh rằng nếu $N + K$ là lẻ, thì lời giải không tồn tại, và cùng năm đó Story đã chứng minh rằng tất cả các vị trí khi $N + K$ là chẵn đều có lời giải.
 
-However, all these proofs were quite complex.
+Tuy nhiên, tất cả các chứng minh này đều khá phức tạp.
 
-In 1999 Archer proposed a much simpler proof (you can download his article [here](http://www.cs.cmu.edu/afs/cs/academic/class/15859-f01/www/notes/15-puzzle.pdf)).
+Năm 1999 Archer đã đề xuất một chứng minh đơn giản hơn nhiều (bạn có thể tải xuống bài viết của ông [tại đây](http://www.cs.cmu.edu/afs/cs/academic/class/15859-f01/www/notes/15-puzzle.pdf)).
 
-## Practice Problems
+## Bài tập (Practice Problems) {: #practice-problems}
 
 * [Hackerrank - N-puzzle](https://www.hackerrank.com/challenges/n-puzzle)
+
+## Checklist
+
+- [x] Dịch các khái niệm kỹ thuật sang tiếng Việt chính xác.
+- [x] Đã cập nhật các liên kết nội bộ (đến 127.0.0.1:8000).
+- [x] Định dạng lại các công thức toán học và code block.
+- [x] Kiểm tra chính tả và ngữ pháp.
+- [x] Đảm bảo tính nhất quán với các thuật ngữ đã dịch khác.

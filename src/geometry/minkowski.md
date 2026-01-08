@@ -1,65 +1,51 @@
 ---
 tags:
-  - Original
+  - Translated
 ---
 
-# Minkowski sum of convex polygons
+# Tổng Minkowski của các đa giác lồi (Minkowski sum of convex polygons) {: #minkowski-sum-of-convex-polygons}
 
-## Definition
-Consider two sets $A$ and $B$ of points on a plane. Minkowski sum $A + B$ is defined as $\{a + b| a \in A, b \in B\}$.
-Here we will consider the case when $A$ and $B$ consist of convex polygons $P$ and $Q$ with their interiors.
-Throughout this article we will identify polygons with ordered sequences of their vertices, so that notation like $|P|$ or
-$P_i$ makes sense.
-It turns out that the sum of convex polygons $P$ and $Q$ is a convex polygon with at most $|P| + |Q|$ vertices.
+## Định nghĩa (Definition) {: #definition}
+Xem xét hai tập hợp điểm $A$ và $B$ trên một mặt phẳng. Tổng Minkowski $A + B$ được định nghĩa là $\{a + b| a \in A, b \in B\}$.
+Ở đây chúng ta sẽ xem xét trường hợp khi $A$ và $B$ bao gồm các đa giác lồi $P$ và $Q$ với phần bên trong của chúng.
+Trong suốt bài viết này, chúng ta sẽ xác định các đa giác với các chuỗi đỉnh có thứ tự của chúng, để các ký hiệu như $|P|$ hoặc $P_i$ có ý nghĩa.
+Hóa ra tổng của các đa giác lồi $P$ và $Q$ là một đa giác lồi với tối đa $|P| + |Q|$ đỉnh.
 
-## Algorithm
+## Thuật toán (Algorithm) {: #algorithm}
 
-Here we consider the polygons to be cyclically enumerated, i. e. $P_{|P|} = P_0,\ Q_{|Q|} = Q_0$ and so on.
+Ở đây chúng ta coi các đa giác được đánh số theo vòng tròn, tức là $P_{|P|} = P_0,\ Q_{|Q|} = Q_0$ và vân vân.
 
-Since the size of the sum is linear in terms of the sizes of initial polygons, we should aim at finding a linear-time algorithm.
-Suppose that both polygons are ordered counter-clockwise. Consider sequences of edges $\{\overrightarrow{P_iP_{i+1}}\}$
-and $\{\overrightarrow{Q_jQ_{j+1}}\}$ ordered by polar angle. We claim that the sequence of edges of $P + Q$ can be obtained by merging
-these two sequences preserving polar angle order and replacing consecutive co-directed vectors with their sum. Straightforward usage of this idea results
-in a linear-time algorithm, however, restoring the vertices of $P + Q$ from the sequence of sides requires repeated addition of vectors,
-which may introduce unwanted precision issues if we're working with floating-point coordinates, so we will describe a slight
-modification of this idea.
+Vì kích thước của tổng là tuyến tính theo kích thước của các đa giác ban đầu, chúng ta nên nhắm đến việc tìm ra một thuật toán thời gian tuyến tính.
+Giả sử rằng cả hai đa giác đều được sắp xếp ngược chiều kim đồng hồ. Xem xét các chuỗi cạnh $\{\overrightarrow{P_iP_{i+1}}\}$ và $\{\overrightarrow{Q_jQ_{j+1}}\}$ được sắp xếp theo góc cực. Chúng tôi tuyên bố rằng chuỗi các cạnh của $P + Q$ có thể thu được bằng cách hợp nhất hai chuỗi này bảo tồn thứ tự góc cực và thay thế các vector cùng hướng liên tiếp bằng tổng của chúng. Việc sử dụng đơn giản ý tưởng này dẫn đến một thuật toán thời gian tuyến tính, tuy nhiên, việc khôi phục các đỉnh của $P + Q$ từ chuỗi các cạnh đòi hỏi phải cộng vector lặp đi lặp lại, điều này có thể gây ra các vấn đề về độ chính xác không mong muốn nếu chúng ta đang làm việc với tọa độ dấu chấm động, vì vậy chúng tôi sẽ mô tả một sửa đổi nhỏ của ý tưởng này.
 
+Đầu tiên, chúng ta nên sắp xếp lại các đỉnh theo cách mà đỉnh đầu tiên của mỗi đa giác có tọa độ y thấp nhất (trong trường hợp có một vài đỉnh như vậy, hãy chọn đỉnh có tọa độ x nhỏ nhất). Sau đó, các cạnh của cả hai đa giác sẽ được sắp xếp theo góc cực, vì vậy không cần phải sắp xếp chúng thủ công.
+Bây giờ chúng ta tạo hai con trỏ $i$ (trỏ đến một đỉnh của $P$) và $j$ (trỏ đến một đỉnh của $Q$), cả hai ban đầu được đặt thành 0.
+Chúng ta lặp lại các bước sau trong khi $i < |P|$ hoặc $j < |Q|$.
 
-Firstly we should reorder the vertices in such a way that the first vertex
-of each polygon has the lowest y-coordinate (in case of several such vertices pick the one with the smallest x-coordinate). After that the sides of both polygons
-will become sorted by polar angle, so there is no need to sort them manually.
-Now we create two pointers $i$ (pointing to a vertex of $P$) and $j$ (pointing to a vertex of $Q$), both initially set to 0.
-We repeat the following steps while $i < |P|$ or $j < |Q|$.
+1. Thêm $P_i + Q_j$ vào $P + Q$.
 
-1. Append $P_i + Q_j$ to $P + Q$.
+2. So sánh góc cực của $\overrightarrow{P_iP_{i + 1}}$ và $\overrightarrow{Q_jQ_{j+1}}$.
 
-2. Compare polar angles of $\overrightarrow{P_iP_{i + 1}}$ and $\overrightarrow{Q_jQ_{j+1}}$.
+3. Tăng con trỏ tương ứng với góc nhỏ nhất (nếu các góc bằng nhau, tăng cả hai).
 
-3. Increment the pointer which corresponds to the smallest angle (if the angles are equal, increment both).
+## Trực quan hóa (Visualization) {: #visualization}
 
-## Visualization
-
-Here is a nice visualization, which may help you understand what is going on.
+Dưới đây là một hình ảnh trực quan đẹp, có thể giúp bạn hiểu những gì đang diễn ra.
 
 <div style="text-align: center;">
-  <img src="minkowski.gif" alt="Visual">
+  <img src="https://cp-algorithms.com/geometry/minkowski.gif" alt="Visual">
 </div>
 
-## Distance between two polygons
-One of the most common applications of Minkowski sum is computing the distance between two convex polygons (or simply checking whether they intersect).
-The distance between two convex polygons $P$ and $Q$ is defined as $\min\limits_{a \in P, b \in Q} ||a - b||$. One can note that
-the distance is always attained between two vertices or a vertex and an edge, so we can easily find the distance in $O(|P||Q|)$. However,
-with clever usage of Minkowski sum we can reduce the complexity to $O(|P| + |Q|)$.
+## Khoảng cách giữa hai đa giác (Distance between two polygons) {: #distance-between-two-polygons}
+Một trong những ứng dụng phổ biến nhất của tổng Minkowski là tính khoảng cách giữa hai đa giác lồi (hoặc đơn giản là kiểm tra xem chúng có giao nhau hay không).
+Khoảng cách giữa hai đa giác lồi $P$ và $Q$ được định nghĩa là $\min\limits_{a \in P, b \in Q} ||a - b||$. Người ta có thể nhận thấy rằng khoảng cách luôn đạt được giữa hai đỉnh hoặc một đỉnh và một cạnh, vì vậy chúng ta có thể dễ dàng tìm thấy khoảng cách trong $O(|P||Q|)$. Tuy nhiên, với việc sử dụng thông minh tổng Minkowski, chúng ta có thể giảm độ phức tạp xuống $O(|P| + |Q|)$.
 
-If we reflect $Q$ through the point $(0, 0)$ obtaining polygon $-Q$, the problem boils down to finding the smallest distance between a point in
-$P + (-Q)$ and $(0, 0)$. We can find that distance in linear time using the following idea.
-If $(0, 0)$ is inside or on the boundary of polygon, the distance is $0$, otherwise the distance is attained between $(0, 0)$ and some vertex or edge of the polygon.
-Since Minkowski sum can be computed
-in linear time, we obtain a linear-time algorithm for finding the distance between two convex polygons.
+Nếu chúng ta phản chiếu $Q$ qua điểm $(0, 0)$ thu được đa giác $-Q$, bài toán quy về việc tìm khoảng cách nhỏ nhất giữa một điểm trong $P + (-Q)$ và $(0, 0)$. Chúng ta có thể tìm thấy khoảng cách đó trong thời gian tuyến tính bằng cách sử dụng ý tưởng sau.
+Nếu $(0, 0)$ ở bên trong hoặc trên biên của đa giác, khoảng cách là $0$, ngược lại khoảng cách đạt được giữa $(0, 0)$ và một đỉnh hoặc cạnh nào đó của đa giác.
+Vì tổng Minkowski có thể được tính toán trong thời gian tuyến tính, chúng ta thu được một thuật toán thời gian tuyến tính để tìm khoảng cách giữa hai đa giác lồi.
 
-## Implementation
-Below is the implementation of Minkowski sum for polygons with integer points. Note that in this case all computations can be done in integers since
-instead of computing polar angles and directly comparing them we can look at the sign of cross product of two vectors.
+## Cài đặt (Implementation) {: #implementation}
+Dưới đây là việc cài đặt tổng Minkowski cho các đa giác có điểm nguyên. Lưu ý rằng trong trường hợp này, tất cả các tính toán có thể được thực hiện bằng số nguyên vì thay vì tính toán các góc cực và so sánh trực tiếp chúng, chúng ta có thể nhìn vào dấu của tích có hướng của hai vector.
 
 ```{.cpp file=minkowski}
 struct pt{
@@ -109,7 +95,7 @@ vector<pt> minkowski(vector<pt> P, vector<pt> Q){
 
 ```
 
-## Problems
+## Bài tập (Problems) {: #problems}
  * [Codeforces 87E Mogohu-Rea Idol](https://codeforces.com/problemset/problem/87/E)
  * [Codeforces 1195F Geometers Anonymous Club](https://codeforces.com/contest/1195/problem/F)
  * [TIMUS 1894 Non-Flying Weather](https://acm.timus.ru/problem.aspx?space=1&num=1894)

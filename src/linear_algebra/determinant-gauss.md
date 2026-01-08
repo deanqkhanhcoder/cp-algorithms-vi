@@ -4,21 +4,21 @@ tags:
 e_maxx_link: determinant_gauss
 ---
 
-# Calculating the determinant of a matrix by Gauss
+# Tính định thức của ma trận bằng phương pháp Gauss (Calculating the determinant of a matrix by Gauss) {: #calculating-the-determinant-of-a-matrix-by-gauss}
 
-Problem: Given a matrix $A$ of size $N \times N$. Compute its determinant.
+Bài toán: Cho ma trận $A$ kích thước $N \times N$. Tính định thức của nó.
 
-## Algorithm
+## Thuật toán (Algorithm) {: #algorithm}
 
-We use the ideas of [Gauss method for solving systems of linear equations](linear-system-gauss.md)
+Chúng tôi sử dụng ý tưởng của [Phương pháp Gauss để giải hệ phương trình tuyến tính](linear-system-gauss.md)
 
-We will perform the same steps as in the solution of systems of linear equations, excluding only the division of the current line to $a_{ij}$. These operations will not change the absolute value of the determinant of the matrix. When we exchange two lines of the matrix, however, the sign of the determinant can change.
+Chúng ta sẽ thực hiện các bước giống như trong giải hệ phương trình tuyến tính, chỉ loại trừ việc chia dòng hiện tại cho $a_{ij}$. Các phép toán này sẽ không thay đổi giá trị tuyệt đối của định thức của ma trận. Tuy nhiên, khi chúng ta trao đổi hai dòng của ma trận, dấu của định thức có thể thay đổi.
 
-After applying Gauss on the matrix, we receive a diagonal matrix, whose determinant is just the product of the elements on the diagonal. The sign, as previously mentioned, can be determined by the number of exchanged rows (if odd, then the sign of the determinant should be reversed). Thus, we can use the Gauss algorithm to compute the determinant of the matrix in complexity $O(N^3)$.
+Sau khi áp dụng Gauss trên ma trận, chúng tôi nhận được một ma trận đường chéo, có định thức chỉ là tích của các phần tử trên đường chéo. Dấu, như đã đề cập trước đây, có thể được xác định bởi số lượng dòng được trao đổi (nếu lẻ, thì dấu của định thức nên được đảo ngược). Do đó, chúng ta có thể sử dụng thuật toán Gauss để tính toán định thức của ma trận với độ phức tạp $O(N^3)$.
 
-It should be noted that if at some point, we do not find non-zero cell in current column, the algorithm should stop and returns 0.
+Cần lưu ý rằng nếu tại một thời điểm nào đó, chúng ta không tìm thấy ô khác không trong cột hiện tại, thuật toán sẽ dừng và trả về 0.
 
-## Implementation
+## Cài đặt (Implementation) {: #implementation}
 
 ```cpp
 const double EPS = 1E-9;
@@ -50,5 +50,5 @@ for (int i=0; i<n; ++i) {
 cout << det;
 ```
 
-## Practice Problems
+## Bài tập (Practice Problems) {: #practice-problems}
 * [Codeforces - Wizards and Bets](http://codeforces.com/contest/167/problem/E)

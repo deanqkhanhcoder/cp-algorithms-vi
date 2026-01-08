@@ -1,34 +1,45 @@
 site_name: Algorithms for Competitive Programming
-site_url: http://127.0.0.1:8000
-site_description: 'The goal of this project is to translate the wonderful resource http://e-maxx.ru/algo which provides descriptions of many algorithms and data structures especially popular in field of competitive programming. Moreover we want to improve the collected knowledge by extending the articles and adding new articles to the collection.'
+site_url: https://deanqkhanhcoder.github.io/cp-algorithms-vi/
+site_description: 'Bản dịch tiếng Việt của dự án cp-algorithms'
 docs_dir: src
 site_dir: public
 use_directory_urls: false
 theme:
   name: material
-  custom_dir: src/overrides
+  custom_dir: src/overrides  # <--- BẮT BUỘC PHẢI CÓ DÒNG NÀY
   palette:
-    - scheme: cpalgo
-      primary: deep purple
+    # 1. Dark Mode làm mặc định
+    - scheme: slate 
+      primary: teal
+      accent: cyan
       toggle:
         icon: material/weather-night
-        name: Switch to dark mode
-    - scheme: slate 
+        name: Switch to light mode
+    # 2. Light Mode
+    - scheme: default
+      primary: indigo
+      accent: indigo
       toggle:
         icon: material/weather-sunny
-        name: Switch to light mode
+        name: Switch to dark mode
+  font:
+    text: Roboto
+    code: JetBrains Mono
   logo: favicon.ico
   favicon: favicon.ico
   icon:
     repo: fontawesome/brands/github
   features:
+    - navigation.top
+    - navigation.tracking
+    - toc.follow
     - toc.integrate
     - search.suggest
     - content.code.copy
-repo_url: https://github.com/cp-algorithms/cp-algorithms
-repo_name: cp-algorithms/cp-algorithms
+repo_url: https://github.com/deanqkhanhcoder/cp-algorithms-vi
+repo_name: deanqkhanhcoder/cp-algorithms-vi
 edit_uri: edit/main/src/
-copyright: Text is available under the <a href="https://github.com/cp-algorithms/cp-algorithms/blob/main/LICENSE">Creative Commons Attribution Share Alike 4.0 International</a> License<br/>Copyright &copy; 2014 - 2025 by <a href="https://github.com/cp-algorithms/cp-algorithms/graphs/contributors">cp-algorithms contributors</a>
+copyright: Text is available under the <a href="https://github.com/deanqkhanhcoder/cp-algorithms-vi/blob/main/LICENSE">Creative Commons Attribution Share Alike 4.0 International</a> License<br/>Copyright &copy; 2014 - 2025 by <a href="https://github.com/deanqkhanhcoder/cp-algorithms-vi/graphs/contributors">cp-algorithms contributors</a>
 extra_javascript:
   - javascript/config.js
   - javascript/donation-banner.js
@@ -59,22 +70,9 @@ markdown_extensions:
 plugins:
   - toggle-sidebar:
       toggle_button: all
-  - mkdocs-simple-hooks:
-      hooks:
-          on_env: "hooks:on_env"
   - search
   - tags
   - literate-nav:
       nav_file: navigation.md
-  - git-revision-date-localized:
-      enable_creation_date: true
-      enabled: !ENV [MKDOCS_ENABLE_GIT_REVISION_DATE, False]
-  - git-authors
-  - git-committers:
-      repository: cp-algorithms/cp-algorithms
-      docs_path: src/
-      token: !ENV MKDOCS_GIT_COMMITTERS_APIKEY
-      enabled: !ENV [MKDOCS_ENABLE_GIT_COMMITTERS, False]
-      branch: !ENV [MKDOCS_GIT_COMMITERS_BRANCH, main]
   - macros:
-  - rss
+  # Đã xóa rss, git-revision, git-authors, git-committers

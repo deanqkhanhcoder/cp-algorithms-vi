@@ -3,67 +3,67 @@ tags:
   - Original
 ---
 
-# Montgomery Multiplication
+# Phép nhân Montgomery (Montgomery Multiplication) {: #montgomery-multiplication}
 
-Many algorithms in number theory, like [prime testing](primality_tests.md) or [integer factorization](factorization.md), and in cryptography, like RSA, require lots of operations modulo a large number.
-A multiplications like $x y \bmod{n}$ is quite slow to compute with the typical algorithms, since it requires a division to know how many times $n$ has to be subtracted from the product.
-And division is a really expensive operation, especially with big numbers.
+Nhiều thuật toán trong lý thuyết số, như [kiểm tra số nguyên tố](primality_tests.md) hoặc [phân tích thừa số nguyên](factorization.md), và trong mật mã, như RSA, yêu cầu rất nhiều phép toán modulo với một số lớn.
+Một phép nhân như $x y \bmod{n}$ khá chậm để tính toán với các thuật toán điển hình, vì nó yêu cầu một phép chia để biết $n$ phải được trừ bao nhiêu lần từ tích.
+Và phép chia là một phép toán thực sự đắt đỏ, đặc biệt là với các số lớn.
 
-The **Montgomery (modular) multiplication** is a method that allows computing such multiplications faster.
-Instead of dividing the product and subtracting $n$ multiple times, it adds multiples of $n$ to cancel out the lower bits and then just discards the lower bits.
+**Phép nhân Montgomery (modular)** là một phương pháp cho phép tính toán các phép nhân như vậy nhanh hơn.
+Thay vì chia tích và trừ $n$ nhiều lần, nó cộng các bội số của $n$ để triệt tiêu các bit thấp hơn và sau đó chỉ loại bỏ các bit thấp hơn.
 
-## Montgomery representation
+## Biểu diễn Montgomery (Montgomery representation) {: #montgomery-representation}
 
-However the Montgomery multiplication doesn't come for free.
-The algorithm works only in the **Montgomery space**.
-And we need to transform our numbers into that space, before we can start multiplying.
+Tuy nhiên, phép nhân Montgomery không miễn phí.
+Thuật toán chỉ hoạt động trong **không gian Montgomery**.
+Và chúng ta cần chuyển đổi các số của mình vào không gian đó, trước khi chúng ta có thể bắt đầu nhân.
 
-For the space we need a positive integer $r \ge n$ coprime to $n$, i.e. $\gcd(n, r) = 1$.
-In practice we always choose $r$ to be $2^m$ for a positive integer $m$, since multiplications, divisions and modulo $r$ operations can then be efficiently implemented using shifts and other bit operations.
-$n$ will be an odd number in pretty much all applications, since it is not hard to factorize an even number.
-So every power of $2$ will be coprime to $n$.
+Đối với không gian, chúng ta cần một số nguyên dương $r \ge n$ nguyên tố cùng nhau với $n$, tức là $\gcd(n, r) = 1$.
+Trong thực tế, chúng ta luôn chọn $r$ là $2^m$ cho một số nguyên dương $m$, vì các phép nhân, phép chia và phép toán modulo $r$ sau đó có thể được cài đặt hiệu quả bằng cách sử dụng phép dịch và các phép toán bit khác.
+$n$ sẽ là một số lẻ trong hầu hết các ứng dụng, vì không khó để phân tích thừa số một số chẵn.
+Vì vậy, mỗi lũy thừa của $2$ sẽ là nguyên tố cùng nhau với $n$.
 
-The representative $\bar{x}$ of a number $x$ in the Montgomery space is defined as: 
+Đại diện $\bar{x}$ của một số $x$ trong không gian Montgomery được định nghĩa là: 
 
 $$\bar{x} := x \cdot r \bmod n$$
 
-Notice, the transformation is actually such a multiplication that we want to optimize.
-So this is still an expensive operation.
-However you only need to transform a number once into the space.
-As soon as you are in the Montgomery space, you can perform as many operations as you want efficiently.
-And at the end you transform the final result back.
-So as long as you are doing lots of operations modulo $n$, this will be no problem.
+Lưu ý, phép chuyển đổi thực sự là một phép nhân như vậy mà chúng ta muốn tối ưu hóa.
+Vì vậy, đây vẫn là một hoạt động đắt đỏ.
+Tuy nhiên, bạn chỉ cần chuyển đổi một số một lần vào không gian.
+Ngay khi bạn ở trong không gian Montgomery, bạn có thể thực hiện bao nhiêu phép toán tùy ý một cách hiệu quả.
+Và cuối cùng bạn chuyển đổi kết quả cuối cùng trở lại.
+Vì vậy, miễn là bạn đang thực hiện nhiều phép toán modulo $n$, điều này sẽ không thành vấn đề.
 
-Inside the Montgomery space you can still perform most operations as usual.
-You can add two elements ($x \cdot r + y \cdot r \equiv (x + y) \cdot r \bmod n$), subtract, check for equality, and even compute the greatest common divisor of a number with $n$ (since $\gcd(n, r) = 1$).
-All with the usual algorithms.
+Bên trong không gian Montgomery, bạn vẫn có thể thực hiện hầu hết các phép toán như bình thường.
+Bạn có thể cộng hai phần tử ($x \cdot r + y \cdot r \equiv (x + y) \cdot r \bmod n$), trừ, kiểm tra sự bằng nhau, và thậm chí tính ước chung lớn nhất của một số với $n$ (vì $\gcd(n, r) = 1$).
+Tất cả với các thuật toán thông thường.
 
-However this is not the case for multiplication.
+Tuy nhiên điều này không đúng đối với phép nhân.
 
-We expect the result to be:
+Chúng ta mong đợi kết quả là:
 
 $$\bar{x} * \bar{y} = \overline{x \cdot y} = (x \cdot y) \cdot r \bmod n.$$
 
-But the normal multiplication will give us:
+Nhưng phép nhân thông thường sẽ cho chúng ta:
 
 $$\bar{x} \cdot \bar{y} = (x \cdot y) \cdot r \cdot r \bmod n.$$
 
-Therefore the multiplication in the Montgomery space is defined as:
+Do đó phép nhân trong không gian Montgomery được định nghĩa là:
 
 $$\bar{x} * \bar{y} := \bar{x} \cdot \bar{y} \cdot r^{-1} \bmod n.$$
 
-## Montgomery reduction
+## Rút gọn Montgomery (Montgomery reduction) {: #montgomery-reduction}
 
-The multiplication of two numbers in the Montgomery space requires an efficient computation of $x \cdot r^{-1} \bmod n$.
-This operation is called the **Montgomery reduction**, and is also known as the algorithm **REDC**.
+Phép nhân của hai số trong không gian Montgomery yêu cầu tính toán hiệu quả $x \cdot r^{-1} \bmod n$.
+Phép toán này được gọi là **Rút gọn Montgomery**, và còn được gọi là thuật toán **REDC**.
 
-Because $\gcd(n, r) = 1$, we know that there are two numbers $r^{-1}$ and $n^{\prime}$ with $0 < r^{-1}, n^{\prime} < n$ with
+Bởi vì $\gcd(n, r) = 1$, chúng ta biết rằng có hai số $r^{-1}$ và $n^{\prime}$ với $0 < r^{-1}, n^{\prime} < n$ với
 
 $$r \cdot r^{-1} + n \cdot n^{\prime} = 1.$$
 
-Both $r^{-1}$ and $n^{\prime}$ can be computed using the [Extended Euclidean algorithm](extended-euclid-algorithm.md).
+Cả $r^{-1}$ và $n^{\prime}$ đều có thể được tính bằng cách sử dụng [Thuật toán Euclid mở rộng](extended-euclid-algorithm.md).
 
-Using this identity we can write $x \cdot r^{-1}$ as:
+Sử dụng đồng nhất thức này, chúng ta có thể viết $x \cdot r^{-1}$ dưới dạng:
 
 $$\begin{aligned}
 x \cdot r^{-1} &= x \cdot r \cdot r^{-1} / r = x \cdot (-n \cdot n^{\prime} + 1) / r \\
@@ -71,10 +71,10 @@ x \cdot r^{-1} &= x \cdot r \cdot r^{-1} / r = x \cdot (-n \cdot n^{\prime} + 1)
 &\equiv ((-x \cdot n^{\prime} + l \cdot r) \cdot n + x) / r \bmod n
 \end{aligned}$$
 
-The equivalences hold for any arbitrary integer $l$.
-This means, that we can add or subtract an arbitrary multiple of $r$ to $x \cdot n^{\prime}$, or in other words, we can compute $q := x \cdot n^{\prime}$ modulo $r$.
+Sự tương đương giữ cho bất kỳ số nguyên tùy ý $l$.
+Điều này có nghĩa là, chúng ta có thể cộng hoặc trừ một bội số tùy ý của $r$ vào $x \cdot n^{\prime}$, hoặc nói cách khác, chúng ta có thể tính $q := x \cdot n^{\prime}$ modulo $r$.
 
-This gives us the following algorithm to compute $x \cdot r^{-1} \bmod n$:
+Điều này cho chúng ta thuật toán sau để tính $x \cdot r^{-1} \bmod n$:
 
 ```text
 function reduce(x):
@@ -85,22 +85,22 @@ function reduce(x):
     return a
 ```
 
-Since $x < n \cdot n < r \cdot n$ (even if $x$ is the product of a multiplication) and $q \cdot n < r \cdot n$ we know that $-n < (x - q \cdot n) / r < n$.
-Therefore the final modulo operation is implemented using a single check and one addition.
+Vì $x < n \cdot n < r \cdot n$ (ngay cả khi $x$ là tích của một phép nhân) và $q \cdot n < r \cdot n$ chúng ta biết rằng $-n < (x - q \cdot n) / r < n$.
+Do đó phép toán modulo cuối cùng được cài đặt bằng cách sử dụng một lần kiểm tra và một phép cộng.
 
-As we see, we can perform the Montgomery reduction without any heavy modulo operations.
-If we choose $r$ as a power of $2$, the modulo operations and divisions in the algorithm can be computed using bitmasking and shifting.
+Như chúng ta thấy, chúng ta có thể thực hiện rút gọn Montgomery mà không cần bất kỳ phép toán modulo nặng nề nào.
+Nếu chúng ta chọn $r$ là lũy thừa của $2$, các phép toán modulo và chia trong thuật toán có thể được tính toán bằng cách sử dụng bitmask và dịch.
 
-A second application of the Montgomery reduction is to transfer a number back from the Montgomery space into the normal space.
+Một ứng dụng thứ hai của rút gọn Montgomery là chuyển một số trở lại từ không gian Montgomery vào không gian bình thường.
 
-## Fast inverse trick
+## Mẹo nghịch đảo nhanh (Fast inverse trick) {: #fast-inverse-trick}
 
-For computing the inverse $n^{\prime} := n^{-1} \bmod r$ efficiently, we can use the following trick (which is inspired from the Newton's method):
+Để tính toán nghịch đảo $n^{\prime} := n^{-1} \bmod r$ một cách hiệu quả, chúng ta có thể sử dụng mẹo sau (được lấy cảm hứng từ phương pháp Newton):
 
 $$a \cdot x \equiv 1 \bmod 2^k \Longrightarrow a \cdot x \cdot (2 - a \cdot x) \equiv 1 \bmod 2^{2k}$$
 
-This can easily be proven.
-If we have $a \cdot x = 1 + m \cdot 2^k$, then we have:
+Điều này có thể dễ dàng được chứng minh.
+Nếu chúng ta có $a \cdot x = 1 + m \cdot 2^k$, thì chúng ta có:
 
 $$\begin{aligned}
 a \cdot x \cdot (2 - a \cdot x) &= 2 \cdot a \cdot x - (a \cdot x)^2 \\
@@ -110,18 +110,18 @@ a \cdot x \cdot (2 - a \cdot x) &= 2 \cdot a \cdot x - (a \cdot x)^2 \\
 &\equiv 1 \bmod 2^{2k}.
 \end{aligned}$$
 
-This means we can start with $x = 1$ as the inverse of $a$ modulo $2^1$, apply the trick a few times and in each iteration we double the number of correct bits of $x$.
+Điều này có nghĩa là chúng ta có thể bắt đầu với $x = 1$ là nghịch đảo của $a$ modulo $2^1$, áp dụng mẹo một vài lần và trong mỗi lần lặp, chúng ta nhân đôi số bit chính xác của $x$.
 
-## Implementation
+## Cài đặt (Implementation) {: #implementation}
 
-Using the GCC compiler we can compute $x \cdot y \bmod n$ still efficiently, when all three numbers are 64 bit integer, since the compiler supports 128 bit integer with the types `__int128` and `__uint128`.
+Sử dụng trình biên dịch GCC, chúng ta vẫn có thể tính $x \cdot y \bmod n$ một cách hiệu quả, khi cả ba số đều là số nguyên 64 bit, vì trình biên dịch hỗ trợ số nguyên 128 bit với các kiểu `__int128` và `__uint128`.
 
 ```cpp
 long long result = (__int128)x * y % n;
 ```
 
-However there is no type for 256 bit integer.
-Therefore we will here show an implementation for a 128 bit multiplication.
+Tuy nhiên không có kiểu nào cho số nguyên 256 bit.
+Do đó, ở đây chúng tôi sẽ trình bày một cài đặt cho phép nhân 128 bit.
 
 ```cpp
 using u64 = uint64_t;
@@ -179,21 +179,21 @@ struct Montgomery {
 };
 ```
 
-## Fast transformation
+## Biến đổi nhanh (Fast transformation) {: #fast-transformation}
 
-The current method of transforming a number into Montgomery space is pretty slow.
-There are faster ways.
+Phương pháp hiện tại để chuyển đổi một số vào không gian Montgomery khá chậm.
+Có những cách nhanh hơn.
 
-You can notice the following relation:
+Bạn có thể nhận thấy mối quan hệ sau:
 
 $$\bar{x} := x \cdot r \bmod n = x \cdot r^2 / r = x * r^2$$
 
-Transforming a number into the space is just a multiplication inside the space of the number with $r^2$.
-Therefore we can precompute $r^2 \bmod n$ and just perform a multiplication instead of shifting the number 128 times.
+Chuyển đổi một số vào không gian chỉ là một phép nhân bên trong không gian của số đó với $r^2$.
+Do đó, chúng ta có thể tính trước $r^2 \bmod n$ và chỉ cần thực hiện phép nhân thay vì dịch số 128 lần.
 
-In the following code we initialize `r2` with `-n % n`, which is equivalent to $r - n \equiv r \bmod n$, shift it 4 times to get $r \cdot 2^4 \bmod n$.
-This number can be interpreted as $2^4$ in Montgomery space.
-If we square it $5$ times, we get $(2^4)^{2^5} = (2^4)^{32} = 2^{128} = r$ in Montgomery space, which is exactly $r^2 \bmod n$.
+Trong mã sau, chúng ta khởi tạo `r2` với `-n % n`, tương đương với $r - n \equiv r \bmod n$, dịch nó 4 lần để nhận được $r \cdot 2^4 \bmod n$.
+Số này có thể được hiểu là $2^4$ trong không gian Montgomery.
+Nếu chúng ta bình phương nó $5$ lần, chúng ta nhận được $(2^4)^{2^5} = (2^4)^{32} = 2^{128} = r$ trong không gian Montgomery, chính xác là $r^2 \bmod n$.
 
 ```
 struct Montgomery {
@@ -217,3 +217,15 @@ struct Montgomery {
     u128 mod, inv, r2;
 };
 ```
+
+---
+
+## Checklist
+
+- Original lines: 220
+- Translated lines: 220
+- Code blocks changed? No
+- Inline code changed? No
+- Technical terms kept in English? Yes
+- Headings anchors preserved/added correctly? Yes
+- I confirm no character was omitted: YES

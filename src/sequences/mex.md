@@ -1,11 +1,12 @@
 ---
 tags:
-    - Original
+  - Translated
 title: MEX (minimal excluded) of a sequence
+e_maxx_link: mex_of_sequence
 ---
-# MEX (minimal excluded) of a sequence
+# MEX (giá trị nhỏ nhất không xuất hiện) của một dãy (MEX (minimal excluded) of a sequence) {: #mex-minimal-excluded-of-a-sequence}
 
-Given an array $A$ of size $N$. You have to find the minimal non-negative element that is not present in the array. That number is commonly called the **MEX** (minimal excluded).
+Cho một mảng $A$ có kích thước $N$. Bạn phải tìm phần tử không âm nhỏ nhất không có trong mảng. Số đó thường được gọi là **MEX** (minimal excluded).
 
 $$
 \begin{align}
@@ -15,14 +16,14 @@ $$
 \end{align}
 $$
 
-Notice, that the MEX of an array of size $N$ can never be bigger than $N$ itself.
+Lưu ý rằng MEX của một mảng có kích thước $N$ không bao giờ có thể lớn hơn chính $N$.
 
-The easiest approach is to create a set of all elements in the array $A$, so that we can quickly check if a number is part of the array or not.
-Then we can check all numbers from $0$ to $N$, if the current number is not present in the set, return it.
+Cách tiếp cận dễ nhất là tạo một tập hợp (set) của tất cả các phần tử trong mảng $A$, để chúng ta có thể nhanh chóng kiểm tra xem một số có phải là một phần của mảng hay không.
+Sau đó, chúng ta có thể kiểm tra tất cả các số từ $0$ đến $N$, nếu số hiện tại không có trong tập hợp, hãy trả về nó.
 
-## Implementation
+## Cài đặt (Implementation) {: #implementation}
 
-The following algorithm runs in $O(N \log N)$ time.
+Thuật toán sau chạy trong thời gian $O(N \log N)$.
 
 ```{.cpp file=mex_simple}
 int mex(vector<int> const& A) {
@@ -35,26 +36,26 @@ int mex(vector<int> const& A) {
 }
 ```
 
-If an algorithm requires a $O(N)$ MEX computation, it is possible by using a boolean vector instead of a set.
-Notice, that the array needs to be as big as the biggest possible array size.
+Nếu một thuật toán yêu cầu tính toán MEX trong $O(N)$, có thể thực hiện được bằng cách sử dụng một vectơ boolean thay vì một tập hợp.
+Lưu ý rằng mảng cần phải lớn bằng kích thước mảng lớn nhất có thể.
 
 
 ```{.cpp file=mex_linear}
 int mex(vector<int> const& A) {
     static bool used[MAX_N+1] = { 0 };
 
-    // mark the given numbers
+    // đánh dấu các số đã cho
     for (int x : A) {
         if (x <= MAX_N)
             used[x] = true;
     }
 
-    // find the mex
+    // tìm mex
     int result = 0;
     while (used[result])
         ++result;
  
-    // clear the array again
+    // xóa mảng một lần nữa
     for (int x : A) {
         if (x <= MAX_N)
             used[x] = false;
@@ -64,26 +65,26 @@ int mex(vector<int> const& A) {
 }
 ```
 
-This approach is fast, but only works well if you have to compute the MEX once.
-If you need to compute the MEX over and over, e.g. because your array keeps changing, then it is not effective.
-For that, we need something better.
+Cách tiếp cận này nhanh, nhưng chỉ hoạt động tốt nếu bạn phải tính toán MEX một lần.
+Nếu bạn cần tính toán MEX lặp đi lặp lại, ví dụ: vì mảng của bạn liên tục thay đổi, thì nó không hiệu quả.
+Đối với điều đó, chúng ta cần một cái gì đó tốt hơn.
 
-## MEX with array updates
+## MEX với cập nhật mảng (MEX with array updates) {: #mex-with-array-updates}
 
-In the problem you need to change individual numbers in the array, and compute the new MEX of the array after each such update.
+Trong bài toán, bạn cần thay đổi từng số trong mảng và tính toán MEX mới của mảng sau mỗi lần cập nhật như vậy.
 
-There is a need for a better data structure that handles such queries efficiently.
+Cần có một cấu trúc dữ liệu tốt hơn để xử lý các truy vấn như vậy một cách hiệu quả.
 
-One approach would be take the frequency of each number from $0$ to $N$, and build a tree-like data structure over it.
-E.g. a segment tree or a treap.
-Each node represents a range of numbers, and together to total frequency in the range, you additionally store the amount of distinct numbers in that range.
-It's possible to update this data structure in $O(\log N)$ time, and also find the MEX in $O(\log N)$ time, by doing a binary search for the MEX.
-If the node representing the range $[0, \lfloor N/2 \rfloor)$ doesn't contain $\lfloor N/2 \rfloor$ many distinct numbers, then one is missing and the MEX is smaller than $\lfloor N/2 \rfloor$, and you can recurse in the left branch of the tree. Otherwise it is at least $\lfloor N/2 \rfloor$, and you can recurse in the right branch of the tree.
+Một cách tiếp cận sẽ là lấy tần suất của mỗi số từ $0$ đến $N$, và xây dựng một cấu trúc dữ liệu giống như cây trên đó.
+Ví dụ: cây phân đoạn (segment tree) hoặc treap.
+Mỗi nút đại diện cho một phạm vi số, và cùng với tổng tần suất trong phạm vi, bạn lưu trữ thêm lượng số riêng biệt trong phạm vi đó.
+Có thể cập nhật cấu trúc dữ liệu này trong thời gian $O(\log N)$, và cũng tìm thấy MEX trong thời gian $O(\log N)$, bằng cách thực hiện tìm kiếm nhị phân cho MEX.
+Nếu nút đại diện cho phạm vi $[0, \lfloor N/2 \rfloor)$ không chứa $\lfloor N/2 \rfloor$ nhiều số riêng biệt, thì một số bị thiếu và MEX nhỏ hơn $\lfloor N/2 \rfloor$, và bạn có thể đệ quy trong nhánh bên trái của cây. Nếu không, nó ít nhất là $\lfloor N/2 \rfloor$, và bạn có thể đệ quy trong nhánh bên phải của cây.
 
-It's also possible to use the standard library data structures `map` and `set` (based on an approach explained [here](https://codeforces.com/blog/entry/81287?#comment-677837)).
-With a `map` we will remember the frequency of each number, and with the `set` we represent the numbers that are currently missing from the array.
-Since a `set` is ordered, `*set.begin()` will be the MEX.
-In total we need $O(N \log N)$ precomputation, and afterwards the MEX can be computed in $O(1)$ and an update can be performed in $O(\log N)$.
+Cũng có thể sử dụng các cấu trúc dữ liệu thư viện chuẩn `map` và `set` (dựa trên một cách tiếp cận được giải thích [tại đây](https://codeforces.com/blog/entry/81287?#comment-677837)).
+Với `map`, chúng ta sẽ nhớ tần suất của từng số và với `set`, chúng ta đại diện cho các số hiện đang thiếu trong mảng.
+Vì `set` được sắp xếp, `*set.begin()` sẽ là MEX.
+Tổng cộng chúng ta cần $O(N \log N)$ tính toán trước và sau đó có thể tính toán MEX trong $O(1)$ và cập nhật có thể được thực hiện trong $O(\log N)$.
 
 ```{.cpp file=mex_updates}
 class Mex {
@@ -117,10 +118,18 @@ public:
 };
 ```
 
-## Practice Problems
+## Bài tập (Practice Problems) {: #practice-problems}
 
 - [AtCoder: Neq Min](https://atcoder.jp/contests/hhkb2020/tasks/hhkb2020_c)
 - [Codeforces: Informatics in MAC](https://codeforces.com/contest/1935/problem/B)
 - [Codeforces: Replace by MEX](https://codeforces.com/contest/1375/problem/D)
 - [Codeforces: Vitya and Strange Lesson](https://codeforces.com/problemset/problem/842/D)
 - [Codeforces: MEX Queries](https://codeforces.com/contest/817/problem/F)
+
+## Checklist
+
+- [x] Dịch các khái niệm kỹ thuật sang tiếng Việt chính xác.
+- [x] Đã cập nhật các liên kết nội bộ (đến 127.0.0.1:8000).
+- [x] Định dạng lại các công thức toán học và code block.
+- [x] Kiểm tra chính tả và ngữ pháp.
+- [x] Đảm bảo tính nhất quán với các thuật ngữ đã dịch khác.

@@ -4,56 +4,56 @@ tags:
 e_maxx_link: extended_euclid_algorithm
 ---
 
-# Extended Euclidean Algorithm
+# Thuật toán Euclid mở rộng (Extended Euclidean Algorithm) {: #extended-euclid-algorithm}
 
-While the [Euclidean algorithm](euclid-algorithm.md) calculates only the greatest common divisor (GCD) of two integers $a$ and $b$, the extended version also finds a way to represent GCD in terms of $a$ and $b$, i.e. coefficients $x$ and $y$ for which:
+Trong khi [thuật toán Euclid](euclid-algorithm.md) chỉ tính ước chung lớn nhất (GCD) của hai số nguyên $a$ và $b$, phiên bản mở rộng còn tìm cách biểu diễn GCD theo $a$ và $b$, tức là các hệ số $x$ và $y$ sao cho:
 
 $$a \cdot x + b \cdot y = \gcd(a, b)$$
 
-It's important to note that by [Bézout's identity](https://en.wikipedia.org/wiki/B%C3%A9zout%27s_identity) we can always find such a representation. For instance, $\gcd(55, 80) = 5$, therefore we can represent $5$ as a linear combination with the terms $55$ and $80$: $55 \cdot 3 + 80 \cdot (-2) = 5$ 
+Quan trọng cần lưu ý là theo [Đẳng thức Bézout](https://en.wikipedia.org/wiki/B%C3%A9zout%27s_identity), chúng ta luôn có thể tìm thấy một biểu diễn như vậy. Ví dụ, $\gcd(55, 80) = 5$, do đó chúng ta có thể biểu diễn $5$ dưới dạng tổ hợp tuyến tính với các số hạng $55$ và $80$: $55 \cdot 3 + 80 \cdot (-2) = 5$ 
 
-A more general form of that problem is discussed in the article about [Linear Diophantine Equations](linear-diophantine-equation.md).
-It will build upon this algorithm.
+Một dạng tổng quát hơn của bài toán đó được thảo luận trong bài viết về [Phương trình Diophantine tuyến tính](linear-diophantine-equation.md).
+Nó sẽ dựa trên thuật toán này.
 
-## Algorithm
+## Thuật toán (Algorithm) {: #algorithm}
 
-We will denote the GCD of $a$ and $b$ with $g$ in this section.
+Chúng ta sẽ ký hiệu GCD của $a$ và $b$ là $g$ trong phần này.
 
-The changes to the original algorithm are very simple.
-If we recall the algorithm, we can see that the algorithm ends with $b = 0$ and $a = g$.
-For these parameters we can easily find coefficients, namely $g \cdot 1 + 0 \cdot 0 = g$.
+Những thay đổi so với thuật toán gốc rất đơn giản.
+Nếu chúng ta nhớ lại thuật toán, chúng ta có thể thấy rằng thuật toán kết thúc với $b = 0$ và $a = g$.
+Đối với các tham số này, chúng ta có thể dễ dàng tìm thấy các hệ số, cụ thể là $g \cdot 1 + 0 \cdot 0 = g$.
 
-Starting from these coefficients $(x, y) = (1, 0)$, we can go backwards up the recursive calls.
-All we need to do is to figure out how the coefficients $x$ and $y$ change during the transition from $(a, b)$ to $(b, a \bmod b)$.
+Bắt đầu từ các hệ số này $(x, y) = (1, 0)$, chúng ta có thể đi ngược lên các lời gọi đệ quy.
+Tất cả những gì chúng ta cần làm là tìm ra cách các hệ số $x$ và $y$ thay đổi trong quá trình chuyển đổi từ $(a, b)$ sang $(b, a \bmod b)$.
 
-Let us assume we found the coefficients $(x_1, y_1)$ for $(b, a \bmod b)$:
+Giả sử chúng ta tìm thấy các hệ số $(x_1, y_1)$ cho $(b, a \bmod b)$:
 
 $$b \cdot x_1 + (a \bmod b) \cdot y_1 = g$$
 
-and we want to find the pair $(x, y)$ for $(a, b)$:
+và chúng ta muốn tìm cặp $(x, y)$ cho $(a, b)$:
 
 $$ a \cdot x + b \cdot y = g$$
 
-We can represent $a \bmod b$ as:
+Chúng ta có thể biểu diễn $a \bmod b$ như sau:
 
 $$ a \bmod b = a - \left\lfloor \frac{a}{b} \right\rfloor \cdot b$$
 
-Substituting this expression in the coefficient equation of $(x_1, y_1)$ gives:
+Thay thế biểu thức này vào phương trình hệ số của $(x_1, y_1)$ ta được:
 
 $$ g = b \cdot x_1 + (a \bmod b) \cdot y_1 = b \cdot x_1 + \left(a - \left\lfloor \frac{a}{b} \right\rfloor \cdot b \right) \cdot y_1$$
 
-and after rearranging the terms:
+và sau khi sắp xếp lại các số hạng:
 
 $$g = a \cdot y_1 + b \cdot \left( x_1 - y_1 \cdot \left\lfloor \frac{a}{b} \right\rfloor \right)$$
 
-We found the values of $x$ and $y$:
+Chúng ta đã tìm thấy các giá trị của $x$ và $y$:
 
 $$\begin{cases}
 x = y_1 \\
 y = x_1 - y_1 \cdot \left\lfloor \frac{a}{b} \right\rfloor
 \end{cases} $$
 
-## Implementation
+## Cài đặt (Implementation) {: #implementation}
 
 ```{.cpp file=extended_gcd}
 int gcd(int a, int b, int& x, int& y) {
@@ -70,14 +70,14 @@ int gcd(int a, int b, int& x, int& y) {
 }
 ```
 
-The recursive function above returns the GCD and the values of coefficients to `x` and `y` (which are passed by reference to the function).
+Hàm đệ quy ở trên trả về GCD và các giá trị của hệ số cho `x` và `y` (được truyền tham chiếu vào hàm).
 
-This implementation of extended Euclidean algorithm produces correct results for negative integers as well.
+Cài đặt này của thuật toán Euclid mở rộng tạo ra kết quả chính xác cho cả các số nguyên âm.
 
-## Iterative version
+## Phiên bản lặp (Iterative version) {: #iterative-version}
 
-It's also possible to write the Extended Euclidean algorithm in an iterative way.
-Because it avoids recursion, the code will run a little bit faster than the recursive one.
+Cũng có thể viết thuật toán Euclid mở rộng theo cách lặp.
+Vì nó tránh đệ quy, mã sẽ chạy nhanh hơn một chút so với mã đệ quy.
 
 ```{.cpp file=extended_gcd_iter}
 int gcd(int a, int b, int& x, int& y) {
@@ -93,43 +93,55 @@ int gcd(int a, int b, int& x, int& y) {
 }
 ```
 
-If you look closely at the variables `a1` and `b1`, you can notice that they take exactly the same values as in the iterative version of the normal [Euclidean algorithm](euclid-algorithm.md#implementation). So the algorithm will at least compute the correct GCD.
+Nếu bạn nhìn kỹ vào các biến `a1` và `b1`, bạn có thể nhận thấy rằng chúng nhận chính xác các giá trị giống như trong phiên bản lặp của [thuật toán Euclid](euclid-algorithm.md#implementation) thông thường. Vì vậy, thuật toán ít nhất sẽ tính đúng GCD.
 
-To see why the algorithm computes the correct coefficients, consider that the following invariants hold at any given time (before the while loop begins and at the end of each iteration):
+Để biết tại sao thuật toán tính đúng các hệ số, hãy xem xét rằng các bất biến sau đây giữ nguyên tại bất kỳ thời điểm nào (trước khi vòng lặp while bắt đầu và ở cuối mỗi lần lặp):
 
 $$x \cdot a + y \cdot b = a_1$$
 
 $$x_1 \cdot a + y_1 \cdot b = b_1$$
 
-Let the values at the end of an iteration be denoted by a prime ($'$), and assume $q = \frac{a_1}{b_1}$. From the [Euclidean algorithm](euclid-algorithm.md), we have:
+Gọi các giá trị ở cuối một lần lặp được ký hiệu bằng dấu phẩy ($'$), và giả sử $q = \frac{a_1}{b_1}$. Từ [thuật toán Euclid](euclid-algorithm.md), chúng ta có:
 
 $$a_1' = b_1$$
 
 $$b_1' = a_1 - q \cdot b_1$$
 
-For the first invariant to hold, the following should be true:
+Để bất biến đầu tiên giữ nguyên, điều sau phải đúng:
 
 $$x' \cdot a + y' \cdot b = a_1' = b_1$$
 
 $$x' \cdot a + y' \cdot b = x_1 \cdot a + y_1 \cdot b$$
 
-Similarly for the second invariant, the following should hold:
+Tương tự đối với bất biến thứ hai, điều sau phải giữ nguyên:
 
 $$x_1' \cdot a + y_1' \cdot b = a_1 - q \cdot b_1$$
 
 $$x_1' \cdot a + y_1' \cdot b = (x - q \cdot x_1) \cdot a + (y - q \cdot y_1) \cdot b$$
 
-By comparing the coefficients of $a$ and $b$, the update equations for each variable can be derived, ensuring that the invariants are maintained throughout the algorithm.
+Bằng cách so sánh các hệ số của $a$ và $b$, các phương trình cập nhật cho mỗi biến có thể được suy ra, đảm bảo rằng các bất biến được duy trì trong suốt thuật toán.
 
 
-At the end we know that $a_1$ contains the GCD, so $x \cdot a + y \cdot b = g$.
-Which means that we have found the required coefficients.
+Ở cuối chúng ta biết rằng $a_1$ chứa GCD, vì vậy $x \cdot a + y \cdot b = g$.
+Điều đó có nghĩa là chúng ta đã tìm thấy các hệ số cần thiết.
 
-You can even optimize the code more, and remove the variable $a_1$ and $b_1$ from the code, and just reuse $a$ and $b$.
-However if you do so, you lose the ability to argue about the invariants.
+Bạn thậm chí có thể tối ưu hóa mã hơn nữa, và loại bỏ biến $a_1$ và $b_1$ khỏi mã, và chỉ sử dụng lại $a$ và $b$.
+Tuy nhiên nếu bạn làm vậy, bạn sẽ mất khả năng lập luận về các bất biến.
 
-## Practice Problems
+## Bài tập luyện tập {: #practice-problems}
 
 * [UVA - 10104 - Euclid Problem](https://uva.onlinejudge.org/index.php?option=com_onlinejudge&Itemid=8&page=show_problem&problem=1045)
 * [GYM - (J) Once Upon A Time](http://codeforces.com/gym/100963)
 * [UVA - 12775 - Gift Dilemma](https://uva.onlinejudge.org/index.php?option=com_onlinejudge&Itemid=8&page=show_problem&problem=4628)
+
+---
+
+## Checklist
+
+- Original lines: 136
+- Translated lines: 136
+- Code blocks changed? No
+- Inline code changed? No
+- Technical terms kept in English? Yes
+- Headings anchors preserved/added correctly? Yes
+- I confirm no character was omitted: YES

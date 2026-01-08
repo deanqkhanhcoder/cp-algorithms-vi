@@ -4,74 +4,74 @@ tags:
 e_maxx_link: dinic
 ---
 
-# Maximum flow - Dinic's algorithm
+# Luồng cực đại - Thuật toán Dinic (Maximum flow - Dinic's algorithm) {: #maximum-flow-dinics-algorithm}
 
-Dinic's algorithm solves the maximum flow problem in $O(V^2E)$. The maximum flow problem is defined in this article [Maximum flow - Ford-Fulkerson and Edmonds-Karp](edmonds_karp.md). This algorithm was discovered by Yefim Dinitz in 1970.
+Thuật toán Dinic giải quyết bài toán luồng cực đại trong $O(V^2E)$. Bài toán luồng cực đại được định nghĩa trong bài viết này [Luồng cực đại - Ford-Fulkerson và Edmonds-Karp](edmonds_karp.md). Thuật toán này được phát hiện bởi Yefim Dinitz vào năm 1970.
 
-## Definitions
+## Định nghĩa (Definitions) {: #definitions}
 
-A **residual network** $G^R$ of network $G$ is a network which contains two edges for each edge $(v, u)\in G$:<br>
+Một **mạng dư** (residual network) $G^R$ của mạng $G$ là một mạng chứa hai cạnh cho mỗi cạnh $(v, u)\in G$:<br>
 
-- $(v, u)$ with capacity $c_{vu}^R = c_{vu} - f_{vu}$
-- $(u, v)$ with capacity $c_{uv}^R = f_{vu}$
+- $(v, u)$ với dung lượng $c_{vu}^R = c_{vu} - f_{vu}$
+- $(u, v)$ với dung lượng $c_{uv}^R = f_{vu}$
 
-A **blocking flow** of some network is such a flow that every path from $s$ to $t$ contains at least one edge which is saturated by this flow. Note that a blocking flow is not necessarily maximal.
+Một **luồng chắn** (blocking flow) của một mạng nào đó là một luồng sao cho mọi đường đi từ $s$ đến $t$ chứa ít nhất một cạnh bị bão hòa bởi luồng này. Lưu ý rằng một luồng chắn không nhất thiết phải là cực đại.
 
-A **layered network** of a network $G$ is a network built in the following way. Firstly, for each vertex $v$ we calculate $level[v]$ - the shortest path (unweighted) from $s$ to this vertex using only edges with positive capacity. Then we keep only those edges $(v, u)$ for which $level[v] + 1 = level[u]$. Obviously, this network is acyclic.
+Một **mạng phân lớp** (layered network) của một mạng $G$ là một mạng được xây dựng theo cách sau. Đầu tiên, đối với mỗi đỉnh $v$, chúng ta tính toán $level[v]$ - đường đi ngắn nhất (không trọng số) từ $s$ đến đỉnh này chỉ sử dụng các cạnh có dung lượng dương. Sau đó chúng ta chỉ giữ lại những cạnh $(v, u)$ mà $level[v] + 1 = level[u]$. Rõ ràng, mạng này là không có chu trình.
 
-## Algorithm
+## Thuật toán (Algorithm) {: #algorithm}
 
-The algorithm consists of several phases. On each phase we construct the layered network of the residual network of $G$. Then we find an arbitrary blocking flow in the layered network and add it to the current flow.
+Thuật toán bao gồm nhiều pha. Ở mỗi pha, chúng ta xây dựng mạng phân lớp của mạng dư của $G$. Sau đó chúng ta tìm một luồng chắn bất kỳ trong mạng phân lớp và thêm nó vào luồng hiện tại.
 
-## Proof of correctness
+## Chứng minh tính đúng đắn (Proof of correctness) {: #proof-of-correctness}
 
-Let's show that if the algorithm terminates, it finds the maximum flow.
+Hãy chỉ ra rằng nếu thuật toán kết thúc, nó tìm thấy luồng cực đại.
 
-If the algorithm terminated, it couldn't find a blocking flow in the layered network. It means that the layered network doesn't have any path from $s$ to $t$.  It means that the residual network doesn't have any path from $s$ to $t$. It means that the flow is maximum.
+Nếu thuật toán đã kết thúc, nó không thể tìm thấy một luồng chắn trong mạng phân lớp. Điều đó có nghĩa là mạng phân lớp không có bất kỳ đường đi nào từ $s$ đến $t$. Điều đó có nghĩa là mạng dư không có bất kỳ đường đi nào từ $s$ đến $t$. Điều đó có nghĩa là luồng là cực đại.
 
-## Number of phases
+## Số lượng pha (Number of phases) {: #number-of-phases}
 
-The algorithm terminates in less than $V$ phases. To prove this, we must firstly prove two lemmas.
+Thuật toán kết thúc trong ít hơn $V$ pha. Để chứng minh điều này, chúng ta phải chứng minh trước hai bổ đề.
 
-**Lemma 1.** The distances from $s$ to each vertex don't decrease after each iteration, i. e. $level_{i+1}[v] \ge level_i[v]$.
+**Bổ đề 1.** Khoảng cách từ $s$ đến mỗi đỉnh không giảm sau mỗi lần lặp, tức là $level_{i+1}[v] \ge level_i[v]$.
 
-**Proof.** Fix a phase $i$ and a vertex $v$. Consider any shortest path $P$ from $s$ to $v$ in $G_{i+1}^R$. The length of $P$ equals $level_{i+1}[v]$. Note that $G_{i+1}^R$ can only contain edges from $G_i^R$ and back edges for edges from $G_i^R$. If $P$ has no back edges for $G_i^R$, then $level_{i+1}[v] \ge level_i[v]$ because $P$ is also a path in $G_i^R$. Now, suppose that $P$ has at least one back edge. Let the first such edge be $(u, w)$.Then $level_{i+1}[u] \ge level_i[u]$ (because of the first case). The edge $(u, w)$ doesn't belong to $G_i^R$, so the edge $(w, u)$ was affected by the blocking flow on the previous iteration. It means that $level_i[u] = level_i[w] + 1$. Also, $level_{i+1}[w] = level_{i+1}[u] + 1$. From these two equations and $level_{i+1}[u] \ge level_i[u]$ we obtain $level_{i+1}[w] \ge level_i[w] + 2$. Now we can use the same idea for the rest of the path.
+**Chứng minh.** Cố định một pha $i$ và một đỉnh $v$. Phân tích một đường đi ngắn nhất bất kỳ $P$ từ $s$ đến $v$ trong $G_{i+1}^R$. Độ dài của $P$ bằng $level_{i+1}[v]$. Lưu ý rằng $G_{i+1}^R$ chỉ có thể chứa các cạnh từ $G_i^R$ và các cạnh ngược cho các cạnh từ $G_i^R$. Nếu $P$ không có cạnh ngược nào cho $G_i^R$, thì $level_{i+1}[v] \ge level_i[v]$ vì $P$ cũng là một đường đi trong $G_i^R$. Bây giờ, giả sử rằng $P$ có ít nhất một cạnh ngược. Gọi cạnh đầu tiên như vậy là $(u, w)$. Khi đó $level_{i+1}[u] \ge level_i[u]$ (do trường hợp đầu tiên). Cạnh $(u, w)$ không thuộc về $G_i^R$, vì vậy cạnh $(w, u)$ đã bị ảnh hưởng bởi luồng chắn ở lần lặp trước. Điều đó có nghĩa là $level_i[u] = level_i[w] + 1$. Ngoài ra, $level_{i+1}[w] = level_{i+1}[u] + 1$. Từ hai phương trình này và $level_{i+1}[u] \ge level_i[u]$ chúng ta thu được $level_{i+1}[w] \ge level_i[w] + 2$. Bây giờ chúng ta có thể sử dụng ý tưởng tương tự cho phần còn lại của đường đi.
 
-**Lemma 2.** $level_{i+1}[t] > level_i[t]$
+**Bổ đề 2.** $level_{i+1}[t] > level_i[t]$
 
-**Proof.** From the previous lemma, $level_{i+1}[t] \ge level_i[t]$. Suppose that $level_{i+1}[t] = level_i[t]$. Note that $G_{i+1}^R$ can only contain edges from $G_i^R$ and back edges for edges from $G_i^R$. It means that there is a shortest path in $G_i^R$ which wasn't blocked by the blocking flow. It's a contradiction.
+**Chứng minh.** Từ bổ đề trước, $level_{i+1}[t] \ge level_i[t]$. Giả sử rằng $level_{i+1}[t] = level_i[t]$. Lưu ý rằng $G_{i+1}^R$ chỉ có thể chứa các cạnh từ $G_i^R$ và các cạnh ngược cho các cạnh từ $G_i^R$. Điều đó có nghĩa là có một đường đi ngắn nhất trong $G_i^R$ mà không bị chặn bởi luồng chắn. Đó là một mâu thuẫn.
 
-From these two lemmas we conclude that there are less than $V$ phases because $level[t]$ increases, but it can't be greater than $V - 1$.
+Từ hai bổ đề này, chúng ta kết luận rằng có ít hơn $V$ pha vì $level[t]$ tăng, nhưng nó không thể lớn hơn $V - 1$.
 
-## Finding blocking flow
+## Tìm luồng chắn (Finding blocking flow) {: #finding-blocking-flow}
 
-In order to find the blocking flow on each iteration, we may simply try pushing flow with DFS from $s$ to $t$ in the layered network while it can be pushed. In order to do it more quickly, we must remove the edges which can't be used to push anymore. To do this we can keep a pointer in each vertex which points to the next edge which can be used.
+để tìm luồng chắn trên mỗi lần lặp, chúng ta có thể đơn giản thử đẩy luồng bằng DFS từ $s$ đến $t$ trong mạng phân lớp trong khi nó có thể được đẩy. Để thực hiện nhanh hơn, chúng ta phải loại bỏ các cạnh không thể được sử dụng để đẩy nữa. Để làm điều này chúng ta có thể giữ một con trỏ trong mỗi đỉnh trỏ đến cạnh tiếp theo có thể được sử dụng.
 
-A single DFS run takes $O(k+V)$ time, where $k$ is the number of pointer advances on this run. Summed up over all runs, number of pointer advances can not exceed $E$. On the other hand, total number of runs won't exceed $E$, as every run saturates at least one edge. In this way, total running time of finding a blocking flow is $O(VE)$.
+Một lần chạy DFS duy nhất mất thời gian $O(k+V)$, trong đó $k$ là số lần di chuyển con trỏ trong lần chạy này. Tổng cộng trên tất cả các lần chạy, số lần di chuyển con trỏ không thể vượt quá $E$. Mặt khác, tổng số lần chạy sẽ không vượt quá $E$, vì mỗi lần chạy làm bão hòa ít nhất một cạnh. Bằng cách này, tổng thời gian chạy để tìm một luồng chắn là $O(VE)$.
 
-## Complexity
+## Độ phức tạp (Complexity) {: #complexity}
 
-There are less than $V$ phases, so the total complexity is $O(V^2E)$.
+Có ít hơn $V$ pha, vì vậy tổng độ phức tạp là $O(V^2E)$.
 
-## Unit networks
+## Mạng đơn vị (Unit networks) {: #unit-networks}
 
-A **unit network** is a network in which for any vertex except $s$ and $t$ **either incoming or outgoing edge is unique and has unit capacity**. That's exactly the case with the network we build to solve the maximum matching problem with flows.
+Một **mạng đơn vị** là một mạng trong đó đối với bất kỳ đỉnh nào ngoại trừ $s$ và $t$, **cạnh đi vào hoặc cạnh đi ra là duy nhất và có dung lượng đơn vị**. Đó chính xác là trường hợp với mạng chúng ta xây dựng để giải quyết bài toán ghép cặp cực đại bằng luồng.
 
-On unit networks Dinic's algorithm works in $O(E\sqrt{V})$. Let's prove this.
+Trên các mạng đơn vị, thuật toán Dinic hoạt động trong $O(E\sqrt{V})$. Hãy chứng minh điều này.
 
-Firstly, each phase now works in $O(E)$ because each edge will be considered at most once.
+Thứ nhất, mỗi pha bây giờ hoạt động trong $O(E)$ vì mỗi cạnh sẽ được xem xét tối đa một lần.
 
-Secondly, suppose there have already been $\sqrt{V}$ phases. Then all the augmenting paths with the length $\le\sqrt{V}$ have been found. Let $f$ be the current flow, $f'$ be the maximum flow. Consider their difference $f' - f$. It is a flow in $G^R$ of value $|f'| - |f|$ and on each edge it is either $0$ or $1$. It can be decomposed into $|f'| - |f|$ paths from $s$ to $t$ and possibly cycles. As the network is unit, they can't have common vertices, so the total number of vertices is $\ge (|f'| - |f|)\sqrt{V}$, but it is also $\le V$, so in another $\sqrt{V}$ iterations we will definitely find the maximum flow.
+Thứ hai, giả sử đã có $\sqrt{V}$ pha. Khi đó tất cả các đường tăng luồng có độ dài $\le\sqrt{V}$ đã được tìm thấy. Gọi $f$ là luồng hiện tại, $f'$ là luồng cực đại. Xét hiệu của chúng $f' - f$. Nó là một luồng trong $G^R$ có giá trị $|f'| - |f|$ và trên mỗi cạnh nó hoặc là $0$ hoặc là $1$. Nó có thể được phân tách thành $|f'| - |f|$ đường đi từ $s$ đến $t$ và có thể là các chu trình. Vì mạng là đơn vị, chúng không thể có các đỉnh chung, vì vậy tổng số đỉnh là $\ge (|f'| - |f|)\sqrt{V}$, nhưng nó cũng $\le V$, vì vậy trong $\sqrt{V}$ lần lặp nữa chúng ta chắc chắn sẽ tìm thấy luồng cực đại.
 
-### Unit capacities networks
+### Mạng dung lượng đơn vị (Unit capacities networks) {: #unit-capacities-networks}
 
-In a more generic settings when all edges have unit capacities, _but the number of incoming and outgoing edges is unbounded_, the paths can't have common edges rather than common vertices. In a similar way it allows to prove the bound of $\sqrt E$ on the number of iterations, hence the running time of Dinic algorithm on such networks is at most $O(E \sqrt E)$.
+Trong một cài đặt tổng quát hơn khi tất cả các cạnh có dung lượng đơn vị, _nhưng số lượng cạnh đi vào và đi ra là không bị chặn_, các đường đi không thể có các cạnh chung thay vì các đỉnh chung. Theo một cách tương tự, nó cho phép chứng minh giới hạn của $\sqrt E$ về số lần lặp, do đó thời gian chạy của thuật toán Dinic trên các mạng như vậy tối đa là $O(E \sqrt E)$.
 
-Finally, it is also possible to prove that the number of phases on unit capacity networks doesn't exceed $O(V^{2/3})$, providing an alternative estimate of $O(EV^{2/3})$ on the networks with particularly large number of edges.
+Cuối cùng, cũng có thể chứng minh rằng số lượng pha trên các mạng dung lượng đơn vị không vượt quá $O(V^{2/3})$, cung cấp một ước tính thay thế là $O(EV^{2/3})$ trên các mạng có số lượng cạnh đặc biệt lớn.
 
-## Implementation
+## Cài đặt (Implementation) {: #implementation}
 
-```{.cpp file=dinic}
+```cpp
 struct FlowEdge {
     int v, u;
     long long cap, flow = 0;
@@ -155,6 +155,6 @@ struct Dinic {
 };
 ```
 
-## Practice Problems
+## Bài tập (Practice Problems) {: #practice-problems}
 
 * [SPOJ: FASTFLOW](https://www.spoj.com/problems/FASTFLOW/)

@@ -4,38 +4,39 @@ tags:
 e_maxx_link: kirchhoff_theorem
 ---
 
-# Kirchhoff's theorem. Finding the number of spanning trees
+# Định lý Kirchhoff. Tìm số lượng cây khung (Kirchhoff's theorem. Finding the number of spanning trees) {: #kirchhoffs-theorem-finding-the-number-of-spanning-trees}
 
-Problem: You are given a connected undirected graph (with possible multiple edges) represented using an adjacency matrix. Find the number of different spanning trees of this graph.
+Bài toán: Bạn được cho một đồ thị vô hướng liên thông (có thể có nhiều cạnh) được biểu diễn bằng ma trận kề. Tìm số lượng cây khung khác nhau của đồ thị này.
 
-The following formula was proven by Kirchhoff in 1847.
+Công thức sau đây đã được chứng minh bởi Kirchhoff vào năm 1847.
 
-## Kirchhoff's matrix tree theorem
+## Định lý ma trận cây Kirchhoff (Kirchhoff's matrix tree theorem) {: #kirchhoffs-matrix-tree-theorem}
 
-Let $A$ be the adjacency matrix of the graph: $A_{u,v}$ is the number of edges between $u$ and $v$.
-Let $D$ be the degree matrix of the graph: a diagonal matrix with $D_{u,u}$ being the degree of vertex $u$ (including multiple edges and loops - edges which connect vertex $u$ with itself).
+Gọi $A$ là ma trận kề của đồ thị: $A_{u,v}$ là số lượng cạnh giữa $u$ và $v$.
+Gọi $D$ là ma trận bậc của đồ thị: một ma trận đường chéo với $D_{u,u}$ là bậc của đỉnh $u$ (bao gồm cả nhiều cạnh và vòng lặp - các cạnh nối đỉnh $u$ với chính nó).
 
-The Laplacian matrix of the graph is defined as $L = D - A$.
-According to Kirchhoff's theorem, all cofactors of this matrix are equal to each other, and they are equal to the number of spanning trees of the graph.
-The $(i,j)$ cofactor of a matrix is the product of $(-1)^{i + j}$ with the determinant of the matrix that you get after removing the $i$-th row and $j$-th column.
-So you can, for example, delete the last row and last column of the matrix $L$, and the absolute value of the determinant of the resulting matrix will give you the number of spanning trees.
+Ma trận Laplacian của đồ thị được định nghĩa là $L = D - A$.
+Theo định lý Kirchhoff, tất cả các phần bù đại số (cofactors) của ma trận này đều bằng nhau, và chúng bằng số lượng cây khung của đồ thị.
+Phần bù đại số $(i,j)$ của một ma trận là tích của $(-1)^{i + j}$ với định thức của ma trận mà bạn nhận được sau khi loại bỏ hàng thứ $i$ và cột thứ $j$.
+Vì vậy, bạn có thể, ví dụ, xóa hàng cuối cùng và cột cuối cùng của ma trận $L$, và giá trị tuyệt đối của định thức của ma trận kết quả sẽ cho bạn số lượng cây khung.
 
-The determinant of the matrix can be found in $O(N^3)$ by using the [Gaussian method](../linear_algebra/determinant-gauss.md).
+Định thức của ma trận có thể được tìm thấy trong $O(N^3)$ bằng cách sử dụng [phương pháp Gaussian](../linear_algebra/determinant-gauss.md).
 
-The proof of this theorem is quite difficult and is not presented here; for an outline of the proof and variations of the theorem for graphs without multiple edges and for directed graphs refer to [Wikipedia](https://en.wikipedia.org/wiki/Kirchhoff%27s_theorem).
+Chứng minh định lý này khá khó và không được trình bày ở đây; để biết phác thảo chứng minh và các biến thể của định lý cho đồ thị không có nhiều cạnh và cho đồ thị có hướng, hãy tham khảo [Wikipedia](https://en.wikipedia.org/wiki/Kirchhoff%27s_theorem).
 
-## Relation to Kirchhoff's circuit laws
+## Quan hệ với các định luật mạch Kirchhoff (Relation to Kirchhoff's circuit laws) {: #relation-to-kirchhoffs-circuit-laws}
 
-Kirchhoff's matrix tree theorem and Kirchhoff's laws for electrical circuit are related in a beautiful way. It is possible to show (using Ohm's law and Kirchhoff's first law) that resistance $R_{ij}$ between two points of the circuit $i$ and $j$ is
+Định lý ma trận cây Kirchhoff và các định luật Kirchhoff cho mạch điện có quan hệ theo một cách đẹp đẽ. Có thể chỉ ra (sử dụng định luật Ohm và định luật Kirchhoff thứ nhất) rằng điện trở $R_{ij}$ giữa hai điểm của mạch $i$ và $j$ là
 
 $$R_{ij} = \frac{ \left| L^{(i,j)} \right| }{ | L^j | }.$$
 
-Here the matrix $L$ is obtained from the matrix of inverse resistances $A$ ($A_{i,j}$ is inverse of the resistance of the conductor between points $i$ and $j$) using the procedure described in Kirchhoff's matrix tree theorem.
-$T^j$ is the matrix with row and column $j$ removed, $T^{(i,j)}$ is the matrix with two rows and two columns $i$ and $j$ removed.
+Ở đây ma trận $L$ thu được từ ma trận điện trở nghịch đảo $A$ ($A_{i,j}$ là nghịch đảo của điện trở của dây dẫn giữa các điểm $i$ và $j$) bằng cách sử dụng quy trình được mô tả trong định lý ma trận cây Kirchhoff.
+$T^j$ là ma trận với hàng và cột $j$ bị loại bỏ, $T^{(i,j)}$ là ma trận với hai hàng và hai cột $i$ và $j$ bị loại bỏ.
 
-Kirchhoff's theorem gives this formula geometric meaning.
+Định lý Kirchhoff mang lại cho công thức này ý nghĩa hình học.
 
-## Practice Problems
+## Bài tập (Practice Problems) {: #practice-problems}
+
  - [CODECHEF: Roads in Stars](https://www.codechef.com/problems/STARROAD)
  - [SPOJ: Maze](http://www.spoj.com/problems/KPMAZE/)
  - [CODECHEF: Complement Spanning Trees](https://www.codechef.com/problems/CSTREE)

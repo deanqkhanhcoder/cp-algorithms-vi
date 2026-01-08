@@ -4,56 +4,56 @@ tags:
 e_maxx_link: games_on_graphs
 ---
 
-# Games on arbitrary graphs
+# Trò chơi trên đồ thị bất kỳ (Games on arbitrary graphs) {: #games-on-arbitrary-graphs}
 
-Let a game be played by two players on an arbitrary graph $G$.
-I.e. the current state of the game is a certain vertex.
-The players perform moves by turns, and move from the current vertex to an adjacent vertex using a connecting edge.
-Depending on the game, the person that is unable to move will either lose or win the game.
+Giả sử một trò chơi được chơi bởi hai người chơi trên một đồ thị bất kỳ $G$.
+Tức là trạng thái hiện tại của trò chơi là một đỉnh nhất định.
+Các người chơi thực hiện các nước đi theo lượt, và di chuyển từ đỉnh hiện tại đến một đỉnh kề bằng cách sử dụng một cạnh nối.
+Tùy thuộc vào trò chơi, người không thể di chuyển sẽ thua hoặc thắng trò chơi.
 
-We consider the most general case, the case of an arbitrary directed graph with cycles.
-It is our task to determine, given an initial state, who will win the game if both players play with optimal strategies or determine that the result of the game will be a draw.
+Chúng ta xem xét trường hợp tổng quát nhất, trường hợp của một đồ thị có hướng bất kỳ có chu trình.
+Nhiệm vụ của chúng ta là xác định, với một trạng thái ban đầu, ai sẽ thắng trò chơi nếu cả hai người chơi chơi với các chiến lược tối ưu hoặc xác định rằng kết quả của trò chơi sẽ là hòa.
 
-We will solve this problem very efficiently.
-We will find the solution for all possible starting vertices of the graph in linear time with respect to the number of edges: $O(m)$.
+Chúng ta sẽ giải quyết bài toán này rất hiệu quả.
+Chúng ta sẽ tìm giải pháp cho tất cả các đỉnh bắt đầu có thể có của đồ thị trong thời gian tuyến tính đối với số lượng cạnh: $O(m)$.
 
-## Description of the algorithm
+## Mô tả thuật toán (Description of the algorithm) {: #description-of-the-algorithm}
 
-We will call a vertex a winning vertex, if the player starting at this state will win the game, if they play optimally (regardless of what turns the other player makes).
-Similarly, we will call a vertex a losing vertex, if the player starting at this vertex will lose the game, if the opponent plays optimally.
+Chúng ta sẽ gọi một đỉnh là đỉnh thắng (winning vertex), nếu người chơi bắt đầu tại trạng thái này sẽ thắng trò chơi, nếu họ chơi tối ưu (bất kể người chơi kia thực hiện các lượt đi nào).
+Tương tự, chúng ta sẽ gọi một đỉnh là đỉnh thua (losing vertex), nếu người chơi bắt đầu tại đỉnh này sẽ thua trò chơi, nếu đối thủ chơi tối ưu.
 
-For some of the vertices of the graph, we already know in advance that they are winning or losing vertices: namely all vertices that have no outgoing edges.
+Đối với một số đỉnh của đồ thị, chúng ta đã biết trước rằng chúng là đỉnh thắng hay thua: cụ thể là tất cả các đỉnh không có cạnh ra.
 
-Also we have the following **rules**:
+Ngoài ra chúng ta có các **quy tắc** sau:
 
-- if a vertex has an outgoing edge that leads to a losing vertex, then the vertex itself is a winning vertex.
-- if all outgoing edges of a certain vertex lead to winning vertices, then the vertex itself is a losing vertex.
-- if at some point there are still undefined vertices, and neither will fit the first or the second rule, then each of these vertices, when used as a starting vertex, will lead to a draw if both player play optimally.
+-   nếu một đỉnh có một cạnh ra dẫn đến một đỉnh thua, thì chính đỉnh đó là một đỉnh thắng.
+-   nếu tất cả các cạnh ra của một đỉnh nhất định dẫn đến các đỉnh thắng, thì chính đỉnh đó là một đỉnh thua.
+-   nếu tại một thời điểm nào đó vẫn còn các đỉnh chưa xác định, và không đỉnh nào phù hợp với quy tắc thứ nhất hoặc thứ hai, thì mỗi đỉnh này, khi được sử dụng làm đỉnh bắt đầu, sẽ dẫn đến kết quả hòa nếu cả hai người chơi chơi tối ưu.
 
-Thus, we can define an algorithm which runs in $O(n m)$ time immediately.
-We go through all vertices and try to apply the first or second rule, and repeat.
+Do đó, chúng ta có thể định nghĩa một thuật toán chạy trong thời gian $O(n m)$ ngay lập tức.
+Chúng ta đi qua tất cả các đỉnh và cố gắng áp dụng quy tắc thứ nhất hoặc thứ hai, và lặp lại.
 
-However, we can accelerate this procedure, and get the complexity down to $O(m)$.
+Tuy nhiên, chúng ta có thể tăng tốc quy trình này, và giảm độ phức tạp xuống $O(m)$.
 
-We will go over all the vertices, for which we initially know if they are winning or losing states.
-For each of them, we start a [depth first search](../graph/depth-first-search.md).
-This DFS will move back over the reversed edges.
-First of all, it will not enter vertices which already are defined as winning or losing vertices.
-And further, if the search goes from a losing vertex to an undefined vertex, then we mark this one as a winning vertex, and continue the DFS using this new vertex.
-If we go from a winning vertex to an undefined vertex, then we must check whether all edges from this one leads to winning vertices.
-We can perform this test in $O(1)$ by storing the number of edges that lead to a winning vertex for each vertex.
-So if we go from a winning vertex to an undefined one, then we increase the counter, and check if this number is equal to the number of outgoing edges.
-If this is the case, we can mark this vertex as a losing vertex, and continue the DFS from this vertex.
-Otherwise we don't know yet, if this vertex is a winning or losing vertex, and therefore it doesn't make sense to keep continuing the DFS using it.
+Chúng ta sẽ đi qua tất cả các đỉnh, mà chúng ta ban đầu biết nếu chúng là trạng thái thắng hoặc thua.
+Đối với mỗi đỉnh trong số chúng, chúng ta bắt đầu một [tìm kiếm theo chiều sâu (DFS)](../graph/depth-first-search.md).
+DFS này sẽ di chuyển ngược lại qua các cạnh đảo ngược (reversed edges).
+Trước hết, nó sẽ không đi vào các đỉnh đã được xác định là đỉnh thắng hoặc thua.
+Và xa hơn nữa, nếu tìm kiếm đi từ một đỉnh thua đến một đỉnh chưa xác định, thì chúng ta đánh dấu đỉnh này là một đỉnh thắng, và tiếp tục DFS sử dụng đỉnh mới này.
+Nếu chúng ta đi từ một đỉnh thắng đến một đỉnh chưa xác định, thì chúng ta phải kiểm tra xem tất cả các cạnh từ đỉnh này có dẫn đến các đỉnh thắng hay không.
+Chúng ta có thể thực hiện kiểm tra này trong $O(1)$ bằng cách lưu trữ số lượng cạnh dẫn đến một đỉnh thắng cho mỗi đỉnh.
+Vì vậy, nếu chúng ta đi từ một đỉnh thắng đến một đỉnh chưa xác định, thì chúng ta tăng bộ đếm, và kiểm tra xem số này có bằng số lượng cạnh ra hay không.
+Nếu đúng như vậy, chúng ta có thể đánh dấu đỉnh này là một đỉnh thua, và tiếp tục DFS từ đỉnh này.
+Ngược lại, chúng ta chưa biết liệu đỉnh này là đỉnh thắng hay thua, và do đó không có ý nghĩa gì khi tiếp tục DFS sử dụng nó.
 
-In total we visit every winning and every losing vertex exactly once (undefined vertices are not visited), and we go over each edge also at most one time.
-Hence the complexity is $O(m)$.
+Tổng cộng chúng ta thăm mọi đỉnh thắng và mọi đỉnh thua chính xác một lần (các đỉnh chưa xác định không được thăm), và chúng ta cũng đi qua mỗi cạnh tối đa một lần.
+Do đó độ phức tạp là $O(m)$.
 
-## Implementation
+## Cài đặt (Implementation) {: #implementation}
 
-Here is the implementation of such a DFS.
-We assume that the variable `adj_rev` stores the adjacency list for the graph in **reversed** form, i.e. instead of storing the edge $(i, j)$ of the graph, we store $(j, i)$.
-Also for each vertex we assume that the outgoing degree is already computed.
+Dưới đây là việc cài đặt của một DFS như vậy.
+Chúng ta giả sử rằng biến `adj_rev` lưu trữ danh sách kề cho đồ thị ở dạng **đảo ngược**, tức là thay vì lưu trữ cạnh $(i, j)$ của đồ thị, chúng ta lưu trữ $(j, i)$.
+Ngoài ra đối với mỗi đỉnh, chúng ta giả sử rằng bậc ra (outgoing degree) đã được tính toán.
 
 ```cpp 
 vector<vector<int>> adj_rev;
@@ -79,38 +79,38 @@ void dfs(int v) {
 }
 ```
 
-## Example: "Policeman and thief"
+## Ví dụ: "Cảnh sát và tên trộm" (Example: "Policeman and thief") {: #example-policeman-and-thief}
 
-Here is a concrete example of such a game.
+Dưới đây là một ví dụ cụ thể về một trò chơi như vậy.
 
-There is $m \times n$ board.
-Some of the cells cannot be entered.
-The initial coordinates of the police officer and of the thief are known.
-One of the cells is the exit.
-If the policeman and the thief are located at the same cell at any moment, the policeman wins.
-If the thief is at the exit cell (without the policeman also being on the cell), then the thief wins.
-The policeman can walk in all 8 directions, the thief only in 4 (along the coordinate axis).
-Both the policeman and the thief will take turns moving.
-However they also can skip a turn if they want to.
-The first move is made by the policeman.
+Có bảng $m \times n$.
+Một số ô không thể đi vào.
+Tọa độ ban đầu của cảnh sát và tên trộm được biết.
+Một trong các ô là lối ra.
+Nếu cảnh sát và tên trộm ở cùng một ô tại bất kỳ thời điểm nào, cảnh sát thắng.
+Nếu tên trộm ở ô lối ra (mà không có cảnh sát cũng ở trên ô đó), thì tên trộm thắng.
+Cảnh sát có thể đi bộ theo tất cả 8 hướng, tên trộm chỉ theo 4 hướng (theo trục tọa độ).
+Cả cảnh sát và tên trộm sẽ lần lượt di chuyển.
+Tuy nhiên họ cũng có thể bỏ qua một lượt nếu họ muốn.
+Nước đi đầu tiên được thực hiện bởi cảnh sát.
 
-We will now **construct the graph**.
-For this we must formalize the rules of the game.
-The current state of the game is determined by the coordinates of the police offices $P$, the coordinates of the thief $T$, and also by whose turn it is, let's call this variable $P_{\text{turn}}$ (which is true when it is the policeman's turn).
-Therefore a vertex of the graph is determined by the triple $(P, T, P_{\text{turn}})$
-The graph then can be easily constructed, simply by following the rules of the game.
+Bây giờ chúng ta sẽ **xây dựng đồ thị**.
+Để làm điều này chúng ta phải chính thức hóa các quy tắc của trò chơi.
+Trạng thái hiện tại của trò chơi được xác định bởi tọa độ của cảnh sát $P$, tọa độ của tên trộm $T$, và cũng bởi lượt của ai, hãy gọi biến này là $P_{\text{turn}}$ (là true khi đến lượt của cảnh sát).
+Do đó, một đỉnh của đồ thị được xác định bởi bộ ba $(P, T, P_{\text{turn}})$
+Sau đó, đồ thị có thể được xây dựng dễ dàng, đơn giản bằng cách tuân theo các quy tắc của trò chơi.
 
-Next we need to determine which vertices are winning and which are losing ones initially.
-There is a **subtle point** here.
-The winning / losing vertices depend, in addition to the coordinates, also on $P_{\text{turn}}$ - whose turn it.
-If it is the policeman's turn, then the vertex is a winning vertex, if the coordinates of the policeman and the thief coincide, and the vertex is a losing one if it is not a winning one and the thief is on the exit vertex.
-If it is the thief's turn, then a vertex is a losing vertex, if the coordinates of the two players coincide, and it is a winning vertex if it is not a losing one, and the thief is at the exit vertex.
+Tiếp theo, chúng ta cần xác định đỉnh nào là thắng và đỉnh nào là thua ban đầu.
+Có một **điểm tinh tế** ở đây.
+Các đỉnh thắng / thua phụ thuộc, ngoài tọa độ, còn vào $P_{\text{turn}}$ - lượt của ai.
+Nếu đến lượt của cảnh sát, thì đỉnh là đỉnh thắng, nếu tọa độ của cảnh sát và tên trộm trùng nhau, và đỉnh là đỉnh thua nếu nó không phải là đỉnh thắng và tên trộm đang ở lối ra.
+Nếu đến lượt của tên trộm, thì một đỉnh là đỉnh thua, nếu tọa độ của hai người chơi trùng nhau, và nó là đỉnh thắng nếu nó không phải là đỉnh thua, và tên trộm đang ở lối ra.
 
-The only point before implementing is not, that you need to decide if you want to build the graph **explicitly** or just construct it **on the fly**.
-On one hand, building the graph explicitly will be a lot easier and there is less chance of making mistakes.
-On the other hand, it will increase the amount of code and the running time will be slower than if you build the graph on the fly.
+Điểm duy nhất trước khi cài đặt là bạn cần quyết định xem bạn muốn xây dựng đồ thị **một cách tường minh** hay chỉ xây dựng nó **ngay trong quá trình chạy (on the fly)**.
+Một mặt, việc xây dựng đồ thị một cách tường minh sẽ dễ dàng hơn nhiều và ít có khả năng mắc lỗi hơn.
+Mặt khác, nó sẽ làm tăng lượng mã và thời gian chạy sẽ chậm hơn so với khi bạn xây dựng đồ thị ngay trong quá trình chạy.
 
-The following implementation will construct the graph explicitly:
+Việc cài đặt sau đây sẽ xây dựng đồ thị một cách tường minh:
 
 ```cpp
 struct State {

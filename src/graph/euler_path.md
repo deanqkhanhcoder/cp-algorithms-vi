@@ -1,84 +1,85 @@
 ---
-title: Finding the Eulerian path in O(M)
+title: Tìm đường đi Euler trong O(M)
 tags:
   - Translated
 e_maxx_link: euler_path
 ---
-# Finding the Eulerian path in $O(M)$
 
-A Eulerian path is a path in a graph that passes through all of its edges exactly once.
-A Eulerian cycle is a Eulerian path that is a cycle.
+# Tìm đường đi Euler trong $O(M)$ (Finding the Eulerian path in $O(M)$) {: #finding-the-eulerian-path-in-o-m}
 
-The problem is to find the Eulerian path in an **undirected multigraph with loops**.
+Đường đi Euler là đường đi trong đồ thị đi qua tất cả các cạnh của nó đúng một lần.
+Chu trình Euler là đường đi Euler mà cũng là một chu trình.
 
-## Algorithm
+Bài toán là tìm đường đi Euler trong một **đa đồ thị vô hướng có khuyên**.
 
-First we can check if there is an Eulerian path.
-We can use the following theorem. An Eulerian cycle exists if and only if the degrees of all vertices are even.
-And an Eulerian path exists if and only if the number of vertices with odd degrees is two (or zero, in the case of the existence of a Eulerian cycle).
-In addition, of course, the graph must be sufficiently connected (i.e., if you remove all isolated vertices from it, you should get a connected graph).
+## Thuật toán (Algorithm) {: #algorithm}
 
-To find the Eulerian path / Eulerian cycle we can use the following strategy:
-We find all simple cycles and combine them into one - this will be the Eulerian cycle.
-If the graph is such that the Eulerian path is not a cycle, then add the missing edge, find the Eulerian cycle, then remove the extra edge.
+Đầu tiên chúng ta có thể kiểm tra xem có tồn tại đường đi Euler hay không.
+Chúng ta có thể sử dụng định lý sau. Một chu trình Euler tồn tại khi và chỉ khi bậc của tất cả các đỉnh đều là chẵn.
+Và một đường đi Euler tồn tại khi và chỉ khi số lượng đỉnh có bậc lẻ là hai (hoặc không, trong trường hợp tồn tại chu trình Euler).
+Ngoài ra, tất nhiên, đồ thị phải đủ liên thông (tức là, nếu bạn loại bỏ tất cả các đỉnh cô lập khỏi nó, bạn sẽ nhận được một đồ thị liên thông).
 
-Looking for all cycles and combining them can be done with a simple recursive procedure:
+Để tìm đường đi Euler / chu trình Euler, chúng ta có thể sử dụng chiến lược sau:
+Chúng ta tìm tất cả các chu trình đơn và kết hợp chúng thành một - đây sẽ là chu trình Euler.
+Nếu đồ thị sao cho đường đi Euler không phải là một chu trình, thì hãy thêm cạnh bị thiếu vào, tìm chu trình Euler, sau đó xóa cạnh thừa.
+
+Việc tìm kiếm tất cả các chu trình và kết hợp chúng có thể được thực hiện bằng một thủ tục đệ quy đơn giản:
 
 ```nohighlight
 procedure FindEulerPath(V)
-  1. iterate through all the edges outgoing from vertex V;
-       remove this edge from the graph,
-       and call FindEulerPath from the second end of this edge;
-  2. add vertex V to the answer.
+  1. duyệt qua tất cả các cạnh đi ra từ đỉnh V;
+       xóa cạnh này khỏi đồ thị,
+       và gọi FindEulerPath từ đầu thứ hai của cạnh này;
+  2. thêm đỉnh V vào câu trả lời.
 ```
 
-The complexity of this algorithm is obviously linear with respect to the number of edges.
+Độ phức tạp của thuật toán này rõ ràng là tuyến tính đối với số lượng cạnh.
 
-But we can write the same algorithm in the non-recursive version:
+Nhưng chúng ta có thể viết cùng một thuật toán trong phiên bản không đệ quy:
 
 ```nohighlight
 stack St;
-put start vertex in St;
-until St is empty
-  let V be the value at the top of St;
-  if degree(V) = 0, then
-    add V to the answer;
-    remove V from the top of St;
-  otherwise
-    find any edge coming out of V;
-    remove it from the graph;
-    put the second end of this edge in St;
+đặt đỉnh bắt đầu vào St;
+cho đến khi St rỗng
+  gọi V là giá trị ở đỉnh của St;
+  nếu degree(V) = 0, thì
+    thêm V vào câu trả lời;
+    xóa V khỏi đỉnh của St;
+  ngược lại
+    tìm bất kỳ cạnh nào đi ra từ V;
+    xóa nó khỏi đồ thị;
+    đặt đầu thứ hai của cạnh này vào St;
 ```
 
-It is easy to check the equivalence of these two forms of the algorithm. However, the second form is obviously faster, and the code will be much more efficient.
+Dễ dàng kiểm tra tính tương đương của hai dạng thuật toán này. Tuy nhiên, dạng thứ hai rõ ràng nhanh hơn và mã sẽ hiệu quả hơn nhiều.
 
-## The Domino problem
+## Bài toán Domino (The Domino problem) {: #the-domino-problem}
 
-We give here a classical Eulerian cycle problem - the Domino problem.
+Chúng tôi đưa ra ở đây một bài toán chu trình Euler cổ điển - bài toán Domino.
 
-There are $N$ dominoes, as it is known, on both ends of the Domino one number is written(usually from 1 to 6, but in our case it is not important). You want to put all the dominoes in a row so that the numbers on any two adjacent dominoes, written on their common side, coincide. Dominoes are allowed to turn.
+Có $N$ quân domino, như đã biết, trên cả hai đầu của Domino một số được viết (thường từ 1 đến 6, nhưng trong trường hợp của chúng tôi điều đó không quan trọng). Bạn muốn đặt tất cả các quân domino thành một hàng sao cho các số trên bất kỳ hai quân domino liền kề nào, được viết trên cạnh chung của chúng, trùng nhau. Các quân domino được phép xoay.
 
-Reformulate the problem. Let the numbers written on the bottoms be the vertices of the graph, and the dominoes be the edges of this graph (each Domino with numbers $(a,b)$ are the edges $(a,b)$ and $(b, a)$). Then our problem is reduced to the problem of finding the Eulerian path in this graph.
+Phát biểu lại bài toán. Hãy để các số được viết trên các mặt là các đỉnh của đồ thị, và các quân domino là các cạnh của đồ thị này (mỗi Domino với các số $(a,b)$ là các cạnh $(a,b)$ và $(b, a)$). Khi đó, bài toán của chúng ta được quy về bài toán tìm đường đi Euler trong đồ thị này.
 
-## Implementation
+## Cài đặt (Implementation) {: #implementation}
 
-The program below searches for and outputs a Eulerian loop or path in a graph, or outputs $-1$ if it does not exist.
+Chương trình dưới đây tìm kiếm và in ra một vòng lặp hoặc đường đi Euler trong một đồ thị, hoặc in ra $-1$ nếu nó không tồn tại.
 
-First, the program checks the degree of vertices: if there are no vertices with an odd degree, then the graph has an Euler cycle, if there are $2$ vertices with an odd degree, then in the graph there is only an Euler path (but no Euler cycle), if there are more than $2$ such vertices, then in the graph there is no Euler cycle or Euler path.
-To find the Euler path (not a cycle), let's do this: if $V1$ and $V2$ are two vertices of odd degree, then just add an edge $(V1, V2)$, in the resulting graph we find the Euler cycle (it will obviously exist), and then remove the "fictitious" edge $(V1, V2)$ from the answer.
-We will look for the Euler cycle exactly as described above (non-recursive version), and at the same time at the end of this algorithm we will check whether the graph was connected or not (if the graph was not connected, then at the end of the algorithm some edges will remain in the graph, and in this case we need to print $-1$).
-Finally, the program takes into account that there can be isolated vertices in the graph.
+Đầu tiên, chương trình kiểm tra bậc của các đỉnh: nếu không có đỉnh nào có bậc lẻ, thì đồ thị có chu trình Euler, nếu có $2$ đỉnh có bậc lẻ, thì trong đồ thị chỉ có đường đi Euler (nhưng không có chu trình Euler), nếu có nhiều hơn $2$ đỉnh như vậy, thì trong đồ thị không có chu trình Euler hoặc đường đi Euler.
+Để tìm đường đi Euler (không phải là chu trình), hãy làm như sau: nếu $V1$ và $V2$ là hai đỉnh có bậc lẻ, thì chỉ cần thêm một cạnh $(V1, V2)$, trong đồ thị kết quả chúng ta tìm chu trình Euler (nó rõ ràng sẽ tồn tại), và sau đó xóa cạnh "giả" $(V1, V2)$ khỏi câu trả lời.
+Chúng ta sẽ tìm kiếm chu trình Euler chính xác như mô tả ở trên (phiên bản không đệ quy), và đồng thời ở cuối thuật toán này, chúng ta sẽ kiểm tra xem đồ thị có liên thông hay không (nếu đồ thị không liên thông, thì ở cuối thuật toán, một số cạnh sẽ vẫn còn trong đồ thị, và trong trường hợp này chúng ta cần in $-1$).
+Cuối cùng, chương trình tính đến việc có thể có các đỉnh cô lập trong đồ thị.
 
-Notice that we use an adjacency matrix in this problem.
-Also this implementation handles finding the next with brute-force, which requires to iterate over the complete row in the matrix over and over.
-A better way would be to store the graph as an adjacency list, and remove edges in $O(1)$ and mark the reversed edges in separate list.
-This way we can achieve an $O(N)$ algorithm.
+Lưu ý rằng chúng ta sử dụng ma trận kề trong bài toán này.
+Ngoài ra, việc cài đặt này xử lý việc tìm đỉnh tiếp theo bằng brute-force, đòi hỏi phải lặp đi lặp lại qua toàn bộ hàng trong ma trận.
+Cách tốt hơn sẽ là lưu trữ đồ thị dưới dạng danh sách kề, và xóa các cạnh trong $O(1)$ và đánh dấu các cạnh ngược lại trong danh sách riêng biệt.
+Bằng cách này chúng ta có thể đạt được thuật toán $O(N)$.
 
 ```cpp
 int main() {
     int n;
     vector<vector<int>> g(n, vector<int>(n));
-    // reading the graph in the adjacency matrix
+    // đọc đồ thị vào ma trận kề
 
     vector<int> deg(n);
     for (int i = 0; i < n; ++i) {
@@ -159,7 +160,8 @@ int main() {
     }
 }
 ```
-### Practice problems:
+
+### Bài tập (Practice problems):
 
 - [CSES : Mail Delivery](https://cses.fi/problemset/task/1691)
 - [CSES : Teleporters Path](https://cses.fi/problemset/task/1693)

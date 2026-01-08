@@ -4,49 +4,49 @@ tags:
 e_maxx_link: tree_painting
 ---
 
-# Paint the edges of the tree
+# Tô màu các cạnh của cây (Paint the edges of the tree) {: #paint-the-edges-of-the-tree}
 
-This is a fairly common task. Given a tree $G$ with $N$ vertices. There are two types of queries: the first one is to paint an edge, the second one is to query the number of colored edges between two vertices.
+Đây là một nhiệm vụ khá phổ biến. Cho một cây $G$ với $N$ đỉnh. Có hai loại truy vấn: truy vấn đầu tiên là tô màu một cạnh, truy vấn thứ hai là truy vấn số lượng cạnh được tô màu giữa hai đỉnh.
 
-Here we will describe a fairly simple solution (using a [segment tree](../data_structures/segment_tree.md)) that will answer each query in $O(\log N)$ time.
-The preprocessing step will take $O(N)$ time.
+Ở đây chúng ta sẽ mô tả một giải pháp khá đơn giản (sử dụng [segment tree](../data_structures/segment_tree.md)) sẽ trả lời mỗi truy vấn trong thời gian $O(\log N)$.
+Bước tiền xử lý sẽ mất thời gian $O(N)$.
 
-## Algorithm
+## Thuật toán (Algorithm) {: #algorithm}
 
-First, we need to find the [LCA](lca.md) to reduce each query of the second kind $(i,j)$ into two queries $(l,i)$ and $(l,j)$, where $l$ is the LCA of $i$ and $j$.
-The answer of the query $(i,j)$ will be the sum of both subqueries.
-Both these queries have a special structure, the first vertex is an ancestor of the second one.
-For the rest of the article we will only talk about these special kind of queries.
+Đầu tiên, chúng ta cần tìm [LCA](lca.md) để giảm mỗi truy vấn loại thứ hai $(i,j)$ thành hai truy vấn $(l,i)$ và $(l,j)$, trong đó $l$ là LCA của $i$ và $j$.
+Câu trả lời của truy vấn $(i,j)$ sẽ là tổng của cả hai truy vấn con.
+Cả hai truy vấn này đều có cấu trúc đặc biệt, đỉnh đầu tiên là tổ tiên của đỉnh thứ hai.
+Trong phần còn lại của bài viết, chúng ta sẽ chỉ nói về loại truy vấn đặc biệt này.
 
-We will start by describing the **preprocessing** step.
-Run a depth-first search from the root of the tree and record the Euler tour of this depth-first search (each vertex is added to the list when the search visits it first and every time we return from one of its children).
-The same technique can be used in the LCA preprocessing.
+Chúng ta sẽ bắt đầu bằng cách mô tả bước **tiền xử lý**.
+Chạy tìm kiếm theo chiều sâu (DFS) từ gốc của cây và ghi lại Euler tour của tìm kiếm theo chiều sâu này (mỗi đỉnh được thêm vào danh sách khi tìm kiếm thăm nó lần đầu tiên và mỗi lần chúng ta quay lại từ một trong các con của nó).
+Kỹ thuật tương tự có thể được sử dụng trong tiền xử lý LCA.
 
-This list will contain each edge (in the sense that if $i$ and $j$ are the ends of the edge, then there will be a place in the list where $i$ and $j$ are neighbors in the list), and it appear exactly two times: in the forward direction (from $i$ to $j$, where vertex $i$ is closer to the root than vertex $j$) and in the opposite direction (from $j$ to $i$).
+Danh sách này sẽ chứa mỗi cạnh (theo nghĩa là nếu $i$ và $j$ là các đầu của cạnh, thì sẽ có một chỗ trong danh sách mà $i$ và $j$ là hàng xóm trong danh sách), và nó xuất hiện chính xác hai lần: theo hướng thuận (từ $i$ đến $j$, trong đó đỉnh $i$ gần gốc hơn đỉnh $j$) và theo hướng ngược lại (từ $j$ đến $i$).
 
-We will build two lists for these edges.
-The first one will store the color of all edges in the forward direction, and the second one the color of all edges in the opposite direction.
-We will use $1$ if the edge is colored, and $0$ otherwise.
-Over these two lists we will build each a segment tree (for sum with a single modification), let's call them $T1$ and $T2$.
+Chúng ta sẽ xây dựng hai danh sách cho các cạnh này.
+Danh sách đầu tiên sẽ lưu trữ màu của tất cả các cạnh theo hướng thuận, và danh sách thứ hai lưu trữ màu của tất cả các cạnh theo hướng ngược lại.
+Chúng ta sẽ sử dụng $1$ nếu cạnh được tô màu, và $0$ nếu ngược lại.
+Trên hai danh sách này, chúng ta sẽ xây dựng mỗi danh sách một cây phân đoạn (segment tree) (cho tổng với một sửa đổi đơn lẻ), hãy gọi chúng là $T1$ và $T2$.
 
-Let us answer a query of the form $(i,j)$, where $i$ is the ancestor of $j$.
-We need to determine how many edges are painted on the path between $i$ and $j$.
-Let's find $i$ and $j$ in the Euler tour for the first time, let it be the positions $p$ and $q$ (this can be done in $O(1)$ if we calculate these positions in advance during preprocessing).
-Then the **answer** to the query is the sum $T1[p..q-1]$ minus the sum $T2[p..q-1]$.
+Hãy để chúng tôi trả lời một truy vấn có dạng $(i,j)$, trong đó $i$ là tổ tiên của $j$.
+Chúng ta cần xác định có bao nhiêu cạnh được tô màu trên đường đi giữa $i$ và $j$.
+Hãy tìm $i$ và $j$ trong Euler tour lần đầu tiên, giả sử đó là các vị trí $p$ và $q$ (việc này có thể được thực hiện trong $O(1)$ nếu chúng ta tính toán các vị trí này trước trong quá trình tiền xử lý).
+Khi đó **câu trả lời** cho truy vấn là tổng $T1[p..q-1]$ trừ đi tổng $T2[p..q-1]$.
 
-**Why?**
-Consider the segment $[p;q]$ in the Euler tour.
-It contains all edges of the path we need from $i$ to $j$ but also contains a set of edges that lie on other paths from $i$.
-However there is one big difference between the edges we need and the rest of the edges: the edges we need will be listed only once in the forward direction, and all the other edges appear twice: once in the forward and once in the opposite direction.
-Hence, the difference $T1[p..q-1] - T2[p..q-1]$ will give us the correct answer (minus one is necessary because otherwise, we will capture an extra edge going out from vertex $j$).
-The sum query in the segment tree is executed in $O(\log N)$.
+**Tại sao?**
+Xem xét đoạn $[p;q]$ trong Euler tour.
+Nó chứa tất cả các cạnh của đường đi chúng ta cần từ $i$ đến $j$ nhưng cũng chứa một tập hợp các cạnh nằm trên các đường đi khác từ $i$.
+Tuy nhiên, có một sự khác biệt lớn giữa các cạnh chúng ta cần và các cạnh còn lại: các cạnh chúng ta cần sẽ chỉ được liệt kê một lần theo hướng thuận, và tất cả các cạnh khác xuất hiện hai lần: một lần theo hướng thuận và một lần theo hướng ngược lại.
+Do đó, hiệu $T1[p..q-1] - T2[p..q-1]$ sẽ cho chúng ta câu trả lời chính xác (trừ một là cần thiết vì nếu không, chúng ta sẽ bắt thêm một cạnh đi ra từ đỉnh $j$).
+Truy vấn tổng trong segment tree được thực hiện trong $O(\log N)$.
 
-Answering the **first type of query** (painting an edge) is even easier - we just need to update $T1$ and $T2$, namely to perform a single update of the element that corresponds to our edge (finding the edge in the list, again, is possible in $O(1)$, if you perform this search during preprocessing).
-A single modification in the segment tree is performed in $O(\log N)$.
+Trả lời **loại truy vấn đầu tiên** (tô màu một cạnh) thậm chí còn dễ dàng hơn - chúng ta chỉ cần cập nhật $T1$ và $T2$, cụ thể là thực hiện một bản cập nhật duy nhất của phần tử tương ứng với cạnh của chúng ta (tìm cạnh trong danh sách, một lần nữa, là có thể trong $O(1)$, nếu bạn thực hiện tìm kiếm này trong quá trình tiền xử lý).
+Một sửa đổi đơn lẻ trong segment tree được thực hiện trong $O(\log N)$.
 
-## Implementation
+## Cài đặt (Implementation) {: #implementation}
 
-Here is the full implementation of the solution, including LCA computation:
+Dưới đây là cài đặt đầy đủ của giải pháp, bao gồm cả tính toán LCA:
 
 ```cpp
 const int INF = 1000 * 1000 * 1000;

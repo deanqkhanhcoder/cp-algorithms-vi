@@ -4,17 +4,17 @@ tags:
 e_maxx_link: gray_code
 ---
 
-# Gray code
+# Mã Gray (Gray code) {: #gray-code}
 
-Gray code is a binary numeral system where two successive values differ in only one bit. 
+Mã Gray là một hệ thống số nhị phân trong đó hai giá trị liên tiếp chỉ khác nhau ở một bit.
 
-For example, the sequence of Gray codes for 3-bit numbers is: 000, 001, 011, 010, 110, 111, 101, 100, so $G(4) = 6$.
+Ví dụ, dãy mã Gray cho các số 3-bit là: 000, 001, 011, 010, 110, 111, 101, 100, vì vậy $G(4) = 6$.
 
-This code was invented by Frank Gray in 1953.
+Mã này được phát minh bởi Frank Gray vào năm 1953.
 
-## Finding Gray code
+## Tìm mã Gray (Finding Gray code) {: #finding-gray-code}
 
-Let's look at the bits of number $n$ and the bits of number $G(n)$. Notice that $i$-th bit of $G(n)$ equals 1 only when $i$-th bit of $n$ equals 1 and $i + 1$-th bit equals 0 or the other way around ($i$-th bit equals 0 and $i + 1$-th bit equals 1). Thus, $G(n) = n \oplus (n >> 1)$:  
+Hãy xem xét các bit của số $n$ và các bit của số $G(n)$. Lưu ý rằng bit thứ $i$ của $G(n)$ bằng 1 chỉ khi bit thứ $i$ của $n$ bằng 1 và bit thứ $i + 1$ bằng 0 hoặc ngược lại (bit thứ $i$ bằng 0 và bit thứ $i + 1$ bằng 1). Do đó, $G(n) = n \oplus (n >> 1)$:  
 
 ```cpp
 int g (int n) {
@@ -22,11 +22,11 @@ int g (int n) {
 }
 ```
 
-## Finding inverse Gray code
+## Tìm mã Gray ngược (Finding inverse Gray code) {: #finding-inverse-gray-code}
 
-Given Gray code $g$, restore the original number $n$.
+Cho mã Gray $g$, khôi phục số ban đầu $n$.
 
-We will move from the most significant bits to the least significant ones (the least significant bit has index 1 and the most significant bit has index $k$). The relation between the bits $n_i$ of number $n$ and the bits $g_i$ of number $g$:
+Chúng ta sẽ di chuyển từ các bit quan trọng nhất (most significant bits) đến các bit ít quan trọng nhất (least significant bits) (bit ít quan trọng nhất có chỉ số 1 và bit quan trọng nhất có chỉ số $k$). Quan hệ giữa các bit $n_i$ của số $n$ và các bit $g_i$ của số $g$:
 
 $$\begin{align}
   n_k &= g_k, \\
@@ -36,7 +36,7 @@ $$\begin{align}
   \vdots
 \end{align}$$
 
-The easiest way to write it in code is:
+Cách dễ nhất để viết nó trong mã là:
 
 ```cpp
 int rev_g (int g) {
@@ -47,28 +47,39 @@ int rev_g (int g) {
 }
 ```
 
-## Practical applications
-Gray codes have some useful applications, sometimes quite unexpected:
+## Các ứng dụng thực tế (Practical applications) {: #practical-applications}
+Mã Gray có một số ứng dụng hữu ích, đôi khi khá bất ngờ:
 
-*   Gray code of $n$ bits forms a Hamiltonian cycle on a hypercube, where each bit corresponds to one dimension. 
+*   Mã Gray của $n$ bit tạo thành một chu trình Hamilton trên một siêu lập phương (hypercube), trong đó mỗi bit tương ứng với một chiều. 
 
-*   Gray codes are used to minimize the errors in digital-to-analog signals conversion (for example, in sensors). 
+*   Mã Gray được sử dụng để giảm thiểu lỗi trong chuyển đổi tín hiệu số sang tương tự (ví dụ, trong các cảm biến). 
 
-*   Gray code can be used to solve the Towers of Hanoi problem.
-    Let $n$ denote number of disks. Start with Gray code of length $n$ which
-    consists of all zeroes ($G(0)$) and move between consecutive Gray codes (from $G(i)$ to $G(i+1)$).
-    Let $i$-th bit of current Gray code represent $n$-th disk 
-    (the least significant bit corresponds to the smallest disk and the most significant bit to the biggest disk). 
-    Since exactly one bit changes on each step, we can treat changing $i$-th bit as moving $i$-th disk.
-    Notice that there is exactly one move option for each disk (except the smallest one) on each step (except start and finish positions).
-    There are always two move options for the smallest disk but there is a strategy which will always lead to answer:
-    if $n$ is odd then sequence of the smallest disk moves looks like $f \to t \to r \to f \to t \to r \to ...$
-    where $f$ is the initial rod, $t$ is the terminal rod and $r$ is the remaining rod), and 
-    if $n$ is even: $f \to r \to t \to f \to r \to t \to ...$.
+*   Mã Gray có thể được sử dụng để giải bài toán Tháp Hà Nội.
+    Gọi $n$ là số lượng đĩa. Bắt đầu với mã Gray có độ dài $n$ bao gồm tất cả các số không ($G(0)$) và di chuyển giữa các mã Gray liên tiếp (từ $G(i)$ đến $G(i+1)$).
+    Gọi bit thứ $i$ của mã Gray hiện tại đại diện cho đĩa thứ $n$ 
+    (bit ít quan trọng nhất tương ứng với đĩa nhỏ nhất và bit quan trọng nhất với đĩa lớn nhất). 
+    Vì chính xác một bit thay đổi trong mỗi bước, chúng ta có thể coi việc thay đổi bit thứ $i$ là di chuyển đĩa thứ $i$.
+    Lưu ý rằng có chính xác một tùy chọn di chuyển cho mỗi đĩa (ngoại trừ đĩa nhỏ nhất) trong mỗi bước (ngoại trừ vị trí bắt đầu và kết thúc).
+    Luôn có hai tùy chọn di chuyển cho đĩa nhỏ nhất nhưng có một chiến lược sẽ luôn dẫn đến câu trả lời:
+    nếu $n$ là lẻ thì chuỗi các lần di chuyển đĩa nhỏ nhất trông giống như $f \to t \to r \to f \to t \to r \to ...$
+    trong đó $f$ là cọc ban đầu, $t$ là cọc đích và $r$ là cọc còn lại), và 
+    nếu $n$ là chẵn: $f \to r \to t \to f \to r \to t \to ...$.
 
-*   Gray codes are also used in genetic algorithms theory.
+*   Mã Gray cũng được sử dụng trong lý thuyết thuật toán di truyền.
 
 
-## Practice Problems
+## Bài tập luyện tập {: #practice-problems}
 *   <a href="https://cses.fi/problemset/task/2205">Gray Code &nbsp;&nbsp;&nbsp;&nbsp; [Difficulty: easy]</a>
 *   <a href="http://codeforces.com/problemsets/acmsguru/problem/99999/249">SGU #249 <b>"Matrix"</b> &nbsp;&nbsp;&nbsp;&nbsp; [Difficulty: medium]</a>
+
+---
+
+## Checklist
+
+- Original lines: 75
+- Translated lines: 75
+- Code blocks changed? No
+- Inline code changed? No
+- Technical terms kept in English? Yes
+- Headings anchors preserved/added correctly? Yes
+- I confirm no character was omitted: YES

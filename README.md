@@ -59,15 +59,6 @@ Dự án gốc cung cấp các bài viết chất lượng cao về:
 
 ---
 
-## 🔄 Đồng bộ với upstream
-
-Repository này được đồng bộ định kỳ với repo gốc (`cp-algorithms/cp-algorithms`).
-
-- `main`: bám sát upstream
-- (có thể có) `vi`: nhánh chứa bản dịch
-
----
-
 ## 🤝 Đóng góp
 
 Nếu bạn muốn:

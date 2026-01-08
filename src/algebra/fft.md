@@ -1,38 +1,38 @@
----
+﻿---
 tags:
   - Translated
 e_maxx_link: fft_multiply
 ---
 
-# Fast Fourier transform
+# Biến đổi Fourier nhanh (Fast Fourier transform) {: #fast-fourier-transform}
 
-In this article we will discuss an algorithm that allows us to multiply two polynomials of length $n$ in $O(n \log n)$ time, which is better than the trivial multiplication which takes $O(n^2)$ time.
-Obviously also multiplying two long numbers can be reduced to multiplying polynomials, so also two long numbers can be multiplied in $O(n \log n)$ time (where $n$ is the number of digits in the numbers).
+Trong bài viết này, chúng tôi sẽ thảo luận về một thuật toán cho phép chúng ta nhân hai đa thức có độ dài $n$ trong thời gian $O(n \log n)$, tốt hơn phép nhân tầm thường thông thường mất thời gian $O(n^2)$.
+Rõ ràng việc nhân hai số lớn cũng có thể được đưa về việc nhân các đa thức, vì vậy hai số lớn cũng có thể được nhân trong thời gian $O(n \log n)$ (trong đó $n$ là số chữ số trong các số).
 
-The discovery of the **Fast Fourier transformation (FFT)** is attributed to Cooley and Tukey, who published an algorithm in 1965.
-But in fact the FFT has been discovered repeatedly before, but the importance of it was not understood before the inventions of modern computers.
-Some researchers attribute the discovery of the FFT to Runge and König in 1924.
-But actually Gauss developed such a method already in 1805, but never published it.
+Việc khám phá ra **biến đổi Fourier nhanh (Fast Fourier transformation - FFT)** được cho là của Cooley và Tukey, những người đã công bố một thuật toán vào năm 1965.
+Nhưng thực tế FFT đã được phát hiện lặp đi lặp lại trước đó, nhưng tầm quan trọng của nó đã không được hiểu trước khi có các phát minh của máy tính hiện đại.
+Một số nhà nghiên cứu cho rằng việc khám phá ra FFT là của Runge và König vào năm 1924.
+Nhưng thực sự Gauss đã phát triển một phương pháp như vậy vào năm 1805, nhưng chưa bao giờ công bố nó.
 
-Notice, that the FFT algorithm presented here runs in $O(n \log n)$ time, but it doesn't work for multiplying arbitrary big polynomials with arbitrary large coefficients or for multiplying arbitrary big integers.
-It can easily handle polynomials of size $10^5$ with small coefficients, or multiplying two numbers of size $10^6$, which is usually enough for solving competitive programming problems. Beyond the scale of multiplying numbers with $10^6$ bits, the range and precision of the floating point numbers used during the computation will not be enough to give accurate final results, though there are more complex variations that can perform arbitrary large polynomial/integer multiplications.
-E.g. in 1971 Schönhage and Strasser developed a variation for multiplying arbitrary large numbers that applies the FFT recursively in rings structures running in $O(n \log n \log \log n)$.
-And recently (in 2019) Harvey and van der Hoeven published an algorithm that runs in true $O(n \log n)$.
+Lưu ý rằng thuật toán FFT được trình bày ở đây chạy trong thời gian $O(n \log n)$, nhưng nó không hoạt động để nhân các đa thức lớn tùy ý với các hệ số lớn tùy ý hoặc để nhân các số nguyên lớn tùy ý.
+Nó có thể dễ dàng xử lý các đa thức có kích thước $10^5$ với các hệ số nhỏ, hoặc nhân hai số có kích thước $10^6$, thường là đủ để giải quyết các bài toán lập trình thi đấu. Ngoài quy mô nhân các số có $10^6$ bit, phạm vi và độ chính xác của các số dấu phẩy động được sử dụng trong quá trình tính toán sẽ không đủ để đưa ra kết quả cuối cùng chính xác, mặc dù có những biến thể phức tạp hơn có thể thực hiện phép nhân đa thức/số nguyên lớn tùy ý.
+Ví dụ: vào năm 1971 Schönhage và Strasser đã phát triển một biến thể để nhân các số lớn tùy ý áp dụng FFT đệ quy trong các cấu trúc vành chạy trong $O(n \log n \log \log n)$.
+Và gần đây (vào năm 2019) Harvey và van der Hoeven đã công bố một thuật toán chạy trong đúng $O(n \log n)$.
 
-## Discrete Fourier transform
+## Biến đổi Fourier rời rạc (Discrete Fourier transform) {: #discrete-fourier-transform}
 
-Let there be a polynomial of degree $n - 1$:
+Giả sử có một đa thức bậc $n - 1$:
 
 $$A(x) = a_0 x^0 + a_1 x^1 + \dots + a_{n-1} x^{n-1}$$
 
-Without loss of generality we assume that $n$ - the number of coefficients - is a power of $2$.
-If $n$ is not a power of $2$, then we simply add the missing terms $a_i x^i$ and set the coefficients $a_i$ to $0$.
+Không mất tính tổng quát, chúng ta giả sử rằng $n$ - số lượng hệ số - là lũy thừa của $2$.
+Nếu $n$ không phải là lũy thừa của $2$, thì chúng ta chỉ cần thêm các số hạng còn thiếu $a_i x^i$ và đặt các hệ số $a_i$ thành $0$.
 
-The theory of complex numbers tells us that the equation $x^n = 1$ has $n$ complex solutions (called the $n$-th roots of unity), and the solutions are of the form $w_{n, k} = e^{\frac{2 k \pi i}{n}}$ with $k = 0 \dots n-1$.
-Additionally these complex numbers have some very interesting properties:
-e.g. the principal $n$-th root $w_n = w_{n, 1} = e^{\frac{2 \pi i}{n}}$ can be used to describe all other $n$-th roots: $w_{n, k} = (w_n)^k$.
+Lý thuyết số phức cho chúng ta biết rằng phương trình $x^n = 1$ có $n$ nghiệm phức (được gọi là căn bậc $n$ của đơn vị), và các nghiệm có dạng $w_{n, k} = e^{\frac{2 k \pi i}{n}}$ với $k = 0 \dots n-1$.
+Ngoài ra, các số phức này có một số tính chất rất thú vị:
+ví dụ: căn bậc $n$ chính $w_n = w_{n, 1} = e^{\frac{2 \pi i}{n}}$ có thể được sử dụng để mô tả tất cả các căn bậc $n$ khác: $w_{n, k} = (w_n)^k$.
 
-The **discrete Fourier transform (DFT)** of the polynomial $A(x)$ (or equivalently the vector of coefficients $(a_0, a_1, \dots, a_{n-1})$ is defined as the values of the polynomial at the points $x = w_{n, k}$, i.e. it is the vector:
+**Biến đổi Fourier rời rạc (DFT)** của đa thức $A(x)$ (hoặc tương đương là vectơ các hệ số $(a_0, a_1, \dots, a_{n-1})$) được định nghĩa là các giá trị của đa thức tại các điểm $x = w_{n, k}$, tức là nó là vectơ:
 
 $$\begin{align}
 \text{DFT}(a_0, a_1, \dots, a_{n-1}) &= (y_0, y_1, \dots, y_{n-1}) \\
@@ -40,76 +40,76 @@ $$\begin{align}
 &= (A(w_n^0), A(w_n^1), \dots, A(w_n^{n-1}))
 \end{align}$$
 
-Similarly the **inverse discrete Fourier transform** is defined:
-The inverse DFT of values of the polynomial $(y_0, y_1, \dots, y_{n-1})$ are the coefficients of the polynomial $(a_0, a_1, \dots, a_{n-1})$.
+Tương tự, **biến đổi Fourier rời rạc ngược (inverse discrete Fourier transform)** được định nghĩa:
+Biến đổi DFT ngược của các giá trị của đa thức $(y_0, y_1, \dots, y_{n-1})$ là các hệ số của đa thức $(a_0, a_1, \dots, a_{n-1})$.
 
 $$\text{InverseDFT}(y_0, y_1, \dots, y_{n-1}) = (a_0, a_1, \dots, a_{n-1})$$
 
-Thus, if a direct DFT computes the values of the polynomial at the points at the $n$-th roots, the inverse DFT can restore the coefficients of the polynomial using those values.
+Do đó, nếu một DFT trực tiếp tính toán các giá trị của đa thức tại các điểm ở căn bậc $n$, thì DFT ngược có thể khôi phục các hệ số của đa thức sử dụng các giá trị đó.
 
-### Application of the DFT: fast multiplication of polynomials
+### Ứng dụng của DFT: nhân nhanh đa thức (Application of the DFT: fast multiplication of polynomials) {: #application-of-the-dft-fast-multiplication-of-polynomials}
 
-Let there be two polynomials $A$ and $B$.
-We compute the DFT for each of them: $\text{DFT}(A)$ and $\text{DFT}(B)$.
+Giả sử có hai đa thức $A$ và $B$.
+Chúng ta tính DFT cho mỗi đa thức: $\text{DFT}(A)$ và $\text{DFT}(B)$.
 
-What happens if we multiply these polynomials?
-Obviously at each point the values are simply multiplied, i.e.
+Điều gì xảy ra nếu chúng ta nhân các đa thức này?
+Rõ ràng tại mỗi điểm, các giá trị chỉ đơn giản là nhân với nhau, tức là
 
 $$(A \cdot B)(x) = A(x) \cdot B(x).$$
 
-This means that if we multiply the vectors $\text{DFT}(A)$ and $\text{DFT}(B)$ - by multiplying each element of one vector by the corresponding element of the other vector - then we get nothing other than the DFT of the polynomial $\text{DFT}(A \cdot B)$:
+Điều này có nghĩa là nếu chúng ta nhân các vectơ $\text{DFT}(A)$ và $\text{DFT}(B)$ - bằng cách nhân từng phần tử của một vectơ với phần tử tương ứng của vectơ kia - thì chúng ta không nhận được gì khác ngoài DFT của đa thức $\text{DFT}(A \cdot B)$:
 
 $$\text{DFT}(A \cdot B) = \text{DFT}(A) \cdot \text{DFT}(B)$$
 
-Finally, applying the inverse DFT, we obtain:
+Cuối cùng, áp dụng DFT ngược, chúng ta thu được:
 
 $$A \cdot B = \text{InverseDFT}(\text{DFT}(A) \cdot \text{DFT}(B))$$
 
-On the right the product of the two DFTs we mean the pairwise product of the vector elements.
-This can be computed in $O(n)$ time.
-If we can compute the DFT and the inverse DFT in $O(n \log n)$, then we can compute the product of the two polynomials (and consequently also two long numbers) with the same time complexity.
+Ở bên phải tích của hai DFT, chúng tôi có nghĩa là tích từng đôi một của các phần tử vectơ.
+Điều này có thể được tính toán trong thời gian $O(n)$.
+Nếu chúng ta có thể tính DFT và DFT ngược trong $O(n \log n)$, thì chúng ta có thể tính tích của hai đa thức (và do đó cũng là hai số lớn) với cùng độ phức tạp thời gian.
 
-It should be noted, that the two polynomials should have the same degree.
-Otherwise the two result vectors of the DFT have different length.
-We can accomplish this by adding coefficients with the value $0$.
+Cần lưu ý rằng hai đa thức phải có cùng bậc.
+Nếu không, hai vectơ kết quả của DFT có độ dài khác nhau.
+Chúng ta có thể thực hiện điều này bằng cách thêm các hệ số có giá trị $0$.
 
-And also, since the result of the product of two polynomials is a polynomial of degree $2 (n - 1)$, we have to double the degrees of each polynomial (again by padding $0$s).
-From a vector with $n$ values we cannot reconstruct the desired polynomial with $2n - 1$ coefficients.
+Và cũng vậy, vì kết quả của tích của hai đa thức là một đa thức bậc $2 (n - 1)$, chúng ta phải nhân đôi bậc của mỗi đa thức (một lần nữa bằng cách đệm các số $0$).
+Từ một vectơ có $n$ giá trị, chúng ta không thể tái tạo đa thức mong muốn với $2n - 1$ hệ số.
 
-### Fast Fourier Transform
+### Biến đổi Fourier Nhanh (Fast Fourier Transform) {: #fast-fourier-transform-1}
 
-The **fast Fourier transform** is a method that allows computing the DFT in $O(n \log n)$ time.
-The basic idea of the FFT is to apply divide and conquer.
-We divide the coefficient vector of the polynomial into two vectors, recursively compute the DFT for each of them, and combine the results to compute the DFT of the complete polynomial.
+**Biến đổi Fourier nhanh** là một phương pháp cho phép tính DFT trong thời gian $O(n \log n)$.
+Ý tưởng cơ bản của FFT là áp dụng chia để trị.
+Chúng ta chia vectơ hệ số của đa thức thành hai vectơ, tính toán đệ quy DFT cho mỗi vectơ đó và kết hợp các kết quả để tính DFT của đa thức hoàn chỉnh.
 
-So let there be a polynomial $A(x)$ with degree $n - 1$, where $n$ is a power of $2$, and $n > 1$:
+Vì vậy giả sử có một đa thức $A(x)$ với bậc $n - 1$, trong đó $n$ là lũy thừa của $2$, và $n > 1$:
 
 $$A(x) = a_0 x^0 + a_1 x^1 + \dots + a_{n-1} x^{n-1}$$
 
-We divide it into two smaller polynomials, the one containing only the coefficients of the even positions, and the one containing the coefficients of the odd positions:
+Chúng ta chia nó thành hai đa thức nhỏ hơn, một chứa các hệ số của các vị trí chẵn, và một chứa các hệ số của các vị trí lẻ:
 
 $$\begin{align}
 A_0(x) &= a_0 x^0 + a_2 x^1 + \dots + a_{n-2} x^{\frac{n}{2}-1} \\
 A_1(x) &= a_1 x^0 + a_3 x^1 + \dots + a_{n-1} x^{\frac{n}{2}-1}
 \end{align}$$
 
-It is easy to see that
+Dễ dàng nhận thấy rằng
 
 $$A(x) = A_0(x^2) + x A_1(x^2).$$
 
-The polynomials $A_0$ and $A_1$ have only half as many coefficients as the polynomial $A$.
-If we can compute the $\text{DFT}(A)$ in linear time using $\text{DFT}(A_0)$ and $\text{DFT}(A_1)$, then we get the recurrence $T_{\text{DFT}}(n) = 2 T_{\text{DFT}}\left(\frac{n}{2}\right) + O(n)$ for the time complexity, which results in $T_{\text{DFT}}(n) = O(n \log n)$ by the **master theorem**.
+Các đa thức $A_0$ và $A_1$ chỉ có một nửa số lượng hệ số so với đa thức $A$.
+Nếu chúng ta có thể tính $\text{DFT}(A)$ trong thời gian tuyến tính bằng cách sử dụng $\text{DFT}(A_0)$ và $\text{DFT}(A_1)$, thì chúng ta nhận được công thức truy hồi $T_{\text{DFT}}(n) = 2 T_{\text{DFT}}\left(\frac{n}{2}\right) + O(n)$ cho độ phức tạp thời gian, dẫn đến $T_{\text{DFT}}(n) = O(n \log n)$ theo **định lý thợ (master theorem)**.
 
-Let's learn how we can accomplish that.
+Hãy tìm hiểu cách chúng ta có thể thực hiện điều đó.
 
-Suppose we have computed the vectors $\left(y_k^0\right)_{k=0}^{n/2-1} = \text{DFT}(A_0)$ and $\left(y_k^1\right)_{k=0}^{n/2-1} = \text{DFT}(A_1)$.
-Let us find a expression for $\left(y_k\right)_{k=0}^{n-1} = \text{DFT}(A)$.
+Giả sử chúng ta đã tính toán các vectơ $\left(y_k^0\right)_{k=0}^{n/2-1} = \text{DFT}(A_0)$ và $\left(y_k^1\right)_{k=0}^{n/2-1} = \text{DFT}(A_1)$.
+Hãy tìm một biểu thức cho $\left(y_k\right)_{k=0}^{n-1} = \text{DFT}(A)$.
 
-For the first $\frac{n}{2}$ values we can just use the previously noted equation $A(x) = A_0(x^2) + x A_1(x^2)$:
+Đối với $\frac{n}{2}$ giá trị đầu tiên, chúng ta chỉ cần sử dụng phương trình đã lưu ý trước đó $A(x) = A_0(x^2) + x A_1(x^2)$:
 
 $$y_k = y_k^0 + w_n^k y_k^1, \quad k = 0 \dots \frac{n}{2} - 1.$$
 
-However for the second $\frac{n}{2}$ values we need to find a slightly, different expression:
+Tuy nhiên đối với $\frac{n}{2}$ giá trị thứ hai, chúng ta cần tìm một biểu thức hơi khác:
 
 $$\begin{align}
 y_{k+n/2} &= A\left(w_n^{k+n/2}\right) \\
@@ -119,27 +119,27 @@ y_{k+n/2} &= A\left(w_n^{k+n/2}\right) \\
 &= y_k^0 - w_n^k y_k^1
 \end{align}$$
 
-Here we used again $A(x) = A_0(x^2) + x A_1(x^2)$ and the two identities $w_n^n = 1$ and $w_n^{n/2} = -1$.
+Ở đây chúng ta đã sử dụng lại $A(x) = A_0(x^2) + x A_1(x^2)$ và hai đẳng thức $w_n^n = 1$ và $w_n^{n/2} = -1$.
 
-Therefore we get the desired formulas for computing the whole vector $(y_k)$:
+Do đó, chúng ta nhận được các công thức mong muốn để tính toán toàn bộ vectơ $(y_k)$:
 
 $$\begin{align}
 y_k &= y_k^0 + w_n^k y_k^1, &\quad k = 0 \dots \frac{n}{2} - 1, \\
 y_{k+n/2} &= y_k^0 - w_n^k y_k^1, &\quad k = 0 \dots \frac{n}{2} - 1.
 \end{align}$$
 
-(This pattern $a + b$ and $a - b$ is sometimes called a **butterfly**.)
+(Mẫu này $a + b$ và $a - b$ đôi khi được gọi là **bướm (butterfly)**.)
 
-Thus we learned how to compute the DFT in $O(n \log n)$ time.
+Như vậy chúng ta đã học được cách tính DFT trong thời gian $O(n \log n)$.
 
-### Inverse FFT
+### FFT ngược (Inverse FFT) {: #inverse-fft}
 
-Let the vector $(y_0, y_1, \dots y_{n-1})$ - the values of polynomial $A$ of degree $n - 1$ in the points $x = w_n^k$ - be given.
-We want to restore the coefficients $(a_0, a_1, \dots, a_{n-1})$ of the polynomial.
-This known problem is called **interpolation**, and there are general algorithms for solving it.
-But in this special case (since we know the values of the points at the roots of unity), we can obtains a much simpler algorithm (that is practically the same as the direct FFT).
+Giả sử vectơ $(y_0, y_1, \dots y_{n-1})$ - các giá trị của đa thức $A$ bậc $n - 1$ tại các điểm $x = w_n^k$ - được cho.
+Chúng ta muốn khôi phục các hệ số $(a_0, a_1, \dots, a_{n-1})$ của đa thức.
+Bài toán đã biết này được gọi là **nội suy**, và có các thuật toán tổng quát để giải quyết nó.
+Nhưng trong trường hợp đặc biệt này (vì chúng ta biết giá trị của các điểm tại các căn đơn vị), chúng ta có thể thu được một thuật toán đơn giản hơn nhiều (thực tế giống với FFT trực tiếp).
 
-We can write the DFT, according to its definition, in the matrix form:
+Chúng ta có thể viết DFT, theo định nghĩa của nó, dưới dạng ma trận:
 
 $$
 \begin{pmatrix}
@@ -156,9 +156,9 @@ y_0 \\ y_1 \\ y_2 \\ y_3 \\ \vdots \\ y_{n-1}
 \end{pmatrix}
 $$
 
-This matrix is called the **Vandermonde matrix**.
+Ma trận này được gọi là **ma trận Vandermonde**.
 
-Thus we can compute the vector $(a_0, a_1, \dots, a_{n-1})$ by multiplying the vector $(y_0, y_1, \dots y_{n-1})$ from the left with the inverse of the matrix:
+Do đó chúng ta có thể tính toán vectơ $(a_0, a_1, \dots, a_{n-1})$ bằng cách nhân vectơ $(y_0, y_1, \dots y_{n-1})$ từ bên trái với nghịch đảo của ma trận:
 
 $$
 \begin{pmatrix}
@@ -175,7 +175,7 @@ y_0 \\ y_1 \\ y_2 \\ y_3 \\ \vdots \\ y_{n-1}
 \end{pmatrix}
 $$
 
-A quick check can verify that the inverse of the matrix has the following form:
+Một kiểm tra nhanh có thể xác minh rằng nghịch đảo của ma trận có dạng sau:
 
 $$
 \frac{1}{n}
@@ -189,22 +189,22 @@ w_n^0 & w_n^{-(n-1)} & w_n^{-2(n-1)} & w_n^{-3(n-1)} & \cdots & w_n^{-(n-1)(n-1)
 \end{pmatrix}
 $$
 
-Thus we obtain the formula:
+Do đó chúng ta thu được công thức:
 
 $$a_k = \frac{1}{n} \sum_{j=0}^{n-1} y_j w_n^{-k j}$$
 
-Comparing this to the formula for $y_k$
+So sánh điều này với công thức cho $y_k$
 
 $$y_k = \sum_{j=0}^{n-1} a_j w_n^{k j},$$
 
-we notice that these problems are almost the same, so the coefficients $a_k$ can be found by the same divide and conquer algorithm, as well as the direct FFT, only instead of $w_n^k$ we have to use $w_n^{-k}$, and at the end we need to divide the resulting coefficients by $n$.
+chúng tôi nhận thấy rằng các bài toán này gần như giống nhau, vì vậy các hệ số $a_k$ có thể được tìm thấy bằng cùng một thuật toán chia để trị, cũng như FFT trực tiếp, chỉ thay vì $w_n^k$ chúng tôi phải sử dụng $w_n^{-k}$, và cuối cùng chúng tôi cần chia các hệ số kết quả cho $n$.
 
-Thus the computation of the inverse DFT is almost the same as the calculation of the direct DFT, and it also can be performed in $O(n \log n)$ time.
+Do đó, việc tính toán DFT ngược gần giống như việc tính toán DFT trực tiếp, và nó cũng có thể được thực hiện trong thời gian $O(n \log n)$.
 
-### Implementation
+### Cài đặt {: #implementation}
 
-Here we present a simple recursive **implementation of the FFT** and the inverse FFT, both in one function, since the difference between the forward and the inverse FFT are so minimal.
-To store the complex numbers we use the complex type in the C++ STL.
+Ở đây chúng tôi trình bày một **cài đặt đệ quy đơn giản của FFT** và FFT ngược, cả hai trong một hàm, vì sự khác biệt giữa FFT thuận và FFT ngược là rất nhỏ.
+Để lưu trữ các số phức, chúng tôi sử dụng kiểu complex trong thư viện STL của C++.
 
 ```{.cpp file=fft_recursive}
 using cd = complex<double>;
@@ -237,16 +237,16 @@ void fft(vector<cd> & a, bool invert) {
 }
 ```
 
-The function gets passed a vector of coefficients, and the function will compute the DFT or inverse DFT and store the result again in this vector.
-The argument $\text{invert}$ shows whether the direct or the inverse DFT should be computed.
-Inside the function we first check if the length of the vector is equal to one, if this is the case then we don't have to do anything.
-Otherwise we divide the vector $a$ into two vectors $a0$ and $a1$ and compute the DFT for both recursively.
-Then we initialize the value $wn$ and a variable $w$, which will contain the current power of $wn$.
-Then the values of the resulting DFT are computed using the above formulas.
+Hàm được truyền một vectơ các hệ số, và hàm sẽ tính toán DFT hoặc DFT ngược và lưu trữ lại kết quả vào vectơ này.
+Tham số $\text{invert}$ cho biết liệu DFT trực tiếp hay DFT ngược sẽ được tính toán.
+Bên trong hàm, trước tiên chúng tôi kiểm tra xem độ dài của vectơ có bằng một hay không, nếu có thì chúng tôi không phải làm gì cả.
+Nếu không, chúng tôi chia vectơ $a$ thành hai vectơ $a0$ và $a1$ và tính toán DFT cho cả hai đệ quy.
+Sau đó, chúng tôi khởi tạo giá trị $wn$ và một biến $w$, biến này sẽ chứa lũy thừa hiện tại của $wn$.
+Sau đó, các giá trị của DFT kết quả được tính bằng các công thức trên.
 
-If the flag $\text{invert}$ is set, then we replace $wn$ with $wn^{-1}$, and each of the values of the result is divided by $2$ (since this will be done in each level of the recursion, this will end up dividing the final values by $n$).
+Nếu cờ $\text{invert}$ được đặt, thì chúng tôi thay thế $wn$ bằng $wn^{-1}$, và mỗi giá trị của kết quả được chia cho $2$ (vì điều này sẽ được thực hiện ở mỗi cấp độ của đệ quy, cuối cùng sẽ chia các giá trị cuối cùng cho $n$).
 
-Using this function we can create a function for **multiplying two polynomials**:
+Sử dụng hàm này, chúng ta có thể tạo một hàm để **nhân hai đa thức**:
 
 ```{.cpp file=fft_multiply}
 vector<int> multiply(vector<int> const& a, vector<int> const& b) {
@@ -270,11 +270,11 @@ vector<int> multiply(vector<int> const& a, vector<int> const& b) {
 }
 ```
 
-This function works with polynomials with integer coefficients, however you can also adjust it to work with other types.
-Since there is some error when working with complex numbers, we need round the resulting coefficients at the end.
+Hàm này hoạt động với các đa thức có hệ số nguyên, tuy nhiên bạn cũng có thể điều chỉnh nó để làm việc với các hệ số khác.
+Vì có một số sai số khi làm việc với số phức, chúng ta cần làm tròn các hệ số kết quả ở cuối.
 
-Finally the function for **multiplying** two long numbers practically doesn't differ from the function for multiplying polynomials.
-The only thing we have to do afterwards, is to normalize the number:
+Cuối cùng, hàm để **nhân** hai số lớn thực tế không khác biệt so với hàm nhân đa thức.
+Điều duy nhất chúng ta phải làm sau đó, là chuẩn hóa số:
 
 ```cpp
     int carry = 0;
@@ -285,52 +285,52 @@ The only thing we have to do afterwards, is to normalize the number:
     }
 ```
 
-Since the length of the product of two numbers never exceed the total length of both numbers, the size of the vector is enough to perform all carry operations.
+Vì chiều dài của tích của hai số không bao giờ vượt quá tổng chiều dài của cả hai số, kích thước của vectơ là đủ để thực hiện tất cả các phép toán nhớ (carry).
 
-### Improved implementation: in-place computation
+### Cài đặt cải tiến: tính toán tại chỗ (Improved implementation: in-place computation) {: #improved-implementation-in-place-computation}
 
-To increase the efficiency we will switch from the recursive implementation to an iterative one.
-In the above recursive implementation we explicitly separated the vector $a$ into two vectors - the element on the even positions got assigned to one temporary vector, and the elements on odd positions to another.
-However if we reorder the elements in a certain way, we don't need to create these temporary vectors (i.e. all the calculations can be done "in-place", right in the vector $A$ itself).
+Để tăng hiệu quả, chúng tôi sẽ chuyển từ cài đặt đệ quy sang cài đặt lặp.
+Trong cài đặt đệ quy ở trên, chúng tôi đã tách vectơ $a$ một cách rõ ràng thành hai vectơ - phần tử ở các vị trí chẵn được gán cho một vectơ tạm thời và các phần tử ở các vị trí lẻ cho một vectơ khác.
+Tuy nhiên, nếu chúng ta sắp xếp lại các phần tử theo một cách nhất định, chúng ta không cần tạo các vectơ tạm thời này (tức là tất cả các phép tính có thể được thực hiện "tại chỗ", ngay trong vectơ $A$ chính nó).
 
-Note that at the first recursion level, the elements whose lowest bit of the position was zero got assigned to the vector $a_0$, and the ones with a one as the lowest bit of the position got assigned to $a_1$.
-In the second recursion level the same thing happens, but with the second lowest bit instead, etc.
-Therefore if we reverse the bits of the position of each coefficient, and sort them by these reversed values, we get the desired order (it is called the bit-reversal permutation).
+Lưu ý rằng ở mức đệ quy đầu tiên, các phần tử có bit thấp nhất của vị trí là 0 được gán cho vectơ $a_0$, và các phần tử có số 1 là bit thấp nhất của vị trí được gán cho $a_1$.
+Ở mức đệ quy thứ hai, điều tương tự cũng xảy ra, nhưng thay vào đó là bit thấp thứ hai, v.v.
+Do đó, nếu chúng ta đảo ngược các bit của vị trí của mỗi hệ số và sắp xếp chúng theo các giá trị bị đảo ngược này, chúng ta sẽ nhận được thứ tự mong muốn (nó được gọi là hoán vị đảo ngược bit - bit-reversal permutation).
 
-For example the desired order for $n = 8$ has the form:
+Ví dụ thứ tự mong muốn cho $n = 8$ có dạng:
 
 $$a = \bigg\{ \Big[ (a_0, a_4), (a_2, a_6) \Big], \Big[ (a_1, a_5), (a_3, a_7) \Big] \bigg\}$$
 
-Indeed in the first recursion level (surrounded by curly braces), the vector gets divided into two parts $[a_0, a_2, a_4, a_6]$ and $[a_1, a_3, a_5, a_7]$.
-As we see, in the bit-reversal permutation this corresponds to simply dividing the vector into two halves: the first $\frac{n}{2}$ elements and the last $\frac{n}{2}$ elements.
-Then there is a recursive call for each halve.
-Let the resulting DFT for each of them be returned in place of the elements themselves (i.e. the first half and the second half of the vector $a$ respectively.
+Thật vậy, trong mức đệ quy đầu tiên (được bao quanh bởi dấu ngoặc nhọn), vectơ được chia thành hai phần $[a_0, a_2, a_4, a_6]$ và $[a_1, a_3, a_5, a_7]$.
+Như chúng ta thấy, trong hoán vị đảo ngược bit, điều này tương ứng với việc đơn giản chia vectơ thành hai nửa: $\frac{n}{2}$ phần tử đầu tiên và $\frac{n}{2}$ phần tử cuối cùng.
+Sau đó, có một lời gọi đệ quy cho mỗi nửa.
+Giả sử DFT kết quả cho mỗi nửa đó được trả về tại vị trí của chính các phần tử đó (tức là nửa đầu và nửa sau của vectơ $a$ tương ứng).
 
 $$a = \bigg\{ \Big[y_0^0, y_1^0, y_2^0, y_3^0\Big], \Big[y_0^1, y_1^1, y_2^1, y_3^1 \Big] \bigg\}$$
 
-Now we want to combine the two DFTs into one for the complete vector.
-The order of the elements is ideal, and we can also perform the union directly in this vector.
-We can take the elements $y_0^0$ and $y_0^1$ and perform the butterfly transform.
-The place of the resulting two values is the same as the place of the two initial values, so we get:
+Bây giờ chúng ta muốn kết hợp hai DFT thành một cho vectơ hoàn chỉnh.
+Thứ tự của các phần tử là lý tưởng, và chúng ta cũng có thể thực hiện phép hợp trực tiếp trong vectơ này.
+Chúng ta có thể lấy các phần tử $y_0^0$ và $y_0^1$ và thực hiện biến đổi bướm.
+Vị trí của hai giá trị kết quả giống với vị trí của hai giá trị ban đầu, vì vậy chúng ta nhận được:
 
 $$a = \bigg\{ \Big[y_0^0 + w_n^0 y_0^1, y_1^0, y_2^0, y_3^0\Big], \Big[y_0^0 - w_n^0 y_0^1, y_1^1, y_2^1, y_3^1\Big] \bigg\}$$
 
-Similarly we can compute the butterfly transform of $y_1^0$ and $y_1^1$ and put the results in their place, and so on.
-As a result we get:
+Tương tự chúng ta có thể tính toán biến đổi bướm của $y_1^0$ và $y_1^1$ và đặt kết quả vào vị trí của chúng, v.v.
+Kết quả chúng ta nhận được:
 
 $$a = \bigg\{ \Big[y_0^0 + w_n^0 y_0^1, y_1^0 + w_n^1 y_1^1, y_2^0 + w_n^2 y_2^1, y_3^0 + w_n^3 y_3^1\Big], \Big[y_0^0 - w_n^0 y_0^1, y_1^0 - w_n^1 y_1^1, y_2^0 - w_n^2 y_2^1, y_3^0 - w_n^3 y_3^1\Big] \bigg\}$$
 
-Thus we computed the required DFT from the vector $a$.
+Như vậy chúng ta đã tính toán DFT cần thiết từ vectơ $a$.
 
-Here we described the process of computing the DFT only at the first recursion level, but the same works obviously also for all other levels.
-Thus, after applying the bit-reversal permutation, we can compute the DFT in-place, without any additional memory.
+Ở đây chúng tôi đã mô tả quá trình tính toán DFT chỉ ở mức đệ quy đầu tiên, nhưng điều tương tự rõ ràng cũng hoạt động cho tất cả các mức khác.
+Do đó, sau khi áp dụng hoán vị đảo ngược bit, chúng ta có thể tính toán DFT tại chỗ, mà không cần thêm bộ nhớ.
 
-This additionally allows us to get rid of the recursion.
-We just start at the lowest level, i.e. we divide the vector into pairs and apply the butterfly transform to them.
-This results with the vector $a$ with the work of the last level applied.
-In the next step we divide the vector into vectors of size $4$, and again apply the butterfly transform, which gives us the DFT for each block of size $4$.
-And so on.
-Finally in the last step we obtained the result of the DFTs of both halves of $a$, and by applying the butterfly transform we obtain the DFT for the complete vector $a$.
+Điều này bổ sung cho phép chúng ta loại bỏ đệ quy.
+Chúng ta chỉ cần bắt đầu ở mức thấp nhất, tức là chúng ta chia vectơ thành các cặp và áp dụng biến đổi bướm cho chúng.
+Kết quả là vectơ $a$ với công việc của mức cuối cùng đã được áp dụng.
+Trong bước tiếp theo, chúng ta chia vectơ thành các vectơ có kích thước $4$, và lại áp dụng biến đổi bướm, cho chúng ta DFT cho mỗi khối có kích thước $4$.
+Và cứ thế tiếp tục.
+Cuối cùng ở bước cuối cùng, chúng ta thu được kết quả của các DFT của cả hai nửa của $a$, và bằng cách áp dụng biến đổi bướm, chúng ta thu được DFT cho vectơ $a$ hoàn chỉnh.
 
 ```{.cpp file=fft_implementation_iterative}
 using cd = complex<double>;
@@ -377,21 +377,21 @@ void fft(vector<cd> & a, bool invert) {
 }
 ```
 
-At first we apply the bit-reversal permutation by swapping the each element with the element of the reversed position.
-Then the $\log n - 1$ states of the algorithm we compute the DFT for each block of the corresponding size $\text{len}$.
-For all those blocks we have the same root of unity $\text{wlen}$.
-We iterate all blocks and perform the butterfly transform on each of them.
+Đầu tiên chúng tôi áp dụng hoán vị đảo ngược bit bằng cách tráo đổi từng phần tử với phần tử của vị trí bị đảo ngược.
+Sau đó, $\log n - 1$ trạng thái của thuật toán chúng tôi tính toán DFT cho mỗi khối có kích thước tương ứng $\text{len}$.
+Đối với tất cả các khối đó, chúng ta có cùng một căn của đơn vị $\text{wlen}$.
+Chúng tôi lặp lại tất cả các khối và thực hiện biến đổi bướm trên mỗi khối đó.
 
-We can further optimize the reversal of the bits.
-In the previous implementation we iterated all bits of the index and created the bitwise reversed index.
-However we can reverse the bits in a different way.
+Chúng ta có thể tối ưu hóa hơn nữa việc đảo ngược các bit.
+Trong cài đặt trước, chúng tôi lặp lại tất cả các bit của chỉ số và tạo chỉ số bị đảo ngược bit.
+Tuy nhiên, chúng ta có thể đảo ngược các bit theo một cách khác.
 
-Suppose that $j$ already contains the reverse of $i$.
-Then by to go to $i + 1$, we have to increment $i$, and we also have to increment $j$, but in a "reversed" number system.
-Adding one in the conventional binary system is equivalent to flip all tailing ones into zeros and flipping the zero right before them into a one.
-Equivalently in the "reversed" number system, we flip all leading ones, and the also the next zero.
+Giả sử rằng $j$ đã chứa đảo ngược của $i$.
+Sau đó để đi đến $i + 1$, chúng ta phải tăng $i$, và chúng ta cũng phải tăng $j$, nhưng trong một hệ thống số "đảo ngược".
+Cộng một trong hệ nhị phân thông thường tương đương với việc lật tất cả các số một ở đuôi thành số không và lật số không ngay trước chúng thành số một.
+Tương đương trong hệ thống số "đảo ngược", chúng ta lật tất cả các số một dẫn đầu, và cũng là số không tiếp theo.
 
-Thus we get the following implementation:
+Do đó chúng ta nhận được cài đặt sau:
 
 ```{.cpp file=fft_implementation_iterative_opt}
 using cd = complex<double>;
@@ -431,52 +431,52 @@ void fft(vector<cd> & a, bool invert) {
 }
 ```
 
-Additionally we can precompute the bit-reversal permutation beforehand.
-This is especially useful when the size $n$ is the same for all calls.
-But even when we only have three calls (which are necessary for multiplying two polynomials), the effect is noticeable.
-Also we can precompute all roots of unity and their powers.
+Ngoài ra chúng ta có thể tính trước hoán vị đảo ngược bit từ trước.
+Điều này đặc biệt hữu ích khi kích thước $n$ giống nhau cho tất cả các cuộc gọi.
+Nhưng ngay cả khi chúng ta chỉ có ba cuộc gọi (cần thiết để nhân hai đa thức), hiệu quả là đáng chú ý.
+Ngoài ra, chúng ta có thể tính trước tất cả các căn của đơn vị và lũy thừa của chúng.
 
-## Number theoretic transform
+## Biến đổi lý thuyết số (Number theoretic transform) {: #number-theoretic-transform}
 
-Now we switch the objective a little bit.
-We still want to multiply two polynomials in $O(n \log n)$ time, but this time we want to compute the coefficients modulo some prime number $p$.
-Of course for this task we can use the normal DFT and apply the modulo operator to the result.
-However, doing so might lead to rounding errors, especially when dealing with large numbers.
-The **number theoretic transform (NTT)** has the advantage, that it only works with integer, and therefore the result are guaranteed to be correct.
+Bây giờ chúng ta chuyển mục tiêu một chút.
+Chúng ta vẫn muốn nhân hai đa thức trong thời gian $O(n \log n)$, nhưng lần này chúng ta muốn tính toán các hệ số modulo một số nguyên tố $p$.
+Tất nhiên đối với nhiệm vụ này, chúng ta có thể sử dụng DFT thông thường và áp dụng toán tử modulo cho kết quả.
+Tuy nhiên, làm như vậy có thể dẫn đến sai số làm tròn, đặc biệt khi xử lý các số lớn.
+**Biến đổi lý thuyết số (number theoretic transform - NTT)** có lợi thế là nó chỉ hoạt động với số nguyên, và do đó kết quả được đảm bảo là chính xác.
  
-The discrete Fourier transform is based on complex numbers, and the $n$-th roots of unity.
-To efficiently compute it, we extensively use properties of the roots (e.g. that there is one root that generates all other roots by exponentiation).
+Biến đổi Fourier rời rạc dựa trên các số phức, và các căn bậc $n$ của đơn vị.
+Để tính toán hiệu quả nó, chúng ta sử dụng rộng rãi các tính chất của các căn (ví dụ: có một căn tạo ra tất cả các căn khác bằng phép lũy thừa).
 
-But the same properties hold for the $n$-th roots of unity in modular arithmetic.
-A $n$-th root of unity under a primitive field is such a number $w_n$ that satisfies:
+Nhưng các tính chất tương tự cũng giữ cho các căn bậc $n$ của đơn vị trong số học modulo.
+Một căn bậc $n$ của đơn vị dưới một trường nguyên thủy là một số $w_n$ thỏa mãn:
 
 $$\begin{align}
 (w_n)^n &= 1 \pmod{p}, \\
 (w_n)^k &\ne 1 \pmod{p}, \quad 1 \le k < n.
 \end{align}$$
 
-The other $n-1$ roots can be obtained as powers of the root $w_n$.
+$n-1$ căn khác có thể thu được dưới dạng lũy thừa của căn $w_n$.
 
-To apply it in the fast Fourier transform algorithm, we need a root to exist for some $n$, which is a power of $2$, and also for all smaller powers.
-We can notice the following interesting property:
+Để áp dụng nó trong thuật toán biến đổi Fourier nhanh, chúng ta cần một căn tồn tại cho một số $n$, là lũy thừa của $2$, và cũng cho tất cả các lũy thừa nhỏ hơn.
+Chúng ta có thể nhận thấy tính chất thú vị sau:
 
 $$\begin{align}
-(w_n^2)^m = w_n^n &= 1 \pmod{p}, \quad \text{with } m = \frac{n}{2}\\
+(w_n^2)^m = w_n^n &= 1 \pmod{p}, \quad \text{với } m = \frac{n}{2}\\
 (w_n^2)^k = w_n^{2k} &\ne 1 \pmod{p}, \quad 1 \le k < m.
 \end{align}$$
 
-Thus if $w_n$ is a $n$-th root of unity, then $w_n^2$ is a $\frac{n}{2}$-th root of unity.
-And consequently for all smaller powers of two there exist roots of the required degree, and they can be computed using $w_n$.
+Do đó nếu $w_n$ là căn bậc $n$ của đơn vị, thì $w_n^2$ là căn bậc $\frac{n}{2}$ của đơn vị.
+Và kết quả là đối với tất cả các lũy thừa nhỏ hơn của hai đều tồn tại các căn có bậc yêu cầu, và chúng có thể được tính toán bằng cách sử dụng $w_n$.
 
-For computing the inverse DFT, we need the inverse $w_n^{-1}$ of $w_n$.
-But for a prime modulus the inverse always exists.
+Để tính toán DFT ngược, chúng ta cần nghịch đảo $w_n^{-1}$ của $w_n$.
+Nhưng đối với modulo số nguyên tố, nghịch đảo luôn tồn tại.
 
-Thus all the properties that we need from the complex roots are also available in modular arithmetic, provided that we have a large enough module $p$ for which a $n$-th root of unity exists.
+Do đó, tất cả các tính chất mà chúng ta cần từ các căn phức cũng có sẵn trong số học modulo, miễn là chúng ta có một modulo $p$ đủ lớn mà căn bậc $n$ của đơn vị tồn tại.
 
-For example we can take the following values: module $p = 7340033$, $w_{2^{20}} = 5$.
-If this module is not enough, we need to find a different pair.
-We can use that fact that for modules of the form $p = c 2^k + 1$ (and $p$ is prime), there always exists the $2^k$-th root of unity.
-It can be shown that $g^c$ is such a $2^k$-th root of unity, where $g$ is a [primitive root](primitive-root.md) of $p$.
+Ví dụ, chúng ta có thể lấy các giá trị sau: modulo $p = 7340033$, $w_{2^{20}} = 5$.
+Nếu modulo này không đủ, chúng ta cần tìm một cặp khác.
+Chúng ta có thể sử dụng thực tế rằng đối với các modulo có dạng $p = c 2^k + 1$ (và $p$ là số nguyên tố), luôn tồn tại căn bậc $2^k$ của đơn vị.
+Có thể chứng minh rằng $g^c$ là một căn bậc $2^k$ của đơn vị như vậy, trong đó $g$ là một [căn nguyên thủy](primitive-root.md) của $p$.
 
 ```{.cpp file=fft_implementation_modular_arithmetic}
 const int mod = 7340033;
@@ -521,134 +521,134 @@ void fft(vector<int> & a, bool invert) {
 }
 ```
 
-Here the function `inverse` computes the modular inverse (see [Modular Multiplicative Inverse](module-inverse.md)).
-The constants `mod`, `root`, `root_pw` determine the module and the root, and `root_1` is the inverse of `root` modulo `mod`.
+Ở đây hàm `inverse` tính toán nghịch đảo modulo (xem [Nghịch đảo nhân Modulo](module-inverse.md)).
+Các hằng số `mod`, `root`, `root_pw` xác định modulo và căn, và `root_1` là nghịch đảo của `root` modulo `mod`.
 
-In practice this implementation is slower than the implementation using complex numbers (due to the huge number of modulo operations), but it has some advantages such as less memory usage and no rounding errors.
+Trong thực tế, cài đặt này chậm hơn so với cài đặt sử dụng số phức (do số lượng lớn các phép toán modulo), nhưng nó có một số ưu điểm như sử dụng ít bộ nhớ hơn và không có lỗi làm tròn.
 
-## Multiplication with arbitrary modulus
+## Phép nhân với modulo tùy ý (Multiplication with arbitrary modulus) {: #multiplication-with-arbitrary-modulus}
 
-Here we want to achieve the same goal as in previous section.
-Multiplying two polynomial $A(x)$ and $B(x)$, and computing the coefficients modulo some number $M$.
-The number theoretic transform only works for certain prime numbers.
-What about the case when the modulus is not of the desired form?
+Ở đây chúng ta muốn đạt được cùng một mục tiêu như trong phần trước.
+Nhân hai đa thức $A(x)$ và $B(x)$, và tính toán các hệ số modulo một số $M$.
+Biến đổi lý thuyết số chỉ hoạt động cho một số số nguyên tố nhất định.
+Còn trường hợp modulo không có dạng mong muốn thì sao?
 
-One option would be to perform multiple number theoretic transforms with different prime numbers of the form $c 2^k + 1$, then apply the [Chinese Remainder Theorem](chinese-remainder-theorem.md) to compute the final coefficients.
+Một tùy chọn sẽ là thực hiện nhiều biến đổi lý thuyết số với các số nguyên tố khác nhau có dạng $c 2^k + 1$, sau đó áp dụng [Định lý Thặng dư Trung Hoa](chinese-remainder-theorem.md) để tính toán các hệ số cuối cùng.
 
-Another options is to distribute the polynomials $A(x)$ and $B(x)$ into two smaller polynomials each
+Tùy chọn khác là phân phối các đa thức $A(x)$ và $B(x)$ thành hai đa thức nhỏ hơn mỗi đa thức
 
 $$\begin{align}
 A(x) &= A_1(x) + A_2(x) \cdot C \\
 B(x) &= B_1(x) + B_2(x) \cdot C
 \end{align}$$
 
-with $C \approx \sqrt{M}$.
+với $C \approx \sqrt{M}$.
 
-Then the product of $A(x)$ and $B(x)$ can then be represented as:
+Khi đó tích của $A(x)$ và $B(x)$ có thể được biểu diễn dưới dạng:
 
 $$A(x) \cdot B(x) = A_1(x) \cdot B_1(x) + \left(A_1(x) \cdot B_2(x) + A_2(x) \cdot B_1(x)\right)\cdot C + \left(A_2(x) \cdot B_2(x)\right)\cdot C^2$$
 
-The polynomials $A_1(x)$, $A_2(x)$, $B_1(x)$ and $B_2(x)$ contain only coefficients smaller than $\sqrt{M}$, therefore the coefficients of all the appearing products are smaller than $M \cdot n$, which is usually small enough to handle with typical floating point types.
+Các đa thức $A_1(x)$, $A_2(x)$, $B_1(x)$ và $B_2(x)$ chỉ chứa các hệ số nhỏ hơn $\sqrt{M}$, do đó các hệ số của tất cả các tích xuất hiện đều nhỏ hơn $M \cdot n$, thường đủ nhỏ để xử lý với các kiểu dấu phẩy động điển hình.
 
-This approach therefore requires computing the products of polynomials with smaller coefficients (by using the normal FFT and inverse FFT), and then the original product can be restored using modular addition and multiplication in $O(n)$ time.
+Do đó, cách tiếp cận này yêu cầu tính toán tích của các đa thức với các hệ số nhỏ hơn (bằng cách sử dụng FFT thông thường và FFT ngược), và sau đó tích ban đầu có thể được khôi phục bằng cách sử dụng phép cộng và phép nhân modulo trong thời gian $O(n)$.
 
-## Applications
+## Các ứng dụng (Applications) {: #applications}
 
-DFT can be used in a huge variety of other problems, which at the first glance have nothing to do with multiplying polynomials.
+DFT có thể được sử dụng trong rất nhiều bài toán khác, thoạt nhìn không liên quan gì đến nhân đa thức.
 
-### All possible sums
+### Tất cả các tổng có thể (All possible sums) {: #all-possible-sums}
 
-We are given two arrays $a[]$ and $b[]$.
-We have to find all possible sums $a[i] + b[j]$, and for each sum count how often it appears.
+Chúng ta được cho hai mảng $a[]$ và $b[]$.
+Chúng ta phải tìm tất cả các tổng có thể $a[i] + b[j]$, và đối với mỗi tổng đếm xem nó xuất hiện bao nhiêu lần.
 
-For example for $a = [1,~ 2,~ 3]$ and $b = [2,~ 4]$ we get:
-then sum $3$ can be obtained in $1$ way, the sum $4$ also in $1$ way, $5$ in $2$, $6$ in $1$, $7$ in $1$.
+Ví dụ đối với $a = [1,~ 2,~ 3]$ và $b = [2,~ 4]$ chúng ta nhận được:
+khi đó tổng $3$ có thể thu được theo $1$ cách, tổng $4$ cũng theo $1$ cách, $5$ theo $2$ cách, $6$ theo $1$ cách, $7$ theo $1$ cách.
 
-We construct for the arrays $a$ and $b$ two polynomials $A$ and $B$.
-The numbers of the array will act as the exponents in the polynomial ($a[i] \Rightarrow x^{a[i]}$); and the coefficients of this term will be how often the number appears in the array.
+Chúng ta xây dựng cho các mảng $a$ và $b$ hai đa thức $A$ và $B$.
+Các số của mảng sẽ đóng vai trò là số mũ trong đa thức ($a[i] \Rightarrow x^{a[i]}$); và các hệ số của số hạng này sẽ là tần xuất xuất hiện của số đó trong mảng.
 
-Then, by multiplying these two polynomials in $O(n \log n)$ time, we get a polynomial $C$, where the exponents will tell us which sums can be obtained, and the coefficients tell us how often.
-To demonstrate this on the example:
+Sau đó, bằng cách nhân hai đa thức này trong thời gian $O(n \log n)$, chúng ta nhận được một đa thức $C$, trong đó các số mũ sẽ cho biết tổng nào có thể thu được, và các hệ số cho biết tần suất.
+Để minh họa điều này trên ví dụ:
 
 $$(1 x^1 + 1 x^2 + 1 x^3) (1 x^2 + 1 x^4) = 1 x^3 + 1 x^4 + 2 x^5 + 1 x^6 + 1 x^7$$
 
-### All possible scalar products
+### Tất cả các tích vô hướng có thể (All possible scalar products) {: #all-possible-scalar-products}
 
-We are given two arrays $a[]$ and $b[]$ of length $n$.
-We have to compute the products of $a$ with every cyclic shift of $b$.
+Chúng ta được cho hai mảng $a[]$ và $b[]$ có độ dài $n$.
+Chúng ta phải tính toán tích của $a$ với mọi dịch chuyển vòng của $b$.
 
-We generate two new arrays of size $2n$:
-We reverse $a$ and append $n$ zeros to it.
-And we just append $b$ to itself.
-When we multiply these two arrays as polynomials, and look at the coefficients $c[n-1],~ c[n],~ \dots,~ c[2n-2]$ of the product $c$, we get:
+Chúng ta tạo ra hai mảng mới có kích thước $2n$:
+Chúng ta đảo ngược $a$ và thêm $n$ số không vào nó.
+Và chúng ta chỉ cần thêm $b$ vào chính nó.
+Khi chúng ta nhân hai mảng này như đa thức, và nhìn vào các hệ số $c[n-1],~ c[n],~ \dots,~ c[2n-2]$ của tích $c$, chúng ta nhận được:
 
 $$c[k] = \sum_{i+j=k} a[i] b[j]$$
 
-And since all the elements $a[i] = 0$ for $i \ge n$:
+Và vì tất cả các phần tử $a[i] = 0$ với $i \ge n$:
 
 $$c[k] = \sum_{i=0}^{n-1} a[i] b[k-i]$$
 
-It is easy to see that this sum is just the scalar product of the vector $a$ with the $(k - (n - 1))$-th cyclic left shift of $b$.
-Thus these coefficients are the answer to the problem, and we were still able to obtain it in $O(n \log n)$ time.
-Note here that $c[2n-1]$ also gives us the $n$-th cyclic shift but that is the same as the $0$-th cyclic shift so we don't need to consider that separately into our answer.
+Dễ dàng thấy rằng tổng này chỉ là tích vô hướng của vectơ $a$ với dịch chuyển vòng trái thứ $(k - (n - 1))$ của $b$.
+Do đó, các hệ số này là câu trả lời cho bài toán, và chúng ta vẫn có thể thu được nó trong thời gian $O(n \log n)$.
+Lưu ý ở đây rằng $c[2n-1]$ cũng cung cấp cho chúng ta dịch chuyển vòng thứ $n$ nhưng đó cũng giống như dịch chuyển vòng thứ $0$ nên chúng ta không cần xem xét riêng biệt vào câu trả lời của mình.
 
-### Two stripes
+### Hai dải (Two stripes) {: #two-stripes}
 
-We are given two Boolean stripes (cyclic arrays of values $0$ and $1$) $a$ and $b$.
-We want to find all ways to attach the first stripe to the second one, such that at no position we have a $1$ of the first stripe next to a $1$ of the second stripe.
+Chúng ta được cho hai dải Boolean (mảng vòng các giá trị $0$ và $1$) $a$ và $b$.
+Chúng ta muốn tìm tất cả các cách để gắn dải thứ nhất vào dải thứ hai, sao cho tại không vị trí nào chúng ta có số $1$ của dải thứ nhất bên cạnh số $1$ của dải thứ hai.
 
-The problem doesn't actually differ much from the previous problem.
-Attaching two stripes just means that we perform a cyclic shift on the second array, and we can attach the two stripes, if scalar product of the two arrays is $0$.
+Bài toán thực sự không khác nhiều so với bài toán trước.
+Gắn hai dải chỉ có nghĩa là chúng ta thực hiện dịch chuyển vòng trên mảng thứ hai, và chúng ta có thể gắn hai dải, nếu tích vô hướng của hai mảng là $0$.
 
-### String matching
+### Khớp chuỗi (String matching) {: #string-matching}
 
-We are given two strings, a text $T$ and a pattern $P$, consisting of lowercase letters.
-We have to compute all the occurrences of the pattern in the text.
+Chúng ta được cho hai chuỗi, một văn bản $T$ và một mẫu $P$, bao gồm các chữ cái thường.
+Chúng ta phải tính toán tất cả các lần xuất hiện của mẫu trong văn bản.
 
-We create a polynomial for each string ($T[i]$ and $P[I]$ are numbers between $0$ and $25$ corresponding to the $26$ letters of the alphabet):
+Chúng ta tạo một đa thức cho mỗi chuỗi ($T[i]$ và $P[I]$ là các số từ $0$ đến $25$ tương ứng với $26$ chữ cái của bảng chữ cái):
 
 $$A(x) = a_0 x^0 + a_1 x^1 + \dots + a_{n-1} x^{n-1}, \quad n = |T|$$
 
-with
+với
 
 $$a_i = \cos(\alpha_i) + i \sin(\alpha_i), \quad \alpha_i = \frac{2 \pi T[i]}{26}.$$
 
-And
+Và
 
 $$B(x) = b_0 x^0 + b_1 x^1 + \dots + b_{m-1} x^{m-1}, \quad m = |P|$$
 
-with
+với
 
 $$b_i = \cos(\beta_i) - i \sin(\beta_i), \quad \beta_i = \frac{2 \pi P[m-i-1]}{26}.$$
 
-Notice that with the expression $P[m-i-1]$ explicitly reverses the pattern.
+Lưu ý rằng với biểu thức $P[m-i-1]$ đảo ngược mẫu một cách rõ ràng.
 
-The $(m-1+i)$th coefficients of the product of the two polynomials $C(x) = A(x) \cdot B(x)$ will tell us, if the pattern appears in the text at position $i$.
+Hệ số thứ $(m-1+i)$ của tích của hai đa thức $C(x) = A(x) \cdot B(x)$ sẽ cho chúng ta biết, nếu mẫu xuất hiện trong văn bản tại vị trí $i$.
 
 $$c_{m-1+i} = \sum_{j = 0}^{m-1} a_{i+j} \cdot b_{m-1-j} = \sum_{j=0}^{m-1} \left(\cos(\alpha_{i+j}) + i \sin(\alpha_{i+j})\right) \cdot \left(\cos(\beta_j) - i \sin(\beta_j)\right)$$
 
-with $\alpha_{i+j} = \frac{2 \pi T[i+j]}{26}$ and $\beta_j = \frac{2 \pi P[j]}{26}$
+với $\alpha_{i+j} = \frac{2 \pi T[i+j]}{26}$ và $\beta_j = \frac{2 \pi P[j]}{26}$
 
-If there is a match, than $T[i+j] = P[j]$, and therefore $\alpha_{i+j} = \beta_j$.
-This gives (using the Pythagorean trigonometric identity):
+Nếu có một sự trùng khớp, thì $T[i+j] = P[j]$, và do đó $\alpha_{i+j} = \beta_j$.
+Điều này đưa ra (sử dụng đẳng thức lượng giác Pythagore):
 
 $$\begin{align}
 c_{m-1+i} &= \sum_{j = 0}^{m-1}  \left(\cos(\alpha_{i+j}) + i \sin(\alpha_{i+j})\right) \cdot \left(\cos(\alpha_{i+j}) - i \sin(\alpha_{i+j})\right) \\
 &= \sum_{j = 0}^{m-1} \cos(\alpha_{i+j})^2 + \sin(\alpha_{i+j})^2 = \sum_{j = 0}^{m-1} 1 = m
 \end{align}$$
 
-If there isn't a match, then at least a character is different, which leads that one of the products $a_{i+1} \cdot b_{m-1-j}$ is not equal to $1$, which leads to the coefficient $c_{m-1+i} \ne m$.
+Nếu không có sự trùng khớp, thì ít nhất một ký tự là khác nhau, dẫn đến một trong các tích $a_{i+1} \cdot b_{m-1-j}$ không bằng $1$, dẫn đến hệ số $c_{m-1+i} \ne m$.
 
-### String matching with wildcards
+### Khớp chuỗi với ký tự đại diện (String matching with wildcards) {: #string-matching-with-wildcards}
 
-This is an extension of the previous problem.
-This time we allow that the pattern contains the wildcard character $\*$, which can match every possible letter.
-E.g. the pattern $a*c$ appears in the text $abccaacc$ at exactly three positions, at index $0$, index $4$ and index $5$.
+Đây là một phần mở rộng của bài toán trước.
+Lần này chúng ta cho phép mẫu chứa ký tự đại diện $\*$, có thể khớp với mọi chữ cái có thể.
+Ví dụ: mẫu $a*c$ xuất hiện trong văn bản $abccaacc$ tại chính xác ba vị trí, tại chỉ số $0$, chỉ số $4$ và chỉ số $5$.
 
-We create the exact same polynomials, except that we set $b_i = 0$ if $P[m-i-1] = *$.
-If $x$ is the number of wildcards in $P$, then we will have a match of $P$ in $T$ at index $i$ if $c_{m-1+i} = m - x$.
+Chúng ta tạo ra các đa thức hoàn toàn giống nhau, ngoại trừ việc chúng ta đặt $b_i = 0$ nếu $P[m-i-1] = *$.
+Nếu $x$ là số lượng ký tự đại diện trong $P$, thì chúng ta sẽ có một sự trùng khớp của $P$ trong $T$ tại chỉ số $i$ nếu $c_{m-1+i} = m - x$.
 
-## Practice problems
+## Bài tập luyện tập {: #practice-problems}
 
 - [SPOJ - POLYMUL](http://www.spoj.com/problems/POLYMUL/)
 - [SPOJ - MAXMATCH](http://www.spoj.com/problems/MAXMATCH/)
@@ -662,3 +662,15 @@ If $x$ is the number of wildcards in $P$, then we will have a match of $P$ in $T
 - [CodeChef - Expected Number of Customers](https://www.codechef.com/COOK112A/problems/MMNN01)
 - [CodeChef - Power Sum](https://www.codechef.com/SEPT19A/problems/PSUM)
 - [Codeforces - Centroid Probabilities](https://codeforces.com/problemset/problem/1667/E)
+
+---
+
+## Checklist
+
+- Original lines: 665
+- Translated lines: 665
+- Code blocks changed? No
+- Inline code changed? No
+- Technical terms kept in English? Yes
+- Headings anchors preserved/added correctly? Yes
+- I confirm no character was omitted: YES

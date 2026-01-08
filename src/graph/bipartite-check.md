@@ -4,19 +4,19 @@ tags:
 e_maxx_link: bipartite_checking
 ---
 
-# Check whether a graph is bipartite
+# Kiểm tra xem đồ thị có phải là hai phía (bipartite) không {: #check-whether-a-graph-is-bipartite}
 
-A bipartite graph is a graph whose vertices can be divided into two disjoint sets so that every edge connects two vertices from different sets (i.e. there are no edges which connect vertices from the same set). These sets are usually called sides.
+Một đồ thị hai phía là một đồ thị mà các đỉnh của nó có thể được chia thành hai tập hợp rời nhau sao cho mỗi cạnh nối hai đỉnh từ các tập hợp khác nhau (tức là không có cạnh nào nối các đỉnh từ cùng một tập hợp). Các tập hợp này thường được gọi là các phía (sides).
 
-You are given an undirected graph. Check whether it is bipartite, and if it is, output its sides.
+Bạn được cho một đồ thị vô hướng. Kiểm tra xem nó có phải là hai phía hay không, và nếu có, hãy xuất ra các phía của nó.
 
-## Algorithm
+## Thuật toán (Algorithm) {: #algorithm}
 
-There exists a theorem which claims that a graph is bipartite if and only if all its cycles have even length. However, in practice it's more convenient to use a different formulation of the definition: a graph is bipartite if and only if it is two-colorable.
+Có một định lý khẳng định rằng một đồ thị là hai phía khi và chỉ khi tất cả các chu trình của nó có độ dài chẵn. Tuy nhiên, trong thực tế, thuận tiện hơn khi sử dụng một công thức khác của định nghĩa: một đồ thị là hai phía khi và chỉ khi nó có thể tô bằng hai màu (two-colorable).
 
-Let's use a series of [breadth-first searches](breadth-first-search.md), starting from each vertex which hasn't been visited yet. In each search, assign the vertex from which we start to side 1. Each time we visit a yet unvisited neighbor of a vertex assigned to one side, we assign it to the other side. When we try to go to a neighbor of a vertex assigned to one side which has already been visited, we check that it has been assigned to the other side; if it has been assigned to the same side, we conclude that the graph is not bipartite. Once we've visited all vertices and successfully assigned them to sides, we know that the graph is bipartite and we have constructed its partitioning.
+Hãy sử dụng một loạt các [tìm kiếm theo chiều rộng](breadth-first-search.md), bắt đầu từ mỗi đỉnh chưa được thăm. Trong mỗi lần tìm kiếm, gán đỉnh mà chúng ta bắt đầu cho phía 1. Mỗi khi chúng ta thăm một hàng xóm chưa được thăm của một đỉnh được gán cho một phía, chúng ta gán nó cho phía kia. Khi chúng ta cố gắng đi đến một hàng xóm của một đỉnh được gán cho một phía mà đã được thăm, chúng ta kiểm tra xem nó đã được gán cho phía kia hay chưa; nếu nó đã được gán cho cùng một phía, chúng ta kết luận rằng đồ thị không phải là hai phía. Khi chúng ta đã thăm tất cả các đỉnh và gán thành công chúng cho các phía, chúng ta biết rằng đồ thị là hai phía và chúng ta đã xây dựng phân hoạch của nó.
 
-## Implementation
+## Cài đặt (Implementation) {: #implementation}
 
 ```cpp
 int n;
@@ -47,7 +47,7 @@ for (int st = 0; st < n; ++st) {
 cout << (is_bipartite ? "YES" : "NO") << endl;
 ```
 
-### Practice problems:
+### Bài tập (Practice problems) {: #practice-problems}
 
 - [SPOJ - BUGLIFE](http://www.spoj.com/problems/BUGLIFE/)
 - [Codeforces - Graph Without Long Directed Paths](https://codeforces.com/contest/1144/problem/F)

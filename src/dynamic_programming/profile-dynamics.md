@@ -4,28 +4,28 @@ tags:
 e_maxx_link: profile_dynamics
 ---
 
-# Dynamic Programming on Broken Profile. Problem "Parquet"
+# Quy hoạch động trên Profile gãy. Bài toán "Parquet" (Dynamic Programming on Broken Profile. Problem "Parquet") {: #dynamic-programming-on-broken-profile-problem-parquet}
 
-Common problems solved using DP on broken profile include:
+Các bài toán phổ biến được giải quyết bằng DP trên profile gãy (broken profile) bao gồm:
 
-- finding number of ways to fully fill an area (e.g. chessboard/grid) with some figures (e.g. dominoes)
-- finding a way to fill an area with minimum number of figures
-- finding a partial fill with minimum number of unfilled space (or cells, in case of grid)
-- finding a partial fill with the minimum number of figures, such that no more figures can be added
+- tìm số cách để lấp đầy hoàn toàn một diện tích (ví dụ: bàn cờ/lưới) bằng một số hình (ví dụ: domino)
+- tìm một cách để lấp đầy một diện tích với số lượng hình tối thiểu
+- tìm một cách lấp đầy một phần với số lượng không gian chưa lấp đầy tối thiểu (hoặc các ô, trong trường hợp lưới)
+- tìm một cách lấp đầy một phần với số lượng hình tối thiểu, sao cho không thể thêm hình nào nữa
 
-## Problem "Parquet"
+## Bài toán "Parquet" (Problem "Parquet") {: #problem-parquet}
 
-**Problem description.** Given a grid of size $N \times M$. Find number of ways to fill the grid with figures of size $2 \times 1$ (no cell should be left unfilled, and figures should not overlap each other).
+**Mô tả bài toán.** Cho một lưới kích thước $N \times M$. Tìm số cách để lấp đầy lưới bằng các hình có kích thước $2 \times 1$ (không được để lại ô nào chưa lấp đầy, và các hình không được chồng lên nhau).
 
-Let the DP state be: $dp[i, mask]$, where $i = 1, \ldots N$ and $mask = 0, \ldots 2^M - 1$.
+Đặt trạng thái DP là: $dp[i, mask]$, trong đó $i = 1, \ldots N$ và $mask = 0, \ldots 2^M - 1$.
 
-$i$ represents number of rows in the current grid, and $mask$ is the state of last row of current grid. If $j$-th bit of $mask$ is $0$ then the corresponding cell is filled, otherwise it is unfilled.
+$i$ đại diện cho số hàng trong lưới hiện tại, và $mask$ là trạng thái của hàng cuối cùng của lưới hiện tại. Nếu bit thứ $j$ của $mask$ là $0$ thì ô tương ứng đã được lấp đầy, ngược lại nó chưa được lấp đầy.
 
-Clearly, the answer to the problem will be $dp[N, 0]$.
+Rõ ràng, câu trả lời cho bài toán sẽ là $dp[N, 0]$.
 
-We will be building the DP state by iterating over each $i = 1, \cdots N$ and each $mask = 0, \ldots 2^M - 1$, and for each $mask$ we will be only transitioning forward, that is, we will be _adding_ figures to the current grid.
+Chúng ta sẽ xây dựng trạng thái DP bằng cách lặp qua từng $i = 1, \cdots N$ và từng $mask = 0, \ldots 2^M - 1$, và với mỗi $mask$ chúng ta sẽ chỉ chuyển tiếp, tức là, chúng ta sẽ _thêm_ các hình vào lưới hiện tại.
 
-### Implementation
+### Cài đặt (Implementation) {: #implementation}
 
 ```cpp
 int n, m;
@@ -68,7 +68,7 @@ int main()
 }
 ```
 
-## Practice Problems
+## Bài tập (Practice Problems) {: #practice-problems}
 
 - [UVA 10359 - Tiling](https://onlinejudge.org/index.php?option=com_onlinejudge&Itemid=8&page=show_problem&problem=1300)
 - [UVA 10918 - Tri Tiling](https://onlinejudge.org/index.php?option=com_onlinejudge&Itemid=8&page=show_problem&problem=1859)
@@ -84,7 +84,7 @@ int main()
 - [Timus 1519 - Formula 1](https://acm.timus.ru/problem.aspx?space=1&num=1519)
 - [Codeforces Parquet](https://codeforces.com/problemset/problem/26/C)
 
-## References
+## Tài liệu tham khảo (References) {: #references}
 
 - [Blog by EvilBunny](https://web.archive.org/web/20180712171735/https://blog.evilbuggy.com/2018/05/broken-profile-dynamic-programming.html)
 - [TopCoder Recipe by "syg96"](https://apps.topcoder.com/forums/?module=Thread&start=0&threadID=697369)

@@ -4,344 +4,344 @@ tags:
 e_maxx_link: suffix_automata
 ---
 
-# Suffix Automaton
+# Suffix Automaton (Suffix Automaton) {: #suffix-automaton}
 
-A **suffix automaton** is a powerful data structure that allows solving many string-related problems. 
+**Suffix automaton** là một cấu trúc dữ liệu mạnh mẽ cho phép giải quyết nhiều vấn đề liên quan đến chuỗi.
 
-For example, you can search for all occurrences of one string in another, or count the amount of different substrings of a given string.
-Both tasks can be solved in linear time with the help of a suffix automaton.
+Ví dụ: bạn có thể tìm kiếm tất cả các lần xuất hiện của một chuỗi trong chuỗi khác hoặc đếm số lượng các chuỗi con khác nhau của một chuỗi đã cho.
+Cả hai nhiệm vụ đều có thể được giải quyết trong thời gian tuyến tính với sự trợ giúp của suffix automaton.
 
-Intuitively a suffix automaton can be understood as a compressed form of **all substrings** of a given string.
-An impressive fact is, that the suffix automaton contains all this information in a highly compressed form.
-For a string of length $n$ it only requires $O(n)$ memory.
-Moreover, it can also be built in $O(n)$ time (if we consider the size $k$ of the alphabet as a constant), otherwise both the memory and the time complexity will be $O(n \log k)$.
+Về mặt trực quan, suffix automaton có thể được hiểu là một dạng nén của **tất cả các chuỗi con** của một chuỗi nhất định.
+Một thực tế ấn tượng là suffix automaton chứa tất cả thông tin này ở dạng nén cao.
+Đối với chuỗi có độ dài $n$, nó chỉ yêu cầu bộ nhớ $O(n)$.
+Hơn nữa, nó cũng có thể được xây dựng trong thời gian $O(n)$ (nếu chúng ta coi kích thước $k$ của bảng chữ cái là hằng số), nếu không thì cả độ phức tạp thời gian và bộ nhớ sẽ là $O(n \log k)$.
 
-The linearity of the size of the suffix automaton was first discovered in 1983 by Blumer et al., and in 1985 the first linear algorithms for the construction was presented by Crochemore and Blumer.
+Tính tuyến tính của kích thước suffix automaton được phát hiện lần đầu tiên vào năm 1983 bởi Blumer và cộng sự, và vào năm 1985, các thuật toán tuyến tính đầu tiên để xây dựng đã được trình bày bởi Crochemore và Blumer.
 
-## Definition of a suffix automaton
+## Định nghĩa suffix automaton (Definition of a suffix automaton) {: #definition-of-a-suffix-automaton}
 
-A suffix automaton for a given string $s$ is a minimal **DFA** (deterministic finite automaton / deterministic finite state machine) that accepts all the suffixes of the string $s$.
+Suffix automaton cho một chuỗi $s$ nhất định là một **DFA** (deterministic finite automaton - automaton đơn định hữu hạn) tối thiểu chấp nhận tất cả các hậu tố của chuỗi $s$.
 
-In other words:
+Nói cách khác:
 
- -  A suffix automaton is an oriented acyclic graph.
-    The vertices are called **states**, and the edges are called **transitions** between states.
- -  One of the states $t_0$ is the **initial state**, and it must be the source of the graph (all other states are reachable from $t_0$).
- -  Each **transition** is labeled with some character.
-    All transitions originating from a state must have **different** labels.
- -  One or multiple states are marked as **terminal states**.
-    If we start from the initial state $t_0$ and move along transitions to a terminal state, then the labels of the passed transitions must spell one of the suffixes of the string $s$.
-    Each of the suffixes of $s$ must be spellable using a path from $t_0$ to a terminal state.
- -  The suffix automaton contains the minimum number of vertices among all automata satisfying the conditions described above.
+ -  Suffix automaton là một đồ thị có hướng không có chu trình.
+    Các đỉnh được gọi là **trạng thái** (**states**) và các cạnh được gọi là **chuyển đổi** (**transitions**) giữa các trạng thái.
+ -  Một trong những trạng thái $t_0$ là **trạng thái ban đầu**, và nó phải là nguồn của đồ thị (tất cả các trạng thái khác đều có thể truy cập được từ $t_0$).
+ -  Mỗi **chuyển đổi** được gắn nhãn với một số ký tự.
+    Tất cả các chuyển đổi bắt nguồn từ một trạng thái phải có nhãn **khác nhau**.
+ -  Một hoặc nhiều trạng thái được đánh dấu là **trạng thái kết thúc** (**terminal states**).
+    Nếu chúng ta bắt đầu từ trạng thái ban đầu $t_0$ và di chuyển dọc theo các chuyển đổi đến trạng thái kết thúc, thì các nhãn của các chuyển đổi đã qua phải đánh vần một trong các hậu tố của chuỗi $s$.
+    Mỗi hậu tố của $s$ phải có thể đánh vần được bằng cách sử dụng một đường dẫn từ $t_0$ đến một trạng thái kết thúc.
+ -  Suffix automaton chứa số lượng đỉnh tối thiểu trong số tất cả các automaton thỏa mãn các điều kiện được mô tả ở trên.
 
-### Substring property
+### Thuộc tính chuỗi con (Substring property) {: #substring-property}
 
-The simplest and most important property of a suffix automaton is, that it contains information about all substrings of the string $s$.
-Any path starting at the initial state $t_0$, if we write down the labels of the transitions, forms a **substring** of $s$.
-And conversely every substring of $s$ corresponds to a certain path starting at $t_0$.
+Thuộc tính đơn giản và quan trọng nhất của suffix automaton là nó chứa thông tin về tất cả các chuỗi con của chuỗi $s$.
+Bất kỳ đường dẫn nào bắt đầu ở trạng thái ban đầu $t_0$, nếu chúng ta viết ra các nhãn của các chuyển đổi, sẽ tạo thành một **chuỗi con** của $s$.
+Và ngược lại, mọi chuỗi con của $s$ tương ứng với một đường dẫn nhất định bắt đầu tại $t_0$.
 
-In order to simplify the explanations, we will say that the substring **corresponds** to that path (starting at $t_0$ and the labels spell the substring).
-And conversely we say that any path **corresponds** to the string spelled by its labels.
+Để đơn giản hóa các giải thích, chúng tôi sẽ nói rằng chuỗi con **tương ứng** với đường dẫn đó (bắt đầu tại $t_0$ và các nhãn đánh vần chuỗi con).
+Và ngược lại, chúng tôi nói rằng bất kỳ đường dẫn nào cũng **tương ứng** với chuỗi được đánh vần bởi các nhãn của nó.
 
-One or multiple paths can lead to a state.
-Thus, we will say that a state **corresponds** to the set of strings, which correspond to these paths.
+Một hoặc nhiều đường dẫn có thể dẫn đến một trạng thái.
+Do đó, chúng tôi sẽ nói rằng một trạng thái **tương ứng** với tập hợp các chuỗi, tương ứng với các đường dẫn này.
 
-### Examples of constructed suffix automata
+### Ví dụ về suffix automata đã xây dựng (Examples of constructed suffix automata) {: #examples-of-constructed-suffix-automata}
 
-Here we will show some examples of suffix automata for several simple strings.
+Ở đây chúng tôi sẽ hiển thị một số ví dụ về suffix automata cho một số chuỗi đơn giản.
 
-We will denote the initial state with blue and the terminal states with green.
+Chúng tôi sẽ biểu thị trạng thái ban đầu bằng màu xanh lam và các trạng thái kết thúc bằng màu xanh lục.
 
-For the string $s =~ \text{""}$:
+Đối với chuỗi $s =~ \text{""}$:
 
-![Suffix automaton for ""](SA.png)
+![Suffix automaton for ""](https://cp-algorithms.com/string/SA.png)
 
-For the string $s =~ \text{"a"}$:
+Đối với chuỗi $s =~ \text{"a"}$:
 
-![Suffix automaton for "a"](SAa.png)
+![Suffix automaton for "a"](https://cp-algorithms.com/string/SAa.png)
 
-For the string $s =~ \text{"aa"}$:
+Đối với chuỗi $s =~ \text{"aa"}$:
 
-![Suffix automaton for "aa"](SAaa.png)
+![Suffix automaton for "aa"](https://cp-algorithms.com/string/SAaa.png)
 
-For the string $s =~ \text{"ab"}$:
+Đối với chuỗi $s =~ \text{"ab"}$:
 
-![Suffix automaton for "ab"](SAab.png)
+![Suffix automaton for "ab"](https://cp-algorithms.com/string/SAab.png)
 
-For the string $s =~ \text{"aba"}$:
+Đối với chuỗi $s =~ \text{"aba"}$:
 
-![Suffix automaton for "aba"](SAaba.png)
+![Suffix automaton for "aba"](https://cp-algorithms.com/string/SAaba.png)
 
-For the string $s =~ \text{"abb"}$:
+Đối với chuỗi $s =~ \text{"abb"}$:
 
-![Suffix automaton for "abb"](SAabb.png)
+![Suffix automaton for "abb"](https://cp-algorithms.com/string/SAabb.png)
 
-For the string $s =~ \text{"abbb"}$:
+Đối với chuỗi $s =~ \text{"abbb"}$:
 
-![Suffix automaton for "abbb"](SAabbb.png)
+![Suffix automaton for "abbb"](https://cp-algorithms.com/string/SAabbb.png)
 
-## Construction in linear time
+## Xây dựng trong thời gian tuyến tính (Construction in linear time) {: #construction-in-linear-time}
 
-Before we describe the algorithm to construct a suffix automaton in linear time, we need to introduce several new concepts and simple proofs, which will be very important in understanding the construction.
+Trước khi mô tả thuật toán để xây dựng một suffix automaton trong thời gian tuyến tính, chúng ta cần giới thiệu một vài khái niệm mới và các bằng chứng đơn giản, sẽ rất quan trọng trong việc tìm hiểu việc xây dựng.
 
-### End positions $endpos$ {data-toc-label="End positions"}
+### Vị trí kết thúc $endpos$ (End positions $endpos$) {: #end-positions-endpos}
 
-Consider any non-empty substring $t$ of the string $s$.
-We will denote with $endpos(t)$ the set of all positions in the string $s$, in which the occurrences of $t$ end. For instance, we have $endpos(\text{"bc"}) = \{2, 4\}$ for the string $\text{"abcbc"}$.
+Xét bất kỳ chuỗi con không rỗng $t$ nào của chuỗi $s$.
+Chúng tôi sẽ ký hiệu với $endpos(t)$ tập hợp tất cả các vị trí trong chuỗi $s$, trong đó các lần xuất hiện của $t$ kết thúc. Ví dụ: chúng ta có $endpos(\text{"bc"}) = \{2, 4\}$ cho chuỗi $\text{"abcbc"}$.
 
-We will call two substrings $t_1$ and $t_2$ $endpos$-equivalent, if their ending sets coincide: $endpos(t_1) = endpos(t_2)$.
-Thus all non-empty substrings of the string $s$ can be decomposed into several **equivalence classes** according to their sets $endpos$.
+Chúng tôi sẽ gọi hai chuỗi con $t_1$ và $t_2$ là $endpos$-tương đương, nếu tập hợp kết thúc của chúng trùng nhau: $endpos(t_1) = endpos(t_2)$.
+Do đó, tất cả các chuỗi con không rỗng của chuỗi $s$ có thể được phân tách thành một số **lớp tương đương** theo tập hợp $endpos$ của chúng.
 
-It turns out, that in a suffix machine $endpos$-equivalent substrings **correspond to the same state**.
-In other words the number of states in a suffix automaton is equal to the number of equivalence classes among all substrings, plus the initial state.
-Each state of a suffix automaton corresponds to one or more substrings having the same value $endpos$.
+Hóa ra, trong một máy hậu tố, các chuỗi con $endpos$-tương đương **tương ứng với cùng một trạng thái**.
+Nói cách khác, số lượng trạng thái trong suffix automaton bằng số lượng các lớp tương đương trong tất cả các chuỗi con, cộng với trạng thái ban đầu.
+Mỗi trạng thái của một suffix automaton tương ứng với một hoặc nhiều chuỗi con có cùng giá trị $endpos$.
 
-We will later describe the construction algorithm using this assumption.
-We will then see, that all the required properties of a suffix automaton, except for the minimality, are fulfilled.
-And the minimality follows from Nerode's theorem (which will not be proven in this article).
+Sau này chúng tôi sẽ mô tả thuật toán xây dựng sử dụng giả định này.
+Sau đó chúng ta sẽ thấy, tất cả các thuộc tính cần thiết của một suffix automaton, ngoại trừ tính tối thiểu, đều được đáp ứng.
+Và tính tối thiểu tuân theo định lý Nerode (sẽ không được chứng minh trong bài viết này).
 
-We can make some important observations concerning the values $endpos$:
+Chúng ta có thể đưa ra một số quan sát quan trọng liên quan đến các giá trị $endpos$:
 
-**Lemma 1**:
-Two non-empty substrings $u$ and $w$ (with $length(u) \le length(w)$) are $endpos$-equivalent, if and only if the string $u$ occurs in $s$ only in the form of a suffix of $w$.
+**Bổ đề 1**:
+Hai chuỗi con không rỗng $u$ và $w$ (với $length(u) \le length(w)$) là $endpos$-tương đương, khi và chỉ khi chuỗi $u$ xuất hiện trong $s$ chỉ dưới dạng hậu tố của $w$.
 
-The proof is obvious.
-If $u$ and $w$ have the same $endpos$ values, then $u$ is a suffix of $w$ and appears only in the form of a suffix of $w$ in $s$.
-And if $u$ is a suffix of $w$ and appears only in the form as a suffix in $s$, then the values $endpos$ are equal by definition.
+Bằng chứng là hiển nhiên.
+Nếu $u$ và $w$ có cùng giá trị $endpos$, thì $u$ là hậu tố của $w$ và chỉ xuất hiện dưới dạng hậu tố của $w$ trong $s$.
+Và nếu $u$ là hậu tố của $w$ và chỉ xuất hiện dưới dạng hậu tố trong $s$, thì các giá trị $endpos$ bằng nhau theo định nghĩa.
 
-**Lemma 2**:
-Consider two non-empty substrings $u$ and $w$ (with $length(u) \le length(w)$).
-Then their sets $endpos$ either don't intersect at all, or $endpos(w)$ is a subset of $endpos(u)$.
-And it depends on if $u$ is a suffix of $w$ or not.
+**Bổ đề 2**:
+Xét hai chuỗi con không rỗng $u$ và $w$ (với $length(u) \le length(w)$).
+Khi đó tập hợp $endpos$ của chúng hoặc hoàn toàn không giao nhau, hoặc $endpos(w)$ là một tập hợp con của $endpos(u)$.
+Và nó phụ thuộc vào việc $u$ có phải là hậu tố của $w$ hay không.
 
 $$\begin{cases}
-endpos(w) \subseteq endpos(u) & \text{if } u \text{ is a suffix of } w \\\\
-endpos(w) \cap endpos(u) = \emptyset & \text{otherwise}
+endpos(w) \subseteq endpos(u) & \text{nếu } u \text{ là hậu tố của } w \\\\
+endpos(w) \cap endpos(u) = \emptyset & \text{ngược lại}
 \end{cases}$$
 
-Proof:
-If the sets $endpos(u)$ and $endpos(w)$ have at least one common element, then the strings $u$ and $w$ both end in that position, i.e. $u$ is a suffix of $w$.
-But then at every occurrence of $w$ also appears the substring $u$, which means that $endpos(w)$ is a subset of $endpos(u)$.
+Bằng chứng:
+Nếu các tập hợp $endpos(u)$ và $endpos(w)$ có ít nhất một phần tử chung, thì các chuỗi $u$ và $w$ đều kết thúc ở vị trí đó, tức là $u$ là một hậu tố của $w$.
+Nhưng sau đó tại mỗi lần xuất hiện của $w$ cũng xuất hiện chuỗi con $u$, có nghĩa là $endpos(w)$ là một tập hợp con của $endpos(u)$.
 
-**Lemma 3**:
-Consider an $endpos$-equivalence class.
-Sort all the substrings in this class by decreasing length.
-Then in the resulting sequence each substring will be one shorter than the previous one, and at the same time will be a suffix of the previous one.
-In other words, in a same equivalence class, the shorter substrings are actually suffixes of the longer substrings, and they take all possible lengths in a certain interval $[x; y]$.
+**Bổ đề 3**:
+Xét một lớp tương đương $endpos$.
+Sắp xếp tất cả các chuỗi con trong lớp này theo độ dài giảm dần.
+Khi đó trong chuỗi kết quả, mỗi chuỗi con sẽ ngắn hơn chuỗi trước đó một đơn vị, và đồng thời sẽ là hậu tố của chuỗi trước đó.
+Nói cách khác, trong cùng một lớp tương đương, các chuỗi con ngắn hơn thực sự là các hậu tố của các chuỗi con dài hơn và chúng nhận tất cả các độ dài có thể trong một khoảng nhất định $[x; y]$.
 
-Proof:
-Fix some $endpos$-equivalence class.
-If it only contains one string, then the lemma is obviously true.
-Now let's say that the number of strings in the class is greater than one.
+Bằng chứng:
+Cố định một số lớp tương đương $endpos$.
+Nếu nó chỉ chứa một chuỗi, thì bổ đề rõ ràng là đúng.
+Bây giờ giả sử số lượng chuỗi trong lớp lớn hơn một.
 
-According to Lemma 1, two different $endpos$-equivalent strings are always in such a way, that the shorter one is a proper suffix of the longer one.
-Consequently, there cannot be two strings of the same length in the equivalence class.
+Theo Bổ đề 1, hai chuỗi tương đương $endpos$ khác nhau luôn theo cách sao cho chuỗi ngắn hơn là hậu tố thực sự của chuỗi dài hơn.
+Do đó, không thể có hai chuỗi có cùng độ dài trong lớp tương đương.
 
-Let's denote by $w$ the longest, and through $u$ the shortest string in the equivalence class.
-According to Lemma 1, the string $u$ is a proper suffix of the string $w$.
-Consider now any suffix of $w$ with a length in the interval $[length(u); length(w)]$.
-It is easy to see, that this suffix is also contained in the same equivalence class.
-Because this suffix can only appear in the form of a suffix of $w$ in the string $s$ (since also the shorter suffix $u$ occurs in $s$ only in the form of a suffix of $w$).
-Consequently, according to Lemma 1, this suffix is $endpos$-equivalent to the string $w$.
+Hãy ký hiệu $w$ là chuỗi dài nhất và $u$ là chuỗi ngắn nhất trong lớp tương đương.
+Theo Bổ đề 1, chuỗi $u$ là hậu tố thực sự của chuỗi $w$.
+Bây giờ hãy xem xét bất kỳ hậu tố nào của $w$ có độ dài trong khoảng $[length(u); length(w)]$.
+Dễ thấy rằng hậu tố này cũng được chứa trong cùng một lớp tương đương.
+Bởi vì hậu tố này chỉ có thể xuất hiện dưới dạng hậu tố của $w$ trong chuỗi $s$ (vì hậu tố ngắn hơn $u$ cũng xuất hiện trong $s$ chỉ dưới dạng hậu tố của $w$).
+Do đó, theo Bổ đề 1, hậu tố này $endpos$-tương đương với chuỗi $w$.
 
-### Suffix links $link$ {data-toc-label="Suffix links"}
+### Liên kết hậu tố $link$ (Suffix links $link$) {: #suffix-links-link}
 
-Consider some state $v \ne t_0$ in the automaton.
-As we know, the state $v$ corresponds to the class of strings with the same $endpos$ values.
-And if we denote by $w$ the longest of these strings, then all the other strings are suffixes of $w$.
+Xem xét một số trạng thái $v \ne t_0$ trong automaton.
+Như chúng ta đã biết, trạng thái $v$ tương ứng với lớp chuỗi có cùng giá trị $endpos$.
+Và nếu chúng ta ký hiệu $w$ là chuỗi dài nhất trong các chuỗi này, thì tất cả các chuỗi khác là hậu tố của $w$.
 
-We also know the first few suffixes of a string $w$ (if we consider suffixes in descending order of their length) are all contained in this equivalence class, and all other suffixes (at least one other - the empty suffix) are in some other classes.
-We denote by $t$ the biggest such suffix, and make a suffix link to it.
+Chúng tôi cũng biết một vài hậu tố đầu tiên của một chuỗi $w$ (nếu chúng ta xem xét các hậu tố theo thứ tự độ dài giảm dần) đều được chứa trong lớp tương đương này, và tất cả các hậu tố khác (ít nhất một hậu tố khác - hậu tố rỗng) nằm trong một số lớp khác.
+Chúng tôi ký hiệu $t$ là hậu tố lớn nhất như vậy và tạo một liên kết hậu tố đến nó.
 
-In other words, a **suffix link** $link(v)$ leads to the state that corresponds to the **longest suffix** of $w$ that is in another $endpos$-equivalence class.
+Nói cách khác, một **liên kết hậu tố** (**suffix link**) $link(v)$ dẫn đến trạng thái tương ứng với **hậu tố dài nhất** của $w$ nằm trong một lớp tương đương $endpos$ khác.
 
-Here we assume that the initial state $t_0$ corresponds to its own equivalence class (containing only the empty string), and for convenience we set $endpos(t_0) = \{-1, 0, \dots, length(s)-1\}$.
+Ở đây chúng tôi giả định rằng trạng thái ban đầu $t_0$ tương ứng với lớp tương đương của riêng nó (chỉ chứa chuỗi rỗng) và để thuận tiện, chúng tôi đặt $endpos(t_0) = \{-1, 0, \dots, length(s)-1\}$.
 
-**Lemma 4**:
-Suffix links form a **tree** with the root $t_0$.
+**Bổ đề 4**:
+Các liên kết hậu tố tạo thành một **cây** với gốc $t_0$.
 
-Proof:
-Consider an arbitrary state $v \ne t_0$.
-A suffix link $link(v)$ leads to a state corresponding to strings with strictly smaller length (this follows from the definition of the suffix links and from Lemma 3).
-Therefore, by moving along the suffix links, we will sooner or later come to the initial state $t_0$, which corresponds to the empty string.
+Bằng chứng:
+Xét một trạng thái $v \ne t_0$ tùy ý.
+Một liên kết hậu tố $link(v)$ dẫn đến một trạng thái tương ứng với các chuỗi có độ dài nhỏ hơn nghiêm ngặt (điều này tuân theo định nghĩa của các liên kết hậu tố và từ Bổ đề 3).
+Do đó, bằng cách di chuyển dọc theo các liên kết hậu tố, sớm hay muộn chúng ta cũng sẽ đến trạng thái ban đầu $t_0$, tương ứng với chuỗi rỗng.
 
-**Lemma 5**:
-If we construct a tree using the sets $endpos$ (by the rule that the set of a parent node contains the sets of all children as subsets), then the structure will coincide with the tree of suffix links.
+**Bổ đề 5**:
+Nếu chúng ta xây dựng một cây sử dụng các tập hợp $endpos$ (theo quy tắc tập hợp của nút cha chứa các tập hợp của tất cả con cái dưới dạng tập hợp con), thì cấu trúc sẽ trùng với cây của các liên kết hậu tố.
 
-Proof:
-The fact that we can construct a tree using the sets $endpos$ follows directly from Lemma 2 (that any two sets either do not intersect or one is contained in the other).
+Bằng chứng:
+Việc chúng ta có thể xây dựng một cây bằng cách sử dụng các tập hợp $endpos$ tuân theo trực tiếp từ Bổ đề 2 (rằng bất kỳ hai tập hợp nào không giao nhau hoặc một tập hợp được chứa trong tập hợp kia).
 
-Let us now consider an arbitrary state $v \ne t_0$, and its suffix link $link(v)$.
-From the definition of the suffix link and from Lemma 2 it follows that
+Bây giờ chúng ta hãy xem xét một trạng thái $v \ne t_0$ tùy ý và liên kết hậu tố của nó $link(v)$.
+Từ định nghĩa của liên kết hậu tố và từ Bổ đề 2 suy ra rằng
 
 $$endpos(v) \subseteq endpos(link(v)),$$
 
-which together with the previous lemma proves the assertion:
-the tree of suffix links is essentially a tree of sets $endpos$.
+cùng với bổ đề trước chứng minh khẳng định:
+cây liên kết hậu tố về cơ bản là một cây của các tập hợp $endpos$.
 
-Here is an **example** of a tree of suffix links in the suffix automaton build for the string $\text{"abcbc"}$.
-The nodes are labeled with the longest substring from the corresponding equivalence class.
+Dưới đây là một **ví dụ** về cây liên kết hậu tố trong suffix automaton được xây dựng cho chuỗi $\text{"abcbc"}$.
+Các nút được gắn nhãn với chuỗi con dài nhất từ lớp tương đương tương ứng.
 
-![Suffix automaton for "abcbc" with suffix links](SA_suffix_links.png)
+![Suffix automaton for "abcbc" with suffix links](https://cp-algorithms.com/string/SA_suffix_links.png)
 
-### Recap
+### Tóm tắt (Recap) {: #recap}
 
-Before proceeding to the algorithm itself, we recap the accumulated knowledge, and introduce a few auxiliary notations.
+Trước khi tiến hành thuật toán, chúng ta tóm tắt lại kiến thức đã tích lũy và giới thiệu một vài ký hiệu phụ trợ.
 
-- The substrings of the string $s$ can be decomposed into equivalence classes according to their end positions $endpos$.
-- The suffix automaton consists of the initial state $t_0$, as well as of one state for each $endpos$-equivalence class.
-- For each state $v$ one or multiple substrings match.
-  We denote by $longest(v)$ the longest such string, and through $len(v)$ its length.
-  We denote by $shortest(v)$ the shortest such substring, and its length with $minlen(v)$.
-  Then all the strings corresponding to this state are different suffixes of the string $longest(v)$ and have all possible lengths in the interval $[minlen(v); len(v)]$.
-- For each state $v \ne t_0$ a suffix link is defined as a link, that leads to a state that corresponds to the suffix of the string $longest(v)$ of length $minlen(v) - 1$.
-  The suffix links form a tree with the root in $t_0$, and at the same time this tree forms an inclusion relationship between the sets $endpos$.
-- We can express $minlen(v)$ for $v \ne t_0$ using the suffix link $link(v)$ as:
+- Các chuỗi con của chuỗi $s$ có thể được phân tách thành các lớp tương đương theo vị trí kết thúc $endpos$ của chúng.
+- Suffix automaton bao gồm trạng thái ban đầu $t_0$, cũng như một trạng thái cho mỗi lớp tương đương $endpos$.
+- Đối với mỗi trạng thái $v$, một hoặc nhiều chuỗi con khớp với nhau.
+  Chúng tôi ký hiệu $longest(v)$ là chuỗi dài nhất như vậy và qua $len(v)$ là độ dài của nó.
+  Chúng tôi ký hiệu $shortest(v)$ là chuỗi con ngắn nhất như vậy và độ dài của nó với $minlen(v)$.
+  Sau đó, tất cả các chuỗi tương ứng với trạng thái này là các hậu tố khác nhau của chuỗi $longest(v)$ và có tất cả các độ dài có thể trong khoảng $[minlen(v); len(v)]$.
+- Đối với mỗi trạng thái $v \ne t_0$, một liên kết hậu tố được định nghĩa là một liên kết, dẫn đến một trạng thái tương ứng với hậu tố của chuỗi $longest(v)$ có độ dài $minlen(v) - 1$.
+  Các liên kết hậu tố tạo thành một cây với gốc ở $t_0$, và đồng thời cây này tạo thành mối quan hệ bao gồm giữa các tập hợp $endpos$.
+- Chúng ta có thể biểu thị $minlen(v)$ cho $v \ne t_0$ bằng liên kết hậu tố $link(v)$ như sau:
   
 $$minlen(v) = len(link(v)) + 1$$
 
-- If we start from an arbitrary state $v_0$ and follow the suffix links, then sooner or later we will reach the initial state $t_0$.
-  In this case we obtain a sequence of disjoint intervals $[minlen(v_i); len(v_i)]$, which in union forms the continuous interval $[0; len(v_0)]$.
+- Nếu chúng ta bắt đầu từ một trạng thái $v_0$ tùy ý và đi theo các liên kết hậu tố, thì sớm hay muộn chúng ta cũng sẽ đạt đến trạng thái ban đầu $t_0$.
+  Trong trường hợp này, chúng ta thu được một chuỗi các khoảng rời rạc $[minlen(v_i); len(v_i)]$, trong đó hợp lại tạo thành khoảng liên tục $[0; len(v_0)]$.
 
-### Algorithm
+### Thuật toán (Algorithm) {: #algorithm}
 
-Now we can proceed to the algorithm itself.
-The algorithm will be **online**, i.e. we will add the characters of the string one by one, and modify the automaton accordingly in each step.
+Bây giờ chúng ta có thể tiến hành thuật toán chính nó.
+Thuật toán sẽ là **trực tuyến**, tức là chúng ta sẽ thêm các ký tự của chuỗi từng cái một, và sửa đổi automaton cho phù hợp trong từng bước.
 
-To achieve linear memory consumption, we will only store the values $len$, $link$ and a list of transitions in each state.
-We will not label terminal states (but we will later show how to arrange these labels after constructing the suffix automaton).
+Để đạt được mức tiêu thụ bộ nhớ tuyến tính, chúng ta sẽ chỉ lưu trữ các giá trị $len$, $link$ và danh sách các chuyển đổi trong mỗi trạng thái.
+Chúng tôi sẽ không gắn nhãn các trạng thái kết thúc (nhưng sau này chúng tôi sẽ chỉ ra cách sắp xếp các nhãn này sau khi xây dựng suffix automaton).
 
-Initially the automaton consists of a single state $t_0$, which will be the index $0$ (the remaining states will receive the indices $1, 2, \dots$).
-We assign it $len = 0$ and $link = -1$ for convenience ($-1$ will be a fictional, non-existing state).
+Ban đầu automaton bao gồm một trạng thái duy nhất $t_0$, sẽ là chỉ số $0$ (các trạng thái còn lại sẽ nhận được các chỉ số $1, 2, \dots$).
+Chúng tôi gán cho nó $len = 0$ và $link = -1$ để thuận tiện ($-1$ sẽ là một trạng thái hư cấu, không tồn tại).
 
-Now the whole task boils down to implementing the process of **adding one character** $c$ to the end of the current string.
-Let us describe this process:
+Bây giờ toàn bộ nhiệm vụ rút gọn lại thành việc thực hiện quá trình **thêm một ký tự** $c$ vào cuối chuỗi hiện tại.
+Hãy mô tả quá trình này:
 
-  - Let $last$ be the state corresponding to the entire string before adding the character $c$.
-    (Initially we set $last = 0$, and we will change $last$ in the last step of the algorithm accordingly.)
-  - Create a new state $cur$, and assign it with $len(cur) = len(last) + 1$.
-    The value $link(cur)$ is not known at the time.
-  - Now we do the following procedure:
-    We start at the state $last$.
-    While there isn't a transition through the letter $c$, we will add a transition to the state $cur$, and follow the suffix link.
-    If at some point there already exists a transition through the letter $c$, then we will stop and denote this state with $p$.
-  - If we haven't found such a state $p$, then we reached the fictitious state $-1$, then we can just assign $link(cur) = 0$ and leave.
-  - Suppose now that we have found a state $p$, from which there exists a transition through the letter $c$.
-    We will denote the state, to which the transition leads,  with $q$.
-  - Now we have two cases. Either $len(p) + 1 = len(q)$, or not.
-  - If $len(p) + 1 = len(q)$, then we can simply assign $link(cur) = q$ and leave.
-  - Otherwise it is a bit more complicated.
-    It is necessary to **clone** the state $q$:
-    we create a new state $clone$, copy all the data from $q$ (suffix link and transition) except the value $len$.
-    We will assign $len(clone) = len(p) + 1$.
+  - Gọi $last$ là trạng thái tương ứng với toàn bộ chuỗi trước khi thêm ký tự $c$.
+    (Ban đầu chúng ta đặt $last = 0$, và chúng ta sẽ thay đổi $last$ trong bước cuối cùng của thuật toán cho phù hợp.)
+  - Tạo một trạng thái mới $cur$, và gán cho nó $len(cur) = len(last) + 1$.
+    Giá trị $link(cur)$ không được biết vào lúc đó.
+  - Bây giờ chúng ta thực hiện thủ tục sau:
+    Chúng ta bắt đầu ở trạng thái $last$.
+    Trong khi không có chuyển đổi qua chữ cái $c$, chúng ta sẽ thêm một chuyển đổi đến trạng thái $cur$, và đi theo liên kết hậu tố.
+    Nếu tại một thời điểm nào đó đã tồn tại một chuyển đổi qua chữ cái $c$, thì chúng ta sẽ dừng lại và biểu thị trạng thái này bằng $p$.
+  - Nếu chúng ta chưa tìm thấy trạng thái $p$ như vậy, thì chúng ta đã đạt đến trạng thái hư cấu $-1$, sau đó chúng ta chỉ cần gán $link(cur) = 0$ và rời đi.
+  - Giả sử bây giờ chúng ta đã tìm thấy một trạng thái $p$, từ đó tồn tại một chuyển đổi qua chữ cái $c$.
+    Chúng tôi sẽ biểu thị trạng thái mà chuyển đổi dẫn đến là $q$.
+  - Bây giờ chúng ta có hai trường hợp. Hoặc $len(p) + 1 = len(q)$, hoặc không.
+  - Nếu $len(p) + 1 = len(q)$, thì chúng ta chỉ cần gán $link(cur) = q$ và rời đi.
+  - Nếu không thì phức tạp hơn một chút.
+    Cần phải **nhân bản** (**clone**) trạng thái $q$:
+    chúng ta tạo một trạng thái mới $clone$, sao chép tất cả dữ liệu từ $q$ (liên kết hậu tố và chuyển đổi) ngoại trừ giá trị $len$.
+    Chúng tôi sẽ gán $len(clone) = len(p) + 1$.
 
-    After cloning we direct the suffix link from $cur$ to $clone$, and also from $q$ to clone.
+    Sau khi nhân bản, chúng ta hướng liên kết hậu tố từ $cur$ đến $clone$, và cả từ $q$ đến $clone$.
 
-    Finally we need to walk from the state $p$ back using suffix links as long as there is a transition through $c$ to the state $q$, and redirect all those to the state $clone$.
+    Cuối cùng, chúng ta cần đi bộ từ trạng thái $p$ trở lại bằng cách sử dụng các liên kết hậu tố miễn là có chuyển đổi qua $c$ đến trạng thái $q$, và chuyển hướng tất cả những chuyển đổi đó đến trạng thái $clone$.
 
-  - In any of the three cases, after completing the procedure, we update the value $last$ with the state $cur$.
+  - Trong bất kỳ trường hợp nào trong ba trường hợp, sau khi hoàn thành thủ tục, chúng ta cập nhật giá trị $last$ với trạng thái $cur$.
 
-If we also want to know which states are **terminal** and which are not, we can find all terminal states after constructing the complete suffix automaton for the entire string $s$.
-To do this, we take the state corresponding to the entire string (stored in the variable $last$), and follow its suffix links until we reach the initial state.
-We will mark all visited states as terminal.
-It is easy to understand that by doing so we will mark exactly the states corresponding to all the suffixes of the string $s$, which are exactly the terminal states.
+Nếu chúng ta cũng muốn biết trạng thái nào là **kết thúc** và trạng thái nào không, chúng ta có thể tìm thấy tất cả các trạng thái kết thúc sau khi xây dựng suffix automaton hoàn chỉnh cho toàn bộ chuỗi $s$.
+Để làm điều này, chúng ta lấy trạng thái tương ứng với toàn bộ chuỗi (được lưu trữ trong biến $last$) và đi theo các liên kết hậu tố của nó cho đến khi chúng ta đến trạng thái ban đầu.
+Chúng tôi sẽ đánh dấu tất cả các trạng thái đã truy cập là kết thúc.
+Dễ hiểu rằng bằng cách làm như vậy, chúng ta sẽ đánh dấu chính xác các trạng thái tương ứng với tất cả các hậu tố của chuỗi $s$, đó chính xác là các trạng thái kết thúc.
 
-In the next section we will look in detail at each step and show its **correctness**.
+Trong phần tiếp theo, chúng ta sẽ xem xét chi tiết từng bước và cho thấy **tính chính xác** của nó.
 
-Here we only note that, since we only create one or two new states for each character of $s$, the suffix automaton contains a **linear number of states**.
+Ở đây chúng tôi chỉ lưu ý rằng, vì chúng tôi chỉ tạo một hoặc hai trạng thái mới cho mỗi ký tự của $s$, suffix automaton chứa một **số lượng trạng thái tuyến tính**.
 
-The linearity of the number of transitions, and in general the linearity of the runtime of the algorithm is less clear, and they will be proven after we proved the correctness.
+Tính tuyến tính của số lượng chuyển đổi, và nói chung là tính tuyến tính của thời gian chạy của thuật toán ít rõ ràng hơn, và chúng sẽ được chứng minh sau khi chúng tôi chứng minh tính chính xác.
 
-### Correctness
+### Tính chính xác (Correctness) {: #correctness}
 
-  - We will call a transition $(p, q)$ **continuous** if $len(p) + 1 = len(q)$.
-    Otherwise, i.e. when $len(p) + 1 < len(q)$, the transition will be called **non-continuous**.
+  - Chúng tôi sẽ gọi một chuyển đổi $(p, q)$ là **liên tục** (**continuous**) nếu $len(p) + 1 = len(q)$.
+    Việc khác, tức là khi $len(p) + 1 < len(q)$, chuyển đổi sẽ được gọi là **không liên tục** (**non-continuous**).
 
-    As we can see from the description of the algorithm, continuous and non-continuous transitions will lead to different cases of the algorithm.
-    Continuous transitions are fixed, and will never change again.
-    In contrast non-continuous transition may change, when new letters are added to the string (the end of the transition edge may change).
+    Như chúng ta có thể thấy từ mô tả của thuật toán, các chuyển đổi liên tục và không liên tục sẽ dẫn đến các trường hợp khác nhau của thuật toán.
+    Các chuyển đổi liên tục là cố định và sẽ không bao giờ thay đổi nữa.
+    Ngược lại, chuyển đổi không liên tục có thể thay đổi khi các chữ cái mới được thêm vào chuỗi (kết thúc của cạnh chuyển đổi có thể thay đổi).
 
-  - To avoid ambiguity we will denote the string, for which the suffix automaton was built before adding the current character $c$, with $s$.
+  - Để tránh sự mơ hồ, chúng tôi sẽ biểu thị chuỗi, mà suffix automaton được xây dựng trước khi thêm ký tự hiện tại $c$, bằng $s$.
 
-  - The algorithm begins with creating a new state $cur$, which will correspond to the entire string $s + c$.
-    It is clear why we have to create a new state.
-    Together with the new character a new equivalence class is created.
+  - Thuật toán bắt đầu bằng cách tạo một trạng thái mới $cur$, sẽ tương ứng với toàn bộ chuỗi $s + c$.
+    Rõ ràng là tại sao chúng ta phải tạo ra một trạng thái mới.
+    Cùng với ký tự mới, một lớp tương đương mới được tạo ra.
 
-  - After creating a new state we traverse by suffix links starting from the state corresponding to the entire string $s$.
-    For each state we try to add a transition with the character $c$ to the new state $cur$.
-    Thus we append to each suffix of $s$ the character $c$.
-    However we can only add these new transitions, if they don't conflict with an already existing one.
-    Therefore as soon as we find an already existing transition with $c$ we have to stop.
+  - Sau khi tạo trạng thái mới, chúng ta duyệt qua các liên kết hậu tố bắt đầu từ trạng thái tương ứng với toàn bộ chuỗi $s$.
+    Đối với mỗi trạng thái, chúng tôi cố gắng thêm một chuyển đổi với ký tự $c$ vào trạng thái mới $cur$.
+    Do đó, chúng ta thêm ký tự $c$ vào mỗi hậu tố của $s$.
+    Tuy nhiên, chúng ta chỉ có thể thêm các chuyển đổi mới này nếu chúng không xung đột với một chuyển đổi đã tồn tại.
+    Do đó, ngay khi chúng ta tìm thấy một chuyển đổi đã tồn tại với $c$, chúng ta phải dừng lại.
 
-  - In the simplest case we reached the fictitious state $-1$.
-    This means we added the transition with $c$ to all suffixes of $s$.
-    This also means, that the character $c$ hasn't been part of the string $s$ before.
-    Therefore the suffix link of $cur$ has to lead to the state $0$.
+  - Trong trường hợp đơn giản nhất, chúng tôi đã đạt đến trạng thái hư cấu $-1$.
+    Điều này có nghĩa là chúng ta đã thêm chuyển đổi với $c$ cho tất cả các hậu tố của $s$.
+    Điều này cũng có nghĩa là, ký tự $c$ chưa từng là một phần của chuỗi $s$ trước đây.
+    Do đó, liên kết hậu tố của $cur$ phải dẫn đến trạng thái $0$.
 
-  - In the second case we came across an existing transition $(p, q)$.
-    This means that we tried to add a string $x + c$ (where $x$ is a suffix of $s$) to the machine that **already exists** in the machine (the string $x + c$ already appears as a substring of $s$).
-    Since we assume that the automaton for the string $s$ is built correctly, we should not add a new transition here.
+  - Trong trường hợp thứ hai, chúng ta bắt gặp một chuyển đổi hiện có $(p, q)$.
+    Điều này có nghĩa là chúng ta đã cố gắng thêm một chuỗi $x + c$ (trong đó $x$ là hậu tố của $s$) vào máy **đã tồn tại** trong máy (chuỗi $x + c$ đã xuất hiện dưới dạng chuỗi con của $s$).
+    Vì chúng tôi giả định rằng automaton cho chuỗi $s$ được xây dựng chính xác, chúng tôi không nên thêm một chuyển đổi mới ở đây.
 
-    However there is a difficulty.
-    To which state should the suffix link from the state $cur$ lead?
-    We have to make a suffix link to a state, in which the longest string is exactly $x + c$, i.e. the $len$ of this state should be $len(p) + 1$.
-    However it is possible, that such a state doesn't yet exists, i.e. $len(q) > len(p) + 1$.
-    In this case we have to create such a state, by **splitting** the state $q$.
+    Tuy nhiên có một khó khăn.
+    Liên kết hậu tố từ trạng thái $cur$ nên dẫn đến trạng thái nào?
+    Chúng ta phải tạo một liên kết hậu tố đến một trạng thái, trong đó chuỗi dài nhất chính xác là $x + c$, tức là $len$ của trạng thái này phải là $len(p) + 1$.
+    Tuy nhiên, có thể trạng thái như vậy chưa tồn tại, tức là $len(q) > len(p) + 1$.
+    Trong trường hợp này, chúng ta phải tạo ra một trạng thái như vậy bằng cách **tách** trạng thái $q$.
 
-  - If the transition $(p, q)$ turns out to be continuous, then $len(q) = len(p) + 1$.
-    In this case everything is simple.
-    We direct the suffix link from $cur$ to the state $q$.
+  - Nếu chuyển đổi $(p, q)$ hóa ra là liên tục, thì $len(q) = len(p) + 1$.
+    Trong trường hợp này mọi thứ đều đơn giản.
+    Chúng tôi hướng liên kết hậu tố từ $cur$ đến trạng thái $q$.
 
-  - Otherwise the transition is non-continuous, i.e. $len(q) > len(p) + 1$.
-    This means that the state $q$ corresponds to not only the suffix of $s + c$ with length $len(p) + 1$, but also to longer substrings of $s$.
-    We can do nothing other than **splitting** the state $q$ into two sub-states, so that the first one has length $len(p) + 1$.
+  - Nếu không, quá trình chuyển đổi là không liên tục, tức là $len(q) > len(p) + 1$.
+    Điều này có nghĩa là trạng thái $q$ tương ứng không chỉ với hậu tố của $s + c$ với độ dài $len(p) + 1$, mà còn với các chuỗi con dài hơn của $s$.
+    Chúng ta không thể làm gì khác ngoài **tách** trạng thái $q$ thành hai trạng thái con, để trạng thái đầu tiên có độ dài $len(p) + 1$.
 
-    How can we split a state?
-    We **clone** the state $q$, which gives us the state $clone$, and we set $len(clone) = len(p) + 1$.
-    We copy all the transitions from $q$ to $clone$, because we don't want to change the paths that traverse through $q$.
-    Also we set the suffix link from $clone$ to the target of the suffix link of $q$, and set the suffix link of $q$ to $clone$.
+    Làm thế nào chúng ta có thể tách một trạng thái?
+    Chúng ta **nhân bản** trạng thái $q$, cung cấp cho chúng ta trạng thái $clone$, và chúng ta đặt $len(clone) = len(p) + 1$.
+    Chúng tôi sao chép tất cả các chuyển đổi từ $q$ sang $clone$, vì chúng tôi không muốn thay đổi các đường dẫn đi qua $q$.
+    Ngoài ra, chúng tôi đặt liên kết hậu tố từ $clone$ thành đích của liên kết hậu tố của $q$, và đặt liên kết hậu tố của $q$ thành $clone$.
 
-    And after splitting the state, we set the suffix link from $cur$ to $clone$.
+    Và sau khi tách trạng thái, chúng ta đặt liên kết hậu tố từ $cur$ đến $clone$.
 
-    In the last step we change some of the transitions to $q$, we redirect them to $clone$.
-    Which transitions do we have to change?
-    It is enough to redirect only the transitions corresponding to all the suffixes of the string $w + c$ (where $w$ is the longest string of $p$), i.e. we need to continue to move along the suffix links, starting from the vertex $p$ until we reach the fictitious state $-1$ or a transition that leads to a different state than $q$.
+    Trong bước cuối cùng, chúng tôi thay đổi một số chuyển đổi thành $q$, chúng tôi chuyển hướng chúng sang $clone$.
+    Chúng ta phải thay đổi những chuyển đổi nào?
+    Chỉ cần chuyển hướng các chuyển đổi tương ứng với tất cả các hậu tố của chuỗi $w + c$ (trong đó $w$ là chuỗi dài nhất của $p$) là đủ, tức là chúng ta cần tiếp tục di chuyển dọc theo các liên kết hậu tố, bắt đầu từ đỉnh $p$ cho đến khi chúng ta đến trạng thái hư cấu $-1$ hoặc một chuyển đổi dẫn đến trạng thái khác với $q$.
 
-### Linear number of operations
+### Số lượng hoạt động tuyến tính (Linear number of operations) {: #linear-number-of-operations}
 
-First we immediately make the assumption that the size of the alphabet is **constant**.
-If this is not the case, then it will not be possible to talk about the linear time complexity.
-The list of transitions from one vertex will be stored in a balanced tree, which allows you to quickly perform key search operations and adding keys.
-Therefore if we denote with $k$ the size of the alphabet, then the asymptotic behavior of the algorithm will be $O(n \log k)$ with $O(n)$ memory.
-However if the alphabet is small enough, then you can sacrifice memory by avoiding balanced trees, and store the transitions at each vertex as an array of length $k$ (for quick searching by key) and a dynamic list (to quickly traverse all available keys).
-Thus we reach the $O(n)$ time complexity for the algorithm, but at a cost of $O(n k)$ memory complexity.
+Đầu tiên, chúng ta ngay lập tức đưa ra giả định rằng kích thước của bảng chữ cái là **hằng số**.
+Nếu không phải như vậy, thì sẽ không thể nói về độ phức tạp thời gian tuyến tính.
+Danh sách các chuyển đổi từ một đỉnh sẽ được lưu trữ trong một cây cân bằng, cho phép bạn nhanh chóng thực hiện các thao tác tìm kiếm khóa và thêm khóa.
+Do đó, nếu chúng ta biểu thị kích thước của bảng chữ cái bằng $k$, thì hành vi tiệm cận của thuật toán sẽ là $O(n \log k)$ với bộ nhớ $O(n)$.
+Tuy nhiên, nếu bảng chữ cái đủ nhỏ, thì bạn có thể hy sinh bộ nhớ bằng cách tránh các cây cân bằng và lưu trữ các chuyển đổi tại mỗi đỉnh dưới dạng một mảng có độ dài $k$ (để tìm kiếm nhanh bằng khóa) và danh sách động (để nhanh chóng duyệt qua tất cả các khóa có sẵn).
+Do đó, chúng ta đạt được độ phức tạp thời gian $O(n)$ cho thuật toán, nhưng với chi phí là độ phức tạp bộ nhớ $O(n k)$.
 
-So we will consider the size of the alphabet to be constant, i.e. each operation of searching for a transition on a character, adding a transition, searching for the next transition - all these operations can be done in $O(1)$.
+Vì vậy, chúng tôi sẽ coi kích thước của bảng chữ cái là hằng số, tức là mỗi thao tác tìm kiếm chuyển đổi trên một ký tự, thêm chuyển đổi, tìm kiếm chuyển đổi tiếp theo - tất cả các thao tác này đều có thể được thực hiện trong $O(1)$.
 
-If we consider all parts of the algorithm, then it contains three places in the algorithm in which the linear complexity is not obvious:
+Nếu chúng ta xem xét tất cả các phần của thuật toán, thì nó chứa ba vị trí trong thuật toán mà độ phức tạp tuyến tính không rõ ràng:
 
-  - The first place is the traversal through the suffix links from the state $last$, adding transitions with the character $c$.
-  - The second place is the copying of transitions when the state $q$ is cloned into a new state $clone$.
-  - Third place is changing the transition leading to $q$, redirecting them to $clone$.
+  - Vị trí đầu tiên là truyền qua các liên kết hậu tố từ trạng thái $last$, thêm các chuyển đổi với ký tự $c$.
+  - Vị trí thứ hai là sao chép các chuyển đổi khi trạng thái $q$ được nhân bản thành một trạng thái mới $clone$.
+  - Vị trí thứ ba là thay đổi quá trình chuyển đổi dẫn đến $q$, chuyển hướng chúng đến $clone$.
 
-We use the fact that the size of the suffix automaton (both in the number of states and in the number of transitions) is **linear**.
-(The proof of the linearity of the number of states is the algorithm itself, and the proof of linearity of the number of states is given below, after the implementation of the algorithm).
+Chúng tôi sử dụng thực tế là kích thước của suffix automaton (cả về số lượng trạng thái và số lượng chuyển đổi) là **tuyến tính**.
+(Bằng chứng về tính tuyến tính của số lượng trạng thái là chính thuật toán, và bằng chứng về tính tuyến tính của số lượng trạng thái được đưa ra bên dưới, sau khi thực hiện thuật toán).
 
-Thus the total complexity of the **first and second places** is obvious, after all each operation adds only one amortized new transition to the automaton.
+Do đó, tổng độ phức tạp của **vị trí thứ nhất và thứ hai** là hiển nhiên, sau cùng thì mỗi thao tác chỉ thêm một chuyển đổi mới được khấu hao vào automaton.
 
-It remains to estimate the total complexity of the **third place**, in which we redirect transitions, that pointed originally to $q$, to $clone$.
-We denote $v = longest(p)$.
-This is a suffix of the string $s$, and with each iteration its length decreases - and therefore the position $v$ as the suffix of the string $s$ increases monotonically with each iteration.
-In this case, if before the first iteration of the loop, the corresponding string $v$ was at the depth $k$ ($k \ge 2$) from $last$ (by counting the depth as the number of suffix links), then after the last iteration the string $v + c$ will be a $2$-th suffix link on the path from $cur$ (which will become the new value $last$).
+Vẫn còn phải ước tính tổng độ phức tạp của **vị trí thứ ba**, trong đó chúng ta chuyển hướng các chuyển đổi, ban đầu trỏ đến $q$, sang $clone$.
+Chúng tôi ký hiệu $v = longest(p)$.
+Đây là hậu tố của chuỗi $s$, và với mỗi lần lặp, độ dài của nó giảm dần - và do đó vị trí $v$ là hậu tố của chuỗi $s$ tăng đơn điệu với mỗi lần lặp.
+Trong trường hợp này, nếu trước lần lặp đầu tiên của vòng lặp, chuỗi tương ứng $v$ ở độ sâu $k$ ($k \ge 2$) từ $last$ (bằng cách đếm độ sâu là số lượng liên kết hậu tố), thì sau lần lặp cuối cùng chuỗi $v + c$ sẽ là liên kết hậu tố thứ $2$ trên đường dẫn từ $cur$ (sẽ trở thành giá trị $last$ mới).
 
-Thus, each iteration of this loop leads to the fact that the position of the string $longest(link(link(last))$ as a suffix of the current string will monotonically increase.
-Therefore this cycle cannot be executed more than $n$ iterations, which was required to prove.
+Do đó, mỗi lần lặp của vòng lặp này dẫn đến thực tế là vị trí của chuỗi $longest(link(link(last))$ là hậu tố của chuỗi hiện tại sẽ tăng đơn điệu.
+Do đó, chu trình này không thể được thực hiện quá $n$ lần lặp, đó là điều cần thiết để chứng minh.
 
-### Implementation
+### Cài đặt (Implementation) {: #implementation}
 
-First we describe a data structure that will store all information about a specific transition ($len$, $link$ and the list of transitions).
-If necessary you can add a terminal flag here, as well as other information.
-We will store the list of transitions in the form of a $map$, which allows us to achieve total $O(n)$ memory and $O(n \log k)$ time for processing the entire string.
+Đầu tiên, chúng tôi mô tả một cấu trúc dữ liệu sẽ lưu trữ tất cả thông tin về một chuyển đổi cụ thể ($len$, $link$ và danh sách chuyển đổi).
+Nếu cần, bạn có thể thêm cờ đầu cuối tại đây, cũng như thông tin khác.
+Chúng tôi sẽ lưu trữ danh sách các chuyển đổi dưới dạng $map$, cho phép chúng tôi đạt được tổng bộ nhớ $O(n)$ và $O(n \log k)$ thời gian để xử lý toàn bộ chuỗi.
 
 ```{.cpp file=suffix_automaton_struct}
 struct state {
@@ -350,8 +350,8 @@ struct state {
 };
 ```
 
-The suffix automaton itself will be stored in an array of these structures $state$.
-We store the current size $sz$ and also the variable $last$, the state corresponding to the entire string at the moment.
+Bản thân suffix automaton sẽ được lưu trữ trong một mảng các cấu trúc này $state$.
+Chúng tôi lưu trữ kích thước hiện tại $sz$ và biến $last$, trạng thái tương ứng với toàn bộ chuỗi tại thời điểm này.
 
 ```{.cpp file=suffix_automaton_def}
 const int MAXLEN = 100000;
@@ -359,7 +359,7 @@ state st[MAXLEN * 2];
 int sz, last;
 ```
 
-We give a function that initializes a suffix automaton (creating a suffix automaton with a single state).
+Chúng tôi đưa ra một chức năng khởi tạo suffix automaton (tạo suffix automaton với một trạng thái duy nhất).
 
 ```{.cpp file=suffix_automaton_init}
 void sa_init() {
@@ -370,7 +370,7 @@ void sa_init() {
 }
 ```
 
-And finally we give the implementation of the main function - which adds the next character to the end of the current line, rebuilding the machine accordingly.
+Và cuối cùng chúng tôi đưa ra việc thực hiện chức năng chính - thêm ký tự tiếp theo vào cuối dòng hiện tại, xây dựng lại máy cho phù hợp.
 
 ```{.cpp file=suffix_automaton_extend}
 void sa_extend(char c) {
@@ -403,102 +403,101 @@ void sa_extend(char c) {
 }
 ```
 
-As mentioned above, if you sacrifice memory ($O(n k)$, where $k$ is the size of the alphabet), then you can achieve the build time of the machine in $O(n)$, even for any alphabet size $k$.
-But for this you will have to store an array of size $k$ in each state (for quickly jumping to the transition of the letter), and additional a list of all transitions (to quickly iterate over the transitions them).
+Như đã đề cập ở trên, nếu bạn hy sinh bộ nhớ ($O(n k)$, trong đó $k$ là kích thước bảng chữ cái), thì bạn có thể đạt được thời gian xây dựng máy trong $O(n)$, ngay cả đối với bất kỳ kích thước bảng chữ cái nào $k$.
+Nhưng đối với điều này, bạn sẽ phải lưu trữ một mảng có kích thước $k$ trong mỗi trạng thái (để nhanh chóng chuyển sang quá trình chuyển đổi của chữ cái), và thêm danh sách tất cả các chuyển đổi (để nhanh chóng lặp lại các chuyển đổi đó).
 
-## Additional properties
+## Thuộc tính bổ sung (Additional properties) {: #additional-properties}
 
-### Number of states
+### Số lượng trạng thái (Number of states) {: #number-of-states}
 
-The number of states in a suffix automaton of the string $s$ of length $n$ **doesn't exceed** $2n - 1$ (for $n \ge 2$).
+Số lượng trạng thái trong suffix automaton của chuỗi $s$ có độ dài $n$ **không vượt quá** $2n - 1$ (với $n \ge 2$).
 
-The proof is the construction algorithm itself, since initially the automaton consists of one state, and in the first and second iteration only a single state will be created, and in the remaining $n-2$ steps at most $2$ states will be created each.
+Bằng chứng là chính thuật toán xây dựng, vì ban đầu automaton bao gồm một trạng thái, và trong lần lặp đầu tiên và thứ hai, chỉ có một trạng thái duy nhất sẽ được tạo ra, và trong $n-2$ bước còn lại, tối đa $2$ trạng thái sẽ được tạo ra mỗi bước.
 
-However we can also **show** this estimation **without knowing the algorithm**.
-Let us recall that the number of states is equal to the number of different sets $endpos$.
-In addition theses sets $endpos$ form a tree (a parent vertex contains all children sets in his set).
-Consider this tree and transform it a little bit:
-as long as it has an internal vertex with only one child (which means that the set of the child misses at least one position from the parent set), we create a new child with the set of the missing positions.
-In the end we have a tree in which each inner vertex has a degree greater than one, and the number of leaves does not exceed $n$.
-Therefore there are no more than $2n - 1$ vertices in such a tree.
+Tuy nhiên, chúng tôi cũng có thể **hiển thị** ước tính này **mà không cần biết thuật toán**.
+Chúng ta hãy nhớ lại rằng số lượng trạng thái bằng số lượng các tập hợp khác nhau $endpos$.
+Ngoài ra, các tập hợp $endpos$ này tạo thành một cây (đỉnh cha chứa tất cả các tập hợp con trong tập hợp của mình).
+Xem xét cây này và biến đổi nó một chút:
+miễn là nó có một đỉnh bên trong chỉ có một con (có nghĩa là tập hợp của con bỏ lỡ ít nhất một vị trí từ tập hợp cha), chúng tôi tạo một con mới với tập hợp các vị trí bị thiếu.
+Cuối cùng, chúng ta có một cái cây trong đó mỗi đỉnh bên trong có bậc lớn hơn một, và số lượng lá không vượt quá $n$.
+Do đó, không có quá $2n - 1$ đỉnh trong một cây như vậy.
 
-This bound of the number of states can actually be achieved for each $n$.
-A possible string is:
+Giới hạn về số lượng trạng thái này thực sự có thể đạt được cho mỗi $n$.
+Một chuỗi có thể là:
 
 $$\text{"abbb}\dots \text{bbb"}$$
 
-In each iteration, starting at the third one, the algorithm will split a state, resulting in exactly $2n - 1$ states.
+Trong mỗi lần lặp, bắt đầu từ lần thứ ba, thuật toán sẽ tách một trạng thái, dẫn đến chính xác $2n - 1$ trạng thái.
 
-### Number of transitions
+### Số lượt chuyển đổi (Number of transitions) {: #number-of-transitions}
 
-The number of transitions in a suffix automaton of a string $s$ of length $n$ **doesn't exceed** $3n - 4$ (for $n \ge 3$).
+Số lần chuyển đổi trong một suffix automaton của một chuỗi $s$ có độ dài $n$ **không vượt quá** $3n - 4$ (với $n \ge 3$).
 
-Let us prove this:
+Hãy chứng minh điều này:
 
-Let us first estimate the number of continuous transitions.
-Consider a spanning tree of the longest paths in the automaton starting in the state $t_0$.
-This skeleton will consist of only the continuous edges, and therefore their number is less than the number of states, i.e. it does not exceed $2n - 2$.
+Trước tiên chúng ta hãy ước tính số lượng chuyển đổi liên tục.
+Xem xét một cây bao trùm các đường dẫn dài nhất trong automaton bắt đầu ở trạng thái $t_0$.
+Bộ xương này sẽ chỉ bao gồm các cạnh liên tục, và do đó số lượng của chúng nhỏ hơn số lượng trạng thái, tức là nó không vượt quá $2n - 2$.
 
-Now let us estimate the number of non-continuous transitions.
-Let the current non-continuous transition be $(p, q)$ with the character $c$.
-We take the correspondent string $u + c + w$, where the string $u$ corresponds to the longest path from the initial state to $p$, and $w$ to the longest path from $q$ to any terminal state.
-On one hand, each such string $u + c + w$ for each incomplete strings will be different (since the strings $u$ and $w$ are formed only by complete transitions).
-On the other hand each such string $u + c + w$, by the definition of the terminal states, will be a suffix of the entire string $s$.
-Since there are only $n$ non-empty suffixes of $s$, and none of the strings $u + c + w$ can contain $s$ (because the entire string only contains complete transitions), the total number of incomplete transitions does not exceed $n - 1$.
+Bây giờ chúng ta hãy ước tính số lượng chuyển đổi không liên tục.
+Gọi chuyển đổi không liên tục hiện tại là $(p, q)$ với ký tự $c$.
+Chúng tôi lấy chuỗi tương ứng $u + c + w$, trong đó chuỗi $u$ tương ứng với đường dẫn dài nhất từ trạng thái ban đầu đến $p$, và $w$ đến đường dẫn dài nhất từ $q$ đến bất kỳ trạng thái kết thúc nào.
+Một mặt, mỗi chuỗi như vậy $u + c + w$ cho mỗi chuỗi không hoàn chỉnh sẽ khác nhau (vì các chuỗi $u$ và $w$ chỉ được hình thành bởi các chuyển đổi hoàn chỉnh).
+Mặt khác, mỗi chuỗi như vậy $u + c + w$, theo định nghĩa của các trạng thái kết thúc, sẽ là hậu tố của toàn bộ chuỗi $s$.
+Vì chỉ có $n$ hậu tố không rỗng của $s$, và không có chuỗi nào trong số $u + c + w$ có thể chứa $s$ (bởi vì toàn bộ chuỗi chỉ chứa các chuyển đổi hoàn chỉnh), tổng số chuyển đổi không hoàn chỉnh không vượt quá $n - 1$.
 
-Combining these two estimates gives us the bound $3n - 3$.
-However, since the maximum number of states can only be achieved with the test case $\text{"abbb\dots bbb"}$ and this case has clearly less than $3n - 3$ transitions, we get the tighter bound of $3n - 4$ for the number of transitions in a suffix automaton.
+Kết hợp hai ước tính này cho chúng ta giới hạn $3n - 3$.
+Tuy nhiên, vì số lượng trạng thái tối đa chỉ có thể đạt được với trường hợp thử nghiệm $\text{"abbb\dots bbb"}$ và trường hợp này rõ ràng có ít hơn $3n - 3$ chuyển đổi, chúng tôi nhận được giới hạn chặt chẽ hơn $3n - 4$ cho số lần chuyển đổi trong một suffix automaton.
 
-This bound can also be achieved with the string:
+Giới hạn này cũng có thể đạt được với chuỗi:
 
 $$\text{"abbb}\dots \text{bbbc"}$$
 
-## Applications
+## Ứng dụng (Applications) {: #applications}
 
-Here we look at some tasks that can be solved using the suffix automaton.
-For the simplicity we assume that the alphabet size $k$ is constant, which allows us to consider the complexity of appending a character and the traversal as constant.
+Ở đây chúng ta xem xét một số nhiệm vụ có thể được giải quyết bằng cách sử dụng suffix automaton.
+Để đơn giản, chúng tôi giả định rằng kích thước bảng chữ cái $k$ là không đổi, điều này cho phép chúng tôi xem xét độ phức tạp của việc gắn thêm một ký tự và truyền tải là hằng số.
 
-### Check for occurrence
+### Kiểm tra sự xuất hiện (Check for occurrence) {: #check-for-occurrence}
 
-Given a text $T$, and multiple patterns $P$.
-We have to check whether or not the strings $P$ appear as a substring of $T$.
+Cho một văn bản $T$, và nhiều mẫu $P$.
+Chúng ta phải kiểm tra xem các chuỗi $P$ có xuất hiện dưới dạng chuỗi con của $T$ hay không.
 
-We build a suffix automaton of the text $T$ in $O(length(T))$ time.
-To check if a pattern $P$ appears in $T$, we follow the transitions, starting from $t_0$, according to the characters of $P$.
-If at some point there doesn't exists a transition, then the pattern $P$ doesn't appear as a substring of $T$.
-If we can process the entire string $P$ this way, then the string appears in $T$.
+Chúng tôi xây dựng một suffix automaton của văn bản $T$ trong thời gian $O(length(T))$.
+Để kiểm tra xem mẫu $P$ có xuất hiện trong $T$ hay không, chúng tôi làm theo các chuyển đổi, bắt đầu từ $t_0$, theo các ký tự của $P$.
+Nếu tại một thời điểm nào đó không tồn tại một chuyển đổi, thì mẫu $P$ không xuất hiện dưới dạng chuỗi con của $T$.
+Nếu chúng ta có thể xử lý toàn bộ chuỗi $P$ theo cách này, thì chuỗi xuất hiện trong $T$.
 
-It is clear that this will take $O(length(P))$ time for each string $P$.
-Moreover the algorithm actually finds the length of the longest prefix of $P$ that appears in the text.
+Rõ ràng là điều này sẽ mất thời gian $O(length(P))$ cho mỗi chuỗi $P$.
+Hơn nữa, thuật toán thực sự tìm thấy độ dài của tiền tố dài nhất của $P$ xuất hiện trong văn bản.
 
-### Number of different substrings
+### Số lượng chuỗi con khác nhau (Number of different substrings) {: #number-of-different-substrings}
 
-Given a string $S$.
-You want to compute the number of different substrings.
+Cho một chuỗi $S$.
+Bạn muốn tính toán số lượng chuỗi con khác nhau.
 
-Let us build a suffix automaton for the string $S$.
+Chúng ta hãy xây dựng một suffix automaton cho chuỗi $S$.
 
-Each substring of $S$ corresponds to some path in the automaton.
-Therefore the number of different substrings is equal to the number of different paths in the automaton starting at $t_0$.
+Mỗi chuỗi con của $S$ tương ứng với một số đường dẫn trong automaton.
+Do đó số chuỗi con khác nhau bằng số đường dẫn khác nhau trong automaton bắt đầu từ $t_0$.
 
-Given that the suffix automaton is a directed acyclic graph, the number of different ways can be computed using dynamic programming.
+Cho rằng suffix automaton là một đồ thị có hướng không có chu trình, số lượng các cách khác nhau có thể được tính bằng cách sử dụng quy hoạch động.
 
-Namely, let $d[v]$ be the number of ways, starting at the state $v$ (including the path of length zero).
-Then we have the recursion:
+Cụ thể, đặt $d[v]$ là số cách, bắt đầu ở trạng thái $v$ (bao gồm cả đường dẫn có độ dài bằng 0).
+Sau đó chúng ta có đệ quy:
 
 $$d[v] = 1 + \sum_{w : (v, w, c) \in DAWG} d[w]$$
 
-I.e. $d[v]$ can be expressed as the sum of answers for all ends of the transitions of $v$.
+Tức là $d[v]$ có thể được biểu thị bằng tổng các câu trả lời cho tất cả các đầu của quá trình chuyển đổi của $v$.
 
-The number of different substrings is the value $d[t_0] - 1$ (since we don't count the empty substring).
+Số lượng chuỗi con khác nhau là giá trị $d[t_0] - 1$ (vì chúng ta không tính chuỗi con rỗng).
 
-Total time complexity: $O(length(S))$
+Tổng độ phức tạp thời gian: $O(length(S))$
 
+Ngoài ra, chúng ta có thể tận dụng lợi thế của thực tế là mỗi trạng thái $v$ khớp với các chuỗi con có độ dài $[minlen(v),len(v)]$.
+Do đó, với $minlen(v) = 1 + len(link(v))$, chúng ta có tổng số chuỗi con riêng biệt ở trạng thái $v$ là $len(v) - minlen(v) + 1 = len(v) - (1 + len(link(v))) + 1 = len(v) - len(link(v))$.
 
-Alternatively, we can take advantage of the fact that each state $v$ matches to substrings of length $[minlen(v),len(v)]$.
-Therefore, given $minlen(v) = 1 + len(link(v))$, we have total distinct substrings at state $v$ being $len(v) - minlen(v) + 1 = len(v) - (1 + len(link(v))) + 1 = len(v) - len(link(v))$.
-
-This is demonstrated succinctly below:
+Điều này được chứng minh ngắn gọn dưới đây:
 
 ```cpp
 long long get_diff_strings(){
@@ -510,27 +509,27 @@ long long get_diff_strings(){
 }
 ```
 
-While this is also $O(length(S))$, it requires no extra space and no recursive calls, consequently running faster in practice.
+Mặc dù đây cũng là $O(length(S))$, nhưng nó không yêu cầu thêm không gian và không có lệnh gọi đệ quy, do đó chạy nhanh hơn trong thực tế.
 
-### Total length of all different substrings
+### Tổng độ dài của tất cả các chuỗi con khác nhau (Total length of all different substrings) {: #total-length-of-all-different-substrings}
 
-Given a string $S$.
-We want to compute the total length of all its various substrings.
+Cho một chuỗi $S$.
+Chúng tôi muốn tính toán tổng độ dài của tất cả các chuỗi con khác nhau của nó.
 
-The solution is similar to the previous one, only now it is necessary to consider two quantities for the dynamic programming part:
-the number of different substrings $d[v]$ and their total length $ans[v]$.
+Giải pháp tương tự như giải pháp trước, chỉ bây giờ cần phải xem xét hai đại lượng cho phần quy hoạch động:
+số lượng chuỗi con khác nhau $d[v]$ và tổng độ dài của chúng $ans[v]$.
 
-We already described how to compute $d[v]$ in the previous task.
-The value $ans[v]$ can be computed using the recursion:
+Chúng tôi đã mô tả cách tính $d[v]$ trong tác vụ trước.
+Giá trị $ans[v]$ có thể được tính bằng đệ quy:
 
 $$ans[v] = \sum_{w : (v, w, c) \in DAWG} d[w] + ans[w]$$
 
-We take the answer of each adjacent vertex $w$, and add to it $d[w]$ (since every substring is one character longer when starting from the state $v$).
+Chúng ta lấy câu trả lời của mỗi đỉnh liền kề $w$, và thêm vào đó $d[w]$ (vì mỗi chuỗi con dài hơn một ký tự khi bắt đầu từ trạng thái $v$).
 
-Again this task can be computed in $O(length(S))$ time.
+Một lần nữa nhiệm vụ này có thể được tính toán trong thời gian $O(length(S))$.
 
-Alternatively, we can, again, take advantage of the fact that each state $v$ matches to substrings of length $[minlen(v),len(v)]$.
-Since $minlen(v) = 1 + len(link(v))$ and the arithmetic series formula $S_n = n \cdot \frac{a_1+a_n}{2}$ (where $S_n$ denotes the sum of $n$ terms, $a_1$ representing the first term, and $a_n$ representing the last), we can compute the length of substrings at a state in constant time.  We then sum up these totals for each state $v \neq t_0$ in the automaton. This is shown by the code below:
+Ngoài ra, một lần nữa, chúng ta có thể tận dụng lợi thế của thực tế là mỗi trạng thái $v$ khớp với các chuỗi con có độ dài $[minlen(v),len(v)]$.
+Vì $minlen(v) = 1 + len(link(v))$ và công thức chuỗi số học $S_n = n \cdot \frac{a_1+a_n}{2}$ (trong đó $S_n$ biểu thị tổng của $n$ số hạng, $a_1$ đại diện cho số hạng đầu tiên và $a_n$ đại diện cho số hạng cuối cùng), chúng ta có thể tính độ dài của chuỗi con ở trạng thái trong thời gian không đổi. Sau đó, chúng tôi tổng hợp các tổng này cho từng trạng thái $v \neq t_0$ trong automaton. Điều này được hiển thị bằng mã dưới đây:
 
 ```cpp
 long long get_tot_len_diff_substings() {
@@ -547,123 +546,123 @@ long long get_tot_len_diff_substings() {
 }
 ```
 
-This approach runs in  $O(length(S))$ time, but experimentally runs 20x faster than the memoized dynamic programming version on randomized strings. It requires no extra space and no recursion.
+Cách tiếp cận này chạy trong thời gian $O(length(S))$, nhưng thực nghiệm chạy nhanh hơn 20 lần so với phiên bản quy hoạch động đã ghi nhớ trên các chuỗi ngẫu nhiên. Nó không đòi hỏi thêm không gian và không cần đệ quy.
 
-### Lexicographically $k$-th substring {data-toc-label="Lexicographically k-th substring"}
+### Chuỗi con thứ $k$ theo thứ tự từ điển (Lexicographically $k$-th substring) {: #lexicographically-k-th-substring}
 
-Given a string $S$.
-We have to answer multiple queries.
-For each given number $K_i$ we have to find the $K_i$-th string in the lexicographically ordered list of all substrings.
+Cho một chuỗi $S$.
+Chúng tôi phải trả lời nhiều câu hỏi.
+Đối với mỗi số đã cho $K_i$ chúng ta phải tìm chuỗi thứ $K_i$ trong danh sách sắp xếp theo thứ tự từ điển của tất cả các chuỗi con.
 
-The solution to this problem is based on the idea of the previous two problems.
-The lexicographically $k$-th substring corresponds to the lexicographically $k$-th path in the suffix automaton.
-Therefore after counting the number of paths from each state, we can easily search for the $k$-th path starting from the root of the automaton.
+Giải pháp cho vấn đề này dựa trên ý tưởng của hai vấn đề trước đó.
+Chuỗi con thứ $k$ theo từ điển tương ứng với đường dẫn thứ $k$ theo từ điển trong suffix automaton.
+Do đó, sau khi đếm số lượng đường dẫn từ mỗi trạng thái, chúng ta có thể dễ dàng tìm kiếm đường dẫn thứ $k$ bắt đầu từ gốc của automaton.
 
-This takes $O(length(S))$ time for preprocessing and then $O(length(ans) \cdot k)$ for each query (where $ans$ is the answer for the query and $k$ is the size of the alphabet).
+Việc này mất thời gian $O(length(S))$ để tiền xử lý và sau đó $O(length(ans) \cdot k)$ cho mỗi truy vấn (trong đó $ans$ là câu trả lời cho truy vấn và $k$ là kích thước của bảng chữ cái).
 
-### Smallest cyclic shift
+### Dịch chuyển vòng nhỏ nhất (Smallest cyclic shift) {: #smallest-cyclic-shift}
 
-Given a string $S$.
-We want to find the lexicographically smallest cyclic shift.
+Cho một chuỗi $S$.
+Chúng tôi muốn tìm sự thay đổi theo chu kỳ nhỏ nhất theo từ điển.
 
-We construct a suffix automaton for the string $S + S$.
-Then the automaton will contain in itself as paths all the cyclic shifts of the string $S$.
+Chúng tôi xây dựng một suffix automaton cho chuỗi $S + S$.
+Sau đó, automaton sẽ chứa trong chính nó dưới dạng đường dẫn tất cả các dịch chuyển vòng của chuỗi $S$.
 
-Consequently the problem is reduced to finding the lexicographically smallest path of length $length(S)$, which can be done in a trivial way: we start in the initial state and greedily pass through the transitions with the minimal character.
+Do đó, vấn đề giảm xuống thành việc tìm đường dẫn nhỏ nhất theo từ điển có độ dài $length(S)$, có thể được thực hiện theo cách tầm thường: chúng ta bắt đầu ở trạng thái ban đầu và tham lam đi qua các chuyển đổi với ký tự tối thiểu.
 
-Total time complexity is $O(length(S))$.
+Tổng độ phức tạp thời gian là $O(length(S))$.
 
-### Number of occurrences
+### Số lần xuất hiện (Number of occurrences) {: #number-of-occurrences}
 
-For a given text $T$.
-We have to answer multiple queries.
-For each given pattern $P$ we have to find out how many times the string $P$ appears in the string $T$ as a substring.
+Cho một văn bản $T$.
+Chúng tôi phải trả lời nhiều câu hỏi.
+Đối với mỗi mẫu đã cho $P$ chúng ta phải tìm hiểu xem chuỗi $P$ xuất hiện bao nhiêu lần trong chuỗi $T$ dưới dạng một chuỗi con.
 
-We construct the suffix automaton for the text $T$.
+Chúng tôi xây dựng suffix automaton cho văn bản $T$.
 
-Next we do the following preprocessing:
-for each state $v$ in the automaton we calculate the number $cnt[v]$ that is equal to the size of the set $endpos(v)$.
-In fact all strings corresponding to the same state $v$ appear in the text $T$ an equal amount of times, which is equal to the number of positions in the set $endpos$.
+Tiếp theo chúng tôi thực hiện tiền xử lý sau:
+đối với mỗi trạng thái $v$ trong automaton, chúng ta tính số $cnt[v]$ bằng với kích thước của tập hợp $endpos(v)$.
+Trong thực tế, tất cả các chuỗi tương ứng với cùng một trạng thái $v$ đều xuất hiện trong văn bản $T$ một lượng lần bằng nhau, bằng với số lượng vị trí trong tập hợp $endpos$.
 
-However we cannot construct the sets $endpos$ explicitly, therefore we only consider their sizes $cnt$.
+Tuy nhiên, chúng ta không thể xây dựng các tập hợp $endpos$ một cách rõ ràng, vì vậy chúng ta chỉ xem xét kích thước của chúng $cnt$.
 
-To compute them we proceed as follows.
-For each state, if it was not created by cloning (and if it is not the initial state $t_0$), we initialize it with $cnt = 1$.
-Then we will go through all states in decreasing order of their length $len$, and add the current value $cnt[v]$ to the suffix links:
+Để tính toán chúng, chúng ta tiến hành như sau.
+Đối với mỗi trạng thái, nếu nó không được tạo bằng cách nhân bản (và nếu nó không phải là trạng thái ban đầu $t_0$), chúng tôi khởi tạo nó với $cnt = 1$.
+Sau đó, chúng tôi sẽ đi qua tất cả các trạng thái theo thứ tự độ dài $len$ giảm dần và thêm giá trị hiện tại $cnt[v]$ vào các liên kết hậu tố:
 
 $$cnt[link(v)] \text{ += } cnt[v]$$
 
-This gives the correct value for each state.
+Điều này cung cấp giá trị chính xác cho từng trạng thái.
 
-Why is this correct?
-The total number of states obtained _not_ via cloning is exactly $length(T)$, and the first $i$ of them appeared when we added the first $i$ characters.
-Consequently for each of these states we count the corresponding position at which it was processed.
-Therefore initially we have $cnt = 1$ for each such state, and $cnt = 0$ for all other.
+Tại sao điều này đúng?
+Tổng số trạng thái thu được _không_ qua nhân bản chính xác là $length(T)$, và $i$ trạng thái đầu tiên trong số đó xuất hiện khi chúng ta thêm $i$ ký tự đầu tiên.
+Do đó, đối với mỗi trạng thái này, chúng tôi đếm vị trí tương ứng mà nó được xử lý.
+Do đó, ban đầu chúng ta có $cnt = 1$ cho mỗi trạng thái như vậy và $cnt = 0$ cho tất cả các trạng thái khác.
 
-Then we apply the following operation for each $v$: $cnt[link(v)] \text{ += } cnt[v]$.
-The meaning behind this is, that if a string $v$ appears $cnt[v]$ times, then also all its suffixes appear at the exact same end positions, therefore also $cnt[v]$ times.
+Sau đó, chúng tôi áp dụng thao tác sau cho mỗi $v$: $cnt[link(v)] \text{ += } cnt[v]$.
+Ý nghĩa đằng sau điều này là, nếu một chuỗi $v$ xuất hiện $cnt[v]$ lần, thì tất cả các hậu tố của nó cũng xuất hiện tại các vị trí kết thúc chính xác giống nhau, do đó cũng $cnt[v]$ lần.
 
-Why don't we overcount in this procedure (i.e. don't count some positions twice)?
-Because we add the positions of a state to only one other state, so it can not happen that one state directs its positions to another state twice in two different ways.
+Tại sao chúng ta không đếm quá nhiều trong thủ tục này (tức là không đếm một số vị trí hai lần)?
+Bởi vì chúng ta chỉ thêm các vị trí của một trạng thái vào một trạng thái khác, vì vậy không thể xảy ra trường hợp một trạng thái hướng các vị trí của nó sang trạng thái khác hai lần theo hai cách khác nhau.
 
-Thus we can compute the quantities $cnt$ for all states in the automaton in $O(length(T))$ time.
+Do đó, chúng ta có thể tính toán số lượng $cnt$ cho tất cả các trạng thái trong automaton trong thời gian $O(length(T))$.
 
-After that answering a query by just looking up the value $cnt[t]$, where $t$ is the state corresponding to the pattern, if such a state exists.
-Otherwise answer with $0$.
-Answering a query takes $O(length(P))$ time.
+Sau đó trả lời một truy vấn bằng cách chỉ tìm kiếm giá trị $cnt[t]$, trong đó $t$ là trạng thái tương ứng với mẫu, nếu trạng thái đó tồn tại.
+Nếu không thì trả lời bằng $0$.
+Trả lời một truy vấn mất thời gian $O(length(P))$.
 
-### First occurrence position
+### Vị trí xuất hiện đầu tiên (First occurrence position) {: #first-occurrence-position}
 
-Given a text $T$ and multiple queries.
-For each query string $P$ we want to find the position of the first occurrence of $P$ in the string $T$ (the position of the beginning of $P$).
+Cho một văn bản $T$ và nhiều truy vấn.
+Đối với mỗi chuỗi truy vấn $P$, chúng tôi muốn tìm vị trí xuất hiện đầu tiên của $P$ trong chuỗi $T$ (vị trí bắt đầu của $P$).
 
-We again construct a suffix automaton.
-Additionally we precompute the position $firstpos$ for all states in the automaton, i.e. for each state $v$ we want to find the position $firstpos[v]$ of the end of the first occurrence.
-In other words, we want to find in advance the minimal element of each set $endpos$ (since obviously cannot maintain all sets $endpos$ explicitly).
+Chúng ta lại xây dựng một suffix automaton.
+Ngoài ra, chúng tôi tính toán trước vị trí $firstpos$ cho tất cả các trạng thái trong automaton, tức là đối với mỗi trạng thái $v$, chúng ta muốn tìm vị trí $firstpos[v]$ của phần cuối của lần xuất hiện đầu tiên.
+Nói cách khác, chúng ta muốn tìm trước phần tử tối thiểu của mỗi tập hợp $endpos$ (vì rõ ràng không thể duy trì tất cả các tập hợp $endpos$ một cách rõ ràng).
 
-To maintain these positions $firstpos$ we extend the function `sa_extend()`.
-When we create a new state $cur$, we set:
+Để duy trì các vị trí này $firstpos$, chúng tôi mở rộng chức năng `sa_extend()`.
+Khi chúng ta tạo một trạng thái mới $cur$, chúng ta đặt:
 
 $$firstpos(cur) = len(cur) - 1$$
 
-And when we clone a vertex $q$ as $clone$, we set:
+Và khi chúng ta sao chép một đỉnh $q$ dưới dạng $clone$, chúng ta đặt:
 
 $$firstpos(clone) = firstpos(q)$$
 
-(since the only other option for a value would be $firstpos(cur)$ which is definitely too big)
+(vì tùy chọn duy nhất khác cho một giá trị sẽ là $firstpos(cur)$ chắc chắn quá lớn)
 
-Thus the answer for a query is simply $firstpos(t) - length(P) + 1$, where $t$ is the state corresponding to the string $P$.
-Answering a query again takes only $O(length(P))$ time.
+Do đó câu trả lời cho truy vấn chỉ đơn giản là $firstpos(t) - length(P) + 1$, trong đó $t$ là trạng thái tương ứng với chuỗi $P$.
+Trả lời một truy vấn một lần nữa chỉ mất thời gian $O(length(P))$.
 
-### All occurrence positions
+### Tất cả vị trí xuất hiện (All occurrence positions) {: #all-occurrence-positions}
 
-This time we have to display all positions of the occurrences in the string $T$.
+Lần này chúng ta phải hiển thị tất cả các vị trí xuất hiện trong chuỗi $T$.
 
-Again we construct a suffix automaton for the text $T$.
-Similar as in the previous task we compute the position $firstpos$ for all states.
+Một lần nữa chúng tôi xây dựng một suffix automaton cho văn bản $T$.
+Tương tự như trong nhiệm vụ trước, chúng ta tính toán vị trí $firstpos$ cho tất cả các trạng thái.
 
-Clearly $firstpos(t)$ is part of the answer, if $t$ is the state corresponding to a query string $P$.
-So we took into account the state of the automaton containing $P$.
-What other states do we need to take into account?
-All states that correspond to strings for which $P$ is a suffix.
-In other words we need to find all the states that can reach the state $t$ via suffix links.
+Rõ ràng $firstpos(t)$ là một phần của câu trả lời, nếu $t$ là trạng thái tương ứng với một chuỗi truy vấn $P$.
+Vì vậy, chúng tôi đã tính đến trạng thái của automaton chứa $P$.
+Chúng ta cần tính đến những trạng thái nào khác?
+Tất cả các trạng thái tương ứng với các chuỗi mà $P$ là hậu tố.
+Nói cách khác, chúng ta cần tìm tất cả các trạng thái có thể đến trạng thái $t$ thông qua các liên kết hậu tố.
 
-Therefore to solve the problem we need to save for each state a list of suffix references leading to it.
-The answer to the query then will then contain all $firstpos$ for each state that we can find on a DFS / BFS starting from the state $t$ using only the suffix references.
+Do đó để giải quyết vấn đề, chúng ta cần lưu danh sách các tham chiếu hậu tố dẫn đến từng trạng thái.
+Câu trả lời cho truy vấn sau đó sẽ chứa tất cả $firstpos$ cho mỗi trạng thái mà chúng ta có thể tìm thấy trên DFS / BFS bắt đầu từ trạng thái $t$ chỉ sử dụng các tham chiếu hậu tố.
 
-Overall, this requires $O(length (T))$ for preprocessing and $O(length(P) + answer(P))$ for each request, where $answer(P)$ — this is the size of the answer.
+Nhìn chung, điều này đòi hỏi $O(length (T))$ để tiền xử lý và $O(length(P) + answer(P))$ cho mỗi yêu cầu, ở đâu $answer(P)$ — đây là kích thước của câu trả lời.
 
-First, we walk down the automaton for each character in the pattern to find our starting node requiring $O(length(P))$.  Then, we use our workaround which will work in time $O(answer(P))$, because we will not visit a state twice (because only one suffix link leaves each state, so there cannot be two different paths leading to the same state).
+Đầu tiên, chúng ta đi xuống automaton cho từng ký tự trong mẫu để tìm nút bắt đầu của chúng ta yêu cầu $O(length(P))$.  Sau đó, chúng tôi sử dụng giải pháp thay thế của mình sẽ hoạt động kịp thời $O(answer(P))$, bởi vì chúng ta sẽ không ghé thăm một trạng thái hai lần (bởi vì chỉ có một liên kết hậu tố rời khỏi mỗi trạng thái, vì vậy không thể có hai con đường khác nhau dẫn đến cùng một trạng thái).
 
-We only must take into account that two different states can have the same $firstpos$ value.
-This happens if one state was obtained by cloning another.
-However, this doesn't ruin the complexity, since each state can only have at most one clone.
+Chúng ta chỉ phải tính đến việc hai trạng thái khác nhau có thể có cùng giá trị $firstpos$.
+Điều này xảy ra nếu một trạng thái thu được bằng cách nhân bản trạng thái khác.
+Tuy nhiên, điều này không phá hỏng sự phức tạp, vì mỗi trạng thái chỉ có thể có tối đa một bản sao.
 
-Moreover, we can also get rid of the duplicate positions, if we don't output the positions from the cloned states.
-In fact a state, that a cloned state can reach, is also reachable from the original state.
-Thus if we remember the flag `is_cloned` for each state, we can simply ignore the cloned states and only output $firstpos$ for all other states.
+Hơn nữa, chúng ta cũng có thể loại bỏ các vị trí trùng lặp, nếu chúng ta không xuất các vị trí từ các trạng thái được sao chép.
+Trong thực tế, một trạng thái mà một trạng thái nhân bản có thể đạt được, cũng có thể truy cập được từ trạng thái ban đầu.
+Do đó, nếu chúng ta nhớ cờ `is_cloned` cho mỗi trạng thái, chúng ta chỉ cần bỏ qua các trạng thái được nhân bản và chỉ xuất $firstpos$ cho tất cả các trạng thái khác.
 
-Here are some implementation sketches:
+Dưới đây là một số bản phác thảo thực hiện:
 
 ```cpp
 struct state {
@@ -687,50 +686,50 @@ void output_all_occurrences(int v, int P_length) {
 }
 ```
 
-### Shortest non-appearing string
+### Chuỗi không xuất hiện ngắn nhất (Shortest non-appearing string) {: #shortest-non-appearing-string}
 
-Given a string $S$ and a certain alphabet.
-We have to find a string of the smallest length, that doesn't appear in $S$.
+Cho một chuỗi $S$ và một bảng chữ cái nhất định.
+Chúng ta phải tìm một chuỗi có độ dài nhỏ nhất, không xuất hiện trong $S$.
 
-We will apply dynamic programming on the suffix automaton built for the string $S$.
+Chúng tôi sẽ áp dụng quy hoạch động trên suffix automaton được xây dựng cho chuỗi $S$.
 
-Let $d[v]$ be the answer for the node $v$, i.e. we already processed part of the substring, are currently in the state $v$, and want to find the smallest number of characters that have to be added to find a non-existent transition.
-Computing $d[v]$ is very simple.
-If there is not transition using at least one character of the alphabet, then $d[v] = 1$.
-Otherwise one character is not enough, and so we need to take the minimum of all answers of all transitions:
+Gọi $d[v]$ là câu trả lời cho nút $v$, tức là chúng ta đã xử lý một phần của chuỗi con, hiện đang ở trạng thái $v$, và muốn tìm số lượng ký tự nhỏ nhất phải thêm vào để tìm một chuyển đổi không tồn tại.
+Tính toán $d[v]$ rất đơn giản.
+Nếu không có sự chuyển tiếp bằng cách sử dụng ít nhất một ký tự của bảng chữ cái, thì $d[v] = 1$.
+Nếu không, một ký tự là không đủ, và vì vậy chúng ta cần lấy tối thiểu tất cả các câu trả lời của tất cả các chuyển đổi:
 
 $$d[v] = 1 + \min_{w:(v,w,c) \in SA} d[w].$$
 
-The answer to the problem will be $d[t_0]$, and the actual string can be restored using the computed array $d[]$.
+Câu trả lời cho vấn đề sẽ là $d[t_0]$, và chuỗi thực tế có thể được khôi phục bằng cách sử dụng mảng được tính toán $d[]$.
 
-### Longest common substring of two strings
+### Chuỗi con chung dài nhất của hai chuỗi (Longest common substring of two strings) {: #longest-common-substring-of-two-strings}
 
-Given two strings $S$ and $T$.
-We have to find the longest common substring, i.e. such a string $X$ that appears as a substring in $S$ and also in $T$.
+Cho hai chuỗi $S$ và $T$.
+Chúng ta phải tìm chuỗi con chung dài nhất, tức là một chuỗi $X$ xuất hiện dưới dạng chuỗi con trong $S$ và cả trong $T$.
 
-We construct a suffix automaton for the string $S$.
+Chúng tôi xây dựng một suffix automaton cho chuỗi $S$.
 
-We will now take the string $T$, and for each prefix look for the longest suffix of this prefix in $S$.
-In other words, for each position in the string $T$, we want to find the longest common substring of $S$ and $T$ ending in that position.
+Bây giờ chúng ta sẽ lấy chuỗi $T$, và đối với mỗi tiền tố, hãy tìm hậu tố dài nhất của tiền tố này trong $S$.
+Nói cách khác, đối với mỗi vị trí trong chuỗi $T$, chúng tôi muốn tìm chuỗi con chung dài nhất của $S$ và $T$ kết thúc ở vị trí đó.
 
-For this we will use two variables, the **current state** $v$, and the **current length** $l$.
-These two variables will describe the current matching part: its length and the state that corresponds to it.
+Đối với điều này, chúng tôi sẽ sử dụng hai biến, **trạng thái hiện tại** $v$, và **độ dài hiện tại** $l$.
+Hai biến này sẽ mô tả phần khớp hiện tại: độ dài của nó và trạng thái tương ứng với nó.
 
-Initially $v = t_0$ and $l = 0$, i.e. the match is empty.
+Ban đầu $v = t_0$ và $l = 0$, tức là trận đấu trống rỗng.
 
-Now let us describe how we can add a character $T[i]$ and recalculate the answer for it.
+Bây giờ chúng ta hãy mô tả cách chúng ta có thể thêm một ký tự $T[i]$ và tính toán lại câu trả lời cho nó.
 
-  - If there is a transition from $v$ with the character $T[i]$, then we simply follow the transition and increase $l$ by one.
-  - If there is no such transition, we have to shorten the current matching part, which means that we need to follow the suffix link: $v = link(v)$.
-    At the same time, the current length has to be shortened.
-    Obviously we need to assign $l = len(v)$, since after passing through the suffix link we end up in state whose corresponding longest string is a substring.
-  - If there is still no transition using the required character, we repeat and again go through the suffix link and decrease $l$, until we find a transition or we reach the fictional state $-1$ (which means that the symbol $T[i]$ doesn't appear at all in $S$, so we assign $v = l = 0$).
+  - Nếu có chuyển đổi từ $v$ với ký tự $T[i]$, thì chúng ta chỉ cần làm theo chuyển đổi và tăng $l$ thêm một.
+  - Nếu không có chuyển đổi như vậy, chúng ta phải rút ngắn phần khớp hiện tại, điều đó có nghĩa là chúng ta cần tuân theo liên kết hậu tố: $v = link(v)$.
+    Đồng thời, độ dài hiện tại phải được rút ngắn.
+    Rõ ràng chúng ta cần gán $l = len(v)$, vì sau khi đi qua liên kết hậu tố, chúng ta sẽ ở trạng thái có chuỗi dài nhất tương ứng là một chuỗi con.
+  - Nếu vẫn không có chuyển đổi bằng cách sử dụng ký tự bắt buộc, chúng tôi lặp lại và đi qua liên kết hậu tố và giảm $l$, cho đến khi chúng tôi tìm thấy một chuyển đổi hoặc chúng tôi đạt đến trạng thái hư cấu $-1$ (có nghĩa là biểu tượng $T[i]$ hoàn toàn không xuất hiện trong $S$, vì vậy chúng ta gán $v = l = 0$).
 
-The answer to the task will be the maximum of all the values $l$.
+Câu trả lời cho nhiệm vụ sẽ là tối đa của tất cả các giá trị $l$.
 
-The complexity of this part is $O(length(T))$, since in one move we can either increase $l$ by one, or make several passes through the suffix links, each one ends up reducing the value $l$.
+Độ phức tạp của phần này là $O(length(T))$,  vì trong một lần di chuyển, chúng ta có thể tăng $l$ lên một hoặc thực hiện một vài lần đi qua các liên kết hậu tố, mỗi lần đi qua sẽ giảm giá trị $l$.
 
-Implementation:
+Cài đặt:
 
 ```cpp
 string lcs (string S, string T) {
@@ -757,25 +756,25 @@ string lcs (string S, string T) {
 } 
 ```
 
-### Largest common substring of multiple strings
+### Chuỗi con chung lớn nhất của nhiều chuỗi (Largest common substring of multiple strings) {: #largest-common-substring-of-multiple-strings}
 
-There are $k$ strings $S_i$ given.
-We have to find the longest common substring, i.e. such a string $X$ that appears as substring in each string $S_i$.
+Có $k$ chuỗi $S_i$ được đưa ra.
+Chúng ta phải tìm chuỗi con chung dài nhất, tức là một chuỗi $X$ xuất hiện dưới dạng chuỗi con trong mỗi chuỗi $S_i$.
 
-We join all strings into one large string $T$, separating the strings by a special characters $D_i$ (one for each string):
+Chúng tôi nối tất cả các chuỗi thành một chuỗi lớn $T$, tách các chuỗi bằng một ký tự đặc biệt $D_i$ (mỗi chuỗi một ký tự):
 
 $$T = S_1 + D_1 + S_2 + D_2 + \dots + S_k + D_k.$$
 
-Then we construct the suffix automaton for the string $T$.
+Sau đó, chúng tôi xây dựng suffix automaton cho chuỗi $T$.
 
-Now we need to find a string in the machine, which is contained in all the strings $S_i$, and this can be done by using the special added characters.
-Note that if a substring is included in some string $S_j$, then in the suffix automaton exists a path starting from this substring containing the character $D_j$ and not containing the other characters $D_1, \dots, D_{j-1}, D_{j+1}, \dots, D_k$.
+Bây giờ chúng ta cần tìm một chuỗi trong máy, được chứa trong tất cả các chuỗi $S_i$, và điều này có thể được thực hiện bằng cách sử dụng các ký tự được thêm đặc biệt.
+Lưu ý rằng nếu một chuỗi con được bao gồm trong một số chuỗi $S_j$, thì trong suffix automaton tồn tại một đường dẫn bắt đầu từ chuỗi con này chứa ký tự $D_j$ và không chứa các ký tự khác $D_1, \dots, D_{j-1}, D_{j+1}, \dots, D_k$.
 
-Thus we need to calculate the attainability, which tells us for each state of the machine and each symbol $D_i$ if there exists such a path.
-This can easily be computed by DFS or BFS and dynamic programming.
-After that, the answer to the problem will be the string $longest(v)$ for the state $v$, from which the paths were exists for all special characters.
+Do đó, chúng ta cần tính toán khả năng đạt được, cho chúng ta biết đối với từng trạng thái của máy và từng ký hiệu $D_i$ nếu tồn tại một đường dẫn như vậy.
+Điều này có thể dễ dàng được tính toán bởi DFS hoặc BFS và quy hoạch động.
+Sau đó, câu trả lời cho bài toán sẽ là chuỗi $longest(v)$ cho trạng thái $v$, từ đó các đường dẫn tồn tại cho tất cả các ký tự đặc biệt.
 
-## Practice Problems
+## Bài tập (Practice Problems) {: #practice-problems}
 
   - [CSES - Finding Patterns](https://cses.fi/problemset/task/2102)
   - [CSES - Counting Patterns](https://cses.fi/problemset/task/2103)

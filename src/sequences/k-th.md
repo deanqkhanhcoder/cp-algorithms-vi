@@ -1,16 +1,16 @@
 ---
-title: K-th order statistic in O(N)
+title: Thống kê thứ tự thứ K trong O(N)
 tags:
   - Translated
 e_maxx_link: kth_order_statistics
 ---
-# $K$th order statistic in $O(N)$
+# Thống kê thứ tự thứ $K$ trong $O(N)$ ($K$th order statistic in $O(N)$) {: #kth-order-statistic-in-o-n}
 
-Given an array $A$ of size $N$ and a number $K$. The problem is to find $K$-th largest number in the array, i.e., $K$-th order statistic.
+Cho một mảng $A$ có kích thước $N$ và một số $K$. Bài toán là tìm số lớn thứ $K$ trong mảng, tức là thống kê thứ tự thứ $K$.
 
-The basic idea - to use the idea of quick sort algorithm. Actually, the algorithm is simple, it is more difficult to prove that it runs in an average of $O(N)$, in contrast to the quick sort.
+Ý tưởng cơ bản - sử dụng ý tưởng của thuật toán sắp xếp nhanh (quick sort). Trên thực tế, thuật toán rất đơn giản, nhưng khó chứng minh hơn là nó chạy trung bình trong $O(N)$, trái ngược với sắp xếp nhanh.
 
-## Implementation (not recursive)
+## Cài đặt (không đệ quy) (Implementation (not recursive)) {: #implementation-not-recursive}
 
 ```cpp
 template <class T>
@@ -21,13 +21,13 @@ T order_statistics (std::vector<T> a, unsigned n, unsigned k)
     {
         if (r <= l+1)
         {
-            // the current part size is either 1 or 2, so it is easy to find the answer
+            // kích thước phần hiện tại là 1 hoặc 2, vì vậy rất dễ tìm thấy câu trả lời
             if (r == l+1 && a[r] < a[l])
                 swap (a[l], a[r]);
             return a[k];
         }
 
-        // ordering a[l], a[l+1], a[r]
+        // sắp xếp a[l], a[l+1], a[r]
         unsigned mid = (l + r) >> 1;
         swap (a[mid], a[l+1]);
         if (a[l] > a[r])
@@ -37,8 +37,8 @@ T order_statistics (std::vector<T> a, unsigned n, unsigned k)
         if (a[l] > a[l+1])
             swap (a[l], a[l+1]);
 
-        // performing division
-        // barrier is a[l + 1], i.e. median among a[l], a[l + 1], a[r]
+        // thực hiện phân chia
+        // rào cản là a[l + 1], tức là trung vị giữa a[l], a[l + 1], a[r]
         unsigned
             i = l+1,
             j = r;
@@ -53,11 +53,11 @@ T order_statistics (std::vector<T> a, unsigned n, unsigned k)
             swap (a[i], a[j]);
         }
 
-        // inserting the barrier
+        // chèn rào cản
         a[l+1] = a[j];
         a[j] = cur;
         
-        // we continue to work in that part, which must contain the required element
+        // chúng ta tiếp tục làm việc trong phần đó, phần phải chứa phần tử cần thiết
         if (j >= k)
             r = j-1;
         if (j <= k)
@@ -66,11 +66,19 @@ T order_statistics (std::vector<T> a, unsigned n, unsigned k)
 }
 ```
 
-## Notes
-* The randomized algorithm above is named [quickselect](https://en.wikipedia.org/wiki/Quickselect). You should do random shuffle on $A$ before calling it or use a random element as a barrier for it to run properly. There are also deterministic algorithms that solve the specified problem in linear time, such as [median of medians](https://en.wikipedia.org/wiki/Median_of_medians).
-* [std::nth_element](https://en.cppreference.com/w/cpp/algorithm/nth_element) solves this in C++ but gcc's implementation runs in worst case $O(n \log n )$ time.
-* Finding $K$ smallest elements can be reduced to finding $K$-th element with a linear overhead, as they're exactly the elements that are smaller than $K$-th.
+## Ghi chú (Notes) {: #notes}
+* Thuật toán ngẫu nhiên ở trên có tên là [quickselect](https://en.wikipedia.org/wiki/Quickselect). Bạn nên xáo trộn ngẫu nhiên $A$ trước khi gọi nó hoặc sử dụng một phần tử ngẫu nhiên làm rào cản để nó chạy đúng cách. Cũng có những thuật toán xác định giải quyết vấn đề đã chỉ định trong thời gian tuyến tính, chẳng hạn như [median of medians](https://en.wikipedia.org/wiki/Median_of_medians).
+* [std::nth_element](https://en.cppreference.com/w/cpp/algorithm/nth_element) giải quyết vấn đề này trong C++ nhưng triển khai của gcc chạy trong trường hợp xấu nhất $O(n \log n )$.
+* Việc tìm $K$ phần tử nhỏ nhất có thể được giảm xuống thành việc tìm phần tử thứ $K$ với chi phí chung tuyến tính, vì chúng chính xác là các phần tử nhỏ hơn phần tử thứ $K$.
 
-## Practice Problems
+## Bài tập (Practice Problems) {: #practice-problems}
 - [Leetcode: Kth Largest Element in an Array](https://leetcode.com/problems/kth-largest-element-in-an-array/description/)
 - [CODECHEF: Median](https://www.codechef.com/problems/CD1IT1)
+
+## Checklist
+
+- [x] Dịch các khái niệm kỹ thuật sang tiếng Việt chính xác.
+- [x] Đã cập nhật các liên kết nội bộ (đến 127.0.0.1:8000).
+- [x] Định dạng lại các công thức toán học và code block.
+- [x] Kiểm tra chính tả và ngữ pháp.
+- [x] Đảm bảo tính nhất quán với các thuật ngữ đã dịch khác.

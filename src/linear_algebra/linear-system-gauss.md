@@ -4,11 +4,11 @@ tags:
 e_maxx_link: linear_systems_gauss
 ---
 
-# Gauss method for solving system of linear equations
+# Phương pháp Gauss để giải hệ phương trình tuyến tính (Gauss method for solving system of linear equations) {: #gauss-method-for-solving-system-of-linear-equations}
 
-Given a system of $n$ linear algebraic equations (SLAE) with $m$ unknowns. You are asked to solve the system: to determine if it has no solution, exactly one solution or infinite number of solutions. And in case it has at least one solution, find any of them.
+Cho một hệ gồm $n$ phương trình đại số tuyến tính (System of Linear Algebraic Equations - SLAE) với $m$ ẩn số. Bạn được yêu cầu giải hệ phương trình: xác định xem nó không có nghiệm, có đúng một nghiệm hay có vô số nghiệm. Và trong trường hợp nó có ít nhất một nghiệm, hãy tìm bất kỳ nghiệm nào trong số đó.
 
-Formally, the problem is formulated as follows: solve the system:
+Một cách hình thức, bài toán được phát biểu như sau: giải hệ phương trình:
 
 $$\begin{align}
 a_{11} x_1 + a_{12} x_2 + &\dots + a_{1m} x_m = b_1 \\
@@ -17,15 +17,15 @@ a_{21} x_1 + a_{22} x_2 + &\dots + a_{2m} x_m = b_2\\
 a_{n1} x_1 + a_{n2} x_2 + &\dots + a_{nm} x_m = b_n
 \end{align}$$
 
-where the coefficients $a_{ij}$ (for $i$ from 1 to $n$, $j$ from 1 to $m$) and $b_i$ ($i$ from 1 to $n$) are known and variables $x_i$ ($i$ from 1 to $m$) are unknowns.
+trong đó các hệ số $a_{ij}$ (với $i$ từ 1 đến $n$, $j$ từ 1 đến $m$) và $b_i$ ($i$ từ 1 đến $n$) đã biết và các biến số $x_i$ ($i$ từ 1 đến $m$) là ẩn số.
 
-This problem also has a simple matrix representation:
+Bài toán này cũng có biểu diễn ma trận đơn giản:
 
 $$Ax = b,$$
 
-where $A$ is a matrix of size $n \times m$ of coefficients $a_{ij}$ and $b$ is the column vector of size $n$.
+trong đó $A$ là ma trận kích thước $n \times m$ của các hệ số $a_{ij}$ và $b$ là vectơ cột kích thước $n$.
 
-It is worth noting that the method presented in this article can also be used to solve the equation modulo any number p, i.e.:
+Cần lưu ý rằng phương pháp được trình bày trong bài viết này cũng có thể được sử dụng để giải phương trình đồng dư modulo p bất kỳ, tức là:
 
 $$\begin{align}
 a_{11} x_1 + a_{12} x_2 + &\dots + a_{1m} x_m \equiv b_1 \pmod p \\
@@ -36,54 +36,54 @@ a_{n1} x_1 + a_{n2} x_2 + &\dots + a_{nm} x_m \equiv b_n \pmod p
 
 ## Gauss
 
-Strictly speaking, the method described below should be called "Gauss-Jordan", or Gauss-Jordan elimination, because it is a variation of the Gauss method, described by Jordan in 1887.
+Nói một cách chính xác, phương pháp được mô tả dưới đây nên được gọi là "Gauss-Jordan", hoặc khử Gauss-Jordan (Gauss-Jordan elimination), bởi vì nó là một biến thể của phương pháp Gauss, được mô tả bởi Jordan vào năm 1887.
 
-## Overview
+## Tổng quan (Overview) {: #overview}
 
-The algorithm is a `sequential elimination` of the variables in each equation, until each equation will have only one remaining variable. If $n = m$, you can think of it as transforming the matrix $A$ to identity matrix, and solve the equation in this obvious case, where solution is unique and is equal to coefficient $b_i$.
+Thuật toán là một sự `khử tuần tự` (`sequential elimination`) các biến trong mỗi phương trình, cho đến khi mỗi phương trình chỉ còn lại một biến. Nếu $n = m$, bạn có thể nghĩ về nó như là biến đổi ma trận $A$ thành ma trận đơn vị, và giải phương trình trong trường hợp hiển nhiên này, trong đó nghiệm là duy nhất và bằng hệ số $b_i$.
 
-Gaussian elimination is based on two simple transformations:   
+Khử Gaussian dựa trên hai phép biến đổi đơn giản:
 
-* It is possible to exchange two equations
-* Any equation can be replaced by a linear combination of that row (with non-zero coefficient), and some other rows (with arbitrary coefficients).
+* Có thể hoán đổi hai phương trình
+* Bất kỳ phương trình nào cũng có thể được thay thế bằng tổ hợp tuyến tính của hàng đó (với hệ số khác không), và một số hàng khác (với các hệ số tùy ý).
 
-In the first step, Gauss-Jordan algorithm divides the first row by $a_{11}$. Then, the algorithm adds the first row to the remaining rows such that the coefficients in the first column becomes all zeros. To achieve this, on the i-th row, we must add the first row multiplied by $- a_{i1}$. Note that, this operation must also be performed on vector $b$. In a sense, it behaves as if vector $b$ was the $m+1$-th column of matrix $A$.
+Trong bước đầu tiên, thuật toán Gauss-Jordan chia hàng đầu tiên cho $a_{11}$. Sau đó, thuật toán cộng hàng đầu tiên vào các hàng còn lại sao cho các hệ số trong cột đầu tiên trở thành tất cả các số không. Để đạt được điều này, trên hàng thứ $i$, chúng ta phải thêm hàng đầu tiên nhân với $- a_{i1}$. Lưu ý rằng, thao tác này cũng phải được thực hiện trên vectơ $b$. Theo một nghĩa nào đó, nó hoạt động như thể vectơ $b$ là cột thứ $m+1$ của ma trận $A$.
 
-As a result, after the first step, the first column of matrix $A$ will consists of $1$ on the first row, and $0$ in other rows.
+Kết quả là, sau bước đầu tiên, cột đầu tiên của ma trận $A$ sẽ bao gồm $1$ trên hàng đầu tiên và $0$ ở các hàng khác.
 
-Similarly, we perform the second step of the algorithm, where we consider the second column of second row. First, the row is divided by $a_{22}$, then it is subtracted from other rows so that all the second column becomes $0$ (except for the second row).
+Tương tự, chúng ta thực hiện bước thứ hai của thuật toán, trong đó chúng ta xem xét cột thứ hai của hàng thứ hai. Đầu tiên, hàng được chia cho $a_{22}$, sau đó nó được trừ đi từ các hàng khác sao cho tất cả cột thứ hai trở thành $0$ (ngoại trừ hàng thứ hai).
 
-We continue this process for all columns of matrix $A$. If $n = m$, then $A$ will become identity matrix.
+Chúng ta tiếp tục quá trình này cho tất cả các cột của ma trận $A$. Nếu $n = m$, thì $A$ sẽ trở thành ma trận đơn vị.
 
-## Search for the pivoting element
+## Tìm kiếm phần tử trụ (Search for the pivoting element) {: #search-for-the-pivoting-element}
 
-The described scheme left out many details. At the $i$th step, if $a_{ii}$ is zero, we cannot apply directly the described method. Instead, we must first `select a pivoting row`: find one row of the matrix where the $i$th column is non-zero, and then swap the two rows.
+Lược đồ được mô tả đã bỏ qua nhiều chi tiết. Tại bước thứ $i$, nếu $a_{ii}$ bằng không, chúng ta không thể áp dụng trực tiếp phương pháp được mô tả. Thay vào đó, trước tiên chúng ta phải `chọn một hàng trụ` (`select a pivoting row`): tìm một hàng của ma trận mà cột thứ $i$ khác không, sau đó tráo đổi hai hàng.
 
-Note that, here we swap rows but not columns. This is because if you swap columns, then when you find a solution, you must remember to swap back to correct places. Thus, swapping rows is much easier to do.
+Lưu ý rằng, ở đây chúng ta tráo đổi các hàng nhưng không tráo đổi các cột. Điều này là do nếu bạn tráo đổi các cột, thì khi bạn tìm thấy một nghiệm, bạn phải nhớ tráo đổi lại đúng vị trí. Do đó, việc tráo đổi các hàng dễ thực hiện hơn nhiều.
 
-In many implementations, when $a_{ii} \neq 0$, you can see people still swap the $i$th row with some pivoting row, using some heuristics such as choosing the pivoting row with maximum absolute value of $a_{ji}$. This heuristic is used to reduce the value range of the matrix in later steps. Without this heuristic, even for matrices of size about $20$, the error will be too big and can cause overflow for floating points data types of C++.
+Trong nhiều triển khai, khi $a_{ii} \neq 0$, bạn có thể thấy mọi người vẫn tráo đổi hàng thứ $i$ với một số hàng trụ, sử dụng một số phỏng đoán (heuristics) chẳng hạn như chọn hàng trụ có giá trị tuyệt đối lớn nhất của $a_{ji}$. Phỏng đoán này được sử dụng để giảm phạm vi giá trị của ma trận trong các bước sau. Nếu không có phỏng đoán này, ngay cả đối với các ma trận có kích thước khoảng $20$, sai số sẽ quá lớn và có thể gây tràn số đối với các loại dữ liệu dấu phẩy động của C++.
 
-## Degenerate cases
+## Các trường hợp suy biến (Degenerate cases) {: #degenerate-cases}
 
-In the case where $m = n$ and the system is non-degenerate (i.e. it has non-zero determinant, and has unique solution), the algorithm described above will transform $A$ into identity matrix.
+Trong trường hợp $m = n$ và hệ thống không suy biến (tức là nó có định thức khác không và có nghiệm duy nhất), thuật toán được mô tả ở trên sẽ biến đổi $A$ thành ma trận đơn vị.
 
-Now we consider the `general case`, where $n$ and $m$ are not necessarily equal, and the system can be degenerate. In these cases, the pivoting element in $i$th step may not be found. This means that on the $i$th column, starting from the current line, all contains zeros. In this case, either there is no possible value of variable $x_i$ (meaning the SLAE has no solution), or $x_i$ is an independent variable and can take arbitrary value. When implementing Gauss-Jordan, you should continue the work for subsequent variables and just skip the $i$th column (this is equivalent to removing the $i$th column of the matrix).
+Bây giờ chúng ta xem xét `trường hợp tổng quát` (`general case`), trong đó $n$ và $m$ không nhất thiết phải bằng nhau và hệ thống có thể bị suy biến. Trong những trường hợp này, phần tử trụ trong bước thứ $i$ có thể không tìm thấy. Điều này có nghĩa là trên cột thứ $i$, bắt đầu từ dòng hiện tại, tất cả đều chứa số không. Trong trường hợp này, hoặc không có giá trị nào của biến $x_i$ (nghĩa là SLAE không có nghiệm), hoặc $x_i$ là một biến độc lập và có thể nhận giá trị tùy ý. Khi triển khai Gauss-Jordan, bạn nên tiếp tục công việc cho các biến tiếp theo và chỉ cần bỏ qua cột thứ $i$ (điều này tương đương với việc xóa cột thứ $i$ của ma trận).
 
-So, some of the variables in the process can be found to be independent. When the number of variables, $m$ is greater than the number of equations, $n$, then at least $m - n$ independent variables will be found.
+Vì vậy, một số biến trong quá trình có thể được coi là độc lập. Khi số lượng biến, $m$ lớn hơn số lượng phương trình, $n$, thì ít nhất $m - n$ biến độc lập sẽ được tìm thấy.
 
-In general, if you find at least one independent variable, it can take any arbitrary value, while the other (dependent) variables are expressed through it.  This means that when we work in the field of real numbers, the system potentially has infinitely many solutions. But you should remember that when there are independent variables, SLAE can have no solution at all. This happens when the remaining untreated equations have at least one non-zero constant term. You can check this by assigning zeros to all independent variables, calculate other variables, and then plug in to the original SLAE to check if they satisfy it.
+Nhìn chung, nếu bạn tìm thấy ít nhất một biến độc lập, nó có thể nhận bất kỳ giá trị tùy ý nào, trong khi các biến khác (phụ thuộc) được biểu thị qua nó. Điều này có nghĩa là khi chúng ta làm việc trong trường số thực, hệ thống có khả năng có vô số nghiệm. Nhưng bạn nên nhớ rằng khi có các biến độc lập, SLAE hoàn toàn có thể không có nghiệm. Điều này xảy ra khi các phương trình chưa được xử lý còn lại có ít nhất một hằng số khác không. Bạn có thể kiểm tra điều này bằng cách gán số không cho tất cả các biến độc lập, tính toán các biến khác và sau đó thay vào SLAE ban đầu để kiểm tra xem chúng có thỏa mãn nó hay không.
 
-## Implementation
+## Cài đặt (Implementation) {: #implementation}
 
-Following is an implementation of Gauss-Jordan. Choosing the pivot row is done with heuristic: choosing maximum value in the current column.
+Sau đây là một triển khai của Gauss-Jordan. Việc chọn hàng trụ được thực hiện với phỏng đoán: chọn giá trị lớn nhất trong cột hiện tại.
 
-The input to the function `gauss` is the system matrix $a$. The last column of this matrix is vector $b$.
+Đầu vào cho hàm `gauss` là ma trận hệ thống $a$. Cột cuối cùng của ma trận này là vectơ $b$.
 
-The function returns the number of solutions of the system $(0, 1,\textrm{or } \infty)$. If at least one solution exists, then it is returned in the vector $ans$.
+Hàm trả về số lượng nghiệm của hệ thống $(0, 1,\textrm{hoặc } \infty)$. Nếu tồn tại ít nhất một nghiệm, thì nó được trả về trong vectơ $ans$.
 
 ```{.cpp file=gauss}
 const double EPS = 1e-9;
-const int INF = 2; // it doesn't actually have to be infinity or a big number
+const int INF = 2; // nó thực sự không cần phải là vô cùng hoặc một số lớn
 
 int gauss (vector < vector<double> > a, vector<double> & ans) {
 	int n = (int) a.size();
@@ -129,37 +129,37 @@ int gauss (vector < vector<double> > a, vector<double> & ans) {
 }
 ```
 
-Implementation notes:
+Ghi chú triển khai:
 
-* The function uses two pointers - the current column $col$ and the current row $row$.
-* For each variable $x_i$, the value $where(i)$ is the line where this column is not zero. This vector is needed because some variables can be independent.
-* In this implementation, the current $i$th line is not divided by $a_{ii}$ as described above, so in the end the matrix is not identity matrix (though apparently dividing the $i$th line can help reducing errors).
-* After finding a solution, it is inserted back into the matrix - to check whether the system has at least one solution or not. If the test solution is successful, then the function returns 1 or $\inf$, depending on whether there is at least one independent variable.
+* Hàm sử dụng hai con trỏ - cột hiện tại $col$ và hàng hiện tại $row$.
+* Đối với mỗi biến $x_i$, giá trị $where(i)$ là dòng mà cột này không bằng không. Vectơ này là cần thiết vì một số biến có thể độc lập.
+* Trong triển khai này, dòng thứ $i$ hiện tại không chia cho $a_{ii}$ như mô tả ở trên, vì vậy cuối cùng ma trận không phải là ma trận đơn vị (mặc dù rõ ràng việc chia dòng thứ $i$ có thể giúp giảm sai số).
+* Sau khi tìm thấy một nghiệm, nó được chèn lại vào ma trận - để kiểm tra xem hệ thống có ít nhất một nghiệm hay không. Nếu nghiệm thử nghiệm thành công, thì hàm trả về 1 hoặc $\inf$, tùy thuộc vào việc có ít nhất một biến độc lập hay không.
 
-## Complexity
+## Độ phức tạp (Complexity) {: #complexity}
 
-Now we should estimate the complexity of this algorithm. The algorithm consists of $m$ phases, in each phase:
+Bây giờ chúng ta nên ước tính độ phức tạp của thuật toán này. Thuật toán bao gồm $m$ giai đoạn, trong mỗi giai đoạn:
 
-* Search and reshuffle the pivoting row. This takes $O(n + m)$ when using heuristic mentioned above.
-* If the pivot element in the current column is found - then we must add this equation to all other equations, which takes time $O(nm)$.
+* Tìm kiếm và tráo đổi hàng trụ. Việc này mất $O(n + m)$ khi sử dụng phỏng đoán được đề cập ở trên.
+* Nếu phần tử trụ trong cột hiện tại được tìm thấy - thì chúng ta phải thêm phương trình này vào tất cả các phương trình khác, mất thời gian $O(nm)$.
 
-So, the final complexity of the algorithm is $O(\min (n, m) . nm)$.
-In case $n = m$, the complexity is simply $O(n^3)$.
+Vì vậy, độ phức tạp cuối cùng của thuật toán là $O(\min (n, m) . nm)$.
+Trong trường hợp $n = m$, độ phức tạp đơn giản là $O(n^3)$.
 
-Note that when the SLAE is not on real numbers, but is in the modulo two, then the system can be solved much faster, which is described below.
+Lưu ý rằng khi SLAE không nằm trên số thực, mà ở modulo 2, thì hệ thống có thể được giải nhanh hơn nhiều, được mô tả bên dưới.
 
-## Acceleration of the algorithm
+## Tăng tốc thuật toán (Acceleration of the algorithm) {: #acceleration-of-the-algorithm}
 
-The previous implementation can be sped up by two times, by dividing the algorithm into two phases: forward and reverse:
+Việc triển khai trước đó có thể được tăng tốc gấp hai lần, bằng cách chia thuật toán thành hai giai đoạn: thuận (forward) và nghịch (reverse):
 
-* Forward phase: Similar to the previous implementation, but the current row is only added to the rows after it. As a result, we obtain a triangular matrix instead of diagonal.
-* Reverse phase: When the matrix is triangular, we first calculate the value of the last variable. Then plug this value to find the value of next variable. Then plug these two values to find the next variables...
+* Giai đoạn thuận: Tương tự như triển khai trước, nhưng hàng hiện tại chỉ được thêm vào các hàng sau nó. Kết quả là, chúng ta thu được một ma trận tam giác thay vì ma trận đường chéo.
+* Giai đoạn nghịch: Khi ma trận là tam giác, đầu tiên chúng ta tính giá trị của biến cuối cùng. Sau đó thay giá trị này để tìm giá trị của biến tiếp theo. Sau đó thay hai giá trị này để tìm các biến tiếp theo...
 
-Reverse phase only takes $O(nm)$, which is much faster than forward phase. In forward phase, we reduce the number of operations by half, thus reducing the running time of the implementation.
+Giai đoạn nghịch chỉ mất $O(nm)$, nhanh hơn nhiều so với giai đoạn thuận. Trong giai đoạn thuận, chúng ta giảm một nửa số lượng phép toán, do đó giảm thời gian chạy của triển khai.
 
-## Solving modular SLAE
+## Giải SLAE mô-đun (Solving modular SLAE) {: #solving-modular-slae}
 
-For solving SLAE in some modulus, we can still use the described algorithm. However, in case the modulus is equal to 2, we can perform Gauss-Jordan elimination much more effectively using bitwise operations and C++ bitset data types:
+Để giải SLAE trong một mô-đun nào đó, chúng ta vẫn có thể sử dụng thuật toán được mô tả. Tuy nhiên, trong trường hợp mô-đun bằng 2, chúng ta có thể thực hiện khử Gauss-Jordan hiệu quả hơn nhiều bằng cách sử dụng các phép toán bit và kiểu dữ liệu bitset của C++:
 
 ```cpp
 int gauss (vector < bitset<N> > a, int n, int m, bitset<N> & ans) {
@@ -179,31 +179,31 @@ int gauss (vector < bitset<N> > a, int n, int m, bitset<N> & ans) {
 				a[i] ^= a[row];
 		++row;
 	}
-        // The rest of implementation is the same as above
+        // Phần còn lại của việc triển khai tương tự như trên
 }
 ```
 
-Since we use bit compress, the implementation is not only shorter, but also 32 times faster.
+Vì chúng ta sử dụng nén bit, việc triển khai không chỉ ngắn hơn mà còn nhanh hơn 32 lần.
 
-## A little note about different heuristics of choosing pivoting row
+## Một chút lưu ý về các phỏng đoán khác nhau của việc chọn hàng trụ (A little note about different heuristics of choosing pivoting row) {: #heuristics}
 
-There is no general rule for what heuristics to use.
+Không có quy tắc chung cho những phỏng đoán nào để sử dụng.
 
-The heuristics used in previous implementation works quite well in practice. It also turns out to give almost the same answers as "full pivoting" - where the pivoting row is search amongst all elements of the whose submatrix (from the current row and current column).
+Các phỏng đoán được sử dụng trong triển khai trước hoạt động khá tốt trong thực tế. Nó cũng cho ra kết quả gần như giống hệt như "trụ đầy đủ" ("full pivoting") - trong đó hàng trụ được tìm kiếm giữa tất cả các phần tử của ma trận con (từ hàng hiện tại và cột hiện tại).
 
-Though, you should note that both heuristics is dependent on how much the original equations was scaled. For example, if one of the equation was multiplied by $10^6$, then this equation is almost certain to be chosen as pivot in first step. This seems rather strange, so it seems logical to change to a more complicated heuristics, called `implicit pivoting`.
+Tuy nhiên, bạn nên lưu ý rằng cả hai phỏng đoán đều phụ thuộc vào mức độ các phương trình ban đầu được thu phóng. Ví dụ, nếu một trong các phương trình được nhân với $10^6$, thì phương trình này gần như chắc chắn được chọn làm trụ trong bước đầu tiên. Điều này có vẻ khá lạ, vì vậy có vẻ hợp lý khi chuyển sang một phỏng đoán phức tạp hơn, được gọi là `trụ ngầm định` (`implicit pivoting`).
 
-Implicit pivoting compares elements as if both lines were normalized, so that the maximum element would be unity. To implement this technique, one need to maintain maximum in each row (or maintain each line so that maximum is unity, but this can lead to increase in the accumulated error).
+Trụ ngầm định so sánh các phần tử như thể cả hai dòng đều được chuẩn hóa, sao cho phần tử lớn nhất sẽ là đơn vị. Để thực hiện kỹ thuật này, người ta cần duy trì giá trị lớn nhất trong mỗi hàng (hoặc duy trì từng dòng sao cho giá trị lớn nhất là đơn vị, nhưng điều này có thể dẫn đến sự gia tăng sai số tích lũy).
 
-## Improve the solution
+## Cải thiện nghiệm (Improve the solution) {: #improve-the-solution}
 
-Despite various heuristics, Gauss-Jordan algorithm can still lead to large errors in special matrices even of size $50 - 100$.
+Bất chấp các phỏng đoán khác nhau, thuật toán Gauss-Jordan vẫn có thể dẫn đến sai số lớn trong các ma trận đặc biệt thậm chí có kích thước $50 - 100$.
 
-Therefore, the resulting Gauss-Jordan solution must sometimes be improved by applying a simple numerical method - for example, the method of simple iteration.
+Do đó, giải pháp Gauss-Jordan kết quả đôi khi phải được cải thiện bằng cách áp dụng một phương pháp số đơn giản - ví dụ, phương pháp lặp đơn.
 
-Thus, the solution turns into two-step: First, Gauss-Jordan algorithm is applied, and then a numerical method taking initial solution as solution in the first step.
+Do đó, giải pháp biến thành hai bước: Đầu tiên, thuật toán Gauss-Jordan được áp dụng, và sau đó một phương pháp số lấy nghiệm ban đầu làm nghiệm trong bước đầu tiên.
 
-## Practice Problems
+## Bài tập (Practice Problems) {: #practice-problems}
 * [Spoj - Xor Maximization](http://www.spoj.com/problems/XMAX/)
 * [Codechef - Knight Moving](https://www.codechef.com/SEP12/problems/KNGHTMOV)
 * [Lightoj - Graph Coloring](http://lightoj.com/volume_showproblem.php?problem=1279)

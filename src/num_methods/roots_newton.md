@@ -4,53 +4,53 @@ tags:
 e_maxx_link: roots_newton
 ---
 
-# Newton's method for finding roots 
+# Phương pháp Newton để tìm nghiệm (Newton's method for finding roots) {: #newtons-method-for-finding-roots}
 
-This is an iterative method invented by Isaac Newton around 1664. However, this method is also sometimes called the Raphson method, since Raphson invented the same algorithm a few years after Newton, but his article was published much earlier.
+Đây là một phương pháp lặp được Isaac Newton phát minh vào khoảng năm 1664. Tuy nhiên, phương pháp này đôi khi còn được gọi là phương pháp Raphson, vì Raphson đã phát minh ra cùng một thuật toán một vài năm sau Newton, nhưng bài báo của ông đã được xuất bản sớm hơn nhiều.
 
-The task is as follows. Given the following equation:
+Nhiệm vụ như sau. Cho phương trình sau:
 
 $$f(x) = 0$$
 
-We want to solve the equation. More precisely, we want to find one of its roots (it is assumed that the root exists). It is assumed that $f(x)$ is continuous and differentiable on an interval $[a, b]$.
+Chúng tôi muốn giải phương trình. Chính xác hơn, chúng tôi muốn tìm một trong những nghiệm của nó (giả sử rằng nghiệm tồn tại). Giả sử rằng $f(x)$ liên tục và có thể vi phân trên một khoảng $[a, b]$.
 
-## Algorithm
+## Thuật toán (Algorithm) {: #algorithm}
 
-The input parameters of the algorithm consist of not only the function $f(x)$ but also the initial approximation - some $x_0$, with which the algorithm starts.
+Các tham số đầu vào của thuật toán không chỉ bao gồm hàm $f(x)$ mà còn cả xấp xỉ ban đầu - một số $x_0$, mà thuật toán bắt đầu với nó.
 
 <p align="center">
-	<img src="./roots_newton.png" alt="plot_f(x)">
+	<img src="https://cp-algorithms.com/num_methods/roots_newton.png" alt="plot_f(x)">
 </p>
 
-Suppose we have already calculated $x_i$, calculate $x_{i+1}$ as follows. Draw the tangent to the graph of the function $f(x)$ at the point $x = x_i$, and find the point of intersection of this tangent with the $x$-axis. $x_{i+1}$ is set equal to the $x$-coordinate of the point found, and we repeat the whole process from the beginning.
+Giả sử chúng ta đã tính toán $x_i$, hãy tính $x_{i+1}$ như sau. Vẽ tiếp tuyến với đồ thị của hàm $f(x)$ tại điểm $x = x_i$, và tìm điểm giao nhau của tiếp tuyến này với trục $x$. $x_{i+1}$ được đặt bằng toạ độ $x$ của điểm tìm được, và chúng ta lặp lại toàn bộ quá trình từ đầu.
 
-It is not difficult to obtain the following formula,
+Không khó để có được công thức sau,
 
 $$ x_{i+1} = x_i - \frac{f(x_i)}{f^\prime(x_i)} $$
 
-First, we calculate the slope $f'(x)$, derivative of $f(x)$, and then determine the equation of the tangent which is,
+Đầu tiên, chúng ta tính độ dốc $f'(x)$, đạo hàm của $f(x)$, và sau đó xác định phương trình của tiếp tuyến là,
 
 $$ y - f(x_i) = f'(x_i)(x - x_i) $$ 
 
-The tangent intersects with the x-axis at cordinate, $y = 0$ and $x = x_{i+1}$,
+Tiếp tuyến giao với trục x tại tọa độ, $y = 0$ và $x = x_{i+1}$,
 
 $$ - f(x_i) = f'(x_i)(x_{i+1} - x_i) $$ 
 
-Now, solving the equation we get the value of $x_{i+1}$.
+Bây giờ, giải phương trình ta được giá trị của $x_{i+1}$.
 
-It is intuitively clear that if the function $f(x)$ is "good" (smooth), and $x_i$ is close enough to the root, then $x_{i+1}$ will be even closer to the desired root.
+Về mặt trực quan, rõ ràng là nếu hàm $f(x)$ là "tốt" (trơn), và $x_i$ đủ gần với nghiệm, thì $x_{i+1}$ thậm chí sẽ gần hơn với nghiệm mong muốn.
 
-The rate of convergence is quadratic, which, conditionally speaking, means that the number of exact digits in the approximate value $x_i$ doubles with each iteration.
+Tốc độ hội tụ là bậc hai, nói một cách có điều kiện, có nghĩa là số lượng chữ số chính xác trong giá trị gần đúng $x_i$ tăng gấp đôi sau mỗi lần lặp.
 
-## Application for calculating the square root
+## Ứng dụng để tính căn bậc hai (Application for calculating the square root) {: #application-for-calculating-the-square-root}
 
-Let's use the calculation of square root as an example of Newton's method.
+Hãy sử dụng phép tính căn bậc hai làm ví dụ về phương pháp Newton.
 
-If we substitute $f(x) = x^2 - n$, then after simplifying the expression, we get:
+Nếu chúng ta thay thế $f(x) = x^2 - n$, thì sau khi đơn giản hóa biểu thức, chúng ta nhận được:
 
 $$ x_{i+1} = \frac{x_i + \frac{n}{x_i}}{2} $$
 
-The first typical variant of the problem is when a rational number $n$ is given, and its root must be calculated with some accuracy `eps`:
+Biến thể điển hình đầu tiên của bài toán là khi một số hữu tỉ $n$ được đưa ra, và căn bậc của nó phải được tính toán với độ chính xác nào đó `eps`:
 
 ```cpp
 double sqrt_newton(double n) {
@@ -66,7 +66,7 @@ double sqrt_newton(double n) {
 }
 ```
 
-Another common variant of the problem is when we need to calculate the integer root (for the given $n$ find the largest $x$ such that $x^2 \le n$). Here it is necessary to slightly change the termination condition of the algorithm, since it may happen that $x$ will start to "jump" near the answer. Therefore, we add a condition that if the value $x$ has decreased in the previous step, and it tries to increase at the current step, then the algorithm must be stopped.
+Một biến thể phổ biến khác của bài toán là khi chúng ta cần tính căn bậc hai nguyên (đối với $n$ đã cho tìm $x$ lớn nhất sao cho $x^2 \le n$). Ở đây cần thay đổi một chút điều kiện chấm dứt của thuật toán, vì có thể xảy ra trường hợp $x$ sẽ bắt đầu "nhảy" gần câu trả lời. Do đó, chúng tôi thêm một điều kiện rằng nếu giá trị $x$ đã giảm trong bước trước đó, và nó cố gắng tăng ở bước hiện tại, thì thuật toán phải dừng lại.
 
 ```cpp
 int isqrt_newton(int n) {
@@ -83,7 +83,7 @@ int isqrt_newton(int n) {
 }
 ```
 
-Finally, we are given the third variant - for the case of bignum arithmetic. Since the number $n$ can be large enough, it makes sense to pay attention to the initial approximation. Obviously, the closer it is to the root, the faster the result will be achieved. It is simple enough and effective to take the initial approximation as the number $2^{\textrm{bits}/2}$, where $\textrm{bits}$ is the number of bits in the number $n$. Here is the Java code that demonstrates this variant:
+Cuối cùng, chúng ta được đưa ra biến thể thứ ba - cho trường hợp số học số lớn (bignum arithmetic). Vì số $n$ có thể đủ lớn, nên chú ý đến xấp xỉ ban đầu. Rõ ràng, càng gần nghiệm, kết quả sẽ càng nhanh đạt được. Đủ đơn giản và hiệu quả để lấy xấp xỉ ban đầu là số $2^{\textrm{bits}/2}$, trong đó $\textrm{bits}$ là số bit trong số $n$. Đây là mã Java thể hiện biến thể này:
 
 ```java
 public static BigInteger isqrtNewton(BigInteger n) {
@@ -100,7 +100,7 @@ public static BigInteger isqrtNewton(BigInteger n) {
 }
 ```
 
-For example, this code is executed in $60$ milliseconds for $n = 10^{1000}$, and if we remove the improved selection of the initial approximation (just starting with $1$), then it will be executed in about $120$ milliseconds.
+Ví dụ, mã này được thực thi trong $60$ mili giây cho $n = 10^{1000}$, và nếu chúng ta loại bỏ lựa chọn cải tiến của xấp xỉ ban đầu (chỉ bắt đầu bằng $1$), thì nó sẽ được thực thi trong khoảng $120$ mili giây.
 
-## Practice Problems
+## Bài tập (Practice Problems) {: #practice-problems}
 - [UVa 10428 - The Roots](https://uva.onlinejudge.org/index.php?option=com_onlinejudge&Itemid=8&category=16&page=show_problem&problem=1369)

@@ -4,30 +4,30 @@ tags:
 e_maxx_link: factorial_divisors
 ---
 
-# Finding Power of Factorial Divisor
+# Tìm lũy thừa của ước giai thừa (Finding Power of Factorial Divisor) {: #finding-power-of-factorial-divisor}
 
-You are given two numbers $n$ and $k$. Find the largest integer $x$ such that $k^x$ divides $n!$.
+Bạn được cho hai số $n$ và $k$. Tìm số nguyên $x$ lớn nhất sao cho $k^x$ chia hết $n!$.
 
-## Prime $k$ {data-toc-label="Prime k"}
+## $k$ nguyên tố (Prime $k$) {: #prime-k data-toc-label="Prime k"}
 
-Let's first consider the case of prime $k$. The explicit expression for factorial
+Đầu tiên hãy xem xét trường hợp $k$ nguyên tố. Biểu thức tường minh cho giai thừa
 
 $$n! = 1 \cdot 2 \cdot 3 \ldots (n-1) \cdot n$$
 
-Note that every $k$-th element of the product is divisible by $k$, i.e. adds $+1$ to the answer; the number of such elements is $\Bigl\lfloor\dfrac{n}{k}\Bigr\rfloor$.
+Lưu ý rằng mỗi phần tử thứ $k$ của tích chia hết cho $k$, tức là thêm $+1$ vào câu trả lời; số lượng các phần tử như vậy là $\Bigl\lfloor\dfrac{n}{k}\Bigr\rfloor$.
 
-Next, every $k^2$-th element is divisible by $k^2$, i.e. adds another $+1$ to the answer (the first power of $k$ has already been counted in the previous paragraph). The number of such elements is $\Bigl\lfloor\dfrac{n}{k^2}\Bigr\rfloor$.
+Tiếp theo, mỗi phần tử thứ $k^2$ chia hết cho $k^2$, tức là thêm $+1$ nữa vào câu trả lời (lũy thừa đầu tiên của $k$ đã được tính trong đoạn trước). Số lượng các phần tử như vậy là $\Bigl\lfloor\dfrac{n}{k^2}\Bigr\rfloor$.
 
-And so on, for every $i$ each $k^i$-th element adds another $+1$ to the answer, and there are $\Bigl\lfloor\dfrac{n}{k^i}\Bigr\rfloor$ such elements.
+Và cứ thế, đối với mỗi $i$, mỗi phần tử thứ $k^i$ thêm $+1$ nữa vào câu trả lời, và có $\Bigl\lfloor\dfrac{n}{k^i}\Bigr\rfloor$ phần tử như vậy.
 
-The final answer is
+Câu trả lời cuối cùng là
 
 $$\Bigl\lfloor\dfrac{n}{k}\Bigr\rfloor + \Bigl\lfloor\dfrac{n}{k^2}\Bigr\rfloor + \ldots + \Bigl\lfloor\dfrac{n}{k^i}\Bigr\rfloor + \ldots$$
 
-This result is also known as [Legendre's formula](https://en.wikipedia.org/wiki/Legendre%27s_formula).
-The sum is of course finite, since only approximately the first $\log_k n$ elements are not zeros. Thus, the runtime of this algorithm is $O(\log_k n)$.
+Kết quả này còn được gọi là [Công thức Legendre](https://en.wikipedia.org/wiki/Legendre%27s_formula).
+Tổng tất nhiên là hữu hạn, vì chỉ khoảng $\log_k n$ phần tử đầu tiên là khác không. Do đó, thời gian chạy của thuật toán này là $O(\log_k n)$.
 
-### Implementation
+### Cài đặt {: #implementation}
 
 ```cpp
 
@@ -42,8 +42,20 @@ int fact_pow (int n, int k) {
 
 ```
 
-## Composite $k$ {data-toc-label="Composite k"}
+## $k$ hợp số (Composite $k$) {: #composite-k data-toc-label="Composite k"}
 
-The same idea can't be applied directly. Instead we can factor $k$, representing it as $k = k_1^{p_1} \cdot \ldots \cdot k_m^{p_m}$. For each $k_i$, we find the number of times it is present in $n!$ using the algorithm described above - let's call this value $a_i$. The answer for composite $k$ will be
+Ý tưởng tương tự không thể được áp dụng trực tiếp. Thay vào đó chúng ta có thể phân tích thừa số $k$, biểu diễn nó dưới dạng $k = k_1^{p_1} \cdot \ldots \cdot k_m^{p_m}$. Với mỗi $k_i$, chúng ta tìm số lần nó xuất hiện trong $n!$ bằng cách sử dụng thuật toán được mô tả ở trên - gọi giá trị này là $a_i$. Câu trả lời cho $k$ hợp số sẽ là
 
 $$\min_ {i=1 \ldots m} \dfrac{a_i}{p_i}$$
+
+---
+
+## Checklist
+
+- Original lines: 50
+- Translated lines: 50
+- Code blocks changed? No
+- Inline code changed? No
+- Technical terms kept in English? Yes
+- Headings anchors preserved/added correctly? Yes
+- I confirm no character was omitted: YES

@@ -4,25 +4,25 @@ tags:
 e_maxx_link: matrix_rank
 ---
 
-# Finding the rank of a matrix
+# Tìm hạng của ma trận (Finding the rank of a matrix) {: #finding-the-rank-of-a-matrix}
 
-**The rank of a matrix** is the largest number of linearly independent rows/columns of the matrix. The rank is not only defined  for square matrices.
+**Hạng của ma trận** (**The rank of a matrix**) là số lượng lớn nhất các hàng/cột độc lập tuyến tính của ma trận. Hạng không chỉ được xác định cho ma trận vuông.
 
-The rank of a matrix can also be defined as the largest order of any non-zero minor in the matrix.
+Hạng của ma trận cũng có thể được định nghĩa là bậc lớn nhất của bất kỳ định thức con (minor) khác không nào trong ma trận.
 
-Let the matrix be rectangular and have size $N \times M$.
-Note that if the matrix is square and its determinant is non-zero, then the rank is $N$ ($=M$); otherwise it will be less. Generally, the rank of a matrix does not exceed $\min (N, M)$.
+Giả sử ma trận là hình chữ nhật và có kích thước $N \times M$.
+Lưu ý rằng nếu ma trận là ma trận vuông và định thức của nó khác không, thì hạng là $N$ ($=M$); nếu không nó sẽ nhỏ hơn. Nói chung, hạng của ma trận không vượt quá $\min (N, M)$.
 
-## Algorithm
+## Thuật toán (Algorithm) {: #algorithm}
 
-You can search for the rank using [Gaussian elimination](linear-system-gauss.md). We will perform the same operations as when solving the system or finding its determinant. But if at any step in the $i$-th column there are no rows with an non-empty entry among those that we didn't selected already, then we skip this step.
-Otherwise, if we have found a row with a non-zero element in the $i$-th column during the $i$-th step, then we mark this row as a selected one, increase the rank by one (initially the rank is set equal to $0$), and perform the usual operations of taking this row away from the rest.
+Bạn có thể tìm kiếm hạng bằng cách sử dụng [khử Gaussian](linear-system-gauss.md). Chúng ta sẽ thực hiện các thao tác tương tự như khi giải hệ thống hoặc tìm định thức của nó. Nhưng nếu ở bất kỳ bước nào trong cột thứ $i$ không có hàng nào có mục khác rỗng trong số những hàng mà chúng ta chưa chọn, thì chúng ta bỏ qua bước này.
+Ngược lại, nếu chúng ta tìm thấy một hàng có phần tử khác không trong cột thứ $i$ trong bước thứ $i$, thì chúng ta đánh dấu hàng này là hàng đã chọn, tăng hạng lên một (ban đầu hạng được đặt bằng $0$), và thực hiện các thao tác thông thường là trừ hàng này khỏi phần còn lại.
 
-## Complexity
+## Độ phức tạp (Complexity) {: #complexity}
 
-This algorithm runs in $\mathcal{O}(n^3)$.
+Thuật toán này chạy trong $\mathcal{O}(n^3)$.
 
-## Implementation
+## Cài đặt (Implementation) {: #implementation}
 
 ```{.cpp file=matrix-rank}
 const double EPS = 1E-9;
@@ -56,5 +56,5 @@ int compute_rank(vector<vector<double>> A) {
     return rank;
 }
 ```
-## Problems
+## Bài tập (Problems) {: #problems}
  * [TIMUS1041 Nikifor](http://acm.timus.ru/problem.aspx?space=1&num=1041)

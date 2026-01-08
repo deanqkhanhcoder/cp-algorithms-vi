@@ -1,51 +1,51 @@
 ---
 tags:
-  - Original
+  - Translated
 ---
 
-# Minimum Enclosing Circle
+# Đường tròn bao nhỏ nhất (Minimum Enclosing Circle) {: #minimum-enclosing-circle}
 
-Consider the following problem:
+Xem xét bài toán sau:
 
 !!! example "[Library Checker - Minimum Enclosing Circle](https://judge.yosupo.jp/problem/minimum_enclosing_circle)"
 
-    You're given $n \leq 10^5$ points $p_i=(x_i, y_i)$.
+    Bạn được cho $n \leq 10^5$ điểm $p_i=(x_i, y_i)$.
 
-    For each $p_i$, find whether it lies on the circumference of the minimum enclosing circle of $\{p_1,\dots,p_n\}$.
+    Đối với mỗi $p_i$, hãy tìm xem nó có nằm trên chu vi (circumference) của đường tròn bao nhỏ nhất của $\{p_1,\dots,p_n\}$ hay không.
 
-Here, by the minimum enclosing circle (MEC) we mean a circle with minimum possible radius that contains all the $n$ points, inside the circle or on its boundary. This problem has a simple randomized solution that, on first glance, looks like it would run in $O(n^3)$, but actually works in $O(n)$ expected time.
+Ở đây, theo đường tròn bao nhỏ nhất (MEC - Minimum Enclosing Circle), chúng ta có nghĩa là một đường tròn có bán kính nhỏ nhất có thể chứa tất cả $n$ điểm, bên trong đường tròn hoặc trên biên của nó. Bài toán này có một giải pháp ngẫu nhiên đơn giản, thoạt nhìn, có vẻ như sẽ chạy trong $O(n^3)$, nhưng thực ra hoạt động trong thời gian kỳ vọng $O(n)$.
 
-To better understand the reasoning below, we should immediately note that the solution to the problem is unique:
+Để hiểu rõ hơn về lý luận dưới đây, chúng ta nên lưu ý ngay rằng giải pháp cho bài toán là duy nhất:
 
-??? question "Why is the MEC unique?"
+??? question "Tại sao MEC là duy nhất?"
 
-    Consider the following setup: Let $r$ be the radius of the MEC. We draw a circle of radius $r$ around each of the points $p_1,\dots,p_n$. Geometrically, the centers of circles that have radius $r$ and cover all the points $p_1,\dots,p_n$ form the intersection of all $n$ circles.
+    Xem xét thiết lập sau: Gọi $r$ là bán kính của MEC. Chúng ta vẽ một đường tròn bán kính $r$ xung quanh mỗi điểm $p_1,\dots,p_n$. Về mặt hình học, tâm của các đường tròn có bán kính $r$ và bao phủ tất cả các điểm $p_1,\dots,p_n$ tạo thành giao điểm của tất cả $n$ đường tròn.
 
-    Now, if the intersection is just a single point, this already proves that it is unique. Otherwise, the intersection is a shape of non-zero area, so we can reduce $r$ by a tiny bit, and still have non-empty intersection, which contradicts the assumption that $r$ was the minimum possible radius of the enclosing circle.
+    Bây giờ, nếu giao điểm chỉ là một điểm duy nhất, điều này đã chứng minh rằng nó là duy nhất. Ngược lại, giao điểm là một hình dạng có diện tích khác không, vì vậy chúng ta có thể giảm $r$ đi một chút, và vẫn có giao điểm không rỗng, điều này mâu thuẫn với giả định rằng $r$ là bán kính nhỏ nhất có thể của đường tròn bao.
 
-    With a similar logic, we can also show the uniqueness of the MEC if we additionally demand that it passes through a given specific point $p_i$ or two points $p_i$ and $p_j$ (it is also unique because its radius uniquely defines it).
+    Với một logic tương tự, chúng ta cũng có thể chỉ ra tính duy nhất của MEC nếu chúng ta yêu cầu thêm rằng nó đi qua một điểm cụ thể $p_i$ hoặc hai điểm $p_i$ và $p_j$ (nó cũng là duy nhất vì bán kính của nó xác định duy nhất nó).
 
-    Alternatively, we can also assume that there are two MECs, and then notice that their intersection (which contains the points $p_1,\dots,p_n$ already) must have a smaller diameter than initial circles, and thus can be covered with a smaller circle.
+    Ngoài ra, chúng ta cũng có thể giả sử rằng có hai MEC, và sau đó nhận thấy rằng giao điểm của chúng (đã chứa các điểm $p_1,\dots,p_n$) phải có đường kính nhỏ hơn các đường tròn ban đầu, và do đó có thể được bao phủ bằng một đường tròn nhỏ hơn.
 
-## Welzl's algorithm
+## Thuật toán Welzl (Welzl's algorithm) {: #welzls-algorithm}
 
-For brevity, let's denote $\operatorname{mec}(p_1,\dots,p_n)$ to be the MEC of $\{p_1,\dots,p_n\}$, and let $P_i = \{p_1,\dots,p_i\}$.
+Để ngắn gọn, hãy ký hiệu $\operatorname{mec}(p_1,\dots,p_n)$ là MEC của $\{p_1,\dots,p_n\}$, và gọi $P_i = \{p_1,\dots,p_i\}$.
 
-The algorithm, initially [proposed](https://doi.org/10.1007/BFb0038202) by Welzl in 1991, goes as follows:
+Thuật toán, ban đầu được [đề xuất](https://doi.org/10.1007/BFb0038202) bởi Welzl vào năm 1991, diễn ra như sau:
 
-1. Apply a random permutation to the input sequence of points.
-2. Maintain the current candidate to be the MEC $C$, starting with $C = \operatorname{mec}(p_1, p_2)$.
-3. Iterate over $i=3..n$ and check if $p_i \in C$.
-    1. If $p_i \in C$ it means that $C$ is the MEC of $P_i$.
-    2. Otherwise, assign $C = \operatorname{mec}(p_i, p_1)$ and iterate over $j=2..i$ and check if $p_j \in C$.
-        1. If $p_j \in C$, then $C$ is the MEC of $P_j$ among circles that pass through $p_i$.
-        2. Otherwise, assign $C=\operatorname{mec}(p_i, p_j)$ and iterate over $k=1..j$ and check if $p_k \in C$.
-            1. If $p_k \in C$, then $C$ is the MEC of $P_k$ among circles that pass through $p_i$ and $p_j$.
-            2. Otherwise, $C=\operatorname{mec}(p_i,p_j,p_k)$ is the MEC of $P_k$ among circles that pass through $p_i$ and $p_j$.
+1. Áp dụng một hoán vị ngẫu nhiên cho dãy điểm đầu vào.
+2. Duy trì ứng cử viên hiện tại là MEC $C$, bắt đầu với $C = \operatorname{mec}(p_1, p_2)$.
+3. Lặp qua $i=3..n$ và kiểm tra xem $p_i \in C$ hay không.
+    1. Nếu $p_i \in C$, điều đó có nghĩa là $C$ là MEC của $P_i$.
+    2. Ngược lại, gán $C = \operatorname{mec}(p_i, p_1)$ và lặp qua $j=2..i$ và kiểm tra xem $p_j \in C$ hay không.
+        1. Nếu $p_j \in C$, thì $C$ là MEC của $P_j$ trong số các đường tròn đi qua $p_i$.
+        2. Ngược lại, gán $C=\operatorname{mec}(p_i, p_j)$ và lặp qua $k=1..j$ và kiểm tra xem $p_k \in C$ hay không.
+            1. Nếu $p_k \in C$, thì $C$ là MEC của $P_k$ trong số các đường tròn đi qua $p_i$ và $p_j$.
+            2. Ngược lại, $C=\operatorname{mec}(p_i,p_j,p_k)$ là MEC của $P_k$ trong số các đường tròn đi qua $p_i$ và $p_j$.
 
-We can see that each level of nestedness here has an invariant to maintain (that $C$ is the MEC among circles that also pass through additionally given $0$, $1$ or $2$ points), and whenever the inner loop closes, its invariant becomes equivalent to the invariant of the current iteration of its parent loop. This, in turn, ensures the _correctness_ of the algorithm as a whole.
+Chúng ta có thể thấy rằng mỗi cấp độ lồng nhau ở đây có một bất biến để duy trì (rằng $C$ là MEC trong số các đường tròn cũng đi qua thêm $0$, $1$ hoặc $2$ điểm nhất định), và bất cứ khi nào vòng lặp bên trong đóng lại, bất biến của nó trở nên tương đương với bất biến của lần lặp hiện tại của vòng lặp cha của nó. Điều này, đến lượt nó, đảm bảo tính _đúng đắn_ của toàn bộ thuật toán.
 
-Omitting some technical details, for now, the whole algorithm can be implemented in C++ as follows:
+Bỏ qua một số chi tiết kỹ thuật, hiện tại, toàn bộ thuật toán có thể được cài đặt trong C++ như sau:
 
 ```cpp
 struct point {...};
@@ -82,91 +82,91 @@ mec enclosing_circle(vector<point> &p) {
 }
 ```
 
-Now, it is to be expected that checking that a point $p_i$ is inside the MEC of $2$ or $3$ points can be done in $O(1)$ (we will discuss this later on). But even then, the algorithm above looks as if it would take $O(n^3)$ in the worst case just because of all the nested loops. So, how come we claimed the linear expected runtime? Let's figure out!
+Bây giờ, người ta có thể mong đợi rằng việc kiểm tra xem một điểm $p_i$ có nằm trong MEC của $2$ hoặc $3$ điểm hay không có thể được thực hiện trong $O(1)$ (chúng ta sẽ thảo luận về điều này sau). Nhưng ngay cả khi đó, thuật toán trên trông như thể nó sẽ mất $O(n^3)$ trong trường hợp xấu nhất chỉ vì tất cả các vòng lặp lồng nhau. Vậy làm thế nào chúng ta lại tuyên bố thời gian chạy kỳ vọng tuyến tính? Hãy cùng tìm hiểu!
 
-### Complexity analysis
+### Phân tích độ phức tạp (Complexity analysis) {: #complexity-analysis}
 
-For the inner-most loop (over $k$), clearly its expected runtime is $O(j)$ operations. What about the loop over $j$?
+Đối với vòng lặp trong cùng (theo $k$), rõ ràng thời gian chạy kỳ vọng của nó là $O(j)$ phép toán. Còn vòng lặp theo $j$ thì sao?
 
-It only triggers the next loop if $p_j$ is on the boundary of the MEC of $P_j$ that also passes through point $i$, _and removing $p_j$ would further shrink the circle_. Of all points in $P_j$ there can only be at most $2$ points with such property, because if there are more than $2$ points from $P_j$ on the boundary, it means that after removing any of them, there will still be at least $3$ points on the boundary, sufficient to uniquely define the circle.
+Nó chỉ kích hoạt vòng lặp tiếp theo nếu $p_j$ nằm trên biên của MEC của $P_j$ cũng đi qua điểm $i$, _và việc loại bỏ $p_j$ sẽ làm thu nhỏ đường tròn hơn nữa_. Trong tất cả các điểm trong $P_j$ chỉ có thể có tối đa $2$ điểm có tính chất như vậy, bởi vì nếu có nhiều hơn $2$ điểm từ $P_j$ trên biên, điều đó có nghĩa là sau khi loại bỏ bất kỳ điểm nào trong số chúng, vẫn sẽ có ít nhất $3$ điểm trên biên, đủ để xác định duy nhất đường tròn.
 
-In other words, after initial random shuffle, there is at most $\frac{2}{j}$ probability that we get one of the at most two unlucky points as $p_j$. Summing it up over all $j$ from $1$ to $i$, we get the expected runtime of
+Nói cách khác, sau khi xáo trộn ngẫu nhiên ban đầu, có tối đa xác suất $\frac{2}{j}$ rằng chúng ta nhận được một trong tối đa hai điểm không may mắn là $p_j$. Cộng tổng lại trên tất cả $j$ từ $1$ đến $i$, chúng ta nhận được thời gian chạy kỳ vọng là
 
 $$
 \sum\limits_{j=1}^i \frac{2}{j} \cdot O(j) = O(i).
 $$
 
-In exactly same fashion we can now also prove that the outermost loop has expected runtime of $O(n)$.
+Theo cách hoàn toàn tương tự, bây giờ chúng ta cũng có thể chứng minh rằng vòng lặp ngoài cùng có thời gian chạy kỳ vọng là $O(n)$.
 
-### Checking that a point is in the MEC of 2 or 3 points
+### Kiểm tra xem một điểm có nằm trong MEC của 2 hoặc 3 điểm hay không (Checking that a point is in the MEC of 2 or 3 points) {: #checking-that-a-point-is-in-the-mec-of-2-or-3-points}
 
-Let's now figure out the implementation detail of `point` and `mec`. In this problem, it turns out to be particularly useful to use [std::complex](https://codeforces.com/blog/entry/22175) as a class for points:
+Bây giờ hãy tìm hiểu chi tiết cài đặt của `point` và `mec`. Trong bài toán này, hóa ra việc sử dụng [std::complex](https://codeforces.com/blog/entry/22175) làm lớp cho các điểm đặc biệt hữu ích:
 
 ```cpp
 using ftype = int64_t;
 using point = complex<ftype>;
 ```
 
-As a reminder, a complex number is a number of type $x+yi$, where $i^2=-1$ and $x, y \in \mathbb R$. In C++, such complex number is represented by a 2-dimensional point $(x, y)$. Complex numbers already implement basic component-wise linear operations (addition, multiplication by a real number), but also their multiplication and division carry certain geometric meaning.
+Xin nhắc lại, số phức là một số loại $x+yi$, trong đó $i^2=-1$ và $x, y \in \mathbb R$. Trong C++, số phức như vậy được biểu diễn bởi một điểm 2 chiều $(x, y)$. Các số phức đã cài đặt các phép toán tuyến tính theo từng thành phần cơ bản (cộng, nhân với một số thực), nhưng phép nhân và phép chia của chúng cũng mang ý nghĩa hình học nhất định.
 
-Without going in too much detail, we will note the most important property for this particular task: Multiplying two complex numbers adds up their polar angles (counted from $Ox$ counter-clockwise), and taking a conjugate (i.e. changing $z=x+yi$ into $\overline{z} = x-yi$) multiplies the polar angle with $-1$. This allows us to formulate some very simple criteria for whether a point $z$ is inside the MEC of $2$ or $3$ specific points.
+Không đi sâu vào quá nhiều chi tiết, chúng ta sẽ lưu ý tính chất quan trọng nhất cho nhiệm vụ cụ thể này: Nhân hai số phức sẽ cộng các góc cực (polar angles) của chúng (tính từ $Ox$ ngược chiều kim đồng hồ), và lấy liên hợp (nghĩa là thay đổi $z=x+yi$ thành $\overline{z} = x-yi$) sẽ nhân góc cực với $-1$. Điều này cho phép chúng ta xây dựng một số tiêu chí rất đơn giản để biết liệu một điểm $z$ có nằm trong MEC của $2$ hoặc $3$ điểm cụ thể hay không.
 
-#### MEC of 2 points
+#### MEC của 2 điểm {: #mec-of-2-points}
 
-For $2$ points $a$ and $b$, their MEC is simply the circle centered at $\frac{a+b}{2}$ with the radius $\frac{|a-b|}{2}$, in other words the circle that has $ab$ as a diameter. To check if $z$ is inside this circle we simply need to check that the angle between $za$ and $zb$ is not acute.
+Đối với $2$ điểm $a$ và $b$, MEC của chúng đơn giản là đường tròn có tâm tại $\frac{a+b}{2}$ với bán kính $\frac{|a-b|}{2}$, nói cách khác là đường tròn có $ab$ là đường kính. Để kiểm tra xem $z$ có nằm trong đường tròn này hay không, chúng ta chỉ cần kiểm tra xem góc giữa $za$ và $zb$ có không nhọn hay không.
 
 <center>
 <img src="https://upload.wikimedia.org/wikipedia/commons/8/8e/Diameter_angles.svg">
 <br>
-<i>Inner angles are obtuse, external angles are acute and angles on the circumference are right</i>
+<i>Góc trong là góc tù, góc ngoài là góc nhọn và góc trên chu vi là góc vuông</i>
 </center>
 
-Equivalently, we need to check that
+Tương đương, chúng ta cần kiểm tra xem
 
 $$
 I_0=(b-z)\overline{(a-z)}
 $$
 
-doesn't have a positive real coordinate (corresponding to points that have a polar angle between $-90^\circ$ and $90^\circ$).
+không có tọa độ thực dương (tương ứng với các điểm có góc cực nằm giữa $-90^\circ$ và $90^\circ$).
 
-#### MEC of 3 points
+#### MEC của 3 điểm {: #mec-of-3-points}
 
-Adding $z$ to the triangle $abc$ will make it a quadrilateral. Consider the following expression:
+Thêm $z$ vào tam giác $abc$ sẽ tạo thành một tứ giác. Xem xét biểu thức sau:
 
 $$
 \angle azb + \angle bca
 $$
 
-In a [cyclic quadrilateral](https://en.wikipedia.org/wiki/Cyclic_quadrilateral), if $c$ and $z$ are from the same side of $ab$, then the angles are equal, and will add up to $0^\circ$ when summed up signed (i.e. positive if counter-clockwise and negative if clockwise). Correspondingly, if $c$ and $z$ are on the opposite sides, the angles will add up to $180^\circ$.
+Trong một [tứ giác nội tiếp](https://vi.wikipedia.org/wiki/T%E1%BB%A9_gi%C3%A1c_n%E1%BB%99i_ti%E1%BA%BFp), nếu $c$ và $z$ nằm cùng phía của $ab$, thì các góc bằng nhau, và sẽ cộng lại thành $0^\circ$ khi tổng có dấu (tức là dương nếu ngược chiều kim đồng hồ và âm nếu cùng chiều kim đồng hồ). Tương ứng, nếu $c$ và $z$ ở hai phía đối diện, các góc sẽ cộng lại thành $180^\circ$.
 
 <center>
 <img src="https://upload.wikimedia.org/wikipedia/commons/3/30/Opposing_inscribed_angles.svg">
 <br>
-<i>Adjacent inscribed angles are same, opposing angles complement to 180 degrees</i>
+<i>Các góc nội tiếp liền kề giống nhau, các góc đối diện bù nhau thành 180 độ</i>
 </center>
 
-In terms of complex numbers, we can note that $\angle azb$ is the polar angle of $(b-z)\overline{(a-z)}$ and $\angle bca$ is the polar angle of $(a-c)\overline{(b-c)}$. Thus, we can conclude that $\angle azb + \angle bca$ is the polar angle of
+Về số phức, chúng ta có thể lưu ý rằng $\angle azb$ là góc cực của $(b-z)\overline{(a-z)}$ và $\angle bca$ là góc cực của $(a-c)\overline{(b-c)}$. Do đó, chúng ta có thể kết luận rằng $\angle azb + \angle bca$ là góc cực của
 
 $$
 I_1 = (b-z) \overline{(a-z)} (a-c) \overline{(b-c)}
 $$
 
-If the angle is $0^\circ$ or $180^\circ$, it means that the imaginary part of $I_1$ is $0$, otherwise we can deduce whether $z$ is inside or outside of the enclosing circle of $abc$ by checking the sign of the imaginary part of $I_1$. Positive imaginary part corresponds to positive angles, and negative imaginary part corresponds to negative angles.
+Nếu góc là $0^\circ$ hoặc $180^\circ$, điều đó có nghĩa là phần ảo của $I_1$ là $0$, ngược lại chúng ta có thể suy ra $z$ nằm trong hay nằm ngoài đường tròn bao của $abc$ bằng cách kiểm tra dấu của phần ảo của $I_1$. Phần ảo dương tương ứng với các góc dương, và phần ảo âm tương ứng với các góc âm.
 
-But which one of them means that $z$ is inside or outside of the circle? As we already noticed, having $z$ inside the circle generally increases the magnitude of $\angle azb$, while having it outside the circle decreases it. As such, we have the following 4 cases:
+Nhưng cái nào trong số chúng có nghĩa là $z$ ở trong hay ở ngoài đường tròn? Như chúng ta đã nhận thấy, việc có $z$ bên trong đường tròn thường làm tăng độ lớn của $\angle azb$, trong khi việc có nó bên ngoài đường tròn sẽ làm giảm nó. Như vậy, chúng ta có 4 trường hợp sau:
 
-1. $\angle bca > 0^\circ$, $c$ on the same side of $ab$ as $z$. Then, $\angle azb < 0^\circ$, and $\angle azb + \angle bca < 0^\circ$ for points inside the circle.
-3. $\angle bca < 0^\circ$, $c$ on the same side of $ab$ as $z$. Then, $\angle azb > 0^\circ$, and $\angle azb + \angle bca > 0^\circ$ for points inside the circle.
-2. $\angle bca > 0^\circ$, $c$ on the opposite side of $ab$ to $z$. Then, $\angle azb > 0^\circ$ and $\angle azb + \angle bca > 180^\circ$ for points inside the circle.
-4. $\angle bca < 0^\circ$, $c$ on the opposite side of $ab$ to $z$. Then, $\angle azb < 0^\circ$ and $\angle azb + \angle bca < 180^\circ$ for points inside the circle.
+1. $\angle bca > 0^\circ$, $c$ ở cùng phía của $ab$ với $z$. Khi đó, $\angle azb < 0^\circ$, và $\angle azb + \angle bca < 0^\circ$ đối với các điểm bên trong đường tròn.
+3. $\angle bca < 0^\circ$, $c$ ở cùng phía của $ab$ với $z$. Khi đó, $\angle azb > 0^\circ$, và $\angle azb + \angle bca > 0^\circ$ đối với các điểm bên trong đường tròn.
+2. $\angle bca > 0^\circ$, $c$ ở phía đối diện của $ab$ với $z$. Khi đó, $\angle azb > 0^\circ$ và $\angle azb + \angle bca > 180^\circ$ đối với các điểm bên trong đường tròn.
+4. $\angle bca < 0^\circ$, $c$ ở phía đối diện của $ab$ với $z$. Khi đó, $\angle azb < 0^\circ$ và $\angle azb + \angle bca < 180^\circ$ đối với các điểm bên trong đường tròn.
 
-In other words, if $\angle bca$ is positive, points inside the circle will have $\angle azb + \angle bca < 0^\circ$, otherwise they will have $\angle azb + \angle bca > 0^\circ$, assuming that we normalize the angles between $-180^\circ$ and $180^\circ$. This, in turn, can be checked by the signs of imaginary parts of $I_2=(a-c)\overline{(b-c)}$ and $I_1 = I_0 I_2$.
+Nói cách khác, nếu $\angle bca$ là dương, các điểm bên trong đường tròn sẽ có $\angle azb + \angle bca < 0^\circ$, ngược lại chúng sẽ có $\angle azb + \angle bca > 0^\circ$, giả sử rằng chúng ta chuẩn hóa các góc trong khoảng $-180^\circ$ và $180^\circ$. Điều này, đến lượt nó, có thể được kiểm tra bằng các dấu của phần ảo của $I_2=(a-c)\overline{(b-c)}$ và $I_1 = I_0 I_2$.
 
-**Note**: As we multiply four complex numbers to get $I_1$, the intermediate coefficients can be as large as $O(A^4)$, where $A$ is the largest coordinate magnitude in the input. On the bright side, if the input is integer, both checks above can be done fully in integers.
+**Lưu ý**: Vì chúng ta nhân bốn số phức để có được $I_1$, các hệ số trung gian có thể lớn tới $O(A^4)$, trong đó $A$ là độ lớn tọa độ lớn nhất trong đầu vào. Về mặt tích cực, nếu đầu vào là số nguyên, cả hai kiểm tra trên đều có thể được thực hiện hoàn toàn bằng số nguyên.
 
-#### Implementation
+#### Cài đặt (Implementation) {: #implementation}
 
-Now, to actually implement the check, we should first decide how to represent the MEC. As our criteria work with the points directly, a natural and efficient way to do this is to say that MEC is directly represented as a pair or triple of points that defines it:
+Bây giờ, để thực sự cài đặt việc kiểm tra, trước tiên chúng ta nên quyết định cách biểu diễn MEC. Vì các tiêu chí của chúng ta làm việc trực tiếp với các điểm, một cách tự nhiên và hiệu quả để thực hiện điều này là nói rằng MEC được biểu diễn trực tiếp dưới dạng một cặp hoặc bộ ba điểm xác định nó:
 
 ```cpp
 using mec = variant<
@@ -175,7 +175,7 @@ using mec = variant<
 >;
 ```
 
-Now, we can use `std::visit` to efficiently deal with both cases in accordance with criteria above:
+Bây giờ, chúng ta có thể sử dụng `std::visit` để giải quyết hiệu quả cả hai trường hợp phù hợp với các tiêu chí trên:
 
 ```cpp
 /* I < 0 if z inside C,
@@ -202,9 +202,9 @@ bool inside(mec const& C, point p) {
 
 ```
 
-Now, we can finally ensure that everything works by submitting the problem to the Library Checker: [#308668](https://judge.yosupo.jp/submission/308668).
+Bây giờ, cuối cùng chúng ta có thể đảm bảo rằng mọi thứ hoạt động bằng cách nộp bài toán lên Library Checker: [#308668](https://judge.yosupo.jp/submission/308668).
 
-## Practice problems
+## Bài tập (Practice problems) {: #practice-problems}
 
 - [Library Checker - Minimum Enclosing Circle](https://judge.yosupo.jp/problem/minimum_enclosing_circle)
 - [BOI 2002 - Aliens](https://www.spoj.com/problems/ALIENS)

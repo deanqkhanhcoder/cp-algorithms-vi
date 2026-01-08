@@ -4,22 +4,21 @@ tags:
 e_maxx_link: oriented_area
 ---
 
-# Oriented area of a triangle
+# Diện tích có hướng của tam giác (Oriented area of a triangle) {: #oriented-area-of-a-triangle}
 
-Given three points $p_1$, $p_2$ and $p_3$, calculate an oriented (signed) area of a triangle formed by them. The sign of the area is determined in the following way: imagine you are standing in the plane at point $p_1$ and are facing $p_2$. You go to $p_2$ and if $p_3$ is to your right (then we say the three vectors turn "clockwise"), the sign of the area is negative, otherwise it is positive. If the three points are collinear, the area is zero.
+Cho ba điểm $p_1$, $p_2$ và $p_3$, tính diện tích có hướng (có dấu) của tam giác được tạo bởi chúng. Dấu của diện tích được xác định theo cách sau: hãy tưởng tượng bạn đang đứng trong mặt phẳng tại điểm $p_1$ và đang đối mặt với $p_2$. Bạn đi đến $p_2$ và nếu $p_3$ ở bên phải của bạn (khi đó chúng ta nói ba vector quay "cùng chiều kim đồng hồ"), dấu của diện tích là âm, ngược lại nó là dương. Nếu ba điểm thẳng hàng, diện tích bằng không.
 
-Using this signed area, we can both get the regular unsigned area (as the absolute value of the signed area) and determine if the points lie clockwise or counterclockwise in their specified order (which is useful, for example, in convex hull algorithms).
+Sử dụng diện tích có dấu này, chúng ta có thể vừa nhận được diện tích không dấu thông thường (như giá trị tuyệt đối của diện tích có dấu) vừa xác định xem các điểm nằm cùng chiều kim đồng hồ hay ngược chiều kim đồng hồ theo thứ tự đã chỉ định của chúng (điều này hữu ích, ví dụ, trong các thuật toán bao lồi).
 
-
-## Calculation
-We can use the fact that a determinant of a $2\times 2$ matrix is equal to the signed area of a parallelogram spanned by column (or row) vectors of the matrix.
-This is analog to the definition of the cross product in 2D (see [Basic Geometry](basic-geometry.md)).
-By dividing this area by two we get the area of a triangle that we are interested in.
-We will use $\vec{p_1p_2}$ and $\vec{p_2p_3}$ as the column vectors and calculate a $2\times 2$ determinant:
+## Tính toán (Calculation) {: #calculation}
+Chúng ta có thể sử dụng thực tế là định thức của ma trận $2\times 2$ bằng với diện tích có dấu của hình bình hành được tạo bởi các vector cột (hoặc hàng) của ma trận.
+Điều này tương tự với định nghĩa của tích có hướng trong 2D (xem [Hình học cơ bản](basic-geometry.md)).
+Bằng cách chia diện tích này cho hai, chúng ta nhận được diện tích của tam giác mà chúng ta quan tâm.
+Chúng ta sẽ sử dụng $\vec{p_1p_2}$ và $\vec{p_2p_3}$ làm các vector cột và tính toán định thức $2\times 2$:
 
 $$2S=\left|\begin{matrix}x_2-x_1 & x_3-x_2\\y_2-y_1 & y_3-y_2\end{matrix}\right|=(x_2-x_1)(y_3-y_2)-(x_3-x_2)(y_2-y_1)$$
 
-## Implementation
+## Cài đặt (Implementation) {: #implementation}
 
 ```cpp
 int signed_area_parallelogram(point2d p1, point2d p2, point2d p3) {
@@ -39,5 +38,5 @@ bool counter_clockwise(point2d p1, point2d p2, point2d p3) {
 }
 ```
 
-## Practice Problems
+## Bài tập (Practice Problems) {: #practice-problems}
 * [Codechef - Chef and Polygons](https://www.codechef.com/problems/CHEFPOLY)

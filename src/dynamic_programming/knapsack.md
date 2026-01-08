@@ -1,130 +1,132 @@
 ---
 tags:
-  - Original
+  - Translated
 ---
 
-# Knapsack Problem
-Prerequisite knowledge: [Introduction to Dynamic Programming](https://cp-algorithms.com/dynamic_programming/intro-to-dp.html)
+# Bài toán cái túi (Knapsack Problem) {: #knapsack-problem}
 
-## Introduction
-Consider the following example:
+Kiến thức tiên quyết: [Giới thiệu về Quy hoạch động](../dynamic_programming/intro-to-dp.md)
 
-### [[USACO07 Dec] Charm Bracelet](https://www.acmicpc.net/problem/6144) 
-There are $n$ distinct items and a knapsack of capacity $W$. Each item has 2 attributes, weight ($w_{i}$) and value ($v_{i}$). 
-You have to select a subset of items to put into the knapsack such that the total weight does not exceed the capacity $W$ and the total value is maximized.
+## Giới thiệu (Introduction) {: #introduction}
 
-In the example above, each object has only two possible states (taken or not taken),
-corresponding to binary 0 and 1. Thus, this type of problem is called "0-1 knapsack problem".
+Xem xét ví dụ sau:
 
-## 0-1 Knapsack
+### [[USACO07 Dec] Charm Bracelet](https://www.acmicpc.net/problem/6144)
+Có $n$ vật phẩm riêng biệt và một cái túi có sức chứa $W$. Mỗi vật phẩm có 2 thuộc tính, trọng lượng ($w_{i}$) và giá trị ($v_{i}$).
+Bạn phải chọn một tập hợp con các vật phẩm để đưa vào túi sao cho tổng trọng lượng không vượt quá sức chứa $W$ và tổng giá trị được tối đa hóa.
 
-### Explanation
+Trong ví dụ trên, mỗi đối tượng chỉ có hai trạng thái có thể (được chọn hoặc không được chọn),
+tương ứng với nhị phân 0 và 1. Do đó, loại bài toán này được gọi là "bài toán cái túi 0-1" (0-1 knapsack problem).
 
-In the example above, the input to the problem is the following: the weight of $i^{th}$ item $w_{i}$, the value of $i^{th}$ item $v_{i}$, and the total capacity of the knapsack $W$.
+## Cái túi 0-1 (0-1 Knapsack) {: #0-1-knapsack}
 
-Let $f_{i, j}$ be the dynamic programming state holding the maximum total value the knapsack can carry with capacity $j$, when only the first $i$ items are considered.
+### Giải thích (Explanation) {: #explanation}
 
-Assuming that all states of the first $i-1$ items have been processed, what are the options for the $i^{th}$ item?
+Trong ví dụ trên, đầu vào của bài toán là: trọng lượng của vật phẩm thứ $i$ là $w_{i}$, giá trị của vật phẩm thứ $i$ là $v_{i}$, và tổng sức chứa của cái túi $W$.
 
-- When it is not put into the knapsack, the remaining capacity remains unchanged and total value does not change. Therefore, the maximum value in this case is $f_{i-1, j}$
-- When it is put into the knapsack, the remaining capacity decreases by $w_{i}$ and the total value increases by $v_{i}$,
-so the maximum value in this case is $f_{i-1, j-w_i} + v_i$
+Gọi $f_{i, j}$ là trạng thái quy hoạch động giữ tổng giá trị lớn nhất mà cái túi có thể mang với sức chứa $j$, khi chỉ xem xét $i$ vật phẩm đầu tiên.
 
-From this we can derive the dp transition equation:
+Giả sử rằng tất cả các trạng thái của $i-1$ vật phẩm đầu tiên đã được xử lý, các lựa chọn cho vật phẩm thứ $i$ là gì?
+
+-   Khi nó không được đưa vào túi, sức chứa còn lại không đổi và tổng giá trị không thay đổi. Do đó, giá trị lớn nhất trong trường hợp này là $f_{i-1, j}$
+-   Khi nó được đưa vào túi, sức chứa còn lại giảm đi $w_{i}$ và tổng giá trị tăng thêm $v_{i}$,
+    do đó giá trị lớn nhất trong trường hợp này là $f_{i-1, j-w_i} + v_i$
+
+Từ đây chúng ta có thể suy ra phương trình chuyển trạng thái dp:
 
 $$f_{i, j} = \max(f_{i-1, j}, f_{i-1, j-w_i} + v_i)$$
 
-Further, as $f_{i}$ is only dependent on $f_{i-1}$, we can remove the first dimension. We obtain the transition rule
+Hơn nữa, vì $f_{i}$ chỉ phụ thuộc vào $f_{i-1}$, chúng ta có thể loại bỏ chiều đầu tiên. Chúng ta thu được quy tắc chuyển trạng thái
 
 $$f_j \gets \max(f_j, f_{j-w_i}+v_i)$$
 
-that should be executed in the **decreasing** order of $j$ (so that $f_{j-w_i}$ implicitly corresponds to $f_{i-1,j-w_i}$ and not $f_{i,j-w_i}$).
+điều này nên được thực hiện theo thứ tự **giảm dần** của $j$ (để $f_{j-w_i}$ tương ứng ngầm định với $f_{i-1,j-w_i}$ chứ không phải $f_{i,j-w_i}$).
 
-**It is important to understand this transition rule, because most of the transitions for knapsack problems are derived in a similar way.**
+**Điều quan trọng là phải hiểu quy tắc chuyển đổi này, bởi vì hầu hết các chuyển đổi cho các bài toán cái túi đều được suy ra theo cách tương tự.**
 
-### Implementation
+### Cài đặt (Implementation) {: #implementation}
 
-The algorithm described can be implemented in $O(nW)$ as:
+Thuật toán được mô tả có thể được cài đặt trong $O(nW)$ như sau:
 
-```.c++
+```cpp
 for (int i = 1; i <= n; i++)
   for (int j = W; j >= w[i]; j--)
     f[j] = max(f[j], f[j - w[i]] + v[i]);
 ```
 
-Again, note the order of execution. It should be strictly followed to ensure the following invariant: Right before the pair $(i, j)$ is processed, $f_k$ corresponds to $f_{i,k}$ for $k > j$, but to $f_{i-1,k}$ for $k < j$. This ensures that $f_{j-w_i}$ is taken from the $(i-1)$-th step, rather than from the $i$-th one.
+Một lần nữa, lưu ý thứ tự thực hiện. Nó phải được tuân thủ nghiêm ngặt để đảm bảo bất biến sau: Ngay trước khi cặp $(i, j)$ được xử lý, $f_k$ tương ứng với $f_{i,k}$ cho $k > j$, nhưng với $f_{i-1,k}$ cho $k < j$. Điều này đảm bảo rằng $f_{j-w_i}$ được lấy từ bước thứ $(i-1)$, thay vì từ bước thứ $i$.
 
-## Complete Knapsack
+## Cái túi hoàn chỉnh (Complete Knapsack) {: #complete-knapsack}
 
-The complete knapsack model is similar to the 0-1 knapsack, the only difference from the 0-1 knapsack is that an item can be selected an unlimited number of times instead of only once.
+Mô hình cái túi hoàn chỉnh tương tự như cái túi 0-1, sự khác biệt duy nhất so với cái túi 0-1 là một vật phẩm có thể được chọn số lần không giới hạn thay vì chỉ một lần.
 
-We can refer to the idea of 0-1 knapsack to define the state: $f_{i, j}$, the maximum value the knapsack can obtain using the first $i$ items with maximum capacity $j$.
+Chúng ta có thể tham khảo ý tưởng của cái túi 0-1 để định nghĩa trạng thái: $f_{i, j}$, giá trị tối đa mà cái túi có thể đạt được bằng cách sử dụng $i$ vật phẩm đầu tiên với sức chứa tối đa $j$.
 
-It should be noted that although the state definition is similar to that of a 0-1 knapsack, its transition rule is different from that of a 0-1 knapsack.
+Cần lưu ý rằng mặc dù định nghĩa trạng thái tương tự như định nghĩa của cái túi 0-1, quy tắc chuyển trạng thái của nó khác với quy tắc của cái túi 0-1.
 
-### Explanation
+### Giải thích (Explanation) {: #explanation-1}
 
-The trivial approach is, for the first $i$ items, enumerate how many times each item is to be taken. The time complexity of this is $O(n^2W)$.
+Cách tiếp cận tầm thường là, đối với $i$ vật phẩm đầu tiên, hãy liệt kê số lần mỗi vật phẩm được lấy. Độ phức tạp thời gian của việc này là $O(n^2W)$.
 
-This yields the following transition equation:
+Điều này mang lại phương trình chuyển trạng thái sau:
 
 $$f_{i, j} = \max\limits_{k=0}^{\infty}(f_{i-1, j-k\cdot w_i} + k\cdot v_i)$$
 
-At the same time, it simplifies into a "flat" equation:
+Đồng thời, nó đơn giản hóa thành một phương trình "phẳng":
 
 $$f_{i, j} = \max(f_{i-1, j},f_{i, j-w_i} + v_i)$$
 
-The reason this works is that $f_{i, j-w_i}$ has already been updated by $f_{i, j-2\cdot w_i}$ and so on.
+Lý do điều này hoạt động là vì $f_{i, j-w_i}$ đã được cập nhật bởi $f_{i, j-2\cdot w_i}$ và cứ thế.
 
-Similar to the 0-1 knapsack, we can remove the first dimension to optimize the space complexity. This gives us the same transition rule as 0-1 knapsack.
+Tương tự như cái túi 0-1, chúng ta có thể loại bỏ chiều đầu tiên để tối ưu hóa độ phức tạp không gian. Điều này cho chúng ta quy tắc chuyển trạng thái giống như cái túi 0-1.
 
 $$f_j \gets \max(f_j, f_{j-w_i}+v_i)$$
 
-### Implementation
+### Cài đặt (Implementation) {: #implementation-1}
 
-The algorithm described can be implemented in $O(nW)$ as:
+Thuật toán được mô tả có thể được cài đặt trong $O(nW)$ như sau:
 
-```.c++
+```cpp
 for (int i = 1; i <= n; i++)
   for (int j = w[i]; j <= W; j++)
     f[j] = max(f[j], f[j - w[i]] + v[i]);
 ```
 
-Despite having the same transition rule, the code above is incorrect for 0-1 knapsack.
+Mặc dù có cùng quy tắc chuyển trạng thái, mã ở trên là không chính xác đối với cái túi 0-1.
 
-Observing the code carefully, we see that for the currently processed item $i$ and the current state $f_{i,j}$, 
-when $j\geqslant w_{i}$, $f_{i,j}$ will be affected by $f_{i,j-w_{i}}$. 
-This is equivalent to being able to put item $i$ into the backpack multiple times, which is consistent with the complete knapsack problem and not the 0-1 knapsack problem.
+Quan sát mã cẩn thận, chúng ta thấy rằng đối với vật phẩm $i$ hiện đang được xử lý và trạng thái hiện tại $f_{i,j}$,
+khi $j\geqslant w_{i}$, $f_{i,j}$ sẽ bị ảnh hưởng bởi $f_{i,j-w_{i}}$.
+Điều này tương đương với việc có thể đưa vật phẩm $i$ vào ba lô nhiều lần, phù hợp với bài toán cái túi hoàn chỉnh chứ không phải bài toán cái túi 0-1.
 
-## Multiple Knapsack
+## Cái túi đa bội (Multiple Knapsack) {: #multiple-knapsack}
 
-Multiple knapsack is also a variant of 0-1 knapsack. The main difference is that there are $k_i$ of each item instead of just $1$.
+Cái túi đa bội cũng là một biến thể của cái túi 0-1. Sự khác biệt chính là có $k_i$ mỗi vật phẩm thay vì chỉ $1$.
 
-### Explanation
+### Giải thích (Explanation) {: #explanation-2}
 
-A very simple idea is: "choose each item $k_i$ times" is equivalent to "$k_i$ of the same item is selected one by one". Thus converting it to a 0-1 knapsack model, which can be described by the transition function:
+Một ý tưởng rất đơn giản là: "chọn mỗi vật phẩm $k_i$ lần" tương đương với "$k_i$ vật phẩm giống nhau được chọn từng cái một". Do đó chuyển đổi nó thành mô hình cái túi 0-1, có thể được mô tả bằng hàm chuyển trạng thái:
 
 $$f_{i, j} = \max_{k=0}^{k_i}(f_{i-1,j-k\cdot w_i} + k\cdot v_i)$$
 
-The time complexity of this process is $O(W\sum\limits_{i=1}^{n}k_i)$
+Độ phức tạp thời gian của quá trình này là $O(W\sum\limits_{i=1}^{n}k_i)$
 
-### Binary Grouping Optimization
+### Tối ưu hóa nhóm nhị phân (Binary Grouping Optimization) {: #binary-grouping-optimization}
 
-We still consider converting the multiple knapsack model into a 0-1 knapsack model for optimization. The time complexity $O(Wn)$ can not be further optimized with the approach above, so we focus on $O(\sum k_i)$ component.
+Chúng ta vẫn xem xét việc chuyển đổi mô hình cái túi đa bội thành mô hình cái túi 0-1 để tối ưu hóa. Độ phức tạp thời gian $O(Wn)$ không thể được tối ưu hóa thêm với cách tiếp cận trên, vì vậy chúng ta tập trung vào thành phần $O(\sum k_i)$.
 
-Let $A_{i, j}$ denote the $j^{th}$ item split from the $i^{th}$ item. In the trivial approach discussed above, $A_{i, j}$ represents the same item for all $j \leq k_i$. The main reason for our low efficiency is that we are doing a lot of repetetive work. For example, consider selecting $\{A_{i, 1},A_{i, 2}\}$, and selecting $\{A_{i, 2}, A_{i, 3}\}$. These two situations are completely equivalent. Thus optimizing the splitting method will greatly reduce the time complexity.
+Gọi $A_{i, j}$ là vật phẩm thứ $j$ được tách ra từ vật phẩm thứ $i$. Trong cách tiếp cận tầm thường được thảo luận ở trên, $A_{i, j}$ đại diện cho cùng một vật phẩm cho tất cả $j \leq k_i$. Lý do chính cho hiệu quả thấp của chúng ta là chúng ta đang làm rất nhiều công việc lặp lại. Ví dụ, hãy xem xét việc chọn $\{A_{i, 1},A_{i, 2}\}$, và chọn $\{A_{i, 2}, A_{i, 3}\}$. Hai tình huống này hoàn toàn tương đương. Vì vậy, việc tối ưu hóa phương pháp tách sẽ làm giảm đáng kể độ phức tạp thời gian.
 
-The grouping is made more efficient by using binary grouping.
+Việc phân nhóm được thực hiện hiệu quả hơn bằng cách sử dụng phân nhóm nhị phân.
 
-Specifically, $A_{i, j}$ holds $2^j$ individual items ($j\in[0,\lfloor \log_2(k_i+1)\rfloor-1]$).If $k_i + 1$ is not an integer power of $2$, another bundle of size $k_i-(2^{\lfloor \log_2(k_i+1)\rfloor}-1)$ is used to make up for it.
+Cụ thể, $A_{i, j}$ giữ $2^j$ vật phẩm riêng lẻ ($j\in[0,\lfloor \log_2(k_i+1)\rfloor-1]$). Nếu $k_i + 1$ không phải là lũy thừa nguyên của $2$, một gói khác có kích thước $k_i-(2^{\lfloor \log_2(k_i+1)\rfloor}-1)$ được sử dụng để bù đắp cho nó.
 
-Through the above splitting method, it is possible to obtain any sum of $\leq k_i$ items by selecting a few $A_{i, j}$'s. After splitting each item in the described way, it is sufficient to use 0-1 knapsack method to solve the new formulation of the problem.
+Thông qua phương pháp tách trên, có thể thu được bất kỳ tổng nào của $\leq k_i$ vật phẩm bằng cách chọn một vài $A_{i, j}$. Sau khi tách từng vật phẩm theo cách được mô tả, chỉ cần sử dụng phương pháp cái túi 0-1 để giải quyết công thức mới của bài toán.
 
-This optimization gives us a time complexity of $O(W\sum\limits_{i=1}^{n}\log k_i)$.
+Sự tối ưu hóa này mang lại cho chúng ta độ phức tạp thời gian là $O(W\sum\limits_{i=1}^{n}\log k_i)$.
 
-### Implementation
+### Cài đặt (Implementation) {: #implementation-2}
 
-```c++
+```cpp
 index = 0;
 for (int i = 1; i <= n; i++) {
   int c = 1, p, h, k;
@@ -140,29 +142,29 @@ for (int i = 1; i <= n; i++) {
 }
 ```
 
-### Monotone Queue Optimization
+### Tối ưu hóa hàng đợi đơn điệu (Monotone Queue Optimization) {: #monotone-queue-optimization}
 
-In this optimization, we aim to convert the knapsack problem into a [maximum queue](https://cp-algorithms.com/data_structures/stack_queue_modification.html) one.
+Trong tối ưu hóa này, chúng ta nhắm đến việc chuyển đổi bài toán cái túi thành bài toán [hàng đợi cực đại (maximum queue)](../data_structures/stack_queue_modification.md).
 
-For convenience of description, let $g_{x, y} = f_{i, x \cdot w_i + y} ,\space g'_{x, y} = f_{i-1, x \cdot w_i + y}$. Then the transition rule can be written as:
+Để thuận tiện cho việc mô tả, gọi $g_{x, y} = f_{i, x \cdot w_i + y} ,\space g'_{x, y} = f_{i-1, x \cdot w_i + y}$. Khi đó quy tắc chuyển trạng thái có thể được viết là:
 
 $$g_{x, y} = \max_{k=0}^{k_i}(g'_{x-k, y} + v_i \cdot k)$$
 
-Further, let $G_{x, y} = g'_{x, y} - v_i \cdot x$. Then the transition rule can be expressed as:
+Hơn nữa, gọi $G_{x, y} = g'_{x, y} - v_i \cdot x$. Khi đó quy tắc chuyển trạng thái có thể được biểu diễn như sau:
 
 $$g_{x, y} \gets \max_{k=0}^{k_i}(G_{x-k, y}) + v_i \cdot x$$
 
-This transforms into a classic monotone queue optimization form. $G_{x, y}$ can be calculated in $O(1)$, so for a fixed $y$, we can calculate $g_{x, y}$ in $O(\lfloor \frac{W}{w_i} \rfloor)$ time.
-Therefore, the complexity of finding all $g_{x, y}$ is $O(\lfloor \frac{W}{w_i} \rfloor) \times O(w_i) = O(W)$.
-In this way, the total complexity of the algorithm is reduced to $O(nW)$. 
+Điều này chuyển đổi thành một dạng tối ưu hóa hàng đợi đơn điệu cổ điển. $G_{x, y}$ có thể được tính trong $O(1)$, vì vậy với một $y$ cố định, chúng ta có thể tính $g_{x, y}$ trong thời gian $O(\lfloor \frac{W}{w_i} \rfloor)$.
+Do đó, độ phức tạp của việc tìm tất cả $g_{x, y}$ là $O(\lfloor \frac{W}{w_i} \rfloor) \times O(w_i) = O(W)$.
+Theo cách này, tổng độ phức tạp của thuật toán giảm xuống còn $O(nW)$.
 
-## Mixed Knapsack
+## Cái túi hỗn hợp (Mixed Knapsack) {: #mixed-knapsack}
 
-The mixed knapsack problem involves a combination of the three problems described above. That is, some items can only be taken once, some can be taken infinitely, and some can be taken atmost $k$ times.
+Bài toán cái túi hỗn hợp liên quan đến sự kết hợp của ba bài toán được mô tả ở trên. Tức là, một số vật phẩm chỉ có thể được lấy một lần, một số có thể được lấy vô hạn và một số có thể được lấy tối đa $k$ lần.
 
-The problem may seem daunting, but as long as you understand the core ideas of the previous knapsack problems and combine them together, you can do it. The pseudo code for the solution is as:
+Bài toán có vẻ khó khăn, nhưng miễn là bạn hiểu những ý tưởng cốt lõi của các bài toán cái túi trước đó và kết hợp chúng lại với nhau, bạn có thể làm được. Mã giả cho giải pháp như sau:
 
-```c++
+```cpp
 for (each item) {
   if (0-1 knapsack)
     Apply 0-1 knapsack code;
@@ -173,7 +175,7 @@ for (each item) {
 }
 ```
 
-## Practise Problems
+## Bài tập (Practise Problems) {: #practise-problems}
 
 - [Atcoder: Knapsack-1](https://atcoder.jp/contests/dp/tasks/dp_d)
 - [Atcoder: Knapsack-2](https://atcoder.jp/contests/dp/tasks/dp_e)

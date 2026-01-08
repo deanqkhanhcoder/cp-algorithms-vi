@@ -4,27 +4,27 @@ tags:
 e_maxx_link: negative_cycle
 ---
 
-# Finding a negative cycle in the graph
+# Tìm chu trình âm trong đồ thị (Finding a negative cycle in the graph) {: #finding-a-negative-cycle-in-the-graph}
 
-You are given a directed weighted graph $G$ with $N$ vertices and $M$ edges. Find any cycle of negative weight in it, if such a cycle exists.
+Bạn được cho một đồ thị có trọng số có hướng $G$ với $N$ đỉnh và $M$ cạnh. Tìm bất kỳ chu trình nào có trọng số âm trong đó, nếu tồn tại một chu trình như vậy.
 
-In another formulation of the problem you have to find all pairs of vertices which have a path of arbitrarily small weight between them.
+Trong một cách phát biểu bài toán khác, bạn phải tìm tất cả các cặp đỉnh có đường đi với trọng số nhỏ tùy ý giữa chúng.
 
-It is convenient to use different algorithms to solve these two variations of the problem, so we'll discuss both of them here.
+Thuận tiện để sử dụng các thuật toán khác nhau để giải quyết hai biến thể này của bài toán, vì vậy chúng tôi sẽ thảo luận về cả hai ở đây.
 
-## Using Bellman-Ford algorithm
+## Sử dụng thuật toán Bellman-Ford (Using Bellman-Ford algorithm) {: #using-bellman-ford-algorithm}
 
-Bellman-Ford algorithm allows you to check whether there exists a cycle of negative weight in the graph, and if it does, find one of these cycles.
+Thuật toán Bellman-Ford cho phép bạn kiểm tra xem có tồn tại một chu trình trọng số âm trong đồ thị hay không, và nếu có, hãy tìm một trong những chu trình này.
 
-The details of the algorithm are described in the article on the [Bellman-Ford](bellman_ford.md) algorithm.
-Here we'll describe only its application to this problem.
+Các chi tiết của thuật toán được mô tả trong bài viết về thuật toán [Bellman-Ford](bellman_ford.md).
+Ở đây chúng tôi sẽ chỉ mô tả ứng dụng của nó cho bài toán này.
 
-The standard implementation of Bellman-Ford looks for a negative cycle reachable from some starting vertex $v$ ; however, the algorithm can be modified to just look for any negative cycle in the graph. 
-For this we need to put all the distance  $d[i]$  to zero and not infinity — as if we are looking for the shortest path from all vertices simultaneously; the validity of the detection of a negative cycle is not affected.
+Cài đặt tiêu chuẩn của Bellman-Ford tìm kiếm một chu trình âm có thể truy cập được từ một đỉnh bắt đầu $v$; tuy nhiên, thuật toán có thể được sửa đổi để chỉ tìm bất kỳ chu trình âm nào trong đồ thị.
+Để làm điều này, chúng ta cần đặt tất cả khoảng cách $d[i]$ thành 0 và không phải vô cùng — như thể chúng ta đang tìm kiếm đường đi ngắn nhất từ tất cả các đỉnh cùng một lúc; tính hợp lệ của việc phát hiện chu trình âm không bị ảnh hưởng.
 
-Do $N$ iterations of Bellman-Ford algorithm. If there were no changes on the last iteration, there is no cycle of negative weight in the graph. Otherwise take a vertex the distance to which has changed, and go from it via its ancestors until a cycle is found. This cycle will be the desired cycle of negative weight.
+Thực hiện $N$ lần lặp thuật toán Bellman-Ford. Nếu không có thay đổi nào trong lần lặp cuối cùng, không có chu trình trọng số âm trong đồ thị. Ngược lại, lấy một đỉnh mà khoảng cách đến nó đã thay đổi, và đi từ nó qua các tổ tiên của nó cho đến khi tìm thấy chu trình. Chu trình này sẽ là chu trình trọng số âm mong muốn.
 
-### Implementation
+### Cài đặt (Implementation) {: #implementation}
 
 ```cpp
 struct Edge {
@@ -73,23 +73,23 @@ void solve() {
 }
 ```
 
-## Using Floyd-Warshall algorithm
+## Sử dụng thuật toán Floyd-Warshall (Using Floyd-Warshall algorithm) {: #using-floyd-warshall-algorithm}
 
-The Floyd-Warshall algorithm allows to solve the second variation of the problem - finding all pairs of vertices $(i, j)$ which don't have a shortest path between them (i.e. a path of arbitrarily small weight exists).
+Thuật toán Floyd-Warshall cho phép giải quyết biến thể thứ hai của bài toán - tìm tất cả các cặp đỉnh $(i, j)$ không có đường đi ngắn nhất giữa chúng (tức là tồn tại một đường đi có trọng số nhỏ tùy ý).
 
-Again, the details can be found in the [Floyd-Warshall](all-pair-shortest-path-floyd-warshall.md) article, and here we describe only its application.
+Một lần nữa, các chi tiết có thể được tìm thấy trong bài viết [Floyd-Warshall](all-pair-shortest-path-floyd-warshall.md), và ở đây chúng tôi chỉ mô tả ứng dụng của nó.
 
-Run Floyd-Warshall algorithm on the graph.
-Initially $d[v][v] = 0$ for each $v$.
-But after running the algorithm $d[v][v]$ will be smaller than $0$ if there exists a negative length path from $v$ to $v$.
-We can use this to also find all pairs of vertices that don't have a shortest path between them.
-We iterate over all pairs of vertices $(i, j)$ and for each pair we check whether they have a shortest path between them.
-To do this try all possibilities for an intermediate vertex $t$.
-$(i, j)$ doesn't have a shortest path, if one of the intermediate vertices $t$ has $d[t][t] < 0$ (i.e. $t$ is part of a cycle of negative weight), $t$ can be reached from $i$ and $j$ can be reached from $t$.
-Then the path from $i$ to $j$ can have arbitrarily small weight.
-We will denote this with `-INF`.
+Chạy thuật toán Floyd-Warshall trên đồ thị.
+Ban đầu $d[v][v] = 0$ cho mỗi $v$.
+Nhưng sau khi chạy thuật toán $d[v][v]$ sẽ nhỏ hơn $0$ nếu tồn tại một đường đi có độ dài âm từ $v$ đến $v$.
+Chúng ta có thể sử dụng điều này để tìm tất cả các cặp đỉnh không có đường đi ngắn nhất giữa chúng.
+Chúng ta lặp qua tất cả các cặp đỉnh $(i, j)$ và đối với mỗi cặp, chúng ta kiểm tra xem chúng có đường đi ngắn nhất giữa chúng hay không.
+Để làm điều này, hãy thử tất cả các khả năng cho một đỉnh trung gian $t$.
+$(i, j)$ không có đường đi ngắn nhất, nếu một trong các đỉnh trung gian $t$ có $d[t][t] < 0$ (tức là $t$ là một phần của chu trình trọng số âm), $t$ có thể truy cập được từ $i$ và $j$ có thể truy cập được từ $t$.
+Khi đó đường đi từ $i$ đến $j$ có thể có trọng số nhỏ tùy ý.
+Chúng ta sẽ ký hiệu điều này bằng `-INF`.
 
-### Implementation
+### Cài đặt (Implementation)
 
 ```cpp
 for (int i = 0; i < n; ++i) {
@@ -102,7 +102,7 @@ for (int i = 0; i < n; ++i) {
 }
 ```
 
-## Practice Problems
+## Bài tập (Practice Problems) {: #practice-problems}
 
 - [UVA: Wormholes](https://uva.onlinejudge.org/index.php?option=com_onlinejudge&Itemid=8&page=show_problem&problem=499)
 - [SPOJ: Alice in Amsterdam, I mean Wonderland](http://www.spoj.com/problems/UCV2013B/)

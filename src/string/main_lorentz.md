@@ -4,55 +4,55 @@ tags:
 e_maxx_link: string_tandems
 ---
 
-# Finding repetitions
+# Tìm kiếm lặp lại (Finding repetitions) {: #finding-repetitions}
 
-Given a string $s$ of length $n$.
+Cho một chuỗi $s$ có độ dài $n$.
 
-A **repetition** is two occurrences of a string in a row.
-In other words a repetition can be described by a pair of indices $i < j$ such that the substring $s[i \dots j]$ consists of two identical strings written after each other.
+Một **sự lặp lại** (**repetition**) là hai lần xuất hiện của một chuỗi liên tiếp nhau.
+Nói cách khác, một sự lặp lại có thể được mô tả bởi một cặp chỉ số $i < j$ sao cho chuỗi con $s[i \dots j]$ bao gồm hai chuỗi giống hệt nhau được viết sau nhau.
 
-The challenge is to **find all repetitions** in a given string $s$.
-Or a simplified task: find **any** repetition or find the **longest** repetition.
+Thách thức là **tìm tất cả các lần lặp lại** trong một chuỗi $s$ nhất định.
+Hoặc một nhiệm vụ đơn giản hóa: tìm **bất kỳ** sự lặp lại nào hoặc tìm sự lặp lại **dài nhất**.
 
-The algorithm described here was published in 1982 by Main and Lorentz.
+Thuật toán được mô tả ở đây được công bố vào năm 1982 bởi Main và Lorentz.
 
-## Example
+## Ví dụ (Example) {: #example}
 
-Consider the repetitions in the following example string:
+Hãy xem xét các sự lặp lại trong chuỗi ví dụ sau:
 
 $$acababaee$$
 
-The string contains the following three repetitions:
+Chuỗi chứa ba lần lặp lại sau:
 
 - $s[2 \dots 5] = abab$
 - $s[3 \dots 6] = baba$
 - $s[7 \dots 8] = ee$
 
-Another example:
+Một ví dụ khác:
 
 $$abaaba$$
 
-Here there are only two repetitions
+Ở đây chỉ có hai lần lặp lại:
 
 - $s[0 \dots 5] = abaaba$
 - $s[2 \dots 3] = aa$
 
-## Number of repetitions
+## Số lượng lặp lại (Number of repetitions) {: #number-of-repetitions}
 
-In general there can be up to $O(n^2)$ repetitions in a string of length $n$.
-An obvious example is a string consisting of $n$ times the same letter, in this case any substring of even length is a repetition.
-In general any periodic string with a short period will contain a lot of repetitions.
+Nói chung, có thể có tới $O(n^2)$ lần lặp lại trong một chuỗi có độ dài $n$.
+Một ví dụ rõ ràng là một chuỗi bao gồm $n$ lần cùng một chữ cái, trong trường hợp này, bất kỳ chuỗi con nào có độ dài chẵn đều là một sự lặp lại.
+Nói chung, bất kỳ chuỗi tuần hoàn nào có chu kỳ ngắn sẽ chứa rất nhiều sự lặp lại.
 
-On the other hand this fact does not prevent computing the number of repetitions in $O(n \log n)$ time, because the algorithm can give the repetitions in compressed form, in groups of several pieces at once.
+Mặt khác, thực tế này không ngăn cản việc tính toán số lần lặp lại trong thời gian $O(n \log n)$, bởi vì thuật toán có thể đưa ra các lần lặp lại ở dạng nén, theo nhóm của nhiều mảnh cùng một lúc.
 
-There is even the concept, that describes groups of periodic substrings with tuples of size four.
-It has been proven that we the number of such groups is at most linear with respect to the string length.
+Thậm chí còn có khái niệm mô tả các nhóm chuỗi con tuần hoàn với các bộ bốn kích thước.
+Người ta đã chứng minh rằng số lượng các nhóm như vậy tối đa là tuyến tính đối với độ dài chuỗi.
 
-Also, here are some more interesting results related to the number of repetitions:
+Ngoài ra, đây là một số kết quả thú vị hơn liên quan đến số lần lặp lại:
 
-  - The number of primitive repetitions (those whose halves are not repetitions) is at most $O(n \log n)$.
-  - If we encode repetitions with tuples of numbers (called Crochemore triples) $(i,~ p,~ r)$ (where $i$ is the position of the beginning, $p$ the length of the repeating substring, and $r$ the number of repetitions), then all repetitions can be described with $O(n \log n)$ such triples.
-  - Fibonacci strings, defined as 
+  - Số lượng lặp lại nguyên thủy (những lần lặp lại có nửa không phải là lặp lại) tối đa là $O(n \log n)$.
+  - Nếu chúng ta mã hóa các lần lặp lại bằng các bộ số (được gọi là bộ ba Crochemore) $(i,~ p,~ r)$ (trong đó $i$ là vị trí bắt đầu, $p$ độ dài của chuỗi con lặp lại và $r$ số lần lặp lại), thì tất cả các lần lặp lại có thể được mô tả bằng $O(n \log n)$ bộ ba như vậy.
+  - Chuỗi Fibonacci, được định nghĩa là
     
     \[\begin{align}
     t_0 &= a, \\\\
@@ -60,83 +60,83 @@ Also, here are some more interesting results related to the number of repetition
     t_i &= t_{i-1} + t_{i-2},
     \end{align}\]
     
-    are "strongly" periodic.
-    The number of repetitions in the Fibonacci string $f_i$, even in the compressed with Crochemore triples, is $O(f_n \log f_n)$.
-    The number of primitive repetitions is also $O(f_n \log f_n)$.
+    là tuần hoàn "mạnh".
+    Số lượng lặp lại trong chuỗi Fibonacci $f_i$, ngay cả khi được nén bằng bộ ba Crochemore, là $O(f_n \log f_n)$.
+    Số lượng lặp lại nguyên thủy cũng là $O(f_n \log f_n)$.
 
-## Main-Lorentz algorithm
+## Thuật toán Main-Lorentz (Main-Lorentz algorithm) {: #main-lorentz-algorithm}
 
-The idea behind the Main-Lorentz algorithm is **divide-and-conquer**.
+Ý tưởng đằng sau thuật toán Main-Lorentz là **chia để trị** (**divide-and-conquer**).
 
-It splits the initial string into halves, and computes the number of repetitions that lie completely in each halve by two recursive calls.
-Then comes the difficult part.
-The algorithm finds all repetitions starting in the first half and ending in the second half (which we will call **crossing repetitions**).
-This is the essential part of the Main-Lorentz algorithm, and we will discuss it in detail here.
+Nó chia chuỗi ban đầu thành một nửa và tính toán số lần lặp lại nằm hoàn toàn trong mỗi nửa bằng hai lệnh gọi đệ quy.
+Sau đó đến phần khó khăn.
+Thuật toán tìm tất cả các lần lặp lại bắt đầu ở nửa đầu và kết thúc ở nửa sau (chúng tôi sẽ gọi là **lặp lại chéo** - **crossing repetitions**).
+Đây là phần thiết yếu của thuật toán Main-Lorentz và chúng ta sẽ thảo luận chi tiết về nó ở đây.
 
-The complexity of divide-and-conquer algorithms is well researched.
-The [master theorem](https://en.wikipedia.org/wiki/Master_theorem_(analysis_of_algorithms)) says, that we will end up with an $O(n \log n)$ algorithm, if we can compute the crossing repetitions in $O(n)$ time.
+Độ phức tạp của các thuật toán chia để trị được nghiên cứu kỹ lưỡng.
+[Định lý Master](https://vi.wikipedia.org/wiki/%C4%90%E1%BB%8Bnh_l%C3%BD_th%E1%BB%A3) nói rằng, chúng ta sẽ kết thúc với thuật toán $O(n \log n)$, nếu chúng ta có thể tính toán các lần lặp lại chéo trong thời gian $O(n)$.
 
-### Search for crossing repetitions
+### Tìm kiếm các lặp lại chéo (Search for crossing repetitions) {: #search-for-crossing-repetitions}
 
-So we want to find all such repetitions that start in the first half of the string, let's call it $u$, and end in the second half, let's call it $v$:
+Vì vậy, chúng ta muốn tìm tất cả các lần lặp lại như vậy bắt đầu ở nửa đầu của chuỗi, hãy gọi nó là $u$, và kết thúc ở nửa sau, hãy gọi nó là $v$:
 
 $$s = u + v$$
 
-Their lengths are approximately equal to the length of $s$ divided by two.
+Độ dài của chúng xấp xỉ bằng độ dài của $s$ chia cho hai.
 
-Consider an arbitrary repetition and look at the middle character (more precisely the first character of the second half of the repetition).
-I.e. if the repetition is a substring $s[i \dots j]$, then the middle character is $(i + j + 1) / 2$.
+Xem xét một lần lặp lại tùy ý và nhìn vào ký tự ở giữa (chính xác hơn là ký tự đầu tiên của nửa sau của lần lặp lại).
+Tức là nếu sự lặp lại là một chuỗi con $s[i \dots j]$, thì ký tự ở giữa là $(i + j + 1) / 2$.
 
-We call a repetition **left** or **right** depending on which string this character is located - in the string $u$ or in the string $v$.
-In other words a string is called left, if the majority of it lies in $u$, otherwise we call it right.
+Chúng tôi gọi một sự lặp lại là **trái** (**left**) hoặc **phải** (**right**) tùy thuộc vào chuỗi nào ký tự này nằm ở - trong chuỗi $u$ hay trong chuỗi $v$.
+Nói cách khác, một chuỗi được gọi là trái, nếu phần lớn của nó nằm trong $u$, nếu không chúng tôi gọi nó là phải.
 
-We will now discuss how to find **all left repetitions**.
-Finding all right repetitions can be done in the same way.
+Bây giờ chúng ta sẽ thảo luận về cách tìm **tất cả các lặp lại trái**.
+Việc tìm tất cả các lặp lại phải có thể được thực hiện theo cùng một cách.
 
-Let us denote the length of the left repetition by $2l$ (i.e. each half of the repetition has length $l$).
-Consider the first character of the repetition falling into the string $v$ (it is at position $|u|$ in the string $s$).
-It coincides with the character $l$ positions before it, let's denote this position $cntr$.
+Chúng ta hãy biểu thị độ dài của lần lặp lại bên trái bằng $2l$ (tức là mỗi nửa của lần lặp lại có độ dài $l$).
+Xem xét ký tự đầu tiên của lần lặp lại rơi vào chuỗi $v$ (nó ở vị trí $|u|$ trong chuỗi $s$).
+Nó trùng với ký tự $l$ vị trí trước nó, hãy biểu thị vị trí này là $cntr$.
 
-We will fixate this position $cntr$, and **look for all repetitions at this position** $cntr$.
+Chúng tôi sẽ cố định vị trí này $cntr$, và **tìm kiếm tất cả các lần lặp lại tại vị trí này** $cntr$.
 
-For example:
+Ví dụ:
 
 $$c ~ \underset{cntr}{a} ~ c ~ | ~ a ~ d ~ a$$
 
-The vertical lines divides the two halves.
-Here we fixated the position $cntr = 1$, and at this position we find the repetition $caca$.
+Các đường thẳng đứng chia hai nửa.
+Ở đây chúng ta cố định vị trí $cntr = 1$, và tại vị trí này chúng ta tìm thấy sự lặp lại $caca$.
 
-It is clear, that if we fixate the position $cntr$, we simultaneously fixate the length of the possible repetitions: $l = |u| - cntr$.
-Once we know how to find these repetitions, we will iterate over all possible values for $cntr$ from $0$ to $|u|-1$, and find all left crossover repetitions of length $l = |u|,~ |u|-1,~ \dots, 1$.
+Rõ ràng là, nếu chúng ta cố định vị trí $cntr$, chúng ta đồng thời cố định độ dài của các lần lặp lại có thể: $l = |u| - cntr$.
+Khi chúng ta biết cách tìm các lần lặp lại này, chúng ta sẽ lặp lại trên tất cả các giá trị có thể có cho $cntr$ từ $0$ đến $|u|-1$, và tìm tất cả các lần lặp lại chéo trái có độ dài $l = |u|,~ |u|-1,~ \dots, 1$.
 
-### Criterion for left crossing repetitions
+### Tiêu chí cho các lặp lại chéo trái (Criterion for left crossing repetitions) {: #criterion-for-left-crossing-repetitions}
 
-Now, how can we find all such repetitions for a fixated $cntr$?
-Keep in mind that there still can be multiple such repetitions.
+Bây giờ, làm thế nào chúng ta có thể tìm thấy tất cả các lần lặp lại như vậy cho một $cntr$ cố định?
+Hãy nhớ rằng vẫn có thể có nhiều lần lặp lại như vậy.
 
-Let's again look at a visualization, this time for the repetition $abcabc$:
+Hãy nhìn lại một hình dung, lần này cho sự lặp lại $abcabc$:
 
 $$\overbrace{a}^{l_1} ~ \overbrace{\underset{cntr}{b} ~ c}^{l_2} ~ \overbrace{a}^{l_1} ~ | ~ \overbrace{b ~ c}^{l_2}$$
 
-Here we denoted the lengths of the two pieces of the repetition with $l_1$ and $l_2$:
-$l_1$ is the length of the repetition up to the position $cntr-1$, and $l_2$ is the length of the repetition from $cntr$ to the end of the half of the repetition.
-We have $2l = l_1 + l_2 + l_1 + l_2$ as the total length of the repetition.
+Ở đây chúng tôi biểu thị độ dài của hai phần của sự lặp lại bằng $l_1$ và $l_2$:
+$l_1$ là độ dài của lần lặp lại đến vị trí $cntr-1$, và $l_2$ là độ dài của lần lặp lại từ $cntr$ đến hết nửa của lần lặp lại.
+Chúng ta có $2l = l_1 + l_2 + l_1 + l_2$ là tổng độ dài của sự lặp lại.
 
-Let us generate **necessary and sufficient** conditions for such a repetition at position $cntr$ of length $2l = 2(l_1 + l_2) = 2(|u| - cntr)$:
+Chúng ta hãy tạo các điều kiện **cần và đủ** cho một sự lặp lại như vậy tại vị trí $cntr$ có độ dài $2l = 2(l_1 + l_2) = 2(|u| - cntr)$:
 
-- Let $k_1$ be the largest number such that the first $k_1$ characters before the position $cntr$ coincide with the last $k_1$ characters in the string $u$:
+- Gọi $k_1$ là số lớn nhất sao cho $k_1$ ký tự đầu tiên trước vị trí $cntr$ trùng với $k_1$ ký tự cuối cùng trong chuỗi $u$:
   
 $$
 u[cntr - k_1 \dots cntr - 1] = u[|u| - k_1 \dots |u| - 1]
 $$
   
-- Let $k_2$ be the largest number such that the $k_2$ characters starting at position $cntr$ coincide with the first $k_2$ characters in the string $v$:
+- Gọi $k_2$ là số lớn nhất sao cho $k_2$ ký tự bắt đầu tại vị trí $cntr$ trùng với $k_2$ ký tự đầu tiên trong chuỗi $v$:
 
 $$  
   u[cntr \dots cntr + k_2 - 1] = v[0 \dots k_2 - 1]
 $$
   
-- Then we have a repetition exactly for any pair $(l_1,~ l_2)$ with
+- Sau đó, chúng ta có một sự lặp lại chính xác cho bất kỳ cặp $(l_1,~ l_2)$ nào với
 
 $$
   \begin{align}
@@ -145,13 +145,13 @@ $$
   \end{align}
 $$
 
-To summarize:
+Tóm lại:
 
-- We fixate a specific position $cntr$.
-- All repetition which we will find now have length $2l = 2(|u| - cntr)$.
-  There might be multiple such repetitions, they depend on the lengths $l_1$ and $l_2 = l - l_1$.
-- We find $k_1$ and $k_2$ as described above.
-- Then all suitable repetitions are the ones for which the lengths of the pieces $l_1$ and $l_2$ satisfy the conditions:
+- Chúng tôi cố định một vị trí cụ thể $cntr$.
+- Tất cả các lần lặp lại mà chúng tôi sẽ tìm thấy bây giờ có độ dài $2l = 2(|u| - cntr)$.
+  Có thể có nhiều lần lặp lại như vậy, chúng phụ thuộc vào độ dài $l_1$ và $l_2 = l - l_1$.
+- Chúng ta tìm thấy $k_1$ và $k_2$ như mô tả ở trên.
+- Khi đó tất cả các lần lặp lại phù hợp là những lần mà độ dài của các mảnh $l_1$ và $l_2$ thỏa mãn các điều kiện:
 
 $$
   \begin{align}
@@ -161,35 +161,35 @@ $$
   \end{align}
 $$
 
-Therefore the only remaining part is how we can compute the values $k_1$ and $k_2$ quickly for every position $cntr$.
-Luckily we can compute them in $O(1)$ using the [Z-function](../string/z-function.md):
+Do đó, phần còn lại duy nhất là cách chúng ta có thể tính toán các giá trị $k_1$ và $k_2$ một cách nhanh chóng cho mọi vị trí $cntr$.
+May mắn thay, chúng ta có thể tính toán chúng trong $O(1)$ bằng cách sử dụng [Hàm Z (Z-function)](../string/z-function.md):
 
-- To can find the value $k_1$ for each position by calculating the Z-function for the string $\overline{u}$ (i.e. the reversed string $u$).
-  Then the value $k_1$ for a particular $cntr$ will be equal to the corresponding value of the array of the Z-function.
-- To precompute all values $k_2$, we calculate the Z-function for the string $v + \# + u$ (i.e. the string $u$ concatenated with the separator character $\#$ and the string $v$).
-  Again we just need to look up the corresponding value in the Z-function to get the $k_2$ value.
+- Để có thể tìm giá trị $k_1$ cho mỗi vị trí bằng cách tính toán hàm Z cho chuỗi $\overline{u}$ (tức là chuỗi đảo ngược $u$).
+  Sau đó, giá trị $k_1$ cho một $cntr$ cụ thể sẽ bằng với giá trị tương ứng của mảng hàm Z.
+- Để tính toán trước tất cả các giá trị $k_2$, chúng ta tính toán hàm Z cho chuỗi $v + \# + u$ (tức là chuỗi $u$ được nối với ký tự phân tách $\#$ và chuỗi $v$).
+  Một lần nữa chúng ta chỉ cần tra cứu giá trị tương ứng trong hàm Z để có được giá trị $k_2$.
 
-So this is enough to find all left crossing repetitions.
+Vì vậy, điều này là đủ để tìm tất cả các lần lặp lại chéo trái.
 
-### Right crossing repetitions
+### Lặp lại chéo phải (Right crossing repetitions) {: #right-crossing-repetitions}
 
-For computing the right crossing repetitions we act similarly:
-we define the center $cntr$ as the character corresponding to the last character in the string $u$.
+Để tính toán các lần lặp lại chéo phải, chúng ta hành động tương tự:
+chúng ta xác định tâm $cntr$ là ký tự tương ứng với ký tự cuối cùng trong chuỗi $u$.
 
-Then the length $k_1$ will be defined as the largest number of characters before the position $cntr$ (inclusive) that coincide with the last characters of the string $u$.
-And the length $k_2$ will be defined as the largest number of characters starting at $cntr + 1$ that coincide with the characters of the string $v$.
+Sau đó, độ dài $k_1$ sẽ được xác định là số lượng lớn nhất các ký tự trước vị trí $cntr$ (bao gồm cả nó) trùng với các ký tự cuối cùng của chuỗi $u$.
+Và độ dài $k_2$ sẽ được xác định là số lượng lớn nhất các ký tự bắt đầu tại $cntr + 1$ trùng với các ký tự của chuỗi $v$.
 
-Thus we can find the values $k_1$ and $k_2$ by computing the Z-function for the strings $\overline{u} + \# + \overline{v}$ and $v$.
+Do đó, chúng ta có thể tìm thấy các giá trị $k_1$ và $k_2$ bằng cách tính toán hàm Z cho các chuỗi $\overline{u} + \# + \overline{v}$ và $v$.
 
-After that we can find the repetitions by looking at all positions $cntr$, and use the same criterion as we had for left crossing repetitions.
+Sau đó, chúng ta có thể tìm thấy các lần lặp lại bằng cách xem xét tất cả các vị trí $cntr$ và sử dụng tiêu chí tương tự như chúng ta đã có cho các lần lặp lại chéo trái.
 
-### Implementation
+### Cài đặt (Implementation) {: #implementation}
 
-The implementation of the Main-Lorentz algorithm finds all repetitions in form of peculiar tuples of size four: $(cntr,~ l,~ k_1,~ k_2)$ in $O(n \log n)$ time.
-If you only want to find the number of repetitions in a string, or only want to find the longest repetition in a string, this information is enough and the runtime will still be $O(n \log n)$.
+Việc cài đặt thuật toán Main-Lorentz tìm tất cả các lần lặp lại dưới dạng các bộ bốn đặc biệt: $(cntr,~ l,~ k_1,~ k_2)$ trong thời gian $O(n \log n)$.
+Nếu bạn chỉ muốn tìm số lần lặp lại trong một chuỗi hoặc chỉ muốn tìm lần lặp lại dài nhất trong một chuỗi, thông tin này là đủ và thời gian chạy vẫn sẽ là $O(n \log n)$.
 
-Notice that if you want to expand these tuples to get the starting and end position of each repetition, then the runtime will be the runtime will be $O(n^2)$ (remember that there can be $O(n^2)$ repetitions).
-In this implementation we will do so, and store all found repetition in a vector of pairs of start and end indices.
+Lưu ý rằng nếu bạn muốn mở rộng các bộ này để có vị trí bắt đầu và kết thúc của mỗi lần lặp lại, thì thời gian chạy sẽ là $O(n^2)$ (hãy nhớ rằng có thể có $O(n^2)$ lần lặp lại).
+Trong quá trình triển khai này, chúng tôi sẽ làm như vậy và lưu trữ tất cả các lần lặp lại được tìm thấy trong một vector gồm các cặp chỉ số bắt đầu và kết thúc.
 
 ```{.cpp file=main_lorentz}
 vector<int> z_function(string const& s) {

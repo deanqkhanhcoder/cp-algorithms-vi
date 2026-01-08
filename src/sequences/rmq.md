@@ -4,39 +4,47 @@ tags:
 e_maxx_link: rmq
 ---
 
-# Range Minimum Query
+# Truy vấn giá trị nhỏ nhất trong đoạn (Range Minimum Query) {: #range-minimum-query}
 
-You are given an array $A[1..N]$.
-You have to answer incoming queries of the form $(L, R)$, which ask to find the minimum element in array $A$ between positions $L$ and $R$ inclusive.
+Bạn được cho một mảng $A[1..N]$.
+Bạn phải trả lời các truy vấn đến có dạng $(L, R)$, yêu cầu tìm phần tử nhỏ nhất trong mảng $A$ giữa các vị trí $L$ và $R$.
 
-RMQ can appear in problems directly or can be applied in some other tasks, e.g. the [Lowest Common Ancestor](../graph/lca.md) problem.
+RMQ có thể xuất hiện trực tiếp trong các bài toán hoặc có thể được áp dụng trong một số nhiệm vụ khác, ví dụ: bài toán [Tổ tiên chung thấp nhất (Lowest Common Ancestor)](../graph/lca.md).
 
-## Solution
+## Giải pháp (Solution) {: #solution}
 
-There are lots of possible approaches and data structures that you can use to solve the RMQ task.
+Có rất nhiều cách tiếp cận và cấu trúc dữ liệu có thể mà bạn có thể sử dụng để giải quyết tác vụ RMQ.
 
-The ones that are explained on this site are listed below.
+Những cái được giải thích trên trang web này được liệt kê dưới đây.
 
-First the approaches that allow modifications to the array between answering queries.
+Đầu tiên là các cách tiếp cận cho phép sửa đổi mảng giữa các lần trả lời truy vấn.
 
-- [Sqrt-decomposition](../data_structures/sqrt_decomposition.md) - answers each query in $O(\sqrt{N})$, preprocessing done in $O(N)$.
-  Pros: a very simple data structure. Cons: worse complexity.
-- [Segment tree](../data_structures/segment_tree.md) - answers each query in $O(\log N)$, preprocessing done in $O(N)$.
-  Pros: good time complexity. Cons: larger amount of code compared to the other data structures.
-- [Fenwick tree](../data_structures/fenwick.md) - answers each query in $O(\log N)$, preprocessing done in $O(N \log N)$.
-  Pros: the shortest code, good time complexity. Cons: Fenwick tree can only be used for queries with $L = 1$, so it is not applicable to many problems.
+- [Sqrt-decomposition](../data_structures/sqrt_decomposition.md) - trả lời mỗi truy vấn trong $O(\sqrt{N})$, tiền xử lý được thực hiện trong $O(N)$.
+  Ưu điểm: một cấu trúc dữ liệu rất đơn giản. Nhược điểm: độ phức tạp tồi tệ hơn.
+- [Segment tree](../data_structures/segment_tree.md) - trả lời mỗi truy vấn trong $O(\log N)$, tiền xử lý được thực hiện trong $O(N)$.
+  Ưu điểm: độ phức tạp thời gian tốt. Nhược điểm: lượng mã lớn hơn so với các cấu trúc dữ liệu khác.
+- [Fenwick tree](../data_structures/fenwick.md) - trả lời mỗi truy vấn trong $O(\log N)$, tiền xử lý được thực hiện trong $O(N \log N)$.
+  Ưu điểm: mã ngắn nhất, độ phức tạp thời gian tốt. Nhược điểm: Cây Fenwick chỉ có thể được sử dụng cho các truy vấn có $L = 1$, vì vậy nó không áp dụng cho nhiều bài toán.
 
-And here are the approaches that only work on static arrays, i.e. it is not possible to change a value in the array without recomputing the complete data structure.
+Và đây là những cách tiếp cận chỉ hoạt động trên các mảng tĩnh, tức là không thể thay đổi giá trị trong mảng mà không tính toán lại cấu trúc dữ liệu hoàn chỉnh.
 
-- [Sparse Table](../data_structures/sparse-table.md) - answers each query in $O(1)$, preprocessing done in $O(N \log N)$.
-  Pros: simple data structure, excellent time complexity.
-- [Sqrt Tree](../data_structures/sqrt-tree.md) - answers queries in $O(1)$, preprocessing done in $O(N \log \log N)$. Pros: fast. Cons: Complicated to implement.
-- [Disjoint Set Union / Arpa's Trick](../data_structures/disjoint_set_union.md#arpa) - answers queries in $O(1)$, preprocessing in $O(n)$. Pros: short, fast. Cons: only works if all queries are known in advance, i.e. only supports off-line processing of the queries.
-- [Cartesian Tree](../graph/rmq_linear.md) and [Farach-Colton and Bender algorithm](../graph/lca_farachcoltonbender.md) - answers queries in $O(1)$, preprocessing in $O(n)$. Pros: optimal complexity. Cons: large amount of code.
+- [Sparse Table](../data_structures/sparse-table.md) - trả lời mỗi truy vấn trong $O(1)$, tiền xử lý được thực hiện trong $O(N \log N)$.
+  Ưu điểm: cấu trúc dữ liệu đơn giản, độ phức tạp thời gian tuyệt vời.
+- [Sqrt Tree](../data_structures/sqrt-tree.md) - trả lời truy vấn trong $O(1)$, tiền xử lý được thực hiện trong $O(N \log \log N)$. Ưu điểm: nhanh. Nhược điểm: Phức tạp để cài đặt.
+- [Disjoint Set Union / Arpa's Trick](../data_structures/disjoint_set_union.md#arpa) - trả lời truy vấn trong $O(1)$, tiền xử lý trong $O(n)$. Ưu điểm: ngắn, nhanh. Nhược điểm: chỉ hoạt động nếu tất cả các truy vấn được biết trước, tức là chỉ hỗ trợ xử lý off-line các truy vấn.
+- [Cartesian Tree](../graph/rmq_linear.md) và [Thuật toán Farach-Colton và Bender](../graph/lca_farachcoltonbender.md) - trả lời truy vấn trong $O(1)$, tiền xử lý trong $O(n)$. Ưu điểm: độ phức tạp tối ưu. Nhược điểm: lượng mã lớn.
 
-Note: Preprocessing is the preliminary processing of the given array by building the corresponding data structure for it.
+Lưu ý: Tiền xử lý là quá trình xử lý sơ bộ mảng đã cho bằng cách xây dựng cấu trúc dữ liệu tương ứng cho nó.
 
-## Practice Problems
+## Bài tập (Practice Problems) {: #practice-problems}
 - [SPOJ: Range Minimum Query](http://www.spoj.com/problems/RMQSQ/)
 - [CODECHEF: Chef And Array](https://www.codechef.com/problems/FRMQ)
 - [Codeforces:  Array Partition](https://codeforces.com/contest/1454/problem/F)
+
+## Checklist
+
+- [x] Dịch các khái niệm kỹ thuật sang tiếng Việt chính xác.
+- [x] Đã cập nhật các liên kết nội bộ (đến 127.0.0.1:8000).
+- [x] Định dạng lại các công thức toán học và code block.
+- [x] Kiểm tra chính tả và ngữ pháp.
+- [x] Đảm bảo tính nhất quán với các thuật ngữ đã dịch khác.

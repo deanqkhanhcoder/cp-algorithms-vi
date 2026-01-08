@@ -4,141 +4,141 @@ tags:
 e_maxx_link: bridge_searching_online
 ---
 
-# Finding Bridges Online
+# Tìm cầu trực tuyến (Finding Bridges Online) {: #finding-bridges-online}
 
-We are given an undirected graph.
-A bridge is an edge whose removal makes the graph disconnected (or, more precisely, increases the number of connected components).
-Our task is to find all the bridges in the given graph.
+Chúng ta được cho một đồ thị vô hướng.
+Một cầu (bridge) là một cạnh mà việc loại bỏ nó làm cho đồ thị mất liên thông (hoặc, chính xác hơn là làm tăng số lượng các thành phần liên thông).
+Nhiệm vụ của chúng ta là tìm tất cả các cầu trong đồ thị đã cho.
 
-Informally this task can be put as follows:
-we have to find all the "important" roads on the given road map, i.e. such roads that the removal of any of them will lead to some cities being unreachable from others.
+Một cách không chính thức, nhiệm vụ này có thể được đặt ra như sau:
+chúng ta phải tìm tất cả các con đường "quan trọng" trên bản đồ đường bộ đã cho, tức là những con đường mà việc loại bỏ bất kỳ con đường nào trong số đó sẽ dẫn đến việc một số thành phố không thể tiếp cận được từ những thành phố khác.
 
-There is already the article [Finding Bridges in $O(N+M)$](bridge-searching.md) which solves this task with a [Depth First Search](depth-first-search.md) traversal.
-This algorithm will be much more complicated, but it has one big advantage:
-the algorithm described in this article works online, which means that the input graph doesn't have to be known in advance.
-The edges are added once at a time, and after each addition the algorithm recounts all the bridges in the current graph.
-In other words the algorithm is designed to work efficiently on a dynamic, changing graph.
+Đã có bài viết [Tìm Cầu trong $O(N+M)$](bridge-searching.md) giải quyết nhiệm vụ này bằng cách duyệt [Tìm kiếm theo chiều sâu (DFS)](depth-first-search.md).
+Thuật toán này sẽ phức tạp hơn nhiều nhưng nó có một lợi thế lớn:
+thuật toán được mô tả trong bài viết này hoạt động trực tuyến (online), có nghĩa là đồ thị đầu vào không cần phải biết trước.
+Các cạnh được thêm vào từng cái một, và sau mỗi lần thêm, thuật toán sẽ đếm lại tất cả các cầu trong đồ thị hiện tại.
+Nói cách khác, thuật toán được thiết kế để hoạt động hiệu quả trên một đồ thị động, thay đổi.
 
-More rigorously the statement of the problem is as follows:
-Initially the graph is empty and consists of $n$ vertices.
-Then we receive pairs of vertices $(a, b)$, which denote an edge added to the graph.
-After each received edge, i.e. after adding each edge, output the current number of bridges in the graph.
+Nói một cách chính xác hơn, phát biểu của bài toán như sau:
+Ban đầu đồ thị rỗng và bao gồm $n$ đỉnh.
+Sau đó, chúng ta nhận được các cặp đỉnh $(a, b)$, biểu thị một cạnh được thêm vào đồ thị.
+Sau mỗi cạnh nhận được, tức là sau khi thêm mỗi cạnh, hãy xuất ra số lượng cầu hiện tại trong đồ thị.
 
-It is also possible to maintain a list of all bridges as well as explicitly support the 2-edge-connected components.
+Cũng có thể duy trì danh sách tất cả các cầu cũng như hỗ trợ rõ ràng các thành phần liên thông 2 cạnh (2-edge-connected components).
 
-The algorithm described below works in $O(n \log n + m)$ time, where $m$ is the number of edges.
-The algorithm is based on the data structure [Disjoint Set Union](../data_structures/disjoint_set_union.md).
-However the implementation in this article takes $O(n \log n + m \log n)$ time, because it uses the simplified version of the DSU without Union by Rank.
+Thuật toán được mô tả bên dưới hoạt động trong thời gian $O(n \log n + m)$, trong đó $m$ là số cạnh.
+Thuật toán dựa trên cấu trúc dữ liệu [Disjoint Set Union](../data_structures/disjoint_set_union.md).
+Tuy nhiên, việc cài đặt trong bài viết này tốn thời gian $O(n \log n + m \log n)$, vì nó sử dụng phiên bản đơn giản hóa của DSU không có Union by Rank (hợp nhất theo hạng).
 
-## Algorithm
+## Thuật toán (Algorithm) {: #algorithm}
 
-First let's define a $k$-edge-connected component:
-it is a connected component that remains connected whenever you remove fewer than $k$ edges.
+Đầu tiên, hãy định nghĩa thành phần liên thông 2 cạnh (2-edge-connected component):
+đó là một thành phần liên thông vẫn giữ nguyên tính liên thông bất cứ khi nào bạn loại bỏ ít hơn $k$ cạnh.
 
-It is very easy to see, that the bridges partition the graph into 2-edge-connected components.
-If we compress each of those 2-edge-connected components into vertices and only leave the bridges as edges in the compressed graph, then we obtain an acyclic graph, i.e. a forest.
+Rất dễ thấy rằng các cầu phân chia đồ thị thành các thành phần liên thông 2 cạnh.
+Nếu chúng ta nén mỗi thành phần liên thông 2 cạnh đó thành các đỉnh và chỉ để lại các cầu làm các cạnh trong đồ thị nén, thì chúng ta thu được một đồ thị không có chu trình, tức là một rừng (forest).
 
-The algorithm described below maintains this forest explicitly as well as the 2-edge-connected components.
+Thuật toán được mô tả dưới đây duy trì khu rừng này một cách rõ ràng cũng như các thành phần liên thông 2 cạnh.
 
-It is clear that initially, when the graph is empty, it contains $n$ 2-edge-connected components, which by themselves are not connect.
+Rõ ràng là ban đầu, khi đồ thị rỗng, nó chứa $n$ thành phần liên thông 2 cạnh, bản thân chúng không được kết nối.
 
-When adding the next edge $(a, b)$ there can occur three situations:
+Khi thêm cạnh tiếp theo $(a, b)$, có thể xảy ra ba tình huống:
 
-*   Both vertices $a$ and $b$ are in the same 2-edge-connected component - then this edge is not a bridge, and does not change anything in the forest structure, so we can just skip this edge.
+*   Cả hai đỉnh $a$ và $b$ đều nằm trong cùng một thành phần liên thông 2 cạnh - khi đó cạnh này không phải là cầu, và không thay đổi bất cứ điều gì trong cấu trúc rừng, vì vậy chúng ta có thể bỏ qua cạnh này.
 
-    Thus, in this case the number of bridges does not change.
+    Do đó, trong trường hợp này số lượng cầu không thay đổi.
 
-*   The vertices $a$ and $b$ are in completely different connected components, i.e. each one is part of a different tree.
-    In this case, the edge $(a, b)$ becomes a new bridge, and these two trees are combined into one (and all the old bridges remain).
+*   Các đỉnh $a$ và $b$ nằm trong các thành phần liên thông hoàn toàn khác nhau, tức là mỗi đỉnh là một phần của một cây khác nhau.
+    Trong trường hợp này, cạnh $(a, b)$ trở thành một cầu mới, và hai cây này được kết hợp thành một (và tất cả các cầu cũ vẫn còn).
 
-    Thus, in this case the number of bridges increases by one.
+    Do đó, trong trường hợp này, số lượng cầu tăng thêm một.
 
-*   The vertices $a$ and $b$ are in one connected component, but in different 2-edge-connected components.
-    In this case, this edge forms a cycle along with some of the old bridges.
-    All these bridges end being bridges, and the resulting cycle must be compressed into a new 2-edge-connected component.
+*   Các đỉnh $a$ và $b$ nằm trong một thành phần liên thông, nhưng nằm trong các thành phần liên thông 2 cạnh khác nhau.
+    Trong trường hợp này, cạnh này tạo thành một chu trình cùng với một số cầu cũ.
+    Tất cả các cầu này kết thúc việc là cầu, và chu trình kết quả phải được nén thành một thành phần liên thông 2 cạnh mới.
 
-    Thus, in this case the number of bridges decreases by one or more.
+    Do đó, trong trường hợp này, số lượng cầu giảm đi một hoặc nhiều hơn.
 
-Consequently the whole task is reduced to the effective implementation of all these operations over the forest of 2-edge-connected components.
+Do đó, toàn bộ nhiệm vụ được giảm xuống thành việc thực hiện hiệu quả tất cả các thao tác này trên rừng các thành phần liên thông 2 cạnh.
 
-## Data Structures for storing the forest
+## Cấu trúc dữ liệu để lưu trữ rừng (Data Structures for storing the forest) {: #data-structures-for-storing-the-forest}
 
-The only data structure that we need is [Disjoint Set Union](../data_structures/disjoint_set_union.md).
-In fact we will make two copies of this structure:
-one will be to maintain the connected components, the other to maintain the 2-edge-connected components.
-And in addition we store the structure of the trees in the forest of 2-edge-connected components via pointers:
-Each 2-edge-connected component will store the index `par[]` of its ancestor in the tree.
+Cấu trúc dữ liệu duy nhất mà chúng ta cần là [Disjoint Set Union](../data_structures/disjoint_set_union.md).
+Trên thực tế, chúng ta sẽ tạo hai bản sao của cấu trúc này:
+một bản sẽ là để duy trì các thành phần liên thông (connected components), bản còn lại để duy trì các thành phần liên thông 2 cạnh (2-edge-connected components).
+Và ngoài ra, chúng ta lưu trữ cấu trúc của các cây trong rừng các thành phần liên thông 2 cạnh thông qua các con trỏ:
+Mỗi thành phần liên thông 2 cạnh sẽ lưu trữ chỉ số `par[]` của tổ tiên của nó trong cây.
 
-We will now consistently disassemble every operation that we need to learn to implement:
+Bây giờ chúng ta sẽ liên tục phân tích mọi thao tác mà chúng ta cần học cách cài đặt:
 
-  * Check whether the two vertices lie in the same connected / 2-edge-connected component.
-    It is done with the usual DSU algorithm, we just find and compare the representatives of the DSUs.
+  * Kiểm tra xem liệu hai đỉnh có nằm trong cùng một thành phần liên thông / liên thông 2 cạnh hay không.
+    Nó được thực hiện với thuật toán DSU thông thường, chúng ta chỉ cần tìm và so sánh các đại diện của các DSU.
   
-  * Joining two trees for some edge $(a, b)$.
-    Since it could turn out that neither the vertex $a$ nor the vertex $b$ are the roots of their trees, the only way to connect these two trees is to re-root one of them.
-    For example you can re-root the tree of vertex $a$, and then attach it to another tree by setting the ancestor of $a$ to $b$.
+  * Nối hai cây cho một số cạnh $(a, b)$.
+    Vì có thể xảy ra trường hợp cả đỉnh $a$ và đỉnh $b$ đều không phải là gốc của cây của chúng, cách duy nhất để kết nối hai cây này là đổi gốc (re-root) một trong hai cây.
+    Ví dụ, bạn có thể đổi gốc cây của đỉnh $a$, và sau đó gắn nó vào một cây khác bằng cách đặt tổ tiên của $a$ thành $b$.
   
-    However the question about the effectiveness of the re-rooting operation arises:
-    in order to re-root the tree with the root $r$ to the vertex $v$, it is necessary to visit all vertices on the path between $v$ and $r$ and redirect the pointers `par[]` in the opposite direction, and also change the references to the ancestors in the DSU that is responsible for the connected components.
+    Tuy nhiên, câu hỏi về hiệu quả của thao tác đổi gốc nảy sinh:
+    để đổi gốc cây với gốc $r$ sang đỉnh $v$, cần phải thăm tất cả các đỉnh trên đường đi giữa $v$ và $r$ và chuyển hướng các con trỏ `par[]` theo hướng ngược lại, và cũng thay đổi các tham chiếu đến các tổ tiên trong DSU chịu trách nhiệm cho các thành phần liên thông.
   
-    Thus, the cost of re-rooting is $O(h)$, where $h$ is the height of the tree.
-    You can make an even worse estimate by saying that the cost is $O(\text{size})$ where $\text{size}$ is the number of vertices in the tree.
-    The final complexity will not differ.
+    Do đó, chi phí của việc đổi gốc là $O(h)$, trong đó $h$ là chiều cao của cây.
+    Bạn có thể đưa ra một ước tính thậm chí tồi tệ hơn bằng cách nói rằng chi phí là $O(\text{size})$ trong đó $\text{size}$ là số lượng đỉnh trong cây.
+    Độ phức tạp cuối cùng sẽ không khác biệt.
   
-    We now apply a standard technique: we re-root the tree that contains fewer vertices.
-    Then it is intuitively clear that the worst case is when two trees of approximately equal sizes are combined, but then the result is a tree of twice the size.
-    This does not allow this situation to happen many times.
+    Bây giờ chúng ta áp dụng một kỹ thuật tiêu chuẩn: chúng ta đổi gốc cây chứa ít đỉnh hơn.
+    Sau đó, theo trực giác, trường hợp xấu nhất là khi hai cây có kích thước xấp xỉ bằng nhau được kết hợp, nhưng sau đó kết quả là một cây có kích thước gấp đôi.
+    Điều này không cho phép tình huống này xảy ra nhiều lần.
   
-    In general the total cost can be written in the form of a recurrence:
+    Nói chung, tổng chi phí có thể được viết dưới dạng truy hồi:
     
     \[ T(n) = \max_{k = 1 \ldots n-1} \left\{ T(k) + T(n - k) + O(\min(k, n - k))\right\} \]
     
-    $T(n)$ is the number of operations necessary to obtain a tree with $n$ vertices by means of re-rooting and unifying trees.
-    A tree of size $n$ can be created by combining two smaller trees of size $k$ and $n - k$.
-    This recurrence is has the solution $T(n) = O (n \log n)$.
+    $T(n)$ là số lượng thao tác cần thiết để có được một cây với $n$ đỉnh bằng cách đổi gốc và hợp nhất các cây.
+    Một cây có kích thước $n$ có thể được tạo ra bằng cách kết hợp hai cây nhỏ hơn có kích thước $k$ và $n - k$.
+    Công thức truy hồi này có lời giải $T(n) = O (n \log n)$.
   
-    Thus, the total time spent on all re-rooting operations will be $O(n \log n)$ if we always re-root the smaller of the two trees.
+    Do đó, tổng thời gian dành cho tất cả các thao tác đổi gốc sẽ là $O(n \log n)$ nếu chúng ta luôn đổi gốc cây nhỏ hơn trong hai cây.
   
-    We will have to maintain the size of each connected component, but the data structure DSU makes this possible without difficulty.
+    Chúng ta sẽ phải duy trì kích thước của mỗi thành phần liên thông, nhưng cấu trúc dữ liệu DSU làm cho điều này trở nên khả thi mà không gặp khó khăn gì.
   
-  * Searching for the cycle formed by adding a new edge $(a, b)$.
-    Since $a$ and $b$ are already connected in the tree we need to find the [Lowest Common Ancestor](lca.md) of the vertices $a$ and $b$.
-    The cycle will consist of the paths from $b$ to the LCA, from the LCA to $a$ and the edge $a$ to $b$.
+  * Tìm kiếm chu trình được hình thành bằng cách thêm một cạnh mới $(a, b)$.
+    Vì $a$ và $b$ đã được kết nối trong cây nên chúng ta cần tìm [Tổ tiên chung thấp nhất (LCA)](lca.md) của các đỉnh $a$ và $b$.
+    Chu trình sẽ bao gồm các đường đi từ $b$ đến LCA, từ LCA đến $a$ và cạnh $a$ đến $b$.
   
-    After finding the cycle we compress all vertices of the detected cycle into one vertex.
-    This means that we already have a complexity proportional to the cycle length, which means that we also can use any LCA algorithm proportional to the length, and don't have to use any fast one.
+    Sau khi tìm thấy chu trình, chúng ta nén tất cả các đỉnh của chu trình được phát hiện thành một đỉnh.
+    Điều này có nghĩa là chúng ta đã có độ phức tạp tỷ lệ thuận với độ dài chu trình, điều đó có nghĩa là chúng ta cũng có thể sử dụng bất kỳ thuật toán LCA nào tỷ lệ thuận với độ dài và không cần phải sử dụng bất kỳ thuật toán nhanh nào.
   
-    Since all information about the structure of the tree is available in the ancestor array `par[]`, the only reasonable LCA algorithm is the following:
-    mark the vertices $a$ and $b$ as visited, then we go to their ancestors `par[a]` and `par[b]` and mark them, then advance to their ancestors and so on, until we reach an already marked vertex.
-    This vertex is the LCA that we are looking for, and we can find the vertices on the cycle by traversing the path from $a$ and $b$ to the LCA again.
+    Vì tất cả thông tin về cấu trúc của cây đều có sẵn trong mảng tổ tiên `par[]`, thuật toán LCA hợp lý duy nhất là như sau:
+    đánh dấu các đỉnh $a$ và $b$ là đã thăm, sau đó chúng ta đi đến tổ tiên của chúng `par[a]` và `par[b]` và đánh dấu chúng, sau đó tiến đến tổ tiên của chúng và cứ thế, cho đến khi chúng ta đến một đỉnh đã được đánh dấu.
+    Đỉnh này là LCA mà chúng ta đang tìm kiếm, và chúng ta có thể tìm các đỉnh trên chu trình bằng cách duyệt lại đường đi từ $a$ và $b$ đến LCA.
   
-    It is obvious that the complexity of this algorithm is proportional to the length of the desired cycle.
+    Rõ ràng là độ phức tạp của thuật toán này tỷ lệ thuận với độ dài của chu trình mong muốn.
   
-  * Compression of the cycle by adding a new edge $(a, b)$ in a tree.
+  * Nén chu trình bằng cách thêm một cạnh mới $(a, b)$ trong một cây.
   
-    We need to create a new 2-edge-connected component, which will consist of all vertices of the detected cycle (also the detected cycle itself could consist of some 2-edge-connected components, but this does not change anything).
-    In addition it is necessary to compress them in such a way that the structure of the tree is not disturbed, and all pointers `par[]` and two DSUs are still correct.
+    Chúng ta cần tạo một thành phần liên thông 2 cạnh mới, bao gồm tất cả các đỉnh của chu trình được phát hiện (chu trình được phát hiện cũng có thể bao gồm một số thành phần liên thông 2 cạnh, nhưng điều này không thay đổi bất cứ điều gì).
+    Ngoài ra, cần phải nén chúng theo cách mà cấu trúc của cây không bị xáo trộn, và tất cả các con trỏ `par[]` và hai DSU vẫn chính xác.
   
-    The easiest way to achieve this is to compress all the vertices of the cycle to their LCA.
-    In fact the LCA is the highest of the vertices, i.e. its ancestor pointer `par[]` remains unchanged.
-    For all the other vertices of the loop the ancestors do not need to be updated, since these vertices simply cease to exists.
-    But in the DSU of the 2-edge-connected components all these vertices will simply point to the LCA.
+    Cách dễ nhất để đạt được điều này là nén tất cả các đỉnh của chu trình vào LCA của chúng.
+    Trên thực tế, LCA là đỉnh cao nhất trong số các đỉnh, tức là con trỏ tổ tiên `par[]` của nó vẫn không thay đổi.
+    Đối với tất cả các đỉnh khác của vòng lặp, các tổ tiên không cần cập nhật, vì các đỉnh này đơn giản là không còn tồn tại nữa.
+    Nhưng trong DSU của các thành phần liên thông 2 cạnh, tất cả các đỉnh này sẽ chỉ trỏ đến LCA.
   
-    We will implement the DSU of the 2-edge-connected components without the Union by rank optimization, therefore we will get the complexity $O(\log n)$ on average per query.
-    To achieve the complexity $O(1)$ on average per query, we need to combine the vertices of the cycle according to Union by rank, and then assign `par[]` accordingly.
+    Chúng ta sẽ cài đặt DSU của các thành phần liên thông 2 cạnh mà không cần tối ưu hóa Union by rank, do đó chúng ta sẽ nhận được độ phức tạp trung bình là $O(\log n)$ cho mỗi truy vấn.
+    Để đạt được độ phức tạp trung bình là $O(1)$ cho mỗi truy vấn, chúng ta cần kết hợp các đỉnh của chu trình theo Union by rank, và sau đó gán `par[]` cho phù hợp.
 
-## Implementation
+## Cài đặt (Implementation) {: #implementation}
 
-Here is the final implementation of the whole algorithm.
+Dưới đây là cài đặt cuối cùng của toàn bộ thuật toán.
 
-As mentioned before, for the sake of simplicity the DSU of the 2-edge-connected components is written without Union by rank, therefore the resulting complexity will be $O(\log n)$ on average.
+Như đã đề cập trước đó, để đơn giản, DSU của các thành phần liên thông 2 cạnh được viết mà không có Union by rank, do đó độ phức tạp kết quả sẽ là trung bình $O(\log n)$.
 
-Also in this implementation the bridges themselves are not stored, only their count `bridges`.
-However it will not be difficult to create a `set` of all bridges.
+Ngoài ra trong cài đặt này, bản thân các cầu không được lưu trữ, chỉ có số lượng của chúng `bridges`.
+Tuy nhiên, sẽ không khó để tạo một `set` của tất cả các cầu.
 
-Initially you call the function `init()`, which initializes the two DSUs (creating a separate set for each vertex, and setting the size equal to one), and sets the ancestors `par`.
+Ban đầu bạn gọi hàm `init()`, khởi tạo hai DSU (tạo một tập hợp riêng cho mỗi đỉnh và đặt kích thước bằng một), và đặt các tổ tiên `par`.
 
-The main function is `add_edge(a, b)`, which processes and adds a new edge.
+Hàm chính là `add_edge(a, b)`, xử lý và thêm một cạnh mới.
 
 ```cpp
 vector<int> par, dsu_2ecc, dsu_cc, dsu_cc_size;
@@ -252,26 +252,26 @@ void add_edge(int a, int b) {
 }
 ```
 
-The DSU for the 2-edge-connected components is stored in the vector `dsu_2ecc`, and the function returning the representative is `find_2ecc(v)`.
-This function is used many times in the rest of the code, since after the compression of several vertices into one all these vertices cease to exist, and instead only the leader has the correct ancestor `par` in the forest of 2-edge-connected components.
+DSU cho các thành phần liên thông 2 cạnh được lưu trữ trong vector `dsu_2ecc`, và hàm trả về đại diện là `find_2ecc(v)`.
+Hàm này được sử dụng nhiều lần trong phần còn lại của mã, vì sau khi nén một số đỉnh thành một, tất cả các đỉnh này không còn tồn tại nữa và thay vào đó chỉ có người lãnh đạo có tổ tiên `par` chính xác trong rừng các thành phần liên thông 2 cạnh.
 
-The DSU for the connected components is stored in the vector `dsu_cc`, and there is also an additional vector `dsu_cc_size` to store the component sizes.
-The function `find_cc(v)` returns the leader of the connectivity component (which is actually the root of the tree).
+DSU cho các thành phần liên thông được lưu trữ trong vector `dsu_cc`, và cũng có một vector bổ sung `dsu_cc_size` để lưu trữ kích thước thành phần.
+Hàm `find_cc(v)` trả về người lãnh đạo của thành phần liên thông (thực ra là gốc của cây).
 
-The re-rooting of a tree `make_root(v)` works as described above:
-if traverses from the vertex $v$ via the ancestors to the root vertex, each time redirecting the ancestor `par` in the opposite direction.
-The link to the representative of the connected component `dsu_cc` is also updated, so that it points to the new root vertex.
-After re-rooting we have to assign the new root the correct size of the connected component.
-Also we have to be careful that we call `find_2ecc()` to get the representatives of the 2-edge-connected component, rather than some other vertex that have already been compressed.
+Việc đổi gốc của một cây `make_root(v)` hoạt động như mô tả ở trên:
+nó đi từ đỉnh $v$ qua các tổ tiên đến đỉnh gốc, mỗi lần chuyển hướng tổ tiên `par` theo hướng ngược lại.
+Liên kết đến đại diện của thành phần liên thông `dsu_cc` cũng được cập nhật, để nó trỏ đến đỉnh gốc mới.
+Sau khi đổi gốc, chúng ta phải gán cho gốc mới kích thước chính xác của thành phần liên thông.
+Ngoài ra, chúng ta phải cẩn thận gọi `find_2ecc()` để lấy các đại diện của thành phần liên thông 2 cạnh, thay vì một số đỉnh khác đã bị nén.
 
-The cycle finding and compression function `merge_path(a, b)` is also implemented as described above.
-It searches for the LCA of $a$ and $b$ be rising these nodes in parallel, until we meet a vertex for the second time.
-For efficiency purposes we choose a unique identifier for each LCA finding call, and mark the traversed vertices with it.
-This works in $O(1)$, while other approaches like using $set$ perform worse.
-The passed paths are stored in the vectors `path_a` and `path_b`, and we use them to walk through them a second time up to the LCA, thereby obtaining all vertices of the cycle.
-All the vertices of the cycle get compressed by attaching them to the LCA, hence the average complexity is $O(\log n)$ (since we don't use Union by rank).
-All the edges we pass have been bridges, so we subtract 1 for each edge in the cycle.
+Hàm tìm chu trình và nén `merge_path(a, b)` cũng được thực hiện như mô tả ở trên.
+Nó tìm kiếm LCA của $a$ và $b$ bằng cách nâng các nút này song song, cho đến khi chúng ta gặp một đỉnh lần thứ hai.
+Vì mục đích hiệu quả, chúng ta chọn một định danh duy nhất cho mỗi cuộc gọi tìm LCA và đánh dấu các đỉnh đã đi qua bằng nó.
+Thao tác này hoạt động trong $O(1)$, trong khi các phương pháp khác như sử dụng `set` thực hiện kém hơn.
+Các đường dẫn đã qua được lưu trữ trong các vector `path_a` và `path_b`, và chúng ta sử dụng chúng để duyệt qua chúng lần thứ hai lên đến LCA, qua đó thu được tất cả các đỉnh của chu trình.
+Tất cả các đỉnh của chu trình được nén bằng cách gắn chúng vào LCA, do đó độ phức tạp trung bình là $O(\log n)$ (vì chúng ta không sử dụng Union by rank).
+Tất cả các cạnh chúng ta đi qua đều là các cầu, vì vậy chúng ta trừ 1 cho mỗi cạnh trong chu trình.
 
-Finally the query function `add_edge(a, b)` determines the connected components in which the vertices $a$ and $b$ lie.
-If they lie in different connectivity components, then a smaller tree is re-rooted and then attached to the larger tree.
-Otherwise if the vertices $a$ and $b$ lie in one tree, but in different 2-edge-connected components, then the function `merge_path(a, b)` is called, which will detect the cycle and compress it into one 2-edge-connected component. 
+Cuối cùng, hàm truy vấn `add_edge(a, b)` xác định các thành phần liên thông mà các đỉnh $a$ và $b$ nằm trong đó.
+Nếu chúng nằm trong các thành phần liên thông khác nhau, thì một cây nhỏ hơn sẽ được đổi gốc và sau đó gắn vào cây lớn hơn.
+Ngược lại nếu các đỉnh $a$ và $b$ nằm trong một cây, nhưng trong các thành phần liên thông 2 cạnh khác nhau, thì hàm `merge_path(a, b)` được gọi, hàm này sẽ phát hiện chu trình và nén nó thành một thành phần liên thông 2 cạnh.

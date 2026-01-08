@@ -1,29 +1,29 @@
 ---
-title: Calculating the determinant using Kraut method
+title: Tính định thức bằng phương pháp Kraut (Calculating the determinant using Kraut method)
 tags:
   - Original
 ---
-# Calculating the determinant using Kraut method in $O(N^3)$
+# Tính định thức bằng phương pháp Kraut trong $O(N^3)$ (Calculating the determinant using Kraut method in $O(N^3)$) {: #calculating-the-determinant-using-kraut-method}
 
-In this article, we'll describe how to find the determinant of the matrix using Kraut method, which works in $O(N^3)$.
+Trong bài viết này, chúng tôi sẽ mô tả cách tìm định thức của ma trận bằng phương pháp Kraut, phương pháp này hoạt động trong $O(N^3)$.
 
-The Kraut algorithm finds decomposition of matrix $A$ as $A = L U$ where $L$ is lower triangular and $U$ is upper triangular matrix. Without loss of generality, we can assume that all the diagonal elements of $L$ are equal to 1. Once we know these matrices, it is easy to calculate the determinant of $A$: it is equal to the product of all the elements on the main diagonal of the matrix $U$.
+Thuật toán Kraut tìm cách phân rã ma trận $A$ dưới dạng $A = L U$ trong đó $L$ là ma trận tam giác dưới và $U$ là ma trận tam giác trên. Không mất tính tổng quát, chúng ta có thể giả định rằng tất cả các phần tử đường chéo của $L$ đều bằng 1. Một khi chúng ta biết các ma trận này, thật dễ dàng để tính toán định thức của $A$: nó bằng tích của tất cả các phần tử trên đường chéo chính của ma trận $U$.
 
-There is a theorem stating that any invertible matrix has a LU-decomposition, and it is unique, if and only if all its principle minors are non-zero. We consider only such decomposition in which the diagonal of matrix $L$ consists of ones.
+Có một định lý nói rằng bất kỳ ma trận nghịch đảo nào cũng có phân rã LU, và nó là duy nhất, khi và chỉ khi tất cả các định thức con chính của nó đều khác không. Chúng tôi chỉ xem xét phân rã như vậy trong đó đường chéo của ma trận $L$ bao gồm các số một.
 
-Let $A$ be the matrix and $N$ - its size. We will find the elements of the matrices $L$ and $U$ using the following steps:
+Gọi $A$ là ma trận và $N$ - kích thước của nó. Chúng ta sẽ tìm các phần tử của ma trận $L$ và $U$ bằng các bước sau:
 
- 1. Let $L_{i i} = 1$ for $i = 1, 2, ..., N$.
- 2. For each $j = 1, 2, ..., N$ perform:
-      - For $i = 1, 2, ..., j$ find values 
+ 1. Đặt $L_{i i} = 1$ cho $i = 1, 2, ..., N$.
+ 2. Đối với mỗi $j = 1, 2, ..., N$ thực hiện:
+      - Đối với $i = 1, 2, ..., j$ tìm các giá trị 
         
         \[U_{ij} = A_{ij} - \sum_{k=1}^{i-1} L_{ik} \cdot U_{kj}\]
  
-      - Next, for $i = j+1, j+2, ..., N$ find values
+      - Tiếp theo, đối với $i = j+1, j+2, ..., N$ tìm các giá trị
  
         \[L_{ij} = \frac{1}{U_{jj}} \left(A_{ij} - \sum_{k=1}^{j-1} L_{ik} \cdot U_{kj} \right).\]
 
-## Implementation
+## Cài đặt (Implementation) {: #implementation}
 
 ```java
 static BigInteger det (BigDecimal a [][], int n) {

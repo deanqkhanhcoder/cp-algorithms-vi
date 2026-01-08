@@ -4,51 +4,51 @@ tags:
 e_maxx_link: rmq_linear
 ---
 
-# Solve RMQ (Range Minimum Query) by finding LCA (Lowest Common Ancestor)
+# Giải RMQ (Truy vấn giá trị nhỏ nhất trong phạm vi) bằng cách tìm LCA (Tổ tiên chung thấp nhất) (Solve RMQ (Range Minimum Query) by finding LCA (Lowest Common Ancestor)) {: #solve-rmq-range-minimum-query-by-finding-lca-lowest-common-ancestor}
 
-Given an array `A[0..N-1]`.
-For each query of the form `[L, R]` we want to find the minimum in the array `A` starting from position `L` and ending with position `R`.
-We will assume that the array `A` doesn't change in the process, i.e. this article describes a solution to the static RMQ problem
+Cho một mảng `A[0..N-1]`.
+Đối với mỗi truy vấn có dạng `[L, R]`, chúng ta muốn tìm giá trị nhỏ nhất trong mảng `A` bắt đầu từ vị trí `L` và kết thúc bằng vị trí `R`.
+Chúng ta sẽ giả định rằng mảng `A` không thay đổi trong quá trình, tức là bài viết này mô tả một giải pháp cho bài toán RMQ tĩnh.
 
-Here is a description of an asymptotically optimal solution.
-It stands apart from other solutions for the RMQ problem, since it is very different from them:
-it reduces the RMQ problem to the LCA problem, and then uses the [Farach-Colton and Bender algorithm](lca_farachcoltonbender.md), which reduces the LCA problem back to a specialized RMQ problem and solves that.
+Dưới đây là mô tả về một giải pháp tối ưu tiệm cận.
+Nó đứng tách biệt với các giải pháp khác cho bài toán RMQ, vì nó rất khác biệt với chúng:
+nó quy giảm bài toán RMQ thành bài toán LCA, và sau đó sử dụng [thuật toán Farach-Colton và Bender](lca_farachcoltonbender.md), vốn quy giảm bài toán LCA trở lại thành một bài toán RMQ chuyên biệt và giải quyết nó.
 
-## Algorithm
+## Thuật toán (Algorithm) {: #algorithm}
 
-We construct a **Cartesian tree** from the array `A`.
-A Cartesian tree of an array `A` is a binary tree with the min-heap property (the value of parent node has to be smaller or equal than the value of its children) such that the in-order traversal of the tree visits the nodes in the same order as they are in the array `A`.
+Chúng ta xây dựng một **cây Cartesian** từ mảng `A`.
+Cây Cartesian của một mảng `A` là một cây nhị phân có thuộc tính min-heap (giá trị của nút cha phải nhỏ hơn hoặc bằng giá trị của các con của nó) sao cho việc duyệt cây theo thứ tự giữa (in-order traversal) sẽ thăm các nút theo cùng thứ tự như chúng nằm trong mảng `A`.
 
-In other words, a Cartesian tree is a recursive data structure.
-The array `A` will be partitioned into 3 parts: the prefix of the array up to the minimum, the minimum, and the remaining suffix.
-The root of the tree will be a node corresponding to the minimum element of the array `A`, the left subtree will be the Cartesian tree of the prefix, and the right subtree will be a Cartesian tree of the suffix.
+Nói cách khác, cây Cartesian là một cấu trúc dữ liệu đệ quy.
+Mảng `A` sẽ được phân chia thành 3 phần: tiền tố của mảng cho đến giá trị nhỏ nhất, giá trị nhỏ nhất, và hậu tố còn lại.
+Gốc của cây sẽ là một nút tương ứng với phần tử nhỏ nhất của mảng `A`, cây con bên trái sẽ là cây Cartesian của tiền tố, và cây con bên phải sẽ là cây Cartesian của hậu tố.
 
-In the following image you can see one array of length 10 and the corresponding Cartesian tree.
+Trong hình ảnh sau đây, bạn có thể thấy một mảng có độ dài 10 và cây Cartesian tương ứng.
 <div style="text-align: center;">
   <img src="CartesianTree.png" alt="Image of Cartesian Tree">
 </div>
 
-The range minimum query `[l, r]` is equivalent to the lowest common ancestor query `[l', r']`, where `l'` is the node corresponding to the element `A[l]` and `r'` the node corresponding to the element `A[r]`.
-Indeed the node corresponding to the smallest element in the range has to be an ancestor of all nodes in the range, therefor also from `l'` and `r'`.
-This automatically follows from the min-heap property.
-And is also has to be the lowest ancestor, because otherwise `l'` and `r'` would be both in the left or in the right subtree, which generates a contradiction since in such a case the minimum wouldn't even be in the range.
+Truy vấn giá trị nhỏ nhất trong phạm vi `[l, r]` tương đương với truy vấn tổ tiên chung thấp nhất `[l', r']`, trong đó `l'` là nút tương ứng với phần tử `A[l]` và `r'` là nút tương ứng với phần tử `A[r]`.
+Thật vậy, nút tương ứng với phần tử nhỏ nhất trong phạm vi phải là tổ tiên của tất cả các nút trong phạm vi, do đó cũng từ `l'` và `r'`.
+Điều này tự động theo sau từ thuộc tính min-heap.
+Và nó cũng phải là tổ tiên thấp nhất, bởi vì nếu không `l'` và `r'` sẽ đều ở trong cây con bên trái hoặc bên phải, điều này tạo ra một mâu thuẫn vì trong trường hợp như vậy giá trị nhỏ nhất thậm chí sẽ không nằm trong phạm vi.
 
-In the following image you can see the LCA queries for the RMQ queries `[1, 3]` and `[5, 9]`.
-In the first query the LCA of the nodes `A[1]` and `A[3]` is the node corresponding to `A[2]` which has the value 2, and in the second query the LCA of `A[5]` and `A[9]` is the node corresponding to `A[8]` which has the value 3.
+Trong hình ảnh sau đây, bạn có thể thấy các truy vấn LCA cho các truy vấn RMQ `[1, 3]` và `[5, 9]`.
+Trong truy vấn đầu tiên, LCA của các nút `A[1]` và `A[3]` là nút tương ứng với `A[2]` có giá trị 2, và trong truy vấn thứ hai, LCA của `A[5]` và `A[9]` là nút tương ứng với `A[8]` có giá trị 3.
 <div style="text-align: center;">
   <img src="CartesianTreeLCA.png" alt="LCA queries in the Cartesian Tree">
 </div>
 
-Such a tree can be built in $O(N)$ time and the Farach-Colton and Benders algorithm can preprocess the tree in $O(N)$ and find the LCA in $O(1)$.
+Một cây như vậy có thể được xây dựng trong thời gian $O(N)$ và thuật toán Farach-Colton và Bender có thể tiền xử lý cây trong $O(N)$ và tìm LCA trong $O(1)$.
 
-## Construction of a Cartesian tree
+## Xây dựng cây Cartesian (Construction of a Cartesian tree) {: #construction-of-a-cartesian-tree}
 
-We will build the Cartesian tree by adding the elements one after another.
-In each step we maintain a valid Cartesian tree of all the processed elements.
-It is easy to see, that adding an element `s[i]` can only change the nodes in the most right path - starting at the root and repeatedly taking the right child - of the tree.
-The subtree of the node with the smallest, but greater or equal than `s[i]`, value becomes the left subtree of `s[i]`, and the tree with root `s[i]` will become the new right subtree of the node with the biggest, but smaller than `s[i]` value.
+Chúng ta sẽ xây dựng cây Cartesian bằng cách thêm các phần tử lần lượt từng cái một.
+Trong mỗi bước, chúng ta duy trì một cây Cartesian hợp lệ của tất cả các phần tử đã xử lý.
+Dễ dàng thấy rằng, việc thêm một phần tử `s[i]` chỉ có thể thay đổi các nút trong đường đi ngoài cùng bên phải - bắt đầu từ gốc và lặp đi lặp lại việc lấy con bên phải - của cây.
+Cây con của nút có giá trị nhỏ nhất, nhưng lớn hơn hoặc bằng `s[i]`, trở thành cây con bên trái của `s[i]`, và cây có gốc `s[i]` sẽ trở thành cây con bên phải mới của nút có giá trị lớn nhất, nhưng nhỏ hơn `s[i]`.
 
-This can be implemented by using a stack to store the indices of the most right nodes.
+Điều này có thể được cài đặt bằng cách sử dụng một ngăn xếp để lưu trữ các chỉ số của các nút ngoài cùng bên phải.
 
 ```cpp
 vector<int> parent(n, -1);

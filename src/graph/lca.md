@@ -4,32 +4,32 @@ tags:
   - Translated
 e_maxx_link: lca
 ---
-# Lowest Common Ancestor - $O(\sqrt{N})$ and $O(\log N)$ with $O(N)$ preprocessing
+# Tổ tiên chung thấp nhất - $O(\sqrt{N})$ và $O(\log N)$ với tiền xử lý $O(N)$ (Lowest Common Ancestor - $O(\sqrt{N})$ and $O(\log N)$ with $O(N)$ preprocessing) {: #lowest-common-ancestor-o-sqrt-n-and-o-log-n-with-o-n-preprocessing}
 
-Given a tree $G$. Given queries of the form $(v_1, v_2)$, for each query you need to find the lowest common ancestor (or least common ancestor), i.e. a vertex $v$ that lies on the path from the root to $v_1$ and the path from the root to $v_2$, and the vertex should be the lowest. In other words, the desired vertex $v$ is the most bottom ancestor of $v_1$ and $v_2$. It is obvious that their lowest common ancestor lies on a shortest path from $v_1$ and $v_2$. Also, if $v_1$ is the ancestor of $v_2$, $v_1$ is their lowest common ancestor.
+Cho một cây $G$. Cho các truy vấn có dạng $(v_1, v_2)$, đối với mỗi truy vấn bạn cần tìm tổ tiên chung thấp nhất (hoặc tổ tiên chung nhỏ nhất), tức là một đỉnh $v$ nằm trên đường đi từ gốc đến $v_1$ và đường đi từ gốc đến $v_2$, và đỉnh này phải là thấp nhất. Nói cách khác, đỉnh $v$ mong muốn là tổ tiên gần nhất (most bottom ancestor) của $v_1$ và $v_2$. Rõ ràng là tổ tiên chung thấp nhất của chúng nằm trên đường đi ngắn nhất từ $v_1$ và $v_2$. Ngoài ra, nếu $v_1$ là tổ tiên của $v_2$, thì $v_1$ là tổ tiên chung thấp nhất của chúng.
 
-### The Idea of the Algorithm
+### Ý tưởng của thuật toán (The Idea of the Algorithm)
 
-Before answering the queries, we need to **preprocess** the tree.
-We make a [DFS](depth-first-search.md) traversal starting at the root and we build a list $\text{euler}$ which stores the order of the vertices that we visit (a vertex is added to the list when we first visit it, and after the return of the DFS traversals to its children).
-This is also called an Euler tour of the tree.
-It is clear that the size of this list will be $O(N)$.
-We also need to build an array $\text{first}[0..N-1]$ which stores for each vertex $i$ its first occurrence in $\text{euler}$.
-That is, the first position in $\text{euler}$ such that $\text{euler}[\text{first}[i]] = i$.
-Also by using the DFS we can find the height of each node (distance from root to it) and store it in the array $\text{height}[0..N-1]$.
+Trước khi trả lời các truy vấn, chúng ta cần **tiền xử lý** cây.
+Chúng ta thực hiện duyệt [DFS](depth-first-search.md) bắt đầu từ gốc và xây dựng một danh sách $\text{euler}$ lưu trữ thứ tự các đỉnh mà chúng ta thăm (một đỉnh được thêm vào danh sách khi chúng ta lần đầu tiên thăm nó, và sau khi quay lại từ các lần duyệt DFS đến con của nó).
+Đây cũng được gọi là một Euler tour của cây.
+Rõ ràng kích thước của danh sách này sẽ là $O(N)$.
+Chúng ta cũng cần xây dựng một mảng $\text{first}[0..N-1]$ lưu trữ lần xuất hiện đầu tiên của mỗi đỉnh $i$ trong $\text{euler}$.
+Nghĩa là, vị trí đầu tiên trong $\text{euler}$ sao cho $\text{euler}[\text{first}[i]] = i$.
+Ngoài ra bằng cách sử dụng DFS chúng ta có thể tìm độ cao của mỗi nút (khoảng cách từ gốc đến nó) và lưu trữ nó trong mảng $\text{height}[0..N-1]$.
 
-So how can we answer queries using the Euler tour and the additional two arrays?
-Suppose the query is a pair of $v_1$ and $v_2$.
-Consider the vertices that we visit in the Euler tour between the first visit of $v_1$ and the first visit of $v_2$.
-It is easy to see, that the $\text{LCA}(v_1, v_2)$ is the vertex with the lowest height on this path.
-We already noticed, that the LCA has to be part of the shortest path between $v_1$ and $v_2$.
-Clearly it also has to be the vertex with the smallest height.
-And in the Euler tour we essentially use the shortest path, except that we additionally visit all subtrees that we find on the path.
-But all vertices in these subtrees are lower in the tree than the LCA and therefore have a larger height.
-So the $\text{LCA}(v_1, v_2)$ can be uniquely determined by finding the vertex with the smallest height in the Euler tour between $\text{first}(v_1)$ and $\text{first}(v_2)$.
+Vậy làm thế nào chúng ta có thể trả lời các truy vấn bằng cách sử dụng Euler tour và hai mảng bổ sung?
+Giả sử truy vấn là một cặp $v_1$ và $v_2$.
+Xem xét các đỉnh mà chúng ta thăm trong Euler tour giữa lần thăm đầu tiên của $v_1$ và lần thăm đầu tiên của $v_2$.
+Dễ dàng nhận thấy rằng, $\text{LCA}(v_1, v_2)$ là đỉnh có độ cao thấp nhất trên đường đi này.
+Chúng ta đã nhận thấy rằng, LCA phải là một phần của đường đi ngắn nhất giữa $v_1$ và $v_2$.
+Rõ ràng nó cũng phải là đỉnh có độ cao nhỏ nhất.
+Và trong Euler tour chúng ta về cơ bản sử dụng đường đi ngắn nhất, ngoại trừ việc chúng ta thăm thêm tất cả các cây con mà chúng ta tìm thấy trên đường đi.
+Nhưng tất cả các đỉnh trong các cây con này đều thấp hơn trong cây so với LCA và do đó có độ cao lớn hơn.
+Vì vậy $\text{LCA}(v_1, v_2)$ có thể được xác định duy nhất bằng cách tìm đỉnh có độ cao nhỏ nhất trong Euler tour giữa $\text{first}(v_1)$ và $\text{first}(v_2)$.
 
-Let's illustrate this idea.
-Consider the following graph and the Euler tour with the corresponding heights:
+Hãy minh họa ý tưởng này.
+Xem xét đồ thị sau và Euler tour với các độ cao tương ứng:
 <div style="text-align: center;">
   <img src="LCA_Euler.png" alt="LCA_Euler_Tour">
 </div>
@@ -40,22 +40,22 @@ $$\begin{array}{|l|c|c|c|c|c|c|c|c|c|c|c|c|c|}
 \text{Heights:} & 1 & 2 & 3 & 2 & 3 & 2 & 1 & 2 & 1 & 2 & 3 & 2 & 1 \\ \hline
 \end{array}$$
 
-The tour starting at vertex $6$ and ending at $4$ we visit the vertices $[6, 2, 1, 3, 1, 4]$.
-Among those vertices the vertex $1$ has the lowest height, therefore $\text{LCA(6, 4) = 1}$.
+Tour bắt đầu tại đỉnh $6$ và kết thúc tại $4$ chúng ta thăm các đỉnh $[6, 2, 1, 3, 1, 4]$.
+Trong số các đỉnh đó, đỉnh $1$ có độ cao thấp nhất, do đó $\text{LCA(6, 4) = 1}$.
 
-To recap:
-to answer a query we just need **to find the vertex with smallest height** in the array $\text{euler}$ in the range from $\text{first}[v_1]$ to $\text{first}[v_2]$.
-Thus, **the LCA problem is reduced to the RMQ problem** (finding the minimum in an range problem).
+Tóm tắt lại:
+để trả lời một truy vấn chúng ta chỉ cần **tìm đỉnh có độ cao nhỏ nhất** trong mảng $\text{euler}$ trong phạm vi từ $\text{first}[v_1]$ đến $\text{first}[v_2]$.
+Do đó, **bài toán LCA được quy về bài toán RMQ** (tìm giá trị nhỏ nhất trong một phạm vi).
 
-Using [Sqrt-Decomposition](../data_structures/sqrt_decomposition.md), it is possible to obtain a solution answering each query in $O(\sqrt{N})$ with preprocessing in $O(N)$ time.
+Sử dụng [Phân rã căn bậc hai (Sqrt-Decomposition)](../data_structures/sqrt_decomposition.md), có thể thu được một giải pháp trả lời mỗi truy vấn trong $O(\sqrt{N})$ với tiền xử lý trong thời gian $O(N)$.
 
-Using a [Segment Tree](../data_structures/segment_tree.md) you can answer each query in $O(\log N)$ with preprocessing in $O(N)$ time.
+Sử dụng [Segment Tree](../data_structures/segment_tree.md) bạn có thể trả lời mỗi truy vấn trong $O(\log N)$ với tiền xử lý trong thời gian $O(N)$.
 
-Since there will almost never be any update to the stored values, a [Sparse Table](../data_structures/sparse-table.md) might be a better choice, allowing $O(1)$ query answering with $O(N\log N)$ build time.
+Vì hầu như sẽ không bao giờ có bất kỳ cập nhật nào cho các giá trị được lưu trữ, [Bảng thưa (Sparse Table)](../data_structures/sparse-table.md) có thể là một lựa chọn tốt hơn, cho phép trả lời truy vấn $O(1)$ với thời gian xây dựng $O(N\log N)$.
 
-### Implementation
+### Cài đặt (Implementation) {: #implementation}
 
-In the following implementation of the LCA algorithm a Segment Tree is used.
+Trong cài đặt LCA sau đây, Segment Tree được sử dụng.
 
 ```{.cpp file=lca}
 struct LCA {
@@ -124,7 +124,8 @@ struct LCA {
 
 ```
 
-## Practice Problems
+## Bài tập (Practice Problems) {: #practice-problems}
+
  - [SPOJ: LCA](http://www.spoj.com/problems/LCA/)
  - [SPOJ: DISQUERY](http://www.spoj.com/problems/DISQUERY/)
  - [TIMUS: 1471. Distance in the Tree](http://acm.timus.ru/problem.aspx?space=1&num=1471)

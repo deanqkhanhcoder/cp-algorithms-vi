@@ -4,61 +4,61 @@ tags:
 e_maxx_link: topological_sort
 ---
 
-# Topological Sorting
+# Sắp xếp Topo (Topological Sorting) {: #topological-sorting}
 
-You are given a directed graph with $n$ vertices and $m$ edges.
-You have to find an **order of the vertices**, so that every edge leads from the vertex with a smaller index to a vertex with a larger one.
+Bạn được cho một đồ thị có hướng với $n$ đỉnh và $m$ cạnh.
+Bạn phải tìm một **thứ tự của các đỉnh**, sao cho mọi cạnh đều dẫn từ đỉnh có chỉ số nhỏ hơn đến đỉnh có chỉ số lớn hơn.
 
-In other words, you want to find a permutation of the vertices (**topological order**) which corresponds to the order defined by all edges of the graph.
+Nói cách khác, bạn muốn tìm một hoán vị của các đỉnh (**thứ tự topo**) tương ứng với thứ tự được xác định bởi tất cả các cạnh của đồ thị.
 
-Here is one given graph together with its topological order:
+Dưới đây là một đồ thị đã cho cùng với thứ tự topo của nó:
 
 <div style="text-align: center;">
   <img src="topological_1.png" alt="example directed graph">
   <img src="topological_2.png" alt="one topological order">
 </div>
 
-Topological order can be **non-unique** (for example, if there exist three vertices $a$, $b$, $c$ for which there exist paths from $a$ to $b$ and from $a$ to $c$ but not paths from $b$ to $c$ or from $c$ to $b$).
-The example graph also has multiple topological orders, a second topological order is the following:
+Thứ tự topo có thể là **không duy nhất** (ví dụ, nếu tồn tại ba đỉnh $a$, $b$, $c$ mà có các đường đi từ $a$ đến $b$ và từ $a$ đến $c$ nhưng không có đường đi từ $b$ đến $c$ hoặc từ $c$ đến $b$).
+Đồ thị ví dụ cũng có nhiều thứ tự topo, thứ tự topo thứ hai như sau:
 <div style="text-align: center;">
   <img src="topological_3.png" alt="second topological order">
 </div>
 
-A Topological order may **not exist** at all.
-It only exists, if the directed graph contains no cycles.
-Otherwise, there is a contradiction: if there is a cycle containing the vertices $a$ and $b$, then $a$ needs to have a smaller index than $b$ (since you can reach $b$ from $a$) and also a bigger one (as you can reach $a$ from $b$).
-The algorithm described in this article also shows by construction, that every acyclic directed graph contains at least one topological order.
+Thứ tự topo có thể **không tồn tại** chút nào.
+Nó chỉ tồn tại nếu đồ thị có hướng không chứa chu trình.
+Ngược lại, có một mâu thuẫn: nếu có một chu trình chứa các đỉnh $a$ và $b$, thì $a$ cần có chỉ số nhỏ hơn $b$ (vì bạn có thể tiếp cận $b$ từ $a$) và cũng lớn hơn (vì bạn có thể tiếp cận $a$ từ $b$).
+Thuật toán được mô tả trong bài viết này cũng cho thấy bằng cách xây dựng, rằng mọi đồ thị có hướng không có chu trình (DAG) đều chứa ít nhất một thứ tự topo.
 
-A common problem in which topological sorting occurs is the following. There are $n$ variables with unknown values. For some variables, we know that one of them is less than the other. You have to check whether these constraints are contradictory, and if not, output the variables in ascending order (if several answers are possible, output any of them). It is easy to notice that this is exactly the problem of finding the topological order of a graph with $n$ vertices.
+Một bài toán phổ biến trong đó sắp xếp topo xảy ra là như sau. Có $n$ biến với các giá trị chưa biết. Đối với một số biến, chúng ta biết rằng biến này nhỏ hơn biến kia. Bạn phải kiểm tra xem các ràng buộc này có mâu thuẫn hay không, và nếu không, hãy xuất ra các biến theo thứ tự tăng dần (nếu có thể có nhiều câu trả lời, hãy xuất ra bất kỳ câu trả lời nào). Dễ dàng nhận thấy rằng đây chính xác là bài toán tìm thứ tự topo của một đồ thị với $n$ đỉnh.
 
-## The Algorithm
+## Thuật toán (The Algorithm) {: #the-algorithm}
 
-To solve this problem, we will use [depth-first search](depth-first-search.md).
+Để giải quyết bài toán này, chúng ta sẽ sử dụng [tìm kiếm theo chiều sâu](depth-first-search.md).
 
-Let's assume that the graph is acyclic. What does the depth-first search do?
+Giả sử rằng đồ thị không có chu trình. Tìm kiếm theo chiều sâu làm gì?
 
-When starting from some vertex $v$, DFS tries to traverse along all edges outgoing from $v$.
-It stops at the edges for which the ends have been already been visited previously, and traverses along the rest of the edges and continues recursively at their ends.
+Khi bắt đầu từ một đỉnh $v$ nào đó, DFS cố gắng đi qua tất cả các cạnh đi ra từ $v$.
+Nó dừng lại ở các cạnh mà các đầu của chúng đã được thăm trước đó, và đi qua các cạnh còn lại và tiếp tục đệ quy tại các đầu của chúng.
 
-Thus, by the time of the function call $\text{dfs}(v)$ has finished, all vertices that are reachable from $v$ have been either directly (via one edge) or indirectly visited by the search.
+Do đó, vào thời điểm lệnh gọi hàm $\text{dfs}(v)$ kết thúc, tất cả các đỉnh có thể truy cập từ $v$ đã được thăm trực tiếp (thông qua một cạnh) hoặc gián tiếp bởi tìm kiếm.
 
-Let's append the vertex $v$ to a list, when we finish $\text{dfs}(v)$. Since all reachable vertices have already been visited, they will already be in the list when we append $v$.
-Let's do this for every vertex in the graph, with one or multiple depth-first search runs.
-For every directed edge $v \rightarrow u$ in the graph, $u$ will appear earlier in this list than $v$, because $u$ is reachable from $v$.
-So if we just label the vertices in this list with $n-1, n-2, \dots, 1, 0$, we have found a topological order of the graph.
-In other words, the list represents the reversed topological order.
+Hãy thêm đỉnh $v$ vào một danh sách, khi chúng ta kết thúc $\text{dfs}(v)$. Vì tất cả các đỉnh có thể truy cập đã được thăm, chúng sẽ nằm trong danh sách khi chúng ta thêm $v$.
+Hãy làm điều này cho mọi đỉnh trong đồ thị, với một hoặc nhiều lần chạy tìm kiếm theo chiều sâu.
+Đối với mỗi cạnh có hướng $v \rightarrow u$ trong đồ thị, $u$ sẽ xuất hiện sớm hơn trong danh sách này so với $v$, bởi vì $u$ có thể truy cập được từ $v$.
+Vì vậy, nếu chúng ta chỉ đánh dấu các đỉnh trong danh sách này với $n-1, n-2, \dots, 1, 0$, chúng ta đã tìm thấy một thứ tự topo của đồ thị.
+Nói cách khác, danh sách đại diện cho thứ tự topo bị đảo ngược.
 
-These explanations can also be presented in terms of exit times of the DFS algorithm.
-The exit time for vertex $v$ is the time at which the function call $\text{dfs}(v)$ finished (the times can be numbered from $0$ to $n-1$).
-It is easy to understand that exit time of any vertex $v$ is always greater than the exit time of any vertex reachable from it (since they were visited either before the call $\text{dfs}(v)$ or during it). Thus, the desired topological ordering are the vertices in descending order of their exit times.
+Những giải thích này cũng có thể được trình bày dưới dạng thời gian thoát (exit times) của thuật toán DFS.
+Thời gian thoát cho đỉnh $v$ là thời gian mà lệnh gọi hàm $\text{dfs}(v)$ kết thúc (thời gian có thể được đánh số từ $0$ đến $n-1$).
+Dễ hiểu là thời gian thoát của bất kỳ đỉnh $v$ nào luôn lớn hơn thời gian thoát của bất kỳ đỉnh nào có thể truy cập từ nó (vì chúng đã được thăm trước khi gọi $\text{dfs}(v)$ hoặc trong quá trình đó). Do đó, thứ tự topo mong muốn là các đỉnh theo thứ tự giảm dần của thời gian thoát của chúng.
 
-## Implementation
+## Cài đặt (Implementation) {: #implementation}
 
-Here is an implementation which assumes that the graph is acyclic, i.e. the desired topological ordering exists. If necessary, you can easily check that the graph is acyclic, as described in the article on [depth-first search](depth-first-search.md).
+Dưới đây là một cài đặt giả định rằng đồ thị không có chu trình, tức là thứ tự topo mong muốn tồn tại. Nếu cần thiết, bạn có thể dễ dàng kiểm tra xem đồ thị có không có chu trình hay không, như được mô tả trong bài viết về [tìm kiếm theo chiều sâu](depth-first-search.md).
 
 ```cpp
-int n; // number of vertices
-vector<vector<int>> adj; // adjacency list of graph
+int n; // số lượng đỉnh
+vector<vector<int>> adj; // danh sách kề của đồ thị
 vector<bool> visited;
 vector<int> ans;
 
@@ -84,9 +84,9 @@ void topological_sort() {
 }
 ```
 
-The main function of the solution is `topological_sort`, which initializes DFS variables, launches DFS and receives the answer in the vector `ans`. It is worth noting that when the graph is not acyclic, `topological_sort` result would still be somewhat meaningful in a sense that if a vertex $u$ is reachable from vertex $v$, but not vice versa, the vertex $v$ will always come first in the resulting array. This property of the provided implementation is used in [Kosaraju's algorithm](./strongly-connected-components.md) to extract strongly connected components and their topological sorting in a directed graph with cycles.
+Hàm chính của giải pháp là `topological_sort`, khởi tạo các biến DFS, khởi chạy DFS và nhận câu trả lời trong vector `ans`. Cần lưu ý rằng khi đồ thị không phải là không có chu trình (tức là có chu trình), kết quả `topological_sort` vẫn sẽ có ý nghĩa ở một khía cạnh nào đó là nếu một đỉnh $u$ có thể truy cập từ đỉnh $v$, nhưng không ngược lại (not vice versa), thì đỉnh $v$ sẽ luôn đi trước trong mảng kết quả. Thuộc tính này của cài đặt được cung cấp được sử dụng trong [thuật toán Kosaraju](./strongly-connected-components.md) để trích xuất các thành phần liên thông mạnh và sắp xếp topo của chúng trong một đồ thị có hướng có chu trình.
 
-## Practice Problems
+## Bài tập (Practice Problems) {: #practice-problems}
 
 - [SPOJ TOPOSORT - Topological Sorting [difficulty: easy]](http://www.spoj.com/problems/TOPOSORT/)
 - [UVA 10305 - Ordering Tasks [difficulty: easy]](https://onlinejudge.org/index.php?option=com_onlinejudge&Itemid=8&page=show_problem&problem=1246)

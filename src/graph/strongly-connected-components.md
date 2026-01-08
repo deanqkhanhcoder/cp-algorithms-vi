@@ -4,87 +4,89 @@ tags:
 e_maxx_link: strong_connected_components
 ---
 
-# Strongly connected components and the condensation graph
+# Thành phần liên thông mạnh và đồ thị nén (Strongly connected components and the condensation graph) {: #strongly-connected-components-and-the-condensation-graph}
 
-## Definitions
-Let $G=(V,E)$ be a directed graph with vertices $V$ and edges $E \subseteq V \times V$. We denote with $n=|V|$ the number of vertices and with $m=|E|$ the number of edges in $G$. It is easy to extend all definitions in this article to multigraphs, but we will not focus on that.
+## Định nghĩa (Definitions) {: #definitions}
 
-A subset of vertices $C \subseteq V$ is called a **strongly connected component** if the following conditions hold:
+Cho $G=(V,E)$ là một đồ thị có hướng với các đỉnh $V$ và các cạnh $E \subseteq V \times V$. Chúng ta ký hiệu $n=|V|$ là số lượng đỉnh và $m=|E|$ là số lượng cạnh trong $G$. Rất dễ dàng để mở rộng tất cả các định nghĩa trong bài viết này cho đa đồ thị, nhưng chúng ta sẽ không tập trung vào điều đó.
 
-- for all $u,v\in C$, if $u \neq v$ there exists a path from $u$ to $v$ and a path from $v$ to $u$, and
-- $C$ is maximal, in the sense that no vertex can be added without violating the above condition.
+Một tập hợp con các đỉnh $C \subseteq V$ được gọi là một **thành phần liên thông mạnh** nếu các điều kiện sau được thỏa mãn:
 
-We denote with $\text{SCC}(G)$ the set of strongly connected components of $G$. These strongly connected components do not intersect with each other, and cover all vertices in the graph. Thus, the set $\text{SCC}(G)$ is a partition of $V$. 
+- với mọi $u,v\in C$, nếu $u \neq v$ tồn tại một đường đi từ $u$ đến $v$ và một đường đi từ $v$ đến $u$, và
+- $C$ là cực đại, theo nghĩa là không có đỉnh nào có thể được thêm vào mà không vi phạm điều kiện trên.
 
-Consider this graph $G_\text{example}$, in which the strongly connected components are highlighted:
+Chúng ta ký hiệu $\text{SCC}(G)$ là tập hợp các thành phần liên thông mạnh của $G$. Các thành phần liên thông mạnh này không giao nhau, và bao phủ tất cả các đỉnh trong đồ thị. Do đó, tập hợp $\text{SCC}(G)$ là một phân hoạch của $V$.
+
+Xem xét đồ thị $G_\text{example}$ này, trong đó các thành phần liên thông mạnh được làm nổi bật:
 
 <center><img src="strongly-connected-components-tikzpicture/graph.svg" alt="drawing" style="width:700px;"/></center>
 
-Here we have $\text{SCC}(G_\text{example})=\{\{0,7\},\{1,2,3,5,6\},\{4,9\},\{8\}\}.$ We can confirm that within each strongly connected component, all vertices are reachable from each other.
+Ở đây chúng ta có $\text{SCC}(G_\text{example})=\{\{0,7\},\{1,2,3,5,6\},\{4,9\},\{8\}\}.$ Chúng ta có thể xác nhận rằng trong mỗi thành phần liên thông mạnh, tất cả các đỉnh đều có thể truy cập được từ nhau.
 
-We define the **condensation graph** $G^{\text{SCC}}=(V^{\text{SCC}}, E^{\text{SCC}})$ as follows:
+Chúng ta định nghĩa **đồ thị nén** (condensation graph) $G^{\text{SCC}}=(V^{\text{SCC}}, E^{\text{SCC}})$ như sau:
 
-- the vertices of $G^{\text{SCC}}$ are the strongly connected components of $G$; i.e., $V^{\text{SCC}} = \text{SCC}(G)$, and
-- for all vertices $C_i,C_j$ of the condensation graph, there is an edge from $C_i$ to $C_j$ if and only if $C_i \neq C_j$ and there exist $a\in C_i$ and $b\in C_j$ such that there is an edge from $a$ to $b$ in $G$.
+- các đỉnh của $G^{\text{SCC}}$ là các thành phần liên thông mạnh của $G$; tức là, $V^{\text{SCC}} = \text{SCC}(G)$, và
+- đối với tất cả các đỉnh $C_i,C_j$ của đồ thị nén, có một cạnh từ $C_i$ đến $C_j$ khi và chỉ khi $C_i \neq C_j$ và tồn tại $a\in C_i$ và $b\in C_j$ sao cho có một cạnh từ $a$ đến $b$ trong $G$.
 
-The condensation graph of $G_\text{example}$ looks as follows:
+Đồ thị nén của $G_\text{example}$ trông như sau:
 
 <center><img src="strongly-connected-components-tikzpicture/cond_graph.svg" alt="drawing" style="width:600px;"/></center>
 
 
-The most important property of the condensation graph is that it is **acyclic**. Indeed, there are no 'self-loops' in the condensation graph by definition, and if there were a cycle going through two or more vertices (strongly connected components) in the condensation graph, then due to reachability, the union of these strongly connected components would have to be one strongly connected component itself: contradiction.
+Thuộc tính quan trọng nhất của đồ thị nén là nó **không có chu trình** (acyclic). Thật vậy, không có 'vòng tự thân' (self-loops) nào trong đồ thị nén theo định nghĩa, và nếu có một chu trình đi qua hai hoặc nhiều đỉnh (thành phần liên thông mạnh) trong đồ thị nén, thì do tính khả truy, hợp của các thành phần liên thông mạnh này sẽ là một thành phần liên thông mạnh: mâu thuẫn.
 
-The algorithm described in the next section finds all strongly connected components in a given graph. After that, the condensation graph can be constructed.
+Thuật toán được mô tả trong phần tiếp theo tìm tất cả các thành phần liên thông mạnh trong một đồ thị đã cho. Sau đó, đồ thị nén có thể được xây dựng.
 
-## Kosaraju's algorithm
+## Thuật toán của Kosaraju (Kosaraju's algorithm) {: #kosarajus-algorithm}
 
-### Description of the algorithm
-The described algorithm was independently suggested by Kosaraju and Sharir around 1980. It is based on two series of [depth first search](depth-first-search.md), with a runtime of $O(n + m)$.
+### Mô tả thuật toán (Description of the algorithm)
 
-In the first step of the algorithm, we perform a sequence of depth first searches (`dfs`), visiting the entire graph. That is, as long as there are still unvisited vertices, we take one of them, and initiate a depth first search from that vertex. For each vertex, we keep track of the *exit time* $t_\text{out}[v]$. This is the 'timestamp' at which the execution of `dfs` on vertex $v$ finishes, i.e., the moment at which all vertices reachable from $v$ have been visited and the algorithm is back at $v$. The timestamp counter should *not* be reset between consecutive calls to `dfs`. The exit times play a key role in the algorithm, which will become clear when we discuss the following theorem.
+Thuật toán được mô tả đã được đề xuất độc lập bởi Kosaraju và Sharir vào khoảng năm 1980. Nó dựa trên hai loạt [tìm kiếm theo chiều sâu](depth-first-search.md), với thời gian chạy là $O(n + m)$.
 
-First, we define the exit time $t_\text{out}[C]$ of a strongly connected component $C$ as the maximum of the values $t_\text{out}[v]$ for all $v \in C.$ Furthermore, in the proof of the theorem, we will mention the *entry time* $t_{\text{in}}[v]$ for each vertex $v\in G$. The number $t_{\text{in}}[v]$ represents the 'timestamp' at which the recursive function `dfs` is called on vertex $v$ in the first step of the algorithm. For a strongly connected component $C$, we define $t_{\text{in}}[C]$ to be the minimum of the values $t_{\text{in}}[v]$ for all $v \in C$.
+Trong bước đầu tiên của thuật toán, chúng ta thực hiện một chuỗi các tìm kiếm theo chiều sâu (`dfs`), thăm toàn bộ đồ thị. Tức là, miễn là vẫn còn các đỉnh chưa được thăm, chúng ta lấy một trong số chúng, và bắt đầu một tìm kiếm theo chiều sâu từ đỉnh đó. Đối với mỗi đỉnh, chúng ta theo dõi *thời gian thoát* (exit time) $t_\text{out}[v]$. Đây là 'dấu thời gian' mà tại đó việc thực thi `dfs` trên đỉnh $v$ kết thúc, tức là thời điểm mà tất cả các đỉnh có thể truy cập từ $v$ đã được thăm và thuật toán quay lại $v$. Bộ đếm dấu thời gian *không* nên được đặt lại giữa các lần gọi liên tiếp đến `dfs`. Thời gian thoát đóng một vai trò quan trọng trong thuật toán, điều này sẽ trở nên rõ ràng khi chúng ta thảo luận về định lý sau.
 
-!!! info "Theorem"
+Đầu tiên, chúng ta định nghĩa thời gian thoát $t_\text{out}[C]$ của một thành phần liên thông mạnh $C$ là giá trị lớn nhất của các giá trị $t_\text{out}[v]$ cho tất cả $v \in C.$ Hơn nữa, trong chứng minh của định lý, chúng ta sẽ đề cập đến *thời gian vào* (entry time) $t_{\text{in}}[v]$ cho mỗi đỉnh $v\in G$. Số $t_{\text{in}}[v]$ đại diện cho 'dấu thời gian' mà tại đó hàm đệ quy `dfs` được gọi trên đỉnh $v$ trong bước đầu tiên của thuật toán. Đối với một thành phần liên thông mạnh $C$, chúng ta định nghĩa $t_{\text{in}}[C]$ là giá trị nhỏ nhất của các giá trị $t_{\text{in}}[v]$ cho tất cả $v \in C$.
 
-    Let $C$ and $C'$ be two different strongly connected components, and let there be an edge from $C$ to $C'$ in the condensation graph. Then, $t_\text{out}[C] > t_\text{out}[C']$.
+!!! info "Định lý"
 
-??? note "Proof"
+    Gọi $C$ và $C'$ là hai thành phần liên thông mạnh khác nhau, và giả sử có một cạnh từ $C$ đến $C'$ trong đồ thị nén. Khi đó, $t_\text{out}[C] > t_\text{out}[C']$.
 
-    There are two different cases, depending on which component will first be reached by depth first search:
+??? note "Chứng minh"
 
-    - Case 1: the component $C$ was reached first (i.e., $t_{\text{in}}[C] < t_{\text{in}}[C']$). In this case, depth first search visits some vertex $v \in C$ at some moment at which all other vertices of the components $C$ and $C'$ are not visited yet. Since there is an edge from $C$ to $C'$ in the condensation graph, not only are all other vertices in $C$ reachable from $v$ in $G$, but all vertices in $C'$ are reachable as well. This means that this `dfs` execution, which is running from vertex $v$, will also visit all other vertices of the components $C$ and $C'$ in the future, so these vertices will be descendants of $v$ in the depth first search tree. This implies that for each vertex $u \in (C \cup C')\setminus \{v\},$ we have that $t_\text{out}[v] > t_\text{out}[u]$. Therefore, $t_\text{out}[C] > t_\text{out}[C']$, which completes this case of the proof.
+    Có hai trường hợp khác nhau, tùy thuộc vào thành phần nào sẽ được tiếp cận trước bởi tìm kiếm theo chiều sâu:
 
-    - Case 2: the component $C'$ was reached first (i.e., $t_{\text{in}}[C] > t_{\text{in}}[C']$). In this case, depth first search visits some vertex $v \in C'$ at some moment at which all other vertices of the components $C$ and $C'$ are not visited yet. Since there is an edge from $C$ to $C'$ in the condensation graph, $C$ is not reachable from $C'$, by the acyclicity property. Hence, the `dfs` execution that is running from vertex $v$ will not reach any vertices of $C$, but it will visit all vertices of $C'$. The vertices of $C$ will be visited by some `dfs` execution later during this step of the algorithm, so indeed we have $t_\text{out}[C] > t_\text{out}[C']$. This completes the proof.
+    - Trường hợp 1: thành phần $C$ được tiếp cận trước (tức là, $t_{\text{in}}[C] < t_{\text{in}}[C']$). Trong trường hợp này, tìm kiếm theo chiều sâu thăm một đỉnh $v \in C$ tại một thời điểm nào đó mà tất cả các đỉnh khác của các thành phần $C$ và $C'$ chưa được thăm. Vì có một cạnh từ $C$ đến $C'$ trong đồ thị nén, không chỉ tất cả các đỉnh khác trong $C$ đều có thể truy cập được từ $v$ trong $G$, mà tất cả các đỉnh trong $C'$ cũng có thể truy cập được. Điều này có nghĩa là việc thực thi `dfs` này, đang chạy từ đỉnh $v$, cũng sẽ thăm tất cả các đỉnh khác của các thành phần $C$ và $C'$ trong tương lai, vì vậy các đỉnh này sẽ là hậu duệ của $v$ trong cây tìm kiếm theo chiều sâu. Điều này ngụ ý rằng đối với mỗi đỉnh $u \in (C \cup C')\setminus \{v\},$ chúng ta có $t_\text{out}[v] > t_\text{out}[u]$. Do đó, $t_\text{out}[C] > t_\text{out}[C']$, hoàn thành trường hợp này của chứng minh.
 
-The proved theorem is very important for finding strongly connected components. It means that any edge in the condensation graph goes from a component with a larger value of $t_\text{out}$ to a component with a smaller value.
+    - Trường hợp 2: thành phần $C'$ được tiếp cận trước (tức là, $t_{\text{in}}[C] > t_{\text{in}}[C']$). Trong trường hợp này, tìm kiếm theo chiều sâu thăm một đỉnh $v \in C'$ tại một thời điểm nào đó mà tất cả các đỉnh khác của các thành phần $C$ và $C'$ chưa được thăm. Vì có một cạnh từ $C$ đến $C'$ trong đồ thị nén, $C$ không thể tiếp cận được từ $C'$, theo tính chất không có chu trình. Do đó, việc thực thi `dfs` đang chạy từ đỉnh $v$ sẽ không tiếp cận bất kỳ đỉnh nào của $C$, nhưng nó sẽ thăm tất cả các đỉnh của $C'$. Các đỉnh của $C$ sẽ được thăm bởi một số lần thực thi `dfs` sau này trong bước này của thuật toán, vì vậy chúng ta thực sự có $t_\text{out}[C] > t_\text{out}[C']$. Điều này hoàn thành chứng minh.
 
-If we sort all vertices $v \in V$ in decreasing order of their exit time $t_\text{out}[v]$, then the first vertex $u$ will belong to the "root" strongly connected component, which has no incoming edges in the condensation graph. Now we want to run some type of search from this vertex $u$ so that it will visit all vertices in its strongly connected component, but not other vertices. By repeatedly doing so, we can gradually find all strongly connected components: we remove all vertices belonging to the first found component, then we find the next remaining vertex with the largest value of $t_\text{out}$, and run this search from it, and so on. In the end, we will have found all strongly connected components. In order to find a search method that behaves like we want, we consider the following theorem:
+Định lý đã chứng minh là rất quan trọng để tìm các thành phần liên thông mạnh. Nó có nghĩa là bất kỳ cạnh nào trong đồ thị nén đều đi từ một thành phần có giá trị $t_\text{out}$ lớn hơn đến một thành phần có giá trị nhỏ hơn.
 
-!!! info "Theorem"
+Nếu chúng ta sắp xếp tất cả các đỉnh $v \in V$ theo thứ tự giảm dần của thời gian thoát $t_\text{out}[v]$, thì đỉnh đầu tiên $u$ sẽ thuộc về thành phần liên thông mạnh "gốc", không có cạnh đi vào trong đồ thị nén. Bây giờ chúng ta muốn chạy một loại tìm kiếm nào đó từ đỉnh $u$ này sao cho nó sẽ thăm tất cả các đỉnh trong thành phần liên thông mạnh của nó, nhưng không phải các đỉnh khác. Bằng cách lặp lại việc này, chúng ta có thể dần dần tìm thấy tất cả các thành phần liên thông mạnh: chúng ta loại bỏ tất cả các đỉnh thuộc về thành phần được tìm thấy đầu tiên, sau đó chúng ta tìm đỉnh còn lại tiếp theo với giá trị $t_\text{out}$ lớn nhất, và chạy tìm kiếm này từ nó, và cứ thế. Cuối cùng, chúng ta sẽ tìm thấy tất cả các thành phần liên thông mạnh. Để tìm một phương pháp tìm kiếm hoạt động như chúng ta muốn, chúng ta xem xét định lý sau:
 
-    Let $G^T$ denote the *transpose graph* of $G$, obtained by reversing the edge directions in $G$. Then, $\text{SCC}(G)=\text{SCC}(G^T)$. Furthermore, the condensation graph of $G^T$ is the transpose of the condensation graph of $G$.
+!!! info "Định lý"
 
-The proof is omitted (but straightforward). As a consequence of this theorem, there will be no edges from the "root" component to the other components in the condensation graph of $G^T$. Thus, in order to visit the whole "root" strongly connected component, containing vertex $v$, we can just run a depth first search from vertex $v$ in the transpose graph $G^T$! This will visit precisely all vertices of this strongly connected component. As was mentioned before, we can then remove these vertices from the graph. Then, we find the next vertex with a maximal value of $t_\text{out}[v]$, and run the search in the transpose graph starting from that vertex to find the next strongly connected component. Repeating this, we find all strongly connected components.
+    Gọi $G^T$ là *đồ thị chuyển vị* (transpose graph) của $G$, thu được bằng cách đảo ngược hướng cạnh trong $G$. Khi đó, $\text{SCC}(G)=\text{SCC}(G^T)$. Hơn nữa, đồ thị nén của $G^T$ là chuyển vị của đồ thị nén của $G$.
 
-Thus, in summary, we discussed the following algorithm to find strongly connected components:
+Chứng minh được bỏ qua (nhưng đơn giản). Như một hệ quả của định lý này, sẽ không có cạnh nào từ thành phần "gốc" đến các thành phần khác trong đồ thị nén của $G^T$. Do đó, để thăm toàn bộ thành phần liên thông mạnh "gốc", chứa đỉnh $v$, chúng ta chỉ cần chạy một tìm kiếm theo chiều sâu từ đỉnh $v$ trong đồ thị chuyển vị $G^T$! Điều này sẽ thăm chính xác tất cả các đỉnh của thành phần liên thông mạnh này. Như đã đề cập trước đó, sau đó chúng ta có thể loại bỏ các đỉnh này khỏi đồ thị. Sau đó, chúng ta tìm đỉnh tiếp theo với giá trị cực đại của $t_\text{out}[v]$, và chạy tìm kiếm trong đồ thị chuyển vị bắt đầu từ đỉnh đó để tìm thành phần liên thông mạnh tiếp theo. Lặp lại điều này, chúng ta tìm thấy tất cả các thành phần liên thông mạnh.
 
- - Step 1. Run a sequence of depth first searches on $G$, which will yield some list (e.g. `order`) of vertices, sorted on increasing exit time $t_\text{out}$.
+Do đó, tóm lại, chúng ta đã thảo luận về thuật toán sau để tìm các thành phần liên thông mạnh:
 
-- Step 2. Build the transpose graph $G^T$, and run a series of depth first searches on the vertices in reverse order (i.e., in decreasing order of exit times). Each depth first search will yield one strongly connected component.
+ - Bước 1. Chạy một chuỗi các tìm kiếm theo chiều sâu trên $G$, sẽ tạo ra một danh sách (ví dụ `order`) các đỉnh, được sắp xếp theo thời gian thoát $t_\text{out}$ tăng dần.
 
-- Step 3 (optional). Build the condensation graph.
+- Bước 2. Xây dựng đồ thị chuyển vị $G^T$, và chạy một loạt các tìm kiếm theo chiều sâu trên các đỉnh theo thứ tự ngược lại (tức là, theo thứ tự giảm dần của thời gian thoát). Mỗi tìm kiếm theo chiều sâu sẽ tạo ra một thành phần liên thông mạnh.
 
-The runtime complexity of the algorithm is $O(n + m)$, because depth first search is performed twice. Building the condensation graph is also $O(n+m).$
+- Bước 3 (tùy chọn). Xây dựng đồ thị nén.
 
-Finally, it is appropriate to mention [topological sort](topological-sort.md) here. In step 1, we find the vertices in the order of increasing exit time. If $G$ is acyclic, this corresponds to a (reversed) topological sort of $G$. In step 2, the algorithm finds strongly connected components in decreasing order of their exit times. Thus, it finds components - vertices of the condensation graph - in an order corresponding to a topological sort of the condensation graph.
+Độ phức tạp thời gian chạy của thuật toán là $O(n + m)$, bởi vì tìm kiếm theo chiều sâu được thực hiện hai lần. Xây dựng đồ thị nén cũng là $O(n+m).$
 
-### Implementation
+Cuối cùng, thật thích hợp để đề cập đến [sắp xếp topo](topological-sort.md) ở đây. Trong bước 1, chúng ta tìm các đỉnh theo thứ tự thời gian thoát tăng dần. Nếu $G$ không có chu trình, điều này tương ứng với một sắp xếp topo (ngược) của $G$. Trong bước 2, thuật toán tìm các thành phần liên thông mạnh theo thứ tự giảm dần của thời gian thoát. Do đó, nó tìm các thành phần - các đỉnh của đồ thị nén - theo thứ tự tương ứng với sắp xếp topo của đồ thị nén.
+
+### Cài đặt (Implementation) {: #implementation}
 ```{.cpp file=strongly_connected_components}
-vector<bool> visited; // keeps track of which vertices are already visited
-
-// runs depth first search starting at vertex v.
-// each visited vertex is appended to the output vector when dfs leaves it.
+vector<bool> visited; // theo dõi các đỉnh đã được thăm
+ 
+// chạy tìm kiếm theo chiều sâu bắt đầu tại đỉnh v.
+// mỗi đỉnh được thăm được thêm vào vector đầu ra khi dfs rời khỏi nó.
 void dfs(int v, vector<vector<int>> const& adj, vector<int> &output) {
     visited[v] = true;
     for (auto u : adj[v])
@@ -92,37 +94,37 @@ void dfs(int v, vector<vector<int>> const& adj, vector<int> &output) {
             dfs(u, adj, output);
     output.push_back(v);
 }
-
-// input: adj -- adjacency list of G
-// output: components -- the strongy connected components in G
-// output: adj_cond -- adjacency list of G^SCC (by root vertices)
+ 
+// đầu vào: adj -- danh sách kề của G
+// đầu ra: components -- các thành phần liên thông mạnh trong G
+// đầu ra: adj_cond -- danh sách kề của G^SCC (theo các đỉnh gốc)
 void strongly_connected_components(vector<vector<int>> const& adj,
                                   vector<vector<int>> &components,
                                   vector<vector<int>> &adj_cond) {
     int n = adj.size();
     components.clear(), adj_cond.clear();
-
-    vector<int> order; // will be a sorted list of G's vertices by exit time
-
+ 
+    vector<int> order; // sẽ là danh sách các đỉnh của G được sắp xếp theo thời gian thoát
+ 
     visited.assign(n, false);
-
-    // first series of depth first searches
+ 
+    // chuỗi tìm kiếm theo chiều sâu đầu tiên
     for (int i = 0; i < n; i++)
         if (!visited[i])
             dfs(i, adj, order);
-
-    // create adjacency list of G^T
+ 
+    // tạo danh sách kề của G^T
     vector<vector<int>> adj_rev(n);
     for (int v = 0; v < n; v++)
         for (int u : adj[v])
             adj_rev[u].push_back(v);
-
+ 
     visited.assign(n, false);
     reverse(order.begin(), order.end());
-
-    vector<int> roots(n, 0); // gives the root vertex of a vertex's SCC
-
-    // second series of depth first searches
+ 
+    vector<int> roots(n, 0); // cung cấp đỉnh gốc của SCC của một đỉnh
+ 
+    // chuỗi tìm kiếm theo chiều sâu thứ hai
     for (auto v : order)
         if (!visited[v]) {
             std::vector<int> component;
@@ -132,8 +134,8 @@ void strongly_connected_components(vector<vector<int>> const& adj,
             for (auto u : component)
                 roots[u] = root;
         }
-
-    // add edges to condensation graph
+ 
+    // thêm cạnh vào đồ thị nén
     adj_cond.assign(n, {});
     for (int v = 0; v < n; v++)
         for (auto u : adj[v])
@@ -142,213 +144,212 @@ void strongly_connected_components(vector<vector<int>> const& adj,
 }
 ```
 
-The function `dfs` implements depth first search. It takes as input an adjacency list and a starting vertex. It also takes a reference to the vector `output`: each visited vertex will be appended to `output` when `dfs` leaves that vertex.
+Hàm `dfs` thực hiện tìm kiếm theo chiều sâu. Nó nhận đầu vào là một danh sách kề và một đỉnh bắt đầu. Nó cũng nhận một tham chiếu đến vector `output`: mỗi đỉnh được thăm sẽ được thêm vào `output` khi `dfs` rời khỏi đỉnh đó.
 
-Note that we use the function `dfs` both in the first and second step of the algorithm. In the first step, we pass in the adjacency list of $G$, and during consecutive calls to `dfs`, we keep passing in the same 'output vector' `order`, so that eventually we obtain a list of vertices in increasing order of exit times. In the second step, we pass in the adjacency list of $G^T$, and in each call, we pass in an empty 'output vector' `component`, which will give us one strongly connected component at a time.
+Lưu ý rằng chúng ta sử dụng hàm `dfs` cả trong bước đầu tiên và bước thứ hai của thuật toán. Trong bước đầu tiên, chúng ta truyền vào danh sách kề của $G$, và trong các lần gọi liên tiếp đến `dfs`, chúng ta tiếp tục truyền vào cùng một 'vector đầu ra' `order`, để cuối cùng chúng ta có được một danh sách các đỉnh theo thứ tự thời gian thoát tăng dần. Trong bước thứ hai, chúng ta truyền vào danh sách kề của $G^T$, và trong mỗi lần gọi, chúng ta truyền vào một 'vector đầu ra' trống `component`, vector này sẽ cung cấp cho chúng ta một thành phần liên thông mạnh tại một thời điểm.
 
-## Tarjan's strongly connected components algorithm
+## Thuật toán thành phần liên thông mạnh của Tarjan (Tarjan's strongly connected components algorithm) {: #tarjans-strongly-connected-components-algorithm}
 
-### Description of the algorithm
+### Mô tả thuật toán (Description of the algorithm)
 
-The described algorithm was first suggested by Tarjan in 1972.
-It is based on performing a sequence of DFS calls, using information inherent to its structure to determine the strongly connected components (SCC), with a runtime of $O(n+m)$.
+Thuật toán được mô tả lần đầu tiên được đề xuất bởi Tarjan vào năm 1972.
+Nó dựa trên việc thực hiện một chuỗi các cuộc gọi DFS, sử dụng thông tin vốn có trong cấu trúc của nó để xác định các thành phần liên thông mạnh (SCC), với thời gian chạy là $O(n+m)$.
 
-When applying the DFS on a vertex, we will traverse its adjacency list, and in case we find a vertex that hasn't been visited, we recursively apply the DFS to it.
+Khi áp dụng DFS trên một đỉnh, chúng ta sẽ duyệt qua danh sách kề của nó, và trong trường hợp chúng ta tìm thấy một đỉnh chưa được thăm, chúng ta sẽ áp dụng đệ quy DFS cho nó.
 
-Let's consider the tree induced by the sequence of DFS calls, which we will call **DFS tree**.
-Once we first call a DFS on a vertex from an SCC, all the vertices of its SCC will be visited before this call ends, since they are all reachable from each other.
-In the DFS tree, this first vertex will be a common ancestor to all other vertices of the SCC; we define this vertex to be the **root of the SCC**.
+Hãy xem xét cây được tạo ra bởi chuỗi các cuộc gọi DFS, mà chúng ta sẽ gọi là **cây DFS**.
+Khi chúng ta lần đầu tiên gọi một DFS trên một đỉnh từ một SCC, tất cả các đỉnh của SCC đó sẽ được thăm trước khi cuộc gọi này kết thúc, vì tất cả chúng đều có thể truy cập được từ nhau.
+Trong cây DFS, đỉnh đầu tiên này sẽ là tổ tiên chung cho tất cả các đỉnh khác của SCC; chúng ta định nghĩa đỉnh này là **gốc của SCC**.
 
-!!! info "Theorem"
+!!! info "Định lý"
 
-    All vertices of an SCC induce a connected subgraph of the DFS tree.
+    Tất cả các đỉnh của một SCC tạo ra một đồ thị con liên thông của cây DFS.
 
-??? note "Proof"
+??? note "Chứng minh"
 
-    We have determined that all vertices of an SCC have a common ancestor, the first vertex to be visited by a DFS call.
-    Let's consider a vertex $v$ and its root, vertex $r$.
-    All the vertices in the path from $r$ to $v$ belong to the same SCC. All these vertices are reachable from $r$, and all of them reach $v$, and since by definition $v$ reaches $r$, all these vertices reach each other.
-    Since all paths from a root to every other vertex of the SCC belong to the same SCC, the subgraph formed is connected.
+    Chúng ta đã xác định rằng tất cả các đỉnh của một SCC có một tổ tiên chung, đỉnh đầu tiên được thăm bởi một cuộc gọi DFS.
+    Hãy xem xét một đỉnh $v$ và gốc của nó, đỉnh $r$.
+    Tất cả các đỉnh trong đường đi từ $r$ đến $v$ thuộc về cùng một SCC. Tất cả các đỉnh này đều có thể truy cập được từ $r$, và tất cả chúng đều tiếp cận được $v$, và vì theo định nghĩa $v$ tiếp cận $r$, tất cả các đỉnh này đều tiếp cận được nhau.
+    Vì tất cả các đường đi từ một gốc đến mọi đỉnh khác của SCC thuộc về cùng một SCC, đồ thị con được hình thành là liên thông.
 
-Note that the SCCs perfectly split the DFS tree in connected subgraphs.
+Lưu ý rằng các SCC chia tách cây DFS hoàn hảo thành các đồ thị con liên thông.
 
-The idea of the algorithm is then the following:
+Ý tưởng của thuật toán sau đó là như sau:
 
-- We perform a sequence of DFS calls, recursively applying them to vertices of the adjacency lists.
+- Chúng ta thực hiện một chuỗi các cuộc gọi DFS, áp dụng đệ quy chúng cho các đỉnh của danh sách kề.
 
-- Once we finish traversing the adjacency list of a vertex, we somehow are able to determine whether it is a root or not.
-This method will be explained later.
+- Khi chúng ta kết thúc việc duyệt danh sách kề của một đỉnh, chúng ta bằng cách nào đó có thể xác định xem nó có phải là gốc hay không.
+Phương pháp này sẽ được giải thích sau.
 
-- In case the vertex is a root, we will then immediately find and claim all the vertices of its SCC.
+- Trong trường hợp đỉnh là gốc, chúng ta sau đó sẽ ngay lập tức tìm và xác nhận tất cả các đỉnh của SCC của nó.
 
-When all calls finish, all roots will have been detected and all vertices will have been claimed as part of some SCC.
+Khi tất cả các cuộc gọi kết thúc, tất cả các gốc sẽ được phát hiện và tất cả các đỉnh sẽ được xác nhận là một phần của một số SCC.
 
-Let's now analyze the properties of the DFS when this claiming process is introduced.
+Bây giờ chúng ta hãy phân tích các tính chất của DFS khi quy trình xác nhận này được giới thiệu.
 
-!!! info "Theorem"
+!!! info "Định lý"
 
-    Let's consider vertex $v$ and let's consider we just finished traversing its adjacency list.
-    All unclaimed vertices in its subtree belong to the same SCC.
+    Hãy xem xét đỉnh $v$ và giả sử chúng ta vừa hoàn thành việc duyệt danh sách kề của nó.
+    Tất cả các đỉnh chưa được xác nhận trong cây con của nó thuộc về cùng một SCC.
 
-??? note "Proof"
+??? note "Chứng minh"
 
-    The algorithm will claim the vertices of an SCC when its root is found.
-    Since the adjacency list of $v$ has been traversed, all DFS calls on its subtree have finished, the roots have been detected and the vertices belonging to their SCCs have been claimed.
-    The root of the remaining unclaimed vertices will be an ancestor whose claiming process has not yet executed, so it's either $v$ or an ancestor of $v$.
-    Since $v$ is in the path from all vertices to their root and SCCs must induce a connected subgraph of the tree, both $v$ and all the remaining vertices belong to the same SCC.
+    Thuật toán sẽ xác nhận các đỉnh của một SCC khi gốc của nó được tìm thấy.
+    Vì danh sách kề của $v$ đã được duyệt, tất cả các cuộc gọi DFS trên cây con của nó đã kết thúc, các gốc đã được phát hiện và các đỉnh thuộc về SCC của chúng đã được xác nhận.
+    Gốc của các đỉnh chưa được xác nhận còn lại sẽ là một tổ tiên có quy trình xác nhận chưa được thực thi, vì vậy nó là $v$ hoặc một tổ tiên của $v$.
+    Vì $v$ nằm trong đường đi từ tất cả các đỉnh đến gốc của chúng và các SCC phải tạo ra một đồ thị con liên thông của cây, cả $v$ và tất cả các đỉnh còn lại thuộc về cùng một SCC.
 
-!!! info "Theorem"
+!!! info "Định lý"
 
-    Let's consider vertex $v$ and let's consider we are traversing it's adjacency list, currently processing edge $(v, u)$.
-    If $u$ was already visited by some DFS call and remains unclaimed, $v$ and $u$ belong to the same SCC.
+    Hãy xem xét đỉnh $v$ và giả sử chúng ta đang duyệt danh sách kề của nó, hiện đang xử lý cạnh $(v, u)$.
+    Nếu $u$ đã được thăm bởi một số cuộc gọi DFS và vẫn chưa được xác nhận, $v$ và $u$ thuộc về cùng một SCC.
 
-??? note "Proof"
+??? note "Chứng minh"
 
-    There are different cases depending on the kind of edge:
+    Có các trường hợp khác nhau tùy thuộc vào loại cạnh:
 
-    - Tree-edge: if this is a tree-edge, this is the first time we are finding vertex $u$. This means we must first recursively apply the DFS call on $u$ and consider it after its DFS call has finished. If vertex $u$ remains unclaimed, its root is either $v$ or an ancestor of $v$, so they must belong to the same SCC.
+    - Cạnh cây (Tree-edge): nếu đây là một cạnh cây, đây là lần đầu tiên chúng ta tìm thấy đỉnh $u$. Điều này có nghĩa là trước tiên chúng ta phải áp dụng đệ quy cuộc gọi DFS trên $u$ và xem xét nó sau khi cuộc gọi DFS của nó đã kết thúc. Nếu đỉnh $u$ vẫn chưa được xác nhận, gốc của nó là $v$ hoặc một tổ tiên của $v$, vì vậy chúng phải thuộc về cùng một SCC.
 
-    - Back-edge: this is the simpler case, if $u$ is an ancestor of $v$, they are reachable from each other and by definition belong to the same SCC.
+    - Cạnh ngược (Back-edge): đây là trường hợp đơn giản hơn, nếu $u$ là tổ tiên của $v$, chúng có thể truy cập được từ nhau và theo định nghĩa thuộc về cùng một SCC.
 
-    - Forward-edge: before this edge was processed, there was a sequence of DFS calls that finished without finding the root of $u$, having returned to $v$ whose DFS call proceeded.
-    The root of $u$ will then be an ancestor whose claiming process has not yet executed, so it's either $v$ or an ancestor of $v$, so they must belong to the same SCC.
+    - Cạnh tiến (Forward-edge): trước khi cạnh này được xử lý, đã có một chuỗi các cuộc gọi DFS kết thúc mà không tìm thấy gốc của $u$, đã quay trở lại $v$ mà cuộc gọi DFS của nó đã tiếp tục.
+    Gốc của $u$ sau đó sẽ là một tổ tiên mà quy trình xác nhận của nó chưa được thực thi, vì vậy nó là $v$ hoặc một tổ tiên của $v$, vì vậy chúng phải thuộc về cùng một SCC.
 
-    - Cross-edge: similarly, before this edge was processed, there was a sequence of DFS calls that finished without finding the root of $u$, having returned to a common ancestor of $u$ and $v$ whose DFS call proceeded and initiated a new sequence of DFS calls that lead to a call on $v$.
-    The root of $u$ will then be an ancestor whose claiming process has not yet executed, and all of the possible candidates are common ancestors with $v$.
-    Since the root of $u$ is an ancestor of $v$, it reaches $v$, and since $v$ now reaches $u$, they must belong to the same SCC.
+    - Cạnh chéo (Cross-edge): tương tự, trước khi cạnh này được xử lý, đã có một chuỗi các cuộc gọi DFS kết thúc mà không tìm thấy gốc của $u$, đã quay trở lại một tổ tiên chung của $u$ và $v$ mà cuộc gọi DFS của nó đã tiếp tục và bắt đầu một chuỗi các cuộc gọi DFS mới dẫn đến một cuộc gọi trên $v$.
+    Gốc của $u$ sau đó sẽ là một tổ tiên mà quy trình xác nhận của nó chưa được thực thi, và tất cả các ứng cử viên có thể là tổ tiên chung với $v$.
+    Vì gốc của $u$ là tổ tiên của $v$, nó tiếp cận $v$, và vì $v$ bây giờ tiếp cận $u$, chúng phải thuộc về cùng một SCC.
 
-Note, when two vertices belong to the same component, their root must be a common ancestor of both vertices.
+Lưu ý, khi hai đỉnh thuộc về cùng một thành phần, gốc của chúng phải là một tổ tiên chung của cả hai đỉnh.
 
-!!! info "Theorem"
+!!! info "Định lý"
 
-    Let $v$ be a vertex. The following statements are equivalent:
+    Cho $v$ là một đỉnh. Các phát biểu sau là tương đương:
 
-    1. Some vertex in the subtree of $v$ reaches an unclaimed vertex outside of the subtree.
-    2. $v$ is not the root of an SCC.
+    1. Một số đỉnh trong cây con của $v$ tiếp cận một đỉnh chưa được xác nhận bên ngoài cây con.
+    2. $v$ không phải là gốc của một SCC.
 
-??? note "Proof"
+??? note "Chứng minh"
 
     - $1. \implies 2.$:
-    Let's assume some vertex $u$ in the subtree of $v$ reaches an unclaimed vertex $w$ outside of the subtree.
-    We have established that $u$ and $w$ belong to the same SCC and that their root must be a common ancestor to both of them.
-    This common ancestor is necessarily outside of the subtree, and it will also be an ancestor of $v$.
-    Since $v$ is in the path from the root to $u$, it must belong to the same SCC, the root of which is not $v$.
+    Giả sử một số đỉnh $u$ trong cây con của $v$ tiếp cận một đỉnh chưa được xác nhận $w$ bên ngoài cây con.
+    Chúng ta đã thiết lập rằng $u$ và $w$ thuộc về cùng một SCC và gốc của chúng phải là một tổ tiên chung cho cả hai.
+    Tổ tiên chung này nhất thiết phải ở bên ngoài cây con, và nó cũng sẽ là tổ tiên của $v$.
+    Vì $v$ nằm trong đường đi từ gốc đến $u$, nó phải thuộc về cùng một SCC, gốc của nó không phải là $v$.
 
     - $\neg 1. \implies \neg 2.$:
-    Let's assume no vertex in the subtree of $v$ reaches an unclaimed vertex outside of the subtree.
-    This must mean that no vertex in the subtree of $v$ reaches an ancestor of $v$.
-    The only possible edges to vertices outside of the subtree are cross-edges to vertices that have already been claimed;
-    these vertices cannot reach an ancestor of $v$, since if they did, they would belong to the same SCC as $v$, which is impossible since their SCC has already been determined.
-    Since no ancestor of $v$ is reachable from its subtree, the root of $v$ must be $v$ itself.
+    Giả sử không có đỉnh nào trong cây con của $v$ tiếp cận một đỉnh chưa được xác nhận bên ngoài cây con.
+    Điều này có nghĩa là không có đỉnh nào trong cây con của $v$ tiếp cận một tổ tiên của $v$.
+    Các cạnh duy nhất có thể đến các đỉnh bên ngoài cây con là các cạnh chéo đến các đỉnh đã được xác nhận;
+    các đỉnh này không thể tiếp cận một tổ tiên của $v$, vì nếu chúng làm vậy, chúng sẽ thuộc về cùng một SCC như $v$, điều này là không thể vì SCC của chúng đã được xác định.
+    Vì không có tổ tiên nào của $v$ có thể truy cập được từ cây con của nó, gốc của $v$ phải là chính $v$.
 
-Now, we must find the method that lets us determine if a vertex is a root or not, and the claiming process properties are necessary for its correctness.
-To this end, we define the entry time $t_{in}[v]$ for each vertex $v \in G$ which corresponds to the 'timestamp' at which the DFS was called on $v$.
-By definition, the root is the first vertex of an SCC to be visited by the DFS so it will have the minimal value of $t_{in}$ of its SCC.
+Bây giờ, chúng ta phải tìm phương pháp cho phép chúng ta xác định xem một đỉnh có phải là gốc hay không, và các thuộc tính quy trình xác nhận là cần thiết cho sự chính xác của nó.
+Để đạt được mục đích này, chúng ta định nghĩa thời gian vào $t_{in}[v]$ cho mỗi đỉnh $v \in G$ tương ứng với 'dấu thời gian' mà tại đó DFS được gọi trên $v$.
+Theo định nghĩa, gốc là đỉnh đầu tiên của một SCC được DFS thăm nên nó sẽ có giá trị $t_{in}$ nhỏ nhất của SCC của nó.
 
-Let $v$ be a vertex and let's consider its subtree.
-At the moment we finish traversing its adjacency list, any vertex already visited by a DFS outside of the subtree will have a smaller value of $t_{in}$, since the DFS was first called on them before it started on $v$.
+Gọi $v$ là một đỉnh và hãy xem xét cây con của nó.
+Tại thời điểm chúng ta kết thúc việc duyệt danh sách kề của nó, bất kỳ đỉnh nào đã được DFS thăm bên ngoài cây con sẽ có giá trị $t_{in}$ nhỏ hơn, vì DFS đã được gọi lần đầu tiên trên chúng trước khi nó bắt đầu trên $v$.
 
-When considering the claiming process, the value of $t_{in}$ of all unclaimed vertices outside of the subtree of $v$ is smaller than $t_{in}[v]$.
-Now we can see how to use $t_{in}$ to determine the roots.
-We consider the minimal value of $t_{in}$ of the unclaimed vertices we can reach and we propagate this information to the ancestors through tree-edges.
-We will call the propagated value $t_{low}$.
+Khi xem xét quy trình xác nhận, giá trị $t_{in}$ của tất cả các đỉnh chưa được xác nhận bên ngoài cây con của $v$ nhỏ hơn $t_{in}[v]$.
+Bây giờ chúng ta có thể thấy cách sử dụng $t_{in}$ để xác định các gốc.
+Chúng ta xem xét giá trị nhỏ nhất của $t_{in}$ của các đỉnh chưa được xác nhận mà chúng ta có thể tiếp cận và chúng ta truyền thông tin này đến các tổ tiên thông qua các cạnh cây.
+Chúng ta sẽ gọi giá trị được truyền là $t_{low}$.
 
-More formally, we define $t_{low}[v]$ to be the lowest value of $t_{in}$ a vertex in the subtree of $v$ can reach through a direct edge.
-We therefore can detect whether a vertex $v$ is a root or not by checking if $t_{low}[v] < t_{in}[v]$.
+Chính thức hơn, chúng ta định nghĩa $t_{low}[v]$ là giá trị thấp nhất của $t_{in}$ mà một đỉnh trong cây con của $v$ có thể tiếp cận thông qua một cạnh trực tiếp.
+Do đó, chúng ta có thể phát hiện xem một đỉnh $v$ có phải là gốc hay không bằng cách kiểm tra xem $t_{low}[v] < t_{in}[v]$.
 
-Lastly, to claim the vertices, there are many ways to do it, such as another graph traversal algorithm, but it's also possible to use a simple data structure to keep track of the unclaimed vertices.
-To determine the data structure from first principles, let's go through the methods it must implement, which are only two:
+Cuối cùng, để xác nhận các đỉnh, có nhiều cách để thực hiện, chẳng hạn như một thuật toán duyệt đồ thị khác, nhưng cũng có thể sử dụng một cấu trúc dữ liệu đơn giản để theo dõi các đỉnh chưa được xác nhận.
+Để xác định cấu trúc dữ liệu từ các nguyên tắc đầu tiên, hãy đi qua các phương thức mà nó phải thực hiện, chỉ có hai:
 
-- When we first visit a vertex, we must simply insert it in the data structure, since this vertex is unclaimed.
+- Khi chúng ta lần đầu tiên thăm một đỉnh, chúng ta chỉ cần chèn nó vào cấu trúc dữ liệu, vì đỉnh này chưa được xác nhận.
 
-- When we find a root, we must find all the remaining unclaimed vertices in its subtree and remove them from the data structure.
+- Khi chúng ta tìm thấy một gốc, chúng ta phải tìm tất cả các đỉnh chưa được xác nhận còn lại trong cây con của nó và loại bỏ chúng khỏi cấu trúc dữ liệu.
 
-We can find an alternative way to describe the removal operation by noticing that immediately after traversing the adjacency list of a vertex $v$, all the vertices placed in the data structure after $v$ all belong to its subtree.
-If $v$ is a root, all the vertices remaining that were inserted after $v$ must be removed.
-So the removal operation can instead be described as:
+Chúng ta có thể tìm một cách thay thế để mô tả thao tác loại bỏ bằng cách nhận thấy rằng ngay sau khi duyệt danh sách kề của một đỉnh $v$, tất cả các đỉnh được đặt trong cấu trúc dữ liệu sau $v$ đều thuộc về cây con của nó.
+Nếu $v$ là gốc, tất cả các đỉnh còn lại được chèn sau $v$ phải được loại bỏ.
+Vì vậy, thao tác loại bỏ thay vào đó có thể được mô tả là:
 
-- When we find a root, we must find and remove all the remaining vertices that were inserted after it.
+- Khi chúng ta tìm thấy một gốc, chúng ta phải tìm và loại bỏ tất cả các đỉnh còn lại được chèn sau nó.
 
-We can now see that this can be implemented with a stack:
+Bây giờ chúng ta có thể thấy rằng điều này có thể được thực hiện với một ngăn xếp (stack):
 
-- When we first visit a vertex, we push it onto the stack.
+- Khi chúng ta lần đầu tiên thăm một đỉnh, chúng ta đẩy nó vào ngăn xếp.
 
-- When we find a root, we pop all the elements until we pop the root itself.
+- Khi chúng ta tìm thấy một gốc, chúng ta lấy ra tất cả các phần tử cho đến khi chúng ta lấy ra chính gốc đó.
 
-This finally lets us implement the algorithm.
+Điều này cuối cùng cho phép chúng ta cài đặt thuật toán.
 
-The runtime complexity of the sequence of DFS calls is $O(n + m)$.
-Considering the stack, its complexity amortizes to $O(n)$ since each node is only pushed and popped once.
-The total runtime complexity is therefore $O(n + m)$.
+Độ phức tạp thời gian chạy của chuỗi các cuộc gọi DFS là $O(n + m)$.
+Xem xét ngăn xếp, độ phức tạp của nó khấu hao thành $O(n)$ vì mỗi nút chỉ được đẩy và lấy ra một lần.
+Do đó, tổng độ phức tạp thời gian chạy là $O(n + m)$.
 
-As an additional remark, the roots are found in reversed topological order.
-In the algorithm, the vertex is a root if there are no edges to unclaimed vertices outside of its subtree, meaning all other reachable components are either in its subtree (and therefore their roots were already found) or they connect to already claimed vertices outside of the subtree (whose roots were also already found).
-So all reachable components were already found, meaning they are introduced in a valid reversed topological ordering of the condensation graph.
+Như một nhận xét bổ sung, các gốc được tìm thấy theo thứ tự topo ngược.
+Trong thuật toán, đỉnh là gốc nếu không có cạnh nào đến các đỉnh chưa được xác nhận bên ngoài cây con của nó, nghĩa là tất cả các thành phần có thể truy cập khác đều nằm trong cây con của nó (và do đó gốc của chúng đã được tìm thấy) hoặc chúng kết nối với các đỉnh đã được xác nhận bên ngoài cây con (mà gốc của chúng cũng đã được tìm thấy).
+Vì vậy, tất cả các thành phần có thể truy cập đã được tìm thấy, nghĩa là chúng được giới thiệu theo thứ tự topo ngược hợp lệ của đồ thị nén.
 
-### Implementation
-
+### Cài đặt (Implementation) {: #implementation}
 ```{.cpp file=tarjan_scc}
-vector<int> st;    // - stack holding the unclaimed vertices
-vector<int> roots; // - keeps track of the SCC roots of the vertices
-int timer;         // - dfs timestamp counter
-vector<int> t_in;  // - keeps track of the dfs timestamp of the vertices
-vector<int> t_low; // - keeps track of the lowest t_in of unclaimed vertices
-                   // reachable in the subtree
-
-// implements the tarjan algorithm for strongly connected components
+vector<int> st;    // - ngăn xếp chứa các đỉnh chưa được xác nhận
+vector<int> roots; // - theo dõi các gốc SCC của các đỉnh
+int timer;         // - bộ đếm dấu thời gian dfs
+vector<int> t_in;  // - theo dõi dấu thời gian dfs của các đỉnh
+vector<int> t_low; // - theo dõi t_in thấp nhất của các đỉnh chưa được xác nhận
+                   // có thể truy cập trong cây con
+ 
+// thực hiện thuật toán tarjan cho các thành phần liên thông mạnh
 void dfs(int v, vector<vector<int>> const &adj, vector<vector<int>> &components) {
-
+ 
   t_low[v] = t_in[v] = timer++;
   st.push_back(v);
-
+ 
   for (auto u : adj[v]) {
     if (t_in[u] == -1) { // tree-edge
       dfs(u, adj, components);
       t_low[v] = min(t_low[v], t_low[u]);
-    } else if (roots[u] == -1) { // back-edge, cross-edge or forward-edge to an unclaimed vertex
+    } else if (roots[u] == -1) { // back-edge, cross-edge hoặc forward-edge đến một đỉnh chưa được xác nhận
       t_low[v] = min(t_low[v], t_in[u]);
     }
   }
-
-  if (t_low[v] == t_in[v]) { // vertex is a root
-    components.push_back({v}); // initializes a new component with root v
+ 
+  if (t_low[v] == t_in[v]) { // đỉnh là một gốc
+    components.push_back({v}); // khởi tạo một thành phần mới với gốc v
     while (true) {
       int u = st.back();
       st.pop_back();
-      roots[u] = v; // claims the vertex
+      roots[u] = v; // xác nhận đỉnh
       if (u == v)
         break;
-      components.back().push_back(u); // adds vertex u to the component of v
+      components.back().push_back(u); // thêm đỉnh u vào thành phần của v
     }
   }
 }
-
-// input: adj -- adjacency list of G
-// output: components -- the strongy connected components in G
-// output: adj_cond -- adjacency list of G^SCC (by root vertices)
+ 
+// đầu vào: adj -- danh sách kề của G
+// đầu ra: components -- các thành phần liên thông mạnh trong G
+// đầu ra: adj_cond -- danh sách kề của G^SCC (theo các đỉnh gốc)
 void strongly_connected_components(vector<vector<int>> const &adj,
                                    vector<vector<int>> &components,
                                    vector<vector<int>> &adj_cond) {
   components.clear();
   adj_cond.clear();
-
+ 
   int n = adj.size();
-
+ 
   st.clear();
   roots.assign(n, -1);
   timer = 0;
   t_in.assign(n, -1);
   t_low.assign(n, -1);
-
-  // applies the tarjan algorithm to all the vertices
-  // adds vertices to the components in reverse topological order
+ 
+  // áp dụng thuật toán tarjan cho tất cả các đỉnh
+  // thêm các đỉnh vào các thành phần theo thứ tự topo ngược
   for (int v = 0; v < n; v++) {
     if (t_in[v] == -1) {
       dfs(v, adj, components);
     }
   }
-
-  // adds edges to the condensation graph
+ 
+  // thêm các cạnh vào đồ thị nén
   adj_cond.assign(n, {});
   for (int v = 0; v < n; v++) {
     for (auto u : adj[v])
@@ -358,50 +359,50 @@ void strongly_connected_components(vector<vector<int>> const &adj,
 }
 ```
 
-We have an [accepted submission](https://judge.yosupo.jp/submission/334251) with this code in Library Checker.
+Chúng tôi có một [bài nộp được chấp nhận](https://judge.yosupo.jp/submission/334251) với mã này trong Thư viện Kiểm tra (Library Checker).
 
-As a last remark, there's an alternative way to iterate through the adjacency list.
-Currently, we are doing the following:
+Như một nhận xét cuối cùng, có một cách thay thế để lặp qua danh sách kề.
+Hiện tại, chúng ta đang thực hiện như sau:
 
 ```c++
 for (auto u : adj[v]) {
   if (t_in[u] == -1) { // tree-edge
     dfs(u, adj);
     t_low[v] = min(t_low[v], t_low[u]);
-  } else if (roots[u] == -1) { // back-edge, cross-edge or forward-edge to an unclaimed vertex
+  } else if (roots[u] == -1) { // back-edge, cross-edge hoặc forward-edge đến một đỉnh chưa được xác nhận
     t_low[v] = min(t_low[v], t_in[u]);
   }
 }
 ```
 
-Alternatively, we could do:
+Ngoài ra, chúng ta có thể làm:
 
 ```c++
 for (auto u : adj[v]) {
-  if (t_in[u] == -1) // vertex is not visited
+  if (t_in[u] == -1) // đỉnh chưa được thăm
     dfs(u, adj);
-  if (roots[u] == -1) // vertex has not been claimed
+  if (roots[u] == -1) // đỉnh chưa được xác nhận
     t_low[v] = min(t_low[v], t_low[u]);
 }
 ```
 
-$t_{low}$ is used to propagate the information to the root, and when we perform `t_low[v] = min(t_low[v], t_in[u])`, we know that $u$ and $v$ belong to the same SCC.
-If $t_{low}[u]$ is propagated until the root of $u$, it can also be propagated through $v$ since the root is the same.
-Since $t_{low}[u] \leq t_{in}[u]$, this does not introduce any conflicts, instead only improving the bound on the root of $v$.
+$t_{low}$ được sử dụng để truyền thông tin đến gốc, và khi chúng ta thực hiện `t_low[v] = min(t_low[v], t_in[u])`, chúng ta biết rằng $u$ và $v$ thuộc về cùng một SCC.
+Nếu $t_{low}[u]$ được truyền cho đến gốc của $u$, nó cũng có thể được truyền qua $v$ vì gốc là giống nhau.
+Vì $t_{low}[u] \leq t_{in}[u]$, điều này không gây ra bất kỳ xung đột nào, thay vào đó chỉ cải thiện giới hạn trên gốc của $v$.
 
-## Building the Condensation Graph
+## Xây dựng Đồ thị Nén (Building the Condensation Graph) {: #building-the-condensation-graph}
 
-When building the adjacency list of the condensation graph, we select the *root* of each component as the first vertex in its list of vertices (this is an arbitrary choice). This root vertex represents its entire SCC. For each vertex `v`, the value `roots[v]` indicates the root vertex of the SCC which `v` belongs to.
+Khi xây dựng danh sách kề của đồ thị nén, chúng ta chọn *gốc* của mỗi thành phần làm đỉnh đầu tiên trong danh sách các đỉnh của nó (đây là một lựa chọn tùy ý). Đỉnh gốc này đại diện cho toàn bộ SCC của nó. Đối với mỗi đỉnh `v`, giá trị `roots[v]` chỉ ra đỉnh gốc của SCC mà `v` thuộc về.
 
-Our condensation graph is now given by the vertices `components` (one strongly connected component corresponds to one vertex in the condensation graph), and the adjacency list is given by `adj_cond`, using only the root vertices of the strongly connected components. Notice that we generate one edge from $C$ to $C'$ in $G^\text{SCC}$ for each edge from some $a\in C$ to some $b\in C'$ in $G$ (if $C\neq C'$). This implies that in our implementation, we can have multiple edges between two components in the condensation graph.
+Đồ thị nén của chúng ta bây giờ được đưa ra bởi các đỉnh `components` (một thành phần liên thông mạnh tương ứng với một đỉnh trong đồ thị nén), và danh sách kề được đưa ra bởi `adj_cond`, chỉ sử dụng các đỉnh gốc của các thành phần liên thông mạnh. Lưu ý rằng chúng ta tạo một cạnh từ $C$ đến $C'$ trong $G^\text{SCC}$ cho mỗi cạnh từ một số $a\in C$ đến một số $b\in C'$ trong $G$ (nếu $C\neq C'$). Điều này ngụ ý rằng trong cài đặt của chúng ta, chúng ta có thể có nhiều cạnh giữa hai thành phần trong đồ thị nén.
 
-## Literature
+## Tài liệu (Literature) {: #literature}
 
 * Thomas Cormen, Charles Leiserson, Ronald Rivest, Clifford Stein. Introduction to Algorithms [2005].
 * M. Sharir. A strong-connectivity algorithm and its applications in data-flow analysis [1979].
 * Robert Tarjan. Depth-first search and linear graph algorithms [1972].
 
-## Practice Problems
+## Bài tập (Practice Problems) {: #practice-problems}
 
 * [SPOJ - Good Travels](http://www.spoj.com/problems/GOODA/)
 * [SPOJ - Lego](http://www.spoj.com/problems/LEGO/)

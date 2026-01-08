@@ -1,63 +1,64 @@
 ---
 tags:
-    - Original
+    - Translated
+e_maxx_link: binary_search
 ---
 
-# Binary search
+# Tìm kiếm nhị phân (Binary search) {: #binary-search}
 
-**Binary search** is a method that allows for quicker search of something by splitting the search interval into two. Its most common application is searching values in sorted arrays, however the splitting idea is crucial in many other typical tasks.
+**Tìm kiếm nhị phân** là một phương pháp cho phép tìm kiếm thứ gì đó nhanh hơn bằng cách chia khoảng tìm kiếm làm hai. Ứng dụng phổ biến nhất của nó là tìm kiếm các giá trị trong các mảng đã phân loại, tuy nhiên ý tưởng chia nhỏ rất quan trọng trong nhiều tác vụ điển hình khác.
 
-## Search in sorted arrays
+## Tìm kiếm trong mảng đã sắp xếp (Search in sorted arrays) {: #search-in-sorted-arrays}
 
-The most typical problem that leads to the binary search is as follows. You're given a sorted array $A_0 \leq A_1 \leq \dots \leq A_{n-1}$, check if $k$ is present within the sequence. The simplest solution would be to check every element one by one and compare it with $k$ (a so-called linear search). This approach works in $O(n)$, but doesn't utilize the fact that the array is sorted.
+Vấn đề điển hình nhất dẫn đến tìm kiếm nhị phân như sau. Bạn được cho một mảng đã sắp xếp $A_0 \leq A_1 \leq \dots \leq A_{n-1}$, hãy kiểm tra xem $k$ có hiện diện trong chuỗi hay không. Giải pháp đơn giản nhất sẽ là kiểm tra từng phần tử một và so sánh nó với $k$ (cái gọi là tìm kiếm tuyến tính). Cách tiếp cận này hoạt động trong $O(n)$, nhưng không tận dụng thực tế là mảng đã được sắp xếp.
 
 <center>
 <img src="https://upload.wikimedia.org/wikipedia/commons/8/83/Binary_Search_Depiction.svg" width="800px">
 <br>
-<i>Binary search of the value $7$ in an array</i>.
+<i>Tìm kiếm nhị phân giá trị $7$ trong một mảng</i>.
 <br>
-<i>The <a href="https://commons.wikimedia.org/wiki/File:Binary_Search_Depiction.svg">image</a> by <a href="https://commons.wikimedia.org/wiki/User:AlwaysAngry">AlwaysAngry</a> is distributed under <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.en">CC BY-SA 4.0</a></i> license.
+<i><a href="https://commons.wikimedia.org/wiki/File:Binary_Search_Depiction.svg">Hình ảnh</a> bởi <a href="https://commons.wikimedia.org/wiki/User:AlwaysAngry">AlwaysAngry</a> được phân phối dưới giấy phép <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.en">CC BY-SA 4.0</a></i>.
 </center>
 
-Now assume that we know two indices $L < R$ such that $A_L \leq k \leq A_R$. Because the array is sorted, we can deduce that $k$ either occurs among $A_L, A_{L+1}, \dots, A_R$ or doesn't occur in the array at all. If we pick an arbitrary index $M$ such that $L < M < R$ and check whether $k$ is less or greater than $A_M$. We have two possible cases:
+Bây giờ giả sử rằng chúng ta biết hai chỉ số $L < R$ sao cho $A_L \leq k \leq A_R$. Bởi vì mảng được sắp xếp, chúng ta có thể suy luận rằng $k$ hoặc xảy ra giữa $A_L, A_{L+1}, \dots, A_R$ hoặc hoàn toàn không xảy ra trong mảng. Nếu chúng ta chọn một chỉ số $M$ tùy ý sao cho $L < M < R$ và kiểm tra xem $k$ nhỏ hơn hay lớn hơn $A_M$. Chúng tôi có hai trường hợp có thể xảy ra:
 
-1. $A_L \leq k \leq A_M$. In this case, we reduce the problem from $[L, R]$ to $[L, M]$;
-1. $A_M \leq k \leq A_R$. In this case, we reduce the problem from $[L, R]$ to $[M, R]$.
+1. $A_L \leq k \leq A_M$. Trong trường hợp này, chúng tôi giảm bài toán từ $[L, R]$ xuống $[L, M]$;
+1. $A_M \leq k \leq A_R$. Trong trường hợp này, chúng tôi giảm bài toán từ $[L, R]$ xuống $[M, R]$.
 
-When it is impossible to pick  $M$, that is, when $R = L + 1$, we directly compare $k$ with $A_L$ and $A_R$. Otherwise we would want to pick $M$ in such manner that it reduces the active segment to a single element as quickly as possible _in the worst case_.
+Khi không thể chọn $M$, nghĩa là khi $R = L + 1$, chúng ta so sánh trực tiếp $k$ với $A_L$ và $A_R$. Mặt khác, chúng ta muốn chọn $M$ theo cách mà nó làm giảm đoạn hoạt động thành một phần tử duy nhất nhanh nhất có thể _trong trường hợp xấu nhất_.
 
-Since in the worst case we will always reduce to larger segment of $[L, M]$ and $[M, R]$. Thus, in the worst case scenario the reduction would be from $R-L$ to $\max(M-L, R-M)$. To minimize this value, we should pick $M \approx \frac{L+R}{2}$, then
+Vì trong trường hợp xấu nhất, chúng ta sẽ luôn giảm xuống đoạn lớn hơn của $[L, M]$ và $[M, R]$. Do đó, trong kịch bản trường hợp xấu nhất, mức giảm sẽ là từ $R-L$ xuống $\max(M-L, R-M)$. Để giảm thiểu giá trị này, chúng ta nên chọn $M \approx \frac{L+R}{2}$, sau đó
 
 $$
 M-L \approx \frac{R-L}{2} \approx R-M.
 $$
 
-In other words, from the worst-case scenario perspective it is optimal to always pick $M$ in the middle of $[L, R]$ and split it in half. Thus, the active segment halves on each step until it becomes of size $1$. So, if the process needs $h$ steps, in the end it reduces the difference between $R$ and $L$ from $R-L$ to $\frac{R-L}{2^h} \approx 1$, giving us the equation $2^h \approx R-L$.
+Nói cách khác, từ góc độ kịch bản trường hợp xấu nhất, tối ưu nhất là luôn chọn $M$ ở giữa $[L, R]$ và chia đôi nó. Do đó, đoạn hoạt động giảm một nửa trên mỗi bước cho đến khi nó có kích thước $1$. Vì vậy, nếu quá trình cần $h$ bước, cuối cùng nó sẽ giảm sự khác biệt giữa $R$ và $L$ từ $R-L$ xuống $\frac{R-L}{2^h} \approx 1$, cho chúng ta phương trình $2^h \approx R-L$.
 
-Taking $\log_2$ on both sides, we get $h \approx \log_2(R-L) \in O(\log n)$.
+Lấy $\log_2$ ở cả hai vế, chúng ta nhận được $h \approx \log_2(R-L) \in O(\log n)$.
 
-Logarithmic number of steps is drastically better than that of linear search. For example, for $n \approx 2^{20} \approx 10^6$ you'd need to make approximately a million operations for linear search, but only around $20$ operations with the binary search.
+Số lượng các bước logarit tốt hơn nhiều so với tìm kiếm tuyến tính. Ví dụ, đối với $n \approx 2^{20} \approx 10^6$, bạn sẽ cần thực hiện khoảng một triệu thao tác để tìm kiếm tuyến tính, nhưng chỉ khoảng $20$ thao tác với tìm kiếm nhị phân.
 
-### Lower bound and upper bound
+### Cận dưới và cận trên (Lower bound and upper bound) {: #lower-bound-and-upper-bound}
 
-It is often convenient to find the position of the first element that is greater or equal than $k$ (called the lower bound of $k$ in the array) or the position of the first element that is greater than $k$ (called the upper bound of $k$) rather than the exact position of the element.
+Thường thuận tiện để tìm vị trí của phần tử đầu tiên lớn hơn hoặc bằng $k$ (gọi là cận dưới - **lower bound** của $k$ trong mảng) hoặc vị trí của phần tử đầu tiên lớn hơn $k$ (gọi là cận trên - **upper bound** của $k$) thay vì vị trí chính xác của phần tử.
 
-Together, lower and upper bounds produce a possibly empty half-interval of the array elements that are equal to $k$. To check whether $k$ is present in the array it's enough to find its lower bound and check if the corresponding element equates to $k$.
+Cùng với nhau, cận dưới và cận trên tạo ra một nửa khoảng có thể rỗng của các phần tử mảng bằng $k$. Để kiểm tra xem $k$ có hiện diện trong mảng hay không, chỉ cần tìm cận dưới của nó và kiểm tra xem phần tử tương ứng có bằng $k$ hay không.
 
-### Implementation
+### Cài đặt (Implementation) {: #implementation}
 
-The explanation above provides a rough description of the algorithm. For the implementation details, we'd need to be more precise.
+Lời giải thích ở trên cung cấp một mô tả sơ bộ về thuật toán. Đối với các chi tiết cài đặt, chúng ta cần phải chính xác hơn.
 
-We will maintain a pair $L < R$ such that $A_L \leq k < A_R$. Meaning that the active search interval is $[L, R)$. We use half-interval here instead of a segment $[L, R]$ as it turns out to require less corner case work.
+Chúng tôi sẽ duy trì một cặp $L < R$ sao cho $A_L \leq k < A_R$. Có nghĩa là khoảng tìm kiếm đang hoạt động là $[L, R)$. Chúng tôi sử dụng nửa khoảng ở đây thay vì một đoạn $[L, R]$ vì hóa ra nó yêu cầu ít công việc với trường hợp biên hơn.
 
-When $R = L+1$, we can deduce from definitions above that $R$ is the upper bound of $k$. It is convenient to initialize $R$ with past-the-end index, that is $R=n$ and $L$ with before-the-beginning index, that is $L=-1$. It is fine as long as we never evaluate $A_L$ and $A_R$ in our algorithm directly, formally treating it as $A_L = -\infty$ and $A_R = +\infty$.
+Khi $R = L+1$, chúng ta có thể suy ra từ các định nghĩa ở trên rằng $R$ là cận trên của $k$. Sẽ thuận tiện khi khởi tạo $R$ với chỉ số ngay sau khi kết thúc, tức là $R=n$ và $L$ với chỉ số ngay trước khi bắt đầu, tức là $L=-1$. Sẽ ổn miễn là chúng ta không bao giờ đánh giá $A_L$ và $A_R$ trong thuật toán của mình trực tiếp, về mặt hình thức coi nó là $A_L = -\infty$ và $A_R = +\infty$.
 
-Finally, to be specific about the value of $M$ we pick, we will stick with $M = \lfloor \frac{L+R}{2} \rfloor$.
+Cuối cùng, để cụ thể về giá trị của $M$ chúng ta chọn, chúng ta sẽ gắn bó với $M = \lfloor \frac{L+R}{2} \rfloor$.
 
-Then the implementation could look like this:
+Sau đó, việc triển khai có thể trông giống như thế này:
 
 ```cpp
-... // a sorted array is stored as a[0], a[1], ..., a[n-1]
+// mảng đã sắp xếp được lưu trữ dưới dạng a[0], a[1], ..., a[n-1]
 int l = -1, r = n;
 while (r - l > 1) {
     int m = (l + r) / 2;
@@ -69,26 +70,26 @@ while (r - l > 1) {
 }
 ```
 
-During the execution of the algorithm, we never evaluate neither $A_L$ nor $A_R$, as $L < M < R$. In the end, $L$ will be the index of the last element that is not greater than $k$ (or $-1$ if there is no such element) and $R$ will be the index of the first element larger than $k$ (or $n$ if there is no such element).
+Trong quá trình thực thi thuật toán, chúng ta không bao giờ đánh giá $A_L$ cũng như $A_R$, vì $L < M < R$. Cuối cùng, $L$ sẽ là chỉ số của phần tử cuối cùng không lớn hơn $k$ (hoặc $-1$ nếu không có phần tử nào như vậy) và $R$ sẽ là chỉ số của phần tử đầu tiên lớn hơn $k$ (hoặc $n$ nếu không có phần tử nào như vậy).
 
-**Note.** Calculating `m` as `m = (r + l) / 2` can lead to overflow if `l` and `r` are two positive integers, and this error lived about 9 years in JDK as described in the [blogpost](https://ai.googleblog.com/2006/06/extra-extra-read-all-about-it-nearly.html). Some alternative approaches include e.g. writing `m = l + (r - l) / 2` which always works for positive integer `l` and `r`, but might still overflow if `l` is a negative number. If you use C++20, it offers an alternative solution in the form of `m = std::midpoint(l, r)` which always works correctly.
+**Lưu ý.** Việc tính toán `m` là `m = (r + l) / 2` có thể dẫn đến tràn số nếu `l` và `r` là hai số nguyên dương, và lỗi này đã tồn tại khoảng 9 năm trong JDK như được mô tả trong [bài đăng trên blog](https://ai.googleblog.com/2006/06/extra-extra-read-all-about-it-nearly.html). Một số cách tiếp cận thay thế bao gồm ví dụ: viết `m = l + (r - l) / 2` luôn hoạt động đối với số nguyên dương `l` và `r`, nhưng vẫn có thể tràn nếu `l` là một số âm. Nếu bạn sử dụng C++20, nó cung cấp một giải pháp thay thế dưới dạng `m = std::midpoint(l, r)` luôn hoạt động chính xác.
 
-## Search on arbitrary predicate
+## Tìm kiếm trên vị từ tùy ý (Search on arbitrary predicate) {: #search-on-arbitrary-predicate}
 
-Let $f : \{0,1,\dots, n-1\} \to \{0, 1\}$ be a boolean function defined on $0,1,\dots,n-1$ such that it is monotonously increasing, that is
+Cho $f : \{0,1,\dots, n-1\} \to \{0, 1\}$ là một hàm boolean được xác định trên $0,1,\dots,n-1$ sao cho nó tăng đơn điệu, tức là
 
 $$
 f(0) \leq f(1) \leq \dots \leq f(n-1).
 $$
 
-The binary search, the way it is described above, finds the partition of the array by the predicate $f(M)$, holding the boolean value of $k < A_M$ expression.
-It is possible to use arbitrary monotonous predicate instead of $k < A_M$. It is particularly useful when the computation of $f(k)$ requires too much time to actually compute it for every possible value.
-In other words, binary search finds the unique index $L$ such that $f(L) = 0$ and $f(R)=f(L+1)=1$ if such a _transition point_ exists, or gives us $L = n-1$ if $f(0) = \dots = f(n-1) = 0$ or $L = -1$ if $f(0) = \dots = f(n-1) = 1$.
+Tìm kiếm nhị phân, theo cách được mô tả ở trên, tìm phân hoạch của mảng theo vị từ $f(M)$, giữ giá trị boolean của biểu thức $k < A_M$.
+Có thể sử dụng vị từ đơn điệu tùy ý thay vì $k < A_M$. Nó đặc biệt hữu ích khi việc tính toán $f(k)$ đòi hỏi quá nhiều thời gian để thực sự tính toán nó cho mọi giá trị có thể.
+Nói cách khác, tìm kiếm nhị phân tìm chỉ số duy nhất $L$ sao cho $f(L) = 0$ và $f(R)=f(L+1)=1$ nếu tồn tại một _điểm chuyển tiếp_ như vậy, hoặc cho chúng ta $L = n-1$ nếu $f(0) = \dots = f(n-1) = 0$ hoặc $L = -1$ nếu $f(0) = \dots = f(n-1) = 1$.
 
-Proof of correctness supposing a transition point exists, that is $f(0)=0$ and $f(n-1)=1$: The implementation maintains the _loop invariant_ $f(l)=0, f(r)=1$. When $r - l > 1$, the choice of $m$ means $r-l$ will always decrease. The loop terminates when $r - l = 1$, giving us our desired transition point.
+Bằng chứng về tính chính xác giả sử có một điểm chuyển tiếp tồn tại, tức là $f(0)=0$ và $f(n-1)=1$: Việc triển khai duy trì _Bất biến vòng lặp_ (_loop invariant_) $f(l)=0, f(r)=1$. Khi $r - l > 1$, việc chọn $m$ có nghĩa là $r-l$ sẽ luôn giảm. Vòng lặp kết thúc khi $r - l = 1$, cho chúng ta điểm chuyển tiếp mong muốn của mình.
 
 ```cpp
-... // f(i) is a boolean function such that f(0) <= ... <= f(n-1)
+// f(i) là một hàm boolean sao cho f(0) <= ... <= f(n-1)
 int l = -1, r = n;
 while (r - l > 1) {
     int m = (l + r) / 2;
@@ -100,45 +101,45 @@ while (r - l > 1) {
 }
 ```
 
-### Binary search on the answer
+### Tìm kiếm nhị phân trên câu trả lời (Binary search on the answer) {: #binary-search-on-the-answer}
 
-Such situation often occurs when we're asked to compute some value, but we're only capable of checking whether this value is at least $i$. For example, you're given an array $a_1,\dots,a_n$ and you're asked to find the maximum floored average sum
+Tình huống như vậy thường xảy ra khi chúng ta được yêu cầu tính toán một số giá trị, nhưng chúng ta chỉ có khả năng kiểm tra xem giá trị này có ít nhất là $i$ hay không. Ví dụ, bạn được cho một mảng $a_1,\dots,a_n$ và bạn được yêu cầu tìm tổng trung bình sàn lớn nhất
 
 $$
 \left \lfloor \frac{a_l + a_{l+1} + \dots + a_r}{r-l+1} \right\rfloor
 $$
 
-among all possible pairs of $l,r$ such that $r-l \geq x$. One of simple ways to solve this problem is to check whether the answer is at least $\lambda$, that is if there is a pair $l, r$ such that the following is true:
+trong số tất cả các cặp $l,r$ khả thi sao cho $r-l \geq x$. Một trong những cách đơn giản để giải quyết vấn đề này là kiểm tra xem câu trả lời có ít nhất là $\lambda$ hay không, nghĩa là nếu có một cặp $l, r$ sao cho điều sau đây là đúng:
 
 $$
 \frac{a_l + a_{l+1} + \dots + a_r}{r-l+1} \geq \lambda.
 $$
 
-Equivalently, it rewrites as
+Tương đương, nó viết lại thành
 
 $$
 (a_l - \lambda) + (a_{l+1} - \lambda) + \dots + (a_r - \lambda) \geq 0,
 $$
 
-so now we need to check whether there is a subarray of a new array $a_i - \lambda$ of length at least $x+1$ with non-negative sum, which is doable with some prefix sums.
+vì vậy bây giờ chúng ta cần kiểm tra xem có một mảng con của một mảng mới $a_i - \lambda$ có độ dài ít nhất $x+1$ với tổng không âm hay không, điều này có thể thực hiện được với một số tổng tiền tố.
 
-## Continuous search
+## Tìm kiếm liên tục (Continuous search) {: #continuous-search}
 
-Let $f : \mathbb R \to \mathbb R$ be a real-valued function that is continuous on a segment $[L, R]$.
+Cho $f : \mathbb R \to \mathbb R$ là một hàm giá trị thực liên tục trên một đoạn $[L, R]$.
 
-Without loss of generality assume that $f(L) \leq f(R)$. From [intermediate value theorem](https://en.wikipedia.org/wiki/Intermediate_value_theorem) it follows that for any $y \in [f(L), f(R)]$ there is $x \in [L, R]$ such that $f(x) = y$. Note that, unlike previous paragraphs, the function is _not_ required to be monotonous.
+Không mất tính tổng quát giả sử rằng $f(L) \leq f(R)$. Từ [định lý giá trị trung gian](https://en.wikipedia.org/wiki/Intermediate_value_theorem) suy ra rằng đối với bất kỳ $y \in [f(L), f(R)]$ đều có $x \in [L, R]$ sao cho $f(x) = y$. Lưu ý rằng, không giống như các đoạn trước, hàm _không_ bắt buộc phải đơn điệu.
 
-The value $x$ could be approximated up to $\pm\delta$ in $O\left(\log \frac{R-L}{\delta}\right)$ time for any specific value of $\delta$. The idea is essentially the same, if we take $M \in (L, R)$ then we would be able to reduce the search interval to either $[L, M]$ or $[M, R]$ depending on whether $f(M)$ is larger than $y$. One common example here would be finding roots of odd-degree polynomials.
+Giá trị $x$ có thể được xấp xỉ lên đến $\pm\delta$ trong thời gian $O\left(\log \frac{R-L}{\delta}\right)$ cho bất kỳ giá trị cụ thể nào của $\delta$. Ý tưởng về cơ bản là giống nhau, nếu chúng ta lấy $M \in (L, R)$ thì chúng ta có thể giảm khoảng tìm kiếm xuống còn $[L, M]$ hoặc $[M, R]$ tùy thuộc vào việc $f(M)$ có lớn hơn $y$ hay không. Một ví dụ phổ biến ở đây là tìm nghiệm của đa thức bậc lẻ.
 
-For example, let $f(x)=x^3 + ax^2 + bx + c$. Then $f(L) \to -\infty$ and $f(R) \to +\infty$ with $L \to -\infty$ and $R \to +\infty$. Which means that it is always possible to find sufficiently small $L$ and sufficiently large $R$ such that $f(L) < 0$ and $f(R) > 0$. Then, it is possible to find with binary search arbitrarily small interval containing $x$ such that $f(x)=0$.
+Ví dụ, gọi $f(x)=x^3 + ax^2 + bx + c$. Khi đó $f(L) \to -\infty$ và $f(R) \to +\infty$ với $L \to -\infty$ và $R \to +\infty$. Có nghĩa là luôn luôn có thể tìm thấy $L$ đủ nhỏ và $R$ đủ lớn để $f(L) < 0$ và $f(R) > 0$. Sau đó, có thể tìm thấy bằng tìm kiếm nhị phân khoảng thời gian nhỏ tùy ý chứa $x$ sao cho $f(x)=0$.
 
-## Search with powers of 2
+## Tìm kiếm với lũy thừa của 2 (Search with powers of 2) {: #search-with-powers-of-2}
 
-Another noteworthy way to do binary search is, instead of maintaining an active segment, to maintain the current pointer $i$ and the current power $k$. The pointer starts at $i=L$ and then on each iteration one tests the predicate at point $i+2^k$. If the predicate is still $0$, the pointer is advanced from $i$ to $i+2^k$, otherwise it stays the same, then the power $k$ is decreased by $1$.
+Một cách đáng chú ý khác để thực hiện tìm kiếm nhị phân là thay vì duy trì một phân đoạn hoạt động, hãy duy trì con trỏ hiện tại $i$ và lũy thừa hiện tại $k$. Con trỏ bắt đầu tại $i=L$ và sau đó trên mỗi lần lặp, người ta kiểm tra vị từ tại điểm $i+2^k$. Nếu vị từ vẫn là $0$, con trỏ được nâng cao từ $i$ đến $i+2^k$, nếu không nó vẫn giữ nguyên, thì lũy thừa $k$ giảm đi $1$.
 
-This paradigm is widely used in tasks around trees, such as finding lowest common ancestor of two vertices or finding an ancestor of a specific vertex that has a certain height. It could also be adapted to e.g. find the $k$-th non-zero element in a Fenwick tree.
+Mô hình này được sử dụng rộng rãi trong các nhiệm vụ xung quanh cây, chẳng hạn như tìm tổ tiên chung thấp nhất của hai đỉnh hoặc tìm tổ tiên của một đỉnh cụ thể có chiều cao nhất định. Nó cũng có thể được điều chỉnh để ví dụ: tìm phần tử khác không thứ $k$ trong cây Fenwick.
 
-## Practice Problems
+## Bài tập (Practice Problems) {: #practice-problems}
 
 * [LeetCode -  Find First and Last Position of Element in Sorted Array](https://leetcode.com/problems/find-first-and-last-position-of-element-in-sorted-array/)
 * [LeetCode -  Search Insert Position](https://leetcode.com/problems/search-insert-position/)

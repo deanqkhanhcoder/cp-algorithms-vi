@@ -3,42 +3,42 @@ tags:
   - Original
 ---
 
-# Maximum flow - MPM algorithm
+# Luồng cực đại - Thuật toán MPM (Maximum flow - MPM algorithm) {: #maximum-flow-mpm-algorithm}
 
-MPM (Malhotra, Pramodh-Kumar and Maheshwari) algorithm solves the maximum flow problem in $O(V^3)$. This algorithm is similar to [Dinic's algorithm](dinic.md).
+Thuật toán MPM (Malhotra, Pramodh-Kumar và Maheshwari) giải quyết bài toán luồng cực đại trong $O(V^3)$. Thuật toán này tương tự như [thuật toán Dinic](dinic.md).
 
-## Algorithm
+## Thuật toán (Algorithm) {: #algorithm}
 
-Like Dinic's algorithm, MPM runs in phases, during each phase we find the blocking flow in the layered network of the residual network of $G$.
-The main difference from Dinic's is how we find the blocking flow.
-Consider the layered network $L$.
-For each node we define its' _inner potential_ and _outer potential_ as:
+Giống như thuật toán Dinic, MPM chạy theo các pha, trong mỗi pha chúng ta tìm luồng chắn trong mạng phân lớp của mạng dư của $G$.
+Sự khác biệt chính so với Dinic là cách chúng ta tìm luồng chắn.
+Xem xét mạng phân lớp $L$.
+Đối với mỗi nút, chúng ta định nghĩa _thế năng trong_ (inner potential) và _thế năng ngoài_ (outer potential) của nó như sau:
 
 $$\begin{align}
 p_{in}(v) &= \sum\limits_{(u, v)\in L}(c(u, v) - f(u, v)) \\\\
 p_{out}(v) &= \sum\limits_{(v, u)\in L}(c(v, u) - f(v, u))
 \end{align}$$
 
-Also we set $p_{in}(s) = p_{out}(t) = \infty$.
-Given $p_{in}$ and $p_{out}$ we define the _potential_ as $p(v) = min(p_{in}(v), p_{out}(v))$.
-We call a node $r$ a _reference node_ if $p(r) = min\{p(v)\}$.
-Consider a reference node $r$.
-We claim that the flow can be increased by $p(r)$ in such a way that $p(r)$ becomes $0$.
-It is true because $L$ is acyclic, so we can push the flow out of $r$ by outgoing edges and it will reach $t$ because each node has enough outer potential to push the flow out when it reaches it.
-Similarly, we can pull the flow from $s$.
-The construction of the blocked flow is based on this fact.
-On each iteration we find a reference node and push the flow from $s$ to $t$ through $r$.
-This process can be simulated by BFS.
-All completely saturated arcs can be deleted from $L$ as they won't be used later in this phase anyway.
-Likewise, all the nodes different from $s$ and $t$ without outgoing or incoming arcs can be deleted.
+Chúng ta cũng đặt $p_{in}(s) = p_{out}(t) = \infty$.
+Với $p_{in}$ và $p_{out}$ đã cho, chúng ta định nghĩa _thế năng_ (potential) là $p(v) = \min(p_{in}(v), p_{out}(v))$.
+Chúng ta gọi một nút $r$ là _nút tham chiếu_ (reference node) nếu $p(r) = \min\{p(v)\}$.
+Xem xét một nút tham chiếu $r$.
+Chúng ta khẳng định rằng luồng có thể tăng thêm $p(r)$ theo cách mà $p(r)$ trở thành $0$.
+Điều này đúng vì $L$ là không có chu trình, vì vậy chúng ta có thể đẩy luồng ra khỏi $r$ bằng các cạnh đi ra và nó sẽ đến $t$ vì mỗi nút có đủ thế năng ngoài để đẩy luồng ra khi nó đến đó.
+Tương tự, chúng ta có thể kéo luồng từ $s$.
+Việc xây dựng luồng chắn dựa trên thực tế này.
+Trên mỗi lần lặp, chúng ta tìm một nút tham chiếu và đẩy luồng từ $s$ đến $t$ qua $r$.
+Quá trình này có thể được mô phỏng bởi BFS.
+Tất cả các cung bão hòa hoàn toàn có thể được xóa khỏi $L$ vì dù sao chúng cũng sẽ không được sử dụng sau này trong pha này.
+Tương tự như vậy, tất cả các nút khác $s$ và $t$ không có cung đi ra hoặc đi vào đều có thể bị xóa.
 
-Each phase works in $O(V^2)$ because there are at most $V$ iterations (because at least the chosen reference node is deleted), and on each iteration we delete all the edges we passed through except at most $V$.
-Summing, we get $O(V^2 + E) = O(V^2)$.
-Since there are less than $V$ phases (see the proof [here](dinic.md)), MPM works in $O(V^3)$ total.
+Mỗi pha hoạt động trong $O(V^2)$ vì có tối đa $V$ lần lặp (vì ít nhất nút tham chiếu đã chọn bị xóa), và trên mỗi lần lặp, chúng ta xóa tất cả các cạnh chúng ta đã đi qua ngoại trừ tối đa $V$.
+Cộng lại, chúng ta nhận được $O(V^2 + E) = O(V^2)$.
+Vì có ít hơn $V$ pha (xem chứng minh [tại đây](dinic.md)), MPM hoạt động trong tổng số $O(V^3)$.
 
-## Implementation
+## Cài đặt (Implementation) {: #implementation}
 
-```{.cpp file=mpm}
+```cpp
 struct MPM{
     struct FlowEdge{
         int v, u;

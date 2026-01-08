@@ -4,23 +4,23 @@ tags:
 e_maxx_link: length_of_segments_union
 ---
 
-# Length of the union of segments
+# Độ dài hợp của các đoạn thẳng (Length of the union of segments) {: #length-of-the-union-of-segments}
 
-Given $n$ segments on a line, each described by a pair of coordinates $(a_{i1}, a_{i2})$.
-We have to find the length of their union.
+Cho $n$ đoạn thẳng trên một đường thẳng, mỗi đoạn được mô tả bởi một cặp tọa độ $(a_{i1}, a_{i2})$.
+Chúng ta phải tìm độ dài hợp của chúng.
 
-The following algorithm was proposed by Klee in 1977.
-It works in $O(n\log n)$ and has been proven to be the asymptotically optimal.
+Thuật toán sau đây được đề xuất bởi Klee vào năm 1977.
+Nó hoạt động trong $O(n\log n)$ và đã được chứng minh là tối ưu tiệm cận.
 
-## Solution
+## Giải pháp (Solution) {: #solution}
 
-We store in an array $x$ the endpoints of all the segments sorted by their values.
-And additionally we store whether it is a left end or a right end of a segment.
-Now we iterate over the array, keeping a counter $c$ of currently opened segments.
-Whenever the current element is a left end, we increase this counter, and otherwise we decrease it.
-To compute the answer, we take the length between the last to $x$ values $x_i - x_{i-1}$, whenever we come to a new coordinate, and there is currently at least one segment is open.
+Chúng ta lưu trữ trong một mảng $x$ các đầu mút của tất cả các đoạn thẳng được sắp xếp theo giá trị của chúng.
+Và thêm vào đó, chúng ta lưu trữ xem đó là đầu trái hay đầu phải của một đoạn thẳng.
+Bây giờ chúng ta lặp qua mảng, giữ một bộ đếm $c$ các đoạn thẳng hiện đang mở.
+Bất cứ khi nào phần tử hiện tại là một đầu trái, chúng ta tăng bộ đếm này, và ngược lại chúng ta giảm nó.
+Để tính toán câu trả lời, chúng ta lấy độ dài giữa hai giá trị $x$ cuối cùng $x_i - x_{i-1}$, bất cứ khi nào chúng ta đến một tọa độ mới, và hiện tại có ít nhất một đoạn thẳng đang mở.
 
-## Implementation
+## Cài đặt (Implementation) {: #implementation}
 
 ```cpp
 int length_union(const vector<pair<int, int>> &a) {

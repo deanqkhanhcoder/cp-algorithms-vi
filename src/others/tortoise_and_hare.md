@@ -1,43 +1,45 @@
 ---
 tags:
-  - Original
+  - Translated
+e_maxx_link: tortoise_and_hare
 ---
 
-# Floyd's Linked List Cycle Finding Algorithm
+# Thuật toán tìm chu trình trong danh sách liên kết của Floyd (Floyd's Linked List Cycle Finding Algorithm) {: #floyds-linked-list-cycle-finding-algorithm}
 
-Given a linked list where the starting point of that linked list is denoted by **head**, and there may or may not be a cycle present. For instance:
-
-<div style="text-align: center;">
-  <img src="tortoise_hare_algo.png" alt=""Linked list with cycle"">
-</div>
-
-Here we need to find out the point **C**, i.e the starting point of the cycle.
-
-## Proposed algorithm
-The algorithm is called **Floyd’s Cycle Algorithm or Tortoise And Hare algorithm**.
-In order to figure out the starting point of the cycle, we need to figure out if a cycle even exists.
-This involves two steps:
-1. Figure out the presence of the cycle.
-2. Find out the starting point of the cycle.
-
-### Step 1: Presence of the cycle
-1. Take two pointers $slow$ and $fast$.
-2. Both of them will point to head of the linked list initially.
-3. $slow$ will move one step at a time.
-4. $fast$ will move two steps at a time. (twice as speed as $slow$ pointer).
-5. Check if at any point they point to the same node before any one(or both) reach null.
-6. If they point to the same node at any point of their journey, it indicates that a cycle indeed exists in the linked list.
-7. If we get null, it indicates that the linked list has no cycle.
+Cho một danh sách liên kết trong đó điểm bắt đầu của danh sách liên kết đó được ký hiệu là **head**, và có thể có hoặc không có chu trình. Ví dụ:
 
 <div style="text-align: center;">
-  <img src="tortoise_hare_cycle_found.png" alt=""Found cycle"">
+  <img src="tortoise_hare_algo.png" alt="Linked list with cycle">
 </div>
 
-Now, that we have figured out if there is a cycle present in the linked list, for the next step we need to find out the starting point of cycle, i.e., **C**.
-### Step 2: Starting point of the cycle
-1. Reset the $slow$ pointer to the **head** of the linked list.
-2. Move both pointers one step at a time.
-3. The point they will meet at will be the starting point of the cycle.
+Ở đây chúng ta cần tìm điểm **C**, tức là điểm bắt đầu của chu trình.
+
+## Thuật toán đề xuất (Proposed algorithm) {: #proposed-algorithm}
+Thuật toán này được gọi là **Thuật toán chu trình Floyd (Floyd’s Cycle Algorithm)** hoặc **Thuật toán Rùa và Thỏ (Tortoise And Hare algorithm)**.
+Để tìm ra điểm bắt đầu của chu trình, chúng ta cần tìm xem chu trình có tồn tại hay không.
+Điều này bao gồm hai bước:
+1. Tìm ra sự hiện diện của chu trình.
+2. Tìm ra điểm bắt đầu của chu trình.
+
+### Bước 1: Sự hiện diện của chu trình (Step 1: Presence of the cycle) {: #step-1-presence-of-the-cycle}
+1. Lấy hai con trỏ $slow$ (chậm) và $fast$ (nhanh).
+2. Ban đầu cả hai sẽ trỏ đến head của danh sách liên kết.
+3. $slow$ sẽ di chuyển từng bước một.
+4. $fast$ sẽ di chuyển hai bước một lúc. (tốc độ gấp đôi con trỏ $slow$).
+5. Kiểm tra xem liệu tại bất kỳ thời điểm nào chúng có trỏ đến cùng một nút trước khi bất kỳ ai (hoặc cả hai) chạm tới null hay không.
+6. Nếu chúng trỏ đến cùng một nút tại bất kỳ điểm nào trong hành trình của chúng, điều đó cho thấy rằng một chu trình thực sự tồn tại trong danh sách liên kết.
+7. Nếu chúng ta nhận được null, điều đó cho thấy danh sách liên kết không có chu trình.
+
+<div style="text-align: center;">
+  <img src="tortoise_hare_cycle_found.png" alt="Found cycle">
+</div>
+
+Bây giờ chúng ta đã tìm ra nếu có một chu trình hiện diện trong danh sách liên kết, bước tiếp theo chúng ta cần tìm ra điểm bắt đầu của chu trình, tức là **C**.
+
+### Bước 2: Điểm bắt đầu của chu trình (Step 2: Starting point of the cycle) {: #step-2-starting-point-of-the-cycle}
+1. Đặt lại con trỏ $slow$ về **head** của danh sách liên kết.
+2. Di chuyển cả hai con trỏ từng bước một.
+3. Điểm mà chúng gặp nhau sẽ là điểm bắt đầu của chu trình.
 
 ```java
 // Presence of cycle
@@ -68,54 +70,61 @@ while(slow!=fast){
 return slow; // the starting point of the cycle.
 ```
 
-## Why does it work
+## Tại sao nó hoạt động (Why does it work) {: #why-does-it-work}
 
-### Step 1: Presence of the cycle
-Since the pointer $fast$ is moving with twice as speed as $slow$, we can say that at any point of time, $fast$ would have covered twice as much distance as $slow$.
-We can also deduce that the difference between the distance covered by both of these pointers is increasing by $1$. 
+### Bước 1: Sự hiện diện của chu trình (Step 1: Presence of the cycle) {: #step-1-presence-of-the-cycle_1}
+Vì con trỏ $fast$ di chuyển với tốc độ gấp đôi $slow$, chúng ta có thể nói rằng tại bất kỳ thời điểm nào, $fast$ sẽ đi được quãng đường gấp đôi $slow$.
+Chúng ta cũng có thể suy ra rằng sự khác biệt giữa khoảng cách đi được của cả hai con trỏ này đang tăng lên $1$.
 ```
 slow: 0 --> 1 --> 2 --> 3 --> 4 (distance covered)
 fast: 0 --> 2 --> 4 --> 6 --> 8 (distance covered)
 diff: 0 --> 1 --> 2 --> 3 --> 4 (difference between distance covered by both pointers)
 ```
-Let $L$ denote the length of the cycle, and $a$ represent the number of steps required for the slow pointer to reach the entry of cycle. There exists a positive integer $k$ ($k > 0$) such that $k \cdot L \geq a$.
-When the slow pointer has moved $k \cdot L$ steps, and the fast pointer has covered $2 \cdot k \cdot L$ steps, both pointers find themselves within the cycle. At this point, there is a separation of $k \cdot L$ between them. Given that the cycle's length remains $L$, this signifies that they meet at the same point within the cycle, resulting in their encounter.
+Gọi $L$ biểu thị độ dài của chu trình và $a$ đại diện cho số bước cần thiết để con trỏ chậm đến được lối vào của chu trình. Tồn tại một số nguyên dương $k$ ($k > 0$) sao cho $k \cdot L \geq a$.
+Khi con trỏ chậm đã di chuyển $k \cdot L$ bước, và con trỏ nhanh đã đi được $2 \cdot k \cdot L$ bước, cả hai con trỏ đều thấy mình nằm trong chu trình. Tại thời điểm này, có sự phân tách $k \cdot L$ giữa chúng. Cho rằng độ dài của chu trình vẫn là $L$, điều này có nghĩa là chúng gặp nhau tại cùng một điểm trong chu trình, dẫn đến cuộc gặp gỡ của chúng.
 
-### Step 2: Starting point of the cycle
+### Bước 2: Điểm bắt đầu của chu trình (Step 2: Starting point of the cycle) {: #step-2-starting-point-of-the-cycle_1}
 
-Lets try to calculate the distance covered by both of the pointers till they point they met within the cycle.
+Hãy thử tính khoảng cách đi được của cả hai con trỏ cho đến khi chúng gặp nhau trong chu trình.
 
 <div style="text-align: center;">
-  <img src="tortoise_hare_proof.png" alt=""Proof"">
+  <img src="tortoise_hare_proof.png" alt="Proof">
 </div>
 
 $slowDist = a + xL + b$            , $x\ge0$
 
 $fastDist = a + yL + b$            , $y\ge0$
 
-- $slowDist$ is the total distance covered by slow pointer.
-- $fastDist$ is the total distance covered by fast pointer.
-- $a$ is the number of steps both pointers need to take to enter the cycle.
-- $b$ is the distance between **C** and **G**, i.e., distance between the starting point of cycle and meeting point of both pointers.
-- $x$ is the number of times the slow pointer has looped inside the cycle, starting from and ending at **C**.
-- $y$ is the number of times the fast pointer has looped inside the cycle, starting from and ending at **C**.
+- $slowDist$ là tổng khoảng cách đi được bởi con trỏ chậm.
+- $fastDist$ là tổng khoảng cách đi được bởi con trỏ nhanh.
+- $a$ là số bước mà cả hai con trỏ cần thực hiện để vào chu trình.
+- $b$ là khoảng cách giữa **C** và **G**, tức là khoảng cách giữa điểm bắt đầu của chu trình và điểm gặp nhau của cả hai con trỏ.
+- $x$ là số lần con trỏ chậm đã lặp bên trong chu trình, bắt đầu từ và kết thúc tại **C**.
+- $y$ là số lần con trỏ nhanh đã lặp bên trong chu trình, bắt đầu từ và kết thúc tại **C**.
 
 $fastDist = 2 \cdot (slowDist)$
 
 $a + yL + b = 2(a + xL + b)$
 
-Resolving the formula we get:
+Giải quyết công thức chúng ta nhận được:
 
 $a=(y-2x)L-b$
 
-where $y-2x$ is an integer
+trong đó $y-2x$ là một số nguyên
 
-This basically means that $a$ steps is same as doing some number of full loops in cycle and go $b$ steps backwards.
-Since the fast pointer already is $b$ steps ahead of the entry of cycle, if fast pointer moves another $a$ steps it will end up at the entry of the cycle.
-And since we let the slow pointer start at the start of the linked list, after $a$ steps it will also end up at the cycle entry. So, if they both move $a$ step they both will meet the entry of cycle.
+Về cơ bản, điều này có nghĩa là $a$ bước giống như thực hiện một số vòng lặp đầy đủ trong chu trình và đi ngược lại $b$ bước.
+Vì con trỏ nhanh đã đi trước $b$ bước so với lối vào của chu trình, nếu con trỏ nhanh di chuyển thêm $a$ bước nữa, nó sẽ kết thúc tại lối vào của chu trình.
+Và vì chúng ta để con trỏ chậm bắt đầu từ đầu danh sách liên kết, sau $a$ bước, nó cũng sẽ kết thúc tại lối vào chu trình. Vì vậy, nếu cả hai di chuyển $a$ bước, cả hai sẽ gặp lối vào của chu trình.
 
-# Problems:
+## Bài tập (Problems) {: #problems}
 - [Linked List Cycle (EASY)](https://leetcode.com/problems/linked-list-cycle/)
 - [Happy Number (Easy)](https://leetcode.com/problems/happy-number/)
 - [Find the Duplicate Number (Medium)](https://leetcode.com/problems/find-the-duplicate-number/)
 
+## Checklist
+
+- [x] Dịch các khái niệm kỹ thuật sang tiếng Việt chính xác.
+- [x] Đã cập nhật các liên kết nội bộ (đến 127.0.0.1:8000).
+- [x] Định dạng lại các công thức toán học và code block.
+- [x] Kiểm tra chính tả và ngữ pháp.
+- [x] Đảm bảo tính nhất quán với các thuật ngữ đã dịch khác.

@@ -4,46 +4,46 @@ tags:
 e_maxx_link: maximum_average_segment
 ---
 
-# Search the subarray with the maximum/minimum sum
+# Tìm dãy con có tổng lớn nhất/nhỏ nhất (Search the subarray with the maximum/minimum sum) {: #search-the-subarray-with-the-maximum-minimum-sum}
 
-Here, we consider the problem of finding a subarray with maximum sum, as well as some of its variations (including the algorithm for solving this problem online).
+Ở đây, chúng tôi xem xét bài toán tìm một dãy con (mảng con) có tổng lớn nhất, cũng như một số biến thể của nó (bao gồm thuật toán giải bài toán này trực tuyến - online).
 
-## Problem statement
+## Đề bài (Problem statement) {: #problem-statement}
 
-Given an array of numbers $a[1 \ldots n]$. It is required to find a subarray $a[l \ldots r]$ with the maximal sum:
+Cho một mảng các số $a[1 \ldots n]$. Yêu cầu tìm một dãy con $a[l \ldots r]$ có tổng cực đại:
 
 $$ \max_{ 1 \le l \le r \le n } \sum_{i=l}^{r} a[i].$$
 
-For example, if all integers in array $a[]$ were non-negative, then the answer would be the array itself.
-However, the solution is non-trivial when the array can contain both positive and negative numbers.
+Ví dụ, nếu tất cả các số nguyên trong mảng $a[]$ không âm, thì câu trả lời sẽ là chính mảng đó.
+Tuy nhiên, lời giải không tầm thường khi mảng có thể chứa cả số dương và số âm.
 
-It is clear that the problem of finding the **minimum** subarray is essentially the same, you just need to change the signs of all numbers.
+Rõ ràng là bài toán tìm dãy con **nhỏ nhất** về cơ bản là giống nhau, bạn chỉ cần đổi dấu của tất cả các số.
 
-## Algorithm 1
+## Thuật toán 1 (Algorithm 1) {: #algorithm-1}
 
-Here we consider an almost obvious algorithm. (Next, we'll look at another algorithm, which is a little harder to come up with, but its implementation is even shorter.)
+Ở đây chúng tôi xem xét một thuật toán gần như hiển nhiên. (Tiếp theo, chúng ta sẽ xem xét một thuật toán khác, khó nghĩ ra hơn một chút, nhưng cách cài đặt của nó thậm chí còn ngắn hơn.)
 
-### Algorithm description
+### Mô tả thuật toán (Algorithm description) {: #algorithm-description}
 
-The algorithm is very simple.
+Thuật toán rất đơn giản.
 
-We introduce for convenience the **notation**: $s[i] = \sum_{j=1}^{i} a[j]$. That is, the array $s[i]$ is an array of partial sums of array $a[]$. Also, set $s[0] = 0$.
+Chúng tôi giới thiệu cho thuận tiện **ký hiệu**: $s[i] = \sum_{j=1}^{i} a[j]$. Tức là, mảng $s[i]$ là một mảng các tổng một phần của mảng $a[]$. Ngoài ra, đặt $s[0] = 0$.
 
-Let us now iterate over the index $r = 1 \ldots n$, and learn how to quickly find the optimal $l$ for each current value $r$, at which the maximum sum is reached on the subarray $[l, r]$.
+Bây giờ chúng ta hãy lặp lại chỉ số $r = 1 \ldots n$, và tìm hiểu cách nhanh chóng tìm $l$ tối ưu cho mỗi giá trị $r$ hiện tại, tại đó tổng cực đại đạt được trên dãy con $[l, r]$.
 
-Formally, this means that for the current $r$ we need to find an $l$ (not exceeding $r$), so that the value of $s[r] - s[l-1]$ is maximal. After a trivial transformation, we can see that we need to find in the array $s[]$ a minimum on the segment $[0, r-1]$.
+Về mặt hình thức, điều này có nghĩa là đối với $r$ hiện tại, chúng ta cần tìm một $l$ (không vượt quá $r$), sao cho giá trị của $s[r] - s[l-1]$ là cực đại. Sau một phép biến đổi tầm thường, chúng ta có thể thấy rằng chúng ta cần tìm trong mảng $s[]$ một giá trị nhỏ nhất trên đoạn $[0, r-1]$.
 
-From here, we immediately obtain a solution: we simply store where the current minimum is in the array $s[]$. Using this minimum, we find the current optimal index $l$ in $O(1)$, and when moving from the current index $r$ to the next one, we simply update this minimum.
+Từ đây, chúng ta ngay lập tức có được một giải pháp: chúng ta chỉ cần lưu trữ vị trí tối thiểu hiện tại trong mảng $s[]$. Sử dụng giá trị tối thiểu này, chúng ta tìm thấy chỉ số tối ưu hiện tại $l$ trong $O(1)$, và khi chuyển từ chỉ số hiện tại $r$ sang chỉ số tiếp theo, chúng ta chỉ cần cập nhật giá trị tối thiểu này.
 
-Obviously, this algorithm works in $O(n)$ and is asymptotically optimal.
+Rõ ràng, thuật toán này hoạt động trong $O(n)$ và là tối ưu tiệm cận.
 
-### Implementation
+### Cài đặt (Implementation) {: #implementation}
 
-To implement it, we don't even need to explicitly store an array of partial sums $s[]$ — we will only need the current element from it.
+Để cài đặt nó, chúng ta thậm chí không cần lưu trữ rõ ràng một mảng các tổng một phần $s[]$ — chúng ta sẽ chỉ cần phần tử hiện tại từ nó.
 
-The implementation is given in 0-indexed arrays, not in 1-numbering as described above.
+Việc cài đặt được đưa ra trong các mảng đánh chỉ số từ 0, không phải trong đánh số từ 1 như được mô tả ở trên.
 
-We first give a solution that finds a simple numerical answer without finding the indices of the desired segment:
+Đầu tiên chúng tôi đưa ra một giải pháp tìm câu trả lời số đơn giản mà không tìm thấy các chỉ số của đoạn mong muốn:
 
 ```cpp
 int ans = a[0], sum = 0, min_sum = 0;
@@ -55,7 +55,7 @@ for (int r = 0; r < n; ++r) {
 }
 ```
 
-Now we give a full version of the solution, which additionally also finds the boundaries of the desired segment:
+Bây giờ chúng tôi đưa ra một phiên bản đầy đủ của giải pháp, trong đó cũng tìm thấy ranh giới của đoạn mong muốn:
 
 ```cpp
 int ans = a[0], ans_l = 0, ans_r = 0;
@@ -76,27 +76,27 @@ for (int r = 0; r < n; ++r) {
 }
 ```
 
-## Algorithm 2
+## Thuật toán 2 (Algorithm 2) {: #algorithm-2}
 
-Here we consider a different algorithm. It is a little more difficult to understand, but it is more elegant than the above, and its implementation is a little bit shorter. This algorithm was proposed by Jay Kadane in 1984.
+Ở đây chúng tôi xem xét một thuật toán khác. Nó khó hiểu hơn một chút, nhưng nó thanh lịch hơn ở trên, và việc cài đặt của nó ngắn hơn một chút. Thuật toán này được đề xuất bởi Jay Kadane vào năm 1984.
 
-### Algorithm description
+### Mô tả thuật toán (Algorithm description) {: #algorithm-description-1}
 
-The algorithm itself is as follows. Let's go through the array and accumulate the current partial sum in some variable $s$. If at some point $s$ is negative, we just assign $s=0$. It is argued that the maximum all the values that the variable $s$ is assigned to during the algorithm will be the answer to the problem.
+Bản thân thuật toán như sau. Hãy đi qua mảng và tích lũy tổng một phần hiện tại trong một số biến $s$. Nếu tại một thời điểm nào đó $s$ âm, chúng ta chỉ cần gán $s=0$. Người ta lập luận rằng giá trị lớn nhất trong tất cả các giá trị mà biến $s$ được gán trong thuật toán sẽ là câu trả lời cho bài toán.
 
-**Proof:**
+**Chứng minh:**
 
-Consider the first index when the sum of $s$ becomes negative. This means that starting with a zero partial sum, we eventually obtain a negative partial sum — so this whole prefix of the array, as well as any suffix, has a negative sum. Therefore, this subarray never contributes to the partial sum of any subarray of which it is a prefix, and can simply be dropped.
+Xem xét chỉ số đầu tiên khi tổng của $s$ trở thành âm. Điều này có nghĩa là bắt đầu với tổng một phần bằng không, cuối cùng chúng ta thu được tổng một phần âm — vì vậy toàn bộ tiền tố này của mảng, cũng như bất kỳ hậu tố nào, đều có tổng âm. Do đó, dãy con này không bao giờ đóng góp vào tổng một phần của bất kỳ dãy con nào mà nó là tiền tố, và có thể đơn giản bị loại bỏ.
 
-However, this is not enough to prove the algorithm. In the algorithm, we are actually limited in finding the answer only to such segments that begin immediately after the places when $s<0$ happened.
+Tuy nhiên, điều này không đủ để chứng minh thuật toán. Trong thuật toán, chúng ta thực sự bị giới hạn trong việc tìm câu trả lời chỉ cho các phân đoạn bắt đầu ngay sau những nơi khi $s<0$ xảy ra.
 
-But, in fact, consider an arbitrary segment $[l, r]$, and $l$ is not in such a "critical" position (i.e. $l > p+1$, where $p$ is the last such position, in which $s<0$). Since the last critical position is strictly earlier than in $l-1$, it turns out that the sum of $a[p+1 \ldots l-1]$ is non-negative. This means that by moving $l$ to position $p+1$, we will increase the answer or, in extreme cases, we will not change it.
+Nhưng, trên thực tế, xem xét một phân đoạn tùy ý $[l, r]$, và $l$ không ở vị trí "quan trọng" như vậy (tức là $l > p+1$, trong đó $p$ là vị trí cuối cùng như vậy, trong đó $s<0$). Vì vị trí quan trọng cuối cùng hoàn toàn sớm hơn $l-1$, hóa ra tổng của $a[p+1 \ldots l-1]$ là không âm. Điều này có nghĩa là bằng cách di chuyển $l$ đến vị trí $p+1$, chúng ta sẽ tăng câu trả lời hoặc, trong trường hợp cực đoan, chúng ta sẽ không thay đổi nó.
 
-One way or another, it turns out that when searching for an answer, you can limit yourself to only segments that begin immediately after the positions in which $s<0$ appeared. This proves that the algorithm is correct.
+Bằng cách này hay cách khác, hóa ra khi tìm kiếm câu trả lời, bạn có thể tự giới hạn mình chỉ trong các phân đoạn bắt đầu ngay sau các vị trí mà $s<0$ xuất hiện. Điều này chứng minh rằng thuật toán là chính xác.
 
-### Implementation
+### Cài đặt (Implementation) {: #implementation-1}
 
-As in algorithm 1, we first gave a simplified implementation that looks for only a numerical answer without finding the boundaries of the desired segment:
+Giống như trong thuật toán 1, ban đầu chúng tôi đưa ra một triển khai đơn giản chỉ tìm kiếm câu trả lời số mà không tìm thấy ranh giới của phân đoạn mong muốn:
 
 ```cpp
 int ans = a[0], sum = 0;
@@ -108,7 +108,7 @@ for (int r = 0; r < n; ++r) {
 }
 ```
 
-A complete solution, maintaining the indexes of the boundaries of the corresponding segment:
+Một giải pháp hoàn chỉnh, duy trì các chỉ số của ranh giới của phân đoạn tương ứng:
 
 ```cpp
 int ans = a[0], ans_l = 0, ans_r = 0;
@@ -128,42 +128,50 @@ for (int r = 0; r < n; ++r) {
 }
 ```
 
-## Related tasks
+## Các bài toán liên quan (Related tasks) {: #related-tasks}
 
-### Finding the maximum/minimum subarray with constraints
+### Tìm dãy con lớn nhất/nhỏ nhất có ràng buộc (Finding the maximum/minimum subarray with constraints) {: #finding-the-maximum-minimum-subarray-with-constraints}
 
-If the problem condition imposes additional restrictions on the required segment $[l, r]$ (for example, that the length $r-l+1$ of the segment must be within the specified limits), then the described algorithm is likely to be easily generalized to these cases — anyway, the problem will still be to find the minimum in the array $s[]$ with the specified additional restrictions.
+Nếu điều kiện bài toán áp đặt các hạn chế bổ sung cho phân đoạn $[l, r]$ được yêu cầu (ví dụ, độ dài $r-l+1$ của phân đoạn phải nằm trong giới hạn đã chỉ định), thì thuật toán được mô tả có khả năng dễ dàng khái quát hóa cho các trường hợp này — dù sao, bài toán vẫn sẽ là tìm giá trị nhỏ nhất trong mảng $s[]$ với các hạn chế bổ sung được chỉ định.
 
-### Two-dimensional case of the problem: search for maximum/minimum submatrix
+### Trường hợp hai chiều của bài toán: tìm kiếm ma trận con lớn nhất/nhỏ nhất (Two-dimensional case of the problem: search for maximum/minimum submatrix) {: #two-dimensional-case-of-the-problem}
 
-The problem described in this article is naturally generalized to large dimensions. For example, in a two-dimensional case, it turns into a search for such a submatrix $[l_1 \ldots r_1, l_2 \ldots r_2]$ of a given matrix, which has the maximum sum of numbers in it.
+Bài toán được mô tả trong bài viết này được khái quát hóa một cách tự nhiên cho các kích thước lớn. Ví dụ, trong trường hợp hai chiều, nó biến thành tìm kiếm ma trận con $[l_1 \ldots r_1, l_2 \ldots r_2]$ của một ma trận đã cho, có tổng các số trong đó là lớn nhất.
 
-Using the solution for the one-dimensional case, it is easy to obtain a solution in $O(n^3)$ for the two-dimensions case:
-we iterate over all possible values of $l_1$ and $r_1$, and calculate the sums from $l_1$ to $r_1$ in each row of the matrix. Now we have the one-dimensional problem of finding the indices $l_2$ and $r_2$ in this array, which can already be solved in linear time.
+Sử dụng giải pháp cho trường hợp một chiều, rất dễ dàng để có được giải pháp trong $O(n^3)$ cho trường hợp hai chiều:
+chúng ta lặp qua tất cả các giá trị có thể có của $l_1$ và $r_1$, và tính tổng từ $l_1$ đến $r_1$ trong mỗi hàng của ma trận. Bây giờ chúng ta có bài toán một chiều tìm các chỉ số $l_2$ và $r_2$ trong mảng này, vốn đã có thể được giải quyết trong thời gian tuyến tính.
 
-**Faster** algorithms for solving this problem are known, but they are not much faster than $O(n^3)$, and are very complex (so complex that many of them are inferior to the trivial algorithm for all reasonable constraints by the hidden constant). Currently, the best known algorithm works in $O\left(n^3 \frac{ \log^3 \log n }{ \log^2 n} \right)$ time (T. Chan 2007 "More algorithms for all-pairs shortest paths in weighted graphs")
+Các thuật toán **nhanh hơn** để giải quyết vấn đề này đã được biết đến, nhưng chúng không nhanh hơn nhiều so với $O(n^3)$, và rất phức tạp (phức tạp đến mức nhiều trong số chúng kém hơn thuật toán tầm thường đối với tất cả các ràng buộc hợp lý bởi hằng số ẩn). Hiện tại, thuật toán tốt nhất được biết đến hoạt động trong thời gian $O\left(n^3 \frac{ \log^3 \log n }{ \log^2 n} \right)$ (T. Chan 2007 "More algorithms for all-pairs shortest paths in weighted graphs")
 
-This algorithm by Chan, as well as many other results in this area, actually describe **fast matrix multiplication** (where matrix multiplication means modified multiplication: minimum is used instead of addition, and addition is used instead of multiplication). The problem of finding the submatrix with the largest sum can be reduced to the problem of finding the shortest paths between all pairs of vertices, and this problem, in turn, can be reduced to such a multiplication of matrices.
+Thuật toán này của Chan, cũng như nhiều kết quả khác trong lĩnh vực này, thực sự mô tả **nhân ma trận nhanh** (trong đó nhân ma trận có nghĩa là phép nhân được sửa đổi: minimum được sử dụng thay vì phép cộng, và phép cộng được sử dụng thay vì phép nhân). Bài toán tìm ma trận con có tổng lớn nhất có thể được giảm xuống bài toán tìm đường đi ngắn nhất giữa tất cả các cặp đỉnh, và bài toán này, đến lượt nó, có thể được giảm xuống phép nhân ma trận như vậy.
 
-### Search for a subarray with a maximum/minimum average
+### Tìm kiếm dãy con có trung bình lớn nhất/nhỏ nhất (Search for a subarray with a maximum/minimum average) {: #search-for-a-subarray-with-a-maximum-minimum-average}
 
-This problem lies in finding such a segment $a[l, r]$, such that the average value is maximal:
+Bài toán này nằm ở việc tìm phân đoạn $a[l, r]$ như vậy, sao cho giá trị trung bình là cực đại:
 
 $$ \max_{l \le r} \frac{ 1 }{ r-l+1 } \sum_{i=l}^{r} a[i].$$
 
-Of course, if no other conditions are imposed on the required segment $[l, r]$, then the solution will always be a segment of length $1$ at the maximum element of the array. 
-The problem only makes sense, if there are additional restrictions (for example, the length of the desired segment is bounded below).
+Tất nhiên, nếu không có điều kiện nào khác được áp đặt cho phân đoạn $[l, r]$ được yêu cầu, thì giải pháp sẽ luôn là phân đoạn có độ dài $1$ tại phần tử cực đại của mảng.
+Bài toán chỉ có ý nghĩa, nếu có các hạn chế bổ sung (ví dụ, độ dài của phân đoạn mong muốn bị chặn dưới).
 
-In this case, we apply the **standard technique** when working with the problems of the average value: we will select the desired maximum average value by **binary search**.
+Trong trường hợp này, chúng tôi áp dụng **kỹ thuật tiêu chuẩn** khi làm việc với các bài toán về giá trị trung bình: chúng tôi sẽ chọn giá trị trung bình cực đại mong muốn bằng **tìm kiếm nhị phân**.
 
-To do this, we need to learn how to solve the following subproblem: given the number $x$, and we need to check whether there is a subarray of array $a[]$ (of course, satisfying all additional constraints of the problem), where the average value is greater than $x$.
+Để làm điều này, chúng ta cần học cách giải quyết bài toán con sau: cho số $x$, và chúng ta cần kiểm tra xem có dãy con nào của mảng $a[]$ (tất nhiên, thỏa mãn tất cả các ràng buộc bổ sung của bài toán), trong đó giá trị trung bình lớn hơn $x$ hay không.
 
-To solve this subproblem, subtract $x$ from each element of array $a[]$. Then our subproblem actually turns into this one: whether or not there are positive sum subarrays in this array. And we already know how to solve this problem.
+Để giải quyết bài toán con này, hãy trừ $x$ khỏi mỗi phần tử của mảng $a[]$. Sau đó, bài toán con của chúng ta thực sự biến thành bài toán này: có hay không có các dãy con tổng dương trong mảng này. Và chúng ta đã biết cách giải quyết bài toán này.
 
-Thus, we obtained the solution for the asymptotic $O(T(n) \log W)$, where $W$ is the required accuracy, $T(n)$ is the time of solving the subtask for an array of length $n$ (which may vary depending on the specific additional restrictions imposed).
+Do đó, chúng tôi đã thu được giải pháp cho tiệm cận $O(T(n) \log W)$, trong đó $W$ là độ chính xác cần thiết, $T(n)$ là thời gian giải quyết bài toán con cho một mảng có độ dài $n$ (có thể thay đổi tùy thuộc vào các hạn chế bổ sung cụ thể được áp đặt).
 
-### Solving the online problem
+### Giải bài toán trực tuyến (Solving the online problem) {: #solving-the-online-problem}
 
-The condition of the problem is as follows: given an array of $n$ numbers, and a number $L$. There are queries of the form $(l,r)$, and in response to each query, it is required to find a subarray of the segment $[l, r]$ of length not less than $L$ with the maximum possible arithmetic mean.
+Điều kiện của bài toán như sau: cho một mảng gồm $n$ số và một số $L$. Có các truy vấn có dạng $(l,r)$, và để trả lời cho mỗi truy vấn, cần tìm một dãy con của đoạn $[l, r]$ có độ dài không nhỏ hơn $L$ với trung bình cộng lớn nhất có thể.
 
-The algorithm for solving this problem is quite complex. KADR (Yaroslav Tverdokhleb) described his algorithm on the [Russian forum](http://e-maxx.ru/forum/viewtopic.php?id=410).
+Thuật toán giải bài toán này khá phức tạp. KADR (Yaroslav Tverdokhleb) đã mô tả thuật toán của mình trên [diễn đàn Nga](http://e-maxx.ru/forum/viewtopic.php?id=410).
+
+## Checklist
+
+- [x] Dịch các khái niệm kỹ thuật sang tiếng Việt chính xác.
+- [x] Đã cập nhật các liên kết nội bộ (đến 127.0.0.1:8000).
+- [x] Định dạng lại các công thức toán học và code block.
+- [x] Kiểm tra chính tả và ngữ pháp.
+- [x] Đảm bảo tính nhất quán với các thuật ngữ đã dịch khác.

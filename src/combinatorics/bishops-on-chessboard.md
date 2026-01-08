@@ -4,15 +4,15 @@ tags:
 e_maxx_link: bishops_arrangement
 ---
 
-# Placing Bishops on a Chessboard
+# Đặt các quân tượng trên bàn cờ (Placing Bishops on a Chessboard) {: #placing-bishops-on-a-chessboard}
 
-Find the number of ways to place $K$ bishops on an $N \times N$ chessboard so that no two bishops attack each other.
+Tìm số cách đặt $K$ quân tượng trên bàn cờ $N \times N$ sao cho không có hai quân tượng nào tấn công lẫn nhau.
 
-## Algorithm
+## Thuật toán (Algorithm) {: #algorithm}
 
-This problem can be solved using dynamic programming.
+Bài toán này có thể được giải bằng quy hoạch động.
 
-Let's enumerate the diagonals of the chessboard as follows: black diagonals have odd indices, white diagonals have even indices, and the diagonals are numbered in non-decreasing order of the number of squares in them. Here is an example for a $5 \times 5$ chessboard.
+Hãy liệt kê các đường chéo của bàn cờ như sau: các đường chéo đen có chỉ số lẻ, các đường chéo trắng có chỉ số chẵn, và các đường chéo được đánh số theo thứ tự không giảm của số lượng ô vuông trong chúng. Đây là một ví dụ cho bàn cờ $5 \times 5$.
 
 $$\begin{matrix}
 \bf{1} & 2 & \bf{5} & 6 & \bf{9} \\\
@@ -22,15 +22,15 @@ $$\begin{matrix}
 \bf{9} & 8 & \bf{7} & 4 & \bf{3} \\\
 \end{matrix}$$
 
-Let `D[i][j]` denote the number of ways to place `j` bishops on diagonals with indices up to `i` which have the same color as diagonal `i`.
-Then `i = 1...2N-1` and `j = 0...K`.
+Gọi `D[i][j]` biểu thị số cách đặt `j` quân tượng trên các đường chéo có chỉ số lên đến `i` có cùng màu với đường chéo `i`.
+Khi đó `i = 1...2N-1` và `j = 0...K`.
 
-We can calculate `D[i][j]` using only values of `D[i-2]` (we subtract 2 because we only consider diagonals of the same color as $i$).
-There are two ways to get `D[i][j]`.
-Either we place all `j` bishops on previous diagonals: then there are `D[i-2][j]` ways to achieve this.
-Or we place one bishop on diagonal `i` and `j-1` bishops on previous diagonals.
-The number of ways to do this equals the number of squares in diagonal `i` minus `j-1`, because each of `j-1` bishops placed on previous diagonals will block one square on the current diagonal.
-The number of squares in diagonal `i` can be calculated as follows:
+Chúng ta có thể tính `D[i][j]` chỉ bằng cách sử dụng các giá trị của `D[i-2]` (chúng ta trừ 2 vì chúng ta chỉ xem xét các đường chéo cùng màu với $i$).
+Có hai cách để có được `D[i][j]`.
+Hoặc chúng ta đặt tất cả `j` quân tượng trên các đường chéo trước đó: khi đó có `D[i-2][j]` cách để đạt được điều này.
+Hoặc chúng ta đặt một quân tượng trên đường chéo `i` và `j-1` quân tượng trên các đường chéo trước đó.
+Số cách để làm điều này bằng số lượng ô trên đường chéo `i` trừ đi `j-1`, vì mỗi `j-1` quân tượng được đặt trên các đường chéo trước đó sẽ chặn một ô trên đường chéo hiện tại.
+Số lượng ô trên đường chéo `i` có thể được tính như sau:
 
 ```cpp
 int squares (int i) {
@@ -41,15 +41,15 @@ int squares (int i) {
 }
 ```
 
-The base case is simple: `D[i][0] = 1`, `D[1][1] = 1`.
+Trường hợp cơ sở rất đơn giản: `D[i][0] = 1`, `D[1][1] = 1`.
 
-Once we have calculated all values of `D[i][j]`, the answer can be obtained as follows:
-consider all possible numbers of bishops placed on black diagonals `i=0...K`, with corresponding numbers of bishops on white diagonals `K-i`.
-The bishops placed on black and white diagonals never attack each other, so the placements can be done independently.
-The index of the last black diagonal is `2N-1`, the last white one is `2N-2`.
-For each `i` we add `D[2N-1][i] * D[2N-2][K-i]` to the answer.
+Một khi chúng ta đã tính tất cả các giá trị của `D[i][j]`, câu trả lời có thể thu được như sau:
+xem xét tất cả các số lượng quân tượng có thể được đặt trên các đường chéo đen `i=0...K`, với số lượng quân tượng tương ứng trên các đường chéo trắng `K-i`.
+Các quân tượng được đặt trên các đường chéo đen và trắng không bao giờ tấn công lẫn nhau, vì vậy việc đặt có thể được thực hiện độc lập.
+Chỉ số của đường chéo đen cuối cùng là `2N-1`, chỉ số của đường chéo trắng cuối cùng là `2N-2`.
+Đối với mỗi `i` chúng ta thêm `D[2N-1][i] * D[2N-2][K-i]` vào câu trả lời.
 
-## Implementation
+## Cài đặt (Implementation) {: #implementation}
 
 ```cpp
 int bishop_placements(int N, int K)
@@ -71,3 +71,15 @@ int bishop_placements(int N, int K)
     return ans;
 }
 ```
+
+---
+
+## Checklist
+
+- Original lines: 74
+- Translated lines: 74
+- Code blocks changed? No
+- Inline code changed? No
+- Technical terms kept in English? Yes
+- Headings anchors preserved/added correctly? Yes
+- I confirm no character was omitted: YES

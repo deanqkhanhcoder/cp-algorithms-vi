@@ -4,108 +4,108 @@ tags:
 e_maxx_link: 2_sat
 ---
 
-# 2-SAT 
+# 2-SAT {: #2-sat}
 
-SAT (Boolean satisfiability problem) is the problem of assigning Boolean values to variables to satisfy a given Boolean formula.
-The Boolean formula will usually be given in CNF (conjunctive normal form), which is a conjunction of multiple clauses, where each clause is a disjunction of literals (variables or negation of variables).
-2-SAT (2-satisfiability) is a restriction of the SAT problem, in 2-SAT every clause has exactly two literals.
-Here is an example of such a 2-SAT problem.
-Find an assignment of $a, b, c$ such that the following formula is true:
-
-$$(a \lor \lnot b) \land (\lnot a \lor b) \land (\lnot a \lor \lnot b) \land (a \lor \lnot c)$$
-
-SAT is NP-complete, there is no known efficient solution for it.
-However 2SAT can be solved efficiently in $O(n + m)$ where $n$ is the number of variables and $m$ is the number of clauses.
-
-## Algorithm:
-
-First we need to convert the problem to a different form, the so-called implicative normal form.
-Note that the expression $a \lor b$ is equivalent to $\lnot a \Rightarrow b \land \lnot b \Rightarrow a$ (if one of the two variables is false, then the other one must be true).
-
-We now construct a directed graph of these implications:
-for each variable $x$ there will be two vertices $v_x$ and $v_{\lnot x}$.
-The edges will correspond to the implications.
-
-Let's look at the example in 2-CNF form:
+SAT (Bài toán thỏa mãn Boolean - Boolean satisfiability problem) là bài toán gán các giá trị Boolean cho các biến để thỏa mãn một công thức Boolean đã cho.
+Công thức Boolean thường sẽ được đưa ra dưới dạng CNF (dạng chuẩn hội - conjunctive normal form), là một hội (AND) của nhiều mệnh đề, trong đó mỗi mệnh đề là một tuyển (OR) của các literal (biến hoặc phủ định của biến).
+2-SAT (2-satisfiability) là một hạn chế của bài toán SAT, trong 2-SAT mỗi mệnh đề có chính xác hai literal.
+Dưới đây là một ví dụ về bài toán 2-SAT như vậy.
+Tìm một phép gán của $a, b, c$ sao cho công thức sau là đúng:
 
 $$(a \lor \lnot b) \land (\lnot a \lor b) \land (\lnot a \lor \lnot b) \land (a \lor \lnot c)$$
 
-The oriented graph will contain the following vertices and edges:
+SAT là NP-đầy đủ, không có giải pháp hiệu quả nào được biết đến cho nó.
+Tuy nhiên 2SAT có thể được giải quyết hiệu quả trong $O(n + m)$ trong đó $n$ là số lượng biến và $m$ là số lượng mệnh đề.
+
+## Thuật toán (Algorithm) {: #algorithm}
+
+Đầu tiên chúng ta cần chuyển đổi bài toán sang một dạng khác, cái gọi là dạng chuẩn kéo theo (implicative normal form).
+Lưu ý rằng biểu thức $a \lor b$ tương đương với $\lnot a \Rightarrow b \land \lnot b \Rightarrow a$ (nếu một trong hai biến là sai, thì biến kia phải đúng).
+
+Bây giờ chúng ta xây dựng một đồ thị có hướng của những phép kéo theo này:
+đối với mỗi biến $x$ sẽ có hai đỉnh $v_x$ và $v_{\lnot x}$.
+Các cạnh sẽ tương ứng với các phép kéo theo.
+
+Hãy xem ví dụ ở dạng 2-CNF:
+
+$$(a \lor \lnot b) \land (\lnot a \lor b) \land (\lnot a \lor \lnot b) \land (a \lor \lnot c)$$
+
+Đồ thị có hướng sẽ chứa các đỉnh và cạnh sau:
 
 $$\begin{array}{cccc}
 \lnot a \Rightarrow \lnot b & a \Rightarrow b & a \Rightarrow \lnot b & \lnot a \Rightarrow \lnot c\\
 b \Rightarrow a & \lnot b \Rightarrow \lnot a & b \Rightarrow \lnot a & c \Rightarrow a
 \end{array}$$
 
-You can see the implication graph in the following image:
+Bạn có thể thấy đồ thị kéo theo trong hình ảnh sau đây:
 
 <div style="text-align: center;">
-  <img src="2SAT.png" alt=""Implication Graph of 2-SAT example"">
+  <img src="2SAT.png" alt="Implication Graph of 2-SAT example">
 </div>
 
-It is worth paying attention to the property of the implication graph:
-if there is an edge $a \Rightarrow b$, then there also is an edge $\lnot b \Rightarrow \lnot a$. 
+Cần chú ý đến tính chất của đồ thị kéo theo:
+nếu có một cạnh $a \Rightarrow b$, thì cũng có một cạnh $\lnot b \Rightarrow \lnot a$.
 
-Also note, that if $x$ is reachable from $\lnot x$, and $\lnot x$ is reachable from $x$, then the problem has no solution.
-Whatever value we choose for the variable $x$, it will always end in a contradiction - if $x$ will be assigned $\text{true}$ then the implication tells us that $\lnot x$ should also be $\text{true}$ and visa versa.
-It turns out, that this condition is not only necessary, but also sufficient.
-We will prove this in a few paragraphs below.
-First recall, if a vertex is reachable from a second one, and the second one is reachable from the first one, then these two vertices are in the same strongly connected component.
-Therefore we can formulate the criterion for the existence of a solution as follows:
+Cũng lưu ý rằng, nếu $x$ có thể đi tới từ $\lnot x$, và $\lnot x$ có thể đi tới từ $x$, thì bài toán không có lời giải.
+Bất kỳ giá trị nào chúng ta chọn cho biến $x$, nó sẽ luôn kết thúc bằng một mâu thuẫn - nếu $x$ được gán là $\text{true}$ thì phép kéo theo cho chúng ta biết rằng $\lnot x$ cũng phải là $\text{true}$ và ngược lại.
+Hóa ra, điều kiện này không chỉ cần thiết, mà còn đủ.
+Chúng tôi sẽ chứng minh điều này trong một vài đoạn dưới đây.
+Đầu tiên hãy nhớ lại, nếu một đỉnh có thể đi tới từ đỉnh thứ hai, và đỉnh thứ hai có thể đi tới từ đỉnh đầu tiên, thì hai đỉnh này nằm trong cùng một thành phần liên thông mạnh.
+Do đó, chúng ta có thể xây dựng tiêu chí cho sự tồn tại của một giải pháp như sau:
 
-In order for this 2-SAT problem to have a solution, it is necessary and sufficient that for any variable $x$ the vertices $x$ and $\lnot x$ are in different strongly connected components of the strong connection of the implication graph.
+Để bài toán 2-SAT này có lời giải, điều kiện cần và đủ là đối với bất kỳ biến $x$ nào, các đỉnh $x$ và $\lnot x$ nằm trong các thành phần liên thông mạnh khác nhau của đồ thị kéo theo.
 
-This criterion can be verified in $O(n + m)$ time by finding all strongly connected components.
+Tiêu chí này có thể được xác minh trong thời gian $O(n + m)$ bằng cách tìm tất cả các thành phần liên thông mạnh.
 
-The following image shows all strongly connected components for the example.
-As we can check easily, neither of the four components contain a vertex $x$ and its negation $\lnot x$, therefore the example has a solution.
-We will learn in the next paragraphs how to compute a valid assignment, but just for demonstration purposes the solution $a = \text{false}$, $b = \text{false}$, $c = \text{false}$ is given.
+Hình ảnh sau đây hiển thị tất cả các thành phần liên thông mạnh cho ví dụ.
+Như chúng ta có thể kiểm tra dễ dàng, không có thành phần nào trong bốn thành phần chứa một đỉnh $x$ và phủ định của nó $\lnot x$, do đó ví dụ có một giải pháp.
+Chúng ta sẽ tìm hiểu trong các đoạn tiếp theo cách tính toán một phép gán hợp lệ, nhưng chỉ cho mục đích minh họa, giải pháp $a = \text{false}$, $b = \text{false}$, $c = \text{false}$ được đưa ra.
 
 <div style="text-align: center;">
-  <img src="2SAT_SCC.png" alt=""Strongly Connected Components of the 2-SAT example"">
+  <img src="2SAT_SCC.png" alt="Strongly Connected Components of the 2-SAT example">
 </div>
 
-Now we construct the algorithm for finding the solution of the 2-SAT problem on the assumption that the solution exists.
+Bây giờ chúng ta xây dựng thuật toán để tìm lời giải của bài toán 2-SAT với giả định rằng lời giải tồn tại.
 
-Note that, in spite of the fact that the solution exists, it can happen that $\lnot x$ is reachable from $x$ in the implication graph, or that (but not simultaneously) $x$ is reachable from $\lnot x$.
-In that case the choice of either $\text{true}$ or $\text{false}$ for $x$ will lead to a contradiction, while the choice of the other one will not.
-Let's learn how to choose a value, such that we don't generate a contradiction.
+Lưu ý rằng, mặc dù thực tế là lời giải tồn tại, vẫn có thể xảy ra trường hợp $\lnot x$ có thể đi tới từ $x$ trong đồ thị kéo theo, hoặc (nhưng không đồng thời) $x$ có thể đi tới từ $\lnot x$.
+Trong trường hợp đó, việc chọn $\text{true}$ hoặc $\text{false}$ cho $x$ sẽ dẫn đến mâu thuẫn, trong khi việc chọn cái còn lại sẽ không.
+Hãy tìm hiểu cách chọn một giá trị, sao cho chúng ta không tạo ra mâu thuẫn.
 
-Let us sort the strongly connected components in topological order (i.e. $\text{comp}[v] \le \text{comp}[u]$ if there is a path from $v$ to $u$) and let $\text{comp}[v]$ denote the index of strongly connected component to which the vertex $v$ belongs.
-Then, if $\text{comp}[x] < \text{comp}[\lnot x]$ we assign $x$ with $\text{false}$ and $\text{true}$ otherwise.
+Hãy sắp xếp các thành phần liên thông mạnh theo thứ tự tô pô (tức là $\text{comp}[v] \le \text{comp}[u]$ nếu có đường đi từ $v$ đến $u$) và gọi $\text{comp}[v]$ là chỉ số của thành phần liên thông mạnh mà đỉnh $v$ thuộc về.
+Sau đó, nếu $\text{comp}[x] < \text{comp}[\lnot x]$ chúng ta gán $x$ với $\text{false}$ và $\text{true}$ nếu ngược lại.
 
-Let us prove that with this assignment of the variables we do not arrive at a contradiction.
-Suppose $x$ is assigned with $\text{true}$.
-The other case can be proven in a similar way.
+Hãy chứng minh rằng với phép gán các biến này, chúng ta không đi đến mâu thuẫn.
+Giả sử $x$ được gán với $\text{true}$.
+Trường hợp khác có thể được chứng minh theo cách tương tự.
 
-First we prove that the vertex $x$ cannot reach the vertex $\lnot x$.
-Because we assigned $\text{true}$ it has to hold that the index of strongly connected component of $x$ is greater than the index of the component of $\lnot x$.
-This means that $\lnot x$ is located on the left of the component containing $x$, and the later vertex cannot reach the first.
+Đầu tiên chúng ta chứng minh rằng đỉnh $x$ không thể đi đến đỉnh $\lnot x$.
+Bởi vì chúng ta đã gán $\text{true}$, nên chỉ số của thành phần liên thông mạnh của $x$ phải lớn hơn chỉ số của thành phần của $\lnot x$.
+Điều này có nghĩa là $\lnot x$ nằm bên trái của thành phần chứa $x$, và đỉnh sau không thể đi đến đỉnh trước.
 
-Secondly we prove that there doesn't exist a variable $y$, such that the vertices $y$ and $\lnot y$ are both reachable from $x$ in the implication graph.
-This would cause a contradiction, because $x = \text{true}$ implies that $y = \text{true}$ and $\lnot y = \text{true}$.
-Let us prove this by contradiction.
-Suppose that $y$ and $\lnot y$ are both reachable from $x$, then by the property of the implication graph $\lnot x$ is reachable from both $y$ and $\lnot y$.
-By transitivity this results that $\lnot x$ is reachable by $x$, which contradicts the assumption.
+Thứ hai, chúng ta chứng minh rằng không tồn tại biến $y$, sao cho các đỉnh $y$ và $\lnot y$ đều có thể đi tới từ $x$ trong đồ thị kéo theo.
+Điều này sẽ gây ra mâu thuẫn, bởi vì $x = \text{true}$ suy ra rằng $y = \text{true}$ và $\lnot y = \text{true}$.
+Hãy chứng minh điều này bằng phản chứng.
+Giả sử rằng $y$ và $\lnot y$ đều có thể đi tới từ $x$, thì theo tính chất của đồ thị kéo theo $\lnot x$ có thể đi tới từ cả $y$ và $\lnot y$.
+Theo tính chất bắc cầu, điều này dẫn đến kết quả là $\lnot x$ có thể đi tới bởi $x$, điều này mâu thuẫn với giả định.
 
-So we have constructed an algorithm that finds the required values of variables under the assumption that for any variable $x$ the vertices $x$ and $\lnot x$ are in different strongly connected components.
-Above showed the correctness of this algorithm.
-Consequently we simultaneously proved the above criterion for the existence of a solution.
+Vì vậy, chúng ta đã xây dựng một thuật toán tìm các giá trị cần thiết của các biến với giả định rằng đối với bất kỳ biến $x$ nào, các đỉnh $x$ và $\lnot x$ nằm trong các thành phần liên thông mạnh khác nhau.
+Trên đây đã chỉ ra tính đúng đắn của thuật toán này.
+Do đó, chúng tôi đồng thời đã chứng minh tiêu chí trên cho sự tồn tại của một giải pháp.
 
-## Implementation:
+## Cài đặt (Implementation) {: #implementation}
 
-Now we can implement the entire algorithm.
-First we construct the graph of implications and find all strongly connected components.
-This can be accomplished with Kosaraju's algorithm in $O(n + m)$ time.
-In the second traversal of the graph Kosaraju's algorithm visits the strongly connected components in topological order, therefore it is easy to compute $\text{comp}[v]$ for each vertex $v$.
+Bây giờ chúng ta có thể cài đặt toàn bộ thuật toán.
+Đầu tiên chúng ta xây dựng đồ thị kéo theo và tìm tất cả các thành phần liên thông mạnh.
+Điều này có thể được thực hiện với thuật toán Kosaraju trong thời gian $O(n + m)$.
+Trong lần duyệt thứ hai của đồ thị, thuật toán Kosaraju thăm các thành phần liên thông mạnh theo thứ tự tô pô, do đó rất dễ để tính $\text{comp}[v]$ cho mỗi đỉnh $v$.
 
-Afterwards we can choose the assignment of $x$ by comparing $\text{comp}[x]$ and $\text{comp}[\lnot x]$. 
-If $\text{comp}[x] = \text{comp}[\lnot x]$ we return $\text{false}$ to indicate that there doesn't exist a valid assignment that satisfies the 2-SAT problem.
+Sau đó chúng ta có thể chọn phép gán của $x$ bằng cách so sánh $\text{comp}[x]$ và $\text{comp}[\lnot x]$.
+Nếu $\text{comp}[x] = \text{comp}[\lnot x]$ chúng ta trả về $\text{false}$ để chỉ ra rằng không tồn tại phép gán hợp lệ nào thỏa mãn bài toán 2-SAT.
 
-Below is the implementation of the solution of the 2-SAT problem for the already constructed graph of implication $adj$ and the transpose graph $adj^{\intercal}$ (in which the direction of each edge is reversed).
-In the graph the vertices with indices $2k$ and $2k+1$ are the two vertices corresponding to variable $k$ with $2k+1$ corresponding to the negated variable.
+Dưới đây là cài đặt giải pháp của bài toán 2-SAT cho đồ thị kéo theo $adj$ đã được xây dựng và đồ thị chuyển vị $adj^{\intercal}$ (trong đó hướng của mỗi cạnh bị đảo ngược).
+Trong đồ thị, các đỉnh có chỉ số $2k$ và $2k+1$ là hai đỉnh tương ứng với biến $k$ với $2k+1$ tương ứng với biến bị phủ định.
 
-```{.cpp file=2sat}
+```cpp
 struct TwoSatSolver {
     int n_vars;
     int n_vertices;
@@ -183,7 +183,8 @@ struct TwoSatSolver {
 };
 ```
 
-## Practice Problems
+## Bài tập (Practice Problems) {: #practice-problems}
+
  * [Codeforces: The Door Problem](http://codeforces.com/contest/776/problem/D)
  * [Kattis: Illumination](https://open.kattis.com/problems/illumination)
  * [UVA: Rectangles](https://uva.onlinejudge.org/index.php?option=com_onlinejudge&Itemid=8&page=show_problem&problem=3081)
