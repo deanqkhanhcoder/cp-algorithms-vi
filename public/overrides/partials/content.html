@@ -1,0 +1,50 @@
+<script type="text/javascript">
+  window.onload = function () {
+    const newIssueURL = "https://github.com/cp-algorithms/cp-algorithms/issues/new";
+    const issueTitle = "Problem on article " + {{ page.title | tojson
+  }};
+  const issueBody = `
+**Article:** [`+ {{ page.title | tojson }} + `](${window.location.href})
+
+**Problem:**
+`;
+  var issue_a = document.getElementById("report_issue_a");
+  if (issue_a) {
+    issue_a.href = `${newIssueURL}?` + `title=${encodeURIComponent(issueTitle)}&` + `body=${encodeURIComponent(issueBody)}`;
+  }
+}
+</script>
+
+{% if page.edit_url %}
+<a href="{{ page.edit_url }}" title="{{ lang.t('action.edit') }}" class="md-content__button md-icon">
+  {% include ".icons/material/pencil.svg" %}
+</a>
+<a id="report_issue_a" href="" title="Report a problem" class="md-content__button md-icon">
+  {% include ".icons/material/alert.svg" %}
+</a>
+{% endif %}
+
+<ul class="metadata page-metadata" data-bi-name="page info" lang="en-us" dir="ltr">
+  {% for tag in tags %}
+  {% if tag.url %}
+  <a href="{{ tag.url | url }}" class="md-tag">
+    {{ tag.name }}
+  </a>
+  {% else %}
+  <span class="md-tag">{{ tag.name }}</span>
+  {% endif %}
+  {% endfor %}
+
+  {% if page and page.meta and page.meta.e_maxx_link %}
+  {% set links = page.meta.e_maxx_link %}
+  {% set links = [links] if links is string else links %}
+  {% for link in links %}
+  <a href="https://e-maxx.ru/algo/{{ link }}" class="md-tag">From: e-maxx.ru</a>
+  {% endfor %}
+  {% endif %}
+</ul>
+
+{% if not "\x3ch1" in page.content %}
+<h1>{{ page.title | d(config.site_name, true)}}</h1>
+{% endif %}
+{{ page.content }}

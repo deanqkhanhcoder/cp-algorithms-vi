@@ -1,0 +1,230 @@
+[data-md-color-scheme="cpalgo"] {
+  --md-primary-fg-color: #7777aa;
+  --md-primary-fg-color--light: #7777aa;
+  --md-primary-fg-color--dark: #333371;
+}
+
+[data-md-color-scheme="slate"] {
+  --md-hue: 210;
+  --md-typeset-a-color: #c973d9;
+}
+
+[data-md-color-scheme="slate"] img {
+  background-color: lightgray;
+}
+
+/* Move primary sidebar to the right */
+.md-sidebar--primary {
+  order: 100;
+}
+
+/* For proper rendering of contribution meta */
+.metadata {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  margin-bottom: 15px;
+  color: #999;
+  font-size: 0.85em;
+}
+
+.metadata.page-metadata .contributors-text {
+  margin-right: 5px
+}
+
+body[dir=rtl] .metadata.page-metadata .contributors-text {
+  margin-right: 0;
+  margin-left: 5px
+}
+
+.page-metadata .contributors {
+  display: inline-block;
+  list-style: none;
+  margin: 0 !important;
+  padding: 0 !important
+}
+
+.page-metadata .contributors li {
+  display: inline-block;
+  vertical-align: top;
+  margin: 0;
+  padding: 0
+}
+
+/* Visually hide latex code */
+.mjx-copytext {
+  font-size: 0;
+}
+
+.arithmatex {
+  overflow-y: hidden !important;
+}
+
+/* Container chính */
+#donation-banner {
+  margin-bottom: 1.5rem;
+  border-radius: 0.2rem;
+  background-color: var(--md-default-bg-color);
+  /* Màu nền theo theme */
+  border: 1px solid var(--md-default-fg-color--lighter);
+  /* Viền mờ */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  /* Đổ bóng nhẹ */
+  overflow: hidden;
+  position: relative;
+}
+
+/* Sử dụng Flexbox để căn chỉnh */
+.donation-banner-container {
+  display: flex;
+  align-items: flex-start;
+  /* Căn lề trên */
+  padding: 1rem;
+  gap: 1rem;
+}
+
+/* Style cho icon trái tim */
+.donation-icon {
+  font-size: 1.5rem;
+  line-height: 1;
+  animation: heartbeat 1.5s infinite;
+}
+
+/* Nội dung chữ */
+.donation-content {
+  flex: 1;
+  /* Chiếm hết khoảng trống còn lại */
+}
+
+.donation-text {
+  margin: 0 !important;
+  /* Ghi đè margin mặc định của thẻ p */
+  font-size: 0.9rem;
+  line-height: 1.4;
+  color: var(--md-default-fg-color);
+}
+
+.donation-link {
+  font-weight: 700;
+  color: var(--md-primary-fg-color);
+  /* Màu tím chủ đạo của web bạn */
+  text-decoration: none;
+}
+
+.donation-link:hover {
+  text-decoration: underline;
+}
+
+/* Nút đóng (X) */
+.donation-close {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  color: var(--md-default-fg-color--light);
+  border-radius: 50%;
+  transition: background-color 0.2s, color 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.donation-close:hover {
+  background-color: var(--md-default-fg-color--lightest);
+  color: var(--md-default-fg-color);
+}
+
+/* Highlight border bên trái cho nổi bật (giống Admonition) */
+#donation-banner {
+  border-left: 4px solid var(--md-primary-fg-color);
+}
+
+/* Animation trái tim đập */
+@keyframes heartbeat {
+  0% {
+    transform: scale(1);
+  }
+
+  14% {
+    transform: scale(1.1);
+  }
+
+  28% {
+    transform: scale(1);
+  }
+
+  42% {
+    transform: scale(1.1);
+  }
+
+  70% {
+    transform: scale(1);
+  }
+}
+
+/* --- Tùy chỉnh thanh cuộn (Scrollbar) cho hiện đại --- */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--md-default-fg-color--lighter);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: var(--md-primary-fg-color);
+}
+
+/* --- Bo tròn ảnh trong bài viết --- */
+.md-content img {
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  /* Đổ bóng nhẹ */
+  transition: transform 0.3s ease;
+}
+
+/* Hiệu ứng khi di chuột vào ảnh */
+.md-content img:hover {
+  transform: scale(1.02);
+}
+
+/* --- Làm đẹp các khối code --- */
+.md-typeset pre>code {
+  font-size: 0.9em;
+  /* Chữ code nhỏ lại chút cho gọn */
+  border-radius: 6px;
+}
+
+/* --- Tùy chỉnh màu nền Sidebar (Menu trái) nếu muốn --- */
+/* (Bỏ comment dòng dưới nếu muốn menu trái tối hơn chút để tách biệt) */
+/*
+.md-sidebar--primary {
+    background-color: rgba(0,0,0,0.02); 
+}
+*/
+/* Ẩn số sao và fork cạnh icon GitHub để tiết kiệm chỗ */
+/* 1. Ẩn hoàn toàn dòng chứa số Stars và Forks */
+.md-source__facts {
+  display: none !important;
+}
+
+/* 2. Thu gọn tên Repo tối đa để nhường chỗ cho Instagram */
+.md-header__source .md-source__repository {
+  max-width: 150px;
+  /* Giảm xuống 150px cho chắc chắn */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-left: 0;
+}
+
+/* 3. Đảm bảo các icon không bị co lại */
+.md-header__option {
+  flex-shrink: 0;
+}
