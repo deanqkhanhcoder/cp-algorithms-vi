@@ -55,5 +55,3 @@ int gcd (int a, int b) {
 <div id="previewArea">
 </div>
 <br/>
-
----

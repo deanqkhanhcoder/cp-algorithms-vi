@@ -207,5 +207,3 @@ Cuối cùng, cơ số mũ không nhất thiết phải bằng 10. Dựa trên b
 * [UVA - Immortal Rabbits](https://uva.onlinejudge.org/index.php?option=com_onlinejudge&Itemid=8&page=show_problem&problem=4803)
 * [SPOJ - 0110SS](http://www.spoj.com/problems/IWGBS/)
 * [Codeforces - Notepad](http://codeforces.com/contest/17/problem/D)
-
----

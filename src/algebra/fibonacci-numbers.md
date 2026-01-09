@@ -291,5 +291,3 @@ Bây giờ chúng ta chọn hai cặp số dư giống hệt nhau với các ch�
 * [Codeforces - A. Hexadecimal's theorem](https://codeforces.com/problemset/problem/199/A)
 * [Codeforces - B. Blackboard Fibonacci](https://codeforces.com/problemset/problem/217/B)
 * [Codeforces - E. Fibonacci Number](https://codeforces.com/problemset/problem/193/E)
-
----

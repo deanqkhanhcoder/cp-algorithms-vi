@@ -47,5 +47,3 @@ int fact_pow (int n, int k) {
 Ý tưởng tương tự không thể được áp dụng trực tiếp. Thay vào đó chúng ta có thể phân tích thừa số $k$, biểu diễn nó dưới dạng $k = k_1^{p_1} \cdot \ldots \cdot k_m^{p_m}$. Với mỗi $k_i$, chúng ta tìm số lần nó xuất hiện trong $n!$ bằng cách sử dụng thuật toán được mô tả ở trên - gọi giá trị này là $a_i$. Câu trả lời cho $k$ hợp số sẽ là
 
 $$\min_ {i=1 \ldots m} \dfrac{a_i}{p_i}$$
-
----

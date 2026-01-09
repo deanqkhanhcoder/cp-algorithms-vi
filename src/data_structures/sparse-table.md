@@ -175,5 +175,3 @@ Một cấu trúc khác sẽ là [Sqrt Tree](sqrt-tree.md).
 * [Codeforces - Longest Regular Bracket Sequence](http://codeforces.com/contest/5/problem/C)
 * [CSES - Static Range Minimum Queries](https://cses.fi/problemset/task/1647)
 * [Codeforces - Array Stabilization (GCD version)](http://codeforces.com/problemset/problem/1547/F)
-
----

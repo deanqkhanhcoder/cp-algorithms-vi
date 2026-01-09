@@ -274,5 +274,3 @@ Tuy nhiên, thuật toán này cũng có điểm yếu riêng của nó.
 * [SPOJ - Printing some primes (hard)](http://www.spoj.com/problems/PRIMES2/)
 * [Codeforces - Nodbach Problem](https://codeforces.com/problemset/problem/17/A)
 * [Codeforces - Colliders](https://codeforces.com/problemset/problem/154/B)
-
----

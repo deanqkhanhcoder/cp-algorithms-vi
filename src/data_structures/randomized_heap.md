@@ -128,5 +128,3 @@ $$P\{h(T) > (c+1) \log n\} = \sum_{p \in P} 2^{-|p|} < \sum_{p \in P} 2^{-(c+1) 
 Do đó, thuật toán `merge`, và do đó tất cả các thao tác khác được thể hiện bằng nó, có thể được thực hiện trong $O(\log n)$ trung bình.
 
 Hơn nữa, đối với bất kỳ hằng số dương $\epsilon$ nào, có một hằng số dương $c$, sao cho xác suất mà thao tác sẽ yêu cầu nhiều hơn $c \log n$ bước nhỏ hơn $n^{-\epsilon}$ (theo một nghĩa nào đó, điều này mô tả hành vi trường hợp xấu nhất của thuật toán).
-
----

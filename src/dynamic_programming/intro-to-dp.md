@@ -166,5 +166,3 @@ Tất nhiên, thủ thuật quan trọng nhất là thực hành.
 
 *   [Atcoder - Educational DP Contest](https://atcoder.jp/contests/dp/tasks)
 *   [CSES - Dynamic Programming](https://cses.fi/problemset/list/)
-
----

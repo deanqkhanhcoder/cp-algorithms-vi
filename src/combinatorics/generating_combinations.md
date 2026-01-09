@@ -123,5 +123,3 @@ void all_combinations(int n, int k) {
     gen(n, k, 0, false);
 }
 ```
-
----

@@ -94,5 +94,3 @@ int generator (int p) {
 	return -1;
 }
 ```
-
----

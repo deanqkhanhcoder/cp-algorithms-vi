@@ -217,5 +217,3 @@ struct Montgomery {
     u128 mod, inv, r2;
 };
 ```
-
----

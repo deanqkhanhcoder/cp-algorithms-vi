@@ -798,5 +798,3 @@ Nếu chúng ta nhìn vào tam giác được vẽ trên các điểm $\vec r_{k
 $$|\vec r_{k-2} \times \vec r_k| = |\vec r_{k-2} \times (\vec r_{k-2} + a_k \vec r_{k-1})| = a_k |\vec r_{k-2} \times \vec r_{k-1}| = a_k.$$
 
 Kết hợp với [Định lý Pick](../geometry/picks-theorem.md), điều đó có nghĩa là không có điểm lưới nào nằm hoàn toàn bên trong tam giác và các điểm lưới duy nhất trên biên của nó là $\vec 0$ và $\vec r_{k-2} + t \cdot \vec r_{k-1}$ cho tất cả số nguyên $t$ sao cho $0 \leq t \leq a_k$. Khi được nối lại cho tất cả các $k$ có thể, điều đó có nghĩa là không có điểm nguyên nào trong không gian giữa các đa giác được tạo bởi các vectơ giản phân có chỉ số chẵn và lẻ.
-
----

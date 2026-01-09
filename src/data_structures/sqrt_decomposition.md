@@ -246,5 +246,3 @@ Bạn có thể đọc về cách tiếp cận sắp xếp nhanh hơn nữa [t�
 *   [Codeforces - Powerful array](http://codeforces.com/problemset/problem/86/D)
 *   [SPOJ - DQUERY](https://www.spoj.com/problems/DQUERY)
 *   [Codeforces - Robin Hood Archery](https://codeforces.com/contest/2014/problem/H)
-
----

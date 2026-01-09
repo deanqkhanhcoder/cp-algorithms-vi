@@ -114,5 +114,3 @@ Công thức này có thể được chứng minh rất dễ dàng bằng cách 
 Loại bỏ tất cả các phần tử không chứa thừa số $p$.
 Điều này để lại $\lfloor n/p \rfloor$ phần tử còn lại.
 Nếu chúng ta loại bỏ thừa số $p$ khỏi mỗi chúng, chúng ta nhận được tích $1 \cdot 2 \cdots \lfloor n/p \rfloor = \lfloor n/p \rfloor !$, và một lần nữa chúng ta có một đệ quy.
-
----

@@ -270,5 +270,3 @@ string kth_balanced2(int n, int k) {
     return ans;
 }
 ```
-
----

@@ -127,5 +127,3 @@ V.d. C++17 có hàm `std::gcd` trong header `numeric`.
 
 - [CSAcademy - Greatest Common Divisor](https://csacademy.com/contest/archive/task/gcd/)
 - [Codeforces 1916B - Two Divisors](https://codeforces.com/contest/1916/problem/B)
-
----

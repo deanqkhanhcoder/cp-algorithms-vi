@@ -133,5 +133,3 @@ Tuy nhiên nếu bạn làm vậy, bạn sẽ mất khả năng lập luận v�
 * [UVA - 10104 - Euclid Problem](https://uva.onlinejudge.org/index.php?option=com_onlinejudge&Itemid=8&page=show_problem&problem=1045)
 * [GYM - (J) Once Upon A Time](http://codeforces.com/gym/100963)
 * [UVA - 12775 - Gift Dilemma](https://uva.onlinejudge.org/index.php?option=com_onlinejudge&Itemid=8&page=show_problem&problem=4628)
-
----

@@ -226,5 +226,3 @@ int solve(int a, int b, int m) {
 ## Tham khảo {: #references}
 * [Wikipedia - Baby-step giant-step](https://en.wikipedia.org/wiki/Baby-step_giant-step)
 * [Answer by Zander on Mathematics StackExchange](https://math.stackexchange.com/a/133054)
-
----

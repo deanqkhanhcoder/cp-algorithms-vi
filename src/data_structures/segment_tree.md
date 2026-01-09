@@ -1205,5 +1205,3 @@ Rõ ràng ý tưởng này có thể được mở rộng theo nhiều cách kh�
 * [CSES - Hotel Queries](https://cses.fi/problemset/task/1143)
 * [CSES - Polynomial Queries](https://cses.fi/problemset/task/1736)
 * [CSES - Range Updates and Sums](https://cses.fi/problemset/task/1735)
-
----

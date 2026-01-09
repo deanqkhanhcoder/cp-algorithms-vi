@@ -486,5 +486,3 @@ Sau khi half-GCD được cài đặt, bạn có thể áp dụng lặp đi lặ
 - [CodeForces - Basis Change](https://codeforces.com/gym/102129/problem/D)
 - [CodeForces - Permutant](https://codeforces.com/gym/102129/problem/G)
 - [CodeForces - Medium Hadron Collider](https://codeforces.com/gym/102129/problem/C)
-
----

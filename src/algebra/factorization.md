@@ -427,5 +427,3 @@ Sự kết hợp của phép chia thử cho các số nguyên tố nhỏ cùng v
 - [SPOJ - FACT1](https://www.spoj.com/problems/FACT1/)
 - [SPOJ - FACT2](https://www.spoj.com/problems/FACT2/)
 - [GCPC 15 - Divisions](https://codeforces.com/gym/100753)
-
----

@@ -127,5 +127,3 @@ Ví dụ, tích chập Dirichlet của hai hàm nhân tính cũng là một hàm
   - [SPOJ - COMDIV](https://www.spoj.com/problems/COMDIV/)
   - [SPOJ - DIVSUM](https://www.spoj.com/problems/DIVSUM/)
   - [SPOJ - DIVSUM2](https://www.spoj.com/problems/DIVSUM2/)
-
----

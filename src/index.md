@@ -5,5 +5,3 @@ search:
 ---
 
 {% include 'index_body' %}
-
----

@@ -500,5 +500,3 @@ def range_sum(l, r):
 * [Fenwick tree on Wikipedia](http://en.wikipedia.org/wiki/Fenwick_tree)
 * [Binary indexed trees tutorial on TopCoder](https://www.topcoder.com/community/data-science/data-science-tutorials/binary-indexed-trees/)
 * [Range updates and queries ](https://programmingcontests.quora.com/Tutorial-Range-Updates-in-Fenwick-Tree)
-
----

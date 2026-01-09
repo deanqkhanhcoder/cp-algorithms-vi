@@ -190,5 +190,3 @@ Vì tất cả các thao tác với hàng đợi được thực hiện trong th
 *   [Queries with Fixed Length](https://www.hackerrank.com/challenges/queries-with-fixed-length/problem)
 *   [Sliding Window Minimum](https://cses.fi/problemset/task/3221)
 *   [Binary Land](https://www.codechef.com/MAY20A/problems/BINLAND)
-
----

@@ -164,5 +164,3 @@ std::vector<int> invs(const std::vector<int> &a, int m) {
 * [Codeforces 622F - The Sum of the k-th Powers](http://codeforces.com/problemset/problem/622/F)
 * [Codeforces 717A - Festival Organization](http://codeforces.com/problemset/problem/717/A)
 * [Codeforces 896D - Nephren Runs a Cinema](http://codeforces.com/problemset/problem/896/D)
-
----

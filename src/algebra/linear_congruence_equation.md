@@ -54,5 +54,3 @@ trong đó $x$ và $k$ là các số nguyên chưa biết.
 Phương pháp giải phương trình này được mô tả trong bài viết tương ứng [Phương trình Diophantine tuyến tính](linear-diophantine-equation.md) và nó bao gồm việc áp dụng [Thuật toán Euclid mở rộng](extended-euclid-algorithm.md).
 
 Nó cũng mô tả phương pháp thu được tất cả các nghiệm của phương trình này từ một nghiệm tìm thấy, và tình cờ phương pháp này, khi được xem xét cẩn thận, hoàn toàn tương đương với phương pháp được mô tả trong phần trước.
-
----

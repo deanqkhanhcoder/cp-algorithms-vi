@@ -662,5 +662,3 @@ Nếu $x$ là số lượng ký tự đại diện trong $P$, thì chúng ta s�
 - [CodeChef - Expected Number of Customers](https://www.codechef.com/COOK112A/problems/MMNN01)
 - [CodeChef - Power Sum](https://www.codechef.com/SEPT19A/problems/PSUM)
 - [Codeforces - Centroid Probabilities](https://codeforces.com/problemset/problem/1667/E)
-
----

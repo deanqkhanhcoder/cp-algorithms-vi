@@ -55,5 +55,3 @@ Nếu kích thước của thành phần này là $s$, thì có $\binom{n-1}{s-1
 Do đó chúng ta thu được quan hệ truy hồi sau:
 
 $$D[n][k] = \sum_{s=1}^{n} \binom{n-1}{s-1} C_s D[n-s][k-1]$$
-
----

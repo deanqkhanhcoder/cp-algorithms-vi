@@ -219,5 +219,3 @@ Tuy nhiên, vì những con số này (trừ 2) không phải là số nguyên t
 
 - [SPOJ - Prime or Not](https://www.spoj.com/problems/PON/)
 - [Project euler - Investigating a Prime Pattern](https://projecteuler.net/problem=146)
-
----

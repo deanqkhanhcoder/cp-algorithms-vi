@@ -71,5 +71,3 @@ int bishop_placements(int N, int K)
     return ans;
 }
 ```
-
----

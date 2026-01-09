@@ -234,5 +234,3 @@ Khi $m$ không phải là square-free, một [tổng quát hóa của định l�
 * [Blog fishi.devtail.io](https://fishi.devtail.io/weblog/2015/06/25/computing-large-binomial-coefficients-modulo-prime-non-prime/)
 * [Câu hỏi trên Mathematics StackExchange](https://math.stackexchange.com/questions/95491/n-choose-k-bmod-m-using-chinese-remainder-theorem)
 * [Câu hỏi trên CodeChef Discuss](https://discuss.codechef.com/questions/98129/your-approach-to-solve-sandwich)
-
----

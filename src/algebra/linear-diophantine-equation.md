@@ -227,5 +227,3 @@ Nếu $a < b$, chúng ta cần chọn giá trị nhỏ nhất có thể của $k
 * [Codechef - Get AC in one go](https://www.codechef.com/problems/COPR16G)
 * [LightOj - Solutions to an equation](http://www.lightoj.com/volume_showproblem.php?problem=1306)
 * [Atcoder - F - S = 1](https://atcoder.jp/contests/abc340/tasks/abc340_f)
-
----

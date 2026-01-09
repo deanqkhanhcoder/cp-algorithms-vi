@@ -77,5 +77,3 @@ $$\sum_{k=0}^n \binom{n}{k} \cdot 2^k$$
 * [Codeforces - Sandy and Nuts](http://codeforces.com/problemset/problem/599/E)
 * [Uva 1439 - Exclusive Access 2](https://uva.onlinejudge.org/index.php?option=com_onlinejudge&Itemid=8&page=show_problem&problem=4185)
 * [UVa 11825 - Hackers' Crackdown](https://uva.onlinejudge.org/index.php?option=com_onlinejudge&Itemid=8&page=show_problem&problem=2925)
-
----

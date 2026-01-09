@@ -96,5 +96,3 @@ Biết các phân tích thừa số của tất cả các số rất hữu ích 
 ## Tài liệu tham khảo (References) {: #references}
 
 - Paul Pritchard, **Linear Prime-Number Sieves: a Family Tree**, Science of Computer Programming, vol. 9 (1987), pp.17-35.
-
----

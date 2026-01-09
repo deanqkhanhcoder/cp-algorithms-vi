@@ -258,5 +258,3 @@ _Lưu ý rằng một số thao tác (cả các hàm C++20 và các hàm tích h
 * [Codeforces - Raising Bacteria](https://codeforces.com/problemset/problem/579/A)
 * [Codeforces - Fedor and New Game](https://codeforces.com/problemset/problem/467/B)
 * [Codeforces - And Then There Were K](https://codeforces.com/problemset/problem/1527/A)
-
----

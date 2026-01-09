@@ -350,5 +350,3 @@ public:
 ## Bài tập (Problems) {: #problems}
 
 [CodeChef - SEGPROD](https://www.codechef.com/NOV17/problems/SEGPROD)
-
----

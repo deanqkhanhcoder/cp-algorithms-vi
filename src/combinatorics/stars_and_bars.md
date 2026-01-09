@@ -80,5 +80,3 @@ Xem phần [Số lượng nghiệm nguyên có cận trên](./inclusion-exclusio
 * [Codeforces - Colorful Bricks](https://codeforces.com/contest/1081/problem/C)
 * [Codeforces - Two Arrays](https://codeforces.com/problemset/problem/1288/C)
 * [Codeforces - One-Dimensional Puzzle](https://codeforces.com/contest/1931/problem/G)
-
----

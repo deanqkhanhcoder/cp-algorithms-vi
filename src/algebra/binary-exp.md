@@ -263,5 +263,3 @@ $$a \cdot b = \begin{cases}
 * [LA - 3722 Jewel-eating Monsters](https://vjudge.net/problem/UVALive-3722)
 * [SPOJ - Just add it](http://www.spoj.com/problems/ZSUM/)
 * [Codeforces - Stairs and Lines](https://codeforces.com/contest/498/problem/E)
-
----
