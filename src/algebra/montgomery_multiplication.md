@@ -219,13 +219,3 @@ struct Montgomery {
 ```
 
 ---
-
-## Checklist
-
-- Original lines: 220
-- Translated lines: 220
-- Code blocks changed? No
-- Inline code changed? No
-- Technical terms kept in English? Yes
-- Headings anchors preserved/added correctly? Yes
-- I confirm no character was omitted: YES

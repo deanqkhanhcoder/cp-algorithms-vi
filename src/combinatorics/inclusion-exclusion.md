@@ -460,13 +460,3 @@ Danh sách các nhiệm vụ có thể được giải quyết bằng cách sử
 
 
 ---
-
-## Checklist
-
-- Original lines: 462
-- Translated lines: 462
-- Code blocks changed? No
-- Inline code changed? No
-- Technical terms kept in English? Yes
-- Headings anchors preserved/added correctly? Yes
-- I confirm no character was omitted: YES

@@ -116,13 +116,3 @@ Loại bỏ tất cả các phần tử không chứa thừa số $p$.
 Nếu chúng ta loại bỏ thừa số $p$ khỏi mỗi chúng, chúng ta nhận được tích $1 \cdot 2 \cdots \lfloor n/p \rfloor = \lfloor n/p \rfloor !$, và một lần nữa chúng ta có một đệ quy.
 
 ---
-
-## Checklist
-
-- Original lines: 117
-- Translated lines: 117
-- Code blocks changed? No
-- Inline code changed? No
-- Technical terms kept in English? Yes
-- Headings anchors preserved/added correctly? Yes
-- I confirm no character was omitted: YES

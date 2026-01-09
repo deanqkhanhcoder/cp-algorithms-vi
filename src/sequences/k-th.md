@@ -74,11 +74,3 @@ T order_statistics (std::vector<T> a, unsigned n, unsigned k)
 ## Bài tập (Practice Problems) {: #practice-problems}
 - [Leetcode: Kth Largest Element in an Array](https://leetcode.com/problems/kth-largest-element-in-an-array/description/)
 - [CODECHEF: Median](https://www.codechef.com/problems/CD1IT1)
-
-## Checklist
-
-- [x] Dịch các khái niệm kỹ thuật sang tiếng Việt chính xác.
-- [x] Đã cập nhật các liên kết nội bộ (đến 127.0.0.1:8000).
-- [x] Định dạng lại các công thức toán học và code block.
-- [x] Kiểm tra chính tả và ngữ pháp.
-- [x] Đảm bảo tính nhất quán với các thuật ngữ đã dịch khác.

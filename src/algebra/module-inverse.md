@@ -166,13 +166,3 @@ std::vector<int> invs(const std::vector<int> &a, int m) {
 * [Codeforces 896D - Nephren Runs a Cinema](http://codeforces.com/problemset/problem/896/D)
 
 ---
-
-## Checklist
-
-- Original lines: 167
-- Translated lines: 167
-- Code blocks changed? No
-- Inline code changed? No
-- Technical terms kept in English? Yes
-- Headings anchors preserved/added correctly? Yes
-- I confirm no character was omitted: YES

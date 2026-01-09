@@ -73,13 +73,3 @@ int bishop_placements(int N, int K)
 ```
 
 ---
-
-## Checklist
-
-- Original lines: 74
-- Translated lines: 74
-- Code blocks changed? No
-- Inline code changed? No
-- Technical terms kept in English? Yes
-- Headings anchors preserved/added correctly? Yes
-- I confirm no character was omitted: YES

@@ -276,13 +276,3 @@ Tuy nhiên, thuật toán này cũng có điểm yếu riêng của nó.
 * [Codeforces - Colliders](https://codeforces.com/problemset/problem/154/B)
 
 ---
-
-## Checklist
-
-- Original lines: 277
-- Translated lines: 277
-- Code blocks changed? No
-- Inline code changed? No
-- Technical terms kept in English? Yes
-- Headings anchors preserved/added correctly? Yes
-- I confirm no character was omitted: YES

@@ -67,11 +67,3 @@ Năm 1999 Archer đã đề xuất một chứng minh đơn giản hơn nhiều 
 ## Bài tập (Practice Problems) {: #practice-problems}
 
 * [Hackerrank - N-puzzle](https://www.hackerrank.com/challenges/n-puzzle)
-
-## Checklist
-
-- [x] Dịch các khái niệm kỹ thuật sang tiếng Việt chính xác.
-- [x] Đã cập nhật các liên kết nội bộ (đến 127.0.0.1:8000).
-- [x] Định dạng lại các công thức toán học và code block.
-- [x] Kiểm tra chính tả và ngữ pháp.
-- [x] Đảm bảo tính nhất quán với các thuật ngữ đã dịch khác.

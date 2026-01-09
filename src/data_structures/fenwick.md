@@ -502,13 +502,3 @@ def range_sum(l, r):
 * [Range updates and queries ](https://programmingcontests.quora.com/Tutorial-Range-Updates-in-Fenwick-Tree)
 
 ---
-
-## Checklist
-
-- Original lines: 504
-- Translated lines: 504
-- Code blocks changed? No
-- Inline code changed? No
-- Technical terms kept in English? Yes
-- Headings anchors preserved/added correctly? Yes
-- I confirm no character was omitted: YES

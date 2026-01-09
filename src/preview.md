@@ -57,18 +57,3 @@ int gcd (int a, int b) {
 <br/>
 
 ---
-
-## Checklist
-
-- Original lines: 58
-- Translated lines: 58
-- Code blocks changed? No
-- Inline code changed? No
-- Technical terms kept in English? Yes
-- Headings anchors preserved/added correctly? Yes
-- I confirm no character was omitted: YES
-
-Notes:
-- Translated UI text outside script.
-- Kept script strings (Loading..., Internal error!, etc.) in English to ensure script logic/safety.
-- Added anchors.

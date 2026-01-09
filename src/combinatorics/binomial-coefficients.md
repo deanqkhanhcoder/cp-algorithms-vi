@@ -236,13 +236,3 @@ Khi $m$ không phải là square-free, một [tổng quát hóa của định l�
 * [Câu hỏi trên CodeChef Discuss](https://discuss.codechef.com/questions/98129/your-approach-to-solve-sandwich)
 
 ---
-
-## Checklist
-
-- Original lines: 240
-- Translated lines: 240
-- Code blocks changed? No
-- Inline code changed? No
-- Technical terms kept in English? Yes
-- Headings anchors preserved/added correctly? Yes
-- I confirm no character was omitted: YES

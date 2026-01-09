@@ -283,13 +283,3 @@ int solve(int n, int m) {
 * [GCPC 2017 - Buildings](https://basecamp.eolymp.com/en/problems/11615)
 
 ---
-
-## Checklist
-
-- Original lines: 284
-- Translated lines: 284
-- Code blocks changed? No
-- Inline code changed? No
-- Technical terms kept in English? Yes
-- Headings anchors preserved/added correctly? Yes
-- I confirm no character was omitted: YES

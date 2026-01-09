@@ -157,13 +157,3 @@ struct QueryTree {
 - [Codeforces - Extending Set of Points](https://codeforces.com/contest/1140/problem/F)
 
 ---
-
-## Checklist
-
-- Original lines: 158
-- Translated lines: 158
-- Code blocks changed? No
-- Inline code changed? No
-- Technical terms kept in English? Yes
-- Headings anchors preserved/added correctly? Yes
-- I confirm no character was omitted: YES

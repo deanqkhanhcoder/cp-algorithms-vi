@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
   const STORAGE_KEY = "donationBannerHiddenUntil";
-  const HIDE_DAYS = 30; // 30 ngày hiện lại 1 lần cho đỡ phiền
+  const HIDE_DAYS = 1; // 30 ngày hiện lại 1 lần cho đỡ phiền
 
   const hiddenUntil = Number(localStorage.getItem(STORAGE_KEY) || 0);
   if (Date.now() < hiddenUntil) return;

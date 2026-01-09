@@ -352,13 +352,3 @@ public:
 [CodeChef - SEGPROD](https://www.codechef.com/NOV17/problems/SEGPROD)
 
 ---
-
-## Checklist
-
-- Original lines: 352
-- Translated lines: 352
-- Code blocks changed? No
-- Inline code changed? No
-- Technical terms kept in English? Yes
-- Headings anchors preserved/added correctly? Yes
-- I confirm no character was omitted: YES

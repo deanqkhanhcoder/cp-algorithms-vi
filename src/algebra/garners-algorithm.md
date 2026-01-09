@@ -160,13 +160,3 @@ class Number {
 ```
 
 ---
-
-## Checklist
-
-- Original lines: 161
-- Translated lines: 161
-- Code blocks changed? No
-- Inline code changed? No
-- Technical terms kept in English? Yes
-- Headings anchors preserved/added correctly? Yes
-- I confirm no character was omitted: YES

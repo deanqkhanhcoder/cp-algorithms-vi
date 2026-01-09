@@ -130,13 +130,3 @@ Do đó, thuật toán `merge`, và do đó tất cả các thao tác khác đư
 Hơn nữa, đối với bất kỳ hằng số dương $\epsilon$ nào, có một hằng số dương $c$, sao cho xác suất mà thao tác sẽ yêu cầu nhiều hơn $c \log n$ bước nhỏ hơn $n^{-\epsilon}$ (theo một nghĩa nào đó, điều này mô tả hành vi trường hợp xấu nhất của thuật toán).
 
 ---
-
-## Checklist
-
-- Original lines: 130
-- Translated lines: 130
-- Code blocks changed? No
-- Inline code changed? No
-- Technical terms kept in English? Yes
-- Headings anchors preserved/added correctly? Yes
-- I confirm no character was omitted: YES

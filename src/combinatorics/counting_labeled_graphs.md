@@ -57,13 +57,3 @@ Do đó chúng ta thu được quan hệ truy hồi sau:
 $$D[n][k] = \sum_{s=1}^{n} \binom{n-1}{s-1} C_s D[n-s][k-1]$$
 
 ---
-
-## Checklist
-
-- Original lines: 58
-- Translated lines: 58
-- Code blocks changed? No
-- Inline code changed? No
-- Technical terms kept in English? Yes
-- Headings anchors preserved/added correctly? Yes
-- I confirm no character was omitted: YES

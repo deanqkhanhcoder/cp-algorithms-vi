@@ -82,13 +82,3 @@ Xem phần [Số lượng nghiệm nguyên có cận trên](./inclusion-exclusio
 * [Codeforces - One-Dimensional Puzzle](https://codeforces.com/contest/1931/problem/G)
 
 ---
-
-## Checklist
-
-- Original lines: 83
-- Translated lines: 83
-- Code blocks changed? No
-- Inline code changed? No
-- Technical terms kept in English? Yes
-- Headings anchors preserved/added correctly? Yes
-- I confirm no character was omitted: YES

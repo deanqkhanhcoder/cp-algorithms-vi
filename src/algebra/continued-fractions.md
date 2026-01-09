@@ -800,13 +800,3 @@ $$|\vec r_{k-2} \times \vec r_k| = |\vec r_{k-2} \times (\vec r_{k-2} + a_k \vec
 Kết hợp với [Định lý Pick](../geometry/picks-theorem.md), điều đó có nghĩa là không có điểm lưới nào nằm hoàn toàn bên trong tam giác và các điểm lưới duy nhất trên biên của nó là $\vec 0$ và $\vec r_{k-2} + t \cdot \vec r_{k-1}$ cho tất cả số nguyên $t$ sao cho $0 \leq t \leq a_k$. Khi được nối lại cho tất cả các $k$ có thể, điều đó có nghĩa là không có điểm nguyên nào trong không gian giữa các đa giác được tạo bởi các vectơ giản phân có chỉ số chẵn và lẻ.
 
 ---
-
-## Checklist
-
-- Original lines: 1115
-- Translated lines: 1115
-- Code blocks changed? No
-- Inline code changed? No
-- Technical terms kept in English? Yes
-- Headings anchors preserved/added correctly? Yes
-- I confirm no character was omitted: YES

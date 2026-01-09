@@ -272,13 +272,3 @@ string kth_balanced2(int n, int k) {
 ```
 
 ---
-
-## Checklist
-
-- Original lines: 273
-- Translated lines: 273
-- Code blocks changed? No
-- Inline code changed? No
-- Technical terms kept in English? Yes
-- Headings anchors preserved/added correctly? Yes
-- I confirm no character was omitted: YES

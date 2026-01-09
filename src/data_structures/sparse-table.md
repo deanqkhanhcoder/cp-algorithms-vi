@@ -177,13 +177,3 @@ Một cấu trúc khác sẽ là [Sqrt Tree](sqrt-tree.md).
 * [Codeforces - Array Stabilization (GCD version)](http://codeforces.com/problemset/problem/1547/F)
 
 ---
-
-## Checklist
-
-- Original lines: 178
-- Translated lines: 178
-- Code blocks changed? No
-- Inline code changed? No
-- Technical terms kept in English? Yes
-- Headings anchors preserved/added correctly? Yes
-- I confirm no character was omitted: YES

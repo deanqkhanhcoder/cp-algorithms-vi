@@ -129,13 +129,3 @@ V.d. C++17 có hàm `std::gcd` trong header `numeric`.
 - [Codeforces 1916B - Two Divisors](https://codeforces.com/contest/1916/problem/B)
 
 ---
-
-## Checklist
-
-- Original lines: 130
-- Translated lines: 130
-- Code blocks changed? No
-- Inline code changed? No
-- Technical terms kept in English? Yes
-- Headings anchors preserved/added correctly? Yes
-- I confirm no character was omitted: YES

@@ -434,13 +434,3 @@ void output (pitem t) {
 *   [Codeforces - Yaroslav and Points](https://codeforces.com/contest/295/problem/E)
 
 ---
-
-## Checklist
-
-- Original lines: 436
-- Translated lines: 436
-- Code blocks changed? No
-- Inline code changed? No
-- Technical terms kept in English? Yes
-- Headings anchors preserved/added correctly? Yes
-- I confirm no character was omitted: YES

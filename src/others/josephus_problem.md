@@ -147,11 +147,3 @@ $$J_{n, 2} = 1 + 2 \left(n-2^{\lfloor \log_2 n \rfloor} \right)$$
 ## Giải pháp giải tích cho $k > 2$ (Analytical solution for $k > 2$) {: #analytical-solution-for-k-2_1}
 
 Mặc dù dạng bài toán đơn giản và có một số lượng lớn các bài báo về vấn đề này và các vấn đề liên quan, nhưng cho đến nay vẫn chưa tìm thấy một biểu diễn giải tích đơn giản nào cho giải pháp của bài toán Josephus. Đối với $k$ nhỏ, một số công thức được đưa ra, nhưng dường như tất cả chúng đều khó áp dụng trong thực tế (ví dụ, xem Halbeisen, Hungerbuhler "The Josephus Problem" và Odlyzko, Wilf "Functional iteration and the Josephus problem").
-
-## Checklist
-
-- [x] Dịch các khái niệm kỹ thuật sang tiếng Việt chính xác.
-- [x] Đã cập nhật các liên kết nội bộ (đến 127.0.0.1:8000).
-- [x] Định dạng lại các công thức toán học và code block.
-- [x] Kiểm tra chính tả và ngữ pháp.
-- [x] Đảm bảo tính nhất quán với các thuật ngữ đã dịch khác.

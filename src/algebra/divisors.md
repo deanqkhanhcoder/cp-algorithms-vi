@@ -129,13 +129,3 @@ Ví dụ, tích chập Dirichlet của hai hàm nhân tính cũng là một hàm
   - [SPOJ - DIVSUM2](https://www.spoj.com/problems/DIVSUM2/)
 
 ---
-
-## Checklist
-
-- Original lines: 130
-- Translated lines: 130
-- Code blocks changed? No
-- Inline code changed? No
-- Technical terms kept in English? Yes
-- Headings anchors preserved/added correctly? Yes
-- I confirm no character was omitted: YES

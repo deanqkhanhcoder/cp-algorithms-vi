@@ -96,13 +96,3 @@ int generator (int p) {
 ```
 
 ---
-
-## Checklist
-
-- Original lines: 97
-- Translated lines: 97
-- Code blocks changed? No
-- Inline code changed? No
-- Technical terms kept in English? Yes
-- Headings anchors preserved/added correctly? Yes
-- I confirm no character was omitted: YES

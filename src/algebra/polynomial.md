@@ -488,13 +488,3 @@ Sau khi half-GCD được cài đặt, bạn có thể áp dụng lặp đi lặ
 - [CodeForces - Medium Hadron Collider](https://codeforces.com/gym/102129/problem/C)
 
 ---
-
-## Checklist
-
-- Original lines: 492
-- Translated lines: 492
-- Code blocks changed? No
-- Inline code changed? No
-- Technical terms kept in English? Yes
-- Headings anchors preserved/added correctly? Yes
-- I confirm no character was omitted: YES

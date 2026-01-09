@@ -221,13 +221,3 @@ Tuy nhiên, vì những con số này (trừ 2) không phải là số nguyên t
 - [Project euler - Investigating a Prime Pattern](https://projecteuler.net/problem=146)
 
 ---
-
-## Checklist
-
-- Original lines: 222
-- Translated lines: 222
-- Code blocks changed? No
-- Inline code changed? No
-- Technical terms kept in English? Yes
-- Headings anchors preserved/added correctly? Yes
-- I confirm no character was omitted: YES

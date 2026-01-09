@@ -664,13 +664,3 @@ Nếu $x$ là số lượng ký tự đại diện trong $P$, thì chúng ta s�
 - [Codeforces - Centroid Probabilities](https://codeforces.com/problemset/problem/1667/E)
 
 ---
-
-## Checklist
-
-- Original lines: 665
-- Translated lines: 665
-- Code blocks changed? No
-- Inline code changed? No
-- Technical terms kept in English? Yes
-- Headings anchors preserved/added correctly? Yes
-- I confirm no character was omitted: YES

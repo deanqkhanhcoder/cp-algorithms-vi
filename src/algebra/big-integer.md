@@ -209,13 +209,3 @@ Cuối cùng, cơ số mũ không nhất thiết phải bằng 10. Dựa trên b
 * [Codeforces - Notepad](http://codeforces.com/contest/17/problem/D)
 
 ---
-
-## Checklist
-
-- Original lines: 210
-- Translated lines: 210
-- Code blocks changed? No
-- Inline code changed? No
-- Technical terms kept in English? Yes
-- Headings anchors preserved/added correctly? Yes
-- I confirm no character was omitted: YES

@@ -360,13 +360,3 @@ Tức là đi từ trái sang phải và gán số hiện tại hoặc dãy con 
 - [UVA - Tiling Up Blocks](https://onlinejudge.org/external/11/1196.pdf)
 
 ---
-
-## Checklist
-
-- Original lines: 361
-- Translated lines: 361
-- Code blocks changed? No
-- Inline code changed? No
-- Technical terms kept in English? Yes
-- Headings anchors preserved/added correctly? Yes
-- I confirm no character was omitted: YES

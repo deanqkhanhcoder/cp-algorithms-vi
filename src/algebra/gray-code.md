@@ -73,13 +73,3 @@ Mã Gray có một số ứng dụng hữu ích, đôi khi khá bất ngờ:
 *   <a href="http://codeforces.com/problemsets/acmsguru/problem/99999/249">SGU #249 <b>"Matrix"</b> &nbsp;&nbsp;&nbsp;&nbsp; [Difficulty: medium]</a>
 
 ---
-
-## Checklist
-
-- Original lines: 75
-- Translated lines: 75
-- Code blocks changed? No
-- Inline code changed? No
-- Technical terms kept in English? Yes
-- Headings anchors preserved/added correctly? Yes
-- I confirm no character was omitted: YES

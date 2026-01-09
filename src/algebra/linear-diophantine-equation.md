@@ -229,13 +229,3 @@ Nếu $a < b$, chúng ta cần chọn giá trị nhỏ nhất có thể của $k
 * [Atcoder - F - S = 1](https://atcoder.jp/contests/abc340/tasks/abc340_f)
 
 ---
-
-## Checklist
-
-- Original lines: 230
-- Translated lines: 230
-- Code blocks changed? No
-- Inline code changed? No
-- Technical terms kept in English? Yes
-- Headings anchors preserved/added correctly? Yes
-- I confirm no character was omitted: YES

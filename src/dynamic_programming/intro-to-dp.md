@@ -168,13 +168,3 @@ Tất nhiên, thủ thuật quan trọng nhất là thực hành.
 *   [CSES - Dynamic Programming](https://cses.fi/problemset/list/)
 
 ---
-
-## Checklist
-
-- Original lines: 166
-- Translated lines: 166
-- Code blocks changed? No
-- Inline code changed? No
-- Technical terms kept in English? Yes
-- Headings anchors preserved/added correctly? Yes
-- I confirm no character was omitted: YES

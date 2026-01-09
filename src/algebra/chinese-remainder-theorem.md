@@ -230,13 +230,3 @@ Và với những hệ số đó bạn có thể khôi phục số đầy đủ.
 * [Codeforces - Remainders Game](http://codeforces.com/problemset/problem/687/B)
 
 ---
-
-## Checklist
-
-- Original lines: 231
-- Translated lines: 231
-- Code blocks changed? No
-- Inline code changed? No
-- Technical terms kept in English? Yes
-- Headings anchors preserved/added correctly? Yes
-- I confirm no character was omitted: YES

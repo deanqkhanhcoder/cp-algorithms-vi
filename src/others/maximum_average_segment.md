@@ -167,11 +167,3 @@ Do đó, chúng tôi đã thu được giải pháp cho tiệm cận $O(T(n) \lo
 Điều kiện của bài toán như sau: cho một mảng gồm $n$ số và một số $L$. Có các truy vấn có dạng $(l,r)$, và để trả lời cho mỗi truy vấn, cần tìm một dãy con của đoạn $[l, r]$ có độ dài không nhỏ hơn $L$ với trung bình cộng lớn nhất có thể.
 
 Thuật toán giải bài toán này khá phức tạp. KADR (Yaroslav Tverdokhleb) đã mô tả thuật toán của mình trên [diễn đàn Nga](http://e-maxx.ru/forum/viewtopic.php?id=410).
-
-## Checklist
-
-- [x] Dịch các khái niệm kỹ thuật sang tiếng Việt chính xác.
-- [x] Đã cập nhật các liên kết nội bộ (đến 127.0.0.1:8000).
-- [x] Định dạng lại các công thức toán học và code block.
-- [x] Kiểm tra chính tả và ngữ pháp.
-- [x] Đảm bảo tính nhất quán với các thuật ngữ đã dịch khác.

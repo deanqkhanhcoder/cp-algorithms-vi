@@ -192,13 +192,3 @@ Vì tất cả các thao tác với hàng đợi được thực hiện trong th
 *   [Binary Land](https://www.codechef.com/MAY20A/problems/BINLAND)
 
 ---
-
-## Checklist
-
-- Original lines: 193
-- Translated lines: 193
-- Code blocks changed? No
-- Inline code changed? No
-- Technical terms kept in English? Yes
-- Headings anchors preserved/added correctly? Yes
-- I confirm no character was omitted: YES

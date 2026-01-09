@@ -125,13 +125,3 @@ void all_combinations(int n, int k) {
 ```
 
 ---
-
-## Checklist
-
-- Original lines: 142
-- Translated lines: 142
-- Code blocks changed? No
-- Inline code changed? No
-- Technical terms kept in English? Yes
-- Headings anchors preserved/added correctly? Yes
-- I confirm no character was omitted: YES

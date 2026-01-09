@@ -148,13 +148,3 @@ int main() {
 * [Codeforces - Lunar New Year and a Recursive Sequence](https://codeforces.com/contest/1106/problem/F)
 
 ---
-
-## Checklist
-
-- Original lines: 149
-- Translated lines: 149
-- Code blocks changed? No
-- Inline code changed? No
-- Technical terms kept in English? Yes
-- Headings anchors preserved/added correctly? Yes
-- I confirm no character was omitted: YES

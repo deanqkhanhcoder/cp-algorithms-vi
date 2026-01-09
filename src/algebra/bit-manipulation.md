@@ -260,13 +260,3 @@ _Lưu ý rằng một số thao tác (cả các hàm C++20 và các hàm tích h
 * [Codeforces - And Then There Were K](https://codeforces.com/problemset/problem/1527/A)
 
 ---
-
-## Checklist
-
-- Original lines: 261
-- Translated lines: 261
-- Code blocks changed? No
-- Inline code changed? No
-- Technical terms kept in English? Yes
-- Headings anchors preserved/added correctly? Yes
-- I confirm no character was omitted: YES

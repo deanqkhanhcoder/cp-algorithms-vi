@@ -293,13 +293,3 @@ Bây giờ chúng ta chọn hai cặp số dư giống hệt nhau với các ch�
 * [Codeforces - E. Fibonacci Number](https://codeforces.com/problemset/problem/193/E)
 
 ---
-
-## Checklist
-
-- Original lines: 294
-- Translated lines: 294
-- Code blocks changed? No
-- Inline code changed? No
-- Technical terms kept in English? Yes
-- Headings anchors preserved/added correctly? Yes
-- I confirm no character was omitted: YES

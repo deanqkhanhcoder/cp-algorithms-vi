@@ -228,13 +228,3 @@ int solve(int a, int b, int m) {
 * [Answer by Zander on Mathematics StackExchange](https://math.stackexchange.com/a/133054)
 
 ---
-
-## Checklist
-
-- Original lines: 228
-- Translated lines: 228
-- Code blocks changed? No
-- Inline code changed? No
-- Technical terms kept in English? Yes
-- Headings anchors preserved/added correctly? Yes
-- I confirm no character was omitted: YES

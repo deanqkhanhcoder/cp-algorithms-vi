@@ -28,11 +28,3 @@ Dễ thấy rằng thời gian hoàn thành $l_{p_i}$ đóng vai trò quan trọ
 Thật vậy, đây là chiến lược tối ưu: chúng ta nên **sắp xếp các công việc theo thứ tự giảm dần của $l_i$** và thực hiện chúng theo thứ tự đó.
 
 Chúng ta có thể chứng minh tính tối ưu của giải pháp này bằng phương pháp hoán đổi (exchange argument); hãy xem phần tiếp theo để biết chứng minh chung cho các vấn đề lập lịch trình thuộc loại này.
-
-## Checklist
-
-- [x] Dịch các khái niệm kỹ thuật sang tiếng Việt chính xác.
-- [x] Đã cập nhật các liên kết nội bộ (đến 127.0.0.1:8000).
-- [x] Định dạng lại các công thức toán học và code block.
-- [x] Kiểm tra chính tả và ngữ pháp.
-- [x] Đảm bảo tính nhất quán với các thuật ngữ đã dịch khác.

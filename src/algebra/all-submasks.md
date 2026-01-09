@@ -79,17 +79,3 @@ $$\sum_{k=0}^n \binom{n}{k} \cdot 2^k$$
 * [UVa 11825 - Hackers' Crackdown](https://uva.onlinejudge.org/index.php?option=com_onlinejudge&Itemid=8&page=show_problem&problem=2925)
 
 ---
-
-## Checklist
-
-- Original lines: 80
-- Translated lines: 80
-- Code blocks changed? No
-- Inline code changed? No
-- Technical terms kept in English? Yes
-- Headings anchors preserved/added correctly? Yes
-- I confirm no character was omitted: YES
-
-Notes:
-- Translated successfully.
-- Kept 'submask', 'mask', 'bitmask DP' in English.

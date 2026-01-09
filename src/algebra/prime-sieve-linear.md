@@ -98,13 +98,3 @@ Biết các phân tích thừa số của tất cả các số rất hữu ích 
 - Paul Pritchard, **Linear Prime-Number Sieves: a Family Tree**, Science of Computer Programming, vol. 9 (1987), pp.17-35.
 
 ---
-
-## Checklist
-
-- Original lines: 99
-- Translated lines: 99
-- Code blocks changed? No
-- Inline code changed? No
-- Technical terms kept in English? Yes
-- Headings anchors preserved/added correctly? Yes
-- I confirm no character was omitted: YES

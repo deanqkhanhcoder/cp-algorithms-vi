@@ -49,13 +49,3 @@ int fact_pow (int n, int k) {
 $$\min_ {i=1 \ldots m} \dfrac{a_i}{p_i}$$
 
 ---
-
-## Checklist
-
-- Original lines: 50
-- Translated lines: 50
-- Code blocks changed? No
-- Inline code changed? No
-- Technical terms kept in English? Yes
-- Headings anchors preserved/added correctly? Yes
-- I confirm no character was omitted: YES

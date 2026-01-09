@@ -265,13 +265,3 @@ $$a \cdot b = \begin{cases}
 * [Codeforces - Stairs and Lines](https://codeforces.com/contest/498/problem/E)
 
 ---
-
-## Checklist
-
-- Original lines: 268
-- Translated lines: 268
-- Code blocks changed? No
-- Inline code changed? No
-- Technical terms kept in English? Yes
-- Headings anchors preserved/added correctly? Yes
-- I confirm no character was omitted: YES

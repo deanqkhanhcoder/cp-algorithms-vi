@@ -217,13 +217,3 @@ Bây giờ, bình phương cả hai vế $d-k-1$ lần chúng ta có thể thu �
 * [M30, Hans Petter Selasky, 2009](https://ia601602.us.archive.org/29/items/B-001-001-251/B-001-001-251.pdf#page=640)
 
 ---
-
-## Checklist
-
-- Original lines: 218
-- Translated lines: 218
-- Code blocks changed? No
-- Inline code changed? No
-- Technical terms kept in English? Yes
-- Headings anchors preserved/added correctly? Yes
-- I confirm no character was omitted: YES

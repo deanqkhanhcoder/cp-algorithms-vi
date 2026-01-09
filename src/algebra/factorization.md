@@ -429,13 +429,3 @@ Sự kết hợp của phép chia thử cho các số nguyên tố nhỏ cùng v
 - [GCPC 15 - Divisions](https://codeforces.com/gym/100753)
 
 ---
-
-## Checklist
-
-- Original lines: 430
-- Translated lines: 430
-- Code blocks changed? No
-- Inline code changed? No
-- Technical terms kept in English? Yes
-- Headings anchors preserved/added correctly? Yes
-- I confirm no character was omitted: YES

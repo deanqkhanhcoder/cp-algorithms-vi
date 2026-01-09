@@ -248,13 +248,3 @@ Bạn có thể đọc về cách tiếp cận sắp xếp nhanh hơn nữa [t�
 *   [Codeforces - Robin Hood Archery](https://codeforces.com/contest/2014/problem/H)
 
 ---
-
-## Checklist
-
-- Original lines: 250
-- Translated lines: 250
-- Code blocks changed? No
-- Inline code changed? No
-- Technical terms kept in English? Yes
-- Headings anchors preserved/added correctly? Yes
-- I confirm no character was omitted: YES

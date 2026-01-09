@@ -1207,13 +1207,3 @@ Rõ ràng ý tưởng này có thể được mở rộng theo nhiều cách kh�
 * [CSES - Range Updates and Sums](https://cses.fi/problemset/task/1735)
 
 ---
-
-## Checklist
-
-- Original lines: 1213
-- Translated lines: 1213
-- Code blocks changed? No
-- Inline code changed? No
-- Technical terms kept in English? Yes
-- Headings anchors preserved/added correctly? Yes
-- I confirm no character was omitted: YES

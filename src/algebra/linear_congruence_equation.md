@@ -56,13 +56,3 @@ Phương pháp giải phương trình này được mô tả trong bài viết t
 Nó cũng mô tả phương pháp thu được tất cả các nghiệm của phương trình này từ một nghiệm tìm thấy, và tình cờ phương pháp này, khi được xem xét cẩn thận, hoàn toàn tương đương với phương pháp được mô tả trong phần trước.
 
 ---
-
-## Checklist
-
-- Original lines: 57
-- Translated lines: 57
-- Code blocks changed? No
-- Inline code changed? No
-- Technical terms kept in English? Yes
-- Headings anchors preserved/added correctly? Yes
-- I confirm no character was omitted: YES

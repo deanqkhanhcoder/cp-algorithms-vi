@@ -257,13 +257,3 @@ $$ x^n \equiv x^{\phi(m)} x^{(n - \phi(m)) \bmod \phi(m)} \bmod m \equiv x^{\phi
 * [Codeforces - Small GCD](https://codeforces.com/contest/1900/problem/D)
 
 ---
-
-## Checklist
-
-- Original lines: 258
-- Translated lines: 258
-- Code blocks changed? No
-- Inline code changed? No
-- Technical terms kept in English? Yes
-- Headings anchors preserved/added correctly? Yes
-- I confirm no character was omitted: YES

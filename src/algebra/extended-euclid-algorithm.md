@@ -135,13 +135,3 @@ Tuy nhiên nếu bạn làm vậy, bạn sẽ mất khả năng lập luận v�
 * [UVA - 12775 - Gift Dilemma](https://uva.onlinejudge.org/index.php?option=com_onlinejudge&Itemid=8&page=show_problem&problem=4628)
 
 ---
-
-## Checklist
-
-- Original lines: 136
-- Translated lines: 136
-- Code blocks changed? No
-- Inline code changed? No
-- Technical terms kept in English? Yes
-- Headings anchors preserved/added correctly? Yes
-- I confirm no character was omitted: YES
