@@ -1,4 +1,4 @@
-# Algorithms for Competitive Programming
+# Algorithms for Competitive Programming (but this is Vietnamese)
 
 Chào mừng bạn đến với bản dịch tiếng Việt của CP-Algorithms.
 
@@ -20,7 +20,7 @@ Chào mừng bạn đến với bản dịch tiếng Việt của CP-Algorithms.
     <h3>Đồ thị (Graph)</h3>
     <p>BFS, DFS, Dijkstra, MST...</p>
   </a>
-  
+
   <a href="string/prefix-function.html" class="card">
     <div class="card-icon">abc</div>
     <h3>Xử lý chuỗi</h3>
