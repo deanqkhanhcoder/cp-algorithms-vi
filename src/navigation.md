@@ -8,7 +8,7 @@ search:
     - [Điều hướng](navigation.md)
     - [Danh mục thẻ](tags.md)
     - [Cách đóng góp](contrib.md)
-    - [Quy tắc ứng xử](code_of_conduct.md)
+    - [Quy tắc ứng xử](code-of-conduct.md)
     - [Xem trước](preview.md)
 - Đại số
     - Cơ bản
@@ -20,21 +20,21 @@ search:
     - Số nguyên tố
         - [Sàng Eratosthenes](algebra/sieve-of-eratosthenes.md)
         - [Sàng tuyến tính](algebra/prime-sieve-linear.md)
-        - [Kiểm tra số nguyên tố](algebra/primality_tests.md)
+        - [Kiểm tra số nguyên tố](algebra/primality-tests.md)
         - [Phân tích thừa số nguyên tố](algebra/factorization.md)
     - Hàm lý thuyết số
         - [Hàm phi Euler](algebra/phi-function.md)
         - [Số lượng ước / Tổng các ước](algebra/divisors.md)
     - Số học module
         - [Nghịch đảo module](algebra/module-inverse.md)
-        - [Phương trình đồng dư tuyến tính](algebra/linear_congruence_equation.md)
+        - [Phương trình đồng dư tuyến tính](algebra/linear-congruence-equation.md)
         - [Định lý thặng dư Trung Hoa](algebra/chinese-remainder-theorem.md)
         - [Thuật toán Garner](algebra/garners-algorithm.md)
         - [Giai thừa modulo p](algebra/factorial-modulo.md)
         - [Logarit rời rạc](algebra/discrete-log.md)
         - [Căn nguyên thủy](algebra/primitive-root.md)
         - [Căn rời rạc](algebra/discrete-root.md)
-        - [Nhân Montgomery](algebra/montgomery_multiplication.md)
+        - [Nhân Montgomery](algebra/montgomery-multiplication.md)
     - Hệ đếm
         - [Hệ tam phân cân bằng](algebra/balanced-ternary.md)
         - [Mã Gray](algebra/gray-code.md)
@@ -48,28 +48,28 @@ search:
         - [Phân tích lũy thừa (Factoring Exponentiation)](algebra/factoring-exp.md)
 - Cấu trúc dữ liệu
     - Cơ bản
-        - [Minimum Stack / Minimum Queue](data_structures/stack_queue_modification.md)
+        - [Minimum Stack / Minimum Queue](data_structures/stack-queue-modification.md)
         - [Sparse Table](data_structures/sparse-table.md)
     - Cây
-        - [Disjoint Set Union (DSU)](data_structures/disjoint_set_union.md)
+        - [Disjoint Set Union (DSU)](data_structures/disjoint-set-union.md)
         - [Fenwick Tree](data_structures/fenwick.md)
-        - [Sqrt Decomposition](data_structures/sqrt_decomposition.md)
-        - [Segment Tree](data_structures/segment_tree.md)
+        - [Sqrt Decomposition](data_structures/sqrt-decomposition.md)
+        - [Segment Tree](data_structures/segment-tree.md)
         - [Treap](data_structures/treap.md)
         - [Sqrt Tree](data_structures/sqrt-tree.md)
-        - [Randomized Heap](data_structures/randomized_heap.md)
+        - [Randomized Heap](data_structures/randomized-heap.md)
     - Nâng cao
-        - [Xóa khỏi cấu trúc dữ liệu trong O(T(n) log n)](data_structures/deleting_in_log_n.md)
+        - [Xóa khỏi cấu trúc dữ liệu trong O(T(n) log n)](data_structures/deleting-in-log-n.md)
 - Quy hoạch động
     - [Giới thiệu về Quy hoạch động](dynamic_programming/intro-to-dp.md)
     - [Bài toán cái túi](dynamic_programming/knapsack.md)
-    - [Dãy con tăng dài nhất](dynamic_programming/longest_increasing_subsequence.md)
+    - [Dãy con tăng dài nhất](dynamic_programming/longest-increasing-subsequence.md)
     - Tối ưu hóa DP
         - [Quy hoạch động chia để trị](dynamic_programming/divide-and-conquer-dp.md)
         - [Tối ưu hóa Knuth](dynamic_programming/knuth-optimization.md)
     - Bài tập
         - [Quy hoạch động trên profile gãy. Bài toán "Parquet"](dynamic_programming/profile-dynamics.md)
-        - [Tìm ma trận con toàn số 0 lớn nhất](dynamic_programming/zero_matrix.md)
+        - [Tìm ma trận con toàn số 0 lớn nhất](dynamic_programming/zero-matrix.md)
 - Xử lý chuỗi
     - Cơ bản
         - [Băm chuỗi (String Hashing)](string/string-hashing.md)
@@ -77,15 +77,15 @@ search:
         - [Hàm tiền tố - Knuth-Morris-Pratt](string/prefix-function.md)
         - [Hàm Z (Z-function)](string/z-function.md)
         - [Suffix Array](string/suffix-array.md)
-        - [Thuật toán Aho-Corasick](string/aho_corasick.md)
+        - [Thuật toán Aho-Corasick](string/aho-corasick.md)
     - Nâng cao
         - [Suffix Tree](string/suffix-tree-ukkonen.md)
         - [Suffix Automaton](string/suffix-automaton.md)
-        - [Phân rã Lyndon](string/lyndon_factorization.md)
+        - [Phân rã Lyndon](string/lyndon-factorization.md)
     - Bài tập
-        - [Phân tích biểu thức](string/expression_parsing.md)
+        - [Phân tích biểu thức](string/expression-parsing.md)
         - [Thuật toán Manacher - Tìm tất cả các palindrome con trong O(N)](string/manacher.md)
-        - [Tìm lặp lại](string/main_lorentz.md)
+        - [Tìm lặp lại](string/main-lorentz.md)
 - Đại số tuyến tính
     - Ma trận
         - [Gauss & Hệ phương trình tuyến tính](linear_algebra/linear-system-gauss.md)
@@ -100,18 +100,18 @@ search:
     - Kỹ thuật
         - [Nguyên lý bao hàm - loại trừ](combinatorics/inclusion-exclusion.md)
         - [Bổ đề Burnside / Định lý liệt kê Pólya](combinatorics/burnside.md)
-        - [Bài toán chia kẹo (Stars and bars)](combinatorics/stars_and_bars.md)
-        - [Sinh tất cả tổ hợp chập K](combinatorics/generating_combinations.md)
+        - [Bài toán chia kẹo (Stars and bars)](combinatorics/stars-and-bars.md)
+        - [Sinh tất cả tổ hợp chập K](combinatorics/generating-combinations.md)
     - Bài tập
         - [Xếp quân Tượng trên bàn cờ](combinatorics/bishops-on-chessboard.md)
-        - [Dãy ngoặc đúng](combinatorics/bracket_sequences.md)
-        - [Đếm đồ thị có nhãn](combinatorics/counting_labeled_graphs.md)
+        - [Dãy ngoặc đúng](combinatorics/bracket-sequences.md)
+        - [Đếm đồ thị có nhãn](combinatorics/counting-labeled-graphs.md)
 - Phương pháp số
     - Tìm kiếm
-        - [Tìm kiếm nhị phân](num_methods/binary_search.md)
-        - [Tìm kiếm tam phân](num_methods/ternary_search.md)
-        - [Phương pháp Newton tìm nghiệm](num_methods/roots_newton.md)
-        - [Mô phỏng luyện kim (Simulated Annealing)](num_methods/simulated_annealing.md)
+        - [Tìm kiếm nhị phân](num_methods/binary-search.md)
+        - [Tìm kiếm tam phân](num_methods/ternary-search.md)
+        - [Phương pháp Newton tìm nghiệm](num_methods/roots-newton.md)
+        - [Mô phỏng luyện kim (Simulated Annealing)](num_methods/simulated-annealing.md)
     - Tích phân
         - [Tích phân theo công thức Simpson](num_methods/simpson-integration.md)
 - Hình học
@@ -134,16 +134,16 @@ search:
         - [Điểm nguyên của đa giác không nguyên](geometry/lattice-points.md)
     - Bao lồi
         - [Xây dựng bao lồi](geometry/convex-hull.md)
-        - [Convex hull trick và Li Chao tree](geometry/convex_hull_trick.md)
+        - [Convex hull trick và Li Chao tree](geometry/convex-hull-trick.md)
     - Sweep-line
-        - [Tìm cặp đoạn thẳng cắt nhau](geometry/intersecting_segments.md)
+        - [Tìm cặp đoạn thẳng cắt nhau](geometry/intersecting-segments.md)
     - Đồ thị phẳng
         - [Tìm các mặt của đồ thị phẳng](geometry/planar.md)
         - [Xác định vị trí điểm trong O(log N)](geometry/point-location.md)
     - Khác
-        - [Tìm cặp điểm gần nhất](geometry/nearest_points.md)
+        - [Tìm cặp điểm gần nhất](geometry/nearest-points.md)
         - [Tam giác hóa Delaunay và biểu đồ Voronoi](geometry/delaunay.md)
-        - [Phân rã dọc (Vertical decomposition)](geometry/vertical_decomposition.md)
+        - [Phân rã dọc (Vertical decomposition)](geometry/vertical-decomposition.md)
         - [Giao nửa mặt phẳng - Thuật toán S&I trong O(N log N)](geometry/halfplane-intersection.md)
         - [Khoảng cách Manhattan](geometry/manhattan-distance.md)
         - [Đường tròn bao nhỏ nhất](geometry/enclosing-circle.md)
@@ -160,64 +160,64 @@ search:
         - [Định hướng mạnh](graph/strong-orientation.md)
     - Đường đi ngắn nhất từ một nguồn
         - [Dijkstra - tìm đường đi ngắn nhất từ một đỉnh](graph/dijkstra.md)
-        - [Dijkstra trên đồ thị thưa](graph/dijkstra_sparse.md)
-        - [Bellman-Ford - tìm đường đi ngắn nhất với trọng số âm](graph/bellman_ford.md)
-        - [0-1 BFS](graph/01_bfs.md)
-        - [Thuật toán D´Esopo-Pape](graph/desopo_pape.md)
+        - [Dijkstra trên đồ thị thưa](graph/dijkstra-sparse.md)
+        - [Bellman-Ford - tìm đường đi ngắn nhất với trọng số âm](graph/bellman-ford.md)
+        - [0-1 BFS](graph/01-bfs.md)
+        - [Thuật toán D´Esopo-Pape](graph/desopo-pape.md)
     - Đường đi ngắn nhất giữa mọi cặp đỉnh
         - [Floyd-Warshall - tìm mọi đường đi ngắn nhất](graph/all-pair-shortest-path-floyd-warshall.md)
-        - [Số đường đi độ dài cố định / Đường đi ngắn nhất độ dài cố định](graph/fixed_length_paths.md)
+        - [Số đường đi độ dài cố định / Đường đi ngắn nhất độ dài cố định](graph/fixed-length-paths.md)
     - Cây khung
-        - [Cây khung nhỏ nhất - Thuật toán Prim](graph/mst_prim.md)
-        - [Cây khung nhỏ nhất - Thuật toán Kruskal](graph/mst_kruskal.md)
-        - [Cây khung nhỏ nhất - Kruskal và DSU](graph/mst_kruskal_with_dsu.md)
-        - [Cây khung nhỏ nhất thứ hai - Dùng Kruskal và LCA](graph/second_best_mst.md)
+        - [Cây khung nhỏ nhất - Thuật toán Prim](graph/mst-prim.md)
+        - [Cây khung nhỏ nhất - Thuật toán Kruskal](graph/mst-kruskal.md)
+        - [Cây khung nhỏ nhất - Kruskal và DSU](graph/mst-kruskal-with-dsu.md)
+        - [Cây khung nhỏ nhất thứ hai - Dùng Kruskal và LCA](graph/second-best-mst.md)
         - [Định lý Kirchhoff](graph/kirchhoff-theorem.md)
-        - [Mã Prüfer](graph/pruefer_code.md)
+        - [Mã Prüfer](graph/pruefer-code.md)
     - Chu trình
         - [Kiểm tra tính không chu trình và tìm chu trình trong O(M)](graph/finding-cycle.md)
         - [Tìm chu trình âm trong đồ thị](graph/finding-negative-cycle-in-graph.md)
-        - [Đường đi Euler](graph/euler_path.md)
+        - [Đường đi Euler](graph/euler-path.md)
     - Lowest Common Ancestor
         - [Lowest Common Ancestor (LCA)](graph/lca.md)
-        - [LCA - Binary Lifting](graph/lca_binary_lifting.md)
-        - [LCA - Thuật toán Farach-Colton và Bender](graph/lca_farachcoltonbender.md)
-        - [Giải RMQ bằng LCA](graph/rmq_linear.md)
-        - [LCA - Thuật toán Tarjan (Offline)](graph/lca_tarjan.md)
+        - [LCA - Binary Lifting](graph/lca-binary-lifting.md)
+        - [LCA - Thuật toán Farach-Colton và Bender](graph/lca-farachcoltonbender.md)
+        - [Giải RMQ bằng LCA](graph/rmq-linear.md)
+        - [LCA - Thuật toán Tarjan (Offline)](graph/lca-tarjan.md)
     - Luồng và các bài toán liên quan
-        - [Luồng cực đại - Ford-Fulkerson và Edmonds-Karp](graph/edmonds_karp.md)
+        - [Luồng cực đại - Ford-Fulkerson và Edmonds-Karp](graph/edmonds-karp.md)
         - [Luồng cực đại - Thuật toán Push-relabel](graph/push-relabel.md)
         - [Luồng cực đại - Thuật toán Push-relabel cải tiến](graph/push-relabel-faster.md)
         - [Luồng cực đại - Thuật toán Dinic](graph/dinic.md)
         - [Luồng cực đại - Thuật toán MPM](graph/mpm.md)
-        - [Luồng có yêu cầu (Flows with demands)](graph/flow_with_demands.md)
-        - [Luồng chi phí nhỏ nhất](graph/min_cost_flow.md)
-        - [Bài toán phân công](graph/Assignment-problem-min-flow.md)
+        - [Luồng có yêu cầu (Flows with demands)](graph/flow-with-demands.md)
+        - [Luồng chi phí nhỏ nhất](graph/min-cost-flow.md)
+        - [Bài toán phân công](graph/assignment-problem-min-flow.md)
     - Cặp ghép và các bài toán liên quan
         - [Kiểm tra đồ thị hai phía](graph/bipartite-check.md)
-        - [Thuật toán Kuhn - Cặp ghép cực đại trên đồ thị hai phía](graph/kuhn_maximum_bipartite_matching.md)
+        - [Thuật toán Kuhn - Cặp ghép cực đại trên đồ thị hai phía](graph/kuhn-maximum-bipartite-matching.md)
         - [Thuật toán Hungary](graph/hungarian-algorithm.md)
     - Khác
         - [Sắp xếp topo](graph/topological-sort.md)
-        - [Độ liên thông cạnh / Độ liên thông đỉnh](graph/edge_vertex_connectivity.md)
-        - [Tô màu cây](graph/tree_painting.md)
-        - [2-SAT](graph/2SAT.md)
+        - [Độ liên thông cạnh / Độ liên thông đỉnh](graph/edge-vertex-connectivity.md)
+        - [Tô màu cây](graph/tree-painting.md)
+        - [2-SAT](graph/2-sat.md)
         - [Heavy-light decomposition (HLD)](graph/hld.md)
 - Khác
     - Dãy số
         - [Bài toán RMQ (Range Minimum Query - phần tử nhỏ nhất trong đoạn)](sequences/rmq.md)
-        - [Tìm đoạn con có tổng lớn nhất/nhỏ nhất](others/maximum_average_segment.md)
+        - [Tìm đoạn con có tổng lớn nhất/nhỏ nhất](others/maximum-average-segment.md)
         - [Tìm thống kê thứ K trong O(N)](sequences/k-th.md)
         - [Bài toán MEX (Phần tử nhỏ nhất không xuất hiện)](sequences/mex.md)
     - Lý thuyết trò chơi
-        - [Trò chơi trên đồ thị bất kỳ](game_theory/games_on_graphs.md)
+        - [Trò chơi trên đồ thị bất kỳ](game_theory/games-on-graphs.md)
         - [Định lý Sprague-Grundy. Trò chơi Nim](game_theory/sprague-grundy-nim.md)
     - Lập lịch
-        - [Lập lịch trên một máy](schedules/schedule_one_machine.md)
-        - [Lập lịch trên hai máy](schedules/schedule_two_machines.md)
+        - [Lập lịch trên một máy](schedules/schedule-one-machine.md)
+        - [Lập lịch trên hai máy](schedules/schedule-two-machines.md)
         - [Lịch tối ưu với deadline và thời lượng](schedules/schedule-with-completion-duration.md)
     - Khác
-        - [Thuật toán Rùa và Thỏ (Phát hiện chu trình trong danh sách liên kết)](others/tortoise_and_hare.md)
-        - [Bài toán Josephus](others/josephus_problem.md)
+        - [Thuật toán Rùa và Thỏ (Phát hiện chu trình trong danh sách liên kết)](others/tortoise-and-hare.md)
+        - [Bài toán Josephus](others/josephus-problem.md)
         - [Trò chơi 15 Puzzle: Sự tồn tại của lời giải](others/15-puzzle.md)
-        - [Cây Stern-Brocot và Dãy Farey](others/stern_brocot_tree_farey_sequences.md)
+        - [Cây Stern-Brocot và Dãy Farey](others/stern-brocot-tree-farey-sequences.md)

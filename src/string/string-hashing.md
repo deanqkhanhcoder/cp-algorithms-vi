@@ -64,8 +64,7 @@ Dưới đây là một ví dụ về việc tính toán giá trị băm của c
 Chúng ta chuyển đổi mỗi ký tự của $s$ thành một số nguyên.
 Ở đây chúng ta sử dụng chuyển đổi $a \rightarrow 1$, $b \rightarrow 2$, $\dots$, $z \rightarrow 26$.
 Chuyển đổi $a \rightarrow 0$ không phải là một ý tưởng hay, bởi vì khi đó các giá trị băm của các chuỗi $a$, $aa$, $aaa$, $\dots$ đều đánh giá thành $0$.
-
-```{.cpp file=hashing_function}
+```cpp title="hashing_function"
 long long compute_hash(string const& s) {
     const int p = 31;
     const int m = 1e9 + 9;
@@ -91,8 +90,7 @@ Từ thuật toán hiển nhiên liên quan đến việc sắp xếp các chu�
 Tuy nhiên, bằng cách sử dụng băm, chúng ta giảm thời gian so sánh xuống $O(1)$, cho chúng ta một thuật toán chạy trong thời gian $O(n m + n \log n)$.
 
 Chúng ta tính toán băm cho mỗi chuỗi, sắp xếp các giá trị băm cùng với các chỉ số, và sau đó nhóm các chỉ số theo các giá trị băm giống hệt nhau.
-
-```{.cpp file=hashing_group_identical_strings}
+```cpp title="hashing_group_identical_strings"
 vector<vector<int>> group_identical_strings(vector<string> const& s) {
     int n = s.size();
     vector<pair<long long, int>> hashes(n);
@@ -155,8 +153,7 @@ Số lượng các phần tử khác nhau trong mảng bằng số lượng các
 Số này được cộng vào câu trả lời cuối cùng.
 
 Để thuận tiện, chúng ta sẽ sử dụng $h[i]$ làm giá trị băm của tiền tố với $i$ ký tự, và xác định $h[0] = 0$.
-
-```{.cpp file=hashing_count_unique_substrings}
+```cpp title="hashing_count_unique_substrings"
 int count_unique_substrings(string const& s) {
     int n = s.size();
     
@@ -186,7 +183,7 @@ int count_unique_substrings(string const& s) {
 ```
 
 Lưu ý rằng $O(n^2)$ không phải là độ phức tạp thời gian tốt nhất có thể cho bài toán này.
-Một giải pháp với $O(n \log n)$ được mô tả trong bài viết về [Mảng Hậu tố (Suffix Arrays)](suffix-array.md), và thậm chí có thể tính toán nó trong $O(n)$ bằng cách sử dụng [Cây Hậu tố (Suffix Tree)](./suffix-tree-ukkonen.md) hoặc [Máy tự động Hậu tố (Suffix Automaton)](./suffix-automaton.md).
+Một giải pháp với $O(n \log n)$ được mô tả trong bài viết về [Mảng Hậu tố (Suffix Arrays)](suffix-array.md), và thậm chí có thể tính toán nó trong $O(n)$ bằng cách sử dụng [Cây Hậu tố (Suffix Tree)](suffix-tree-ukkonen.md) hoặc [Máy tự động Hậu tố (Suffix Automaton)](suffix-automaton.md).
 
 ## Cải thiện xác suất không va chạm (Improve no-collision probability) {: #improve-no-collision-probability}
 

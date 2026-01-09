@@ -21,8 +21,7 @@ Nó có thể được kiểm tra bằng một vài tích chéo (cross products)
 ## Cài đặt (Implementation) {: #implementation}
 
 Thuật toán đã cho được cài đặt cho các điểm nguyên. Tất nhiên, nó có thể dễ dàng sửa đổi để làm việc với số thực (doubles).
-
-```{.cpp file=check-segments-inter}
+```cpp title="check-segments-inter"
 struct pt {
     long long x, y;
     pt() {}

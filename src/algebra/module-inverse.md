@@ -100,8 +100,7 @@ trong trường hợp tổng quát. Để thấy điều này, hãy thử tính 
 vì $5 \cdot 5 \equiv 1 \bmod 12$. Tuy nhiên, $12 = 2 \cdot 5 + 2$, và chúng ta có $k=2$ và $r=2$, với $2$ không khả nghịch modulo $12$.
 
 Tuy nhiên, nếu modulo là số nguyên tố, tất cả $a$ với $0 < a < m$ đều khả nghịch modulo $m$, và chúng ta có hàm đệ quy sau (trong C++) để tính nghịch đảo modulo cho số $a$ đối với $m$
-
-```{.cpp file=modular_inverse_euclidean_division}
+```cpp title="modular_inverse_euclidean_division"
 int inv(int a) {
   return a <= 1 ? a : m - (long long)(m/a) * inv(m % a) % m;
 }
@@ -113,8 +112,7 @@ Trong thực tế, cài đặt này nhanh, v.d. đối với modulo $10^9 + 7$ n
 
 <div id="mod-inv-all-num"></div>
 Áp dụng công thức này, chúng ta cũng có thể tính trước nghịch đảo modulo cho mọi số trong khoảng $[1, m-1]$ trong $O(m)$.
-
-```{.cpp file=modular_inverse_euclidean_division_all}
+```cpp title="modular_inverse_euclidean_division_all"
 inv[1] = 1;
 for(int a = 2; a < m; ++a)
     inv[a] = m - (long long)(m/a) * inv[m%a] % m;

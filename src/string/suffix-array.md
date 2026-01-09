@@ -95,8 +95,7 @@ Vì vậy, tất cả chúng đều hợp lệ.
 
 Bây giờ chúng ta hãy tập trung vào việc thực hiện thuật toán.
 Chúng ta sẽ viết một hàm nhận chuỗi $s$ và trả về các hoán vị của các dịch chuyển vòng đã sắp xếp.
-
-```{.cpp file=suffix_array_sort_cyclic1}
+```cpp title="suffix_array_sort_cyclic1"
 vector<int> sort_cyclic_shifts(string const& s) {
     int n = s.size();
     const int alphabet = 256;
@@ -106,8 +105,7 @@ Khi bắt đầu (trong **lần lặp thứ $0$**), chúng ta phải sắp xếp
 Điều này có thể được thực hiện một cách tầm thường, ví dụ, bằng cách sử dụng **sắp xếp đếm** (**counting sort**).
 Đối với mỗi ký tự, chúng ta đếm số lần nó xuất hiện trong chuỗi, và sau đó sử dụng thông tin này để tạo mảng $p[]$.
 Sau đó, chúng ta đi qua mảng $p[]$ và xây dựng $c[]$ bằng cách so sánh các ký tự liền kề.
-
-```{.cpp file=suffix_array_sort_cyclic2}
+```cpp title="suffix_array_sort_cyclic2"
     vector<int> p(n), c(n), cnt(max(alphabet, n), 0);
     for (int i = 0; i < n; i++)
         cnt[s[i]]++;
@@ -170,8 +168,7 @@ Như đã đề cập, điều này có thể được thực hiện bằng sắ
 
 Dưới đây là phần cài đặt còn lại.
 Chúng tôi sử dụng các mảng tạm thời $pn[]$ và $cn[]$ để lưu trữ hoán vị theo các phần tử thứ hai và các chỉ số lớp tương đương mới.
-
-```{.cpp file=suffix_array_sort_cyclic3}
+```cpp title="suffix_array_sort_cyclic3"
     vector<int> pn(n), cn(n);
     for (int h = 0; (1 << h) < n; ++h) {
         for (int i = 0; i < n; i++) {
@@ -207,8 +204,7 @@ Nếu biết rằng chuỗi chỉ chứa một tập hợp con các ký tự, v�
 Cũng lưu ý rằng, thuật toán này chỉ sắp xếp các dịch chuyển vòng.
 Như đã đề cập ở đầu phần này, chúng ta có thể tạo thứ tự sắp xếp của các hậu tố bằng cách thêm một ký tự nhỏ hơn tất cả các ký tự khác của chuỗi và sắp xếp chuỗi kết quả này theo các dịch chuyển vòng, ví dụ: bằng cách sắp xếp các dịch chuyển vòng của $s + \$$.
 Điều này rõ ràng sẽ cung cấp mảng hậu tố của $s$, tuy nhiên được thêm vào trước với $|s|$.
-
-```{.cpp file=suffix_array_construction}
+```cpp title="suffix_array_construction"
 vector<int> suffix_array_construction(string s) {
     s += "$";
     vector<int> sorted_shifts = sort_cyclic_shifts(s);
@@ -336,8 +332,7 @@ Và có thể nó có thể lớn hơn.
 Bây giờ chúng ta đã có thể thực hiện thuật toán.
 Chúng ta sẽ lặp qua các hậu tố theo thứ tự độ dài của chúng. Bằng cách này, chúng ta có thể sử dụng lại giá trị cuối cùng $k$, vì đi từ hậu tố $i$ đến hậu tố $i+1$ hoàn toàn giống như loại bỏ chữ cái đầu tiên.
 Chúng ta sẽ cần một mảng bổ sung $\text{rank}$, sẽ cung cấp cho chúng ta vị trí của một hậu tố trong danh sách các hậu tố đã sắp xếp.
-
-```{.cpp file=suffix_array_lcp_construction}
+```cpp title="suffix_array_lcp_construction"
 vector<int> lcp_construction(string const& s, vector<int> const& p) {
     int n = s.size();
     vector<int> rank(n, 0);

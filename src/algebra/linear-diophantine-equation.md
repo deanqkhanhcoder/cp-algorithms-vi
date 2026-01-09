@@ -76,8 +76,7 @@ $$y_0 = y_g \cdot \frac{c}{g}.$$
 Ý tưởng trên vẫn hoạt động khi $a$ hoặc $b$ hoặc cả hai đều âm. Chúng ta chỉ cần thay đổi dấu của $x_0$ và $y_0$ khi cần thiết.
 
 Cuối cùng, chúng ta có thể cài đặt ý tưởng này như sau (lưu ý rằng mã này không xem xét trường hợp $a = b = 0$):
-
-```{.cpp file=linear_diophantine_any}
+```cpp title="linear_diophantine_any"
 int gcd(int a, int b, int& x, int& y) {
     if (b == 0) {
         x = 1;
@@ -147,8 +146,7 @@ Nghiệm cuối cùng là tất cả các nghiệm với x nằm trong giao củ
 Sau đây là mã cài đặt ý tưởng này.
 Lưu ý rằng chúng ta chia $a$ và $b$ ở đầu cho $g$.
 Vì phương trình $a x + b y = c$ tương đương với phương trình $\frac{a}{g} x + \frac{b}{g} y = \frac{c}{g}$, chúng ta có thể sử dụng phương trình này thay thế và có $\gcd(\frac{a}{g}, \frac{b}{g}) = 1$, giúp đơn giản hóa các công thức.
-
-```{.cpp file=linear_diophantine_all}
+```cpp title="linear_diophantine_all"
 void shift_solution(int & x, int & y, int a, int b, int cnt) {
     x += cnt * b;
     y -= cnt * a;

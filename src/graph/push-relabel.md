@@ -7,7 +7,7 @@ e_maxx_link: preflow_push
 # Luồng cực đại - Thuật toán Push-relabel (Maximum flow - Push-relabel algorithm) {: #maximum-flow-push-relabel-algorithm}
 
 Thuật toán Push-relabel (hay còn được gọi là thuật toán Preflow-push) là một thuật toán để tính toán luồng cực đại của một mạng luồng.
-Định nghĩa chính xác của bài toán mà chúng ta muốn giải quyết có thể được tìm thấy trong bài viết [Luồng cực đại - Ford-Fulkerson và Edmonds-Karp](edmonds_karp.md).
+Định nghĩa chính xác của bài toán mà chúng ta muốn giải quyết có thể được tìm thấy trong bài viết [Luồng cực đại - Ford-Fulkerson và Edmonds-Karp](edmonds-karp.md).
 
 Trong bài viết này, chúng ta sẽ xem xét giải quyết bài toán bằng cách đẩy một luồng tiền (preflow) qua mạng, thuật toán sẽ chạy trong thời gian $O(V^4)$, hoặc chính xác hơn là trong $O(V^2 E)$.
 Thuật toán được thiết kế bởi Andrew Goldberg và Robert Tarjan vào năm 1985.

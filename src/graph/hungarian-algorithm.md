@@ -69,7 +69,7 @@ Hãy tiến hành trực tiếp đến **mô tả thuật toán**.
 
 **Bước 1.** Ban đầu, thế năng được giả định là bằng 0 ($u[i]=v[i]=0$ cho tất cả $i$), và cặp ghép $M$ được giả định là rỗng.
 
-**Bước 2.** Hơn nữa, tại mỗi bước của thuật toán, chúng ta cố gắng, mà không thay đổi thế năng, để tăng lực lượng của cặp ghép hiện tại $M$ lên một (nhớ lại rằng cặp ghép được tìm kiếm trong đồ thị các cạnh cứng $H$). Để làm điều này, [Thuật toán Kuhn thông thường để tìm cặp ghép cực đại trong đồ thị hai phía](kuhn_maximum_bipartite_matching.md) được sử dụng. Hãy nhớ lại thuật toán ở đây.
+**Bước 2.** Hơn nữa, tại mỗi bước của thuật toán, chúng ta cố gắng, mà không thay đổi thế năng, để tăng lực lượng của cặp ghép hiện tại $M$ lên một (nhớ lại rằng cặp ghép được tìm kiếm trong đồ thị các cạnh cứng $H$). Để làm điều này, [Thuật toán Kuhn thông thường để tìm cặp ghép cực đại trong đồ thị hai phía](kuhn-maximum-bipartite-matching.md) được sử dụng. Hãy nhớ lại thuật toán ở đây.
 Tất cả các cạnh của cặp ghép $M$ được định hướng theo hướng từ phần bên phải sang phần bên trái, và tất cả các cạnh khác của đồ thị $H$ được định hướng theo hướng ngược lại.
 
 Nhớ lại (từ thuật ngữ tìm kiếm cặp ghép) rằng một đỉnh được gọi là bão hòa nếu một cạnh của cặp ghép hiện tại kề với nó. Một đỉnh không kề với bất kỳ cạnh nào của cặp ghép hiện tại được gọi là chưa bão hòa. Một đường đi có độ dài lẻ, trong đó cạnh đầu tiên không thuộc về cặp ghép, và đối với tất cả các cạnh tiếp theo có sự thay thế thuộc về cặp ghép (thuộc / không thuộc) - được gọi là đường tăng.
@@ -239,11 +239,11 @@ int cost = -v[0];
 
 ## Kết nối với Thuật toán đường đi ngắn nhất liên tiếp (Connection to the Successive Shortest Path Algorithm) {: #connection-to-the-successive-shortest-path-algorithm}
 
-Thuật toán Hungary có thể được coi là [Thuật toán đường đi ngắn nhất liên tiếp](min_cost_flow.md), được điều chỉnh cho bài toán phân công. Không đi sâu vào chi tiết, hãy cung cấp một trực giác về mối liên hệ giữa chúng.
+Thuật toán Hungary có thể được coi là [Thuật toán đường đi ngắn nhất liên tiếp](min-cost-flow.md), được điều chỉnh cho bài toán phân công. Không đi sâu vào chi tiết, hãy cung cấp một trực giác về mối liên hệ giữa chúng.
 
 Thuật toán đường đi liên tiếp sử dụng phiên bản sửa đổi của thuật toán Johnson làm kỹ thuật đánh trọng số lại. Điều này được chia thành bốn bước:
 
-- Sử dụng thuật toán [Bellman-Ford](bellman_ford.md), bắt đầu từ đích $s$ và, đối với mỗi nút, tìm trọng số tối thiểu $h(v)$ của một đường đi từ $s$ đến $v$.
+- Sử dụng thuật toán [Bellman-Ford](bellman-ford.md), bắt đầu từ đích $s$ và, đối với mỗi nút, tìm trọng số tối thiểu $h(v)$ của một đường đi từ $s$ đến $v$.
 
 Cho mỗi bước của thuật toán chính:
 

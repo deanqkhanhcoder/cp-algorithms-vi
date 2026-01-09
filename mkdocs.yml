@@ -10,8 +10,8 @@ theme:
   palette:
     # 1. Dark Mode làm mặc định
     - scheme: slate 
-      primary: teal
-      accent: cyan
+      primary: indigo
+      accent: indigo
       toggle:
         icon: material/weather-night
         name: Switch to light mode
@@ -23,7 +23,7 @@ theme:
         icon: material/weather-sunny
         name: Switch to dark mode
   font:
-    text: Roboto
+    text: Be Vietnam Pro
     code: JetBrains Mono
   logo: favicon.ico
   favicon: favicon.ico
@@ -39,7 +39,7 @@ theme:
 repo_url: https://github.com/deanqkhanhcoder/cp-algorithms-vi
 repo_name: deanqkhanhcoder/cp-algorithms-vi
 edit_uri: edit/main/src/
-copyright: Text is available under the <a href="https://github.com/deanqkhanhcoder/cp-algorithms-vi/blob/main/LICENSE">Creative Commons Attribution Share Alike 4.0 International</a> License<br/>Copyright &copy; 2014 - 2025 by <a href="https://github.com/deanqkhanhcoder/cp-algorithms-vi/graphs/contributors">cp-algorithms contributors</a>
+copyright: Text is available under the <a href="https://github.com/deanqkhanhcoder/cp-algorithms-vi/blob/main/LICENSE">Creative Commons Attribution Share Alike 4.0 International</a> License<br/>Copyright &copy; 2014 - 2025
 extra_javascript:
   - javascript/config.js
   - javascript/donation-banner.js
@@ -76,3 +76,5 @@ plugins:
       nav_file: navigation.md
   - macros:
   # Đã xóa rss, git-revision, git-authors, git-committers
+extra:
+  generator: false

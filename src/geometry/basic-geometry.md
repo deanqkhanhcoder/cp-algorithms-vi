@@ -12,8 +12,7 @@ Sau này, chúng ta sẽ không phân biệt giữa $\mathbf r$ và $\vec{\mathb
 ## Các phép toán tuyến tính (Linear operations) {: #linear-operations}
 
 Cả điểm 2D và 3D đều duy trì không gian tuyến tính, có nghĩa là đối với chúng, tổng của các điểm và phép nhân điểm với một số được xác định. Dưới đây là những cài đặt cơ bản cho 2D:
-
-```{.cpp file=point2d}
+```cpp title="point2d"
 struct point2d {
     ftype x, y;
     point2d() {}
@@ -56,7 +55,7 @@ point2d operator*(ftype a, point2d b) {
 }
 ```
 Và các điểm 3D:
-```{.cpp file=point3d}
+```cpp title="point3d"
 struct point3d {
     ftype x, y, z;
     point3d() {}
@@ -139,8 +138,7 @@ $$\mathbf a\cdot \mathbf b = (x_1 \cdot \mathbf e_x + y_1 \cdot\mathbf e_y + z_1
 
 Đó cũng là định nghĩa đại số của tích vô hướng.
 Từ đây chúng ta có thể viết các hàm tính toán nó.
-
-```{.cpp file=dotproduct}
+```cpp title="dotproduct"
 ftype dot(point2d a, point2d b) {
     return a.x * b.x + a.y * b.y;
 }
@@ -163,8 +161,7 @@ Ví dụ:
 5. Từ điểm trước, chúng ta có thể thấy rằng tích vô hướng là dương nếu góc giữa chúng là nhọn, âm nếu nó là tù và nó bằng không nếu chúng trực giao, tức là chúng tạo thành một góc vuông.
 
 Lưu ý rằng tất cả các hàm này không phụ thuộc vào số chiều, do đó chúng sẽ giống nhau đối với trường hợp 2D và 3D:
-
-```{.cpp file=dotproperties}
+```cpp title="dotproperties"
 ftype norm(point2d a) {
     return dot(a, a);
 }
@@ -253,8 +250,7 @@ Nếu chúng ta sẽ xem xét dấu thì diện tích sẽ dương nếu phép q
 Lưu ý rằng nó cũng bằng $|\mathbf a| \cdot |\mathbf b| \sin \theta$ trong đó $\theta$ là góc từ $\mathbf a$ đến $\mathbf b$ tính ngược chiều kim đồng hồ (và âm nếu quay theo chiều kim đồng hồ).
 
 Hãy cài đặt tất cả những thứ này!
-
-```{.cpp file=crossproduct}
+```cpp title="crossproduct"
 point3d cross(point3d a, point3d b) {
     return point3d(a.y * b.z - a.z * b.y,
                    a.z * b.x - a.x * b.z,
@@ -308,8 +304,7 @@ Chúng ta có thể nói rằng tất cả các điểm từ đường thẳng �
 $$(\mathbf a_1 + t \cdot \mathbf d_1 - \mathbf a_2)\times \mathbf d_2=0 \quad\Rightarrow\quad t = \dfrac{(\mathbf a_2 - \mathbf a_1)\times\mathbf d_2}{\mathbf d_1\times \mathbf d_2}$$
 
 Hãy cài đặt hàm để tìm giao điểm hai đường thẳng.
-
-```{.cpp file=basic_line_intersection}
+```cpp title="basic_line_intersection"
 point2d intersect(point2d a1, point2d d1, point2d a2, point2d d2) {
     return a1 + cross(a2 - a1, d2) / cross(d1, d2) * d1;
 }
@@ -325,8 +320,7 @@ $$\begin{cases}\mathbf r\cdot \mathbf n_1 = \mathbf a_1\cdot \mathbf n_1, \\ \ma
 
 Thay vì suy nghĩ về cách tiếp cận hình học, bạn có thể tìm ra một cách tiếp cận đại số có thể thu được ngay lập tức.
 Ví dụ: giả sử bạn đã cài đặt lớp điểm, sẽ dễ dàng cho bạn giải hệ thống này bằng quy tắc Cramer vì tích hỗn tạp chỉ đơn giản là định thức của ma trận thu được từ các vector là các cột của nó:
-
-```{.cpp file=plane_intersection}
+```cpp title="plane_intersection"
 point3d intersect(point3d a1, point3d n1, point3d a2, point3d n2, point3d a3, point3d n3) {
     point3d x(n1.x, n2.x, n3.x);
     point3d y(n1.y, n2.y, n3.y);

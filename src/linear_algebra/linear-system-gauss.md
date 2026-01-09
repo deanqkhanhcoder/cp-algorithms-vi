@@ -80,8 +80,7 @@ Sau đây là một triển khai của Gauss-Jordan. Việc chọn hàng trụ �
 Đầu vào cho hàm `gauss` là ma trận hệ thống $a$. Cột cuối cùng của ma trận này là vectơ $b$.
 
 Hàm trả về số lượng nghiệm của hệ thống $(0, 1,\textrm{hoặc } \infty)$. Nếu tồn tại ít nhất một nghiệm, thì nó được trả về trong vectơ $ans$.
-
-```{.cpp file=gauss}
+```cpp title="gauss"
 const double EPS = 1e-9;
 const int INF = 2; // nó thực sự không cần phải là vô cùng hoặc một số lớn
 

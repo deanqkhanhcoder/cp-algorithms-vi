@@ -8,7 +8,7 @@ tags:
 Trong bài viết này, chúng tôi liệt kê một số thuật toán để phân tích các số nguyên ra thừa số, mỗi thuật toán có thể nhanh hoặc chậm tùy thuộc vào đầu vào của chúng.
 
 Lưu ý, nếu số mà bạn muốn phân tích thực sự là một số nguyên tố, hầu hết các thuật toán sẽ chạy rất chậm. Điều này đặc biệt đúng đối với các thuật toán phân tích thừa số Fermat, Pollard's p-1 và Pollard's rho.
-Do đó, việc thực hiện một [kiểm tra số nguyên tố](primality_tests.md) xác suất (hoặc tất định nhanh) trước khi cố gắng phân tích số đó là hợp lý nhất.
+Do đó, việc thực hiện một [kiểm tra số nguyên tố](primality-tests.md) xác suất (hoặc tất định nhanh) trước khi cố gắng phân tích số đó là hợp lý nhất.
 
 ## Chia thử (Trial division) {: #trial-division}
 
@@ -22,8 +22,7 @@ Do đó, chúng ta chỉ cần kiểm tra các ước số $2 \le d \le \sqrt{n}
 Ước số nhỏ nhất phải là một số nguyên tố.
 Chúng ta loại bỏ số đã phân tích, và tiếp tục quá trình.
 Nếu chúng ta không thể tìm thấy bất kỳ ước số nào trong khoảng $[2; \sqrt{n}]$, thì chính số đó phải là số nguyên tố.
-
-```{.cpp file=factorization_trial_division1}
+```cpp title="factorization_trial_division1"
 vector<long long> trial_division1(long long n) {
     vector<long long> factorization;
     for (long long d = 2; d * d <= n; d++) {
@@ -44,8 +43,7 @@ vector<long long> trial_division1(long long n) {
 Khi chúng ta biết rằng số không chia hết cho 2, chúng ta không cần kiểm tra các số chẵn khác.
 Điều này để lại cho chúng ta chỉ $50\%$ số lượng số cần kiểm tra.
 Sau khi loại bỏ thừa số 2, và nhận được một số lẻ, chúng ta có thể chỉ cần bắt đầu với 3 và chỉ đếm các số lẻ khác.
-
-```{.cpp file=factorization_trial_division2}
+```cpp title="factorization_trial_division2"
 vector<long long> trial_division2(long long n) {
     vector<long long> factorization;
     while (n % 2 == 0) {
@@ -74,8 +72,7 @@ Chúng ta có thể cài đặt điều này bằng cách loại bỏ các thừ
 
 Dưới đây là một cài đặt cho các số nguyên tố 2, 3 và 5.
 Thuận tiện khi lưu trữ các bước nhảy trong một mảng.
-
-```{.cpp file=factorization_trial_division3}
+```cpp title="factorization_trial_division3"
 vector<long long> trial_division3(long long n) {
     vector<long long> factorization;
     for (int d : {2, 3, 5}) {
@@ -106,8 +103,7 @@ Nếu chúng ta tiếp tục mở rộng phương pháp này để bao gồm nhi
 
 Mở rộng phương pháp phân tích thừa số bằng bánh xe vô thời hạn, chúng ta sẽ chỉ còn lại các số nguyên tố cần kiểm tra. 
 Một cách tốt để kiểm tra điều này là tính trước tất cả các số nguyên tố bằng [Sàng Eratosthenes](sieve-of-eratosthenes.md) cho đến $\sqrt{n}$, và kiểm tra chúng một cách riêng lẻ.
-
-```{.cpp file=factorization_trial_division4}
+```cpp title="factorization_trial_division4"
 vector<long long> primes;
 
 vector<long long> trial_division4(long long n) {
@@ -193,8 +189,7 @@ Ví dụ, đối với hợp số $100~000~000~000~000~493 = 763~013 \cdot 131~0
 Chúng ta sẽ phải chọn $B \geq 190~753$ để phân tích thừa số của số này.
 
 Trong cài đặt sau, chúng tôi bắt đầu với $\mathrm{B} = 10$ và tăng $\mathrm{B}$ sau mỗi lần lặp.
-
-```{.cpp file=factorization_p_minus_1}
+```cpp title="factorization_p_minus_1"
 long long pollards_p_minus_1(long long n) {
     int B = 10;
     long long g = 1;
@@ -269,7 +264,7 @@ Trong mỗi lần lặp, con trỏ đầu tiên sẽ tiến một phần tử, t
 Sử dụng ý tưởng này, dễ dàng quan sát thấy rằng nếu có một chu trình, tại một thời điểm nào đó, con trỏ thứ hai sẽ quay lại gặp con trỏ đầu tiên trong các vòng lặp.
 Nếu độ dài chu trình là $\lambda$ và $\mu$ là chỉ số đầu tiên mà chu trình bắt đầu, thì thuật toán sẽ chạy trong thời gian $O(\lambda + \mu)$.
 
-Thuật toán này còn được gọi là [Thuật toán Rùa và Thỏ](../others/tortoise_and_hare.md), dựa trên câu chuyện ngụ ngôn trong đó một con rùa (con trỏ chậm) và một con thỏ (con trỏ nhanh hơn) chạy đua.
+Thuật toán này còn được gọi là [Thuật toán Rùa và Thỏ](../others/tortoise-and-hare.md), dựa trên câu chuyện ngụ ngôn trong đó một con rùa (con trỏ chậm) và một con thỏ (con trỏ nhanh hơn) chạy đua.
 
 Thực sự có thể xác định tham số $\lambda$ và $\mu$ bằng cách sử dụng thuật toán này (cũng trong thời gian $O(\lambda + \mu)$ và không gian $O(1)$).
 Khi phát hiện thấy chu trình, thuật toán sẽ trả về 'True'. 
@@ -290,8 +285,7 @@ function floyd(f, x0):
 
 Đầu tiên, đây là một cài đặt sử dụng **thuật toán tìm chu trình của Floyd**.
 Thuật toán thường chạy trong thời gian $O(\sqrt[4]{n} \log(n))$.
-
-```{.cpp file=pollard_rho}
+```cpp title="pollard_rho"
 long long mult(long long a, long long b, long long mod) {
     return (__int128)a * b % mod;
 }
@@ -335,8 +329,7 @@ i & x_i \bmod n & x_{2i} \bmod n & x_i \bmod 317 & x_{2i} \bmod 317 & \gcd(x_i -
 
 Cài đặt sử dụng hàm `mult`, nhân hai số nguyên $\le 10^{18}$ mà không bị tràn bằng cách sử dụng kiểu `__int128` của GCC cho số nguyên 128-bit.
 Nếu không có sẵn GCC, bạn có thể sử dụng ý tưởng tương tự như [lũy thừa nhị phân](binary-exp.md).
-
-```{.cpp file=pollard_rho_mult2}
+```cpp title="pollard_rho_mult2"
 long long mult(long long a, long long b, long long mod) {
     long long result = 0;
     while (b) {
@@ -349,7 +342,7 @@ long long mult(long long a, long long b, long long mod) {
 }
 ```
 
-Ngoài ra bạn cũng có thể cài đặt [Phép nhân Montgomery](montgomery_multiplication.md).
+Ngoài ra bạn cũng có thể cài đặt [Phép nhân Montgomery](montgomery-multiplication.md).
 
 Như đã nêu trước đó, nếu $n$ là hợp số và thuật toán trả về $n$ là thừa số, bạn phải lặp lại quy trình với các tham số khác nhau $x_0$ và $c$.
 V.d. lựa chọn $x_0 = c = 1$ sẽ không phân tích được $25 = 5 \cdot 5$.
@@ -383,8 +376,7 @@ Thuật toán Brent cũng chạy trong thời gian tuyến tính, nhưng thườ
 
 Cài đặt đơn giản của thuật toán Brent có thể được tăng tốc bằng cách bỏ qua các số hạng $x_l - x_k$ nếu $k < \frac{3 \cdot l}{2}$.
 Ngoài ra, thay vì thực hiện tính toán $\gcd$ ở mỗi bước, chúng ta nhân các số hạng và chỉ thực sự kiểm tra $\gcd$ sau mỗi vài bước và quay lui nếu vượt quá.
-
-```{.cpp file=pollard_rho_brent}
+```cpp title="pollard_rho_brent"
 long long brent(long long n, long long x0=2, long long c=1) {
     long long x = x0;
     long long g = 1;

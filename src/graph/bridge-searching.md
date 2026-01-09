@@ -48,8 +48,7 @@ Cài đặt cần phân biệt ba trường hợp: khi chúng ta đi xuống c�
 Để cài đặt điều này, chúng ta cần một hàm tìm kiếm theo chiều sâu chấp nhận đỉnh cha của nút hiện tại.
 
 Đối với các trường hợp đa cạnh (multiple edges), chúng ta cần cẩn thận khi bỏ qua cạnh từ cha. Để giải quyết vấn đề này, chúng ta có thể thêm một cờ `parent_skipped` để đảm bảo chúng ta chỉ bỏ qua cha một lần.
-
-```{.cpp file=bridge_searching_offline}
+```cpp title="bridge_searching_offline"
 void IS_BRIDGE(int v,int to); // một số hàm để xử lý cầu được tìm thấy
 int n; // số lượng nút
 vector<vector<int>> adj; // danh sách kề của đồ thị

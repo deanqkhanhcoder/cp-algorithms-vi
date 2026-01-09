@@ -143,8 +143,7 @@ Cây Fenwick bình thường chỉ có thể trả lời các truy vấn tổng 
 
 Ngoài ra việc cài đặt này hỗ trợ hai hàm tạo.
 Bạn có thể tạo một cây Fenwick được khởi tạo bằng các số không, hoặc bạn có thể chuyển đổi một mảng hiện có thành dạng Fenwick.
-
-```{.cpp file=fenwick_sum}
+```cpp title="fenwick_sum"
 struct FenwickTree {
     vector<int> bit;  // binary indexed tree
     int n;
@@ -200,8 +199,7 @@ FenwickTree(vector<int> const &a) : FenwickTree(a.size()){
 Rõ ràng là không có cách dễ dàng để tìm giá trị nhỏ nhất của đoạn $[l, r]$ bằng cây Fenwick, vì cây Fenwick chỉ có thể trả lời các truy vấn loại $[0, r]$.
 Ngoài ra, mỗi khi một giá trị được `update` (cập nhật), giá trị mới phải nhỏ hơn giá trị hiện tại.
 Cả hai hạn chế đáng kể là do thao tác $min$ cùng với tập hợp các số nguyên không tạo thành một nhóm, vì không có phần tử nghịch đảo.
-
-```{.cpp file=fenwick_min}
+```cpp title="fenwick_min"
 struct FenwickTreeMin {
     vector<int> bit;
     int n;
@@ -302,8 +300,7 @@ $$h(i) = i + (i ~\&~ (-i)).$$
 Như bạn có thể thấy, lợi ích chính của cách tiếp cận này là các hoạt động nhị phân bổ sung cho nhau rất tốt.
 
 Việc cài đặt sau đây có thể được sử dụng giống như các cài đặt khác, tuy nhiên nó sử dụng lập chỉ mục dựa trên một trong nội bộ.
-
-```{.cpp file=fenwick_sum_onebased}
+```cpp title="fenwick_sum_onebased"
 struct FenwickTreeOneBasedIndexing {
     vector<int> bit;  // binary indexed tree
     int n;

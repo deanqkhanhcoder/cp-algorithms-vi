@@ -342,8 +342,7 @@ Do đó, chu trình này không thể được thực hiện quá $n$ lần lặ
 Đầu tiên, chúng tôi mô tả một cấu trúc dữ liệu sẽ lưu trữ tất cả thông tin về một chuyển đổi cụ thể ($len$, $link$ và danh sách chuyển đổi).
 Nếu cần, bạn có thể thêm cờ đầu cuối tại đây, cũng như thông tin khác.
 Chúng tôi sẽ lưu trữ danh sách các chuyển đổi dưới dạng $map$, cho phép chúng tôi đạt được tổng bộ nhớ $O(n)$ và $O(n \log k)$ thời gian để xử lý toàn bộ chuỗi.
-
-```{.cpp file=suffix_automaton_struct}
+```cpp title="suffix_automaton_struct"
 struct state {
     int len, link;
     map<char, int> next;
@@ -352,16 +351,14 @@ struct state {
 
 Bản thân suffix automaton sẽ được lưu trữ trong một mảng các cấu trúc này $state$.
 Chúng tôi lưu trữ kích thước hiện tại $sz$ và biến $last$, trạng thái tương ứng với toàn bộ chuỗi tại thời điểm này.
-
-```{.cpp file=suffix_automaton_def}
+```cpp title="suffix_automaton_def"
 const int MAXLEN = 100000;
 state st[MAXLEN * 2];
 int sz, last;
 ```
 
 Chúng tôi đưa ra một chức năng khởi tạo suffix automaton (tạo suffix automaton với một trạng thái duy nhất).
-
-```{.cpp file=suffix_automaton_init}
+```cpp title="suffix_automaton_init"
 void sa_init() {
     st[0].len = 0;
     st[0].link = -1;
@@ -371,8 +368,7 @@ void sa_init() {
 ```
 
 Và cuối cùng chúng tôi đưa ra việc thực hiện chức năng chính - thêm ký tự tiếp theo vào cuối dòng hiện tại, xây dựng lại máy cho phù hợp.
-
-```{.cpp file=suffix_automaton_extend}
+```cpp title="suffix_automaton_extend"
 void sa_extend(char c) {
     int cur = sz++;
     st[cur].len = st[last].len + 1;

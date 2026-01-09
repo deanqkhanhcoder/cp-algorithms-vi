@@ -82,7 +82,7 @@ Do đó, tóm lại, chúng ta đã thảo luận về thuật toán sau để t
 Cuối cùng, thật thích hợp để đề cập đến [sắp xếp topo](topological-sort.md) ở đây. Trong bước 1, chúng ta tìm các đỉnh theo thứ tự thời gian thoát tăng dần. Nếu $G$ không có chu trình, điều này tương ứng với một sắp xếp topo (ngược) của $G$. Trong bước 2, thuật toán tìm các thành phần liên thông mạnh theo thứ tự giảm dần của thời gian thoát. Do đó, nó tìm các thành phần - các đỉnh của đồ thị nén - theo thứ tự tương ứng với sắp xếp topo của đồ thị nén.
 
 ### Cài đặt (Implementation) {: #implementation}
-```{.cpp file=strongly_connected_components}
+```cpp title="strongly_connected_components"
 vector<bool> visited; // theo dõi các đỉnh đã được thăm
  
 // chạy tìm kiếm theo chiều sâu bắt đầu tại đỉnh v.
@@ -288,7 +288,7 @@ Trong thuật toán, đỉnh là gốc nếu không có cạnh nào đến các 
 Vì vậy, tất cả các thành phần có thể truy cập đã được tìm thấy, nghĩa là chúng được giới thiệu theo thứ tự topo ngược hợp lệ của đồ thị nén.
 
 ### Cài đặt (Implementation) {: #implementation}
-```{.cpp file=tarjan_scc}
+```cpp title="tarjan_scc"
 vector<int> st;    // - ngăn xếp chứa các đỉnh chưa được xác nhận
 vector<int> roots; // - theo dõi các gốc SCC của các đỉnh
 int timer;         // - bộ đếm dấu thời gian dfs

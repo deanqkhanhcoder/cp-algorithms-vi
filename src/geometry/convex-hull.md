@@ -19,7 +19,7 @@ Thuật toán đầu tiên tìm điểm dưới cùng nhất $P_0$. Nếu có nh
 Tiếp theo, tất cả các điểm khác được sắp xếp theo góc cực theo chiều kim đồng hồ.
 Nếu góc cực giữa hai hoặc nhiều điểm giống nhau, sự ràng buộc sẽ bị phá vỡ bởi khoảng cách từ $P_0$, theo thứ tự tăng dần.
 
-Sau đó, chúng ta lặp qua từng điểm một, và đảm bảo rằng điểm hiện tại và hai điểm trước nó tạo ra một bước ngoặt theo chiều kim đồng hồ, nếu không điểm trước đó sẽ bị loại bỏ, vì nó sẽ tạo ra một hình không lồi. Việc kiểm tra tính chất chiều kim đồng hồ hoặc ngược chiều kim đồng hồ có thể được thực hiện bằng cách kiểm tra [hướng](../geometry/oriented-triangle-area.md) (orientation).
+Sau đó, chúng ta lặp qua từng điểm một, và đảm bảo rằng điểm hiện tại và hai điểm trước nó tạo ra một bước ngoặt theo chiều kim đồng hồ, nếu không điểm trước đó sẽ bị loại bỏ, vì nó sẽ tạo ra một hình không lồi. Việc kiểm tra tính chất chiều kim đồng hồ hoặc ngược chiều kim đồng hồ có thể được thực hiện bằng cách kiểm tra [hướng](oriented-triangle-area.md) (orientation).
 
 Chúng ta sử dụng một ngăn xếp để lưu trữ các điểm, và khi chúng ta đến điểm ban đầu $P_0$, thuật toán hoàn tất và chúng ta trả về ngăn xếp chứa tất cả các điểm của bao lồi theo chiều kim đồng hồ.
 
@@ -27,8 +27,7 @@ Nếu bạn cần bao gồm các điểm thẳng hàng (collinear points) trong 
 Các điểm trong dòng này phải được đảo ngược để chúng ta có thể đưa ra tất cả các điểm thẳng hàng, nếu không thuật toán sẽ lấy điểm gần nhất trong dòng này và thoát. Bước này không nên được đưa vào phiên bản không thẳng hàng của thuật toán, nếu không bạn sẽ không nhận được bao lồi nhỏ nhất.
 
 ### Cài đặt (Implementation) {: #implementation}
-
-```{.cpp file=graham_scan}
+```cpp title="graham_scan"
 struct pt {
     double x, y;
     bool operator == (pt const& t) const {
@@ -86,7 +85,7 @@ Thuật toán đầu tiên tìm các điểm ngoài cùng bên trái và ngoài 
 
 Bây giờ, vẽ một đường thẳng qua AB. Điều này chia tất cả các điểm khác thành hai tập hợp, S1 và S2, trong đó S1 chứa tất cả các điểm phía trên đường thẳng nối A và B, và S2 chứa tất cả các điểm phía dưới đường thẳng nối A và B. Các điểm nằm trên đường thẳng nối A và B có thể thuộc về cả hai tập hợp. Các điểm A và B thuộc về cả hai tập hợp. Bây giờ thuật toán xây dựng tập hợp trên S1 và tập hợp dưới S2 và sau đó kết hợp chúng để thu được câu trả lời.
 
-Để có được tập hợp trên (upper set), chúng ta sắp xếp tất cả các điểm theo tọa độ x. Đối với mỗi điểm, chúng ta kiểm tra xem hoặc - điểm hiện tại là điểm cuối cùng (mà chúng ta đã xác định là B), hoặc hướng giữa đường thẳng giữa A và điểm hiện tại và đường thẳng giữa điểm hiện tại và B là theo chiều kim đồng hồ. Trong những trường hợp đó, điểm hiện tại thuộc về tập hợp trên S1. Việc kiểm tra tính chất chiều kim đồng hồ hoặc ngược chiều kim đồng hồ có thể được thực hiện bằng cách kiểm tra [hướng](../geometry/oriented-triangle-area.md).
+Để có được tập hợp trên (upper set), chúng ta sắp xếp tất cả các điểm theo tọa độ x. Đối với mỗi điểm, chúng ta kiểm tra xem hoặc - điểm hiện tại là điểm cuối cùng (mà chúng ta đã xác định là B), hoặc hướng giữa đường thẳng giữa A và điểm hiện tại và đường thẳng giữa điểm hiện tại và B là theo chiều kim đồng hồ. Trong những trường hợp đó, điểm hiện tại thuộc về tập hợp trên S1. Việc kiểm tra tính chất chiều kim đồng hồ hoặc ngược chiều kim đồng hồ có thể được thực hiện bằng cách kiểm tra [hướng](oriented-triangle-area.md).
 
 Nếu điểm đã cho thuộc về tập hợp trên, chúng ta kiểm tra góc được tạo bởi đường thẳng nối điểm áp chót (second last point) và điểm cuối cùng trong bao lồi trên, với đường thẳng nối điểm cuối cùng trong bao lồi trên và điểm hiện tại. Nếu góc không theo chiều kim đồng hồ, chúng ta loại bỏ điểm gần đây nhất được thêm vào bao lồi trên vì điểm hiện tại sẽ có thể chứa điểm trước đó sau khi nó được thêm vào bao lồi.
 
@@ -101,8 +100,7 @@ Tuy nhiên, điều này cho phép một trường hợp suy biến trong đó t
 Để giải quyết vấn đề này, chúng ta kiểm tra xem bao trên có chứa tất cả các điểm hay không, và nếu có, chúng ta chỉ trả về các điểm theo thứ tự ngược lại, vì đó là những gì việc cài đặt của Graham sẽ trả về trong trường hợp này.
 
 ### Cài đặt (Implementation) {: #implementation-1}
-
-```{.cpp file=monotone_chain}
+```cpp title="monotone_chain"
 struct pt {
     double x, y;
 };

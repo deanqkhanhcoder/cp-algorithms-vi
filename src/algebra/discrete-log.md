@@ -130,8 +130,7 @@ Thay vì `map`, chúng ta cũng có thể sử dụng bảng băm (`unordered_ma
 
 Các bài toán thường yêu cầu tìm $x$ nhỏ nhất thỏa mãn nghiệm.
 Có thể lấy tất cả các câu trả lời và lấy giá trị nhỏ nhất, hoặc giảm câu trả lời đầu tiên tìm được bằng cách sử dụng [Định lý Euler](phi-function.md#application), nhưng chúng ta có thể thông minh về thứ tự tính toán các giá trị và đảm bảo câu trả lời đầu tiên chúng ta tìm thấy là nhỏ nhất.
-
-```{.cpp file=discrete_log}
+```cpp title="discrete_log"
 // Returns minimum x for which a ^ x % m = b % m, a and m are coprime.
 int solve(int a, int b, int m) {
     a %= m, b %= m;
@@ -177,8 +176,7 @@ a^x & \equiv b \mod m \\\
 $$
 
 Thuật toán baby-step giant-step có thể dễ dàng được mở rộng để giải $ka^{x} \equiv b \pmod m$ cho $x$.
-
-```{.cpp file=discrete_log_extended}
+```cpp title="discrete_log_extended"
 // Returns minimum x for which a ^ x % m = b % m.
 int solve(int a, int b, int m) {
     a %= m, b %= m;

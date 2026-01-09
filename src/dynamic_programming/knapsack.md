@@ -5,7 +5,7 @@ tags:
 
 # Bài toán cái túi (Knapsack Problem) {: #knapsack-problem}
 
-Kiến thức tiên quyết: [Giới thiệu về Quy hoạch động](../dynamic_programming/intro-to-dp.md)
+Kiến thức tiên quyết: [Giới thiệu về Quy hoạch động](intro-to-dp.md)
 
 ## Giới thiệu (Introduction) {: #introduction}
 
@@ -144,7 +144,7 @@ for (int i = 1; i <= n; i++) {
 
 ### Tối ưu hóa hàng đợi đơn điệu (Monotone Queue Optimization) {: #monotone-queue-optimization}
 
-Trong tối ưu hóa này, chúng ta nhắm đến việc chuyển đổi bài toán cái túi thành bài toán [hàng đợi cực đại (maximum queue)](../data_structures/stack_queue_modification.md).
+Trong tối ưu hóa này, chúng ta nhắm đến việc chuyển đổi bài toán cái túi thành bài toán [hàng đợi cực đại (maximum queue)](../data_structures/stack-queue-modification.md).
 
 Để thuận tiện cho việc mô tả, gọi $g_{x, y} = f_{i, x \cdot w_i + y} ,\space g'_{x, y} = f_{i-1, x \cdot w_i + y}$. Khi đó quy tắc chuyển trạng thái có thể được viết là:
 

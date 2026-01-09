@@ -47,17 +47,16 @@ Tóm tắt lại:
 để trả lời một truy vấn chúng ta chỉ cần **tìm đỉnh có độ cao nhỏ nhất** trong mảng $\text{euler}$ trong phạm vi từ $\text{first}[v_1]$ đến $\text{first}[v_2]$.
 Do đó, **bài toán LCA được quy về bài toán RMQ** (tìm giá trị nhỏ nhất trong một phạm vi).
 
-Sử dụng [Phân rã căn bậc hai (Sqrt-Decomposition)](../data_structures/sqrt_decomposition.md), có thể thu được một giải pháp trả lời mỗi truy vấn trong $O(\sqrt{N})$ với tiền xử lý trong thời gian $O(N)$.
+Sử dụng [Phân rã căn bậc hai (Sqrt-Decomposition)](../data_structures/sqrt-decomposition.md), có thể thu được một giải pháp trả lời mỗi truy vấn trong $O(\sqrt{N})$ với tiền xử lý trong thời gian $O(N)$.
 
-Sử dụng [Segment Tree](../data_structures/segment_tree.md) bạn có thể trả lời mỗi truy vấn trong $O(\log N)$ với tiền xử lý trong thời gian $O(N)$.
+Sử dụng [Segment Tree](../data_structures/segment-tree.md) bạn có thể trả lời mỗi truy vấn trong $O(\log N)$ với tiền xử lý trong thời gian $O(N)$.
 
 Vì hầu như sẽ không bao giờ có bất kỳ cập nhật nào cho các giá trị được lưu trữ, [Bảng thưa (Sparse Table)](../data_structures/sparse-table.md) có thể là một lựa chọn tốt hơn, cho phép trả lời truy vấn $O(1)$ với thời gian xây dựng $O(N\log N)$.
 
 ### Cài đặt (Implementation) {: #implementation}
 
 Trong cài đặt LCA sau đây, Segment Tree được sử dụng.
-
-```{.cpp file=lca}
+```cpp title="lca"
 struct LCA {
     vector<int> height, euler, first, segtree;
     vector<bool> visited;

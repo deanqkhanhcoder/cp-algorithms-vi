@@ -117,8 +117,7 @@ a & \equiv & \sum_{j=1}^k a_j M_j N_j & \pmod{m_i} \\
 \end{array}$$
 
 ### Cài đặt {: #implementation}
-
-```{.cpp file=chinese_remainder_theorem}
+```cpp title="chinese_remainder_theorem"
 struct Congruence {
     long long a, m;
 };

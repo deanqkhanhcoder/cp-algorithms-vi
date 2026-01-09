@@ -7,7 +7,7 @@ tags:
 
 Trong bài viết này, chúng ta sẽ thảo luận về bài toán tính toán phần giao của một tập hợp các nửa mặt phẳng. Một phần giao như vậy có thể được biểu diễn thuận tiện dưới dạng một vùng/đa giác lồi, trong đó mọi điểm bên trong nó cũng nằm bên trong tất cả các nửa mặt phẳng, và chính đa giác này là thứ mà chúng ta đang cố gắng tìm hoặc xây dựng. Chúng tôi đưa ra một số trực giác ban đầu cho bài toán, mô tả một cách tiếp cận $O(N \log N)$ được gọi là thuật toán Sắp xếp và Tăng dần (Sort-and-Incremental algorithm) và đưa ra một số ứng dụng mẫu của kỹ thuật này.
 
-Chúng tôi thực sự khuyên bạn đọc nên làm quen với các nguyên thủy và phép toán hình học cơ bản (điểm, vector, giao điểm của các đường thẳng). Ngoài ra, kiến thức về [Bao lồi (Convex Hulls)](../geometry/convex-hull.md) hoặc [Thủ thuật Bao lồi (Convex Hull Trick)](../geometry/convex_hull_trick.md) có thể giúp hiểu rõ hơn các khái niệm trong bài viết này, nhưng chúng không phải là điều kiện tiên quyết bằng bất kỳ cách nào.
+Chúng tôi thực sự khuyên bạn đọc nên làm quen với các nguyên thủy và phép toán hình học cơ bản (điểm, vector, giao điểm của các đường thẳng). Ngoài ra, kiến thức về [Bao lồi (Convex Hulls)](convex-hull.md) hoặc [Thủ thuật Bao lồi (Convex Hull Trick)](convex-hull-trick.md) có thể giúp hiểu rõ hơn các khái niệm trong bài viết này, nhưng chúng không phải là điều kiện tiên quyết bằng bất kỳ cách nào.
 
 ## Các làm rõ và định nghĩa ban đầu (Initial clarifications and definitions) {: #initial-clarifications-and-definitions}
 

@@ -36,14 +36,12 @@ $\text{K}$ phải thỏa mãn $\text{K} \ge \lfloor \log_2 \text{MAXN} \rfloor$,
 Đối với các mảng có độ dài hợp lý ($\le 10^7$ phần tử), $K = 25$ là một giá trị tốt.
 
 Kích thước $\text{MAXN}$ là thứ hai để cho phép truy cập bộ nhớ liên tiếp (thân thiện với bộ nhớ cache).
-
-```{.cpp file=sparsetable_definition}
+```cpp title="sparsetable_definition"
 int st[K + 1][MAXN];
 ```
 
 Bởi vì đoạn $[j, j + 2^i - 1]$ có độ dài $2^i$ chia tách độc đáo thành các đoạn $[j, j + 2^{i - 1} - 1]$ và $[j + 2^{i - 1}, j + 2^i - 1]$, cả hai đều có độ dài $2^{i - 1}$, chúng ta có thể tạo bảng một cách hiệu quả bằng quy hoạch động:
-
-```{.cpp file=sparsetable_generation}
+```cpp title="sparsetable_generation"
 std::copy(array.begin(), array.end(), st[0]);
 
 for (int i = 1; i <= K; i++)
@@ -61,8 +59,7 @@ Hàm $f$ sẽ phụ thuộc vào loại truy vấn.
 Đối với loại truy vấn này, chúng ta muốn tìm tổng của tất cả các giá trị trong một đoạn.
 Do đó, định nghĩa tự nhiên của hàm $f$ là $f(x, y) = x + y$.
 Chúng ta có thể xây dựng cấu trúc dữ liệu với:
-
-```{.cpp file=sparsetable_sum_generation}
+```cpp title="sparsetable_sum_generation"
 long long st[K + 1][MAXN];
 
 std::copy(array.begin(), array.end(), st[0]);
@@ -74,8 +71,7 @@ for (int i = 1; i <= K; i++)
 
 Để trả lời truy vấn tổng cho đoạn $[L, R]$, chúng ta lặp lại tất cả các lũy thừa của hai, bắt đầu từ lũy thừa lớn nhất.
 Ngay khi lũy thừa của hai $2^i$ nhỏ hơn hoặc bằng độ dài của đoạn ($= R - L + 1$), chúng ta xử lý phần đầu tiên của đoạn $[L, L + 2^i - 1]$, và tiếp tục với đoạn còn lại $[L + 2^i, R]$.
-
-```{.cpp file=sparsetable_sum_query}
+```cpp title="sparsetable_sum_query"
 long long sum = 0;
 for (int i = K; i >= 0; i--) {
     if ((1 << i) <= R - L + 1) {
@@ -100,8 +96,7 @@ $$\min(\text{st}[i][L], \text{st}[i][R - 2^i + 1]) \quad \text{ trong đó } i =
 
 Điều này đòi hỏi rằng chúng ta có thể tính toán $\log_2(R - L + 1)$ nhanh.
 Bạn có thể hoàn thành điều đó bằng cách tính toán trước tất cả các logarit:
-
-```{.cpp file=sparse_table_log_table}
+```cpp title="sparse_table_log_table"
 int lg[MAXN+1];
 lg[1] = 0;
 for (int i = 2; i <= MAXN; i++)
@@ -123,8 +118,7 @@ int log2_floor(unsigned long long i) {
 [Benchmark này](https://quick-bench.com/q/Zghbdj_TEkmw4XG2nqOpD3tsJ8U) chỉ ra rằng việc sử dụng mảng `lg` chậm hơn do lỗi bộ nhớ cache (cache misses).
 
 Sau đó, chúng ta cần tính toán trước cấu trúc Sparse Table. Lần này chúng ta định nghĩa $f$ với $f(x, y) = \min(x, y)$.
-
-```{.cpp file=sparse_table_minimum_generation}
+```cpp title="sparse_table_minimum_generation"
 int st[K + 1][MAXN];
 
 std::copy(array.begin(), array.end(), st[0]);
@@ -135,8 +129,7 @@ for (int i = 1; i <= K; i++)
 ```
 
 Và giá trị nhỏ nhất của một đoạn $[L, R]$ có thể được tính bằng:
-
-```{.cpp file=sparse_table_minimum_query}
+```cpp title="sparse_table_minimum_query"
 int i = lg[R - L + 1];
 int minimum = min(st[i][L], st[i][R - (1 << i) + 1]);
 ```

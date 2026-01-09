@@ -19,8 +19,7 @@ Vì vậy, hãy so sánh từng chuỗi con có độ dài $|s|$ với mẫu. Đ
 Do đó, độ phức tạp cuối cùng của thuật toán là $O(|t| + |s|)$: $O(|s|)$ được yêu cầu để tính toán băm của mẫu và $O(|t|)$ để so sánh mỗi chuỗi con có độ dài $|s|$ với mẫu.
 
 ## Cài đặt (Implementation) {: #implementation}
-
-```{.cpp file=rabin_karp}
+```cpp title="rabin_karp"
 vector<int> rabin_karp(string const& s, string const& t) {
     const int p = 31; 
     const int m = 1e9 + 9;

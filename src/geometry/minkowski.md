@@ -46,8 +46,7 @@ Vì tổng Minkowski có thể được tính toán trong thời gian tuyến t�
 
 ## Cài đặt (Implementation) {: #implementation}
 Dưới đây là việc cài đặt tổng Minkowski cho các đa giác có điểm nguyên. Lưu ý rằng trong trường hợp này, tất cả các tính toán có thể được thực hiện bằng số nguyên vì thay vì tính toán các góc cực và so sánh trực tiếp chúng, chúng ta có thể nhìn vào dấu của tích có hướng của hai vector.
-
-```{.cpp file=minkowski}
+```cpp title="minkowski"
 struct pt{
     long long x, y;
     pt operator + (const pt & p) const {

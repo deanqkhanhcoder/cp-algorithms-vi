@@ -47,8 +47,7 @@ Hàm `prepare` sẽ đảm bảo rằng điểm nhỏ nhất theo thứ tự t�
 Sau đó hàm `pointInConvexPolygon` tính toán kết quả của một truy vấn.
 Chúng ta ghi nhớ thêm điểm $p_0$ và tịnh tiến tất cả các điểm được truy vấn với nó để tính toán khoảng cách chính xác, vì các vector không có điểm ban đầu.
 Bằng cách tịnh tiến các điểm truy vấn, chúng ta có thể giả định rằng tất cả các vector bắt đầu tại gốc tọa độ $(0, 0)$, và đơn giản hóa các tính toán cho khoảng cách và độ dài.
-
-```{.cpp file=points_in_convex_polygon}
+```cpp title="points_in_convex_polygon"
 struct pt {
     long long x, y;
     pt() {}

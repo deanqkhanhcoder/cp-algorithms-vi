@@ -144,8 +144,7 @@ Tóm lại chúng ta:
 - Áp dụng thuật toán Kruskal trên danh sách các cạnh để lấy MST.
 
 Dưới đây bạn có thể tìm thấy một cài đặt, dựa trên một cài đặt từ [KACTL](https://github.com/kth-competitive-programming/kactl/blob/main/content/geometry/ManhattanMST.h).
-
-```{.cpp file=manhattan_mst}
+```cpp title="manhattan_mst"
 struct point {
     long long x, y;
 };

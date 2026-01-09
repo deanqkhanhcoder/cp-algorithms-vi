@@ -54,8 +54,7 @@ y = x_1 - y_1 \cdot \left\lfloor \frac{a}{b} \right\rfloor
 \end{cases} $$
 
 ## Cài đặt (Implementation) {: #implementation}
-
-```{.cpp file=extended_gcd}
+```cpp title="extended_gcd"
 int gcd(int a, int b, int& x, int& y) {
     if (b == 0) {
         x = 1;
@@ -78,8 +77,7 @@ Cài đặt này của thuật toán Euclid mở rộng tạo ra kết quả ch�
 
 Cũng có thể viết thuật toán Euclid mở rộng theo cách lặp.
 Vì nó tránh đệ quy, mã sẽ chạy nhanh hơn một chút so với mã đệ quy.
-
-```{.cpp file=extended_gcd_iter}
+```cpp title="extended_gcd_iter"
 int gcd(int a, int b, int& x, int& y) {
     x = 1, y = 0;
     int x1 = 0, y1 = 1, a1 = a, b1 = b;

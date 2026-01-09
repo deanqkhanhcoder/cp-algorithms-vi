@@ -100,8 +100,7 @@ Vì hai công thức này sẽ yêu cầu độ chính xác rất cao khi làm v
 Số Fibonacci thứ $n$ có thể dễ dàng tìm thấy trong $O(n)$ bằng cách tính toán các số từng cái một cho đến $n$. Tuy nhiên, cũng có những cách nhanh hơn, như chúng ta sẽ thấy.
 
 Chúng ta có thể bắt đầu từ một cách tiếp cận lặp, để tận dụng việc sử dụng công thức $F_n = F_{n-1} + F_{n-2}$, do đó, chúng ta sẽ chỉ cần tính trước các giá trị đó trong một mảng. Tính đến các trường hợp cơ sở cho $F_0$ và $F_1$.
-
-```{.cpp file=fibonacci_linear}
+```cpp title="fibonacci_linear"
 int fib(int n) {
     int a = 0;
     int b = 1;
@@ -175,8 +174,7 @@ $$
 $$
 
 Do đó, để tìm $F_n$ trong thời gian $O(\log  n)$, chúng ta phải nâng ma trận lên lũy thừa n. (Xem [Lũy thừa nhị phân](binary-exp.md))
-
-```{.cpp file=fibonacci_matrix}
+```cpp title="fibonacci_matrix"
 struct matrix {
     long long mat[2][2];
     matrix friend operator *(const matrix &a, const matrix &b){
@@ -246,8 +244,7 @@ F_{2k} &= F_k(F_{k+1}+F_{k-1}) = F_k (2F_{k+1} - F_{k})\\
 \end{align}.$$
 
 Do đó sử dụng hai phương trình trên, số Fibonacci có thể được tính toán dễ dàng bằng đoạn mã sau:
-
-```{.cpp file=fibonacci_doubling}
+```cpp title="fibonacci_doubling"
 pair<int, int> fib (int n) {
     if (n == 0)
         return {0, 1};

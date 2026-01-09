@@ -133,9 +133,9 @@ Một trong những thủ thuật để làm tốt hơn về quy hoạch động
 
 | Tên | Mô tả/Ví dụ |
 | :--- | :--- |
-| [Cái túi 0-1 (0-1 Knapsack)](../dynamic_programming/knapsack.md) | Cho $N$ vật phẩm với trọng lượng $w_i$ và giá trị $v_i$ và trọng lượng tối đa $W$, giá trị lớn nhất $\sum_{i=1}^{k} v_i$ cho mỗi tập con các vật phẩm có kích thước $k$ ($1 \le k \le N$) trong khi đảm bảo $\sum_{i=1}^{k} w_i \le W$ là bao nhiêu? |
+| [Cái túi 0-1 (0-1 Knapsack)](knapsack.md) | Cho $N$ vật phẩm với trọng lượng $w_i$ và giá trị $v_i$ và trọng lượng tối đa $W$, giá trị lớn nhất $\sum_{i=1}^{k} v_i$ cho mỗi tập con các vật phẩm có kích thước $k$ ($1 \le k \le N$) trong khi đảm bảo $\sum_{i=1}^{k} w_i \le W$ là bao nhiêu? |
 | Tổng tập con (Subset Sum) | Cho $N$ số nguyên và $T$, xác định xem có tồn tại một tập con của tập hợp đã cho có tổng các phần tử bằng $T$ hay không. |
-| [Dãy con tăng dài nhất (LIS)](../dynamic_programming/longest_increasing_subsequence.md) | Bạn được cho một mảng chứa $N$ số nguyên. Nhiệm vụ của bạn là xác định LIS trong mảng, tức là một dãy con mà mỗi phần tử đều lớn hơn phần tử trước đó. |
+| [Dãy con tăng dài nhất (LIS)](longest-increasing-subsequence.md) | Bạn được cho một mảng chứa $N$ số nguyên. Nhiệm vụ của bạn là xác định LIS trong mảng, tức là một dãy con mà mỗi phần tử đều lớn hơn phần tử trước đó. |
 | Đếm đường đi trong mảng 2D (Counting Paths in a 2D Array) | Cho $N$ và $M$, đếm tất cả các đường đi riêng biệt có thể từ $(1,1)$ đến $(N, M)$, trong đó mỗi bước là từ $(i,j)$ đến $(i+1,j)$ hoặc $(i,j+1)$. |
 | Dãy con chung dài nhất (Longest Common Subsequence) | Bạn được cho các chuỗi $s$ và $t$. Tìm độ dài của chuỗi dài nhất là dãy con của cả $s$ và $t$. |
 | Đường đi dài nhất trong đồ thị có hướng không chu trình (DAG) | Tìm đường đi dài nhất trong DAG. |
@@ -145,7 +145,7 @@ Một trong những thủ thuật để làm tốt hơn về quy hoạch động
 
 ## Các chủ đề liên quan (Related Topics) {: #related-topics}
 
-*   [Quy hoạch động Bitmask (Bitmask Dynamic Programming)](../dynamic_programming/profile-dynamics.md)
+*   [Quy hoạch động Bitmask (Bitmask Dynamic Programming)](profile-dynamics.md)
 *   Quy hoạch động chữ số (Digit Dynamic Programming)
 *   Quy hoạch động trên cây (Dynamic Programming on Trees)
 

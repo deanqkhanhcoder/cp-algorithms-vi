@@ -18,7 +18,7 @@ Sqrt Tree có thể xử lý các truy vấn như vậy trong thời gian $O(1)$
 
 ### Xây dựng phân rã căn bậc hai (Building sqrt decomposition) {: #building-sqrt-decomposition}
 
-Hãy thực hiện một [phân rã căn bậc hai (sqrt decomposition)](sqrt_decomposition.md). Chúng ta chia mảng của mình thành $\sqrt{n}$ khối, mỗi khối có kích thước $\sqrt{n}$. Đối với mỗi khối, chúng ta tính toán:
+Hãy thực hiện một [phân rã căn bậc hai (sqrt decomposition)](sqrt-decomposition.md). Chúng ta chia mảng của mình thành $\sqrt{n}$ khối, mỗi khối có kích thước $\sqrt{n}$. Đối với mỗi khối, chúng ta tính toán:
 
 1.  Câu trả lời cho các truy vấn nằm trong khối và bắt đầu ở đầu khối ($\text{prefixOp}$)
 2.  Câu trả lời cho các truy vấn nằm trong khối và kết thúc ở cuối khối ($\text{suffixOp}$)

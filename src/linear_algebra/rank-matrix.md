@@ -23,8 +23,7 @@ Ngược lại, nếu chúng ta tìm thấy một hàng có phần tử khác kh
 Thuật toán này chạy trong $\mathcal{O}(n^3)$.
 
 ## Cài đặt (Implementation) {: #implementation}
-
-```{.cpp file=matrix-rank}
+```cpp title="matrix-rank"
 const double EPS = 1E-9;
 
 int compute_rank(vector<vector<double>> A) {

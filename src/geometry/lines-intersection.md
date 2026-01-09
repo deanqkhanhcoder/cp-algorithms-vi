@@ -37,8 +37,7 @@ $$\begin{vmatrix}a_1 & c_1 \cr a_2 & c_2\end{vmatrix}, \begin{vmatrix}b_1 & c_1 
 Lưu ý, một cách tiếp cận khác để tính toán giao điểm được giải thích trong bài viết [Hình học cơ bản](basic-geometry.md).
 
 ## Cài đặt (Implementation) {: #implementation}
-
-```{.cpp file=line_intersection}
+```cpp title="line_intersection"
 struct pt {
     double x, y;
 };

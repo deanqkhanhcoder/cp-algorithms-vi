@@ -24,8 +24,7 @@ Sau đó, chúng ta có thể kiểm tra tất cả các số từ $0$ đến $N
 ## Cài đặt (Implementation) {: #implementation}
 
 Thuật toán sau chạy trong thời gian $O(N \log N)$.
-
-```{.cpp file=mex_simple}
+```cpp title="mex_simple"
 int mex(vector<int> const& A) {
     set<int> b(A.begin(), A.end());
 
@@ -38,9 +37,7 @@ int mex(vector<int> const& A) {
 
 Nếu một thuật toán yêu cầu tính toán MEX trong $O(N)$, có thể thực hiện được bằng cách sử dụng một vectơ boolean thay vì một tập hợp.
 Lưu ý rằng mảng cần phải lớn bằng kích thước mảng lớn nhất có thể.
-
-
-```{.cpp file=mex_linear}
+```cpp title="mex_linear"
 int mex(vector<int> const& A) {
     static bool used[MAX_N+1] = { 0 };
 
@@ -85,8 +82,7 @@ Cũng có thể sử dụng các cấu trúc dữ liệu thư viện chuẩn `ma
 Với `map`, chúng ta sẽ nhớ tần suất của từng số và với `set`, chúng ta đại diện cho các số hiện đang thiếu trong mảng.
 Vì `set` được sắp xếp, `*set.begin()` sẽ là MEX.
 Tổng cộng chúng ta cần $O(N \log N)$ tính toán trước và sau đó có thể tính toán MEX trong $O(1)$ và cập nhật có thể được thực hiện trong $O(\log N)$.
-
-```{.cpp file=mex_updates}
+```cpp title="mex_updates"
 class Mex {
 private:
     map<int, int> frequency;

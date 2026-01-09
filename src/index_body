@@ -9,7 +9,7 @@ Chào mừng bạn đến với bản dịch tiếng Việt của CP-Algorithms.
     <p>Số nguyên tố, Lũy thừa, GCD...</p>
   </a>
 
-  <a href="data_structures/segment_tree.html" class="card">
+  <a href="data_structures/segment-tree.html" class="card">
     <div class="card-icon">🌲</div>
     <h3>Cấu trúc dữ liệu</h3>
     <p>Segment Tree, Fenwick Tree, Treap...</p>
@@ -20,7 +20,7 @@ Chào mừng bạn đến với bản dịch tiếng Việt của CP-Algorithms.
     <h3>Đồ thị (Graph)</h3>
     <p>BFS, DFS, Dijkstra, MST...</p>
   </a>
-  
+
   <a href="string/prefix-function.html" class="card">
     <div class="card-icon">abc</div>
     <h3>Xử lý chuỗi</h3>

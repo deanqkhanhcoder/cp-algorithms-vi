@@ -27,7 +27,7 @@ Sau mỗi cạnh nhận được, tức là sau khi thêm mỗi cạnh, hãy xu�
 Cũng có thể duy trì danh sách tất cả các cầu cũng như hỗ trợ rõ ràng các thành phần liên thông 2 cạnh (2-edge-connected components).
 
 Thuật toán được mô tả bên dưới hoạt động trong thời gian $O(n \log n + m)$, trong đó $m$ là số cạnh.
-Thuật toán dựa trên cấu trúc dữ liệu [Disjoint Set Union](../data_structures/disjoint_set_union.md).
+Thuật toán dựa trên cấu trúc dữ liệu [Disjoint Set Union](../data_structures/disjoint-set-union.md).
 Tuy nhiên, việc cài đặt trong bài viết này tốn thời gian $O(n \log n + m \log n)$, vì nó sử dụng phiên bản đơn giản hóa của DSU không có Union by Rank (hợp nhất theo hạng).
 
 ## Thuật toán (Algorithm) {: #algorithm}
@@ -63,7 +63,7 @@ Do đó, toàn bộ nhiệm vụ được giảm xuống thành việc thực hi
 
 ## Cấu trúc dữ liệu để lưu trữ rừng (Data Structures for storing the forest) {: #data-structures-for-storing-the-forest}
 
-Cấu trúc dữ liệu duy nhất mà chúng ta cần là [Disjoint Set Union](../data_structures/disjoint_set_union.md).
+Cấu trúc dữ liệu duy nhất mà chúng ta cần là [Disjoint Set Union](../data_structures/disjoint-set-union.md).
 Trên thực tế, chúng ta sẽ tạo hai bản sao của cấu trúc này:
 một bản sẽ là để duy trì các thành phần liên thông (connected components), bản còn lại để duy trì các thành phần liên thông 2 cạnh (2-edge-connected components).
 Và ngoài ra, chúng ta lưu trữ cấu trúc của các cây trong rừng các thành phần liên thông 2 cạnh thông qua các con trỏ:

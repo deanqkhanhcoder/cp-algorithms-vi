@@ -226,7 +226,7 @@ Bây giờ, khi mỗi phép biến đổi được mô tả như một ma trận
 
 **Bài toán:** Cho một đồ thị có hướng không trọng số gồm $n$ đỉnh, tìm số đường đi có độ dài $k$ từ bất kỳ đỉnh $u$ nào đến bất kỳ đỉnh $v$ nào khác.
 
-**Lời giải:** Bài toán này được xem xét chi tiết hơn trong [một bài viết riêng](../graph/fixed_length_paths.md). Thuật toán bao gồm việc nâng ma trận kề $M$ của đồ thị (một ma trận mà $m_{ij} = 1$ nếu có cạnh từ $i$ đến $j$, hoặc $0$ nếu ngược lại) lên lũy thừa $k$. Bây giờ $m_{ij}$ sẽ là số đường đi có độ dài $k$ từ $i$ đến $j$. Độ phức tạp thời gian của giải pháp này là $O(n^3 \log k)$.
+**Lời giải:** Bài toán này được xem xét chi tiết hơn trong [một bài viết riêng](../graph/fixed-length-paths.md). Thuật toán bao gồm việc nâng ma trận kề $M$ của đồ thị (một ma trận mà $m_{ij} = 1$ nếu có cạnh từ $i$ đến $j$, hoặc $0$ nếu ngược lại) lên lũy thừa $k$. Bây giờ $m_{ij}$ sẽ là số đường đi có độ dài $k$ từ $i$ đến $j$. Độ phức tạp thời gian của giải pháp này là $O(n^3 \log k)$.
 
 **Lưu ý:** Trong cùng bài viết đó, một biến thể khác của bài toán này cũng được xem xét: khi các cạnh có trọng số và yêu cầu tìm đường đi có trọng số nhỏ nhất chứa chính xác $k$ cạnh. Như đã trình bày trong bài viết đó, bài toán này cũng được giải quyết bằng cách lũy thừa ma trận kề. Ma trận sẽ có trọng số của cạnh từ $i$ đến $j$, hoặc $\infty$ nếu không có cạnh nào như vậy.
 Thay vì phép nhân hai ma trận thông thường, một phép toán sửa đổi nên được sử dụng:

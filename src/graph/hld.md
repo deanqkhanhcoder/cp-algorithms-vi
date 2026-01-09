@@ -64,7 +64,7 @@ Riêng biệt, đáng để chú ý đến bài toán về **tổng các số tr
 
 Cho một cây, mỗi đỉnh được gán một giá trị. Có các truy vấn có dạng $(a, b)$, trong đó $a$ và $b$ là hai đỉnh trong cây, và cần tìm giá trị lớn nhất trên đường đi giữa các đỉnh $a$ và $b$.
 
-Chúng ta xây dựng trước một phân rã heavy-light của cây. Trên mỗi đường đi nặng, chúng ta sẽ xây dựng một [segment tree](../data_structures/segment_tree.md), cho phép chúng ta tìm kiếm một đỉnh có giá trị được gán lớn nhất trong đoạn đã chỉ định của đường đi nặng đã chỉ định trong $\mathcal{O}(\log n)$. Mặc dù số lượng đường đi nặng trong phân rã heavy-light có thể đạt tới $n - 1$, tổng kích thước của tất cả các đường đi bị giới hạn bởi $\mathcal{O}(n)$, do đó tổng kích thước của các segment tree cũng sẽ là tuyến tính.
+Chúng ta xây dựng trước một phân rã heavy-light của cây. Trên mỗi đường đi nặng, chúng ta sẽ xây dựng một [segment tree](../data_structures/segment-tree.md), cho phép chúng ta tìm kiếm một đỉnh có giá trị được gán lớn nhất trong đoạn đã chỉ định của đường đi nặng đã chỉ định trong $\mathcal{O}(\log n)$. Mặc dù số lượng đường đi nặng trong phân rã heavy-light có thể đạt tới $n - 1$, tổng kích thước của tất cả các đường đi bị giới hạn bởi $\mathcal{O}(n)$, do đó tổng kích thước của các segment tree cũng sẽ là tuyến tính.
 
 Để trả lời một truy vấn $(a, b)$, chúng ta tìm [tổ tiên chung thấp nhất (lowest common ancestor)](https://en.wikipedia.org/wiki/Lowest_common_ancestor) của $a$ và $b$ là $l$, bằng bất kỳ phương pháp ưa thích nào. Bây giờ nhiệm vụ đã được giảm xuống còn hai truy vấn $(a, l)$ và $(b, l)$, đối với mỗi truy vấn chúng ta có thể làm như sau: tìm đường đi nặng mà đỉnh thấp hơn nằm trong đó, thực hiện một truy vấn trên đường đi này, di chuyển lên đầu đường đi này, một lần nữa xác định xem chúng ta đang ở trên đường đi nặng nào và thực hiện một truy vấn trên đó, và cứ thế tiếp tục, cho đến khi chúng ta đến đường đi chứa $l$.
 
@@ -81,9 +81,9 @@ Cho một cây, mỗi đỉnh được gán một giá trị. Có các truy vấ
 
 Nhiệm vụ này có thể được giải quyết tương tự như bài toán trước về giá trị lớn nhất với sự trợ giúp của phân rã heavy-light bằng cách xây dựng các segment tree trên các đường đi nặng. Tổng tiền tố có thể được sử dụng thay thế nếu không có cập nhật. Tuy nhiên, vấn đề này cũng có thể được giải quyết bằng các kỹ thuật đơn giản hơn.
 
-Nếu không có cập nhật, thì có thể tìm ra tổng trên đường đi giữa hai đỉnh song song với tìm kiếm LCA của hai đỉnh bằng [nâng nhị phân](lca_binary_lifting.md) — đối với điều này, cùng với tổ tiên thứ $2^k$ của mỗi đỉnh, cũng cần phải lưu trữ tổng trên các đường đi đến các tổ tiên đó trong quá trình tiền xử lý.
+Nếu không có cập nhật, thì có thể tìm ra tổng trên đường đi giữa hai đỉnh song song với tìm kiếm LCA của hai đỉnh bằng [nâng nhị phân](lca-binary-lifting.md) — đối với điều này, cùng với tổ tiên thứ $2^k$ của mỗi đỉnh, cũng cần phải lưu trữ tổng trên các đường đi đến các tổ tiên đó trong quá trình tiền xử lý.
 
-Có một cách tiếp cận hoàn toàn khác cho vấn đề này - xem xét [Euler tour](https://en.wikipedia.org/wiki/Euler_tour_technique) của cây, và xây dựng một segment tree trên đó. Thuật toán này được xem xét trong một [bài viết về một vấn đề tương tự](tree_painting.md). Một lần nữa, nếu không có cập nhật, việc lưu trữ tổng tiền tố là đủ và không cần segment tree.
+Có một cách tiếp cận hoàn toàn khác cho vấn đề này - xem xét [Euler tour](https://en.wikipedia.org/wiki/Euler_tour_technique) của cây, và xây dựng một segment tree trên đó. Thuật toán này được xem xét trong một [bài viết về một vấn đề tương tự](tree-painting.md). Một lần nữa, nếu không có cập nhật, việc lưu trữ tổng tiền tố là đủ và không cần segment tree.
 
 Cả hai phương pháp này đều cung cấp các giải pháp tương đối đơn giản lấy $\mathcal{O}(\log n)$ cho một truy vấn.
 
@@ -91,7 +91,7 @@ Cả hai phương pháp này đều cung cấp các giải pháp tương đối 
 
 Cho một cây, mỗi cạnh ban đầu được tô màu trắng. Có các cập nhật có dạng $(a, b, c)$, trong đó $a$ và $b$ là hai đỉnh và $c$ là một màu, hướng dẫn rằng tất cả các cạnh trên đường đi từ $a$ đến $b$ phải được tô lại bằng màu $c$. Sau tất cả các lần tô lại, cần báo cáo có bao nhiêu cạnh của mỗi màu đã thu được.
 
-Tương tự như các vấn đề trên, giải pháp đơn giản là áp dụng phân rã heavy-light và tạo một [segment tree](../data_structures/segment_tree.md) trên mỗi đường đi nặng.
+Tương tự như các vấn đề trên, giải pháp đơn giản là áp dụng phân rã heavy-light và tạo một [segment tree](../data_structures/segment-tree.md) trên mỗi đường đi nặng.
 
 Mỗi lần tô lại trên đường đi $(a, b)$ sẽ chuyển thành hai bản cập nhật $(a, l)$ và $(b, l)$, trong đó $l$ là tổ tiên chung thấp nhất của các đỉnh $a$ và $b$.
 $\mathcal{O}(\log n)$ cho mỗi đường đi cho $\mathcal{O}(\log n)$ đường đi dẫn đến độ phức tạp là $\mathcal{O}(\log^2 n)$ cho mỗi cập nhật.

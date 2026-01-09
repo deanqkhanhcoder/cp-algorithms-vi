@@ -126,7 +126,7 @@ Do đó, chúng ta thực hiện BFS bình thường từ mỗi đỉnh, nhưng 
 * Tìm lời giải cho một bài toán hoặc một trò chơi với số bước đi ít nhất, nếu mỗi trạng thái của trò chơi có thể được biểu diễn bằng một đỉnh của đồ thị, và các chuyển đổi từ trạng thái này sang trạng thái khác là các cạnh của đồ thị.
 
 * Tìm đường đi ngắn nhất trong đồ thị có trọng số 0 hoặc 1:
-Điều này chỉ yêu cầu một chút sửa đổi đối với tìm kiếm theo chiều rộng thông thường: Thay vì duy trì mảng $used[]$, bây giờ chúng ta sẽ kiểm tra xem khoảng cách đến đỉnh có ngắn hơn khoảng cách được tìm thấy hiện tại hay không, sau đó nếu cạnh hiện tại có trọng số bằng 0, chúng ta thêm nó vào đầu hàng đợi, ngược lại chúng ta thêm nó vào cuối hàng đợi. Sửa đổi này được giải thích chi tiết hơn trong bài viết [0-1 BFS](01_bfs.md).
+Điều này chỉ yêu cầu một chút sửa đổi đối với tìm kiếm theo chiều rộng thông thường: Thay vì duy trì mảng $used[]$, bây giờ chúng ta sẽ kiểm tra xem khoảng cách đến đỉnh có ngắn hơn khoảng cách được tìm thấy hiện tại hay không, sau đó nếu cạnh hiện tại có trọng số bằng 0, chúng ta thêm nó vào đầu hàng đợi, ngược lại chúng ta thêm nó vào cuối hàng đợi. Sửa đổi này được giải thích chi tiết hơn trong bài viết [0-1 BFS](01-bfs.md).
 
 * Tìm chu trình ngắn nhất trong đồ thị có hướng không trọng số:
 Bắt đầu tìm kiếm theo chiều rộng từ mỗi đỉnh.

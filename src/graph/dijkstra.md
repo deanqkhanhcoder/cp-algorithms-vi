@@ -88,9 +88,8 @@ Thời gian chạy của thuật toán bao gồm:
 $$O(n^2+m)$$
 
 Độ phức tạp này là tối ưu cho đồ thị dày, tức là khi $m \approx n^2$.
-Tuy nhiên, trong các đồ thị thưa, khi $m$ nhỏ hơn nhiều so với số lượng cạnh tối đa $n^2$, bài toán có thể được giải quyết với độ phức tạp $O(n \log n + m)$. Thuật toán và cài đặt có thể được tìm thấy trong bài viết [Dijkstra trên đồ thị thưa](dijkstra_sparse.md).
-
-```{.cpp file=dijkstra_dense}
+Tuy nhiên, trong các đồ thị thưa, khi $m$ nhỏ hơn nhiều so với số lượng cạnh tối đa $n^2$, bài toán có thể được giải quyết với độ phức tạp $O(n \log n + m)$. Thuật toán và cài đặt có thể được tìm thấy trong bài viết [Dijkstra trên đồ thị thưa](dijkstra-sparse.md).
+```cpp title="dijkstra_dense"
 const int INF = 1000000000;
 vector<vector<pair<int, int>>> adj;
 
@@ -132,8 +131,7 @@ Hàm nhận đỉnh bắt đầu $s$ và hai vector sẽ được sử dụng l�
 Trước hết, mã khởi tạo các mảng: khoảng cách $d[]$, nhãn $u[]$ và tiền bối $p[]$. Sau đó nó thực hiện $n$ lần lặp. Tại mỗi lần lặp, đỉnh $v$ được chọn có khoảng cách nhỏ nhất $d[v]$ trong số tất cả các đỉnh chưa được đánh dấu. Nếu khoảng cách đến đỉnh đã chọn $v$ bằng vô cùng, thuật toán dừng lại. Ngược lại, đỉnh được đánh dấu và tất cả các cạnh đi ra từ đỉnh này được kiểm tra. Nếu việc nới lỏng dọc theo cạnh là có thể (tức là khoảng cách $d[\text{to}]$ có thể được cải thiện), khoảng cách $d[\text{to}]$ và tiền bối $p[\text{to}]$ được cập nhật.
 
 Sau khi thực hiện tất cả các lần lặp, mảng $d[]$ lưu trữ độ dài của các đường đi ngắn nhất đến tất cả các đỉnh, và mảng $p[]$ lưu trữ các tiền bối của tất cả các đỉnh (ngoại trừ đỉnh bắt đầu $s$). Đường đi đến bất kỳ đỉnh $t$ nào cũng có thể được khôi phục theo cách sau:
-
-```{.cpp file=dijkstra_restore_path}
+```cpp title="dijkstra_restore_path"
 vector<int> restore_path(int s, int t, vector<int> const& p) {
     vector<int> path;
 

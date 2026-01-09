@@ -13,7 +13,7 @@ Tăng tốc được áp dụng cho các chuyển đổi có dạng
 
 $$dp(i, j) = \min_{i \leq k < j} [ dp(i, k) + dp(k+1, j) + C(i, j) ].$$
 
-Tương tự như [DP chia để trị](../dynamic_programming/divide-and-conquer-dp.md), gọi $opt(i, j)$ là giá trị $k$ tối đa giúp giảm thiểu biểu thức trong quá trình chuyển đổi ($opt$ được gọi là "điểm chia tối ưu" trong nửa sau bài viết này). Việc tối ưu hóa yêu cầu điều sau đây phải được thỏa mãn:
+Tương tự như [DP chia để trị](divide-and-conquer-dp.md), gọi $opt(i, j)$ là giá trị $k$ tối đa giúp giảm thiểu biểu thức trong quá trình chuyển đổi ($opt$ được gọi là "điểm chia tối ưu" trong nửa sau bài viết này). Việc tối ưu hóa yêu cầu điều sau đây phải được thỏa mãn:
 
 $$opt(i, j-1) \leq opt(i, j) \leq opt(i+1, j).$$
 
@@ -32,8 +32,7 @@ Hãy xử lý các trạng thái dp theo cách mà chúng ta tính $dp(i, j-1)$ 
 ### Cài đặt chung (Generic implementation) {: #generic-implementation}
 
 Mặc dù việc cài đặt thay đổi, đây là một ví dụ khá chung. Cấu trúc của mã gần giống với DP Khoảng (Range DP).
-
-```{.cpp file=knuth_optimization}
+```cpp title="knuth_optimization"
 
 int solve() {
     int N;

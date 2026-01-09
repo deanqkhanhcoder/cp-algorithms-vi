@@ -30,7 +30,7 @@ $$\left|\bigcup_{i=1}^n A_i \right| = \sum_{\emptyset \neq J\subseteq \{1,2,\ldo
 
 Giả sử biểu đồ hiển thị ba tập hợp $A$, $B$ và $C$:
 
-![Venn diagram](venn-inclusion-exclusion.png "Venn diagram")
+![Venn diagram](../assets/images/venn-inclusion-exclusion.png "Venn diagram")
 
 Khi đó diện tích hợp của chúng $A \cup B \cup C$ bằng tổng diện tích các phần $A$, $B$ và $C$ trừ đi các diện tích được phủ hai lần $A \cap B$, $A \cap C$, $B \cap C$, nhưng cộng thêm diện tích được bao phủ bởi ba tập hợp $A \cap B \cap C$:
 
@@ -148,7 +148,7 @@ trong đó $0 \le x_i \le 8 ~ (i = 1,2,\ldots 6)$.
 
 Nhiệm vụ: đếm số lượng nghiệm của phương trình.
 
-Quên hạn chế về $x_i$ trong giây lát và chỉ đếm số lượng nghiệm không âm cho phương trình này. Điều này dễ dàng được thực hiện bằng cách sử dụng [Phương pháp Ngôi sao và Vách ngăn](stars_and_bars.md):
+Quên hạn chế về $x_i$ trong giây lát và chỉ đếm số lượng nghiệm không âm cho phương trình này. Điều này dễ dàng được thực hiện bằng cách sử dụng [Phương pháp Ngôi sao và Vách ngăn](stars-and-bars.md):
 chúng ta muốn chia một chuỗi $20$ đơn vị thành $6$ nhóm, điều này giống như sắp xếp $5$ _vách ngăn_ và $20$ _ngôi sao_:
 
 $$N_0 = \binom{25}{5}$$

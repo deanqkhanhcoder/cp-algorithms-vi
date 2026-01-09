@@ -10,7 +10,7 @@ Bạn được cho hai đường tròn trên mặt phẳng 2D, mỗi đường t
 
 ## Giải pháp (Solution) {: #solution}
 
-Hãy quy bài toán này về [bài toán giao điểm đường tròn-đường thẳng](../geometry/circle-line-intersection.md).
+Hãy quy bài toán này về [bài toán giao điểm đường tròn-đường thẳng](circle-line-intersection.md).
 
 Giả sử không mất tính tổng quát rằng đường tròn thứ nhất có tâm tại gốc tọa độ (nếu điều này không đúng, chúng ta có thể di chuyển gốc tọa độ đến tâm của đường tròn thứ nhất và điều chỉnh tọa độ của các điểm giao nhau tương ứng tại thời điểm đầu ra). Chúng ta có một hệ gồm hai phương trình:
 
@@ -34,7 +34,7 @@ B &= -2y_2 \\
 C &= x_2^2+y_2^2+r_1^2-r_2^2
 \end{align}$$
 
-Và bài toán này có thể được giải quyết như được mô tả trong [bài viết tương ứng](../geometry/circle-line-intersection.md).
+Và bài toán này có thể được giải quyết như được mô tả trong [bài viết tương ứng](circle-line-intersection.md).
 
 Trường hợp suy biến ( degenerate case) duy nhất chúng ta cần xem xét riêng là khi tâm của các đường tròn trùng nhau. Trong trường hợp này $x_2=y_2=0$, và phương trình đường thẳng sẽ là $C = r_1^2-r_2^2 = 0$. Nếu bán kính của các đường tròn giống nhau, có vô hạn điểm giao nhau, nếu chúng khác nhau, không có giao điểm nào.
 

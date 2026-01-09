@@ -244,7 +244,7 @@ Lưu ý rằng trong bài toán này các ưu tiên không phải là ngẫu nhi
 
 Một trong những giải pháp khả thi ở đây là tìm cho mỗi phần tử các phần tử gần nhất bên trái và bên phải có độ ưu tiên nhỏ hơn phần tử này. Trong số hai phần tử này, phần tử có độ ưu tiên lớn hơn phải là cha của phần tử hiện tại.
 
-Bài toán này có thể giải được với sửa đổi [ngăn xếp tìm min](./stack_queue_modification.md) trong thời gian tuyến tính:
+Bài toán này có thể giải được với sửa đổi [ngăn xếp tìm min](stack-queue-modification.md) trong thời gian tuyến tính:
 
 ```cpp
 void connect(auto from, auto to) {

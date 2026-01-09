@@ -293,7 +293,7 @@ Có hai cách chính để hợp nhất tất cả các liên phân số có th�
 
 ### Cây Stern-Brocot (Stern-Brocot tree) {: #stern-brocot-tree}
 
-[Cây Stern-Brocot](../others/stern_brocot_tree_farey_sequences.md) là một cây tìm kiếm nhị phân chứa tất cả các số hữu tỷ dương phân biệt.
+[Cây Stern-Brocot](../others/stern-brocot-tree-farey-sequences.md) là một cây tìm kiếm nhị phân chứa tất cả các số hữu tỷ dương phân biệt.
 
 Cây thường trông như sau:
 
@@ -541,7 +541,7 @@ $$|r-r_k| = |r_k-r_{k+1}|-|r-r_{k+1}| \leq |r_k - r_{k+1}|.$$
 !!! example "Euclid mở rộng?"
     Bạn được cho $A, B, C \in \mathbb Z$. Tìm $x, y \in \mathbb Z$ sao cho $Ax + By = C$.
 ??? hint "Lời giải"
-    Mặc dù bài toán này thường được giải bằng [thuật toán Euclid mở rộng](../algebra/extended-euclid-algorithm.md), có một giải pháp đơn giản và trực tiếp với liên phân số.
+    Mặc dù bài toán này thường được giải bằng [thuật toán Euclid mở rộng](extended-euclid-algorithm.md), có một giải pháp đơn giản và trực tiếp với liên phân số.
 
     Cho $\frac{A}{B}=[a_0; a_1, \dots, a_k]$. Đã được chứng minh ở trên rằng $p_k q_{k-1} - p_{k-1} q_k = (-1)^{k-1}$. Thay thế $p_k$ và $q_k$ bằng $A$ và $B$, chúng ta nhận được
 

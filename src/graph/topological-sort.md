@@ -84,7 +84,7 @@ void topological_sort() {
 }
 ```
 
-Hàm chính của giải pháp là `topological_sort`, khởi tạo các biến DFS, khởi chạy DFS và nhận câu trả lời trong vector `ans`. Cần lưu ý rằng khi đồ thị không phải là không có chu trình (tức là có chu trình), kết quả `topological_sort` vẫn sẽ có ý nghĩa ở một khía cạnh nào đó là nếu một đỉnh $u$ có thể truy cập từ đỉnh $v$, nhưng không ngược lại (not vice versa), thì đỉnh $v$ sẽ luôn đi trước trong mảng kết quả. Thuộc tính này của cài đặt được cung cấp được sử dụng trong [thuật toán Kosaraju](./strongly-connected-components.md) để trích xuất các thành phần liên thông mạnh và sắp xếp topo của chúng trong một đồ thị có hướng có chu trình.
+Hàm chính của giải pháp là `topological_sort`, khởi tạo các biến DFS, khởi chạy DFS và nhận câu trả lời trong vector `ans`. Cần lưu ý rằng khi đồ thị không phải là không có chu trình (tức là có chu trình), kết quả `topological_sort` vẫn sẽ có ý nghĩa ở một khía cạnh nào đó là nếu một đỉnh $u$ có thể truy cập từ đỉnh $v$, nhưng không ngược lại (not vice versa), thì đỉnh $v$ sẽ luôn đi trước trong mảng kết quả. Thuộc tính này của cài đặt được cung cấp được sử dụng trong [thuật toán Kosaraju](strongly-connected-components.md) để trích xuất các thành phần liên thông mạnh và sắp xếp topo của chúng trong một đồ thị có hướng có chu trình.
 
 ## Bài tập (Practice Problems) {: #practice-problems}
 

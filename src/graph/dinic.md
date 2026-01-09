@@ -6,7 +6,7 @@ e_maxx_link: dinic
 
 # Luồng cực đại - Thuật toán Dinic (Maximum flow - Dinic's algorithm) {: #maximum-flow-dinics-algorithm}
 
-Thuật toán Dinic giải quyết bài toán luồng cực đại trong $O(V^2E)$. Bài toán luồng cực đại được định nghĩa trong bài viết này [Luồng cực đại - Ford-Fulkerson và Edmonds-Karp](edmonds_karp.md). Thuật toán này được phát hiện bởi Yefim Dinitz vào năm 1970.
+Thuật toán Dinic giải quyết bài toán luồng cực đại trong $O(V^2E)$. Bài toán luồng cực đại được định nghĩa trong bài viết này [Luồng cực đại - Ford-Fulkerson và Edmonds-Karp](edmonds-karp.md). Thuật toán này được phát hiện bởi Yefim Dinitz vào năm 1970.
 
 ## Định nghĩa (Definitions) {: #definitions}
 

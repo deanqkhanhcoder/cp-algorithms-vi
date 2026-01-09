@@ -63,8 +63,7 @@ Sau đó, chúng ta chọn cái sẽ gặp phải đầu tiên. Ban đầu cơ s
 ## Cài đặt (Implementation) {: #implementation}
 
 Lưu ý rằng việc cài đặt hàm in_circle là đặc thù của GCC.
-
-```{.cpp file=delaunay}
+```cpp title="delaunay"
 typedef long long ll;
 
 bool ge(const ll& a, const ll& b) { return a >= b; }

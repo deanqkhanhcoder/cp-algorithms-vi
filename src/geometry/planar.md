@@ -62,7 +62,7 @@ Việc cài đặt sau đây trả về một vector các đỉnh cho mỗi mặ
 Các mặt trong được trả về theo thứ tự ngược chiều kim đồng hồ và mặt ngoài được trả về theo thứ tự cùng chiều kim đồng hồ.
 
 Để đơn giản, chúng ta tìm cạnh tiếp theo bằng cách thực hiện tìm kiếm nhị phân theo góc.
-```{.cpp file=planar}
+```cpp title="planar"
 struct Point {
     int64_t x, y;
 
@@ -154,7 +154,7 @@ std::vector<std::vector<size_t>> find_faces(std::vector<Point> vertices, std::ve
 </div>
 
 ## Cài đặt (Implementation) {: #implementation-of-building-graph}
-```{.cpp file=planar_implicit}
+```cpp title="planar_implicit"
 using dbl = long double;
 
 const dbl eps = 1e-9;

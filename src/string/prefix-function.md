@@ -22,8 +22,7 @@ Ví dụ: hàm tiền tố của chuỗi "abcabcd" là $[0, 0, 0, 1, 2, 3, 0]$, 
 ## Thuật toán Tầm thường (Trivial Algorithm) {: #trivial-algorithm}
 
 Một thuật toán tuân theo định nghĩa của hàm tiền tố một cách chính xác là như sau:
-
-```{.cpp file=prefix_slow}
+```cpp title="prefix_slow"
 vector<int> prefix_function(string s) {
     int n = (int)s.length();
     vector<int> pi(n);
@@ -106,8 +105,7 @@ Nếu chúng bằng nhau thì chúng ta gán $\pi[i] = j + 1$, ngược lại ch
 ### Cài đặt (Implementation) {: #implementation}
 
 Việc cài đặt kết thúc ngắn gọn và biểu cảm một cách đáng ngạc nhiên.
-
-```{.cpp file=prefix_fast}
+```cpp title="prefix_fast"
 vector<int> prefix_function(string s) {
     int n = (int)s.length();
     vector<int> pi(n);
@@ -168,8 +166,7 @@ Không khó để thấy rằng, chúng ta có cùng một câu hỏi mà chúng
 Cho một tiền tố có độ dài $j$ là một hậu tố kết thúc tại vị trí $i$, tiền tố nhỏ hơn tiếp theo $\lt j$ cũng là một hậu tố kết thúc tại vị trí $i$ là gì.
 Do đó tại vị trí $i$ kết thúc tiền tố có độ dài $\pi[i]$, tiền tố có độ dài $\pi[\pi[i] - 1]$, tiền tố $\pi[\pi[\pi[i] - 1] - 1]$, và cứ thế tiếp tục, cho đến khi chỉ số trở thành không.
 Do đó chúng ta có thể tính toán câu trả lời theo cách sau.
-
-```{.cpp file=prefix_count_each_prefix}
+```cpp title="prefix_count_each_prefix"
 vector<int> ans(n + 1);
 for (int i = 0; i < n; i++)
     ans[pi[i]]++;
@@ -264,8 +261,7 @@ Thật vậy, trong tình huống như vậy, biết ký tự tiếp theo $c \in
 Nói cách khác, chúng ta có thể xây dựng một **automaton** (một máy trạng thái hữu hạn): trạng thái trong đó là giá trị hiện tại của hàm tiền tố, và quá trình chuyển đổi từ trạng thái này sang trạng thái khác sẽ được thực hiện thông qua ký tự tiếp theo.
 
 Do đó, ngay cả khi không có chuỗi $t$, chúng ta có thể xây dựng một bảng chuyển đổi như vậy $(\text{old}_\pi, c) \rightarrow \text{new}_\pi$ bằng cách sử dụng cùng thuật toán như để tính toán bảng chuyển đổi:
-
-```{.cpp file=prefix_automaton_slow}
+```cpp title="prefix_automaton_slow"
 void compute_automaton(string s, vector<vector<int>>& aut) {
     s += '#';
     int n = s.size();
@@ -287,8 +283,7 @@ void compute_automaton(string s, vector<vector<int>>& aut) {
 Tuy nhiên, ở dạng này, thuật toán chạy trong thời gian $O(n^2 26)$ cho các chữ cái viết thường của bảng chữ cái.
 Lưu ý rằng chúng ta có thể áp dụng quy hoạch động và sử dụng các phần đã được tính toán của bảng.
 Bất cứ khi nào chúng ta đi từ giá trị $j$ đến giá trị $\pi[j-1]$, chúng ta thực sự có nghĩa là quá trình chuyển đổi $(j, c)$ dẫn đến cùng một trạng thái với quá trình chuyển đổi như $(\pi[j-1], c)$, và câu trả lời này đã được tính toán chính xác.
-
-```{.cpp file=prefix_automaton_fast}
+```cpp title="prefix_automaton_fast"
 void compute_automaton(string s, vector<vector<int>>& aut) {
     s += '#';
     int n = s.size();

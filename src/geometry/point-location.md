@@ -75,8 +75,7 @@ Thực ra, với cây bền vững (persistent trees), phương pháp này có t
 Mã sau đây được cài đặt cho số nguyên, nhưng nó có thể dễ dàng sửa đổi để làm việc với số thực (bằng cách thay đổi các phương thức so sánh và kiểu điểm).
 Việc cài đặt này giả định rằng phân hoạch được lưu trữ chính xác bên trong một [DCEL](https://en.wikipedia.org/wiki/Doubly_connected_edge_list) và mặt ngoài được đánh số $-1$.<br>
 Đối với mỗi truy vấn, một cặp $(1, i)$ được trả về nếu điểm nằm hoàn toàn bên trong mặt số $i$, và một cặp $(0, i)$ được trả về nếu điểm nằm trên cạnh số $i$.
-
-```{.cpp file=point-location}
+```cpp title="point-location"
 typedef long long ll;
 
 bool ge(const ll& a, const ll& b) { return a >= b; }

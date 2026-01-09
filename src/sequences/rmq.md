@@ -19,9 +19,9 @@ Những cái được giải thích trên trang web này được liệt kê dư
 
 Đầu tiên là các cách tiếp cận cho phép sửa đổi mảng giữa các lần trả lời truy vấn.
 
-- [Sqrt-decomposition](../data_structures/sqrt_decomposition.md) - trả lời mỗi truy vấn trong $O(\sqrt{N})$, tiền xử lý được thực hiện trong $O(N)$.
+- [Sqrt-decomposition](../data_structures/sqrt-decomposition.md) - trả lời mỗi truy vấn trong $O(\sqrt{N})$, tiền xử lý được thực hiện trong $O(N)$.
   Ưu điểm: một cấu trúc dữ liệu rất đơn giản. Nhược điểm: độ phức tạp tồi tệ hơn.
-- [Segment tree](../data_structures/segment_tree.md) - trả lời mỗi truy vấn trong $O(\log N)$, tiền xử lý được thực hiện trong $O(N)$.
+- [Segment tree](../data_structures/segment-tree.md) - trả lời mỗi truy vấn trong $O(\log N)$, tiền xử lý được thực hiện trong $O(N)$.
   Ưu điểm: độ phức tạp thời gian tốt. Nhược điểm: lượng mã lớn hơn so với các cấu trúc dữ liệu khác.
 - [Fenwick tree](../data_structures/fenwick.md) - trả lời mỗi truy vấn trong $O(\log N)$, tiền xử lý được thực hiện trong $O(N \log N)$.
   Ưu điểm: mã ngắn nhất, độ phức tạp thời gian tốt. Nhược điểm: Cây Fenwick chỉ có thể được sử dụng cho các truy vấn có $L = 1$, vì vậy nó không áp dụng cho nhiều bài toán.
@@ -31,8 +31,8 @@ Và đây là những cách tiếp cận chỉ hoạt động trên các mảng 
 - [Sparse Table](../data_structures/sparse-table.md) - trả lời mỗi truy vấn trong $O(1)$, tiền xử lý được thực hiện trong $O(N \log N)$.
   Ưu điểm: cấu trúc dữ liệu đơn giản, độ phức tạp thời gian tuyệt vời.
 - [Sqrt Tree](../data_structures/sqrt-tree.md) - trả lời truy vấn trong $O(1)$, tiền xử lý được thực hiện trong $O(N \log \log N)$. Ưu điểm: nhanh. Nhược điểm: Phức tạp để cài đặt.
-- [Disjoint Set Union / Arpa's Trick](../data_structures/disjoint_set_union.md#arpa) - trả lời truy vấn trong $O(1)$, tiền xử lý trong $O(n)$. Ưu điểm: ngắn, nhanh. Nhược điểm: chỉ hoạt động nếu tất cả các truy vấn được biết trước, tức là chỉ hỗ trợ xử lý off-line các truy vấn.
-- [Cartesian Tree](../graph/rmq_linear.md) và [Thuật toán Farach-Colton và Bender](../graph/lca_farachcoltonbender.md) - trả lời truy vấn trong $O(1)$, tiền xử lý trong $O(n)$. Ưu điểm: độ phức tạp tối ưu. Nhược điểm: lượng mã lớn.
+- [Disjoint Set Union / Arpa's Trick](../data_structures/disjoint-set-union.md#arpa) - trả lời truy vấn trong $O(1)$, tiền xử lý trong $O(n)$. Ưu điểm: ngắn, nhanh. Nhược điểm: chỉ hoạt động nếu tất cả các truy vấn được biết trước, tức là chỉ hỗ trợ xử lý off-line các truy vấn.
+- [Cartesian Tree](../graph/rmq-linear.md) và [Thuật toán Farach-Colton và Bender](../graph/lca-farachcoltonbender.md) - trả lời truy vấn trong $O(1)$, tiền xử lý trong $O(n)$. Ưu điểm: độ phức tạp tối ưu. Nhược điểm: lượng mã lớn.
 
 Lưu ý: Tiền xử lý là quá trình xử lý sơ bộ mảng đã cho bằng cách xây dựng cấu trúc dữ liệu tương ứng cho nó.
 

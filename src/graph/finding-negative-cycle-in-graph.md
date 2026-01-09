@@ -16,7 +16,7 @@ Thuận tiện để sử dụng các thuật toán khác nhau để giải quy�
 
 Thuật toán Bellman-Ford cho phép bạn kiểm tra xem có tồn tại một chu trình trọng số âm trong đồ thị hay không, và nếu có, hãy tìm một trong những chu trình này.
 
-Các chi tiết của thuật toán được mô tả trong bài viết về thuật toán [Bellman-Ford](bellman_ford.md).
+Các chi tiết của thuật toán được mô tả trong bài viết về thuật toán [Bellman-Ford](bellman-ford.md).
 Ở đây chúng tôi sẽ chỉ mô tả ứng dụng của nó cho bài toán này.
 
 Cài đặt tiêu chuẩn của Bellman-Ford tìm kiếm một chu trình âm có thể truy cập được từ một đỉnh bắt đầu $v$; tuy nhiên, thuật toán có thể được sửa đổi để chỉ tìm bất kỳ chu trình âm nào trong đồ thị.

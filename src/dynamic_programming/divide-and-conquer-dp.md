@@ -34,8 +34,7 @@ Lưu ý rằng không quan trọng $opt(i, j)$ "cân bằng" như thế nào. Qu
 Mặc dù việc cài đặt thay đổi tùy theo bài toán, đây là một mẫu khá chung.
 Hàm `compute` tính toán một hàng $i$ của các trạng thái `dp_cur`, với hàng trước $i-1$ của các trạng thái `dp_before`.
 Nó phải được gọi với `compute(0, n-1, 0, n-1)`. Hàm `solve` tính toán `m` hàng và trả về kết quả.
-
-```{.cpp file=divide_and_conquer_dp}
+```cpp title="divide_and_conquer_dp"
 int m, n;
 vector<long long> dp_before, dp_cur;
 

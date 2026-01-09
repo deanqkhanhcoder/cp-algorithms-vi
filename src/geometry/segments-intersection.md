@@ -34,8 +34,7 @@ Dưới đây là cài đặt, bao gồm tất cả các hàm trợ giúp cho vi
 Hàm chính `intersect` trả về true nếu các đoạn thẳng có giao điểm khác rỗng,
 và lưu trữ các điểm đầu mút của đoạn thẳng giao nhau trong các đối số `left` và `right`.
 Nếu câu trả lời là một điểm duy nhất, các giá trị được ghi vào `left` và `right` sẽ giống nhau.
-
-```{.cpp file=segment_intersection}
+```cpp title="segment_intersection"
 const double EPS = 1E-9;
 
 struct pt {

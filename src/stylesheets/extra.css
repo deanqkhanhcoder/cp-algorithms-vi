@@ -4,14 +4,18 @@
 
 /* Định nghĩa màu sắc cho theme */
 [data-md-color-scheme="cpalgo"] {
-  --md-primary-fg-color: #7777aa;
-  --md-primary-fg-color--light: #7777aa;
-  --md-primary-fg-color--dark: #333371;
+  --md-primary-fg-color: #5c6bc0;
+  /* Indigo lighten-1 */
+  --md-primary-fg-color--light: #7986cb;
+  --md-primary-fg-color--dark: #3f51b5;
+  /* Indigo regular */
 }
 
 [data-md-color-scheme="slate"] {
-  --md-hue: 210;
-  --md-typeset-a-color: #c973d9;
+  --md-hue: 230;
+  /* Indigo hue */
+  --md-typeset-a-color: #7986cb;
+  /* Indigo lighten-2 for links */
 }
 
 [data-md-color-scheme="slate"] img {
@@ -107,7 +111,21 @@ body,
   transition: background-color 0.3s ease-in-out,
     color 0.3s ease-in-out,
     border-color 0.3s ease-in-out,
+    color 0.3s ease-in-out,
+    border-color 0.3s ease-in-out,
     box-shadow 0.3s ease-in-out !important;
+}
+
+/* Tăng line-height cho nội dung bài viết */
+.md-typeset {
+  font-size: 0.95rem;
+  /* Điều chỉnh nhẹ size */
+  line-height: 1.7 !important;
+}
+
+.md-typeset p {
+  margin-bottom: 1.2em;
+  /* Thoáng hơn giữa các đoạn */
 }
 
 /* Hiệu ứng xoay icon Mặt trăng/Mặt trời */

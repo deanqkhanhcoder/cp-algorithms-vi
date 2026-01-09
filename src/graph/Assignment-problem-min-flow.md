@@ -11,7 +11,7 @@ e_maxx_link: assignment_mincostflow
    - Cho một ma trận vuông $A[1..N, 1..N]$, bạn cần chọn $N$ phần tử trong đó sao cho chính xác một phần tử được chọn trong mỗi hàng và mỗi cột, và tổng giá trị của các phần tử này là nhỏ nhất.
    - Có $N$ đơn hàng và $N$ máy móc. Chi phí sản xuất trên mỗi máy được biết cho mỗi đơn hàng. Chỉ một đơn hàng có thể được thực hiện trên mỗi máy. Cần phân công tất cả các đơn hàng cho các máy sao cho tổng chi phí được giảm thiểu.
 
-Ở đây chúng ta sẽ xem xét giải pháp của bài toán dựa trên thuật toán tìm [luồng chi phí nhỏ nhất (min-cost-flow)](min_cost_flow.md), giải quyết bài toán phân công trong $\mathcal{O}(N^3)$.
+Ở đây chúng ta sẽ xem xét giải pháp của bài toán dựa trên thuật toán tìm [luồng chi phí nhỏ nhất (min-cost-flow)](min-cost-flow.md), giải quyết bài toán phân công trong $\mathcal{O}(N^3)$.
 
 ## Mô tả (Description) {: #description}
 
@@ -19,12 +19,12 @@ Hãy xây dựng một mạng hai phía: có một nguồn $S$, một đích $T$
 
 Chúng ta tìm luồng cực đại chi phí nhỏ nhất trong mạng kết quả. Rõ ràng, giá trị của luồng sẽ là $N$. Hơn nữa, đối với mỗi đỉnh $i$ của đoạn thứ nhất có chính xác một đỉnh $j$ của đoạn thứ hai, sao cho luồng $F_{ij}$ = 1. Cuối cùng, đây là một sự tương ứng 1-1 giữa các đỉnh của đoạn thứ nhất và các đỉnh của phần thứ hai, đó là lời giải cho bài toán (vì luồng tìm được có chi phí tối thiểu, nên tổng chi phí của các cạnh được chọn sẽ là thấp nhất có thể, đó là tiêu chí tối ưu).
 
-Độ phức tạp của giải pháp này cho bài toán phân công phụ thuộc vào thuật toán mà việc tìm luồng cực đại chi phí nhỏ nhất được thực hiện. Độ phức tạp sẽ là $\mathcal{O}(N^3)$ khi sử dụng [Dijkstra](dijkstra.md) hoặc $\mathcal{O}(N^4)$ khi sử dụng [Bellman-Ford](bellman_ford.md). Điều này là do thực tế là luồng có kích thước $O(N)$ và mỗi lần lặp của thuật toán Dijkstra có thể được thực hiện trong $O(N^2)$, trong khi đó là $O(N^3)$ cho Bellman-Ford.
+Độ phức tạp của giải pháp này cho bài toán phân công phụ thuộc vào thuật toán mà việc tìm luồng cực đại chi phí nhỏ nhất được thực hiện. Độ phức tạp sẽ là $\mathcal{O}(N^3)$ khi sử dụng [Dijkstra](dijkstra.md) hoặc $\mathcal{O}(N^4)$ khi sử dụng [Bellman-Ford](bellman-ford.md). Điều này là do thực tế là luồng có kích thước $O(N)$ và mỗi lần lặp của thuật toán Dijkstra có thể được thực hiện trong $O(N^2)$, trong khi đó là $O(N^3)$ cho Bellman-Ford.
 
 ## Cài đặt (Implementation) {: #implementation}
 
 Việc cài đặt được đưa ra ở đây rất dài, nó có thể có thể được giảm đáng kể.
-Nó sử dụng [thuật toán SPFA](bellman_ford.md) để tìm đường đi ngắn nhất.
+Nó sử dụng [thuật toán SPFA](bellman-ford.md) để tìm đường đi ngắn nhất.
 
 ```cpp
 const int INF = 1000 * 1000 * 1000;

@@ -139,8 +139,7 @@ Các phần khác của thuật toán Manacher hoạt động rõ ràng trong th
  - Nếu $i$ không vượt quá $r$, $d_{odd}[i]$ được khởi tạo thành $d_{odd}[j]$, trong đó $j$ là vị trí gương của $i$ trong $(l,r)$, hoặc $d_{odd}[i]$ bị giới hạn ở kích thước của palindrome "bên ngoài".
  - Vòng lặp while biểu thị thuật toán tầm thường. Chúng tôi khởi chạy nó bất kể giá trị của $k$.
  - Nếu kích thước của palindrome có tâm tại $i$ là $x$, thì $d_{odd}[i]$ lưu trữ $\frac{x+1}{2}$.
-
-```{.cpp file=manacher_odd}
+```cpp title="manacher_odd"
 vector<int> manacher_odd(string s) {
     int n = s.size();
     s = "$" + s + "^";

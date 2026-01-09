@@ -205,8 +205,7 @@ Do đó, việc tính toán DFT ngược gần giống như việc tính toán D
 
 Ở đây chúng tôi trình bày một **cài đặt đệ quy đơn giản của FFT** và FFT ngược, cả hai trong một hàm, vì sự khác biệt giữa FFT thuận và FFT ngược là rất nhỏ.
 Để lưu trữ các số phức, chúng tôi sử dụng kiểu complex trong thư viện STL của C++.
-
-```{.cpp file=fft_recursive}
+```cpp title="fft_recursive"
 using cd = complex<double>;
 const double PI = acos(-1);
 
@@ -247,8 +246,7 @@ Sau đó, các giá trị của DFT kết quả được tính bằng các công
 Nếu cờ $\text{invert}$ được đặt, thì chúng tôi thay thế $wn$ bằng $wn^{-1}$, và mỗi giá trị của kết quả được chia cho $2$ (vì điều này sẽ được thực hiện ở mỗi cấp độ của đệ quy, cuối cùng sẽ chia các giá trị cuối cùng cho $n$).
 
 Sử dụng hàm này, chúng ta có thể tạo một hàm để **nhân hai đa thức**:
-
-```{.cpp file=fft_multiply}
+```cpp title="fft_multiply"
 vector<int> multiply(vector<int> const& a, vector<int> const& b) {
     vector<cd> fa(a.begin(), a.end()), fb(b.begin(), b.end());
     int n = 1;
@@ -331,8 +329,7 @@ Kết quả là vectơ $a$ với công việc của mức cuối cùng đã đư
 Trong bước tiếp theo, chúng ta chia vectơ thành các vectơ có kích thước $4$, và lại áp dụng biến đổi bướm, cho chúng ta DFT cho mỗi khối có kích thước $4$.
 Và cứ thế tiếp tục.
 Cuối cùng ở bước cuối cùng, chúng ta thu được kết quả của các DFT của cả hai nửa của $a$, và bằng cách áp dụng biến đổi bướm, chúng ta thu được DFT cho vectơ $a$ hoàn chỉnh.
-
-```{.cpp file=fft_implementation_iterative}
+```cpp title="fft_implementation_iterative"
 using cd = complex<double>;
 const double PI = acos(-1);
 
@@ -392,8 +389,7 @@ Cộng một trong hệ nhị phân thông thường tương đương với vi�
 Tương đương trong hệ thống số "đảo ngược", chúng ta lật tất cả các số một dẫn đầu, và cũng là số không tiếp theo.
 
 Do đó chúng ta nhận được cài đặt sau:
-
-```{.cpp file=fft_implementation_iterative_opt}
+```cpp title="fft_implementation_iterative_opt"
 using cd = complex<double>;
 const double PI = acos(-1);
 
@@ -477,8 +473,7 @@ Ví dụ, chúng ta có thể lấy các giá trị sau: modulo $p = 7340033$, $
 Nếu modulo này không đủ, chúng ta cần tìm một cặp khác.
 Chúng ta có thể sử dụng thực tế rằng đối với các modulo có dạng $p = c 2^k + 1$ (và $p$ là số nguyên tố), luôn tồn tại căn bậc $2^k$ của đơn vị.
 Có thể chứng minh rằng $g^c$ là một căn bậc $2^k$ của đơn vị như vậy, trong đó $g$ là một [căn nguyên thủy](primitive-root.md) của $p$.
-
-```{.cpp file=fft_implementation_modular_arithmetic}
+```cpp title="fft_implementation_modular_arithmetic"
 const int mod = 7340033;
 const int root = 5;
 const int root_1 = 4404020;
